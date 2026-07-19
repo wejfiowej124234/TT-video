@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 
+import "./V311DaoProposalThresholds.sol";
+import "./V311StewardLifecycle.sol";
+
 /// @title TravelTrustGovernor
 /// @notice **B-089 Completion**：提案 / 投票 / **quorum** / **threshold** / **快照 `getPastVotes`**；**Succeeded → queue（Timelock）→ delay → execute**。
 interface IGovernanceVotes {
@@ -65,6 +68,10 @@ contract TravelTrustGovernor {
     }
 
     mapping(uint256 => ProposalCore) public proposals;
+    /// @notice V3.1.1 ch.5 · 0=ordinary · 1=important · 2=core（Gap D-03/GOV-01）
+    mapping(uint256 => uint8) public proposalTier;
+    /// @notice V3.1.1 · Gap D-04/GOV-02 · keccak256("REMOVE_COUNTRY_STEWARD") when applicable
+    mapping(uint256 => bytes32) public proposalTypeTags;
     mapping(uint256 => address[]) internal _targets;
     mapping(uint256 => uint256[]) internal _values;
     mapping(uint256 => bytes[]) internal _calldatas;
@@ -125,19 +132,34 @@ contract TravelTrustGovernor {
         orderRatingReviewWindowDays = days_;
     }
 
+    /// @notice Legacy entry · defaults to ordinary tier（V3.1.1）
     function propose(
         address[] memory targets,
         uint256[] memory values,
         bytes[] memory calldatas,
         string memory description
     ) external returns (uint256 proposalId) {
+        return propose(targets, values, calldatas, description, V311DaoProposalThresholds.TIER_ORDINARY);
+    }
+
+    /// @notice V3.1.1 · tiered snapshot thresholds（D-03 / GOV-01）
+    function propose(
+        address[] memory targets,
+        uint256[] memory values,
+        bytes[] memory calldatas,
+        string memory description,
+        uint8 tier
+    ) public returns (uint256 proposalId) {
         if (targets.length != values.length || values.length != calldatas.length) revert GovWrongLength();
         require(targets.length >= 1, "empty proposal");
-        uint256 power = token.getPastVotes(msg.sender, block.number - 1);
-        if (power < proposalThresholdVotes) revert GovThreshold();
+        uint256 snapshot = block.number - 1;
+        uint256 supply = token.getPastTotalSupply(snapshot);
+        uint256 need = V311DaoProposalThresholds.requiredVotes(tier, supply);
+        if (need < proposalThresholdVotes) need = proposalThresholdVotes;
+        uint256 power = token.getPastVotes(msg.sender, snapshot);
+        if (power < need) revert GovThreshold();
 
         proposalId = ++proposalCount;
-        uint256 snapshot = block.number - 1;
         uint256 start = block.number + votingDelayBlocks;
         uint256 end = start + votingPeriodBlocks;
 
@@ -146,6 +168,7 @@ contract TravelTrustGovernor {
         p.snapshot = snapshot;
         p.voteStart = start;
         p.voteEnd = end;
+        proposalTier[proposalId] = tier;
 
         _targets[proposalId] = targets;
         _values[proposalId] = values;
@@ -153,6 +176,31 @@ contract TravelTrustGovernor {
         proposalDescriptions[proposalId] = description;
 
         emit ProposalCreated(proposalId, msg.sender, snapshot, start, end, description);
+    }
+
+    /// @notice D-04 / GOV-02 · REMOVE COUNTRY STEWARD（core tier）
+    function proposeRemoveCountrySteward(
+        address[] memory targets,
+        uint256[] memory values,
+        bytes[] memory calldatas,
+        string memory description
+    ) external returns (uint256 proposalId) {
+        proposalId = propose(
+            targets, values, calldatas, description, V311DaoProposalThresholds.TIER_CORE
+        );
+        proposalTypeTags[proposalId] = V311StewardLifecycle.REMOVE_COUNTRY_STEWARD;
+    }
+
+    function isRemoveCountryStewardProposal(uint256 proposalId) external view returns (bool) {
+        return V311StewardLifecycle.isRemoveProposalType(proposalTypeTags[proposalId]);
+    }
+
+    /// @notice Required votes for tier at current snapshot supply（view helper · Phase A）
+    function proposalThresholdForTier(uint8 tier) external view returns (uint256) {
+        uint256 supply = token.getPastTotalSupply(block.number - 1);
+        uint256 need = V311DaoProposalThresholds.requiredVotes(tier, supply);
+        if (need < proposalThresholdVotes) need = proposalThresholdVotes;
+        return need;
     }
 
     function castVote(uint256 proposalId, uint8 support) external returns (uint256 weight) {

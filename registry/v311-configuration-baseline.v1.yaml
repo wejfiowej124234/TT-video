@@ -1,0 +1,20 @@
+# schema: traveltrust.v311_configuration_baseline.v1
+# Pin only — does NOT mutate ACTIVE address matrix / Registry ACTIVE cutover
+machine_key: TT_CONFIGURATION_BASELINE
+status: PINNED
+recorded_utc: "2026-07-18T11:57:02Z"
+chain_id: 11155111
+tt_configuration_baseline: PARTIAL
+verdict: PARTIAL
+does_not_reopen: TT_CONFIGURATION_ZERO_DRIFT
+pins:
+  address_matrix_sha256: c55913ded96ba4e91fbdb86d1c1dc08283d360299782087e189ad6ef61520596
+  address_matrix_baseline: v311_sepolia_clean_baseline
+  deployment_inventory_sha256: b2c22cc3fcbd9813864ca02d40cd45068f12bac464d5c7e70db46fb08e244229
+  component_count: 20
+env_surface_checklist:
+  RPC_Endpoint: OWNER_PIN_REQUIRED
+  Indexer_Endpoint: OWNER_PIN_REQUIRED
+  WalletConnect_Project_ID: OWNER_PIN_REQUIRED
+  Feature_Flags: OWNER_PIN_REQUIRED
+  ENV_whitelist: OWNER_PIN_REQUIRED

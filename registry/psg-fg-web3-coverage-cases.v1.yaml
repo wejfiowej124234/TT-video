@@ -1,0 +1,297 @@
+schema: traveltrust.psg_fg_web3_coverage_cases.v1
+machine_key: TT_PSG_FG_WEB3_COVERAGE_CASES
+status: STAGED_WAIT_G_RC_CLOSED
+recorded_utc: '2026-07-19T09:33:40Z'
+human_ssot: docs/runbook/TT-PSG-FG-WEB3-COVERAGE-CASES-LATEST.md
+measurement_binding: registry/psg-coverage-measurement-final.v1.yaml#metrics.Financial_Grade_Web3
+threshold_binding: registry/psg-coverage-acceptance-threshold-matrix.v1.yaml#thresholds_first_production_slice.Financial_Grade_Web3
+cases:
+- id: FGCASE-FG-01
+  fg_id: FG-01
+  surface: Money-Path
+  full_capability_domain: E
+  pass_requires:
+  - onchain_fee_split_eq_ledger
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-02
+  fg_id: FG-02
+  surface: Escrow_State_Machine
+  full_capability_domain: D
+  pass_requires:
+  - escrow_happy_and_exception_states
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-03
+  fg_id: FG-03
+  surface: SettlementRouter
+  full_capability_domain: E
+  pass_requires:
+  - settlement_ready_no_skip
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-04
+  fg_id: FG-04
+  surface: FeeRouter
+  full_capability_domain: E
+  pass_requires:
+  - fee_router_constitution_route
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-05
+  fg_id: FG-05
+  surface: Distributable
+  full_capability_domain: E
+  pass_requires:
+  - pending_locked_settlement_ready_distributable_distributed
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-06
+  fg_id: FG-06
+  surface: Steward_Revenue
+  full_capability_domain: F
+  pass_requires:
+  - steward_45_55_or_100_prp
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-07
+  fg_id: FG-07
+  surface: Treasury
+  full_capability_domain: C/E/I
+  pass_requires:
+  - treasury_address_and_balance_verifiable
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-08
+  fg_id: FG-08
+  surface: TTG_Governance
+  full_capability_domain: C/G
+  pass_requires:
+  - proposal_vote_queue
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-09
+  fg_id: FG-09
+  surface: Timelock_Execute
+  full_capability_domain: G
+  pass_requires:
+  - timelock_execute_receipt_sepolia
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-10
+  fg_id: FG-10
+  surface: Wallet_Security
+  full_capability_domain: B/K
+  pass_requires:
+  - extension_wc_mobile_qr_wrong_network
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-11
+  fg_id: FG-11
+  surface: RBAC
+  full_capability_domain: K
+  pass_requires:
+  - role_matrix_full_gate_bar
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-12
+  fg_id: FG-12
+  surface: Indexer
+  full_capability_domain: K/L
+  pass_requires:
+  - events_projected_match_chain
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-13
+  fg_id: FG-13
+  surface: Chain_DB_API_UI_Consistency
+  full_capability_domain: E/I
+  pass_requires:
+  - chain_eq_db_eq_api_eq_ui
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-14
+  fg_id: FG-14
+  surface: Audit_Evidence
+  full_capability_domain: L
+  pass_requires:
+  - gate_citeable_evidence_pack
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+- id: FGCASE-FG-15
+  fg_id: FG-15
+  surface: Observation_48H
+  full_capability_domain: K
+  pass_requires:
+  - contracts_payments_events_indexer_api_errors
+  - citeable_evidence_under_GO_phase2_fcg_full_capability_v2_sepolia
+  - threshold_Financial_Grade_Web3_cell_PASS
+  fail_if:
+  - docs_only_claim
+  - web2_coverage_substituted
+  - legacy_v311_baseline_used_as_commercial_ssot
+  prep_now:
+  - case_registered_in_denom
+  - evidence_slot_reserved
+  - verify_harness_linked
+  execute_after: GOVERNANCE_RC_CLOSED_AND_CLEAN_DEPLOY
+  status: CASE_STAGED_NOT_EXECUTED
+  pass: false
+rollup:
+  staged: 15
+  executed_pass: 0
+  decision: NEED_FIX

@@ -1,0 +1,69 @@
+schema: traveltrust.psg_protocol_v2_testnet_deployment_plan.v1
+machine_key: TT_PROTOCOL_V2_TESTNET_DEPLOYMENT_PLAN
+status: PLAN_ARMED_AWAITING_GOVERNANCE_RC_CLOSED
+recorded_utc: '2026-07-19T09:14:46Z'
+human_ssot: docs/runbook/TT-PROTOCOL-V2-TESTNET-DEPLOYMENT-PLAN-LATEST.md
+evidence_pack: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/PROTOCOL-V2-TESTNET-DEPLOYMENT-PLAN-LATEST.json
+production_go: false
+pass_claimed: false
+governance_rc_closed: false
+implements_code: false
+deploy_authorized: false
+broadcast_authorized: false
+track_a: FROZEN_NO_MUTATION
+preauth_mode: PREAUTH_ONLY
+why_governance_rc_required:
+  reason: PROTOCOL_RULE_CHANGE_NOT_PROCESS_THEATER
+  changed_surfaces:
+  - FeeRouter
+  - Settlement_SettlementRouter
+  - Distributable_SM_including_SETTLEMENT_READY
+  - Steward_Revenue_45_55
+  consequence_if_skipped: 'Deploy first → discover rule mismatch vs constitution/preauth
+    → rework deploy. Forbidden for MAINNET_COMMERCIAL_FULL / Full Capability path.
+
+    '
+canonical_sequence:
+- id: S0
+  name: Governance_RC_CLOSE
+  gate: G-RC-05
+  must_precede: all_later_steps
+- id: S1
+  name: Protocol_Implementation
+  includes:
+  - SettlementRouter_and_Escrow_wiring
+  - FeeRouter_V311_distributable_routing
+  - Distributable_SM_no_skip
+  - Steward_revenue_entitlement_legs
+  window: Money_Path_RC_after_M-RC-00
+- id: S2
+  name: New_Testnet_Deploy
+  strategy: CLEAN_SEPOLIA_REDEPLOY_NOT_UPGRADE
+  baseline_key: fcg_full_capability_v2_sepolia
+  old_baseline_after_cutover: LEGACY_READ_ONLY
+- id: S3
+  name: Full_Capability_Validation
+  includes:
+  - TRE-02_REG-01_REG-04_on_NEW_addresses
+  - Step3_Happy_Path_Evidence
+  - four_way_onchain_db_ui_indexer
+  - M-RC-04_ReAudit
+forbidden_sequences:
+- name: deploy_before_g_rc_close
+  pattern: New_Testnet_Deploy → discover_rule_mismatch → rework
+  status: FORBIDDEN
+- name: upgrade_old_contracts_as_primary_path
+  pattern: in_place_upgrade_Escrow_FeeRouter
+  status: SUPERSEDED_BY_PROTOCOL_V2_CLEAN_DEPLOY
+- name: skip_to_step3_coding_now
+  status: FORBIDDEN_UNTIL_S0_AND_M_RC_00
+next_phase_focus: PROTOCOL_V2_TESTNET_DEPLOYMENT_PLAN
+supersedes_as_primary_path: UPGRADE_OLD_CONTRACTS_NARRATIVE
+cites:
+  preauth: registry/psg-fcg-pay01-gov-rc-closure-preauth.v1.yaml
+  step25: registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+  redeploy_prep: registry/psg-fcg-pay01-gov-rc-closure-prep-v2-redeploy.v1.yaml
+  exit_criteria: registry/v311-production-exit-criteria.v1.yaml
+  deploy_checklist: DEP-V2-01_through_DEP-V2-08
+current_blocker: GOVERNANCE_RC_FROZEN_WAITING_EXECUTE
+clean_deploy_ready_checklist: registry/psg-protocol-v2-clean-deploy-ready-checklist.v1.yaml

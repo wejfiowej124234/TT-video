@@ -1,0 +1,251 @@
+schema: traveltrust.psg_fcg_pay01_step25_ambiguity_closure.v1
+machine_key: TT_FCG_PAY01_STEP25_AMBIGUITY_CLOSURE
+status: PAPER_CLOSED_OA_PAY_01_TO_05
+recorded_utc: '2026-07-19T08:54:37Z'
+parent_freeze: registry/psg-fcg-pay01-protocol-freeze.v1.yaml
+human_ssot: docs/runbook/TT-FCG-PAY-01-STEP25-AMBIGUITY-CLOSURE-LATEST.md
+evidence_pack: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/FCG-PAY-01-STEP25-AMBIGUITY-CLOSURE-LATEST.json
+production_go: false
+pass_claimed: false
+implements_code: false
+deploy_forbidden: true
+track_a: FROZEN_NO_MUTATION
+cites:
+- docs/spec/01-总库总览.md
+- docs/spec/03-业务流程与风控.md
+- docs/spec/05-前端总览.md
+- docs/spec/14-合约-API-ABI-前后端对齐.md
+- docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+- registry/v311-production-exit-criteria.v1.yaml
+- contracts/src/Escrow.sol
+- contracts/src/ServiceFeeStatesV311.sol
+- contracts/src/V311DistributableSplit.sol
+oa_pay_01_actor_model:
+  status: CLOSED_ON_PAPER
+  release:
+    primary_paths:
+    - id: DUAL_CONFIRM_THEN_RELEASE
+      sequence:
+      - Traveler_and_Guide_offchain_confirm_completion_API
+      - optional_post_service_rating_per_product_53
+      - EIP712_dual_sign_or_both_wallet_acks_per_01
+      - onchain_Escrow_release_tx
+      who_submits_release_tx:
+        preferred: Protocol_Executor_or_authorized_relayer
+        allowed_alternate: either_party_wallet_after_dual_confirm_gate
+      signatures_required:
+        offchain_completion: dual_confirm_API_or_EIP712
+        onchain: wallet_sig_on_release_calldata
+      arbitration_required: false
+    - id: TIMEOUT_AUTO_RELEASE
+      sequence:
+      - one_party_confirmed_OR_serviceEnd_passed
+      - dispute_window_not_open_AND_not_frozen
+      - autoCompleteAt_reached_per_03
+      - Protocol_Executor_calls_release
+      who_triggers_timeout: Protocol_Executor_only
+      traveler_or_guide_may_nudge: true_via_ops_API_not_bypass_gate
+      arbitration_required: false
+    forbidden:
+    - release_without_dual_confirm_or_timeout_gate
+    - release_while_Disputed_or_isFrozen
+    - claiming_confirm_completion_API_equals_onchain_release
+    as_is_contract_note: 'Escrow.release() currently lacks role modifiers — TARGET
+      wiring MUST enforce dual-confirm/timeout gate off-chain and/or on-chain before
+      funds move.
+
+      '
+  dispute:
+    flow:
+    - Dispute_Open
+    - Evidence_Submit
+    - Arbitration_Decision
+    - Resolution_Execute
+    open:
+      who: Traveler_OR_Guide
+      from: Funded_Escrowed
+      fn: Escrow.openDispute
+      effect: status_Disputed_AND_freeze_auto_release
+      signature: opener_wallet
+    evidence_submit:
+      who: Traveler_AND_Guide_AND_optional_third_party_attachments
+      where: offchain_dispute_API_DB
+      onchain: reasonHash_only_at_open
+    arbitration_decision:
+      who_is_arbitrator: Escrow.arbitrator_address_sealed_at_create
+      how_produced: 'Arbitrator issues signed decision (decisionHash) off-chain or
+        via admin/dispute console; amounts must conserve guide+travelerRefund+platformFee==total.
+
+        '
+      not: DAO_vote_per_order_default
+    resolution_execute:
+      who_calls_executeResolution: Protocol_Executor_multisig_or_authorized_relayer
+      not_arbitrator_wallet_required_on_chain_if: executor_holds_role_and_binds_decisionHash
+      target_onchain_gate: onlyArbitrator_OR_onlyExecutor_WITH_arbitrator_attestation
+      fn: Escrow.executeResolution
+      after: Resolved_then_map_offchain_to_Completed_Refunded_or_PartiallyRefunded
+    closes_loop: true
+oa_pay_02_legacy_direct_pay:
+  status: CLOSED_ON_PAPER
+  legacy_path:
+    name: ESCROW_RELEASE_DIRECT_PLATFORM_FEE_RECIPIENT
+    description: 'Escrow.release transfers guideAmount to guide and fee to platformFeeRecipient
+      in the same transaction, then advances service fee to DISTRIBUTED.
+
+      '
+    classification: LEGACY_NON_SSOT
+    may_exist_in: current_Escrow_sol_and_FeeRouter_as_recipient_wiring
+    forbidden_as:
+    - constitution_proof
+    - TRE-02_PASS_evidence
+    - REG-01_four_rail_proof
+    - Production_economic_model_claim
+  target_ssot_path: oa_pay_03_architecture.target_flow
+oa_pay_03_architecture:
+  status: CLOSED_ON_PAPER
+  target_flow: "Escrow (Order Escrow rail · principal lock)\n  → SettlementRouter\
+    \ (completion / refund / dispute resolution entry)\n  → FeeRouter (constitution\
+    \ routing · not LEGACY multi-bucket as SSOT)\n  → Distributable SM (PENDING→LOCKED→SettlementReady→DISTRIBUTABLE→DISTRIBUTED)\n\
+    \  → Distribution legs:\n       Guide (principal net of fee)\n       Steward (45%\
+    \ of Distributable if ACTIVE)\n       Project Revenue Pool (55% or 100%)\n   \
+    \    Founder Bootstrap / P4Cap (orthogonal rails · not order principal)\n"
+  components:
+    Escrow:
+      role: lock_principal_and_emit_lifecycle_events
+      must_not: silently_prove_45_55_by_direct_wallet_pay_alone
+    SettlementRouter:
+      role: sole_post_completion_settlement_entry_TARGET
+      inputs: release_or_resolution_outcomes
+      outputs: fee_leg_to_FeeRouter_plus_guide_payout
+      status: TARGET_MODULE_NAME_LOCKED · impl_deferred_to_Money_Path_RC
+    FeeRouter:
+      role: route_Distributable_per_V311_not_LEGACY_4500_3575_1100_825_as_ssot
+      constitution_split: V311DistributableSplit
+    Distributable:
+      role: only_after_refunds_disputes_chargebacks
+    Distribution:
+      legs:
+      - Guide
+      - Steward
+      - PRP
+      - Founder_or_P4Cap_orthogonal
+  four_rails_remain:
+  - Order_Escrow
+  - GovernanceTreasuryP4Cap
+  - Project_Revenue_Pool
+  - Founder_Bootstrap_Wallet
+oa_pay_04_05_distributable_sm:
+  status: CLOSED_ON_PAPER
+  vocabulary_ssot:
+  - SERVICE_FEE_PENDING
+  - SERVICE_FEE_LOCKED
+  - SERVICE_FEE_SETTLEMENT_READY
+  - SERVICE_FEE_DISTRIBUTABLE
+  - SERVICE_FEE_DISTRIBUTED
+  settlement_ready:
+    purpose: 'Independent readiness before DISTRIBUTABLE so auditors never see LOCKED→DISTRIBUTED
+      in one opaque jump without intermediate evidence.
+
+      '
+    maps_constitution: between_LOCKED_and_DISTRIBUTABLE
+    onchain_options:
+    - emit_explicit_ServiceFeeStateChanged_to_SETTLEMENT_READY_TARGET
+    - OR_offchain_SettlementReady_attestation_PLUS_indexer_row_REQUIRED_before_DISTRIBUTABLE
+    preferred_for_M_RC: explicit_onchain_or_indexed_SettlementReady_event
+  transitions:
+  - from: PENDING
+    to: LOCKED
+    trigger: Escrow.deposit_success
+    event: Deposited_plus_ServiceFeeStateChanged
+    db: service_fee_state=LOCKED
+    reversible: false
+  - from: LOCKED
+    to: SETTLEMENT_READY
+    trigger: dual_confirm_or_timeout_gate_OR_resolution_amounts_final
+    event: SettlementReady_or_ServiceFeeStateChanged
+    db: service_fee_state=SETTLEMENT_READY
+    reversible: false_except_dispute_freeze_blocks_advance
+  - from: SETTLEMENT_READY
+    to: DISTRIBUTABLE
+    trigger: SettlementRouter_accepts_fee_leg_net_of_refunds
+    event: ServiceFeeStateChanged_to_DISTRIBUTABLE
+    db: service_fee_state=DISTRIBUTABLE
+    reversible: false
+  - from: DISTRIBUTABLE
+    to: DISTRIBUTED
+    trigger: FeeRouter_or_split_execution_45_55_or_100_PRP
+    event: FeeRouted_or_SplitApplied_plus_ServiceFeeStateChanged
+    db: service_fee_state=DISTRIBUTED
+    reversible: false
+  illegal_edges:
+  - PENDING→DISTRIBUTABLE
+  - PENDING→DISTRIBUTED
+  - LOCKED→DISTRIBUTED
+  - LOCKED→DISTRIBUTABLE_without_SETTLEMENT_READY
+  - SETTLEMENT_READY→DISTRIBUTED_skip_DISTRIBUTABLE
+  - DISTRIBUTED→any_prior
+  same_tx_LOCKED_to_DISTRIBUTED:
+    classification: LEGACY_ANTI_PATTERN
+    risk: missing_intermediate_audit_surface
+    target: at_least_SettlementReady_and_DISTRIBUTABLE_must_be_observable
+oa_closures:
+- id: OA-PAY-01
+  result: CLOSED_ON_PAPER
+  summary: Release dual-confirm/timeout/executor; Dispute open→evidence→arbitrate→executor
+    executeResolution
+- id: OA-PAY-02
+  result: CLOSED_ON_PAPER
+  summary: Direct platformFeeRecipient path = LEGACY_NON_SSOT
+- id: OA-PAY-03
+  result: CLOSED_ON_PAPER
+  summary: Escrow→SettlementRouter→FeeRouter→Distributable→Distribution is TARGET
+    SSOT
+- id: OA-PAY-04
+  result: CLOSED_ON_PAPER
+  summary: executeResolution caller = Protocol Executor with arbitrator decisionHash
+    binding
+- id: OA-PAY-05
+  result: CLOSED_ON_PAPER
+  summary: No-skip SM + SettlementReady required before DISTRIBUTABLE
+governance_rc_closure_prereq_checklist:
+  purpose: 'Owner confirms this economic protocol version may enter Money-Path implementation
+    ONLY after Governance RC CLOSED — do not bypass FROZEN_WAITING_EXECUTE.
+
+    '
+  current_mode: FROZEN_WAITING_EXECUTE
+  gates:
+  - id: G-RC-01
+    name: Timelock Proposal
+    owner_action: Wait_ETA_then_Execute_on_Sepolia_11155111
+    evidence: execute_tx_hash_plus_F-02_state
+  - id: G-RC-02
+    name: Function Cert 54/0/0
+    owner_action: Run_post_execute_function_cert
+    evidence: VERDICT-LATEST.json
+  - id: G-RC-03
+    name: Product Full Cert
+    owner_action: Stamp_P6_after_UI
+    evidence: P6-PRODUCT-CERT-LATEST.json
+  - id: G-RC-04
+    name: UI Full Cert
+    owner_action: Stamp_P5_UI
+    evidence: P5-UI-UX-CERT-LATEST.json
+  - id: G-RC-05
+    name: Governance RC CLOSED
+    owner_action: stamp-v311-governance-rc-close.py
+    must_include:
+    - DEFERRED_TO_MONEY_PATH_RC=[TRE-02,REG-01,REG-04]
+    - written_ack_Step25_protocol_ambiguity_closed
+    - written_ack_LEGACY_direct_pay_not_ssot
+    - written_ack_SettlementRouter_architecture_target
+    evidence: GOVERNANCE-RC-CLOSE-LATEST.json
+  money_path_unlock_after_g_rc_05:
+  - M-RC-00_START
+  - OPT_A_or_OPT_B_locked
+  - then_TRE-02_REG-01_REG-04
+  - then_Step3_Happy_Path_impl
+  forbidden_now:
+  - Step3_coding
+  - deploy_settlement_router
+  - Production_GO
+  - claiming_OA_closure_equals_M_RC_PASS

@@ -1,0 +1,24 @@
+# schema: traveltrust.v311_steward_lifecycle.v1
+machine_key: TT_V311_STEWARD_LIFECYCLE
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+gap_ids: [S-04, D-04, GOV-02]
+recorded_utc: "2026-07-18T12:30:00Z"
+stamp: "20260718T123000Z"
+
+states:
+  - ACTIVE
+  - INACTIVE
+  - REMOVED
+
+rules:
+  inactive_days: 180
+  dao_remove_proposal_type: REMOVE_COUNTRY_STEWARD
+  access_fee_on_remove: non_refundable
+  stake_on_remove: treasury_recovery
+  reopen_after_inactive: stake_plus_access_fee_plus_audit
+
+proposal_type:
+  remove_country_steward:
+    encoded_tag: "REMOVE_COUNTRY_STEWARD"
+    maps_to_gaps: [D-04, GOV-02]

@@ -1,0 +1,57 @@
+# schema: traveltrust.psg_clean_sepolia_redeploy_v311.v1
+machine_key: TT_CLEAN_SEPOLIA_REDEPLOY_V311
+status: COMPLETE
+path: CLEAN_SEPOLIA_REDEPLOY
+human: docs/runbook/TT-CLEAN-SEPOLIA-REDEPLOY-V311-LATEST.md
+economic_ssot: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+phase_a_fec: docs/runbook/TT-PHASE-A-FULL-ENGINEERING-CLOSURE-LATEST.md
+recorded_utc: "2026-07-18T09:45:00Z"
+stamp: "20260718T094500Z"
+deploy_stamp: "20260718T092622Z"
+
+abandons:
+  timelock_remediation_bundle_u_pm: true
+  a1_r1_path_exists: REDEPLOY_OR_UPGRADE
+  forbid_schedule_old_bundle: true
+  forbid_prepare_safe_batch: true
+  forbid_confirm_timelock_flip: true
+
+active_baseline_key: v311_sepolia_clean_baseline
+superseded_baseline: gov_freeze_v2_clean_baseline
+
+redeploy_resolution_gaps_closed:
+  - T-04
+  - T-05
+  - DEP-01
+  - R-01
+
+addresses:
+  timelock: "0x462402082B395F218FFB3634ec0611e39BdD504C"
+  governor: "0x1ce4fbE80557bC2111A814f60A2334de41032116"
+  treasury_p4_cap: "0x6A10df057c637A295b48D91A8101d22542425905"
+  primary_market: "0x98a9BCfe967BA27d5448A1569d1622A7938046c2"
+  seat_registry: "0x7574E868dA767690FD91b5F8940dA7ad3B1efa66"
+  stake_pool: "0xc229D58987e0755467eB4EE53572F7139bAf7281"
+  governance_token: "0x5D2eDABF062E1d8AccDA2bd35c0d9B26CFCd5Ec0"
+  usdc_sink: "0x6A10df057c637A295b48D91A8101d22542425905"
+  timelock_admin_safe: "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf"
+
+verdicts:
+  deploy_broadcast: PASS
+  address_matrix_cutover: PASS
+  onchain_verify: PASS
+  be_fe_ix_runtime: PASS
+  full_constitution_realignment: PASS
+  gaps_closed: true
+  old_baseline_superseded: true
+  psg_git_baseline_refreshed: true
+  psg_v311_sepolia_clean_baseline_cert: PASS
+  production_go: NOT_CLAIMED
+
+git_baseline_sha: "3096516ddcb230e571c41eb0fc0eb16a1f3ce39f"
+cert_registry: registry/psg-v311-sepolia-clean-baseline-cert.v1.yaml
+address_matrix_freeze: registry/v311-sepolia-address-matrix-freeze.v1.json
+evidence_root: evidence/GO_phase2_v311_sepolia_clean_baseline
+notes: "PSG GO archive v1.1.0-psg-go.20260717 immutable · TT_PSG_V311_SEPOLIA_CLEAN_BASELINE_CERT PASS (②) · not Production GO"
+rc_preparation: registry/psg-sepolia-rc-preparation.v1.yaml
+locked_for_rc_preparation: true

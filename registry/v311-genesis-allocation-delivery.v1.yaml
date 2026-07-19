@@ -1,0 +1,28 @@
+# schema: traveltrust.v311_genesis_allocation_delivery.v1
+machine_key: TT_V311_GENESIS_ALLOCATION_DELIVERY
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+gap_id: T-02
+recorded_utc: "2026-07-18T11:00:00Z"
+
+allocation_bps:
+  founder_team: 1500
+  community_incentive: 500
+  dao_treasury: 3000
+  public_sale: 5000
+
+delivery:
+  founder_team:
+    mode: direct_to_founder_designated_wallet
+    vesting_required_by_constitution: false
+  community_incentive:
+    mode: dao_proposal_vote_timelock_phased
+  dao_treasury:
+    mode: treasury_custody
+  public_sale:
+    mode: primary_market
+    blocked_by_a1_r1_live_caps: true
+
+honesty:
+  onchain_bucket_contracts: not_required_by_v311
+  single_holder_mint_compatible: true

@@ -1,0 +1,31 @@
+# schema: traveltrust.v311_dao_proposal_thresholds.v1
+machine_key: TT_V311_DAO_PROPOSAL_THRESHOLDS
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+recorded_utc: "2026-07-18T11:00:00Z"
+gap_ids: [D-03, GOV-01]
+ttg_total_supply: 10000000
+
+tiers:
+  ordinary:
+    snapshot_bps: 50  # 0.5%
+    min_ttg: 5000
+    max_ttg: 50000
+  important:
+    snapshot_bps: 100  # 1%
+    min_ttg: null
+    max_ttg: 100000
+  core:
+    snapshot_bps: 200  # 2%
+    min_ttg: null
+    max_ttg: 200000
+
+proposal_types:
+  REMOVE_COUNTRY_STEWARD:
+    tier: core
+    gap_ids: [D-04, GOV-02]
+    then: treasury_recovery
+
+honesty:
+  governor_onchain_encoding: OPEN  # TravelTrustGovernor still needs wiring — Registry SSOT CLOSED for params
+  closes_registry_ssot_only: true

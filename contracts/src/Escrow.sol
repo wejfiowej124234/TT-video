@@ -2,11 +2,15 @@
 pragma solidity 0.8.19;
 
 import "./IERC20.sol";
+import "./V311EconomicConstants.sol";
+import "./ServiceFeeStatesV311.sol";
 
 /**
  * TravelTrust Escrow 实例（与 01 §4、19 一致）
  * 资金流：Created -> Funded -> Completed | Refunded | (Disputed -> Resolved)
  * 无 admin 后门、无 emergency withdraw（contracts/README）
+ * V3.1.1：platformFeeBps 硬闸 0–10%（`V311EconomicConstants.PLATFORM_SERVICE_FEE_MAX_BPS`）
+ * V3.1.1 F-04：Distributable Service Fee 四态（PENDING→LOCKED→DISTRIBUTABLE→DISTRIBUTED）
  */
 contract Escrow {
     enum Status {
@@ -49,6 +53,8 @@ contract Escrow {
     uint16 public platformFeeBps;
     Status public status;
     address public factory;
+    /// @notice V3.1.1 · Gap F-04 service fee state machine
+    ServiceFeeStatesV311.State public serviceFeeState;
 
     event EscrowCreated(
         bytes32 indexed orderId,
@@ -82,6 +88,11 @@ contract Escrow {
         uint256 guideAmount,
         uint256 platformFeeAmount
     );
+    event ServiceFeeStateChanged(
+        bytes32 indexed orderId,
+        ServiceFeeStatesV311.State from,
+        ServiceFeeStatesV311.State to
+    );
 
     error AlreadyInitialized();
     error InvalidState();
@@ -101,7 +112,7 @@ contract Escrow {
 
     function init(EscrowParams calldata params) external onlyFactory {
         if (status != Status.None) revert AlreadyInitialized();
-        if (params.platformFeeBps > 10000) revert InvalidState();
+        if (params.platformFeeBps > V311EconomicConstants.PLATFORM_SERVICE_FEE_MAX_BPS) revert InvalidState();
         orderId = params.orderId;
         traveler = params.traveler;
         guide = params.guide;
@@ -110,6 +121,7 @@ contract Escrow {
         totalAmount = params.totalAmount;
         platformFeeBps = params.platformFeeBps;
         status = Status.Created;
+        serviceFeeState = ServiceFeeStatesV311.State.SERVICE_FEE_PENDING;
         emit EscrowCreated(
             params.orderId,
             address(this),
@@ -129,6 +141,7 @@ contract Escrow {
         if (amount != totalAmount) revert InvalidState();
         if (!IERC20(token).transferFrom(msg.sender, address(this), amount)) revert TransferFailed();
         status = Status.Funded;
+        _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_LOCKED);
         emit Deposited(orderId, address(this), msg.sender, amount);
     }
 
@@ -142,7 +155,16 @@ contract Escrow {
         if (!IERC20(token).transfer(guide, guideAmount)) revert TransferFailed();
         if (fee > 0 && !IERC20(token).transfer(platformFeeRecipient, fee)) revert TransferFailed();
         status = Status.Completed;
+        _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTABLE);
+        _advanceServiceFee(ServiceFeeStatesV311.State.SERVICE_FEE_DISTRIBUTED);
         emit Released(orderId, address(this), guideAmount, fee);
+    }
+
+    function _advanceServiceFee(ServiceFeeStatesV311.State to) internal {
+        ServiceFeeStatesV311.State from = serviceFeeState;
+        ServiceFeeStatesV311.requireTransition(from, to);
+        serviceFeeState = to;
+        emit ServiceFeeStateChanged(orderId, from, to);
     }
 
     /// @notice 80 附录 02 · PartiallyRefunded：先退 `travelerRefund` 给旅行者；余款 `remainder = totalAmount - travelerRefund` 按 01 §10 同 `release`（向导 `floor(remainder*(10000-bps)/10000)`，平台费 `remainder - guide`）。

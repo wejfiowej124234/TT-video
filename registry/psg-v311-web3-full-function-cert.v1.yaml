@@ -1,0 +1,52 @@
+# schema: traveltrust.psg_v311_web3_full_function_cert.v1
+machine_key: TT_V311_WEB3_FULL_FUNCTION_CERT
+status: FAIL
+phase: "2"
+sole_baseline: v311_sepolia_clean_baseline
+economic_ssot: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+inventory: registry/v311-web3-deployment-inventory.v1.json
+human: docs/runbook/TT-V311-WEB3-DEPLOYMENT-FUNCTIONAL-CERT-LATEST.md
+evidence_root: evidence/GO_phase2_v311_web3_full_function_cert/
+master_script: scripts/dev/run-v311-web3-full-function-cert.sh
+gate_script: scripts/gates/check-v311-web3-full-function-cert.sh
+recorded_utc: "2026-07-18T10:30:00Z"
+
+pass_requires_all:
+  - inventory_coverage_100pct
+  - functional_tests_100pct_pass
+  - upgrade_architecture_and_authority_pass
+  - no_v2_active_refs
+  - fail_count_0
+  - real_sepolia_rpc
+  - per_item_evidence
+
+tiers:
+  A_readonly_onchain:
+    description: Deploy integrity · proxy/impl · admin · bytecode · roles · caps · sink · allowlist · first-wins
+    owner_keys_required: false
+  B_indexer_reconcile:
+    description: Indexer event / reconcile probes
+    owner_keys_required: false
+  C_mutating_functional:
+    description: Escrow create/pay/release/refund/dispute · Governor propose · Timelock schedule→execute · Treasury flow txs
+    owner_keys_required: true
+    broadcast_env: TRAVELTRUST_V311_FUNCTION_CERT_BROADCAST_OK
+    note: "Without Owner keys / Safe approval these stay OWNER_REQUIRED → overall FAIL"
+
+forbid:
+  claim_pass_without_tier_c: true
+  script_replaces_owner_keys: true
+  script_replaces_safe_multisig: true
+  script_replaces_final_signoff: true
+  claim_tt_psg_sepolia_freeze: true
+  claim_production_go: true
+  mutate_active_address_matrix: true
+
+on_fail: "keep FAIL · fix only failed items · targeted re-run · do not expand scope"
+on_pass: "TT_V311_WEB3_FULL_FUNCTION_CERT: PASS · still ≠ SEPOLIA_FREEZE · ≠ Production GO · Owner Sign-off separate"
+
+tt_psg_sepolia_freeze: NOT_CLAIMED
+production_go: NOT_CLAIMED
+owner_signoff: NOT_REPLACED_BY_SCRIPT
+last_run_stamp: "20260718T105504Z"
+last_verdict: FAIL

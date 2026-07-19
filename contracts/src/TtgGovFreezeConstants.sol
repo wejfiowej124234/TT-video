@@ -3,9 +3,13 @@ pragma solidity 0.8.19;
 
 /**
  * @title TtgGovFreezeConstants
- * @notice **TTG-TOKENOMICS-FREEZE-V1** 机读常量 · Gate-2.4 / Sepolia GOV-01～04 对齐真源
- * @dev Authoritative doc: docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
- *      YAML mirror: docs/spec/governance-token/protocol-ssot.v1.yaml `governance_freeze_v1`
+ * @notice GOV-01～04 numeric gates + supply units · **allocation SSOT = Genesis V2**
+ * @dev L3-03 Seq4 · D-CONST-DOCID:
+ *      Allocation authoritative: docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md
+ *      GOV gates prose:          docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
+ *      ACTIVE deploy baseline:   gov_freeze_v2_clean_baseline
+ *      YAML mirror:              protocol-ssot.v1.yaml `genesis_v2` + `governance_freeze_v1`
+ *      Public round caps:        Registry initial 800k / 1.2M / 3M · sum = 5M (Genesis V2 Public Sale)
  */
 library TtgGovFreezeConstants {
     uint256 internal constant TTG_TOTAL_SUPPLY_UNITS = 10_000_000 ether;
@@ -29,11 +33,23 @@ library TtgGovFreezeConstants {
     /// GOV-04 (TTG 18 dec · USDC 6 dec)
     uint256 internal constant PUBLIC_SALE_PER_WALLET_CAP_TTG = 25_000 ether;
     uint256 internal constant PUBLIC_SALE_MIN_PURCHASE_USDC = 100e6;
-    uint256 internal constant PUBLIC_ROUND_1_CAP_TTG = 500_000 ether;
-    uint256 internal constant PUBLIC_ROUND_2_CAP_TTG = 500_000 ether;
-    uint256 internal constant PUBLIC_ROUND_3_CAP_TTG = 1_000_000 ether;
+    /// Registry initial split · sum MUST = 5_000_000 (Public Sale bucket)
+    uint256 internal constant PUBLIC_ROUND_1_CAP_TTG = 800_000 ether;
+    uint256 internal constant PUBLIC_ROUND_2_CAP_TTG = 1_200_000 ether;
+    uint256 internal constant PUBLIC_ROUND_3_CAP_TTG = 3_000_000 ether;
 
+    /// @notice Primary document id for supply / allocation authority (= Genesis V2)
     function freezeDocumentId() internal pure returns (string memory) {
+        return "TTG-TOKENOMICS-GENESIS-V2";
+    }
+
+    /// @notice GOV-01～04 gates document id (not allocation unique SSOT)
+    function govGatesDocumentId() internal pure returns (string memory) {
         return "TTG-TOKENOMICS-FREEZE-V1";
+    }
+
+    /// @notice ACTIVE deployment baseline key in protocol-convergence-deployments
+    function activeDeployBaselineId() internal pure returns (string memory) {
+        return "gov_freeze_v2_clean_baseline";
     }
 }

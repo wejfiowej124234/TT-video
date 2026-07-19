@@ -2,13 +2,17 @@
 //!
 //! 先链下实现，接口设计兼容后续上链。
 
+pub mod access_fee_refund_v311;
+pub mod destination_country_v311;
 pub mod dispute_fee;
 pub mod escrow;
 pub mod fee_route_country;
+pub mod indexer_v311_projections;
 pub mod outbox;
 pub mod preset_cities;
 pub mod product_countries;
 pub mod reputation;
+pub mod service_fee_state_v311;
 pub mod staking;
 pub mod types;
 

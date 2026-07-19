@@ -1,0 +1,50 @@
+schema: traveltrust.psg_fg_web3_evidence_schema.v1
+machine_key: TT_PSG_FG_WEB3_EVIDENCE_SCHEMA
+version: 1.0.0
+recorded_utc: '2026-07-19T09:33:40Z'
+human_ssot: docs/runbook/TT-PSG-FG-WEB3-EVIDENCE-SCHEMA-LATEST.md
+root: evidence/GO_phase2_fcg_full_capability_v2_sepolia/
+pending_root: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/
+live_root_after_g_rc: evidence/GO_phase2_fcg_full_capability_v2_sepolia/fg-web3/
+discipline:
+  pending_only_until_g_rc_closed: true
+  broadcast_artifacts_forbidden_now: true
+required_artifacts_after_g_rc:
+- CLEAN-DEPLOY-BROADCAST-LATEST.json
+- ADDRESS-MATRIX-V2-LATEST.json
+- ACTIVE-CUTOVER-STAMP-LATEST.json
+- FG-WEB3-CASE-RESULTS-LATEST.json
+- CHAIN-INDEXER-API-DB-UI-CONSISTENCY-LATEST.json
+- OBSERVATION-48H-START-LATEST.json
+case_result_object:
+  fg_id: FG-NN
+  status: PASS|FAIL|NOT_RUN|BLOCKED
+  tx_hashes: []
+  meta_snapshot: {}
+  db_row_ids: []
+  api_paths: []
+  ui_routes: []
+  notes: ''
+  recorded_utc: ISO8601
+consistency_object_fg13:
+  chain:
+    addresses: {}
+    events: []
+  indexer:
+    last_block: null
+    projected_events: []
+  api:
+    /meta.chain.contracts: {}
+    order_or_escrow: {}
+  db:
+    tables: []
+  ui:
+    routes: []
+  equality_checks:
+  - address_matrix_eq_meta
+  - event_count_chain_eq_indexer
+  - amount_chain_eq_db_eq_api_eq_ui
+  verdict: PASS|FAIL|PREP_ONLY
+acceptance_threshold_align:
+  Financial_Grade_Web3: pass/15 == 100
+  rollup_blocks_psg_complete_until_15_15: true

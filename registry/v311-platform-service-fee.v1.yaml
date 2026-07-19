@@ -1,0 +1,42 @@
+# schema: traveltrust.v311_platform_service_fee.v1
+machine_key: TT_V311_PLATFORM_SERVICE_FEE
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+recorded_utc: "2026-07-18T11:00:00Z"
+gap_ids: [F-01, F-02, F-03]
+closes: [F-01, F-02, F-03]
+contract_mirror: contracts/src/V311EconomicConstants.sol
+
+defaults:
+  global_default_bps: 500
+  min_bps: 0
+  max_bps: 1000
+  above_max_requires: core_governance_proposal
+
+per_country_initial_bps:
+  CN: 500
+  US: 500
+  JP: 300
+  KR: 400
+  FR: 500
+  ES: 500
+  TH: 500
+  SG: 500
+  AU: 500
+  AE: 500
+
+distributable_split:
+  with_active_steward:
+    steward_share_bps: 4500
+    project_revenue_pool_bps: 5500
+  without_active_steward:
+    project_revenue_pool_bps: 10000
+
+naming:
+  forbid_revenue_as_distributable: true
+  canonical_distributable_term: Distributable_Platform_Service_Fee
+
+honesty:
+  escrow_hard_max_bps_enforced: true
+  country_params_consumed_by_backend: OPEN  # BE/RT wiring
+  distributable_state_machine: OPEN  # F-04

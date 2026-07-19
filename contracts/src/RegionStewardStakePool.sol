@@ -126,6 +126,11 @@ contract RegionStewardStakePool {
         return (ttgTotalSupplyUnits * bps) / 10_000;
     }
 
+    /// @notice V3.1.1 Stake Minimum（TTG）· 与 `registry/v311-stake-minimum-by-country.v1.yaml` 同公式
+    function stakeMinimumTtg(bytes2 jurisdiction) external view returns (uint256) {
+        return minStakeAmount(jurisdiction);
+    }
+
     /// @notice Phase 1 · 10 国是否已从 protocol-ssot 写入 storage（Proxy 路径须显式 bootstrap）
     function jurisdictionsBootstrapped() public view returns (bool) {
         return stewardStakeBps[bytes2("CN")] != 0;

@@ -1,0 +1,275 @@
+schema: traveltrust.psg_fcg_pay01_g_rc_wait_window_s1_arm.v1
+machine_key: TT_FCG_PAY01_G_RC_WAIT_WINDOW_S1_ARM
+status: G_RC_CLOSED_CDR19_SCOPE_CONFIRMED
+recorded_utc: '2026-07-19T09:59:49Z'
+human_ssot: docs/runbook/TT-FCG-PAY-01-G-RC-WAIT-WINDOW-S1-ARM-LATEST.md
+evidence_pack: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/g-rc-05-close-bundle/G-RC-WAIT-WINDOW-S1-ARM-LATEST.json
+preauth_mode: PREAUTH_ONLY
+protocol_v2_plan: UNCHANGED
+governance_rc_closed: false
+pass_go_claimed: false
+current_window:
+  phase: FROZEN_WAITING_EXECUTE
+  before_eta: true
+  execute_allowed_now: false
+  execute_forbidden_now: true
+  proposal_id: 1
+  state: 5
+  state_name: Queued
+  chain_id_required: 11155111
+  execute_after_utc: '2026-07-20T11:37:37Z'
+  bypass_forbidden: true
+  seconds_until_eta: 95102
+  readonly_wait: true
+armed_trigger:
+  must_all_be_true:
+  - heartbeat_execute_allowed_now_true
+  - before_eta_false
+  - proposal_state_still_Queued_5_or_executable
+  - chain_id_11155111
+  then_only: S1_EXECUTE
+s1_execute:
+  gate: G-RC-01
+  command: 'python scripts/dev/stamp-v311-f02-execute-monitor-heartbeat.py
+
+    # require execute_allowed_now=true
+
+    export TRAVELTRUST_V311_FUNCTION_CERT_BROADCAST_OK=1
+
+    bash scripts/dev/run-v311-function-cert-tier-c-item.sh F-02-gov-timelock
+
+    '
+  pass_requires:
+  - final_state_int_7_Executed
+  - execute_tx_hash_on_sepolia_11155111
+  - F-02-gov-timelock.json_status_PASS
+  - heartbeat_execute_done_true
+  receipt_evidence_targets:
+  - evidence/GO_phase2_v311_web3_full_function_cert/tier_c_state/F-02-gov-timelock.json
+  - execute_tx_hash_field_in_F-02_state
+  - F02-EXECUTE-MONITOR-HEARTBEAT-LATEST.json#proposal_1.execute_done
+  fail_stop:
+  - state_not_7
+  - Expired_state_6
+  - wrong_chain_id
+  on_pass_continue_in_order:
+  - F-02_cleared_then_F-01_F-03_I-01_Owner_Required
+  - Playwright_Real_Wallet_Real_TX
+  - Product_Acceptance
+  - G-RC-05_Close
+post_s1_ladder_locked:
+- id: S2
+  name: Function_Owner_Required_clear
+  items:
+  - F-02
+  - F-01
+  - F-03
+  - I-01
+  note: F-02 should clear with S1; others need Sepolia live Owner proofs
+- id: S4
+  name: Real_Wallet_TX_Evidence
+  blocking: playwright_real_wallet_real_tx
+- id: S3
+  name: Product_Acceptance
+  requires:
+  - function_54_0_0
+  - ui_PASS
+- id: S5
+  name: G-RC-05_Close
+  command: python scripts/dev/stamp-v311-governance-rc-close.py
+forbidden_until_g_rc_05:
+- Money_Path_TRE_REG_coding
+- Protocol_v2_implementation_coding
+- Protocol_v2_deploy_broadcast
+- ACTIVE_baseline_flip
+- Step3_Happy_Path
+- Production_GO
+- Execute_while_before_eta
+- Skip_to_S2_without_S1_receipt
+monitor_now:
+  command: python scripts/dev/stamp-v311-f02-execute-monitor-heartbeat.py
+  cadence: Owner_poll_until_execute_allowed_now_true
+  refuse_if: execute_allowed_now_false
+last_heartbeat_gate_utc: '2026-07-19T09:11:09Z'
+last_heartbeat_gate_result: REFUSE_S1_WAIT_WINDOW
+completion_matrix: registry/psg-production-completion-matrix.v1.yaml
+fg_web3_framework_freeze: true
+post_g_rc_closed_ladder_locked:
+- G_RC_CLOSED
+- CDR-19_Release_Identity_Closure_PASS
+- fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- L1_L5_Completion_Matrix_Validation
+- Completion_Recalculate
+- Production_Certification
+forbid:
+- new_coverage_dimension
+- claim_PREP_READY_as_FG_PASS
+- claim_case_staged_as_FG_PASS
+- claim_web2_coverage_as_PSG_COMPLETE
+- money_path_broadcast_before_G_RC_CLOSED
+- ACTIVE_flip_before_clean_deploy_evidence
+wait_window_allowed_work:
+- G_RC_Execute_preparation_only
+- Clean_Deploy_Ready_status_maintenance_only
+wait_window_forbidden_work:
+- new_Coverage_dimension
+- new_Capability_dimension
+- Money_Path_or_Settlement_broadcast
+- ACTIVE_baseline_flip
+- FGCASE_empirical_execution
+- claim_PSG_Complete_from_any_single_layer
+- Protocol_v2_implementation_beyond_exec_prep
+post_g_rc_closed_main_chain:
+- G_RC_CLOSED
+- CDR-19_Release_Identity_Closure_PASS
+- fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- TT_PSG_PRODUCTION_COMPLETION_MATRIX_L1_L5_validation
+- Completion_Recalculate
+- Production_Certification
+discipline:
+  completion_matrix_frozen: true
+  no_new_coverage_or_capability_dimension: true
+  single_layer_pass_not_psg_complete: true
+clean_deploy_preconditions_verdict: CLEAN_DEPLOY_PRECONDITIONS_MAINTAINED_WAIT_G_RC
+clean_deploy_prep_ready: true
+release_sha_convergence_required_before_clean_deploy: true
+forbid_new_test_systems: true
+cdr19_release_identity:
+  status: SCOPE_CONFIRMED
+  execution_forbidden_until_g_rc_closed: false
+  commit_pin_forbidden_until_g_rc_closed: false
+  broadcast_forbidden_until_g_rc_closed: true
+  clean_deploy_forbidden_until_cdr19_pass: true
+  current:
+    branch: feature/g23-04-abi-event-freeze
+    head: f8181b63507fe339e23a1e5285c4242a8bb3507e
+    dirty_count: 564
+    ahead: 16
+    behind: 0
+    converged: false
+  goal: Prove_deployed_bytes_equal_audited_Release_SHA
+  not_goal: Make_git_clean_for_its_own_sake
+  sequence_locked:
+  - dirty_audit
+  - classify
+  - commit
+  - sha_pin
+  - deploy_only_if_cdr19_pass
+  classify_buckets:
+  - MUST_ENTER_RELEASE
+  - TEST_TEMP
+  - EVIDENCE
+  - OBSOLETE
+  forbid_one_shot_cleanup_then_deploy: true
+  elevated_to: Production_Certification_hard_requirement
+  equivalence_chain:
+    chain:
+    - Source_SHA
+    - Deploy_Artifact
+    - Contract_Bytecode
+    - Evidence_Package
+    operator: EQUALS
+    required_for: Production_Certification
+    statement: Source SHA = Deploy Artifact = Contract Bytecode = Evidence Package
+  sequence:
+  - Dirty_Audit
+  - Change_Classification
+  - Commit_Release_Scope_Only
+  - Release_SHA_Pin
+  - Artifact_Binding
+  - Evidence_Manifest_Binding
+  - CDR19_PASS
+  - Clean_Deploy_only_if_pass
+  forbid_premature_dirty_cleanup: true
+  dirty_must_remain_untouched_until_g_rc_closed: true
+  current_dirty_count: 564
+  phase: Release_Scope_Classification
+  dirty_audit_counts:
+    Evidence: 110
+    Release: 452
+    Temp: 3
+  RELEASE_SCOPE_MODE: CONTROLLED_MINIMUM_RELEASE
+  controlled_minimum_count: 168
+  deferred_review_count: 284
+  evidence_separate_count: 110
+owner_instruction_lock: Continue WAIT_WINDOW. No release actions. After G-RC CLOSED
+  start CDR-19 Release Identity Closure (dirty review · necessary tidy · unique Release
+  SHA · deploy artifact + evidence manifest bind). Only after CDR-19 PASS allow fcg_full_capability_v2_sepolia
+  CLEAN Deploy then TT_PSG_PRODUCTION_COMPLETION_MATRIX L1-L5.
+forbid_now:
+- any_release_action
+- modify_dirty
+- commit
+- Release_SHA_pin
+- broadcast
+- clean_deploy
+allowed_now:
+- g_rc_execute_ready_maintain
+- clean_deploy_ready_precondition_maintain
+- wait_window_heartbeat
+g_rc_execute_ready: true
+clean_deploy_ready: true
+awaiting: G_RC_CLOSED
+dual_gates:
+  G_RC:
+    concern: Governance_Authorization
+    status: WAITING_EXECUTE
+    must_pass_before_deploy: true
+  CDR_19:
+    concern: Release_Authenticity
+    status: NOT_STARTED
+    blocked_until: G_RC_CLOSED
+    must_pass_before_deploy: true
+    forbid_now:
+    - modify_dirty
+    - premature_commit
+    - generate_Release_SHA
+clean_deploy: LOCKED
+psg_completion: NOT_STARTED
+no_new_work_now: true
+sole_sequence_locked:
+- G_RC_CLOSED
+- CDR-19_Release_Identity_Closure
+- fcg_full_capability_v2_sepolia_Clean_Deploy
+- L1_Product
+- L2_Data
+- L3_Security
+- L4_Operations
+- L5_Financial_Grade_Web3
+- PSG_Completion_Recalculate
+- Production_Certification
+authenticity_control:
+  purpose: Prevent_test_A_deploy_B_evidence_C
+  required_for: Financial_Grade_Web3
+  equivalence: Source_SHA = Deploy_Artifact = Contract_Bytecode = Evidence_Package
+g_rc_status: CLOSED
+cdr19_status: SCOPE_CONFIRMED_CONTROLLED_MINIMUM_RELEASE
+on_g_rc_closed_immediate:
+- CDR-19_dirty_audit_classify
+- Release_Scope_confirm
+- Commit
+- Release_SHA_Pin
+- Artifact_Bytecode_Evidence_bind
+- CDR19_PASS_then_fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- TT_PSG_PRODUCTION_COMPLETION_MATRIX_L1_L5_full_FG_acceptance
+sole_wait_event: Commit_controlled_minimum_then_SHA_Pin_Binding
+next_state_change_only: Release_Scope_confirm → Commit → SHA Pin → Binding → PASS
+  → Clean Deploy
+no_new_actions: true
+hard_rules:
+  WAIT_WINDOW_neq_dev_window: true
+  PREP_READY_neq_PASS: true
+  Evidence_Ready_neq_Production_Ready: true
+post_g_rc_closed_sequence:
+- CDR-19_Release_Identity_Closure
+- Dirty_Audit
+- Release_Scope_Classification
+- Commit
+- Release_SHA_Pin
+- Artifact_Bytecode_Evidence_Binding
+- CDR-19_PASS
+- fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- TT_PSG_PRODUCTION_COMPLETION_MATRIX_L1_L5_Validation
+g_rc_closed: true
+g_rc_closed_source: Owner_declaration_session
+release_identity: {}

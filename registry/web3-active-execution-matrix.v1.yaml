@@ -1,0 +1,61 @@
+# Web3 ACTIVE Execution Matrix · machine SSOT (hygiene restore)
+#
+# Human: docs/runbook/TT-WEB3-ACTIVE-EXECUTION-MATRIX.md
+# Gate:  bash scripts/gates/check-web3-active-execution-matrix-gate.sh
+#
+# NOT a new governance framework. Restores broken PSG/AGENTS pointers.
+# Address authority: protocol-convergence-deployments → v311_sepolia_clean_baseline.
+# Module readiness / Waves / closure narrative: WEB3-SYSTEM-MASTER-MAP (map + yaml).
+# Daily release cadence: TT-CURRENT-FOCUS-DASHBOARD / Owner Final Queue (OA-01→OA-02).
+
+schema: traveltrust.web3_active_execution_matrix.v1
+version: 1
+status: FROZEN
+role: UNIQUE_WEB3_EXECUTION_ENTRY_POINTER
+NOT_NEW_GOVERNANCE: true
+effective_utc: "2026-07-18"
+hygiene_note: >
+  File restored 2026-07-18 as SSOT pointer after missing-file break.
+  Does not reopen full Web3 audit · does not rewrite TT_PRODUCTION_GO ·
+  does not substitute Dashboard OA-01→OA-02 primary path.
+
+tt_production_go: GO
+tt_production_go_ssot: Tag v1.1.0-psg-go.20260717
+web3_system_closure: BLOCKED_PARALLEL_PSG09
+web3_system_closure_note: >
+  Orthogonal to TT_PRODUCTION_GO. Residual CountryPool / TTG Cert / Reality
+  stay in PSG-09/10/11 parallel queue.
+
+address_authority:
+  registry: registry/protocol-convergence-deployments.v1.yaml
+  baseline: v311_sepolia_clean_baseline
+  chain_id: "11155111"
+
+companion_ssot:
+  human_execution_matrix: docs/runbook/TT-WEB3-ACTIVE-EXECUTION-MATRIX.md
+  master_map_human: docs/runbook/WEB3-SYSTEM-MASTER-MAP-V1.md
+  master_map_machine: registry/web3-system-master-map.v1.yaml
+  primary_market_defer: docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md
+  reality: docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md
+  daily_release_entry: docs/runbook/TT-CURRENT-FOCUS-DASHBOARD-LATEST.md
+
+# Alias keys expected by older PSG-09 audit refs (content lives in companions)
+active_addresses: registry/protocol-convergence-deployments.v1.yaml#v311_sepolia_clean_baseline
+phase_boundary: registry/web3-system-master-map.v1.yaml#deployment_waves
+H_indexer: docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md
+A_governance_token: registry/web3-system-master-map.v1.yaml#modules
+
+primary_market:
+  module: M05
+  readiness: DEFER
+  blocks_web3_system_closure: false
+  ssot: docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md
+
+parallel_psg_queue_only:
+  - CountryPool_Snapshot_Claim_Payout
+  - TTG_Cert_8_to_12
+  - RBAC_D3_residual_if_any
+  - ABI_Reality_residual
+  note: Do not promote these to Dashboard primary while KEY_ABSENT / OA-01 open.
+
+LEGACY: read_only_only

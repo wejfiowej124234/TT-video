@@ -1,0 +1,23 @@
+schema: traveltrust.psg_v311_production_gap_audit.v1
+machine_key: TT_PSG_V311_PRODUCTION_GAP_AUDIT
+version: 1.0.0
+status: ACTIVE_SSOT
+recorded_utc: '2026-07-18T13:18:38Z'
+governance_mode_required: FROZEN_WAITING_EXECUTE
+forbid_mutate:
+- protocol
+- ACTIVE
+- Runtime
+- Registry
+- Package
+runner: scripts/dev/run-psg-v311-production-gap-audit.py
+evidence: evidence/GO_psg_v311_production_gap_audit/PSG-V311-PRODUCTION-GAP-AUDIT-LATEST.json
+runbook: docs/runbook/TT-PSG-V311-PRODUCTION-GAP-AUDIT-LATEST.md
+tracks:
+- T1_PRODUCTION_READINESS
+- T2_PSG_CERTIFICATION
+- T3_NON_MONEY_PATH_FUNCTION_CERT
+- T4_OPS
+- T5_RELEASE_PACKAGE
+- T6_EVIDENCE_CHAIN
+pass_machine_forbidden_until_ladder: TT_WEB3_FULL_CONSTITUTION_CONSISTENCY

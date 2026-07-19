@@ -1,0 +1,62 @@
+# schema: traveltrust.psg_v311_sepolia_clean_baseline_cert.v1
+machine_key: TT_PSG_V311_SEPOLIA_CLEAN_BASELINE_CERT
+status: PASS
+locked_for_rc_preparation: true
+rc_preparation: registry/psg-sepolia-rc-preparation.v1.yaml
+layer: SEPOLIA_V311_CLEAN_BASELINE
+phase: "2"
+recorded_utc: "2026-07-18T10:00:00Z"
+stamp: "20260718T095658Z"
+human: docs/runbook/TT-PSG-V311-SEPOLIA-CLEAN-BASELINE-CERT-LATEST.md
+evidence: evidence/GO_phase2_v311_sepolia_clean_baseline/psg-cert/
+economic_ssot: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+active_deploy_baseline: v311_sepolia_clean_baseline
+legacy_superseded_baseline: gov_freeze_v2_clean_baseline
+deploy_stamp: "20260718T092622Z"
+address_matrix_freeze: registry/v311-sepolia-address-matrix-freeze.v1.json
+
+baselines:
+  matrix_pass: 48
+  matrix_gap: 0
+  tt_v311_verify: PASS
+  tt_v311_full_alignment: PASS
+  active_first_wins: v311_sepolia_clean_baseline
+  protocol_ssot_version: "1.0.5"
+
+consistency_layers:
+  contracts: PASS
+  backend: PASS
+  frontend: PASS
+  indexer: PASS
+  runtime: PASS
+  registry: PASS
+  docs: PASS
+  evidence: PASS
+
+gates:
+  web3_active_execution_matrix: PASS
+  web3_protocol_master_matrix: PASS
+  full_alignment_script: PASS
+  active_v2_cite_audit: PASS
+
+forbid:
+  claim_tt_psg_production_cert: true
+  claim_tt_psg_web3_production_cert: true
+  claim_production_go: true
+  claim_tt_psg_sepolia_freeze_without_rc_prep: true
+  mutate_psg_go_archive_v1_1_0_psg_go_20260717: true
+  reactivate_gov_freeze_v2_as_active: true
+  new_protocol_features: true
+  active_address_matrix_edits: true
+  active_deploy_baseline_change: true
+
+honest_scope: |
+  Sole ② Sepolia baseline for RC Preparation. Locked — no new protocol features,
+  no ACTIVE address matrix edits. Does NOT equal TT_PSG_SEPOLIA_FREEZE or Production GO.
+
+production_go: NOT_CLAIMED
+tt_psg_production_cert: NOT_CLAIMED
+tt_psg_web3_production_cert: NOT_CLAIMED
+git_baseline_sha: "3096516ddcb230e571c41eb0fc0eb16a1f3ce39f"
+revoke_rule: "If ACTIVE config drifts to V2 addresses or gov_freeze_v2 becomes ACTIVE again → revoke this cert and re-enter Cutover"
+prior_revoke: evidence/GO_phase2_v311_sepolia_clean_baseline/closure/CERT-CLOSURE-REVOKED-ACTIVE-DRIFT-20260718T100000Z.md

@@ -1,0 +1,33 @@
+# schema: traveltrust.v311_treasury_rails.v1
+machine_key: TT_V311_TREASURY_RAILS
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+recorded_utc: "2026-07-18T11:00:00Z"
+gap_ids: [R-02, R-03, R-05, TR-01, TR-02]
+
+four_rails_isolation:
+  - id: order_escrow
+    role: order_principal_refund_dispute
+    gap_ref: R-04
+    status: EXISTS
+  - id: governance_treasury_p4cap
+    role: public_sale_usdc_sink
+    gap_ref: R-01
+    status: BLOCKED_BY_A1_R1_LIVE_SINK
+  - id: project_revenue_pool
+    role: receives_55_or_100_distributable
+    gap_ref: [R-02, TR-01]
+    status: LOGICAL_RAIL_DEFINED
+    address_staging: null
+  - id: founder_bootstrap_wallet
+    role: platform_access_fee_300k_usdc
+    gap_ref: [R-03, TR-02]
+    status: LOGICAL_RAIL_DEFINED
+    address_staging: null
+
+forbid_commingling: true
+
+honesty:
+  logical_rails_ssot: true
+  live_pool_contracts: OPEN  # deploy/wiring remains engineering follow-on under same Gap IDs until addresses set
+  phase_a_registry_closed_when_rails_named: true

@@ -1,0 +1,31 @@
+# schema: traveltrust.v311_order_destination_country.v1
+machine_key: TT_V311_ORDER_DESTINATION_COUNTRY
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+gap_ids: [BE-02, S-05, RT-02]
+recorded_utc: "2026-07-18T11:00:00Z"
+
+attribution:
+  unique_source_field: Order.destination_country
+  iso3166_alpha2: true
+  phase1_single_destination_only: true
+  multi_country_orders: deferred
+  gps_may_assist_risk_only: true
+  gps_must_not_override_order_field: true
+
+existing_surfaces:
+  itinerary_destination_zh: crates product_countries
+  market_destinationCountryIso: frontend/lib market rows
+  order_escrow_fee_attribution: MUST_USE_destination_country
+
+backend_obligations:
+  persist_destination_country_on_order: required
+  fee_split_reads_only_this_field: required
+
+closes_when:
+  registry_ssot: true
+  backend_field_wired: OPEN
+  runtime_consumers: OPEN
+
+notes:
+  - S-05 reclassified from N/A → Backend Phase A must-close via this SSOT + BE wiring.

@@ -1,0 +1,215 @@
+schema: traveltrust.psg_fg_web3_audit_matrix.v1
+machine_key: TT_PSG_FG_WEB3_AUDIT_MATRIX
+status: STAGED_WAIT_G_RC_CLOSED
+recorded_utc: '2026-07-19T09:33:40Z'
+human_ssot: docs/runbook/TT-PSG-FG-WEB3-AUDIT-MATRIX-LATEST.md
+constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md#psg-production-completion
+completion: registry/psg-production-completion-definition.v1.yaml
+full_capability_gate: registry/psg-production-full-capability-gate.v1.yaml
+discipline:
+  no_broadcast: true
+  no_active_flip: true
+  no_invented_pass: true
+  wait_window: true
+rollup:
+  pass: 0
+  denom: 15
+  decision: NEED_FIX
+rows:
+- id: FG-01
+  surface: Money-Path
+  full_capability_domain: E
+  findings_or_tracks:
+  - TRE-02
+  - M-RC-01
+  acceptance_key: onchain_fee_split_eq_ledger
+  coverage_case_id: FGCASE-FG-01
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-01
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-02
+  surface: Escrow_State_Machine
+  full_capability_domain: D
+  findings_or_tracks:
+  - REG-04
+  - FCG-ESCROW-01
+  acceptance_key: escrow_happy_and_exception_states
+  coverage_case_id: FGCASE-FG-02
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-02
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-03
+  surface: SettlementRouter
+  full_capability_domain: E
+  findings_or_tracks:
+  - FCG-PAY-01
+  acceptance_key: settlement_ready_no_skip
+  coverage_case_id: FGCASE-FG-03
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-03
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-04
+  surface: FeeRouter
+  full_capability_domain: E
+  findings_or_tracks:
+  - TRE-02
+  acceptance_key: fee_router_constitution_route
+  coverage_case_id: FGCASE-FG-04
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-04
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-05
+  surface: Distributable
+  full_capability_domain: E
+  findings_or_tracks:
+  - REG-04
+  acceptance_key: pending_locked_settlement_ready_distributable_distributed
+  coverage_case_id: FGCASE-FG-05
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-05
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-06
+  surface: Steward_Revenue
+  full_capability_domain: F
+  findings_or_tracks:
+  - FCG-STEWARD-01
+  acceptance_key: steward_45_55_or_100_prp
+  coverage_case_id: FGCASE-FG-06
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-06
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-07
+  surface: Treasury
+  full_capability_domain: C/E/I
+  findings_or_tracks:
+  - GOV
+  acceptance_key: treasury_address_and_balance_verifiable
+  coverage_case_id: FGCASE-FG-07
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-07
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-08
+  surface: TTG_Governance
+  full_capability_domain: C/G
+  findings_or_tracks:
+  - G-RC-02
+  acceptance_key: proposal_vote_queue
+  coverage_case_id: FGCASE-FG-08
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-08
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-09
+  surface: Timelock_Execute
+  full_capability_domain: G
+  findings_or_tracks:
+  - G-RC-01
+  acceptance_key: timelock_execute_receipt_sepolia
+  coverage_case_id: FGCASE-FG-09
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-09
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-10
+  surface: Wallet_Security
+  full_capability_domain: B/K
+  findings_or_tracks:
+  - FCG-WALLET-01
+  acceptance_key: extension_wc_mobile_qr_wrong_network
+  coverage_case_id: FGCASE-FG-10
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-10
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-11
+  surface: RBAC
+  full_capability_domain: K
+  findings_or_tracks:
+  - FCG-RBAC-01
+  acceptance_key: role_matrix_full_gate_bar
+  coverage_case_id: FGCASE-FG-11
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-11
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-12
+  surface: Indexer
+  full_capability_domain: K/L
+  findings_or_tracks:
+  - DEP-V2-06
+  acceptance_key: events_projected_match_chain
+  coverage_case_id: FGCASE-FG-12
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-12
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-13
+  surface: Chain_DB_API_UI_Consistency
+  full_capability_domain: E/I
+  findings_or_tracks:
+  - FG-13
+  acceptance_key: chain_eq_db_eq_api_eq_ui
+  coverage_case_id: FGCASE-FG-13
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-13
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-14
+  surface: Audit_Evidence
+  full_capability_domain: L
+  findings_or_tracks:
+  - X-GO
+  acceptance_key: gate_citeable_evidence_pack
+  coverage_case_id: FGCASE-FG-14
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-14
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+- id: FG-15
+  surface: Observation_48H
+  full_capability_domain: K
+  findings_or_tracks:
+  - 48H
+  acceptance_key: contracts_payments_events_indexer_api_errors
+  coverage_case_id: FGCASE-FG-15
+  status: NOT_READY
+  denom_in: IN
+  wait_window: true
+  broadcast_forbidden: true
+  evidence_schema_ref: evidence.fg_web3.case.FG-15
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py

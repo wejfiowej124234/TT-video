@@ -1,0 +1,265 @@
+schema: traveltrust.psg_fcg_pay01_gov_rc_closure_prep_v2_redeploy.v1
+machine_key: TT_FCG_PAY01_GOV_RC_CLOSURE_PREP_V2_REDEPLOY
+status: PREP_ONLY_PREAUTH_PLUS_V2_REDEPLOY_PLAN
+recorded_utc: '2026-07-19T09:00:16Z'
+human_ssot: docs/runbook/TT-FCG-PAY-01-GOV-RC-CLOSURE-PREP-V2-REDEPLOY-LATEST.md
+evidence_pack: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/FCG-PAY-01-GOV-RC-CLOSURE-PREP-V2-REDEPLOY-LATEST.json
+production_go: false
+pass_claimed: false
+governance_rc_closed: false
+implements_code: false
+deploy_forbidden_this_window: true
+broadcast_forbidden_this_window: true
+active_baseline_mutated_this_window: false
+track_a: FROZEN_NO_MUTATION
+preauth_mode: PREAUTH_ONLY
+step3_coding: FORBIDDEN
+parent_preauth: registry/psg-fcg-pay01-gov-rc-closure-preauth.v1.yaml
+exit_criteria: registry/v311-production-exit-criteria.v1.yaml
+current_active_baseline: v311_sepolia_clean_baseline
+planned_active_baseline: fcg_full_capability_v2_sepolia
+g_rc_closure_conditions:
+  purpose: Immutable checklist of what MUST be true to claim each gate — not a PASS
+    stamp
+  governance_rc_mode_now: FROZEN_WAITING_EXECUTE
+  sequence_lock: G-RC-01 → G-RC-02 → G-RC-04 → G-RC-03 → G-RC-05
+  gates:
+  - id: G-RC-01
+    name: Timelock_Proposal_1_Execute
+    close_requires:
+    - heartbeat_execute_allowed_now_true
+    - proposal_1_state_Executed
+    - execute_receipt_on_sepolia_chain_id_11155111
+    - F-02_timelock_evidence_updated
+    fail_if:
+    - execute_while_before_eta
+    - proposal_still_Queued_past_abandon
+    - execute_reverted_without_remediation
+    evidence_targets:
+    - execute_tx_hash
+    - evidence/GO_phase2_v311_web3_full_function_cert/tier_c_state/F-02-gov-timelock.json
+    current_status: OPEN_BLOCKED
+    pass_claimed: false
+  - id: G-RC-02
+    name: Function_Cert_54_0_0
+    close_requires:
+    - G-RC-01_PASS
+    - counts_PASS_54_FAIL_0_OWNER_REQUIRED_0
+    - upgrade_architecture_pass
+    - pure_sepolia_dataset
+    fail_if:
+    - OWNER_REQUIRED_gt_0
+    - FAIL_gt_0
+    evidence_targets:
+    - evidence/GO_phase2_v311_web3_full_function_cert/VERDICT-LATEST.json
+    current_status: OPEN_BLOCKED
+    observed_now: PASS_50_OWNER_REQUIRED_4_VERDICT_FAIL
+    pass_claimed: false
+  - id: G-RC-04
+    name: UI_Full_Cert
+    close_requires:
+    - G-RC-02_PASS
+    - tt_v311_web3_ui_ux_full_cert_PASS
+    - five_main_wallet_itinerary_gates_green_or_owner_nonblocking_accept
+    fail_if:
+    - ui_cert_PARTIAL_with_blocking_gate_open
+    evidence_targets:
+    - evidence/GO_phase2_v311_final_release/P5-UI-UX-CERT-LATEST.json
+    current_status: OPEN_PARTIAL
+    pass_claimed: false
+    note: Operator order places UI (S4) before Product (S3)
+  - id: G-RC-03
+    name: Product_Full_Cert
+    close_requires:
+    - G-RC-02_PASS
+    - G-RC-04_PASS_or_OWNER_ACCEPT_PARTIAL_per_policy
+    - tt_v311_web3_full_product_cert_PASS
+    fail_if:
+    - product_cert_OPEN_or_FAIL
+    evidence_targets:
+    - evidence/GO_phase2_v311_final_release/P6-PRODUCT-CERT-LATEST.json
+    current_status: OPEN
+    pass_claimed: false
+  - id: G-RC-05
+    name: Governance_RC_CLOSED
+    close_requires:
+    - G-RC-01_PASS
+    - G-RC-02_PASS
+    - G-RC-03_PASS
+    - G-RC-04_PASS_or_policy_accept
+    - DEFERRED_TO_MONEY_PATH_RC=[TRE-02,REG-01,REG-04]
+    - FCG_PAY01_PREAUTH_01_to_05_attached
+    - LEGACY_direct_pay_not_ssot_ack
+    - SettlementRouter_architecture_target_ack
+    - SETTLEMENT_READY_no_skip_ack
+    - Executor_Arbitrator_model_ack
+    - stamp_script_GOVERNANCE-RC-CLOSE-LATEST.json
+    fail_if:
+    - mix_money_path_P0_into_governance_exit_claim
+    - false_alignment_PASS
+    - close_without_preauth_pack
+    evidence_targets:
+    - evidence/GO_phase2_v311_final_release/GOVERNANCE-RC-CLOSE-LATEST.json
+    - evidence/.../FCG-PAY-01-GOV-RC-CLOSURE-PREAUTH-LATEST.json
+    current_status: OPEN_NOT_STAMPED
+    pass_claimed: false
+  after_g_rc_05_only:
+  - M-RC-00_may_open
+  - Protocol_Implementation_S1
+  - Full_Capability_v2_CLEAN_REDEPLOY_S2_with_Owner_OK
+  - Full_Capability_Validation_S3
+  still_forbidden_until_g_rc_05:
+  - Step3_coding
+  - New_Testnet_Deploy_broadcast
+  - claiming_Money_Path_PASS
+  - Production_GO
+  - skip_G_RC_because_clean_redeploy_is_easier
+full_capability_v2_redeploy:
+  strategy: CLEAN_SEPOLIA_REDEPLOY_NOT_IN_PLACE_UPGRADE
+  path_name: FULL_CAPABILITY_V2_CLEAN_REDEPLOY
+  planned_baseline_key: fcg_full_capability_v2_sepolia
+  chain_id: 11155111
+  network: sepolia
+  economic_ssot: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+  protocol_ssot_cite:
+  - registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+  - registry/psg-fcg-pay01-protocol-freeze.v1.yaml
+  supersession:
+    when_cutover_complete:
+      new_active: fcg_full_capability_v2_sepolia
+      old_active_becomes:
+        key: v311_sepolia_clean_baseline
+        status: LEGACY_READ_ONLY
+        note: 'Retain evidence; forbid as MAINNET_COMMERCIAL_FULL / Money-Path / Full
+          Capability commercial-loop proof after cutover.
+
+          '
+      also_legacy_read_only:
+      - gov_freeze_v2_clean_baseline
+      - environments.sepolia_composite_fund_stack
+      - any_pre_v2_EscrowFactory_FeeRouter_addresses
+  forbid:
+  - in_place_upgrade_of_old_Escrow_to_SettlementRouter
+  - proxy_slot_migration_as_substitute_for_clean_redeploy
+  - using_old_deploy_tx_as_MAINNET_COMMERCIAL_FULL_evidence
+  - using_LEGACY_release_direct_platformFeeRecipient_as_TRE-02_proof
+  - cutover_without_Owner_broadcast_OK_and_G-RC-05_CLOSED
+  this_window: PLAN_ONLY_addresses_TBD
+  deploy_manifest_checklist:
+  - id: DEP-V2-01
+    component: Escrow_stack
+    includes:
+    - EscrowFactory_or_EscrowFactoryV2_per_policy
+    - Escrow_implementation_with_SettlementRouter_wiring_TARGET
+    env_keys:
+    - ESCROW_FACTORY_ADDRESS
+    - NEXT_PUBLIC_ESCROW_FACTORY_ADDRESS
+    registry_keys:
+    - escrow_factory_address
+    status_now: PLAN_ADDRESS_TBD
+    notes: Must not keep LEGACY composite factory as ACTIVE after cutover
+  - id: DEP-V2-02
+    component: SettlementRouter
+    includes:
+    - SettlementRouter_new_module_TARGET
+    env_keys:
+    - SETTLEMENT_ROUTER_ADDRESS
+    - NEXT_PUBLIC_SETTLEMENT_ROUTER_ADDRESS
+    registry_keys:
+    - settlement_router_address
+    status_now: PLAN_NEW_CONTRACT_NOT_YET_CODED
+    notes: TARGET name locked in Step 2.5 — coding only after G-RC-05 + M-RC-00
+  - id: DEP-V2-03
+    component: FeeRouter
+    includes:
+    - FeeRouter_V311_distributable_routing_not_LEGACY_bucket_ssot
+    env_keys:
+    - FEE_ROUTER_ADDRESS
+    - NEXT_PUBLIC_FEE_ROUTER_ADDRESS
+    registry_keys:
+    - fee_router_address
+    status_now: PLAN_ADDRESS_TBD
+    notes: Must appear on ACTIVE baseline (unlike current clean baseline gap)
+  - id: DEP-V2-04
+    component: Distributable
+    includes:
+    - ServiceFeeStates_PENDING_LOCKED_SETTLEMENT_READY_DISTRIBUTABLE_DISTRIBUTED
+    - V311DistributableSplit_45_55_or_100_PRP
+    - ProjectRevenuePool_rail_live
+    env_keys:
+    - PROJECT_REVENUE_POOL_ADDRESS
+    - optional_SERVICE_FEE_CONTROLLER_ADDRESS
+    registry_keys:
+    - project_revenue_pool_address
+    - distributable_runtime_ref
+    status_now: PLAN_ADDRESS_TBD
+    notes: SETTLEMENT_READY must be observable — no same-tx LOCKED→DISTRIBUTED as
+      SSOT
+  - id: DEP-V2-05
+    component: Registry_cutover
+    includes:
+    - protocol-convergence-deployments.active_deploy_baseline_flip
+    - web3-active-execution-matrix_update
+    - v311-or-fcg_address_matrix_freeze_json
+    - mark_v311_sepolia_clean_baseline_LEGACY_READ_ONLY
+    files:
+    - registry/protocol-convergence-deployments.v1.yaml
+    - registry/web3-active-execution-matrix.v1.yaml
+    - registry/fcg-full-capability-v2-sepolia-address-matrix-freeze.v1.json
+    status_now: PLAN_ONLY_NO_MUTATION_THIS_WINDOW
+  - id: DEP-V2-06
+    component: Indexer
+    includes:
+    - rebind_contract_address_lists
+    - Escrow_SettlementRouter_FeeRouter_ServiceFee_events
+    - projection_tables_fresh_or_versioned_namespace
+    - finality_policy_unchanged
+    env_keys:
+    - INDEXER_ESCROW_FACTORY_ADDRESS
+    - INDEXER_FEE_ROUTER_ADDRESS
+    - INDEXER_SETTLEMENT_ROUTER_ADDRESS
+    status_now: PLAN_ONLY
+    notes: Old indexed rows remain LEGACY_READ_ONLY · new baseline new projections
+      for money-path proof
+  - id: DEP-V2-07
+    component: Frontend_API_config
+    includes:
+    - GET_/meta.chain.contracts_points_to_v2_ACTIVE_only
+    - NEXT_PUBLIC_*_ADDRESS_v2
+    - API_env_FEE_ROUTER_ESCROW_SETTLEMENT_PRP
+    - forbid_FE_fallback_to_LEGACY_composite_as_primary
+    status_now: PLAN_ONLY
+  - id: DEP-V2-08
+    component: Evidence_binding
+    includes:
+    - evidence/GO_phase2_fcg_full_capability_v2_sepolia/
+    - deploy_broadcast_json
+    - on_chain_verify_pack
+    - cutover_stamp
+    - PREAUTH_and_Step25_cite_in_manifest
+    - explicit_FORBIDDEN_old_baseline_as_MAINNET_COMMERCIAL_FULL_evidence
+    status_now: PLAN_ONLY_DIR_NOT_CREATED_UNTIL_BROADCAST
+  four_rails_on_v2:
+  - Order_Escrow
+  - GovernanceTreasuryP4Cap
+  - Project_Revenue_Pool
+  - Founder_Bootstrap_Wallet
+  cutover_ladder_when_authorized: "G-RC-05 CLOSED\n  → Owner opens M-RC-00 (+ OPT\
+    \ lock)\n  → Implement SettlementRouter + Escrow wiring (Money-Path RC coding\
+    \ window)\n  → CLEAN deploy fcg_full_capability_v2_sepolia (Owner broadcast OK)\n\
+    \  → Registry ACTIVE flip · old baseline LEGACY_READ_ONLY\n  → Indexer + FE/API\
+    \ rebind\n  → On-chain verify + Evidence bind\n  → TRE-02 / REG-01 / REG-04 on\
+    \ NEW addresses\n  → Step 3 Happy Path Evidence (new stack only)\n"
+honesty:
+  this_plan_equals_deploy: false
+  this_plan_flips_active_baseline: false
+  this_plan_equals_governance_rc_closed: false
+  this_plan_equals_production_go: false
+  old_v311_clean_baseline_still_active_until_future_cutover: true
+next_phase_focus: PROTOCOL_V2_TESTNET_DEPLOYMENT_PLAN
+protocol_v2_plan: registry/psg-protocol-v2-testnet-deployment-plan.v1.yaml
+canonical_sequence_lock: G-RC_CLOSE → Protocol_Implementation → New_Testnet_Deploy
+  → Full_Capability_Validation
+forbid_skip_governance_rc: true
+forbid_deploy_before_g_rc_close: true
+upgrade_old_contracts_as_primary: SUPERSEDED_BY_PROTOCOL_V2_CLEAN_DEPLOY

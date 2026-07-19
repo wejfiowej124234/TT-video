@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.v311_sepolia_address_matrix_freeze.v1",
+  "machine_key": "TT_V311_SEPOLIA_ADDRESS_MATRIX_FREEZE",
+  "status": "FROZEN",
+  "baseline": "v311_sepolia_clean_baseline",
+  "chain_id": 11155111,
+  "network": "sepolia",
+  "deploy_stamp": "20260718T092622Z",
+  "freeze_stamp": "20260718T095658Z",
+  "economic_ssot": "docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md",
+  "addresses": {
+    "timelock": "0x462402082B395F218FFB3634ec0611e39BdD504C",
+    "governor": "0x1ce4fbE80557bC2111A814f60A2334de41032116",
+    "treasury_p4_cap": "0x6A10df057c637A295b48D91A8101d22542425905",
+    "usdc_sink": "0x6A10df057c637A295b48D91A8101d22542425905",
+    "primary_market": "0x98a9BCfe967BA27d5448A1569d1622A7938046c2",
+    "seat_registry": "0x7574E868dA767690FD91b5F8940dA7ad3B1efa66",
+    "stake_pool": "0xc229D58987e0755467eB4EE53572F7139bAf7281",
+    "governance_token": "0x5D2eDABF062E1d8AccDA2bd35c0d9B26CFCd5Ec0",
+    "timelock_admin_safe": "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf"
+  },
+  "constraints": {
+    "usdc_sink_equals_p4cap": true,
+    "usdc_sink_ne_timelock_admin_safe": true,
+    "public_round_caps_ttg": [
+      800000,
+      1200000,
+      3000000
+    ],
+    "timelock_delay_seconds": 172800
+  },
+  "production_go": "NOT_CLAIMED",
+  "git_baseline_sha": "3096516ddcb230e571c41eb0fc0eb16a1f3ce39f",
+  "locked_for_rc_preparation": true,
+  "forbid_active_edits": true,
+  "rc_preparation": "registry/psg-sepolia-rc-preparation.v1.yaml",
+  "tt_psg_sepolia_freeze": "NOT_CLAIMED"
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "traveltrust.v311_configuration_baseline.v1",
+  "machine_key": "TT_CONFIGURATION_BASELINE",
+  "status": "PINNED",
+  "recorded_utc": "2026-07-18T11:57:02Z",
+  "phase_scope": "2",
+  "chain_id": 11155111,
+  "dataset_rule": "PURE_SEPOLIA_ONLY",
+  "does_not_reopen": "TT_CONFIGURATION_ZERO_DRIFT",
+  "pins": {
+    "economic_ssot": "docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md",
+    "address_matrix": {
+      "path": "registry/v311-sepolia-address-matrix-freeze.v1.json",
+      "baseline": "v311_sepolia_clean_baseline",
+      "status": "FROZEN",
+      "sha256": "c55913ded96ba4e91fbdb86d1c1dc08283d360299782087e189ad6ef61520596",
+      "addresses": {
+        "timelock": "0x462402082B395F218FFB3634ec0611e39BdD504C",
+        "governor": "0x1ce4fbE80557bC2111A814f60A2334de41032116",
+        "treasury_p4_cap": "0x6A10df057c637A295b48D91A8101d22542425905",
+        "usdc_sink": "0x6A10df057c637A295b48D91A8101d22542425905",
+        "primary_market": "0x98a9BCfe967BA27d5448A1569d1622A7938046c2",
+        "seat_registry": "0x7574E868dA767690FD91b5F8940dA7ad3B1efa66",
+        "stake_pool": "0xc229D58987e0755467eB4EE53572F7139bAf7281",
+        "governance_token": "0x5D2eDABF062E1d8AccDA2bd35c0d9B26CFCd5Ec0",
+        "timelock_admin_safe": "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf"
+      }
+    },
+    "deployment_inventory": {
+      "path": "registry/v311-web3-deployment-inventory.v1.json",
+      "sha256": "b2c22cc3fcbd9813864ca02d40cd45068f12bac464d5c7e70db46fb08e244229",
+      "component_count": 20
+    },
+    "web3_execution_matrix": {
+      "path": "registry/web3-active-execution-matrix.v1.yaml",
+      "address_authority_baseline": "v311_sepolia_clean_baseline"
+    },
+    "cert_dataset": "registry/v311-cert-dataset-sepolia-only.v1.yaml",
+    "canonical_re_ladder": "registry/traveltrust-release-engineering-ladder.v1.yaml"
+  },
+  "env_surface_checklist": {
+    "RPC_Endpoint": "OWNER_PIN_REQUIRED",
+    "Indexer_Endpoint": "OWNER_PIN_REQUIRED",
+    "WalletConnect_Project_ID": "OWNER_PIN_REQUIRED",
+    "Feature_Flags": "OWNER_PIN_REQUIRED",
+    "ENV_whitelist": "OWNER_PIN_REQUIRED"
+  },
+  "verdict": "PARTIAL",
+  "tt_configuration_baseline": "PARTIAL",
+  "verdict_note": "Address matrix + inventory + dataset pinned by hash. Runtime ENV secrets still OWNER_PIN_REQUIRED."
+}

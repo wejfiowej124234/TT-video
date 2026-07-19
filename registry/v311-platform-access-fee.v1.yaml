@@ -1,0 +1,30 @@
+# schema: traveltrust.v311_platform_access_fee.v1
+machine_key: TT_V311_PLATFORM_ACCESS_FEE
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+recorded_utc: "2026-07-18T10:30:00Z"
+stamp: "20260718T103000Z"
+gap_id: REG-02
+resolution: REGISTRY
+closes_with_local_reaudit: true
+blocked_by_a1_r1: false
+
+platform_access_fee:
+  amount_usdc: 300000
+  denomination: USDC
+  destination: founder_designated_wallet
+  refund_policy:
+    audit_fail: refund_100_percent
+    audit_pass: non_refundable
+    exit: non_refundable
+    dao_remove: non_refundable
+    inactive_reopen: non_refundable
+
+honesty:
+  equals_live_onboarding_schedule: false
+  backend_orchestration: OPEN  # BE-03
+  contracts_collection: OPEN   # may map to R-03
+
+notes:
+  - This Registry row is the V3.1.1 parameter SSOT for Access Fee.
+  - Live collection / refund orchestration remain separate Gaps (R-03 · S-02 · BE-03).

@@ -1,1336 +1,1396 @@
 [
-    {
-        "type":  "constructor",
-        "inputs":  [
-                       {
-                           "name":  "owner_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "jurisdiction_",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "settlementToken_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "stewardPathVault_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "unallocatedStewardPathVault_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "globalTreasury_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "stewardStakePool_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "closeDelaySeconds_",
-                           "type":  "uint64",
-                           "internalType":  "uint64"
-                       },
-                       {
-                           "name":  "bpsStewardPath_",
-                           "type":  "uint16",
-                           "internalType":  "uint16"
-                       },
-                       {
-                           "name":  "bpsGlobalTreasury_",
-                           "type":  "uint16",
-                           "internalType":  "uint16"
-                       }
-                   ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "accrualRefs",
-        "inputs":  [
-                       {
-                           "name":  "",
-                           "type":  "bytes32",
-                           "internalType":  "bytes32"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "activeSteward",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "steward",
-                            "type":  "address",
-                            "internalType":  "address"
-                        },
-                        {
-                            "name":  "suspended",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        },
-                        {
-                            "name":  "tenureSatisfied",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        },
-                        {
-                            "name":  "tenureWaived",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        },
-                        {
-                            "name":  "updatedAtBlock",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        },
-                        {
-                            "name":  "proposalRef",
-                            "type":  "bytes32",
-                            "internalType":  "bytes32"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "bpsGlobalTreasury",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint16",
-                            "internalType":  "uint16"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "bpsStewardPath",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint16",
-                            "internalType":  "uint16"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "carriedLoss",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "closeDelaySeconds",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "closeEpoch",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "epochAllowableExpense",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "int256",
-                            "internalType":  "int256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "epochCarriedLossApplied",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "epochFunded",
-        "inputs":  [
-                       {
-                           "name":  "",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "epochGrossRevenue",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "int256",
-                            "internalType":  "int256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "epochNetProfitPrime",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "int256",
-                            "internalType":  "int256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "epochSplitAmounts",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "stewardAmount",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "unallocatedAmount",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "globalAmount",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "epochStatus",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint8",
-                            "internalType":  "enum CountryPoolNetProfitLedger.EpochStatus"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "epochs",
-        "inputs":  [
-                       {
-                           "name":  "",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "epochStart",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        },
-                        {
-                            "name":  "epochEnd",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        },
-                        {
-                            "name":  "grossRevenue",
-                            "type":  "int256",
-                            "internalType":  "int256"
-                        },
-                        {
-                            "name":  "allowableExpense",
-                            "type":  "int256",
-                            "internalType":  "int256"
-                        },
-                        {
-                            "name":  "netProfit",
-                            "type":  "int256",
-                            "internalType":  "int256"
-                        },
-                        {
-                            "name":  "carriedLossBefore",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "carriedLossApplied",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "netProfitPrime",
-                            "type":  "int256",
-                            "internalType":  "int256"
-                        },
-                        {
-                            "name":  "carriedLossAfter",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "status",
-                            "type":  "uint8",
-                            "internalType":  "enum CountryPoolNetProfitLedger.EpochStatus"
-                        },
-                        {
-                            "name":  "closedAt",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        },
-                        {
-                            "name":  "qualificationSnapshotBlock",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        },
-                        {
-                            "name":  "qualifiedSteward",
-                            "type":  "address",
-                            "internalType":  "address"
-                        },
-                        {
-                            "name":  "stewardPathEligible",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        },
-                        {
-                            "name":  "stewardAmount",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "unallocatedAmount",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "globalAmount",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "splitAt",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "fundLedgerForSplit",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "fundingSource",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "address"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "globalTreasury",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "address"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "jurisdiction",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "bytes2",
-                            "internalType":  "bytes2"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "latestEpochId",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "openEpoch",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "epochStart",
-                           "type":  "uint64",
-                           "internalType":  "uint64"
-                       },
-                       {
-                           "name":  "epochEnd",
-                           "type":  "uint64",
-                           "internalType":  "uint64"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "owner",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "address"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "recordAccrual",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "accountCode",
-                           "type":  "bytes32",
-                           "internalType":  "bytes32"
-                       },
-                       {
-                           "name":  "amountSigned",
-                           "type":  "int256",
-                           "internalType":  "int256"
-                       },
-                       {
-                           "name":  "ref",
-                           "type":  "bytes32",
-                           "internalType":  "bytes32"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "recordAccrualBatch",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "lines",
-                           "type":  "tuple[]",
-                           "internalType":  "struct CountryPoolNetProfitLedger.AccrualLine[]",
-                           "components":  [
-                                              {
-                                                  "name":  "accountCode",
-                                                  "type":  "bytes32",
-                                                  "internalType":  "bytes32"
-                                              },
-                                              {
-                                                  "name":  "amountSigned",
-                                                  "type":  "int256",
-                                                  "internalType":  "int256"
-                                              },
-                                              {
-                                                  "name":  "ref",
-                                                  "type":  "bytes32",
-                                                  "internalType":  "bytes32"
-                                              }
-                                          ]
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "setActiveStewardConfig",
-        "inputs":  [
-                       {
-                           "name":  "steward",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "suspended",
-                           "type":  "bool",
-                           "internalType":  "bool"
-                       },
-                       {
-                           "name":  "tenureSatisfied",
-                           "type":  "bool",
-                           "internalType":  "bool"
-                       },
-                       {
-                           "name":  "tenureWaived",
-                           "type":  "bool",
-                           "internalType":  "bool"
-                       },
-                       {
-                           "name":  "proposalRef",
-                           "type":  "bytes32",
-                           "internalType":  "bytes32"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "setFundingSource",
-        "inputs":  [
-                       {
-                           "name":  "fundingSource_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "setSettlementParams",
-        "inputs":  [
-                       {
-                           "name":  "closeDelaySeconds_",
-                           "type":  "uint64",
-                           "internalType":  "uint64"
-                       },
-                       {
-                           "name":  "bpsStewardPath_",
-                           "type":  "uint16",
-                           "internalType":  "uint16"
-                       },
-                       {
-                           "name":  "bpsGlobalTreasury_",
-                           "type":  "uint16",
-                           "internalType":  "uint16"
-                       },
-                       {
-                           "name":  "globalTreasury_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "fundingSource_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "setSettlementPaused",
-        "inputs":  [
-                       {
-                           "name":  "paused",
-                           "type":  "bool",
-                           "internalType":  "bool"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "settlementPaused",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "settlementToken",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "contract IERC20"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "splitNetProfit",
-        "inputs":  [
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "stewardPathVault",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "contract StewardPathVault"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "stewardStakePool",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "contract IRegionStewardStakePool"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "transferOwnership",
-        "inputs":  [
-                       {
-                           "name":  "newOwner",
-                           "type":  "address",
-                           "internalType":  "address"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "unallocatedStewardPathVault",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "contract UnallocatedStewardPathVault"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "version",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "string",
-                            "internalType":  "string"
-                        }
-                    ],
-        "stateMutability":  "pure"
-    },
-    {
-        "type":  "event",
-        "name":  "ActiveStewardConfigSet",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "steward",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "suspended",
-                           "type":  "bool",
-                           "indexed":  false,
-                           "internalType":  "bool"
-                       },
-                       {
-                           "name":  "tenureSatisfied",
-                           "type":  "bool",
-                           "indexed":  false,
-                           "internalType":  "bool"
-                       },
-                       {
-                           "name":  "tenureWaived",
-                           "type":  "bool",
-                           "indexed":  false,
-                           "internalType":  "bool"
-                       },
-                       {
-                           "name":  "proposalRef",
-                           "type":  "bytes32",
-                           "indexed":  false,
-                           "internalType":  "bytes32"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "EpochClosed",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "indexed":  true,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "token",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "grossRevenue",
-                           "type":  "int256",
-                           "indexed":  false,
-                           "internalType":  "int256"
-                       },
-                       {
-                           "name":  "allowableExpense",
-                           "type":  "int256",
-                           "indexed":  false,
-                           "internalType":  "int256"
-                       },
-                       {
-                           "name":  "netProfit",
-                           "type":  "int256",
-                           "indexed":  false,
-                           "internalType":  "int256"
-                       },
-                       {
-                           "name":  "carriedLossBefore",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "carriedLossApplied",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "netProfitPrime",
-                           "type":  "int256",
-                           "indexed":  false,
-                           "internalType":  "int256"
-                       },
-                       {
-                           "name":  "carriedLossAfter",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "epochStatus",
-                           "type":  "uint8",
-                           "indexed":  false,
-                           "internalType":  "enum CountryPoolNetProfitLedger.EpochStatus"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "EpochOpened",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "indexed":  true,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "epochStart",
-                           "type":  "uint64",
-                           "indexed":  false,
-                           "internalType":  "uint64"
-                       },
-                       {
-                           "name":  "epochEnd",
-                           "type":  "uint64",
-                           "indexed":  false,
-                           "internalType":  "uint64"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "LedgerFundedForSplit",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "indexed":  true,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "token",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "amount",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "fundingSource",
-                           "type":  "address",
-                           "indexed":  false,
-                           "internalType":  "address"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "NetProfitAccrued",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "indexed":  true,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "token",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "accountCode",
-                           "type":  "bytes32",
-                           "indexed":  false,
-                           "internalType":  "bytes32"
-                       },
-                       {
-                           "name":  "amountSigned",
-                           "type":  "int256",
-                           "indexed":  false,
-                           "internalType":  "int256"
-                       },
-                       {
-                           "name":  "ref",
-                           "type":  "bytes32",
-                           "indexed":  false,
-                           "internalType":  "bytes32"
-                       },
-                       {
-                           "name":  "recordedAt",
-                           "type":  "uint64",
-                           "indexed":  false,
-                           "internalType":  "uint64"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "NetProfitSplit",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "epochId",
-                           "type":  "uint256",
-                           "indexed":  true,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "token",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "netProfitPrime",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "stewardAmount",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "unallocatedAmount",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "globalAmount",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "stewardPathEligible",
-                           "type":  "bool",
-                           "indexed":  false,
-                           "internalType":  "bool"
-                       },
-                       {
-                           "name":  "qualificationSnapshotBlock",
-                           "type":  "uint64",
-                           "indexed":  false,
-                           "internalType":  "uint64"
-                       },
-                       {
-                           "name":  "qualifiedSteward",
-                           "type":  "address",
-                           "indexed":  false,
-                           "internalType":  "address"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "OwnershipTransferred",
-        "inputs":  [
-                       {
-                           "name":  "previousOwner",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "newOwner",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "SettlementParamsUpdated",
-        "inputs":  [
-                       {
-                           "name":  "closeDelaySeconds",
-                           "type":  "uint64",
-                           "indexed":  false,
-                           "internalType":  "uint64"
-                       },
-                       {
-                           "name":  "bpsStewardPath",
-                           "type":  "uint16",
-                           "indexed":  false,
-                           "internalType":  "uint16"
-                       },
-                       {
-                           "name":  "bpsGlobalTreasury",
-                           "type":  "uint16",
-                           "indexed":  false,
-                           "internalType":  "uint16"
-                       },
-                       {
-                           "name":  "globalTreasury",
-                           "type":  "address",
-                           "indexed":  false,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "fundingSource",
-                           "type":  "address",
-                           "indexed":  false,
-                           "internalType":  "address"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "SettlementPausedSet",
-        "inputs":  [
-                       {
-                           "name":  "paused",
-                           "type":  "bool",
-                           "indexed":  false,
-                           "internalType":  "bool"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "error",
-        "name":  "CloseTooEarly",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "DuplicateAccrualRef",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "EpochAlreadyClosed",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "EpochNotOpen",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "EpochNotSplitPending",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InsufficientLedgerBalance",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidAccountCode",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidAddress",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidAmount",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidBatchSize",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidBps",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidEpoch",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidJurisdiction",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "OnlyOwner",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "SettlementPausedErr",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "SplitNotFunded",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "StewardConfigStale",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "TransferFailed",
-        "inputs":  [
-
-                   ]
-    }
+  {
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "owner_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "jurisdiction_",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      },
+      {
+        "name": "settlementToken_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "stewardPathVault_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "unallocatedStewardPathVault_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "globalTreasury_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "stewardStakePool_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "closeDelaySeconds_",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "bpsStewardPath_",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "bpsGlobalTreasury_",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "accrualRefs",
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "activeSteward",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "steward",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "suspended",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "tenureSatisfied",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "tenureWaived",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "updatedAtBlock",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "proposalRef",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "bpsGlobalTreasury",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "bpsStewardPath",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint16",
+        "internalType": "uint16"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "carriedLoss",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "closeDelaySeconds",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "closeEpoch",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "epochAllowableExpense",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "epochCarriedLossApplied",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "epochFunded",
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "epochGrossRevenue",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "epochNetProfitPrime",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "int256",
+        "internalType": "int256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "epochSplitAmounts",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "stewardAmount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "unallocatedAmount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "globalAmount",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "epochStatus",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8",
+        "internalType": "enum CountryPoolNetProfitLedger.EpochStatus"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "epochs",
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "epochStart",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "epochEnd",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "grossRevenue",
+        "type": "int256",
+        "internalType": "int256"
+      },
+      {
+        "name": "allowableExpense",
+        "type": "int256",
+        "internalType": "int256"
+      },
+      {
+        "name": "netProfit",
+        "type": "int256",
+        "internalType": "int256"
+      },
+      {
+        "name": "carriedLossBefore",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "carriedLossApplied",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "netProfitPrime",
+        "type": "int256",
+        "internalType": "int256"
+      },
+      {
+        "name": "carriedLossAfter",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "status",
+        "type": "uint8",
+        "internalType": "enum CountryPoolNetProfitLedger.EpochStatus"
+      },
+      {
+        "name": "closedAt",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "qualificationSnapshotBlock",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "qualifiedSteward",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "stewardPathEligible",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "stewardAmount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "unallocatedAmount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "globalAmount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "splitAt",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "fundLedgerForSplit",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "fundingSource",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "globalTreasury",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "jurisdiction",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "latestEpochId",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "openEpoch",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "epochStart",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "epochEnd",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "owner",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "recordAccrual",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "accountCode",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "amountSigned",
+        "type": "int256",
+        "internalType": "int256"
+      },
+      {
+        "name": "ref",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "recordAccrualBatch",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "lines",
+        "type": "tuple[]",
+        "internalType": "struct CountryPoolNetProfitLedger.AccrualLine[]",
+        "components": [
+          {
+            "name": "accountCode",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "amountSigned",
+            "type": "int256",
+            "internalType": "int256"
+          },
+          {
+            "name": "ref",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setActiveStewardConfig",
+    "inputs": [
+      {
+        "name": "steward",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "suspended",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "tenureSatisfied",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "tenureWaived",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "proposalRef",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setFundingSource",
+    "inputs": [
+      {
+        "name": "fundingSource_",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setSettlementParams",
+    "inputs": [
+      {
+        "name": "closeDelaySeconds_",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "bpsStewardPath_",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "bpsGlobalTreasury_",
+        "type": "uint16",
+        "internalType": "uint16"
+      },
+      {
+        "name": "globalTreasury_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "fundingSource_",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setSettlementPaused",
+    "inputs": [
+      {
+        "name": "paused",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "settlementPaused",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "settlementToken",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IERC20"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "splitNetProfit",
+    "inputs": [
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "stewardActivationEpochId",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "stewardPathVault",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract StewardPathVault"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "stewardStakePool",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IRegionStewardStakePool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "transferOwnership",
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "unallocatedStewardPathVault",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract UnallocatedStewardPathVault"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "vacancyGraceStartedAt",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "vacancyState",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8",
+        "internalType": "enum CountryPoolNetProfitLedger.VacancyState"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "version",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "string",
+        "internalType": "string"
+      }
+    ],
+    "stateMutability": "pure"
+  },
+  {
+    "type": "event",
+    "name": "ActiveStewardConfigSet",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "steward",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "suspended",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      },
+      {
+        "name": "tenureSatisfied",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      },
+      {
+        "name": "tenureWaived",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      },
+      {
+        "name": "proposalRef",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "EpochClosed",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "token",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "grossRevenue",
+        "type": "int256",
+        "indexed": false,
+        "internalType": "int256"
+      },
+      {
+        "name": "allowableExpense",
+        "type": "int256",
+        "indexed": false,
+        "internalType": "int256"
+      },
+      {
+        "name": "netProfit",
+        "type": "int256",
+        "indexed": false,
+        "internalType": "int256"
+      },
+      {
+        "name": "carriedLossBefore",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "carriedLossApplied",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "netProfitPrime",
+        "type": "int256",
+        "indexed": false,
+        "internalType": "int256"
+      },
+      {
+        "name": "carriedLossAfter",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "epochStatus",
+        "type": "uint8",
+        "indexed": false,
+        "internalType": "enum CountryPoolNetProfitLedger.EpochStatus"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "EpochOpened",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "epochStart",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      },
+      {
+        "name": "epochEnd",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "GraceStarted",
+    "inputs": [
+      {
+        "name": "version",
+        "type": "uint16",
+        "indexed": false,
+        "internalType": "uint16"
+      },
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "graceDays",
+        "type": "uint32",
+        "indexed": false,
+        "internalType": "uint32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "LedgerFundedForSplit",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "token",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "fundingSource",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "NetProfitAccrued",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "token",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "accountCode",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "amountSigned",
+        "type": "int256",
+        "indexed": false,
+        "internalType": "int256"
+      },
+      {
+        "name": "ref",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "recordedAt",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "NetProfitSplit",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "token",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "netProfitPrime",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "stewardAmount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "unallocatedAmount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "globalAmount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "stewardPathEligible",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      },
+      {
+        "name": "qualificationSnapshotBlock",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      },
+      {
+        "name": "qualifiedSteward",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "OwnershipTransferred",
+    "inputs": [
+      {
+        "name": "previousOwner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "newOwner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "SettlementParamsUpdated",
+    "inputs": [
+      {
+        "name": "closeDelaySeconds",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      },
+      {
+        "name": "bpsStewardPath",
+        "type": "uint16",
+        "indexed": false,
+        "internalType": "uint16"
+      },
+      {
+        "name": "bpsGlobalTreasury",
+        "type": "uint16",
+        "indexed": false,
+        "internalType": "uint16"
+      },
+      {
+        "name": "globalTreasury",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "name": "fundingSource",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "SettlementPausedSet",
+    "inputs": [
+      {
+        "name": "paused",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "StewardActivated",
+    "inputs": [
+      {
+        "name": "version",
+        "type": "uint16",
+        "indexed": false,
+        "internalType": "uint16"
+      },
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "stewardActivationEpochId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "steward",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "VacancyEntered",
+    "inputs": [
+      {
+        "name": "version",
+        "type": "uint16",
+        "indexed": false,
+        "internalType": "uint16"
+      },
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "epochId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "principal",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "reserve",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "swept",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "disbursed",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "CloseTooEarly",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "DuplicateAccrualRef",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "EpochAlreadyClosed",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "EpochNotOpen",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "EpochNotSplitPending",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InsufficientLedgerBalance",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidAccountCode",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidAddress",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidAmount",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidBatchSize",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidBps",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidEpoch",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidJurisdiction",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "OnlyOwner",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "SettlementPausedErr",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "SplitNotFunded",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "StewardConfigStale",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "TransferFailed",
+    "inputs": []
+  }
 ]

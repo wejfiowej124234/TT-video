@@ -1,0 +1,356 @@
+# schema: traveltrust.v311_production_exit_criteria.v1
+# Production Exit Criteria v1 — Dual-RC (Governance RC || Money-Path RC)
+# Additive Exit Criteria SSOT. Does NOT mutate ACTIVE address matrix /
+# protocol-convergence ACTIVE cutover / Runtime first-wins / Package LOCK.
+machine_key: TT_V311_PRODUCTION_EXIT_CRITERIA_V1
+document_id: TT-V311-PRODUCTION-EXIT-CRITERIA-V1
+version: "1.1.0"
+status: ACTIVE_SSOT
+immutable: true
+recorded_utc: "2026-07-19T09:30:00Z"
+stamp: "20260719T093000Z"
+
+economic_ssot: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+psg_production_completion: registry/psg-production-completion-definition.v1.yaml
+financial_grade_web3_gate: registry/psg-production-full-capability-gate.v1.yaml
+human: docs/runbook/TT-V311-PRODUCTION-EXIT-CRITERIA-V1-LATEST.md
+dual_rc_board: evidence/GO_v311_constitution_production_alignment_audit/DUAL-RC-TRACK-BOARD-LATEST.md
+money_path_charter: evidence/GO_v311_constitution_production_alignment_audit/MONEY-PATH-RC-CHARTER-LATEST.json
+release_blocking_decision: evidence/GO_v311_constitution_production_alignment_audit/RELEASE-BLOCKING-DECISION-TRE-REG-LATEST.json
+truth_classification: evidence/GO_v311_constitution_production_alignment_audit/FINDINGS-TRUTH-CLASSIFICATION-LATEST.json
+alignment_policy: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+canonical_ladder: registry/traveltrust-release-engineering-ladder.v1.yaml
+
+honesty:
+  equals_production_go_auto: false
+  mutates_active_address_matrix: false
+  mutates_protocol: false
+  mutates_runtime: false
+  mutates_package_lock: false
+  web2_coverage_alone_equals_psg_complete: false
+  financial_grade_web3_optional: false
+
+dual_rc:
+  release_decision: CONTINUE_CURRENT_RC
+  governance_rc:
+    id: GOVERNANCE_RC
+    mode_now: FROZEN_WAITING_EXECUTE
+    status: ACTIVE
+  money_path_rc:
+    id: MONEY_PATH_RC
+    status: REGISTERED_NOT_STARTED
+    start_gate: GOVERNANCE_RC_CLOSED
+    sole_p0: [TRE-02, REG-01, REG-04]
+  isolation:
+    mix_money_path_into_governance_rc: FORBIDDEN
+    implement_money_path_before_governance_closed: FORBIDDEN
+
+exit_gates:
+  - id: G-RC-01
+    track: GOVERNANCE_RC
+    name: Timelock Proposal #1 Execute
+    immutable: true
+    pass_requires: [proposal_1_state_Executed, execute_receipt_on_sepolia_11155111]
+    fail_if: [proposal_still_Queued_past_owner_abandon, execute_reverted_without_remediation_plan]
+    required_evidence:
+      - evidence/GO_phase2_v311_web3_full_function_cert/tier_c_state/F-02-gov-timelock.json
+      - execute_tx_hash
+    blocks_next: [G-RC-02]
+    findings_owned: [GOV-02]
+
+  - id: G-RC-02
+    track: GOVERNANCE_RC
+    name: Function Cert 54/0/0
+    immutable: true
+    pass_requires:
+      - function_cert_counts_PASS_54_FAIL_0_OWNER_REQUIRED_0
+      - upgrade_architecture_pass
+      - pure_sepolia_dataset
+    fail_if: [OWNER_REQUIRED_gt_0, FAIL_gt_0, inventory_coverage_lt_100pct]
+    required_evidence:
+      - evidence/GO_phase2_v311_web3_full_function_cert/VERDICT-LATEST.json
+    blocks_next: [G-RC-03]
+    findings_owned: [CERT-01]
+
+  - id: G-RC-03
+    track: GOVERNANCE_RC
+    name: Product Full Cert PASS
+    immutable: true
+    pass_requires: [tt_v311_web3_full_product_cert_PASS, function_cert_PASS]
+    fail_if: [product_cert_OPEN_or_FAIL]
+    required_evidence:
+      - evidence/GO_phase2_v311_final_release/P6-PRODUCT-CERT-LATEST.json
+    blocks_next: [G-RC-04]
+    findings_owned: [CERT-02]
+
+  - id: G-RC-04
+    track: GOVERNANCE_RC
+    name: UI Full Cert PASS
+    immutable: true
+    pass_requires: [tt_v311_web3_ui_ux_full_cert_PASS, five_main_wallet_itinerary_gates_green]
+    fail_if: [ui_cert_PARTIAL_with_blocking_gate_open]
+    required_evidence:
+      - evidence/GO_phase2_v311_final_release/P5-UI-UX-CERT-LATEST.json
+    blocks_next: [G-RC-05]
+    findings_owned: [CERT-03]
+    defer_policy: >
+      OWNER_ACCEPT_PARTIAL only for non-Constitution UI polish if Product+Function PASS
+      and residual recorded — default MUST PASS for Governance RC CLOSE.
+
+  - id: G-RC-05
+    track: GOVERNANCE_RC
+    name: Governance RC CLOSED
+    immutable: true
+    pass_requires:
+      - G-RC-01_PASS
+      - G-RC-02_PASS
+      - G-RC-03_PASS
+      - G-RC-04_PASS_or_Owner_Accept_per_policy
+      - deferred_money_path_explicitly_registered
+      - no_claim_constitution_money_path_alignment
+      - no_claim_production_go
+    fail_if: [money_path_p0_mixed_into_governance_claims, fake_constitution_full_alignment]
+    required_evidence:
+      - evidence/GO_v311_constitution_production_alignment_audit/DUAL-RC-TRACK-BOARD-LATEST.json
+      - DEFERRED_TO_MONEY_PATH_RC=[TRE-02,REG-01,REG-04]
+    unlocks: [M-RC-00]
+    findings_owned: []
+
+  - id: M-RC-00
+    track: MONEY_PATH_RC
+    name: Money-Path RC START
+    immutable: true
+    pass_requires: [GOVERNANCE_RC_CLOSED, Owner_opens_Money_Path_RC, design_option_OPT_A_or_OPT_B_locked]
+    fail_if: [start_while_governance_rc_open, implement_without_design_lock]
+    required_evidence:
+      - evidence/GO_v311_constitution_production_alignment_audit/MONEY-PATH-RC-CHARTER-LATEST.json
+      - evidence/GO_v311_constitution_production_alignment_audit/MONEY-PATH-RC-DESIGN-LATEST.json
+    blocks_next: [M-RC-01, M-RC-02, M-RC-03]
+    findings_owned: []
+
+  - id: M-RC-01
+    track: MONEY_PATH_RC
+    name: TRE-02 Constitution distribution CLOSED
+    immutable: true
+    pass_requires:
+      - live_split_4500_steward_5500_PRP_or_10000_PRP_without_steward
+      - FeeRouter_LEGACY_not_constitution_distributable_ssot
+      - constitution_recheck_TRE-02_PASS
+    fail_if: [legacy_multi_bucket_still_ssot]
+    required_evidence: [money_path_TRE-02_verify_pack, on_chain_or_runtime_split_proof]
+    findings_owned: [TRE-02]
+    constitution_chapters: ["12.4", "14"]
+
+  - id: M-RC-02
+    track: MONEY_PATH_RC
+    name: REG-01 Four rails live CLOSED
+    immutable: true
+    pass_requires:
+      - order_escrow_rail_live
+      - p4cap_rail_live
+      - project_revenue_pool_address_live_non_null
+      - founder_bootstrap_wallet_live_non_null
+      - rails_non_commingled
+    fail_if: [prp_or_founder_null, rail_role_overlap]
+    required_evidence: [money_path_REG-01_address_matrix, isolation_proof]
+    findings_owned: [REG-01]
+    constitution_chapters: ["14"]
+
+  - id: M-RC-03
+    track: MONEY_PATH_RC
+    name: REG-04 Distributable Runtime CLOSED
+    immutable: true
+    pass_requires:
+      - state_machine_PENDING_LOCKED_DISTRIBUTABLE_DISTRIBUTED_enforced
+      - no_payout_before_DISTRIBUTABLE
+      - registry_honesty_distributable_CLOSED_after_live_proof
+    fail_if: [runtime_honesty_still_OPEN_after_claim_pass]
+    required_evidence: [money_path_REG-04_runtime_proof, indexer_projection_proof]
+    findings_owned: [REG-04]
+    constitution_chapters: ["9"]
+    bundle_with: [M-RC-01]
+
+  - id: M-RC-04
+    track: MONEY_PATH_RC
+    name: Money-Path Full Alignment Re-Audit PASS
+    immutable: true
+    pass_requires: [M-RC-01_PASS, M-RC-02_PASS, M-RC-03_PASS, constitution_money_path_slice_PASS]
+    fail_if: [open_constitution_violation_on_money_path]
+    required_evidence:
+      - evidence/GO_v311_constitution_production_alignment_audit/CONSTITUTION-PRODUCTION-ALIGNMENT-AUDIT-LATEST.json
+    unlocks: [X-FREEZE, X-GO]
+    findings_owned: []
+
+  - id: X-FREEZE
+    track: PSG_CONVERGENCE
+    name: TT_PSG_SEPOLIA_FREEZE eligible
+    immutable: true
+    pass_requires: [GOVERNANCE_RC_CLOSED, RC_prep_RC01_to_RC06_PASS]
+    money_path_policy:
+      default: M-RC-04_PASS
+      owner_deferral_allowed: true
+      owner_deferral_requires:
+        - written_Sign-off_DEFER_MONEY_PATH
+        - no_claim_money_path_aligned
+        - Production_GO_still_blocked_on_money_path
+    fail_if: [claim_freeze_with_undeclared_open_p0]
+    required_evidence:
+      - registry/psg-sepolia-rc-preparation.v1.yaml
+      - Owner_Sign-off_pack
+    findings_owned: []
+
+  - id: X-GO
+    track: PRODUCTION_GO
+    name: Production GO
+    immutable: true
+    pass_requires:
+      - GOVERNANCE_RC_CLOSED
+      - M-RC-04_PASS
+      - FINANCIAL_GRADE_WEB3_PROTOCOL_READINESS_PASS
+      - PSG_FIVE_PILLAR_COMPLETION_PASS
+      - OPEN_BLOCKING_RISKS_0
+      - OPEN_P0_DEFECTS_0
+      - OPEN_P1_DEFECTS_0
+      - DRIFT_BLOCKERS_0
+      - SSOT_CONFLICTS_0
+      - TT_PSG_PRODUCTION_CERT_PASS
+      - TT_PSG_SEPOLIA_FREEZE_or_equivalent_PASS
+      - P10_5_PRODUCTION_READINESS_REVIEW_PASS
+      - Owner_Sign-off_W5_time_separated
+    fail_if:
+      - any_constitution_money_path_p0_open
+      - TRE-02_or_REG-01_or_REG-04_open
+      - docs_claim_without_evidence
+      - web2_coverage_PASS_claimed_as_psg_complete
+      - financial_grade_web3_treated_as_optional
+    required_evidence:
+      - PSG_Production_Cert_pack
+      - Constitution_money_path_re_audit_PASS
+      - TT_PSG_PRODUCTION_COMPLETION_DEFINITION_cite
+      - TT_PRODUCTION_FULL_CAPABILITY_GATE_FG_surfaces_PASS
+    findings_owned: [TRE-02, REG-01, REG-04]
+
+findings_map:
+  GOV-02:
+    primary_gate: G-RC-01
+    track: GOVERNANCE_RC
+    must_close_before: [G-RC-02, GOVERNANCE_RC_CLOSED, X-GO]
+    defer_to_money_path: false
+    defer_allowed: false
+    truth_label: PRODUCTION_BLOCKING
+  CERT-01:
+    primary_gate: G-RC-02
+    track: GOVERNANCE_RC
+    must_close_before: [G-RC-03, GOVERNANCE_RC_CLOSED, X-GO]
+    defer_to_money_path: false
+    defer_allowed: false
+    truth_label: PRODUCTION_BLOCKING
+  CERT-02:
+    primary_gate: G-RC-03
+    track: GOVERNANCE_RC
+    must_close_before: [GOVERNANCE_RC_CLOSED, X-GO]
+    defer_to_money_path: false
+    defer_allowed: false
+    truth_label: PRODUCTION_BLOCKING
+  CERT-03:
+    primary_gate: G-RC-04
+    track: GOVERNANCE_RC
+    must_close_before: [GOVERNANCE_RC_CLOSED]
+    defer_to_money_path: false
+    defer_allowed: CONDITIONAL_OWNER_ACCEPT_NON_BLOCKING_UI_ONLY
+    truth_label: ENGINEERING_GAP
+  TRE-02:
+    primary_gate: M-RC-01
+    track: MONEY_PATH_RC
+    must_close_before: [M-RC-04, X-GO]
+    defer_to_money_path: true
+    defer_from_governance_rc: REQUIRED
+    defer_allowed_past_X_GO: false
+    truth_label: CONSTITUTION_VIOLATION
+  REG-01:
+    primary_gate: M-RC-02
+    track: MONEY_PATH_RC
+    must_close_before: [M-RC-04, X-GO]
+    defer_to_money_path: true
+    defer_from_governance_rc: REQUIRED
+    defer_allowed_past_X_GO: false
+    truth_label: CONSTITUTION_VIOLATION
+  REG-04:
+    primary_gate: M-RC-03
+    track: MONEY_PATH_RC
+    must_close_before: [M-RC-04, X-GO]
+    defer_to_money_path: true
+    defer_from_governance_rc: REQUIRED
+    defer_allowed_past_X_GO: false
+    bundle_with: TRE-02
+    truth_label: CONSTITUTION_VIOLATION
+  REG-05:
+    primary_gate: X-GO
+    track: CONDITIONAL
+    must_close_before: [X-GO_if_Recovery_payout_in_scope]
+    defer_allowed: true
+    defer_requires: Owner_disable_Recovery_payout_or_set_Budget
+    truth_label: OWNER_DECISION
+  REG-03:
+    primary_gate: X-GO
+    track: CONDITIONAL
+    must_close_before: [X-GO_if_Steward_onboarding_Access_Fee_in_scope]
+    defer_allowed: true
+    defer_requires: product_surface_not_enabled_or_Owner_deferral
+    truth_label: ENGINEERING_GAP
+  REG-02:
+    primary_gate: DOC_CONSISTENCY
+    track: DOCUMENTATION
+    must_close_before: []
+    defer_allowed: true
+    truth_label: DOCUMENTATION_DRIFT
+  DOC-01:
+    primary_gate: DOC_CONSISTENCY
+    track: DOCUMENTATION
+    must_close_before: [claim_alignment_or_freeze_narrative]
+    defer_allowed: true
+    truth_label: DOCUMENTATION_DRIFT
+  GOV-01:
+    primary_gate: G-RC-01
+    track: GOVERNANCE_RC
+    must_close_before: [G-RC-02]
+    defer_allowed: false
+    note: Verify live Timelock delay/admin before treating as real Drift
+    truth_label: VERIFY_LIVE_THEN_PASS_OR_FIX
+
+pass_fail_rules:
+  governance_rc_pass: G-RC-01..G-RC-05 all PASS (G-RC-04 per policy)
+  money_path_rc_pass: M-RC-00 started + M-RC-01..M-RC-04 PASS
+  financial_grade_web3_pass: TT_PRODUCTION_FULL_CAPABILITY_GATE FG-01..15 all PASS
+  psg_complete: Product_PASS AND Data_PASS AND Security_PASS AND Operations_PASS AND financial_grade_web3_pass
+  production_go_pass: X-GO all pass_requires true AND TRE-02 REG-01 REG-04 CLOSED AND psg_complete
+  forbid:
+    - claim_Production_GO_with_Money_Path_P0_open
+    - mix_TRE-02_REG-01_REG-04_into_Governance_RC_exit
+    - fake_PASS_with_docs_only
+    - ACCEPT_Blocking_Risk_instead_of_FIX
+    - claim_psg_complete_from_web2_coverage_alone
+    - treat_financial_grade_web3_as_optional
+
+audit_consumption:
+  all_future_audits_must_cite: TT_V311_PRODUCTION_EXIT_CRITERIA_V1
+  classify_findings_against: findings_map
+  dual_rc_isolation: mandatory
+
+# Locked proof chain (Dual-RC honesty)
+consistency_proof_chain:
+  machine_key: TT_V311_CONSISTENCY_PROOF_CHAIN
+  human: evidence/GO_v311_constitution_production_alignment_audit/CONSISTENCY-PROOF-CHAIN-LATEST.md
+  sequence:
+    - Governance_RC_CLOSED
+    - Money_Path_RC_IMPLEMENT_TRE02_REG01_REG04
+    - Money_Path_Re_Audit_PASS
+    - Constitution_Production_Alignment_Audit_PASS
+    - Exit_Criteria_all_gates
+    - Production_GO
+  honesty:
+    money_path_is_implement_then_prove: true
+    audits_alone_cannot_pass_money_path: true
+  governance_rc_mutate_now: FORBIDDEN
+  money_path_implement_now: BLOCKED_UNTIL_GOVERNANCE_RC_CLOSED
+

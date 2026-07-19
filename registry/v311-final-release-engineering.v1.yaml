@@ -1,0 +1,288 @@
+# schema: traveltrust.v311_final_release_engineering.v1
+# V3.1.1 Sepolia ② instance of the UNIQUE Formal Release Engineering ladder
+machine_key: TT_V311_FINAL_RELEASE_ENGINEERING
+status: ACTIVE
+phase_scope: "2"
+canonical_ladder: registry/traveltrust-release-engineering-ladder.v1.yaml
+parent_framework: registry/psg-production-governance-domains.v1.yaml
+ladder_version: "20260718-enterprise-final"
+domain: release_engineering
+note: "Instance of RE domain under PSG — not equal to TT_PSG_SEPOLIA_FREEZE / Production GO"
+economic_ssot: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+human: docs/runbook/TT-V311-FINAL-RELEASE-ENGINEERING-LATEST.md
+recorded_utc: "2026-07-18T11:57:00Z"
+timelock_parallel_board: evidence/GO_phase2_v311_final_release/TIMELOCK-PARALLEL-BOARD-LATEST.json
+release_label: "TravelTrust V3.1.1 RC1 (candidate)"
+
+forbid:
+  claim_tt_psg_sepolia_freeze_before_phase105: true
+  claim_production_go_before_phase105: true
+  claim_phase_pass_by_docs_alone: true
+  rc_candidate_lock_before_release_package_locked: true
+  open_binding_rc02_before_phase8_lock: true
+  count_premature_rc02_window_as_phase9: true
+  mutate_active_address_matrix_after_phase8_lock: true
+  mutate_release_package_after_phase75_lock_without_recert: true
+  reopen_configuration_sprint_via_p05: true
+  invent_parallel_formal_release_ladder: true
+
+principles:
+  - id: P1_ALL_MACHINES_BEFORE_RC_LOCK
+    text: "RC Candidate LOCK (Phase 8) only after Phase -1..7.5 complete. Locks Release Package, not bare Git."
+  - id: P2_WAIT_HUMAN_LAST
+    text: "Binding RC-02 (9) + Manual (10) + Production Readiness Review (10.5) before Freeze/GO. F-02 Timelock 48h inside Phase 4 for other machine work."
+  - id: P3_PURE_SEPOLIA_DATASET_ONLY
+    text: "Every cert uses chain_id=11155111 only. Mixing 31337/seed/mock → automatic FAIL."
+    registry: registry/v311-cert-dataset-sepolia-only.v1.yaml
+  - id: P4_NO_BACKTRACK_WITHOUT_RECERT
+    text: >
+      Once a Phase is PASS/LOCKED, do not modify that Phase's code, config, addresses, Registry, data,
+      or protocol except to fix defects found in that Phase or a later Phase. Mutation voids affected
+      Certifications; restart from earliest affected Phase; re-validate all subsequent Phases.
+  - id: P5_UNIQUE_LADDER
+    text: "Canonical Formal RE ladder applies to all formal releases; this file is the V3.1.1 instance only."
+
+current_rc02_window:
+  registry: registry/psg-sepolia-rc-02-long-stability.v1.yaml
+  status: IN_PROGRESS
+  role_under_this_ladder: NON_BINDING_SOAK_UNTIL_PHASE_8
+  note: "Binding Phase 9 only after Phase 8 LOCK on TT_RELEASE_PACKAGE (re-open window)."
+  tt_psg_sepolia_freeze: NOT_CLAIMED
+  production_go: NOT_CLAIMED
+
+f02_timelock_wait:
+  status: QUEUED_WAITING_DELAY
+  chain_id: 11155111
+  proposal_id: "1"
+  execute_after_utc: "2026-07-20T11:37:37Z"
+  parallel_pack: docs/runbook/TT-V311-F02-TIMELOCK-WAIT-PARALLEL-LATEST.md
+  use_48h_for:
+    - P-1_close_items
+    - P0
+    - P0.5
+    - P1
+    - P2_close
+    - P2.5
+    - P5
+    - P6
+    - P6.5
+    - P7
+    - P7.5_prep
+  forbid_until_execute:
+    - mutate_contracts
+    - mutate_active_address_matrix
+    - mutate_runtime_authority
+    - mutate_registry_active_cutover
+    - protocol_logic
+  after_execute_then:
+    - TT_V311_WEB3_FULL_FUNCTION_CERT_54_0_0
+    - finish_any_remaining_P5_through_P7.5
+    - Phase_8_RC_CANDIDATE_LOCK_on_Release_Package
+    - Phase_9_binding_RC02_24h
+    - Phase_10_Manual_Review
+    - Phase_10.5_Production_Readiness_Review
+    - TT_PSG_SEPOLIA_FREEZE
+    - Production_GO_separate_gate
+
+# Honest status (do not inflate)
+phases:
+  - id: P-1
+    name: Final Closure Audit
+    machine_key: TT_V311_FINAL_CLOSURE_AUDIT
+    maps_to_canonical: TT_FINAL_CLOSURE_AUDIT
+    status: IN_PROGRESS
+    evidence: evidence/GO_phase2_v311_final_release/PHASE-MINUS1-FINAL-CLOSURE-AUDIT-LATEST.json
+    honest_note: "Itemized 23; CLOSED=8 · OPEN/PARTIAL/BLOCKED=15 — not CLOSED until OPEN=0"
+    exit: "OPEN_CLOSURE_ITEMS = 0"
+
+  - id: P0
+    name: Repository Hygiene
+    machine_key: TT_V311_REPOSITORY_CLEAN
+    maps_to_canonical: TT_REPOSITORY_CLEAN
+    status: IN_PROGRESS
+    also_requires: [TT_GIT_HYGIENE]
+    honest_note: "Legacy cleanup ongoing — NOT PASS"
+    exit: "TT_V311_REPOSITORY_CLEAN=PASS AND TT_GIT_HYGIENE=PASS"
+
+  - id: P0.5
+    name: Configuration Baseline Freeze
+    machine_key: TT_CONFIGURATION_BASELINE
+    status: PARTIAL
+    registry_pin: registry/v311-configuration-baseline.v1.json
+    evidence: evidence/GO_phase2_v311_final_release/P0.5-CONFIGURATION-BASELINE-LATEST.md
+    honest_note: "Matrix/inventory/dataset hashed pin done; ENV secrets OWNER_PIN_REQUIRED — NOT PASS"
+    does_not_reopen: TT_CONFIGURATION_ZERO_DRIFT
+    scope:
+      - ENV_whitelist
+      - Feature_Flags
+      - RPC_Endpoint
+      - Indexer_Endpoint
+      - WalletConnect_Project_ID
+      - Treasury_Address
+      - PaymentManager_Address
+      - ACTIVE_Address_Matrix
+      - Chain_IDs
+      - Contract_Registry
+    exit: "TT_CONFIGURATION_BASELINE=PASS"
+
+  - id: P1
+    name: Full Alignment
+    machine_key: TT_V311_SOURCE_ALIGNMENT
+    maps_to_canonical: TT_SOURCE_ALIGNMENT
+    also_requires: [TT_FULL_ALIGNMENT]
+    status: PASS
+    evidence: evidence/GO_phase2_v311_sepolia_clean_baseline/FULL-ALIGNMENT-VERDICT-LATEST.txt
+    honest_note: "TT_V311_FULL_ALIGNMENT: PASS (reaffirmed Timelock window); ENV pin tracked under P0.5 PARTIAL"
+    exit: "Local ≡ Git ≡ Backend ≡ Frontend ≡ Runtime ≡ Registry ≡ Sepolia"
+
+  - id: P2
+    name: Deployment Certification
+    machine_key: TT_V311_DEPLOYMENT_CERT
+    maps_to_canonical: TT_DEPLOYMENT_CERT
+    status: PASS
+    maps_from:
+      - registry/v311-web3-deployment-inventory.v1.json
+      - evidence/GO_phase2_v311_final_release/P2-BYTECODE-LIVE-VERIFY-LATEST.json
+    honest_note: "Live Sepolia bytecode 17/0 + expected skips; Safe threshold=1"
+    exit: "TT_V311_DEPLOYMENT_CERT=PASS"
+
+  - id: P2.5
+    name: Data Certification
+    machine_key: TT_DATA_CERT
+    status: PARTIAL
+    honest_note: "JP CMS/Country CLOSED cited; Provider/Guide/i18n/Search/OCS still OPEN — not full PASS"
+    scope:
+      - CMS
+      - OCS
+      - Public_Catalog
+      - Provider
+      - Guide
+      - Destination
+      - Country
+      - Media
+      - Translation_i18n
+      - AI_Search_Index
+      - API_Projection
+      - Indexer_Projection
+      - Search_Index
+    requirements:
+      - no_duplicates
+      - no_orphan_data
+      - no_legacy_active
+      - no_broken_references
+      - all_media_reachable
+      - public_surface_data_consistent
+    exit: "TT_DATA_CERT=PASS"
+
+  - id: P3
+    name: PSG Baseline Certification
+    machine_key: TT_PSG_V311_BASELINE
+    maps_to_canonical: TT_PSG_BASELINE
+    status: PASS
+    maps_from:
+      - machine_key: TT_PSG_V311_SEPOLIA_CLEAN_BASELINE_CERT
+        status: PASS
+    exit: "TT_PSG_V311_SEPOLIA_CLEAN_BASELINE_CERT=PASS (locked)"
+
+  - id: P4
+    name: Web3 Function Certification
+    machine_key: TT_V311_WEB3_FULL_FUNCTION_CERT
+    maps_to_canonical: TT_WEB3_FULL_FUNCTION_CERT
+    status: IN_PROGRESS
+    honest_note: "I-01 PASS · F-01/F-03 PASS · F-02 Queued · overall FAIL until 54/0/0"
+    maps_from:
+      - TT_V311_INDEXER_LIVE_RECONCILE: PASS
+      - F-02: QUEUED_WAITING_DELAY
+    exit: "PASS=54 FAIL=0 OWNER_REQUIRED=0 on pure Sepolia"
+
+  - id: P5
+    name: Web3 UI/UX Full Certification
+    machine_key: TT_V311_WEB3_UI_UX_FULL_CERT
+    maps_to_canonical: TT_WEB3_UI_UX_FULL_CERT
+    status: PARTIAL
+    honest_note: "Five-main + Wallet L5 PASS · NOT real-wallet Full UI Cert"
+    exit: "Playwright + real wallet + real Sepolia txs PASS"
+
+  - id: P6
+    name: Full Product Certification
+    machine_key: TT_V311_WEB3_FULL_PRODUCT_CERT
+    maps_to_canonical: TT_WEB3_FULL_PRODUCT_CERT
+    status: OPEN
+    exit: "TT_V311_WEB3_FULL_PRODUCT_CERT=PASS"
+
+  - id: P6.5
+    name: Security and Operations Certification
+    machine_key: TT_OPERATIONS_CERT
+    status: OPEN
+    honest_note: "Docs alone insufficient"
+    security: [Roles, Access_Control, Safe_Threshold, Timelock_Delay, Pause, Emergency]
+    operations: [Alert, Monitor, Backup, Recovery, Upgrade_Runbook, Incident_Runbook]
+    exit: "TT_OPERATIONS_CERT=PASS"
+
+  - id: P7
+    name: Documentation and Evidence
+    machine_key: TT_DOCUMENT_EVIDENCE_FREEZE
+    status: OPEN
+    also_requires: [TT_RECOVERY_CERT]
+    exit: "Docs + Evidence frozen for Release Package"
+
+  - id: P7.5
+    name: Release Package Freeze
+    machine_key: TT_RELEASE_PACKAGE
+    status: OPEN
+    honest_note: "Example label: TravelTrust V3.1.1 RC1"
+    package_includes:
+      - Release_Notes
+      - Registry
+      - Evidence
+      - Deployment_Inventory
+      - Address_Matrix
+      - Contract_Inventory
+      - Runbook
+      - Recovery
+      - Architecture
+      - Version
+      - Git_SHA
+    exit: "TT_RELEASE_PACKAGE=LOCKED"
+
+  - id: P8
+    name: RC Candidate LOCK
+    machine_key: TT_RC_CANDIDATE
+    status: BLOCKED_UNTIL_P75
+    note: "LOCK Release Package — not Git alone"
+    exit: "TT_RC_CANDIDATE=LOCKED on TT_RELEASE_PACKAGE"
+
+  - id: P9
+    name: RC-02 Long Stability 24h
+    machine_key: TT_RC02_STABLE
+    maps_to_canonical: TT_RC_STABLE
+    status: BLOCKED_UNTIL_P8
+    wait: true
+    exit: "Binding 24h after P8 LOCK · no mutations · close PASS"
+
+  - id: P10
+    name: Manual Review
+    machine_key: TT_HUMAN_REQUIRED_GATE
+    status: BLOCKED_UNTIL_P9
+    human: true
+    includes: [Manual_UX, Entry_Review, Owner_Signoff_W5]
+    exit: "Human PASS → Phase 10.5 (not Freeze yet)"
+
+  - id: P10.5
+    name: Production Readiness Review
+    machine_key: TT_PRODUCTION_READINESS_REVIEW
+    status: BLOCKED_UNTIL_P10
+    human: true
+    honest_note: "Release board gate — not re-test"
+    review_questions:
+      - all_phases_pass
+      - no_open_p0_p1_defects
+      - accepted_unfixed_risks_documented
+      - registry_runbook_evidence_complete
+      - release_policy_satisfied
+    exit: "TT_PRODUCTION_READINESS_REVIEW=PASS → TT_PSG_SEPOLIA_FREEZE → Production GO (separate)"
+
+targets:
+  tt_psg_sepolia_freeze: NOT_CLAIMED
+  production_go: NOT_CLAIMED
+  tt_psg_production_cert: NOT_CLAIMED

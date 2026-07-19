@@ -1,669 +1,607 @@
 [
-    {
-        "type":  "constructor",
-        "inputs":  [
-                       {
-                           "name":  "owner_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "ttgToken_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "ttgTotalSupplyUnits_",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "releaseDelaySeconds_",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "releaseVestSeconds_",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "bootstrapProtocolSsotJurisdictionsOnce",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "claimReleased",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "configureJurisdiction",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "stakeBps",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "hasJurisdictionStake",
-        "inputs":  [
-                       {
-                           "name":  "",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "initializeProxyStorage",
-        "inputs":  [
-                       {
-                           "name":  "owner_",
-                           "type":  "address",
-                           "internalType":  "address"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "jurisdictionsBootstrapped",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "minStakeAmount",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "owner",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "address"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "releasableAmount",
-        "inputs":  [
-                       {
-                           "name":  "user",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "releaseDelaySeconds",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "releaseVestSeconds",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "requestRelease",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "seatConcentrationRegistry",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "contract ITtgSeatConcentrationRegistry"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "setSeatConcentrationRegistry",
-        "inputs":  [
-                       {
-                           "name":  "registry",
-                           "type":  "address",
-                           "internalType":  "address"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "stake",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "amount",
-                           "type":  "uint256",
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "applicationId",
-                           "type":  "bytes32",
-                           "internalType":  "bytes32"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "stakes",
-        "inputs":  [
-                       {
-                           "name":  "",
-                           "type":  "address",
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "amount",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "applicationId",
-                            "type":  "bytes32",
-                            "internalType":  "bytes32"
-                        },
-                        {
-                            "name":  "stakedAt",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        },
-                        {
-                            "name":  "releaseRequestedAt",
-                            "type":  "uint64",
-                            "internalType":  "uint64"
-                        },
-                        {
-                            "name":  "releasedAmount",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        },
-                        {
-                            "name":  "active",
-                            "type":  "bool",
-                            "internalType":  "bool"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "stewardStakeBps",
-        "inputs":  [
-                       {
-                           "name":  "",
-                           "type":  "bytes2",
-                           "internalType":  "bytes2"
-                       }
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "transferOwnership",
-        "inputs":  [
-                       {
-                           "name":  "newOwner",
-                           "type":  "address",
-                           "internalType":  "address"
-                       }
-                   ],
-        "outputs":  [
-
-                    ],
-        "stateMutability":  "nonpayable"
-    },
-    {
-        "type":  "function",
-        "name":  "ttg",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "address",
-                            "internalType":  "contract IERC20"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "ttgTotalSupplyUnits",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "uint256",
-                            "internalType":  "uint256"
-                        }
-                    ],
-        "stateMutability":  "view"
-    },
-    {
-        "type":  "function",
-        "name":  "version",
-        "inputs":  [
-
-                   ],
-        "outputs":  [
-                        {
-                            "name":  "",
-                            "type":  "string",
-                            "internalType":  "string"
-                        }
-                    ],
-        "stateMutability":  "pure"
-    },
-    {
-        "type":  "event",
-        "name":  "JurisdictionConfigured",
-        "inputs":  [
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "stewardStakeBps",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "OwnershipTransferred",
-        "inputs":  [
-                       {
-                           "name":  "previousOwner",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "newOwner",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "ProtocolSsotJurisdictionsBootstrapped",
-        "inputs":  [
-
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "ProxyStorageInitialized",
-        "inputs":  [
-                       {
-                           "name":  "owner",
-                           "type":  "address",
-                           "indexed":  false,
-                           "internalType":  "address"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "SeatConcentrationRegistryUpdated",
-        "inputs":  [
-                       {
-                           "name":  "previousRegistry",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "registry",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "StewardReleaseRequested",
-        "inputs":  [
-                       {
-                           "name":  "user",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "at",
-                           "type":  "uint64",
-                           "indexed":  false,
-                           "internalType":  "uint64"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "StewardReleased",
-        "inputs":  [
-                       {
-                           "name":  "user",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "amount",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "event",
-        "name":  "StewardStaked",
-        "inputs":  [
-                       {
-                           "name":  "user",
-                           "type":  "address",
-                           "indexed":  true,
-                           "internalType":  "address"
-                       },
-                       {
-                           "name":  "jurisdiction",
-                           "type":  "bytes2",
-                           "indexed":  true,
-                           "internalType":  "bytes2"
-                       },
-                       {
-                           "name":  "amount",
-                           "type":  "uint256",
-                           "indexed":  false,
-                           "internalType":  "uint256"
-                       },
-                       {
-                           "name":  "applicationId",
-                           "type":  "bytes32",
-                           "indexed":  false,
-                           "internalType":  "bytes32"
-                       }
-                   ],
-        "anonymous":  false
-    },
-    {
-        "type":  "error",
-        "name":  "BelowMinStake",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidAddress",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidAmount",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "InvalidJurisdiction",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "JurisdictionAlreadyStaked",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "JurisdictionsAlreadyBootstrapped",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "NoActiveStake",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "NothingToRelease",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "OnlyOwner",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "ProxyStorageAlreadyInitialized",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "ReleaseDelayPending",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "ReleaseNotRequested",
-        "inputs":  [
-
-                   ]
-    },
-    {
-        "type":  "error",
-        "name":  "TransferFailed",
-        "inputs":  [
-
-                   ]
-    }
+  {
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "owner_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "ttgToken_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "ttgTotalSupplyUnits_",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "releaseDelaySeconds_",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "releaseVestSeconds_",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "bootstrapProtocolSsotJurisdictionsOnce",
+    "inputs": [],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "claimReleased",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "configureJurisdiction",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      },
+      {
+        "name": "stakeBps",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "hasJurisdictionStake",
+    "inputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "initializeProxyStorage",
+    "inputs": [
+      {
+        "name": "owner_",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "jurisdictionsBootstrapped",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "minStakeAmount",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "owner",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "releasableAmount",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "releaseDelaySeconds",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "releaseVestSeconds",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "requestRelease",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "seatConcentrationRegistry",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract ITtgSeatConcentrationRegistry"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "setSeatConcentrationRegistry",
+    "inputs": [
+      {
+        "name": "registry",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "stake",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "applicationId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "stakes",
+    "inputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "amount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "applicationId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "stakedAt",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "releaseRequestedAt",
+        "type": "uint64",
+        "internalType": "uint64"
+      },
+      {
+        "name": "releasedAmount",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "active",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "stewardStakeBps",
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes2",
+        "internalType": "bytes2"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "transferOwnership",
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "ttg",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IERC20"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "ttgTotalSupplyUnits",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "version",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "string",
+        "internalType": "string"
+      }
+    ],
+    "stateMutability": "pure"
+  },
+  {
+    "type": "event",
+    "name": "JurisdictionConfigured",
+    "inputs": [
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "stewardStakeBps",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "OwnershipTransferred",
+    "inputs": [
+      {
+        "name": "previousOwner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "newOwner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ProtocolSsotJurisdictionsBootstrapped",
+    "inputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ProxyStorageInitialized",
+    "inputs": [
+      {
+        "name": "owner",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "SeatConcentrationRegistryUpdated",
+    "inputs": [
+      {
+        "name": "previousRegistry",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "registry",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "StewardReleaseRequested",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "at",
+        "type": "uint64",
+        "indexed": false,
+        "internalType": "uint64"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "StewardReleased",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "StewardStaked",
+    "inputs": [
+      {
+        "name": "user",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "jurisdiction",
+        "type": "bytes2",
+        "indexed": true,
+        "internalType": "bytes2"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "applicationId",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "BelowMinStake",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidAddress",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidAmount",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidJurisdiction",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "JurisdictionAlreadyStaked",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "JurisdictionsAlreadyBootstrapped",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NoActiveStake",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NothingToRelease",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "OnlyOwner",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ProxyStorageAlreadyInitialized",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ReleaseDelayPending",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "ReleaseNotRequested",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "TransferFailed",
+    "inputs": []
+  }
 ]

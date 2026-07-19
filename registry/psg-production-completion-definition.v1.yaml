@@ -1,0 +1,147 @@
+schema: traveltrust.psg_production_completion_definition.v1
+machine_key: TT_PSG_PRODUCTION_COMPLETION_DEFINITION
+document_id: TT-PSG-PRODUCTION-COMPLETION-DEFINITION
+version: 1.1.0
+status: ACTIVE_SSOT
+recorded_utc: '2026-07-19T09:46:41Z'
+human_ssot: docs/runbook/TT-PSG-PRODUCTION-COMPLETION-DEFINITION-LATEST.md
+constitution_binding: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md#psg-production-completion
+full_capability_gate: registry/psg-production-full-capability-gate.v1.yaml
+coverage_matrix: registry/psg-production-capability-coverage-matrix.v1.yaml
+exit_criteria_v311: registry/v311-production-exit-criteria.v1.yaml
+exit_criteria_psg_release: docs/runbook/TT-PSG-RELEASE-EXIT-CRITERIA-AND-CHECKLIST-LATEST.md
+purpose: 'Define what "PSG complete" means for TravelTrust. Financial-Grade Web3 Protocol
+  Readiness is a first-class mandatory pillar of Production Completion — never an
+  optional side track and never satisfied by Web2 Coverage PASS alone.
+
+  '
+production_completion_equation: "PSG_COMPLETE =\n  Product_PASS\n  ∧ Data_PASS\n \
+  \ ∧ Security_PASS\n  ∧ Operations_PASS\n  ∧ Financial_Grade_Web3_Protocol_Readiness_PASS\n"
+forbidden_equations:
+- PSG_COMPLETE = Web2_Coverage_PASS_only
+- PSG_COMPLETE = Product_Data_Security_Operations_without_FG_Web3
+- PSG_COMPLETE = Track_A_FROZEN_or_CONDITIONAL_GO_Bar1
+- PSG_COMPLETE = Coverage_Measurement_FINAL_without_FG_Web3_gate
+- Production_GO = partial_feature_PASS
+- PREP_READY_equals_FG_Web3_PASS
+- Case_staged_equals_FG_Web3_PASS
+- dispersed_coverage_matrices_override_completion_matrix
+pillars:
+  Product:
+    must_pass: true
+    scope: user_business_closed_loop_journeys_and_product_certs
+  Data:
+    must_pass: true
+    scope: catalog_announcements_community_db_lifecycle_and_consistency_surfaces
+  Security:
+    must_pass: true
+    scope: RBAC_auth_signature_permission_contract_and_wallet_security
+  Operations:
+    must_pass: true
+    scope: CMS_OCS_admin_ops_monitoring_release_quality
+  Financial_Grade_Web3_Protocol_Readiness:
+    must_pass: true
+    optional: false
+    independent_elective: false
+    name_zh: 金融级 Web3 协议就绪
+    name_en: Financial-Grade Web3 Protocol Readiness
+    gate_alias: TT_FINANCIAL_GRADE_WEB3_PROTOCOL_READINESS
+    full_capability_gate_required: true
+    surfaces_must_all_pass:
+    - id: FG-01
+      name: Money-Path
+    - id: FG-02
+      name: Escrow_State_Machine
+    - id: FG-03
+      name: SettlementRouter
+    - id: FG-04
+      name: FeeRouter
+    - id: FG-05
+      name: Distributable
+    - id: FG-06
+      name: Steward_Revenue
+    - id: FG-07
+      name: Treasury
+    - id: FG-08
+      name: TTG_Governance
+    - id: FG-09
+      name: Timelock_Execute
+    - id: FG-10
+      name: Wallet_Security
+    - id: FG-11
+      name: RBAC
+    - id: FG-12
+      name: Indexer
+    - id: FG-13
+      name: OnChain_DB_UI_Consistency
+    - id: FG-14
+      name: Audit_Evidence
+    - id: FG-15
+      name: Observation_48H
+judgment_discipline:
+  default_includes_financial_grade_web3: true
+  any_psg_complete_claim_must_cite: TT_PSG_PRODUCTION_COMPLETION_DEFINITION
+  web2_coverage_alone_is_insufficient: true
+  bar1_conditional_go_is_not_psg_complete: true
+  mainnet_commercial_full_requires_all_five_pillars: true
+current_honest_rollup:
+  psg_complete: false
+  product: PARTIAL
+  data: PARTIAL_OR_PASS_SLICE
+  security: NEED_FIX
+  operations: PARTIAL
+  financial_grade_web3: NOT_READY
+  note: 'Formalizing FG-Web3 as mandatory does not invent PASS. Current Full Capability
+    Gate remains NOT_READY; Web2 Coverage FINAL must not be narrated as PSG complete.
+
+    '
+honesty:
+  equals_production_go_auto: false
+  mutates_economic_constitution_numbers: false
+  track_a_frozen_immutable: true
+coverage_acceptance_framework:
+  model: registry/psg-coverage-model-seven-dimensions.v1.yaml
+  dimensions_count: 8
+  d8: D8_FINANCIAL_GRADE_WEB3
+  threshold_matrix: registry/psg-coverage-acceptance-threshold-matrix.v1.yaml
+  measurement_final: registry/psg-coverage-measurement-final.v1.yaml
+  gap_map: registry/psg-release-surface-test-coverage-gap.v1.yaml
+  capability_matrix: registry/psg-production-capability-coverage-matrix.v1.yaml
+  fg_denom: 15
+  fg_pass: 0
+  web2_alone_insufficient: true
+fg_web3_prep:
+  audit_matrix: registry/psg-fg-web3-audit-matrix.v1.yaml
+  coverage_cases: registry/psg-fg-web3-coverage-cases.v1.yaml
+  evidence_schema: registry/psg-fg-web3-evidence-schema.v1.yaml
+  consistency_prep: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/CHAIN-INDEXER-API-DB-UI-CONSISTENCY-PREP-LATEST.json
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+  verdict: PREP_READY_AWAIT_G_RC_CLOSED
+unified_completion_matrix: registry/psg-production-completion-matrix.v1.yaml
+fg_web3_framework_freeze: true
+forbid_new_coverage_dimensions: true
+direction: FINANCIAL_PROTOCOL_ACCEPTANCE
+sole_execution_matrix: TT_PSG_PRODUCTION_COMPLETION_MATRIX
+sole_real_blockers_now:
+- G_RC_ETA_then_CLOSED
+- fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- FG_Web3_empirical_verification
+post_g_rc_closed_ladder_locked:
+- CLEAN_Deploy_fcg_full_capability_v2_sepolia
+- Escrow_wire_SettlementRouter
+- Chain_Indexer_API_DB_UI_Live_Consistency
+- FGCASE_01_to_15_empirical
+- RBAC_Security_Validation
+- Observation_48H
+- PSG_Completion_Gate_Recalculate
+forbid_new_capability_dimensions: true
+wait_window_allowed_work:
+- G_RC_Execute_preparation_only
+- Clean_Deploy_Ready_status_maintenance_only
+discipline_single_layer:
+  single_layer_pass_does_not_imply_psg_complete: true
+  requires_all_five_layers: true
+release_identity:
+  cdr19_required_for_production_certification: true
+  equivalence_chain: Source SHA = Deploy Artifact = Contract Bytecode = Evidence Package
+  forbid_premature_dirty_cleanup: true

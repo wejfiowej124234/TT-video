@@ -1,0 +1,28 @@
+# schema: traveltrust.v311_recovery_budget.v1
+machine_key: TT_V311_RECOVERY_BUDGET
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+gap_ids: [S-03, C-01, C-02]
+recorded_utc: "2026-07-18T12:30:00Z"
+stamp: "20260718T123000Z"
+
+recovery:
+  recovers_only: formal_registered_stake_ttg
+  recovered_inventory_name: Recovered_Public_Sale_Inventory
+  total_supply_invariant: unchanged
+
+budget:
+  status: OWNER_INPUT_REQUIRED
+  unit_options: [USDC, TTG_per_period]
+  forbid_unbounded_drain_of:
+    - GovernanceTreasuryP4Cap
+    - ProjectRevenuePool
+  execute_payout_requires_configured_budget: true
+  without_budget_allowed:
+    - register_stake_into_recovered_inventory
+    - freeze_stake_non_payout
+
+honesty:
+  live_budget_value: NOT_SET
+  phase_a_closes_with: registry_ssot_plus_contract_guard
+  payout_execution: DEFER_OWNER_INPUT_AND_DAO

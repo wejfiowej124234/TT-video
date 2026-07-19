@@ -1,0 +1,290 @@
+schema: traveltrust.psg_fcg_pay01_protocol_freeze.v1
+machine_key: TT_FCG_PAY01_PROTOCOL_FREEZE
+status: PAPER_FROZEN_STEPS_1_2_PLUS_STEP25_OA_CLOSED
+recorded_utc: '2026-07-19T08:54:37Z'
+release_target: MAINNET_COMMERCIAL_FULL
+production_go: false
+pass_claimed: false
+track_a: FROZEN_NO_MUTATION
+implements_code: false
+human_ssot: docs/runbook/TT-FCG-PAY-01-PROTOCOL-FREEZE-LATEST.md
+evidence_pack: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/FCG-PAY-01-PROTOCOL-FREEZE-LATEST.json
+cites:
+  constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+  money_path_plan: docs/runbook/TT-MONEY-PATH-TEST-PLAN-LATEST.md
+  exit_criteria: registry/v311-production-exit-criteria.v1.yaml
+  escrow_contract: contracts/src/Escrow.sol
+  service_fee_sm: contracts/src/ServiceFeeStatesV311.sol
+  split_lib: contracts/src/V311DistributableSplit.sol
+  order_state_offchain: crates/core/src/escrow.rs
+honesty:
+  this_freeze_equals_m_rc_pass: false
+  this_freeze_equals_production_go: false
+  coding_tre_reg_allowed: false
+  coding_blocked_until: GOVERNANCE_RC_CLOSED_AND_M_RC_00
+m_rc_00_governance_constraints:
+  required_before_start:
+  - GOVERNANCE_RC_CLOSED
+  - Owner_opens_Money_Path_RC
+  - design_option_OPT_A_or_OPT_B_locked
+  design_lock_cite: MP-IMPL-BASELINE-20260718-OPT-A
+  forbidden:
+  - start_while_governance_rc_open
+  - implement_without_design_lock
+  - mix_money_path_into_governance_rc_exit
+  evidence_required_at_start:
+  - evidence/GO_v311_constitution_production_alignment_audit/MONEY-PATH-RC-CHARTER-LATEST.json
+  - evidence/GO_v311_constitution_production_alignment_audit/MONEY-PATH-RC-DESIGN-LATEST.json
+  current_blocker:
+    governance_rc_mode_now: FROZEN_WAITING_EXECUTE
+    money_path_rc_status: REGISTERED_NOT_STARTED
+fund_model:
+  unit_of_account: USDC
+  destination_country_ssot: Order.destination_country
+  platform_service_fee_bps:
+    default: 500
+    max: 1000
+    sealed_at: EscrowCreated
+  payment_entry:
+    who_pays: traveler
+    asset: USDC_ERC20
+    entry_fn: Escrow.deposit(amount)
+    precondition: escrow_status_Created_AND_amount_eq_totalAmount
+    lock_target: Escrow_contract_balance
+    after: escrow_status_Funded_AND_serviceFee_LOCKED
+  escrow_lock:
+    where: Order_Escrow_rail
+    what_locked: totalAmount_principal_plus_embedded_platform_fee_leg
+    cannot_commingle_with:
+    - GovernanceTreasuryP4Cap
+    - Project_Revenue_Pool
+    - Founder_Bootstrap_Wallet
+  completion_trigger:
+    target_state_onchain: Completed
+    primary_fn: Escrow.release
+    precondition: status_Funded
+    target_actor_policy: LOCKED_STEP25_DUAL_CONFIRM_OR_TIMEOUT_EXECUTOR
+    notes:
+    - AS_IS_contract_release_callable_when_Funded_without_role_gate
+    - TARGET_must_lock_actor_policy_before_coding
+  release_conditions:
+    happy_path:
+    - status_Funded
+    - service_completed_or_completion_attestation_per_product_policy
+    - no_open_dispute
+    outputs:
+      guide_amount: floor_total_times_10000_minus_feeBps_over_10000
+      platform_fee_leg: totalAmount_minus_guide_amount
+    after_release:
+      escrow_status: Completed
+      offchain_order: Completed
+      service_fee_sm: LOCKED_then_DISTRIBUTABLE_then_DISTRIBUTED_per_wiring_policy
+  refund_conditions:
+    full_refund:
+      fn: Escrow.refund
+      actor: traveler_only
+      from: Funded
+      amount: totalAmount_to_traveler
+      after: Refunded
+      distributable: ZERO_no_45_55
+    partial_refund:
+      fn: Escrow.releasePartialRefund
+      from: Funded
+      traveler_refund: gt_0_and_lt_total
+      remainder_split: same_as_release_bps
+      after: PartiallyRefunded
+    cancel_before_fund:
+      offchain_only: Cancelled
+      no_onchain_escrow_funds: true
+  dispute_conditions:
+    open:
+      fn: Escrow.openDispute
+      from: Funded
+      after: Disputed
+      target_actor_policy: OWNER_INPUT_AT_M_RC_00
+    resolve:
+      fn: Escrow.executeResolution
+      from: Disputed
+      conservation: guide_plus_travelerRefund_plus_platformFee_eq_total
+      after: Resolved
+      target_actor: arbitrator
+    offchain_map:
+      Disputed: Disputed
+      Resolution_to_guide_fullish: Completed
+      Resolution_full_traveler: Refunded
+      Resolution_split: PartiallyRefunded_or_Completed_per_amounts
+    target_actor_policy: LOCKED_STEP25_TRAVELER_OR_GUIDE_OPEN
+    resolve_caller: LOCKED_STEP25_PROTOCOL_EXECUTOR
+    arbitrator: Escrow.arbitrator_sealed_at_create
+  fee_router_four_rails:
+    rail_1_order_escrow:
+      id: Order_Escrow
+      holds: order_principal_refunds_disputes
+    rail_2_p4cap:
+      id: GovernanceTreasuryP4Cap
+      holds: public_sale_and_recovery_resale_usdc
+    rail_3_project_revenue_pool:
+      id: Project_Revenue_Pool
+      holds: distributable_platform_share_55_or_100
+    rail_4_founder_bootstrap:
+      id: Founder_Bootstrap_Wallet
+      holds: platform_access_fee_300000_usdc
+    isolation: PERMANENT_NO_COMMINGLE
+    test_plan_alias_map:
+      Track_A_draft: Order_Escrow
+      Track_B_draft: GovernanceTreasuryP4Cap
+      Track_C_draft: Project_Revenue_Pool
+      Track_D_draft: Founder_Bootstrap_Wallet
+  distributable_computation:
+    vocabulary_ssot: SERVICE_FEE_PENDING_LOCKED_DISTRIBUTABLE_DISTRIBUTED
+    test_plan_reg04_vocabulary: DRAFT_SUPERSEDED_BY_CONSTITUTION_SM
+    definition: 'Distributable Platform Service Fee =
+
+      platform service fee leg AFTER refunds, disputes, chargebacks deductions.
+
+      Only amounts that reach SERVICE_FEE_DISTRIBUTABLE may enter 45/55 (or 100% PRP).
+
+      '
+    forbidden: allocate_raw_platform_service_fee_revenue_before_distributable
+    split_when_steward_active:
+      steward_bps: 4500
+      project_revenue_pool_bps: 5500
+    split_when_no_steward:
+      steward_bps: 0
+      project_revenue_pool_bps: 10000
+    library_cite: contracts/src/V311DistributableSplit.sol
+  steward_revenue_entitlement:
+    condition: destination_country_has_ACTIVE_steward
+    share_of_distributable: 45_percent
+    path: country_steward_revenue_path
+    when_inactive_or_absent: 0_percent_all_to_PRP
+    maps_to_fcg: FCG-STEWARD-01
+  treasury_allocation:
+    governance_treasury_p4cap: public_sale_usdc_and_recovery_resale_only
+    project_revenue_pool: distributable_55_or_100_platform_share
+    not_from_order_escrow_principal: true
+  settlement_architecture_ssot: Escrow→SettlementRouter→FeeRouter→Distributable→Distribution
+  legacy_direct_platform_pay: LEGACY_NON_SSOT
+  distributable_sm_includes_settlement_ready: true
+state_mapping_matrix:
+  equality_rule: onchain_event_amounts_eq_db_eq_api_eq_ui_eq_indexer_projection
+  rows:
+  - event: EscrowCreated
+    indexer: index_EscrowCreated
+    db_order: Created_or_Accepted_pending_fund
+    api: state=created|accepted
+    ui: Pending payment / Awaiting deposit
+  - event: Deposited
+    indexer: index_Deposited
+    db_order: Escrowed
+    api: state=escrowed
+    ui: In progress / Funds locked
+    service_fee: SERVICE_FEE_LOCKED
+  - event: Released
+    indexer: index_Released
+    db_order: Completed
+    api: state=completed
+    ui: Completed
+    service_fee: DISTRIBUTABLE_then_DISTRIBUTED_per_wiring
+    notes: must_not_show_Failed_if_tx_success
+  - event: Refunded
+    indexer: index_Refunded
+    db_order: Refunded
+    api: state=refunded
+    ui: Refunded
+  - event: PartialRefundExecuted
+    indexer: index_PartialRefundExecuted
+    db_order: PartiallyRefunded
+    api: state=partially_refunded
+    ui: Partially refunded
+  - event: SlashedExecuted
+    indexer: index_SlashedExecuted
+    db_order: Slashed
+    api: state=slashed
+    ui: Slashed
+  - event: DisputeOpened
+    indexer: index_DisputeOpened
+    db_order: Disputed
+    api: state=disputed
+    ui: Dispute open
+  - event: ResolutionExecuted
+    indexer: index_ResolutionExecuted
+    db_order: Completed_or_Refunded_or_PartiallyRefunded_per_amounts
+    api: state_per_amount_map
+    ui: Resolved
+  - event: ServiceFeeStateChanged
+    indexer: index_ServiceFeeStateChanged
+    db: service_fee_state_column_or_projection
+    api: service_fee_state
+    ui: optional_advanced_only
+m_rc_mapping_draft:
+  TRE-02:
+    gate: M-RC-01
+    freeze_covers:
+    - 45_55_and_100_PRP_rules
+    - LEGACY_not_ssot
+    - V311DistributableSplit_cite
+    still_open_for_impl:
+    - live_onchain_or_runtime_split_proof
+    - FeeRouter_wiring_beyond_platformFeeRecipient_transfer
+    as_is_gap: 'Escrow.release currently pays fee to platformFeeRecipient and advances
+
+      service fee LOCKED→DISTRIBUTABLE→DISTRIBUTED in-tx without steward 45/55 rails
+      proof.
+
+      '
+  REG-01:
+    gate: M-RC-02
+    freeze_covers:
+    - four_rail_ids_and_isolation
+    - alias_map_from_test_plan_tracks
+    still_open_for_impl:
+    - live_non_null_addresses_matrix
+    - isolation_proof_evidence
+  REG-04:
+    gate: M-RC-03
+    freeze_covers:
+    - PENDING_LOCKED_DISTRIBUTABLE_DISTRIBUTED_as_ssot
+    - no_payout_before_DISTRIBUTABLE
+    still_open_for_impl:
+    - runtime_enforcement_evidence
+    - indexer_projection_proof
+    vocabulary_converge: 'Test Plan CLAIMABLE/CLAIMED draft → converge to constitution
+      SM before coding.
+
+      '
+  M-RC-04:
+    gate: M-RC-04
+    freeze_covers:
+    - reaudit_inputs_list
+    - equality_rule
+    still_open_for_impl:
+    - constitution_money_path_slice_PASS_evidence
+    - OPEN_BLOCKING_0_after_impl
+open_alignment_items:
+- id: OA-PAY-01
+  item: Release dual-confirm/timeout/executor; Dispute open→evidence→arbitrate→executor
+    executeResolution
+  result: CLOSED_ON_PAPER
+  closure: registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+- id: OA-PAY-02
+  item: Direct platformFeeRecipient path = LEGACY_NON_SSOT
+  result: CLOSED_ON_PAPER
+  closure: registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+- id: OA-PAY-03
+  item: Escrow→SettlementRouter→FeeRouter→Distributable→Distribution is TARGET SSOT
+  result: CLOSED_ON_PAPER
+  closure: registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+- id: OA-PAY-04
+  item: executeResolution caller = Protocol Executor with arbitrator decisionHash
+    binding
+  result: CLOSED_ON_PAPER
+  closure: registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+- id: OA-PAY-05
+  item: No-skip SM + SettlementReady required before DISTRIBUTABLE
+  result: CLOSED_ON_PAPER
+  closure: registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+step25:
+  status: PAPER_CLOSED_OA_PAY_01_TO_05
+  registry: registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+  human: docs/runbook/TT-FCG-PAY-01-STEP25-AMBIGUITY-CLOSURE-LATEST.md

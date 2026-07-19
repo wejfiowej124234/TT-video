@@ -1,0 +1,38 @@
+# schema: traveltrust.v311_cert_dataset_sepolia_only.v1
+machine_key: TT_V311_CERT_DATASET_SEPOLIA_ONLY
+status: ACTIVE
+phase: "2"
+recorded_utc: "2026-07-18T11:20:00Z"
+human: docs/runbook/TT-V311-FINAL-RELEASE-ENGINEERING-LATEST.md
+
+# Hard rule: every cert (Function / Product / UI/UX / PSG / RC) uses pure Sepolia only.
+rule: PURE_SEPOLIA_DATASET_ONLY
+required_chain_id: 11155111
+network: sepolia
+
+forbid:
+  - chain_id_31337
+  - local_anvil_seed
+  - mock_escrow_addresses
+  - historical_test_projections_mixed_into_cert
+  - cross_chain_orders_bleed_into_reconcile
+
+auto_fail_if:
+  - cert_run_chain_id_ne_11155111
+  - live_reconcile_stats_chain_id_ne_11155111
+  - seed_fixture_escrow_present_in_cert_scope
+  - mock_or_placeholder_escrow_pattern_detected
+
+seed_isolation:
+  description: >
+    Fixture/mock escrow rows (e.g. 0x2222… / 0x3333… under f0e0* ids) must be
+    cleared or excluded from Sepolia cert scope before I-01 PASS.
+  quarantine_script: scripts/dev/quarantine-v311-cert-seed-escrows.sh
+
+indexer_live:
+  machine_key: TT_V311_INDEXER_LIVE_RECONCILE
+  pass_requires:
+    - chain_id_11155111
+    - issues_total_0
+    - projection_reconcile_clean_true
+    - no_31337_in_cert_payload

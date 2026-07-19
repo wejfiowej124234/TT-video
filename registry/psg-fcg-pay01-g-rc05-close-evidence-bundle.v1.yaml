@@ -1,0 +1,25 @@
+schema: traveltrust.psg_fcg_pay01_g_rc05_close_bundle.v1
+machine_key: TT_FCG_PAY01_G_RC05_CLOSE_EVIDENCE_BUNDLE
+status: STAGED_WAIT_WINDOW_ARMED_S1_ONLY
+recorded_utc: '2026-07-19T09:09:49Z'
+governance_rc_closed: false
+preauth_mode: PREAUTH_ONLY
+v2_plan: UNCHANGED
+bundle_root: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/g-rc-05-close-bundle/
+human_ssot: docs/runbook/TT-FCG-PAY-01-G-RC-05-CLOSE-EVIDENCE-BUNDLE-LATEST.md
+index: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/g-rc-05-close-bundle/G-RC-05-CLOSE-EVIDENCE-BUNDLE-INDEX-LATEST.json
+forbidden_until_g_rc_05:
+- Step3_coding
+- deploy_broadcast
+- ACTIVE_baseline_flip
+- Production_GO
+blocking_now:
+- BEFORE_ETA_EXECUTE
+- FUNCTION_OWNER_REQUIRED_4
+- I01_NEEDS_SEPOLIA_11155111
+- UI_PLAYWRIGHT_REAL_TX_OPEN
+- WC_KEY_ABSENT
+- PRODUCT_OPEN
+eta_execute_after_utc: '2026-07-20T11:37:37Z'
+latest_session: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/g-rc-05-close-bundle/G-RC-CLOSURE-CONVERGENCE-SESSION-LATEST.json
+s1_arm: registry/psg-fcg-pay01-g-rc-wait-window-s1-arm.v1.yaml

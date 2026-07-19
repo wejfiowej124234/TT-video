@@ -1,0 +1,417 @@
+schema: traveltrust.psg_protocol_v2_clean_deploy_ready_checklist.v1
+machine_key: TT_PROTOCOL_V2_CLEAN_DEPLOY_READY_CHECKLIST
+status: G_RC_CLOSED_CDR19_SCOPE_CONFIRMED_CLEAN_DEPLOY_LOCKED
+recorded_utc: '2026-07-19T09:59:49Z'
+human_ssot: docs/runbook/TT-PROTOCOL-V2-CLEAN-DEPLOY-READY-CHECKLIST-LATEST.md
+evidence_pack: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/PROTOCOL-V2-CLEAN-DEPLOY-READY-CHECKLIST-LATEST.json
+preauth_only: true
+wait_window: true
+governance_rc_closed: false
+broadcast_forbidden_now: true
+active_flip_forbidden_now: true
+protocol_v2_implementation_forbidden_now: false
+go_claim_forbidden: true
+planned_active_after_g_rc_closed: fcg_full_capability_v2_sepolia
+current_active_baseline: v311_sepolia_clean_baseline
+old_baseline_after_cutover: LEGACY_READ_ONLY
+forbid_continue_old_baseline_as_commercial_ssot: true
+local_git_snapshot:
+  branch: feature/g23-04-abi-event-freeze
+  head_sha: f8181b63507fe339e23a1e5285c4242a8bb3507e
+  ahead_of_traveltrust_v11_tracking: 16
+  behind_tracking: 0
+  note: Local has uncommitted/untracked FCG-PAY / V311 prep trees — commit/sync before
+    Clean Deploy broadcast
+alignment_surfaces:
+  contracts:
+    present:
+    - contracts/script/DeployFcgFullCapabilityV2Sepolia.s.sol
+    - contracts/script/DeployV311SepoliaCleanBaseline.s.sol
+    - contracts/src/Escrow.sol
+    - contracts/src/FeeRouter.sol
+    - contracts/src/ISettlementRouter.sol
+    - contracts/src/ProjectRevenuePoolV311.sol
+    - contracts/src/ServiceFeeStatesV311.sol
+    - contracts/src/SettlementRouter.sol
+    - contracts/src/V311DistributableSplit.sol
+    missing_target: []
+    status: SETTLEMENT_ROUTER_PREP_LANDED_AWAIT_G_RC_FOR_BROADCAST
+  abi_local_pair:
+    Escrow.json: MATCH
+    FeeRouter.json: MATCH
+    EscrowFactory.json: MATCH
+    note: contracts/abi ↔ frontend/dapp/abis sha256 prefix match
+  api:
+    present:
+    - crates/api/src/chain/indexer.rs
+    - crates/core/src/service_fee_state_v311.rs
+    - crates/core/src/indexer_v311_projections.rs
+    status: PRESENT_NEEDS_V2_ADDRESS_REBIND_AT_CUTOVER
+  frontend:
+    present:
+    - frontend/dapp/abis/Escrow.json
+    - frontend/dapp/abis/FeeRouter.json
+    - frontend/lib/v311/
+    status: PRESENT_NEEDS_META_AND_ENV_REBIND_TO_V2
+  registry:
+    active_now: v311_sepolia_clean_baseline
+    planned_v2_key: fcg_full_capability_v2_sepolia
+    plans_present:
+    - registry/psg-protocol-v2-testnet-deployment-plan.v1.yaml
+    - registry/psg-fcg-pay01-gov-rc-closure-prep-v2-redeploy.v1.yaml
+    - registry/web3-active-execution-matrix.v1.yaml
+    status: ACTIVE_UNCHANGED_CORRECT_FOR_WAIT_WINDOW
+  staging:
+    wallet_ui_deploy_status: FROZEN_PASS_UI_ALIGNED_OA_OPEN
+    note: Staging tip evidence dated 2026-07-18 — re-align staging to post-G-RC Clean
+      Deploy SHA after broadcast
+  local_git_staging:
+    local_head: f8181b63507fe339e23a1e5285c4242a8bb3507e
+    tracking_ahead: 16
+    status: LOCAL_AHEAD_OF_REMOTE_TRACKING_SYNC_BEFORE_DEPLOY
+checklist:
+- id: CDR-01
+  item: G-RC-05_CLOSED
+  ready: false
+  blocker: WAIT_WINDOW_before_ETA_and_ladder
+- id: CDR-02
+  item: PREAUTH_and_Step25_and_LadderLock_attached
+  ready: true
+- id: CDR-03
+  item: SettlementRouter_source_exists
+  ready: true
+  blocker: null
+  note: ISettlementRouter + SettlementRouter landed (prep · not deployed)
+- id: CDR-04
+  item: Escrow_wired_to_SettlementRouter_not_LEGACY_direct_pay_ssot
+  ready: false
+  blocker: POST_G_RC_implementation
+- id: CDR-05
+  item: FeeRouter_V311_distributable_routing_ready_to_deploy
+  ready: partial
+  note: FeeRouter.sol + V311DistributableSplit present; full V311 route SSOT wiring
+    still impl window
+- id: CDR-06
+  item: Distributable_SM_SETTLEMENT_READY_observable
+  ready: partial
+  note: SERVICE_FEE_SETTLEMENT_READY enum + LEGACY_COMPAT LOCKED→DISTRIBUTABLE; Escrow
+    rewire still post-G-RC
+- id: CDR-07
+  item: Deploy_script_for_fcg_full_capability_v2_sepolia
+  ready: true
+  blocker: null
+  note: DeployFcgFullCapabilityV2Sepolia.s.sol prep · broadcast gated
+- id: CDR-08
+  item: Registry_cutover_plan_documented
+  ready: true
+  note: Flip active to fcg_full_capability_v2; old v311_sepolia_clean_baseline → LEGACY_READ_ONLY
+- id: CDR-09
+  item: Indexer_rebind_plan
+  ready: true
+  note: DEP-V2-06 documented; execute only at cutover
+- id: CDR-10
+  item: Frontend_API_env_rebind_plan
+  ready: true
+  note: DEP-V2-07; /meta.chain.contracts → v2 only after cutover
+- id: CDR-11
+  item: Evidence_root_GO_phase2_fcg_full_capability_v2_sepolia
+  ready: partial
+  blocker: Broadcast_artifacts_TBD_after_G_RC_CLOSED
+  note: Evidence root + pending pack created; broadcast artifacts still TBD
+- id: CDR-12
+  item: Forbid_broadcast_MoneyPath_Settlement_FeeRouter_Distributable_until_G_RC_CLOSED
+  ready: true
+  enforced_now: true
+- id: CDR-13
+  item: Local_Git_Staging_SHA_alignment_for_deploy_candidate
+  ready: partial
+  blocker: Commit/sync before broadcast still required
+  note: SHA baseline recorded head=f8181b63507f ahead=16 dirty=546
+- id: CDR-14
+  item: Immediately_after_G_RC_CLOSED_use_latest_Clean_Deploy_not_old_baseline
+  ready: true
+  policy: LOCKED
+- id: CDR-15
+  item: FG_Web3_audit_matrix_staged
+  ready: true
+  note: psg-fg-web3-audit-matrix · 15 surfaces IN denom
+- id: CDR-16
+  item: FG_Web3_15_coverage_cases_staged
+  ready: true
+  note: FGCASE-FG-01..15 CASE_STAGED_NOT_EXECUTED
+- id: CDR-17
+  item: Chain_Indexer_API_DB_UI_verify_harness_prep
+  ready: true
+  note: verify-fg-web3-chain-indexer-api-db-ui-prep.py · PREP_ONLY
+- id: CDR-18
+  item: FG_evidence_schema_and_threshold_aligned
+  ready: true
+  note: evidence schema + Financial_Grade_Web3 denom=15 aligned
+- id: CDR-19
+  item: Release_Identity_Closure
+  ready: false
+  blocker: Owner_Release_Scope_confirm
+  note: 'Do NOT clean dirty before G-RC CLOSED. After CLOSED: audit→classify→commit→pin→bind→PASS→deploy.'
+  gap_class: Release_Engineering_NOT_Functional_Defect
+  pass_requires:
+  - dirty_audit_inventory
+  - full_classification
+  - commit_release_scope_only
+  - unique_Release_SHA_pinned
+  - deploy_artifact_bound
+  - contract_build_output_bound
+  - evidence_manifest_bound
+  - equivalence_chain_proven
+  forbid_before_g_rc_closed:
+  - commit_pin
+  - broadcast
+  - clean_deploy
+  - ACTIVE_flip
+  after_pass_allows:
+  - fcg_full_capability_v2_sepolia_CLEAN_Deploy
+  execution_forbidden_until_g_rc_closed: true
+  goal: Prove_deployed_bytes_equal_audited_Release_SHA
+  not_goal: Make_git_clean_for_its_own_sake
+  sequence:
+  - Dirty_Audit
+  - Change_Classification
+  - Commit_Release_Scope_Only
+  - Release_SHA_Pin
+  - Artifact_Binding
+  - Evidence_Manifest_Binding
+  - CDR19_PASS
+  - Clean_Deploy_only_if_pass
+  classify_buckets:
+  - Release
+  - Temp
+  - Evidence
+  - Reject_Delete
+  forbid: &id001
+  - one_shot_dirty_cleanup_then_deploy
+  - pin_without_classification
+  - deploy_without_audited_sha_bind
+  elevated_to: Production_Certification_hard_requirement
+  equivalence_required: Source SHA = Deploy Artifact = Contract Bytecode = Evidence
+    Package
+  forbid_premature_dirty_cleanup: true
+  phase: Release_Scope_Classification
+forbidden_now:
+- forge_script_broadcast_SettlementRouter
+- forge_script_broadcast_FeeRouter_money_path_v2
+- forge_script_broadcast_Distributable_controllers
+- ACTIVE_baseline_flip_to_fcg_full_capability_v2_sepolia
+- claim_Production_GO
+- Escrow_SettlementRouter_wiring_broadcast_before_G_RC_CLOSED
+- ACTIVE_flip_before_G_RC_CLOSED
+post_g_rc_closed_immediate:
+- open_M_RC_00_if_required_by_Exit_Criteria
+- Escrow_wire_to_SettlementRouter_then_CLEAN_deploy
+- CLEAN_deploy_fcg_full_capability_v2_sepolia_latest_SHA
+- Registry_ACTIVE_flip_old_to_LEGACY_READ_ONLY
+- Indexer_FE_API_rebind
+- Evidence_bind
+- then_TRE_REG_and_Step3_on_NEW_stack_only
+honesty:
+  checklist_equals_deploy_ready_pass: false
+  checklist_authorizes_broadcast: false
+  settlement_router_missing_is_expected_pre_impl: false
+  settlement_router_prep_landed_no_broadcast: true
+  pending_pack_ready: true
+  prep_ready_equals_fg_pass: false
+  case_staged_equals_fg_pass: false
+  web2_coverage_equals_psg_complete: false
+  single_layer_pass_equals_psg_complete: false
+  all_five_layers_required: true
+  cdr19_is_release_engineering_gap_not_functional_defect: true
+  prep_ready_does_not_waive_cdr19: true
+pending_pack: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/CLEAN-DEPLOY-PENDING-PACK-LATEST.json
+git_sha_baseline: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/GIT-SHA-BASELINE-LATEST.json
+protocol_v2_escrow_wiring_forbidden_now: true
+protocol_v2_prep_code_landed: true
+fg_web3_prep:
+  audit_matrix: registry/psg-fg-web3-audit-matrix.v1.yaml
+  coverage_cases: registry/psg-fg-web3-coverage-cases.v1.yaml
+  evidence_schema: registry/psg-fg-web3-evidence-schema.v1.yaml
+  consistency_prep: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/CHAIN-INDEXER-API-DB-UI-CONSISTENCY-PREP-LATEST.json
+  verify_script: scripts/dev/verify-fg-web3-chain-indexer-api-db-ui-prep.py
+  verdict: PREP_READY_AWAIT_G_RC_CLOSED
+completion_matrix: registry/psg-production-completion-matrix.v1.yaml
+fg_web3_framework_freeze: true
+forbid_new_coverage_dimensions: true
+post_g_rc_closed_ladder_locked:
+- G_RC_CLOSED
+- CDR-19_Release_Identity_Closure_PASS
+- fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- Escrow_SettlementRouter_Integration
+- Live_Consistency_and_FGCASE_L1_L5_Validation
+- TT_PSG_PRODUCTION_COMPLETION_MATRIX_Recalculate
+- Production_Certification
+forbid_new_capability_dimensions: true
+wait_window_allowed_work:
+- G_RC_Execute_preparation_only
+- Clean_Deploy_Ready_status_maintenance_only
+preconditions_check:
+  artifact: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/CLEAN-DEPLOY-PRECONDITIONS-CHECK-LATEST.json
+  verdict: CLEAN_DEPLOY_PRECONDITIONS_MAINTAINED_WAIT_G_RC
+  prep_ready: true
+  broadcast_ready: false
+framework_frozen: true
+forbid_new_coverage_capability_audit_systems: true
+forbid_new_test_systems: true
+release_sha_convergence:
+  required_before_clean_deploy: true
+  steps:
+  - dirty_cleanup
+  - commit_pin
+  - deploy_artifact_bind
+  current:
+    branch: feature/g23-04-abi-event-freeze
+    head: f8181b63507fe339e23a1e5285c4242a8bb3507e
+    ahead: 16
+    behind: 0
+    dirty_count: 564
+    converged: false
+    note: 'WAIT_WINDOW: do not commit unless Owner asks; converge only after G-RC
+      CLOSED before Clean Deploy'
+completion_matrix_frozen: true
+release_identity: &id002
+  control: CDR-19_Release_Identity_Closure
+  purpose: Every deploy/evidence/PSG Completion must bind a determinate source SHA
+  risk_if_skipped: Evidence_A→Contract_Address→unknown_Git_SHA→audit_unprovable
+  before_g_rc_closed:
+    commit_pin: false
+    broadcast: false
+    deploy: false
+  current_snapshot:
+    head: f8181b63507fe339e23a1e5285c4242a8bb3507e
+    dirty_count: 564
+    ahead: 16
+    behind: 0
+    dirty_untouched_until_g_rc_closed: true
+    cdr19: OPEN
+  execution: ARMED_AFTER_G_RC_CLOSED_ONLY
+  goal: Prove_deployed_bytes_equal_audited_Release_SHA
+  not_goal: Make_git_clean_for_its_own_sake
+  discipline:
+    goal: Prove_deployed_bytes_equal_audited_Release_SHA
+    not_goal: Make_git_clean_for_its_own_sake
+    forbid: *id001
+    sequence_locked:
+    - dirty_audit
+    - classify
+    - commit
+    - sha_pin
+    - deploy_only_if_cdr19_pass
+    classify_buckets:
+    - id: MUST_ENTER_RELEASE
+      action: include_in_release_commit_scope
+    - id: TEST_TEMP
+      action: exclude_or_gitignore_do_not_ship
+    - id: EVIDENCE
+      action: bind_to_manifest_separate_from_runtime_deploy
+    - id: OBSOLETE
+      action: discard_or_revert_do_not_enter_release
+    pass_requires:
+    - dirty_audit_complete_with_inventory
+    - every_path_classified_into_one_bucket
+    - release_commit_contains_only_MUST_ENTER_RELEASE
+    - unique_Release_SHA_pinned
+    - deploy_artifact_bound_to_Release_SHA
+    - evidence_manifest_bound_to_Release_SHA
+    core_statement: CDR-19 proves the thing deployed is the version that was reviewed
+      — not that the working tree became empty.
+  forbid_one_shot_cleanup_then_deploy: true
+  elevated_to: Production_Certification_hard_requirement
+  equivalence_chain:
+    chain:
+    - Source_SHA
+    - Deploy_Artifact
+    - Contract_Bytecode
+    - Evidence_Package
+    operator: EQUALS
+    required_for: Production_Certification
+    statement: Source SHA = Deploy Artifact = Contract Bytecode = Evidence Package
+  sequence_v2:
+  - n: 1
+    step: Dirty_Audit
+  - n: 2
+    step: Change_Classification
+    buckets:
+    - Release
+    - Temp
+    - Evidence
+    - Reject_Delete
+  - n: 3
+    step: Commit_Release_Scope_Only
+  - n: 4
+    step: Release_SHA_Pin
+  - n: 5
+    step: Artifact_Binding
+  - n: 6
+    step: Evidence_Manifest_Binding
+  - n: 7
+    step: CDR19_PASS
+  - n: 8
+    step: Clean_Deploy_only_if_pass
+  forbid_premature_dirty_cleanup: true
+  forbid_premature_reasons:
+  - risk_lose_pending_review_changes
+  - risk_mix_non_release_scope_into_version
+  - risk_break_SHA_audit_chain
+  correct_method: classify_first_then_commit
+  status: SCOPE_CONFIRMED
+  forbid_now:
+  - modify_dirty
+  - premature_commit
+  - generate_Release_SHA
+  authenticity_control:
+    purpose: Prevent_test_A_deploy_B_evidence_C
+    required_for: Financial_Grade_Web3
+    equivalence: Source_SHA = Deploy_Artifact = Contract_Bytecode = Evidence_Package
+  phase: Release_Scope_Classification
+  dirty_audit_counts:
+    Evidence: 110
+    Release: 452
+    Temp: 3
+  RELEASE_SCOPE_MODE: CONTROLLED_MINIMUM_RELEASE
+  controlled_minimum_count: 168
+  deferred_review_count: 284
+  evidence_separate_count: 110
+dual_gates:
+  G_RC:
+    concern: Governance_Authorization
+    status: WAITING_EXECUTE
+    must_pass_before_deploy: true
+  CDR_19:
+    concern: Release_Authenticity
+    status: NOT_STARTED
+    blocked_until: G_RC_CLOSED
+    must_pass_before_deploy: true
+    forbid_now:
+    - modify_dirty
+    - premature_commit
+    - generate_Release_SHA
+clean_deploy: LOCKED
+psg_completion: NOT_STARTED
+no_new_work_now: true
+sole_sequence_locked:
+- G_RC_CLOSED
+- CDR-19_Release_Identity_Closure
+- fcg_full_capability_v2_sepolia_Clean_Deploy
+- L1_Product
+- L2_Data
+- L3_Security
+- L4_Operations
+- L5_Financial_Grade_Web3
+- PSG_Completion_Recalculate
+- Production_Certification
+on_g_rc_closed_immediate:
+- CDR-19_dirty_audit_classify
+- Release_Scope_confirm
+- Commit
+- Release_SHA_Pin
+- Artifact_Bytecode_Evidence_bind
+- CDR19_PASS_then_fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- TT_PSG_PRODUCTION_COMPLETION_MATRIX_L1_L5_full_FG_acceptance
+g_rc_closed: true
+cdr19_release_identity: *id002

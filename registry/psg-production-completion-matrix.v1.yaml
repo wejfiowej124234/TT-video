@@ -1,0 +1,293 @@
+schema: traveltrust.psg_production_completion_matrix.v1
+machine_key: TT_PSG_PRODUCTION_COMPLETION_MATRIX
+document_id: TT-PSG-PRODUCTION-COMPLETION-MATRIX
+version: 1.0.0
+status: ACTIVE_SSOT_FRAMEWORK_FROZEN_WAIT_WINDOW_HOLD_NO_NEW_WORK
+recorded_utc: '2026-07-19T09:58:19Z'
+human_ssot: docs/runbook/TT-PSG-PRODUCTION-COMPLETION-MATRIX-LATEST.md
+completion_definition: registry/psg-production-completion-definition.v1.yaml
+constitution_binding: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md#psg-production-completion
+fg_web3_framework_freeze: true
+forbid_new_coverage_dimensions: true
+phase: WAIT_WINDOW_G_RC_EXEC_PREP_AND_CLEAN_DEPLOY_READY_ONLY
+direction: FINANCIAL_PROTOCOL_ACCEPTANCE
+equation: "PSG_COMPLETE =\n  Layer1_Product_PASS\n  ∧ Layer2_Data_PASS\n  ∧ Layer3_Security_PASS\n\
+  \  ∧ Layer4_Operations_PASS\n  ∧ Layer5_Financial_Grade_Web3_PASS\n"
+forbidden_claims:
+- PREP_READY_equals_FG_PASS
+- Case_staged_equals_FG_PASS
+- Web2_Coverage_PASS_equals_PSG_COMPLETE
+- Measurement_FINAL_Journey_Data_UI_equals_Layer5_PASS
+- Bar1_CONDITIONAL_GO_equals_PSG_COMPLETE
+- Track_A_FROZEN_equals_PSG_COMPLETE
+- any_single_layer_PASS_equals_PSG_COMPLETE
+- L1_or_L2_or_L3_or_L4_PASS_alone_equals_PSG_COMPLETE
+- L5_partial_or_prep_equals_PSG_COMPLETE
+sole_real_blockers_now:
+- G_RC_ETA_then_CLOSED
+- fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- FG_Web3_empirical_verification_FGCASE_01_to_15
+post_g_rc_closed_ladder_locked:
+- id: S0
+  step: CDR-19_Release_Identity_Closure
+- id: S1
+  step: fcg_full_capability_v2_sepolia_CLEAN_Deploy
+- id: S2
+  step: Escrow_SettlementRouter_Integration
+- id: S3
+  step: Live_Chain_Indexer_API_DB_UI_Consistency
+- id: S4
+  step: FGCASE_01_to_15_and_L1_L5_Validation
+- id: S5
+  step: Security_RBAC_Validation
+- id: S6
+  step: Observation_48H
+- id: S7
+  step: TT_PSG_PRODUCTION_COMPLETION_MATRIX_Recalculate
+- id: S8
+  step: Production_Certification
+discipline:
+  no_broadcast_until_g_rc_closed: true
+  no_active_flip_until_after_clean_deploy_evidence: true
+  no_new_coverage_dimension: true
+  no_dispersed_parallel_matrices_as_completion_ssot: true
+  subordinate_artifacts_may_exist_but_not_override_this_matrix: true
+  no_new_capability_dimension: true
+  single_layer_pass_does_not_imply_psg_complete: true
+  all_five_layers_required_for_psg_complete: true
+  wait_window_narrow_scope: true
+  sole_exit_is_completion_matrix: true
+  findings_must_map_to_L1_L5_only: true
+  forbid_spawn_coverage_v3_capability_matrix_audit_dimension: true
+  no_sixth_or_seventh_system: true
+  no_new_test_system: true
+  sha_convergence_before_clean_deploy: true
+  findings_archive_L1_L5_only: true
+  cdr19_pass_required_before_clean_deploy: true
+  no_commit_pin_before_g_rc_closed: true
+  cdr19_sequence: dirty_audit→classify→commit→sha_pin→deploy
+  cdr19_identity_not_cleanliness: true
+  forbid_one_shot_dirty_cleanup_then_deploy: true
+  cdr19_required_for_production_certification: true
+  cdr19_equivalence_chain: Source SHA = Deploy Artifact = Contract Bytecode = Evidence
+    Package
+  forbid_premature_dirty_cleanup: true
+  classify_first_then_commit: true
+subordinate_inputs_readonly:
+- registry/psg-coverage-model-seven-dimensions.v1.yaml
+- registry/psg-coverage-measurement-final.v1.yaml
+- registry/psg-coverage-acceptance-threshold-matrix.v1.yaml
+- registry/psg-production-capability-coverage-matrix.v1.yaml
+- registry/psg-fg-web3-audit-matrix.v1.yaml
+- registry/psg-fg-web3-coverage-cases.v1.yaml
+- registry/psg-production-full-capability-gate.v1.yaml
+layers:
+  L1_Product:
+    name: Product
+    must_pass: true
+    status: PARTIAL
+    surfaces:
+    - User_Journey
+    - Market
+    - Provider
+    - Order
+    - CMS
+    - Admin
+  L2_Data:
+    name: Data
+    must_pass: true
+    status: PARTIAL
+    surfaces:
+    - DB
+    - API
+    - UI
+    - Consistency
+  L3_Security:
+    name: Security
+    must_pass: true
+    status: NEED_FIX
+    surfaces:
+    - RBAC
+    - Wallet
+    - Auth
+    - Permission
+  L4_Operations:
+    name: Operations
+    must_pass: true
+    status: PARTIAL
+    surfaces:
+    - Monitoring
+    - Incident
+    - CMS_Ops
+    - Recovery
+  L5_Financial_Grade_Web3:
+    name: Financial-Grade Web3
+    must_pass: true
+    optional: false
+    status: NOT_READY
+    pass: 0
+    denom: 14
+    note: 'Layer5 surfaces below are the Completion Matrix canonical set. FGCASE-01..15
+      remain the empirical case IDs (incl. FG-11 RBAC overlap with L3). Framework
+      FROZEN — do not add dimensions.
+
+      '
+    surfaces:
+    - id: Money_Path
+      fgcase: FGCASE-FG-01
+    - id: Escrow
+      fgcase: FGCASE-FG-02
+    - id: Settlement
+      fgcase: FGCASE-FG-03
+    - id: FeeRouter
+      fgcase: FGCASE-FG-04
+    - id: Distributable
+      fgcase: FGCASE-FG-05
+    - id: Steward_Revenue
+      fgcase: FGCASE-FG-06
+    - id: Treasury
+      fgcase: FGCASE-FG-07
+    - id: Governance
+      fgcase: FGCASE-FG-08
+    - id: Timelock
+      fgcase: FGCASE-FG-09
+    - id: Wallet_Security
+      fgcase: FGCASE-FG-10
+    - id: Indexer
+      fgcase: FGCASE-FG-12
+    - id: Reconciliation
+      fgcase: FGCASE-FG-13
+    - id: Audit
+      fgcase: FGCASE-FG-14
+    - id: Observation_48H
+      fgcase: FGCASE-FG-15
+honest_rollup:
+  psg_complete: false
+  await: G_RC_CLOSED
+  prep_ready_is_not_pass: true
+  case_staged_is_not_pass: true
+  web2_coverage_pass_is_not_complete: true
+forbid_new_capability_dimensions: true
+wait_window_allowed_work:
+- G_RC_Execute_preparation_only
+- Clean_Deploy_Ready_status_maintenance_only
+wait_window_forbidden_work:
+- new_Coverage_dimension
+- new_Capability_dimension
+- Money_Path_or_Settlement_broadcast
+- ACTIVE_baseline_flip
+- FGCASE_empirical_execution
+- claim_PSG_Complete_from_any_single_layer
+- Protocol_v2_implementation_beyond_exec_prep
+sole_exit: TT_PSG_PRODUCTION_COMPLETION_MATRIX
+project_phase:
+  was:
+  - Build_Phase
+  - Feature_Validation
+  now:
+  - Protocol_Assurance_Phase
+  - Financial_Grade_Verification
+  - Production_Certification
+  wait_window_value: Prepare_post_G_RC_path_for_one_shot_run_avoid_rework
+finding_taxonomy_only:
+- L1_Product_Gap
+- L2_Data_Gap
+- L3_Security_Gap
+- L4_Operations_Gap
+- L5_FG_Web3_Gap
+forbid_spawn:
+- Coverage_Matrix_v3
+- New_Capability_Matrix
+- New_Audit_Dimension
+- sixth_or_seventh_completion_system
+- parallel_exit_matrix
+last_preconditions_check: CLEAN_DEPLOY_PRECONDITIONS_MAINTAINED_WAIT_G_RC
+forbid_new_audit_systems: true
+release_sha_convergence:
+  required_before_clean_deploy: true
+  steps:
+  - dirty_cleanup
+  - commit_pin
+  - deploy_artifact_bind
+  current:
+    branch: feature/g23-04-abi-event-freeze
+    head: f8181b63507fe339e23a1e5285c4242a8bb3507e
+    ahead: 16
+    behind: 0
+    dirty_count: 564
+    converged: false
+    note: 'WAIT_WINDOW: do not commit unless Owner asks; converge only after G-RC
+      CLOSED before Clean Deploy'
+release_identity_control:
+  id: CDR-19
+  elevated_to: Production_Certification_hard_requirement
+  equivalence_chain: &id001
+    chain:
+    - Source_SHA
+    - Deploy_Artifact
+    - Contract_Bytecode
+    - Evidence_Package
+    operator: EQUALS
+    required_for: Production_Certification
+    statement: Source SHA = Deploy Artifact = Contract Bytecode = Evidence Package
+  sequence: &id002
+  - n: 1
+    step: Dirty_Audit
+  - n: 2
+    step: Change_Classification
+    buckets:
+    - Release
+    - Temp
+    - Evidence
+    - Reject_Delete
+  - n: 3
+    step: Commit_Release_Scope_Only
+  - n: 4
+    step: Release_SHA_Pin
+  - n: 5
+    step: Artifact_Binding
+  - n: 6
+    step: Evidence_Manifest_Binding
+  - n: 7
+    step: CDR19_PASS
+  - n: 8
+    step: Clean_Deploy_only_if_pass
+  forbid_premature_dirty_cleanup: true
+  discipline:
+    elevated_to: Production_Certification_hard_requirement
+    not: engineering_habit
+    goal: Prove_equivalence_chain
+    not_goal: Make_git_look_clean
+    equivalence: *id001
+    sequence: *id002
+    forbid_premature_dirty_cleanup: true
+    forbid_one_shot_cleanup_then_deploy: true
+    classify_first_then_commit: true
+    current_dirty_count: 564
+    note: 'WAIT_WINDOW: leave dirty=564 untouched until G-RC CLOSED then CDR-19'
+psg_completion_status: NOT_STARTED
+dual_gates_before_financial_protocol_deploy:
+  G_RC:
+    concern: Governance_Authorization
+    status: CLOSED
+  CDR_19:
+    concern: Release_Authenticity
+    status: IN_PROGRESS_AWAIT_SCOPE_CONFIRM
+  Clean_Deploy: LOCKED
+  both_required: true
+sole_sequence_locked:
+- G_RC_CLOSED
+- CDR-19_Release_Identity_Closure
+- fcg_full_capability_v2_sepolia_Clean_Deploy
+- L1_Product
+- L2_Data
+- L3_Security
+- L4_Operations
+- L5_Financial_Grade_Web3
+- PSG_Completion_Recalculate
+- Production_Certification
+authenticity_control:
+  purpose: Prevent_test_A_deploy_B_evidence_C
+  required_for: Financial_Grade_Web3
+  equivalence: Source_SHA = Deploy_Artifact = Contract_Bytecode = Evidence_Package
+no_new_work_now: true

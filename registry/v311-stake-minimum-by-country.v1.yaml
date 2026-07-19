@@ -1,0 +1,30 @@
+# schema: traveltrust.v311_stake_minimum_by_country.v1
+machine_key: TT_V311_STAKE_MINIMUM_BY_COUNTRY
+status: ACTIVE
+ssot_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+formula: "stake_minimum_ttg = TTG_TOTAL_SUPPLY * steward_stake_bps / 10000"
+ttg_total_supply: 10000000
+dao_adjustable: true
+recorded_utc: "2026-07-18T10:30:00Z"
+stamp: "20260718T103000Z"
+gap_id: REG-01
+resolution: REGISTRY
+closes_with_local_reaudit: true
+blocked_by_a1_r1: false
+
+# Initial values from protocol-ssot jurisdictions.steward_stake_bps (V3.1.1 ch.11.2)
+countries:
+  CN: { steward_stake_bps: 400, stake_minimum_ttg: 400000 }
+  US: { steward_stake_bps: 400, stake_minimum_ttg: 400000 }
+  FR: { steward_stake_bps: 450, stake_minimum_ttg: 450000 }
+  ES: { steward_stake_bps: 450, stake_minimum_ttg: 450000 }
+  JP: { steward_stake_bps: 250, stake_minimum_ttg: 250000 }
+  TH: { steward_stake_bps: 250, stake_minimum_ttg: 250000 }
+  SG: { steward_stake_bps: 200, stake_minimum_ttg: 200000 }
+  KR: { steward_stake_bps: 200, stake_minimum_ttg: 200000 }
+  AU: { steward_stake_bps: 150, stake_minimum_ttg: 150000 }
+  AE: { steward_stake_bps: 150, stake_minimum_ttg: 150000 }
+
+notes:
+  - Contracts/Backend consumers must read this table (or protocol-ssot stake_minimum_ttg) — bps alone is not V3.1.1 SSOT.
+  - Changing values = DAO / Registry bump · not Economic Constitution amend.

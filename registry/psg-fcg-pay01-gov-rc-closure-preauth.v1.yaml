@@ -1,0 +1,108 @@
+schema: traveltrust.psg_fcg_pay01_gov_rc_closure_preauth.v1
+machine_key: TT_FCG_PAY01_GOV_RC_CLOSURE_PREAUTH
+status: PROTOCOL_PRECONDITIONS_ACCEPTED_AWAITING_G_RC_LADDER
+recorded_utc: '2026-07-19T08:55:58Z'
+human_ssot: docs/runbook/TT-FCG-PAY-01-GOV-RC-CLOSURE-PREAUTH-LATEST.md
+evidence_pack: evidence/GO_pre_eta_production_prep/full-capability-gap-closure-20260719/FCG-PAY-01-GOV-RC-CLOSURE-PREAUTH-LATEST.json
+production_go: false
+pass_claimed: false
+governance_rc_closed: false
+g_rc_01_to_05_pass_claimed: false
+implements_code: false
+deploy_forbidden: true
+track_a: FROZEN_NO_MUTATION
+money_path_coding: BLOCKED_UNTIL_GOVERNANCE_RC_CLOSED
+cites:
+  step25: registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml
+  freeze: registry/psg-fcg-pay01-protocol-freeze.v1.yaml
+  exit_criteria: registry/v311-production-exit-criteria.v1.yaml
+  operator_card: docs/runbook/TT-V311-POST-EXECUTE-OPERATOR-CARD-LATEST.md
+owner_protocol_acceptances:
+- id: PREAUTH-01
+  statement: Step_2_5_Protocol_Freeze_and_Ambiguity_Closure_accepted
+  accepted: true
+  cite: docs/runbook/TT-FCG-PAY-01-STEP25-AMBIGUITY-CLOSURE-LATEST.md
+- id: PREAUTH-02
+  statement: LEGACY_NON_SSOT_Escrow_release_direct_platformFeeRecipient_path_deprecated
+  accepted: true
+  classification: LEGACY_NON_SSOT
+  forbidden_as_proof:
+  - TRE-02
+  - REG-01
+  - constitution_economic_claim
+- id: PREAUTH-03
+  statement: SettlementRouter_plus_FeeRouter_plus_Distributable_architecture_is_SSOT
+  accepted: true
+  ssot_flow: Escrow→SettlementRouter→FeeRouter→Distributable→Distribution
+- id: PREAUTH-04
+  statement: SETTLEMENT_READY_no_skip_rule_accepted
+  accepted: true
+  illegal_includes:
+  - LOCKED→DISTRIBUTED
+  - LOCKED→DISTRIBUTABLE_without_SETTLEMENT_READY
+- id: PREAUTH-05
+  statement: Executor_Arbitrator_Resolution_permission_model_accepted
+  accepted: true
+  release: dual_confirm_or_timeout_then_Protocol_Executor
+  dispute: Open→Evidence→Arbitrator_decisionHash→Executor_executeResolution
+all_five_protocol_preauths_accepted: true
+g_rc_preflight_confirmation:
+  purpose: Confirm which Governance RC gates are still OPEN before any CLOSE stamp
+  governance_rc_mode_now: FROZEN_WAITING_EXECUTE
+  gates:
+  - id: G-RC-01
+    name: Timelock_Proposal_1_Execute
+    status: OPEN_BLOCKED
+    observed: F02_TIMELOCK_FROZEN_WAITING_EXECUTE
+    evidence_cite: evidence/GO_phase2_v311_final_release/TIMELOCK-PARALLEL-BOARD-LATEST.json
+    owner_action_required: Wait_execute_allowed_now_then_Execute_Sepolia
+    pass_claimed_here: false
+  - id: G-RC-02
+    name: Function_Cert_54_0_0
+    status: OPEN_BLOCKED
+    observed: VERDICT_FAIL_counts_PASS_50_OWNER_REQUIRED_4
+    evidence_cite: evidence/GO_phase2_v311_web3_full_function_cert/VERDICT-LATEST.json
+    owner_action_required: Post_Execute_re_run_function_cert_to_54_0_0
+    pass_claimed_here: false
+  - id: G-RC-03
+    name: Product_Full_Cert
+    status: OPEN
+    observed: P6_status_OPEN
+    evidence_cite: evidence/GO_phase2_v311_final_release/P6-PRODUCT-CERT-LATEST.json
+    owner_action_required: Stamp_after_UI_and_Function_PASS
+    pass_claimed_here: false
+  - id: G-RC-04
+    name: UI_Full_Cert
+    status: OPEN_PARTIAL
+    observed: P5_status_PARTIAL
+    evidence_cite: evidence/GO_phase2_v311_final_release/P5-UI-UX-CERT-LATEST.json
+    owner_action_required: Complete_UI_cert_gates
+    pass_claimed_here: false
+  - id: G-RC-05
+    name: Governance_RC_CLOSED
+    status: OPEN_NOT_STAMPED
+    observed: GOVERNANCE-RC-CLOSE-LATEST.json_MISSING
+    evidence_cite: null
+    owner_action_required: 'Only after G-RC-01..04 per Exit Criteria — run stamp-v311-governance-rc-close.py
+      INCLUDING written ack of PREAUTH-01..05 and DEFERRED Money-Path TRE/REG
+
+      '
+    pass_claimed_here: false
+    required_written_acks_at_close:
+    - PREAUTH-01_through_PREAUTH-05
+    - DEFERRED_TO_MONEY_PATH_RC=[TRE-02,REG-01,REG-04]
+    - LEGACY_direct_pay_not_ssot
+    - SettlementRouter_architecture_target
+this_evidence_is:
+- Owner_authorization_of_FCG_PAY01_economic_protocol_preconditions
+- Honest_G-RC_01_to_05_preflight_board
+- Input_pack_required_later_by_G-RC-05_stamp
+this_evidence_is_not:
+- Governance_RC_CLOSED
+- G-RC-01_Execute_PASS
+- Money-Path_M-RC_PASS
+- Production_GO
+- Permission_to_code_TRE_REG_or_Step3
+next_legal_sequence: "G-RC-01 Execute (when heartbeat allows)\n  → G-RC-02 Function\
+  \ 54/0/0\n  → G-RC-04 UI → G-RC-03 Product\n  → G-RC-05 CLOSE (attach this PREAUTH\
+  \ pack)\n  → M-RC-00 → TRE-02/REG-01/REG-04 → Step 3\n"
