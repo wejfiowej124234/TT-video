@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.mainnet_fork_rehearsal.v1",
+  "generated_utc": "2026-07-19T16:36:08.559Z",
+  "verdict": "FAIL",
+  "chain_forked": 0,
+  "bytecode_checks": "FAIL",
+  "broadcast_to_live_mainnet": false,
+  "reason": "MAINNET_FORK_RPC_URL (or ETH_MAINNET_RPC_URL) not set — refuse to invent fork",
+  "note": "Fix RPC / anvil / cast then re-run. Never forge --broadcast to live 1 from this harness."
+}

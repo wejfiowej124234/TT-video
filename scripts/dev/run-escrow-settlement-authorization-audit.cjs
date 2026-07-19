@@ -89,28 +89,52 @@ function auditContractV1Legacy() {
 function auditContractV2Mainnet() {
   const v2 = 'contracts/src/EscrowV2.sol';
   const factoryV2 = 'contracts/src/EscrowFactoryV2.sol';
+  const base = 'contracts/src/Escrow.sol';
   const hasV2 = exists(v2) && exists(factoryV2);
-  const hasFlags = grepFile(v2, /travelerServiceConfirmed/) && grepFile(v2, /guideServiceConfirmed/);
-  const releaseGated = grepFile(v2, /ServiceNotComplete/) && grepFile(v2, /function release\(\) external override/);
-  const confirmFn = grepFile(v2, /function confirmServiceComplete\(\)/);
+  // Bilateral may live on EscrowV2 itself OR on Escrow.sol when EscrowV2 is a thin alias (L3 fold-in).
+  const implSurface = `${readSafe(v2)}\n${readSafe(base)}`;
+  const hasFlags =
+    /travelerServiceConfirmed/.test(implSurface) && /guideServiceConfirmed/.test(implSurface);
+  const releaseGated =
+    /ServiceNotComplete/.test(implSurface) && /function release\(\)/.test(implSurface);
+  const confirmFn = /function confirmServiceComplete\(\)/.test(implSurface);
+  const inheritsEscrow = /contract EscrowV2 is Escrow/.test(readSafe(v2));
   const deployScript = exists('contracts/script/DeployEscrowFactoryV2.s.sol');
   const forgeTest = exists('contracts/test/EscrowV2.t.sol');
 
   addCheck('Contract-V2-Mainnet', 'EscrowV2 + FactoryV2 files', 'present', hasV2 ? 'present' : 'missing', hasV2);
-  addCheck('Contract-V2-Mainnet', 'bilateral service flags', 'traveler + guide', hasFlags ? 'present' : 'absent', hasFlags);
-  addCheck('Contract-V2-Mainnet', 'release gated post-bilateral', 'ServiceNotComplete revert', releaseGated ? 'yes' : 'no', releaseGated);
-  addCheck('Contract-V2-Mainnet', 'confirmServiceComplete', 'traveler or guide', confirmFn ? 'present' : 'absent', confirmFn);
+  addCheck(
+    'Contract-V2-Mainnet',
+    'bilateral service flags',
+    'traveler + guide (EscrowV2 and/or Escrow.sol)',
+    hasFlags ? (inheritsEscrow ? 'present_on_Escrow_base' : 'present') : 'absent',
+    hasFlags,
+  );
+  addCheck(
+    'Contract-V2-Mainnet',
+    'release gated post-bilateral',
+    'ServiceNotComplete revert',
+    releaseGated ? 'yes' : 'no',
+    releaseGated,
+  );
+  addCheck(
+    'Contract-V2-Mainnet',
+    'confirmServiceComplete',
+    'traveler or guide',
+    confirmFn ? 'present' : 'absent',
+    confirmFn,
+  );
   addCheck('Contract-V2-Mainnet', 'deploy script', 'DeployEscrowFactoryV2.s.sol', deployScript ? 'present' : 'absent', deployScript);
   addCheck('Contract-V2-Mainnet', 'forge tests', 'EscrowV2.t.sol', forgeTest ? 'present' : 'absent', forgeTest);
 
-  if (!hasV2 || !hasFlags || !releaseGated) {
+  if (!hasV2 || !hasFlags || !releaseGated || !confirmFn) {
     addGap(
       'P0',
       'ESC-GAP-002',
       'Contract-V2-Mainnet',
       'Mainnet path EscrowV2 bilateral release gate incomplete',
       'Complete EscrowV2/FactoryV2 + deploy + registry (PG-P0-ESC)',
-      [v2, factoryV2],
+      [v2, factoryV2, base],
     );
   }
   if (!deployScript) {
@@ -123,7 +147,7 @@ function auditContractV2Mainnet() {
       ['contracts/script/'],
     );
   }
-  return { hasV2, hasFlags, releaseGated, deployScript, forgeTest };
+  return { hasV2, hasFlags, releaseGated, confirmFn, deployScript, forgeTest, inheritsEscrow };
 }
 
 function auditMainnetPolicy() {

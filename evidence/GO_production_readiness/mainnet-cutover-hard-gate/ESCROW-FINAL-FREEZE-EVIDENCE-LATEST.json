@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.escrow_final_freeze_evidence.v1",
+  "machine_key": "TT_ESCROW_FINAL_FREEZE_MAINNET",
+  "generated_utc": "2026-07-19T16:52:18Z",
+  "verdict": "FROZEN",
+  "freeze_git_sha": "09c72b934b62f848e60b38bcc7ff0e6cac44f923",
+  "pg_p0_esc": "CLOSED",
+  "v1_mainnet": "FORBIDDEN",
+  "digests": {
+    "EscrowFactoryV2_artifact": "efd60fb2c8d659765616903d2f3966b8397930070f783f5dd2aa88d871749a35",
+    "EscrowV2_artifact": "5b4e49ef74d3122049f0c417c628fd052dab0bc3d780917ad5da0a366f84b54e",
+    "EscrowFactoryV2_src": "9425a498064a2c657b879ffd6e49a57b0ca07f761fa8b666aa84aa695083a3f8",
+    "EscrowV2_src": "3df0f86e52a94361b7700186dedcaaa64877a9157b0c90417d1363af49b93909",
+    "EscrowFactoryV2_abi": "58ca6a1e5f9b0548555a9101927ab716f8dfecefd117b5f73c8311b000626053",
+    "EscrowV2_abi": "45312d49716f5ae201f24cdbe41b978979621a360d7df829a491b42f08140ba5"
+  },
+  "apply_eligible": true,
+  "note": "FROZEN refused until pg_p0_esc=CLOSED. Digests alone do not authorize mainnet escrow.",
+  "registry_stamped": true
+}

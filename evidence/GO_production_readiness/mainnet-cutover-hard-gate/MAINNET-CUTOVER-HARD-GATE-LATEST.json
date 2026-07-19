@@ -1,0 +1,42 @@
+{
+  "schema": "traveltrust.mainnet_cutover_hard_gate_evidence.v1",
+  "machine_key": "TT_MAINNET_CUTOVER_HARD_GATE",
+  "fund_safety_standard": "REAL_ETH_MAINNET",
+  "paper_go_forbidden": true,
+  "never_skip": true,
+  "generated_utc": "2026-07-19T16:47:16.312Z",
+  "verdict": "EVIDENCE_INCOMPLETE",
+  "message": "CUTOVER_REFUSED",
+  "open_axis_count": 11,
+  "open_axes": [
+    "AXIS-01",
+    "AXIS-02",
+    "AXIS-05",
+    "AXIS-07",
+    "AXIS-08",
+    "AXIS-09",
+    "AXIS-10",
+    "AXIS-11",
+    "AXIS-12",
+    "AXIS-13",
+    "AXIS-14"
+  ],
+  "axis_details": [
+    "AXIS-01: mainnet-release-freeze status=NOT_FROZEN (need FROZEN via evidence --apply)",
+    "AXIS-02: escrow-final-freeze-mainnet status=NOT_FROZEN (need FROZEN; requires pg_p0_esc=CLOSED)",
+    "AXIS-05: safe_address empty/TBD",
+    "AXIS-07: secrets_verified=false (need true|PASS)",
+    "AXIS-08: need R01-THIRD-PARTY-AUDIT-PASS.json OR OWNER-RESIDUAL-RISK-SIGNOFF.json (signed)",
+    "AXIS-09: readiness p0=6 verdict=WEB3_MAINNET_PRODUCTION_BLOCKED (need p0=0 and not BLOCKED)",
+    "AXIS-10: pg_p0_esc=OPEN (need CLOSED)",
+    "AXIS-11: mainnet deployment package gate FAIL (RULE-DEPLOY-001)",
+    "AXIS-12: no Shadow run with GO + chain_id=1 + four JSON (reject TEMPLATE/NO_GO)",
+    "AXIS-13: missing G6_no_rollback_ack.md",
+    "AXIS-14: registry mainnet_cutover_authorized=false; missing OWNER-CUTOVER-AUTH-LATEST.json (need registry true + signed auth JSON)"
+  ],
+  "registry_ssot_verdict": "REFUSED",
+  "shadow_run": null,
+  "note": "exit 1 REFUSED is correct until all axes close — do not treat as broken gate",
+  "broadcast_authorized": false,
+  "user_funds_enabled": false
+}

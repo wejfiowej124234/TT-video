@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.owner_residual_risk_signoff.v1",
+  "generated_utc": "2026-07-19T16:46:00Z",
+  "verdict": "DRAFT_UNSIGNED",
+  "owner_signed": false,
+  "owner_name": null,
+  "signed_utc": null,
+  "chain_target": 1,
+  "residual_risks": [],
+  "blocking_risks_accepted": false,
+  "blocker": "Unsigned draft — hard gate rejects. Prefer R-01 audit PASS.",
+  "template": "docs/runbook/templates/mainnet-package/R01-OR-RESIDUAL-RISK-SIGNOFF.md"
+}

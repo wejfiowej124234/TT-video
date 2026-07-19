@@ -1,0 +1,5 @@
+{
+  "wave_order": ["Wave1_EscrowFactoryV2_FeeRouter","Wave2_Governance","Wave3_Extended"],
+  "broadcast_to_live_mainnet": false,
+  "note": "Order only — execute deploys only after hard gate AUTHORIZED_FOR_WAVE"
+}

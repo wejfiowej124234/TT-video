@@ -17,12 +17,20 @@ current_production_scope: PRODUCTION_SCOPE_SEPOLIA
 current_production_chain_id: "11155111"
 mainnet_cutover_authorized: false
 
+# Fund-safety cutover — env alone cannot unlock; see hard gate (never SKIP)
+cutover_hard_gate:
+  registry: registry/mainnet-cutover-hard-gate.v1.yaml
+  gate_script: scripts/gates/check-mainnet-cutover-hard-gate.sh
+  runbook: docs/runbook/TT-MAINNET-CUTOVER-HARD-GATE-LATEST.md
+  paper_go_forbidden: true
+  initial_verdict: REFUSED
+
 escrow_bilateral_mainnet_policy:
   registry: registry/escrow-bilateral-mainnet-policy.v1.yaml
   owner_decision: docs/runbook/ESCROW-BILATERAL-SETTLEMENT-OWNER-DECISION-RECORD-V1.md
   v1_mainnet: FORBIDDEN
   v2_mainnet_path: EscrowV2_EscrowFactoryV2
-  pg_p0_esc: OPEN
+  pg_p0_esc: CLOSED
   note: >
     Mainnet BLOCKED until PG-P0-ESC closure: V2 deploy + registry + Cert 8-12 + R-01 +
     Shadow Launch G6 + Layer A/B evidence PASS

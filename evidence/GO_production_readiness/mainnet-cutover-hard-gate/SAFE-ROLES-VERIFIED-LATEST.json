@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.safe_roles_verified.v1",
+  "machine_key": "TT_MAINNET_SAFE_ROLES",
+  "generated_utc": "2026-07-19T16:46:00Z",
+  "verdict": "INCOMPLETE",
+  "safe_address": "TBD",
+  "threshold": null,
+  "roles_matrix_verified": false,
+  "source": "registry/mainnet-address-registry.v1.yaml#operational_wallets.timelock_admin_multisig",
+  "address_status": "PLANNED",
+  "blocker": "Safe not created yet — real multisig address required before AXIS-05 PASS",
+  "note": "Do not hand-edit roles_matrix_verified to true."
+}

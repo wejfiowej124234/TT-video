@@ -52,21 +52,31 @@ layer_c:
   not: business_authorization
 
 pg_p0_esc_closure_requires:
+  # Protocol stamp (evidence script run-pg-p0-esc-closure-evidence.sh --apply)
   - layer_a_evidence_pass
-  - layer_b_design_and_tests_pass
+  - layer_b_evidence_pass
+  - settlement_authorization_p0_zero
   - v1_mainnet_forbidden_documented
   - escrow_factory_v2_deploy_script_ready
-  - owner_odr_signoff
+  - owner_odr_b3_selected
+
+# Still required for Mainnet Cutover Hard Gate (separate axes) — NOT for pg_p0_esc CLOSED alone
+mainnet_cutover_still_requires_after_pg_p0_esc:
   - cert_8_through_12
   - r01_third_party_audit
   - shadow_launch_g6_no_rollback
   - mainnet_registry_env_deploy_manifest
+  - owner_cutover_auth
 
 mainnet_blockers_open:
   - PG-P0-ESC escrow bilateral settlement (Phase ①② closure)
   - mainnet_cutover_authorized false
   - PRODUCTION_SCOPE_MAINNET NOT_SELECTED
   - Phase ③ blocked until R-01 · Shadow Launch · G6 · Owner auth
+  - escrow_final_freeze_mainnet NOT_FROZEN (AXIS-02)
+
+escrow_final_freeze: registry/escrow-final-freeze-mainnet.v1.yaml
+cutover_hard_gate: registry/mainnet-cutover-hard-gate.v1.yaml
 
 three_phase_discipline: registry/web3-three-phase-closure-discipline.v1.yaml
 phase12_orchestrator: scripts/dev/run-web3-phase12-closure.cjs

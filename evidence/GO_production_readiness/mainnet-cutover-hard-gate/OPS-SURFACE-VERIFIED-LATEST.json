@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.ops_surface_verified.v1",
+  "machine_key": "TT_MAINNET_OPS_SURFACE",
+  "generated_utc": "2026-07-19T16:46:00Z",
+  "verdict": "INCOMPLETE",
+  "secrets_verified": false,
+  "infra_verified": false,
+  "dns_verified": false,
+  "monitoring_verified": false,
+  "rollback_verified": true,
+  "structural_checks": {
+    "rollback_template_exists": true,
+    "rollback_template_path": "docs/runbook/templates/mainnet-package/rollback/MAINNET-ROLLBACK-PREP-V1.md",
+    "r01_template_exists": true,
+    "mainnet_env_template_exists": true,
+    "hard_gate_runbook_exists": true,
+    "rollback_honesty_language": true
+  },
+  "blocker": "Secrets/infra/DNS/monitoring require Owner/prod probes — docs alone insufficient",
+  "note": "rollback_verified=true only means rollback PREP doc honesty check; secrets/infra/dns/monitoring still false"
+}

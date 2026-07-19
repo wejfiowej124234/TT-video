@@ -1,12 +1,12 @@
 # Escrow Bilateral Layer B Evidence (PG-P0-ESC)
 
 **Verdict:** `LAYER_B_EVIDENCE_PASS`  
-**Stamp:** 2026-07-08T14-02-10
+**Stamp:** 2026-07-19T16-52-15
 
 ## Checks (8/8)
 
 - [x] **escrow_v2_contract** — EscrowV2.sol
-- [x] **escrow_v2_bilateral_release_gate** — release() requires both service flags
+- [x] **escrow_v2_bilateral_release_gate** — bilateral on Escrow.sol (EscrowV2 thin alias) — release gated by both flags
 - [x] **escrow_factory_v2_contract** — EscrowFactoryV2.sol
 - [x] **deploy_script_v2** — DeployEscrowFactoryV2.s.sol
 - [x] **broadcast_shell_v2** — phase2-sepolia-broadcast-escrow-factory-v2.sh

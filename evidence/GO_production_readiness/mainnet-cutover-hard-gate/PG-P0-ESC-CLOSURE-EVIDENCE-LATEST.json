@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.pg_p0_esc_closure_evidence.v1",
+  "generated_utc": "2026-07-19T16:52:18.357Z",
+  "verdict": "CLOSED",
+  "checks": {
+    "layer_a": true,
+    "layer_b": true,
+    "settlement_p0_zero": true,
+    "settlement_verdict": "ESCROW_SETTLEMENT_MODEL_ALIGNED",
+    "v1_forbidden": true,
+    "deploy_script": true,
+    "odr_b3": true
+  },
+  "open": [],
+  "note": "Protocol PG-P0-ESC CLOSED enables Escrow final freeze --apply. Hard Gate still requires R-01/Shadow/G6/Owner (separate axes). No ACTIVE flip.",
+  "remaining_hard_gate_axes": [
+    "AXIS-08",
+    "AXIS-12",
+    "AXIS-13",
+    "AXIS-14"
+  ],
+  "registry_stamped": true,
+  "stamped_utc": "2026-07-19T16:52:18.543Z"
+}

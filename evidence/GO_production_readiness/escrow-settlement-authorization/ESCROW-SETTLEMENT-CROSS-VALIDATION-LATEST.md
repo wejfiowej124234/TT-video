@@ -1,15 +1,15 @@
 # Escrow Settlement Authorization — Cross-Validation Matrix
 
-**Recorded:** 2026-07-08T14:02:51.419Z
+**Recorded:** 2026-07-19T16:52:18.296Z
 
 | Layer | Check | Expected | Actual | PASS |
 |-------|-------|----------|--------|------|
 | Contract-V1-Legacy | deposit caller | traveler only | restricted | ✅ |
 | Contract-V1-Legacy | refund caller | traveler only | restricted | ✅ |
 | Contract-V1-Legacy | release @ Funded (no bilateral) | LEGACY — Sepolia/testnet only · mainnet FORBIDDEN | undefined | ✅ |
-| Contract-V1-Legacy | bilateral flags | absent (expected on V1) | absent | ✅ |
+| Contract-V1-Legacy | bilateral flags | absent (expected on V1) | present | ❌ |
 | Contract-V2-Mainnet | EscrowV2 + FactoryV2 files | present | present | ✅ |
-| Contract-V2-Mainnet | bilateral service flags | traveler + guide | present | ✅ |
+| Contract-V2-Mainnet | bilateral service flags | traveler + guide (EscrowV2 and/or Escrow.sol) | present_on_Escrow_base | ✅ |
 | Contract-V2-Mainnet | release gated post-bilateral | ServiceNotComplete revert | yes | ✅ |
 | Contract-V2-Mainnet | confirmServiceComplete | traveler or guide | present | ✅ |
 | Contract-V2-Mainnet | deploy script | DeployEscrowFactoryV2.s.sol | present | ✅ |

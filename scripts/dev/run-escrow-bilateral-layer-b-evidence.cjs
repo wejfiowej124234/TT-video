@@ -48,14 +48,26 @@ const checks = [];
 checks.push(
   check('escrow_v2_contract', fs.existsSync(path.join(ROOT, 'contracts/src/EscrowV2.sol')), 'EscrowV2.sol'),
 );
-checks.push(
-  check(
-    'escrow_v2_bilateral_release_gate',
-    /travelerServiceConfirmed/.test(readSafe('contracts/src/EscrowV2.sol'))
-      && /ServiceNotComplete/.test(readSafe('contracts/src/EscrowV2.sol')),
-    'release() requires both service flags',
-  ),
-);
+{
+  const v2Txt = readSafe('contracts/src/EscrowV2.sol');
+  const baseTxt = readSafe('contracts/src/Escrow.sol');
+  const surface = `${v2Txt}\n${baseTxt}`;
+  const bilateral =
+    /travelerServiceConfirmed/.test(surface) &&
+    /guideServiceConfirmed/.test(surface) &&
+    /ServiceNotComplete/.test(surface) &&
+    /function confirmServiceComplete\(\)/.test(surface);
+  const folded = /contract EscrowV2 is Escrow/.test(v2Txt);
+  checks.push(
+    check(
+      'escrow_v2_bilateral_release_gate',
+      bilateral,
+      folded
+        ? 'bilateral on Escrow.sol (EscrowV2 thin alias) — release gated by both flags'
+        : 'release() requires both service flags on EscrowV2',
+    ),
+  );
+}
 checks.push(
   check('escrow_factory_v2_contract', fs.existsSync(path.join(ROOT, 'contracts/src/EscrowFactoryV2.sol')), 'EscrowFactoryV2.sol'),
 );

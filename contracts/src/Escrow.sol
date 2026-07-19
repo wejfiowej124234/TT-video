@@ -14,6 +14,8 @@ import "./IEscrowServiceFeeSync.sol";
  * V3.1.1：platformFeeBps 硬闸 0–10%（`V311EconomicConstants.PLATFORM_SERVICE_FEE_MAX_BPS`）
  * V3.1.1 F-04：Distributable Service Fee 态机
  * L5-A：若 `settlementRouter != 0`，release 平台费腿 → SettlementRouter（TARGET）；否则 LEGACY 直付 platformFeeRecipient
+ * L3 Security Hardened：arbitrator 持久化 + onlyArbitrator 争议/非争议扣罚出口；
+ *   release 须双边服务确认后 permissionless（keeper OK）；openDispute 仅 traveler/guide
  */
 contract Escrow is IEscrowServiceFeeSync {
     enum Status {
@@ -60,6 +62,11 @@ contract Escrow is IEscrowServiceFeeSync {
     ServiceFeeStatesV311.State public serviceFeeState;
     /// @notice L5-A · address(0) = LEGACY direct-pay; non-zero = wire fee leg to SettlementRouter
     address public settlementRouter;
+    /// @notice L3 · dispute / slash / partial-refund authority (required non-zero at init)
+    address public arbitrator;
+    /// @notice L3 Release Guard · bilateral service confirmation (EscrowV2 model folded into base)
+    bool public travelerServiceConfirmed;
+    bool public guideServiceConfirmed;
 
     event EscrowCreated(
         bytes32 indexed orderId,
@@ -98,16 +105,28 @@ contract Escrow is IEscrowServiceFeeSync {
         ServiceFeeStatesV311.State from,
         ServiceFeeStatesV311.State to
     );
+    event ServiceCompleteConfirmed(
+        bytes32 indexed orderId, address indexed confirmer, bool travelerConfirmed, bool guideConfirmed
+    );
 
     error AlreadyInitialized();
     error InvalidState();
     error OnlyFactory();
     error OnlyTraveler();
     error OnlyArbitrator();
+    error OnlyParty();
+    error InvalidArbitrator();
+    error ServiceNotComplete();
+    error AlreadyConfirmedService();
     error TransferFailed();
 
     modifier onlyFactory() {
         if (msg.sender != factory) revert OnlyFactory();
+        _;
+    }
+
+    modifier onlyArbitrator() {
+        if (msg.sender != arbitrator) revert OnlyArbitrator();
         _;
     }
 
@@ -118,6 +137,7 @@ contract Escrow is IEscrowServiceFeeSync {
     function init(EscrowParams calldata params) external onlyFactory {
         if (status != Status.None) revert AlreadyInitialized();
         if (params.platformFeeBps > V311EconomicConstants.PLATFORM_SERVICE_FEE_MAX_BPS) revert InvalidState();
+        if (params.arbitrator == address(0)) revert InvalidArbitrator();
         orderId = params.orderId;
         traveler = params.traveler;
         guide = params.guide;
@@ -125,6 +145,7 @@ contract Escrow is IEscrowServiceFeeSync {
         token = params.token;
         totalAmount = params.totalAmount;
         platformFeeBps = params.platformFeeBps;
+        arbitrator = params.arbitrator;
         status = Status.Created;
         serviceFeeState = ServiceFeeStatesV311.State.SERVICE_FEE_PENDING;
         emit EscrowCreated(
@@ -155,13 +176,34 @@ contract Escrow is IEscrowServiceFeeSync {
         emit Deposited(orderId, address(this), msg.sender, amount);
     }
 
+    /// @notice L3 Release Guard · traveler + guide must confirm before release may execute.
+    /// @dev If traveler == guide (rare / test), a single confirmation sets both flags.
+    function confirmServiceComplete() external {
+        if (status != Status.Funded) revert InvalidState();
+        if (msg.sender == traveler) {
+            if (travelerServiceConfirmed) revert AlreadyConfirmedService();
+            travelerServiceConfirmed = true;
+            if (traveler == guide) {
+                guideServiceConfirmed = true;
+            }
+        } else if (msg.sender == guide) {
+            if (guideServiceConfirmed) revert AlreadyConfirmedService();
+            guideServiceConfirmed = true;
+        } else {
+            revert OnlyParty();
+        }
+        emit ServiceCompleteConfirmed(orderId, msg.sender, travelerServiceConfirmed, guideServiceConfirmed);
+    }
+
     /// @notice Completed 路径放款分账（01 §10 / 80 附录 §2 · Completed 收平台费）。
     /// @dev 向导到账 = floor(totalAmount * (10000 - platformFeeBps) / 10000)；
     ///      平台费 = totalAmount - guideAmount（BPS 乘除余数归平台费腿，与 01「dust 归平台」一致）。
     ///      TARGET (settlementRouter!=0): fee → SettlementRouter · SM → SETTLEMENT_READY
     ///      LEGACY (settlementRouter==0): fee → platformFeeRecipient · SM → DISTRIBUTABLE→DISTRIBUTED
+    ///      L3：须双边 confirm；确认后 permissionless（caller 无资金利益 · keeper OK）
     function release() external virtual {
         if (status != Status.Funded) revert InvalidState();
+        if (!travelerServiceConfirmed || !guideServiceConfirmed) revert ServiceNotComplete();
         uint256 guideAmount = (totalAmount * (uint256(10000) - uint256(platformFeeBps))) / 10000;
         uint256 fee = totalAmount - guideAmount;
         if (!IERC20(token).transfer(guide, guideAmount)) revert TransferFailed();
@@ -203,8 +245,8 @@ contract Escrow is IEscrowServiceFeeSync {
     }
 
     /// @notice 80 附录 02 · PartiallyRefunded：先退 `travelerRefund` 给旅行者；余款 `remainder = totalAmount - travelerRefund` 按 01 §10 同 `release`（向导 `floor(remainder*(10000-bps)/10000)`，平台费 `remainder - guide`）。
-    /// @dev 与争议路径 `executeResolution` 正交；`platformFeeBps` 仍仅 `EscrowCreated` 封存。
-    function releasePartialRefund(uint256 travelerRefund) external {
+    /// @dev 与争议路径 `executeResolution` 正交；`platformFeeBps` 仍仅 `EscrowCreated` 封存。L3：onlyArbitrator。
+    function releasePartialRefund(uint256 travelerRefund) external onlyArbitrator {
         if (status != Status.Funded) revert InvalidState();
         if (travelerRefund == 0 || travelerRefund >= totalAmount) revert InvalidState();
         uint256 remainder = totalAmount - travelerRefund;
@@ -218,8 +260,8 @@ contract Escrow is IEscrowServiceFeeSync {
     }
 
     /// @notice 80 附录 02 · Slashed（非争议）：**`guideAmount = 0`**，`platformFee = totalAmount - travelerRefund`，**`travelerRefund < totalAmount`**（全额退旅行者请用 `refund()`）。
-    /// @dev 与争议路径 `executeResolution` 正交；`platformFeeBps` **不参与**本路径分配（扣罚语义下余款归平台收款方）。
-    function releaseSlashed(uint256 travelerRefund) external {
+    /// @dev 与争议路径 `executeResolution` 正交；`platformFeeBps` **不参与**本路径分配（扣罚语义下余款归平台收款方）。L3：onlyArbitrator。
+    function releaseSlashed(uint256 travelerRefund) external onlyArbitrator {
         if (status != Status.Funded) revert InvalidState();
         if (travelerRefund >= totalAmount) revert InvalidState();
         uint256 platformFee = totalAmount - travelerRefund;
@@ -239,19 +281,21 @@ contract Escrow is IEscrowServiceFeeSync {
 
     function openDispute(bytes32 reasonHash) external {
         if (status != Status.Funded) revert InvalidState();
+        if (msg.sender != traveler && msg.sender != guide) revert OnlyParty();
         status = Status.Disputed;
         emit DisputeOpened(orderId, address(this), msg.sender, reasonHash);
     }
 
     /// @param resolutionId keccak256(chainId, orderId, resolutionSeq, decisionHash) per 01 §7
     /// 资金守恒：guideAmount + travelerRefund + platformFee == totalAmount
+    /// @dev L3 Arbitrator Gate · onlyArbitrator
     function executeResolution(
         bytes32 resolutionId,
         bytes32 decisionHash,
         uint256 guideAmount,
         uint256 travelerRefund,
         uint256 platformFee
-    ) external {
+    ) external onlyArbitrator {
         if (status != Status.Disputed) revert InvalidState();
         if (guideAmount + travelerRefund + platformFee != totalAmount) revert InvalidState();
         if (guideAmount > 0 && !IERC20(token).transfer(guide, guideAmount)) revert TransferFailed();

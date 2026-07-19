@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.mainnet_release_freeze_evidence.v1",
+  "machine_key": "TT_MAINNET_RELEASE_FREEZE",
+  "generated_utc": "2026-07-19T16:40:03Z",
+  "verdict": "DIGESTS_READY_DIRTY_WORKTREE",
+  "pin": {
+    "git_sha": "09c72b934b62f848e60b38bcc7ff0e6cac44f923",
+    "worktree_dirty": true
+  },
+  "checksums": {
+    "contracts_src": "285457b84aff5a83f0f20e0dcd8363594703bfc7535f555f4d28ab68352fe76b",
+    "api_src": "a168613bc6bfe44de7a139519d064261958db4a9163341dffcf2859bbc1f04d0",
+    "core_src": "61a5de231f994b8808319c76fb1a5f01e951cb2353f120e60a8ea84ef667b2e0",
+    "frontend_lib": "8c97c6334e99bb9e49f1bbf9937177bbb7f305df3290f5473619d9baf486223a",
+    "frontend_app": "369c4c478c59a00d302dc226c969449422921d44dae4aad48f2902bacc0dc169",
+    "indexer": "a087ffb03d980bc1cad21e9fd27bbb39c4c13359f665493bfbce966a35f6b819"
+  },
+  "registry_active_baseline": "v311_sepolia_clean_baseline",
+  "active_flip": false,
+  "broadcast": false,
+  "apply_eligible": false,
+  "note": "FROZEN only via --apply when digests ready and worktree clean. ACTIVE stays Sepolia."
+}

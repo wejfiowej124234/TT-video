@@ -1,0 +1,169 @@
+# Mainnet Fund-Safety Cutover Hard Gate · Machine SSOT
+#
+# Doctrine: REAL ETH Mainnet fund safety is the highest bar.
+# Paper GO forbidden. Env-only unlock forbidden.
+#
+#   bash scripts/gates/check-mainnet-cutover-hard-gate.sh
+#
+# Initial verdict: REFUSED — close every axis with evidence before AUTHORIZED_FOR_WAVE / FULL_GO.
+
+schema: traveltrust.mainnet_cutover_hard_gate.v1
+version: 1
+effective_utc: "2026-07-19"
+machine_key: TT_MAINNET_CUTOVER_HARD_GATE
+fund_safety_standard: REAL_ETH_MAINNET
+target_chain_id: "1"
+target_network: Ethereum Mainnet
+paper_go_forbidden: true
+env_alone_cannot_unlock: true
+never_skip: true
+
+current_verdict: REFUSED
+
+verdict_enum:
+  - REFUSED
+  - PREP_IN_PROGRESS
+  - EVIDENCE_INCOMPLETE
+  - AUTHORIZED_FOR_WAVE
+  - FULL_GO
+
+related:
+  readiness_gate: registry/web3-mainnet-production-readiness-gate.v1.yaml
+  three_phase: registry/web3-three-phase-closure-discipline.v1.yaml
+  escrow_policy: registry/escrow-bilateral-mainnet-policy.v1.yaml
+  release_freeze: registry/mainnet-release-freeze.v1.yaml
+  escrow_final_freeze: registry/escrow-final-freeze-mainnet.v1.yaml
+  launch_precheck: docs/runbook/TT-MAINNET-LAUNCH-PRECHECK-AFTER-B435-001.md
+  runbook: docs/runbook/TT-MAINNET-CUTOVER-HARD-GATE-LATEST.md
+
+# Required axes — each must have evidence (not checkboxes alone)
+axes:
+  mainnet_release_freeze:
+    id: AXIS-01
+    required: true
+    registry: registry/mainnet-release-freeze.v1.yaml
+    required_status: FROZEN
+    evidence_hint: freeze pin + checksums for contracts/API/FE/indexer
+
+  escrow_final_freeze:
+    id: AXIS-02
+    required: true
+    registry: registry/escrow-final-freeze-mainnet.v1.yaml
+    required_status: FROZEN
+    v1_mainnet: FORBIDDEN
+    v2_required: true
+    evidence_hint: V2 commit + artifact digests + policy closed
+
+  mainnet_fork_rehearsal:
+    id: AXIS-03
+    required: true
+    evidence_glob: evidence/GO_production_readiness/mainnet-fork-rehearsal/MAINNET-FORK-REHEARSAL-LATEST.json
+    required_fields:
+      - chain_forked: 1
+      - bytecode_checks: PASS
+      - broadcast_to_live_mainnet: false
+    harness: scripts/dev/rehearse-mainnet-cutover-fork.sh
+
+  bytecode_address_chain_id:
+    id: AXIS-04
+    required: true
+    note: chain_id=1 + address matrix + bytecode identity (G1)
+    related_gate: scripts/gates/check-mainnet-launch-precheck-gate.sh
+
+  safe_multisig_roles:
+    id: AXIS-05
+    required: true
+    evidence_path: evidence/GO_production_readiness/mainnet-cutover-hard-gate/SAFE-ROLES-VERIFIED-LATEST.json
+    required_fields:
+      - safe_address
+      - threshold
+      - roles_matrix_verified
+
+  broadcast_misexec_protection:
+    id: AXIS-06
+    required: true
+    note: hard gate + phase boundary + chain_id=1 refuse without AUTHORIZED_FOR_WAVE
+    gate: scripts/gates/check-mainnet-cutover-hard-gate.sh
+    boundary: scripts/dev/lib/web3-phase-boundary.sh
+
+  secrets_infra_dns_monitor_rollback:
+    id: AXIS-07
+    required: true
+    evidence_path: evidence/GO_production_readiness/mainnet-cutover-hard-gate/OPS-SURFACE-VERIFIED-LATEST.json
+    required_fields:
+      - secrets_verified
+      - infra_verified
+      - dns_verified
+      - monitoring_verified
+      - rollback_verified
+    rollback_ssot: docs/runbook/templates/mainnet-package/rollback/MAINNET-ROLLBACK-PREP-V1.md
+
+  r01_or_residual_risk:
+    id: AXIS-08
+    required: true
+    accept_either:
+      - evidence/GO_production_readiness/mainnet-cutover-hard-gate/R01-THIRD-PARTY-AUDIT-PASS.json
+      - evidence/GO_production_readiness/mainnet-cutover-hard-gate/OWNER-RESIDUAL-RISK-SIGNOFF.json
+    template: docs/runbook/templates/mainnet-package/R01-OR-RESIDUAL-RISK-SIGNOFF.md
+
+  readiness_p0_zero:
+    id: AXIS-09
+    required: true
+    audit_latest: evidence/GO_production_readiness/web3-mainnet-audit/WEB3-MAINNET-PRODUCTION-READINESS-LATEST.json
+    pass_rule: p0 == 0 and verdict != WEB3_MAINNET_PRODUCTION_BLOCKED
+
+  pg_p0_esc_closed:
+    id: AXIS-10
+    required: true
+    readiness_field: escrow_bilateral_mainnet_policy.pg_p0_esc
+    required_value: CLOSED
+
+  deployment_package:
+    id: AXIS-11
+    required: true
+    gate: scripts/gates/check-mainnet-deployment-package-gate.sh
+
+  shadow_launch_go:
+    id: AXIS-12
+    required: true
+    evidence_root: evidence/mainnet_shadow_launch/
+    required_verdict: GO
+    required_json:
+      - shadow_go_no_go.json
+      - indexer_tick.json
+      - indexer_replay.json
+      - indexer_reconcile.json
+      - overview.json
+    reject: TEMPLATE / NO_GO scaffolds
+
+  g6_no_rollback_ack:
+    id: AXIS-13
+    required: true
+    evidence_path: evidence/mainnet_launch_gate/G6_no_rollback_ack.md
+    reject_template: true
+
+  owner_auth:
+    id: AXIS-14
+    required: true
+    registry_flag: registry/web3-mainnet-production-readiness-gate.v1.yaml#mainnet_cutover_authorized
+    required_value: true
+    evidence_path: evidence/GO_production_readiness/mainnet-cutover-hard-gate/OWNER-CUTOVER-AUTH-LATEST.json
+
+# Progression (fail-closed)
+progression:
+  - Shadow_GO
+  - Owner_auth
+  - Wave_small_enable
+  - Full_GO
+  note: Any anomaly → fail-closed; do not enter real user-fund phase
+
+gate_script: scripts/gates/check-mainnet-cutover-hard-gate.sh
+evidence_root: evidence/GO_production_readiness/mainnet-cutover-hard-gate
+evidence_latest: evidence/GO_production_readiness/mainnet-cutover-hard-gate/MAINNET-CUTOVER-HARD-GATE-LATEST.json
+
+non_goals_this_scaffold:
+  - no_live_mainnet_broadcast
+  - no_active_flip
+  - no_production_scope_mainnet
+  - no_user_fund_enablement
+  - no_paper_go_claim
