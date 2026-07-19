@@ -171,6 +171,7 @@ RELEASE_FIX_REQUIRED   ← 层② · 硬停子类见 Gate RELEASE_BLOCKER
 | `RBAC\|Tourist\|CAP_ADMIN_DENY\|F_DENY_API` · cite `PFA-UI-ADMIN-01` | `tourist@test.com` 被 seed promote 成 `admin` → Tourist Admin 拒测假失败 | `seed_repair_immutable_business_account_roles` + promote 拒 immutable 业务邮箱（`crates/api/src/chain_off/auth.rs`）→ 复验 403 | **CLOSED**（本地种子角色）· **Alignment 未闭环** |
 | Data `Announcement\|Create` | 创建体缺 `kind` / 错 `content_tier` | 探针对齐 `CmsAnnouncementCreateInput` + DB check（**非**产品逻辑改） | **CLOSED**（探针）· **Alignment 未闭环** |
 | Consistency Step4 · Git/Build 漂移 | 干净 tip 缺 `session_cookie` / `production_metrics` / `revoke_all_sessions_for_user` → Staging 部署 COMPILE_FAIL | 最小入提交：`main.rs` mods + `production_metrics.rs` + `users_sessions::revoke_all_sessions_for_user` → SHA `0a0265d3` | **CLOSED**（可构建对齐）· Staging ALIGNED 另证 |
+| Consistency Step4 · Staging smoke · `PSG-COV-STG-MIG-01` | tip `179cf7c3` 镜像构建成功但启动失败：DB 已应用 `20260713180000`，镜像 migration 集缺失（WIP 未提交） | 纳入 `crates/api/migrations/20260713*`/`20260715*`/`20260716*` 未跟踪文件并同域重部署 | **OPEN** → 修复中（ΔFix=0 · 非 Web3） |
 
 > **不**增加 Fix Required（仍 **= 8**）· **不**改 `CONDITIONAL_GO` · **不**关闭 PFA-04 Access Boundary DEFERRED · **不**触碰 Web3 Min-Fix。  
 > **Consistency Control：** [TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md) —  

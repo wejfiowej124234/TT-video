@@ -24,12 +24,9 @@ Release Alignment:   NOT_ALIGNED (build tip pinned; staging deploy next)
 | 2 | Unique commit SHA（Coverage） | **DONE** `50682517…` |
 | 3a | Git/Build 对齐（缺符号入提交） | **DONE** `0a0265d3` |
 | 3b | Registry `pinned_sha` → 可构建 tip | **IN_PROGRESS** |
-| 4 | Staging deploy same SHA | pending |
-| 5 | Staging health/meta SHA match | pending |
-| 6 | Staging re-run Phase3 cells only（不扩测） | pending |
-| 7 | `coverage_run` ALIGNED_PASS | pending |
-| 8 | Coverage Recalculate | pending |
-| 9 | PSG stamp refresh（裁决不变） | pending |
+| 4 | Staging deploy same SHA | **FAIL_SMOKE** `179cf7c3`（镜像 OK · 缺 migration `20260713180000`）→ Register `PSG-COV-STG-MIG-01` |
+| 5 | Staging health/meta SHA match | blocked（API crash-loop / meta timeout） |
+| 6–9 | Evidence / ALIGNED / Recalculate | **未做** · **禁止伪造 ALIGNED** |
 
 ### Step 3a · 已闭编译阻塞
 
