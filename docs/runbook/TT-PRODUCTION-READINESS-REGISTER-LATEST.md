@@ -174,8 +174,8 @@ RELEASE_FIX_REQUIRED   ← 层② · 硬停子类见 Gate RELEASE_BLOCKER
 
 > **不**增加 Fix Required（仍 **= 8**）· **不**改 `CONDITIONAL_GO` · **不**关闭 PFA-04 Access Boundary DEFERRED · **不**触碰 Web3 Min-Fix。  
 > **Consistency Control：** [TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md) —  
-> 修复路径必须 **Register → Fix → Local → Git SHA → Staging 同 SHA → Evidence → Recalculate**；**禁止**仅本地计入 Coverage PASS · **禁止**伪造 ALIGNED。
-
+> 修复路径必须 **Register → Fix → Local → Git SHA → Staging 同 SHA → Evidence → Recalculate**；**禁止**仅本地计入 Coverage PASS · **禁止**伪造 ALIGNED。  
+> **Domain Batch：** [TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST](./TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST.md) — 域序 RBAC→Journey→Data→UI→Web3 · **一域一批一部署** · Web3=HOLD（Fix=8）。
 | Finding / 项 | Sev | 阶段 | 说明 |
 |--------------|-----|------|------|
 | Final User Journey Acceptance | — | Release / Staging Validation | **不**进 WAIT_WINDOW（防 UX Finding 风暴） |

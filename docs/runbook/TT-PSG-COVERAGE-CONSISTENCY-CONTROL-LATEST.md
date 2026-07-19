@@ -5,13 +5,13 @@
 **机读：** [`registry/psg-coverage-consistency-control.v1.yaml`](../../registry/psg-coverage-consistency-control.v1.yaml)  
 **Gate：** `bash scripts/gates/check-psg-coverage-consistency-control.sh`  
 **Stamp：** `python scripts/dev/stamp-psg-coverage-run.py`  
-**关联：** [Measurement Recalculate](./TT-PSG-COVERAGE-MEASUREMENT-RECALCULATE-LATEST.md) · [Measurement FINAL](./TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md) · [Register](./TT-PRODUCTION-READINESS-REGISTER-LATEST.md)
+**关联：** [Domain Batch Closure](./TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST.md) · [Measurement Recalculate](./TT-PSG-COVERAGE-MEASUREMENT-RECALCULATE-LATEST.md) · [Measurement FINAL](./TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md) · [Register](./TT-PRODUCTION-READINESS-REGISTER-LATEST.md)
 
 > **原则（写死）：** 任何 Coverage Gap 修复必须完成  
 > **Local PASS → Git Commit SHA 固化 → Staging 同 SHA 部署 → Staging Evidence 验证 → Coverage Recalculate**  
 > 五点一致，否则 **不得计入 Coverage PASS**（Threshold / Acceptance / GO 层）。  
-> **本地测试通过 ≠ 测试网通过 ≠ Git 版本一致 ≠ 生产可发布。**
-
+> **本地测试通过 ≠ 测试网通过 ≠ Git 版本一致 ≠ 生产可发布。**  
+> **执行模式：** [Domain Batch Closure](./TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST.md) — 域序 **RBAC→Journey→Data→UI→Web3** · **一域一批一部署** · 禁止堆问题 / 单点频繁部署。
 ```text
 PSG:                 CONDITIONAL_GO
 Fix:                 8

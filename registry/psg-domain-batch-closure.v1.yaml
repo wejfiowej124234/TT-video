@@ -1,0 +1,89 @@
+# schema: traveltrust.psg_domain_batch_closure.v1
+# One domain at a time: test → Register → batch min-fix → Local → Git SHA → Staging → Evidence → Recalculate
+machine_key: TT_PSG_DOMAIN_BATCH_CLOSURE
+schema: traveltrust.psg_domain_batch_closure.v1
+status: ACTIVE
+recorded_utc: "2026-07-19T05:35:00Z"
+human_ssot: docs/runbook/TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST.md
+consistency_control: docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md
+consistency_registry: registry/psg-coverage-consistency-control.v1.yaml
+register_ssot: docs/runbook/TT-PRODUCTION-READINESS-REGISTER-LATEST.md
+closure_board: docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST.md
+
+release_gate_stamp:
+  psg: CONDITIONAL_GO
+  fix_required: 8
+  consistency_control: NOT_ALIGNED
+  domain_batch: ACTIVE
+
+domain_order:
+  - RBAC
+  - Journey
+  - Data
+  - UI
+  - Web3
+
+active_domain: RBAC
+
+rules:
+  one_active_domain: true
+  no_cross_domain_issue_pileup: true
+  no_per_fix_staging_deploy: true
+  one_staging_deploy_per_domain_batch: true
+  register_before_fix: true
+  local_pass_does_not_count_as_aligned: true
+  no_fake_aligned: true
+  no_rbac_chase_96_of_96_expansion: true
+  no_web3_minfix_in_batch_mode: true
+  no_fix_required_delta: true
+  no_gate_verdict_mutation: true
+
+domain_loop:
+  - coverage_test_domain_only
+  - register_findings
+  - batch_min_fix
+  - local_pass
+  - git_sha_pin
+  - staging_same_sha_deploy
+  - meta_parity
+  - coverage_run_aligned_evidence
+  - coverage_recalculate
+  - advance_domain
+
+domains:
+  RBAC:
+    status: IN_PROGRESS
+    goal: staging_aligned_for_phase3_rbac_local_cells
+    measurement: RBAC
+    notes: >
+      Phase3 filled LOCAL RBAC residual cells. Domain batch closes Staging ALIGNED
+      for those cells; do not expand probes to chase 96/96.
+  Journey:
+    status: NOT_STARTED
+    depends_on: RBAC
+    measurement: User_Journey
+  Data:
+    status: NOT_STARTED
+    depends_on: Journey
+    measurement: Data_Lifecycle
+  UI:
+    status: NOT_STARTED
+    depends_on: Data
+    measurement: UI_UX_P0
+  Web3:
+    status: HOLD
+    depends_on: UI
+    measurement: Security_Web3
+    hold_reason: Release Window Min-Fix only (Fix Required=8). Domain Batch must not open Web3 early.
+
+current_tip:
+  coverage_content_sha: "50682517b71171129700eeac130ecbdace274bb4"
+  build_align_sha: "0a0265d32da36874d1c373b90b14bd6d496f9ac0"
+  pin_head_sha: "179cf7c3ea8cd63e31a8e8f98eb9aeebe2edfdfc"
+  staging_meta_sha: null
+  note: Staging deploy of pin_head in flight or pending meta verify
+
+efficiency:
+  max_staging_deploys_per_domain: 1
+  allow_same_sha_redeploy_on_infra_failure: true
+  recalculate_only_after_aligned_evidence: true

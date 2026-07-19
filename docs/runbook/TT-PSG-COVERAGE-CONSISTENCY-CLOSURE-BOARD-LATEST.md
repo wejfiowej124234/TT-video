@@ -2,11 +2,12 @@
 
 **Machine:** `TT_PSG_COVERAGE_CONSISTENCY_CLOSURE`  
 **Status:** **IN_PROGRESS @ step 4** · `2026-07-19`  
+**Execution mode：** [Domain Batch Closure](./TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST.md) · **Active Domain = RBAC**  
 **Control：** [Consistency Control](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md)  
 **Coverage content SHA：** `50682517b71171129700eeac130ecbdace274bb4`  
 **Build-aligned tip SHA：** `0a0265d32da36874d1c373b90b14bd6d496f9ac0`（含 50682517）  
-**禁止：** 扩测刷 RBAC 100% · Web3 · Fix=8 · 改 Gate 裁决 · 伪造 ALIGNED_PASS
-
+**Pin HEAD：** `179cf7c3ea8cd63e31a8e8f98eb9aeebe2edfdfc`  
+**禁止：** 扩测刷 RBAC 100% · Web3 · Fix=8 · 改 Gate 裁决 · 伪造 ALIGNED_PASS · 单点频繁部署
 ```text
 PSG:                 CONDITIONAL_GO
 Fix:                 8

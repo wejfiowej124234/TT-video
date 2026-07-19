@@ -7,6 +7,9 @@ recorded_utc: "2026-07-19T05:00:00Z"
 human_ssot: docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md
 gate_script: scripts/gates/check-psg-coverage-consistency-control.sh
 stamp_script: scripts/dev/stamp-psg-coverage-run.py
+domain_batch_ssot: docs/runbook/TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST.md
+domain_batch_registry: registry/psg-domain-batch-closure.v1.yaml
+execution_mode: domain_batch_closure
 
 release_gate_stamp:
   psg: CONDITIONAL_GO
