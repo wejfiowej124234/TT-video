@@ -1,25 +1,25 @@
 {
   "schema": "traveltrust.psg_coverage_consistency_control_gate.v1",
   "machine_key": "TT_PSG_COVERAGE_CONSISTENCY_CONTROL",
-  "recorded_utc": "2026-07-19T06:27:35Z",
-  "head_sha": "4bd9217953a415d5e3eb8624c9a1e7e610876f23",
-  "pinned_sha": "678c9c4bed6aac8fdadacc64e79fd23210711d75",
+  "recorded_utc": "2026-07-19T07:09:58Z",
+  "head_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
+  "pinned_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
   "registry_current_verdict": "ALIGNED_PASS",
   "working_tree_dirty": true,
-  "coverage_paths_dirty": false,
+  "coverage_paths_dirty": true,
   "coverage_run_path": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/COVERAGE-RUN-LATEST.json",
   "checks": {
     "L1_LOCAL": "PASS",
-    "L2_GIT": "PASS",
+    "L2_GIT": "FAIL",
     "L3_STAGING_DEPLOY": "PASS",
     "L4_STAGING_EVIDENCE": "PASS",
-    "L5_RECALCULATE": "PASS"
+    "L5_RECALCULATE": "FAIL"
   },
-  "overall_verdict": "ALIGNED_PASS",
+  "overall_verdict": "NOT_ALIGNED",
   "release_gate_stamp": {
     "psg": "CONDITIONAL_GO",
     "fix_required": 8,
-    "consistency_control": "ALIGNED_PASS"
+    "consistency_control": "NOT_ALIGNED"
   },
   "notes": [
     "LOCAL_PASS must not count as Coverage PASS until ALIGNED_PASS",

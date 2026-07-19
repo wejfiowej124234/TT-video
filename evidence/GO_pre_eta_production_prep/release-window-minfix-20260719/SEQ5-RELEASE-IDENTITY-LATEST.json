@@ -7,7 +7,7 @@
     "PFA-01-IMAGE-DIGEST"
   ],
   "verdict": "PASS",
-  "candidate_sha": "c7b293e99b4ca7a5ca8aed0c5d1d658a6557be6e",
+  "candidate_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
   "tt_web_staging_image": "registry.fly.io/tt-web-staging:deployment-01KXWJBZRCT3M976D4P7CF9G9Q",
   "tt_api_staging_image": "registry.fly.io/tt-api-staging:deployment-01KXWGYHCP8RHZ418A7MEZNJVC",
   "fix_closed": true,

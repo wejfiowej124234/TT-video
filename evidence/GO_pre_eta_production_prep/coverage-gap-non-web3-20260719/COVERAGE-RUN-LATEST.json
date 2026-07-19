@@ -3,21 +3,21 @@
   "machine_key": "TT_PSG_COVERAGE_RUN",
   "coverage_run": {
     "schema": "traveltrust.psg_coverage_run.v1",
-    "git_sha": "4bd9217953a415d5e3eb8624c9a1e7e610876f23",
+    "git_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
     "environment": "staging",
-    "api_sha": "4bd9217953a415d5e3eb8624c9a1e7e610876f23",
+    "api_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
     "web_sha": null,
-    "api_version": "4bd9217953a415d5e3eb8624c9a1e7e610876f23",
+    "api_version": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
     "frontend_version": "0.1.0",
     "migration_state": "matched",
-    "timestamp": "2026-07-19T06:27:35Z",
+    "timestamp": "2026-07-19T07:09:58Z",
     "evidence_path": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719",
     "cell_refs": [],
     "register_issue_ids": [
-      "PSG-COV-STG-MIG-01",
-      "PSG-COV-STG-MIG-02"
+      "PFA-UI-WALLET-01",
+      "PFA-UI-ROLE-02"
     ],
-    "staging_meta_git_sha": "4bd9217953a415d5e3eb8624c9a1e7e610876f23",
+    "staging_meta_git_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
     "consistency_verdict": "ALIGNED_PASS",
     "api_base": "https://tt-api-staging.fly.dev",
     "web_base": null,

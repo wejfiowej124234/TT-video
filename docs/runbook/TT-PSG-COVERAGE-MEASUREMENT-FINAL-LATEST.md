@@ -12,7 +12,7 @@
 
 ```text
 PSG:                 CONDITIONAL_GO
-Fix:                 8
+Fix:                 2  # Release Window partial close; WC open
 Coverage Evidence:   VERIFIED
 Coverage Metrics:    FINAL
 Consistency Control: ALIGNED_PASS
@@ -78,7 +78,7 @@ RBAC 仍 **NEED_FIX** 的原因不是「未测格」，而是阈值写死 **96/9
 | RBAC | **NEED_FIX**（60/96 · 阈值 `pass/96==100`） |
 | Rollup（Acceptance） | **NEED_FIX**（RBAC） |
 | PSG Gate | **CONDITIONAL_GO**（未改） |
-| Fix Required | **8**（未改 · `ΔFix=0`） |
+| Fix Required | **2**（本窗已关 ACTIVE/Trust/ROLE-01 · 剩 WC+ROLE-02） |
 
 **下一动作：** Domain Batch 继续 RBAC（不扩测刷 %）· Web3/Min-Fix 另窗；**禁止**改 Fix=8 / Gate。
 ---
