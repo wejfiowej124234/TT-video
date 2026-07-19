@@ -19,6 +19,8 @@ pub use chain::vacancy_ledger_indexer;
 mod chain_off;
 mod db;
 mod pcp;
+mod session_cookie;
+mod production_metrics;
 mod jurisdiction_country_ledger_template;
 mod middleware;
 mod onboarding_counters;

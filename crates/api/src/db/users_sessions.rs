@@ -76,6 +76,22 @@ pub async fn delete_session(pool: &PgPool, token: &str) -> Result<u64, sqlx::Err
     Ok(r.rows_affected())
 }
 
+/// Delete all sessions for a user (password reset / security revoke).
+pub async fn revoke_all_sessions_for_user<'e, E>(
+    executor: E,
+    user_id: Uuid,
+    _reason: &str,
+) -> Result<u64, sqlx::Error>
+where
+    E: sqlx::Executor<'e, Database = sqlx::Postgres>,
+{
+    let r = sqlx::query("DELETE FROM sessions WHERE user_id = $1")
+        .bind(user_id)
+        .execute(executor)
+        .await?;
+    Ok(r.rows_affected())
+}
+
 /// 用户行（与 chain_off::UserRow 字段对齐，用于 hydrate）
 #[derive(Debug, Clone)]
 pub struct UserRow {
