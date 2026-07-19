@@ -163,9 +163,9 @@ Regression Evidence（同格复验）
 | 项 | 状态 |
 |----|------|
 | Phase3 Local Measurement | 分母格已填 · Metric FINAL（本地） |
-| Coverage fix commit | **`50682517b71171129700eeac130ecbdace274bb4`** |
-| Registry `pinned_sha` | **已钉**（同上） |
-| Staging 同 SHA | **未**证 |
+| Coverage content commit | **`50682517b71171129700eeac130ecbdace274bb4`** |
+| Build-aligned tip / `pinned_sha` | **`0a0265d32da36874d1c373b90b14bd6d496f9ac0`** |
+| Staging 同 SHA | **未**证（部署进行中/待证） |
 | Consistency Control | **NOT_ALIGNED**（等 Staging ALIGNED） |
 | ALIGNED 分子 | **0**（直至 L3–L5） |
 | Fix Required / Gate | **8** / **CONDITIONAL_GO**（未改） |
