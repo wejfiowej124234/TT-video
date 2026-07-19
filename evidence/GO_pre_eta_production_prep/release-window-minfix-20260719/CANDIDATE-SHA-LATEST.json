@@ -1,0 +1,18 @@
+{
+  "candidate_sha": "c7b293e99b4ca7a5ca8aed0c5d1d658a6557be6e",
+  "environment": "staging",
+  "psg": "CONDITIONAL_GO",
+  "fix_required_open": 2,
+  "closed_this_window": [
+    "PFA-UI-GOV-01",
+    "PFA-UI-STEWARD-01",
+    "PFA-UI-GOV-02",
+    "PFA-UI-ROLE-01",
+    "PFA-UI-TRUST-01",
+    "PFA-01-CANDIDATE-SHA"
+  ],
+  "open": [
+    "PFA-UI-WALLET-01",
+    "PFA-UI-ROLE-02"
+  ]
+}
