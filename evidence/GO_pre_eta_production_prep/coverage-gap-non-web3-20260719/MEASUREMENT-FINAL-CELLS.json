@@ -3,8 +3,9 @@
   "machine_key": "TT_PSG_COVERAGE_MEASUREMENT_FINAL",
   "status": "METRIC_FINAL",
   "phase": "phase3_residual_cell_fill",
-  "recorded_utc": "2026-07-19T04:59:25Z",
+  "recorded_utc": "2026-07-19T06:18:14Z",
   "mode": "phase1_baseline_plus_phase2_plus_phase3_cell_fill",
+  "recalculate": "ALIGNED_BINDING",
   "phase2_cell_log": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/CELL_PASS.ndjson",
   "phase3_cell_log": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase3/CELL_PASS.ndjson",
   "release_gate_stamp": {
@@ -12,17 +13,20 @@
     "fix_required": 8,
     "coverage_evidence": "VERIFIED",
     "coverage_metrics": "FINAL",
-    "consistency_control": "NOT_ALIGNED",
-    "pass_tier": "LOCAL_PASS"
+    "consistency_control": "ALIGNED_PASS",
+    "pass_tier": "ALIGNED_PASS"
   },
   "consistency_control": {
     "machine_key": "TT_PSG_COVERAGE_CONSISTENCY_CONTROL",
     "human_ssot": "docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md",
     "registry": "registry/psg-coverage-consistency-control.v1.yaml",
     "gate": "scripts/gates/check-psg-coverage-consistency-control.sh",
-    "verdict": "NOT_ALIGNED",
+    "verdict": "ALIGNED_PASS",
     "rule": "only_ALIGNED_PASS_counts_for_threshold_acceptance",
-    "local_pass_does_not_count": true
+    "local_pass_does_not_count": true,
+    "coverage_run_path": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/COVERAGE-RUN-LATEST.json",
+    "bound_git_sha": "678c9c4bed6aac8fdadacc64e79fd23210711d75",
+    "binding_rule": "coverage_run.staging_ALIGNED_PASS_and_sha_equals_HEAD"
   },
   "discipline": {
     "no_scope_expansion": true,

@@ -167,11 +167,11 @@ Regression Evidence（同格复验）
 | Deploy tip / `pinned_sha` | **`406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16`** |
 | Staging 同 SHA | **已证** · `/meta` `build.git_sha=406fb32c…` |
 | Consistency Control | **ALIGNED_PASS**（L1–L5 Control） |
-| Coverage Metric Recalculate | **DEFERRED**（本轮不提前刷新 FINAL / GO） |
-| ALIGNED 分子（Coverage Acceptance） | **0** 直至 Recalculate |
+| Coverage Metric Recalculate | **DONE** · Pass Tier **ALIGNED_PASS**（绑定 Staging SHA） |
+| Threshold Rollup | **NEED_FIX**（RBAC 60/96） |
 | Fix Required / Gate | **8** / **CONDITIONAL_GO**（未改） |
 
-> Consistency Control ALIGNED_PASS **≠** Coverage Measurement Recalculate / Threshold PASS。  
+> Recalculate 后 Journey/Data/UI 可计 Acceptance；RBAC 仍 NEED_FIX。**≠** Production GO。  
 > Closure Board：[TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST](./TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST.md)
 
 ---

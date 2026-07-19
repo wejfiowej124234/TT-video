@@ -15,16 +15,16 @@ PSG:                 CONDITIONAL_GO
 Fix:                 8
 Coverage Evidence:   VERIFIED
 Coverage Metrics:    FINAL
-Consistency Control: NOT_ALIGNED   ← Local ≠ Git pin ≠ Staging
-Threshold Rollup:    NEED_FIX
+Consistency Control: ALIGNED_PASS
+Pass Tier:           ALIGNED_PASS   ← bound via coverage_run + Staging SHA
+Threshold Rollup:    NEED_FIX       ← RBAC 60/96 阈值未满
 ```
 
-> **Metric FINAL** = 全格已赋值且 `pass/denom` 已算（**本地分子**）。  
-> **≠** Production GO · **≠** Fix=0 · **≠** ALIGNED_PASS。  
-> **Consistency Control（硬闸）：** [TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md) —  
-> 仅 **ALIGNED_PASS**（Local→Git SHA→Staging 同 SHA→Evidence→Recalculate）可计入 Threshold / Acceptance。  
-> 本 FINAL 的 pass 格当前 = **LOCAL_PASS** · **禁止**冒充 Staging/发布级 Coverage PASS。  
-> Phase3 Register 关联最小修复：`seed_repair_immutable_business_account_roles`（`ΔFix=0` · **未**动 Fix=8 / Web3）— 须再走 Alignment Loop 才升格。
+> **Metric FINAL** = 全格已赋值且 `pass/denom` 已算。  
+> **Pass Tier = ALIGNED_PASS**：`coverage_run` staging · SHA 对拍 · Consistency Gate 已闭后 Recalculate 绑定（**禁止** Local-only 冒充）。  
+> **≠** Production GO · **≠** Fix=0 · RBAC 阈值仍 **NEED_FIX**（不扩测刷 96/96）。  
+> **Consistency Control：** [TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md)。  
+> Phase3 Register 关联最小修复：`seed_repair_immutable_business_account_roles`（`ΔFix=0` · **未**动 Fix=8 / Web3）。
 **公式：** `Coverage_% = pass_cells / denom_cells`（`N/A` 不计 PASS）。
 
 ---
@@ -71,15 +71,16 @@ RBAC 仍 **NEED_FIX** 的原因不是「未测格」，而是阈值写死 **96/9
 
 | 项 | 结果 |
 |----|------|
-| Measurement（本地） | **FINAL** · 分子 = LOCAL_PASS |
-| Consistency Control | **NOT_ALIGNED**（见 Gate 报告） |
-| Journey / Data / UI（本地阈值） | **PASS** · **未** ALIGNED |
-| RBAC | **NEED_FIX**（60/96 本地） |
-| Rollup（Acceptance） | **NEED_FIX**（本地 Rollup + 未对齐） |
+| Measurement | **FINAL** · Recalculate **ALIGNED_BINDING** |
+| Consistency Control | **ALIGNED_PASS** |
+| Pass Tier | **ALIGNED_PASS**（Acceptance 可计 Journey/Data/UI） |
+| Journey / Data / UI | **PASS**（ALIGNED） |
+| RBAC | **NEED_FIX**（60/96 · 阈值 `pass/96==100`） |
+| Rollup（Acceptance） | **NEED_FIX**（RBAC） |
 | PSG Gate | **CONDITIONAL_GO**（未改） |
 | Fix Required | **8**（未改 · `ΔFix=0`） |
 
-**下一动作：** Alignment Loop — Git 提交固化 SHA → Staging 同 SHA 部署/复验 → `coverage_run` staging ALIGNED → Recalculate；**禁止**仅本地计入 Coverage PASS；产品 Fix 仍走 Min-Fix（Fix=8）。
+**下一动作：** Domain Batch 继续 RBAC（不扩测刷 %）· Web3/Min-Fix 另窗；**禁止**改 Fix=8 / Gate。
 ---
 
 ## 5 · 纪律确认

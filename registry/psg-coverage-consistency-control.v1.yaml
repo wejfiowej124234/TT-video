@@ -98,18 +98,20 @@ finding_path:
   - Alignment_Loop
   - Recalculate
 
-# Consistency Closure: Staging tip SHA parity closed (L1–L5 Control). Coverage Metric Recalculate deferred.
+# Consistency Closure: ALIGNED + Measurement Recalculate bound (Pass Tier ALIGNED_PASS).
 current_verdict: ALIGNED_PASS
 current_verdict_reason: >
-  Staging /meta build.git_sha == tip 406fb32c; coverage_run staging ALIGNED_PASS + migration_state=matched.
-  MIG-01/MIG-02 closed. Coverage Measurement FINAL / Threshold Recalculate not yet refreshed (intentional).
-pinned_sha: "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16"
+  Staging SHA parity + coverage_run ALIGNED_PASS; Measurement Recalculate bound (ALIGNED_BINDING).
+  Threshold Rollup still NEED_FIX (RBAC 60/96). Fix=8 / CONDITIONAL_GO unchanged.
+pinned_sha: "678c9c4bed6aac8fdadacc64e79fd23210711d75"
 coverage_fix_sha: "50682517b71171129700eeac130ecbdace274bb4"
-deploy_tip_sha: "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16"
+deploy_tip_sha: "678c9c4bed6aac8fdadacc64e79fd23210711d75"
 build_align_sha: "0a0265d32da36874d1c373b90b14bd6d496f9ac0"
 staging_blocker: null
 register_issue: null
-aligned_pass_cells: 0
+aligned_pass_cells: 49
+recalculate_status: DONE
+alignment_base_sha: "678c9c4bed6aac8fdadacc64e79fd23210711d75"
 closure_board: docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST.md
 local_metric_cite: docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md
 measurement_final_registry: registry/psg-coverage-measurement-final.v1.yaml

@@ -20,7 +20,8 @@ PSG:                 CONDITIONAL_GO
 Fix:                 8
 Coverage Evidence:   VERIFIED
 Coverage Metrics:    FINAL
-Consistency Control: NOT_ALIGNED
+Consistency Control: ALIGNED_PASS
+Pass Tier:           ALIGNED_PASS
 Threshold Rollup:    NEED_FIX
 ```
 ---

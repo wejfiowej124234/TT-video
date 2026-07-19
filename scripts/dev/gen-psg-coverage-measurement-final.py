@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import re
+import subprocess
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,7 +12,69 @@ from pathlib import Path
 EV = "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719"
 PHASE2_CELL_LOG = f"{EV}/phase2/CELL_PASS.ndjson"
 PHASE3_CELL_LOG = f"{EV}/phase3/CELL_PASS.ndjson"
+COVERAGE_RUN = f"{EV}/COVERAGE-RUN-LATEST.json"
+CONSISTENCY_REG = "registry/psg-coverage-consistency-control.v1.yaml"
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def git_head() -> str:
+    return subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+    ).strip()
+
+
+def yaml_scalar(text: str, key: str) -> str | None:
+    m = re.search(rf"^{re.escape(key)}:\s*(.+)$", text, re.M)
+    if not m:
+        return None
+    v = m.group(1).strip()
+    if v in ("null", "~", '""', "''"):
+        return None
+    if (v.startswith('"') and v.endswith('"')) or (
+        v.startswith("'") and v.endswith("'")
+    ):
+        return v[1:-1]
+    return v
+
+
+def resolve_alignment() -> dict:
+    """Bind Measurement tier to Staging coverage_run + Consistency Control.
+
+    ALIGNED_PASS only when coverage_run is staging ALIGNED and matches HEAD,
+    and registry current_verdict is ALIGNED(_PASS). Otherwise LOCAL_PASS.
+    """
+    head = git_head()
+    run: dict = {}
+    run_path = ROOT / COVERAGE_RUN
+    if run_path.is_file():
+        raw = json.loads(run_path.read_text(encoding="utf-8"))
+        run = raw.get("coverage_run") or raw
+    reg_text = (ROOT / CONSISTENCY_REG).read_text(encoding="utf-8")
+    reg_verdict = yaml_scalar(reg_text, "current_verdict") or "NOT_ALIGNED"
+    run_sha = str(run.get("git_sha") or "")
+    run_env = str(run.get("environment") or "")
+    run_verdict = str(run.get("consistency_verdict") or "")
+    api_sha = str(run.get("api_sha") or "")
+    staging_meta = str(run.get("staging_meta_git_sha") or "")
+    migration = str(run.get("migration_state") or "")
+    aligned = (
+        run_env == "staging"
+        and run_verdict == "ALIGNED_PASS"
+        and run_sha == head
+        and (not api_sha or api_sha == head)
+        and staging_meta == head
+        and migration == "matched"
+        and reg_verdict in ("ALIGNED", "ALIGNED_PASS")
+    )
+    return {
+        "aligned": aligned,
+        "head_sha": head,
+        "coverage_run_path": COVERAGE_RUN,
+        "coverage_run_git_sha": run_sha or None,
+        "registry_verdict": reg_verdict,
+        "pass_tier": "ALIGNED_PASS" if aligned else "LOCAL_PASS",
+        "consistency_verdict": "ALIGNED_PASS" if aligned else "NOT_ALIGNED",
+    }
 
 # Phase2 NDJSON keys that must not count as PASS (invalid / soft evidence)
 PHASE2_REJECT_KEYS = {
@@ -442,6 +506,7 @@ def main() -> None:
         },
     }
 
+    align = resolve_alignment()
     out = {
         "schema": "traveltrust.psg_coverage_measurement_final.v1",
         "machine_key": "TT_PSG_COVERAGE_MEASUREMENT_FINAL",
@@ -449,6 +514,7 @@ def main() -> None:
         "phase": "phase3_residual_cell_fill",
         "recorded_utc": stamp,
         "mode": "phase1_baseline_plus_phase2_plus_phase3_cell_fill",
+        "recalculate": "ALIGNED_BINDING" if align["aligned"] else "LOCAL_ONLY",
         "phase2_cell_log": PHASE2_CELL_LOG,
         "phase3_cell_log": PHASE3_CELL_LOG,
         "release_gate_stamp": {
@@ -456,17 +522,20 @@ def main() -> None:
             "fix_required": 8,
             "coverage_evidence": "VERIFIED",
             "coverage_metrics": "FINAL",
-            "consistency_control": "NOT_ALIGNED",
-            "pass_tier": "LOCAL_PASS",
+            "consistency_control": align["consistency_verdict"],
+            "pass_tier": align["pass_tier"],
         },
         "consistency_control": {
             "machine_key": "TT_PSG_COVERAGE_CONSISTENCY_CONTROL",
             "human_ssot": "docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md",
             "registry": "registry/psg-coverage-consistency-control.v1.yaml",
             "gate": "scripts/gates/check-psg-coverage-consistency-control.sh",
-            "verdict": "NOT_ALIGNED",
+            "verdict": align["consistency_verdict"],
             "rule": "only_ALIGNED_PASS_counts_for_threshold_acceptance",
             "local_pass_does_not_count": True,
+            "coverage_run_path": align["coverage_run_path"],
+            "bound_git_sha": align["head_sha"] if align["aligned"] else None,
+            "binding_rule": "coverage_run.staging_ALIGNED_PASS_and_sha_equals_HEAD",
         },
         "discipline": {
             "no_scope_expansion": True,

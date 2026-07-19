@@ -16,7 +16,7 @@ Consistency Control: NOT_ALIGNED
 Threshold Rollup:    NEED_FIX
 ```
 **FINAL 数字（Phase3 · LOCAL）：** [Measurement FINAL](./TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md) — Journey **5/5** · Data **20/20** · UI **24/24** · RBAC **60/96 NEED_FIX** · Rollup **NEED_FIX**（定向 NOT_RUN=0）。  
-**Consistency Control：** [Consistency Control](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md) = **NOT_ALIGNED** — 上表分子当前为 **LOCAL_PASS**；**Acceptance / GO 层只认 ALIGNED_PASS**。
+**Consistency Control：** [Consistency Control](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md) = **ALIGNED_PASS** — Pass Tier **ALIGNED_PASS**（Recalculate 已绑定）；**Threshold Rollup 仍 NEED_FIX**（RBAC 60/96）。
 > **顺序（写死）：** 先定义发布标准 → 可计算分母 → 填格证据 → Recalculate → 对照本阈值 → GO。  
 > **不是：** 先刷估数 % → 再上线。  
 > **不改变** `CONDITIONAL_GO` · Fix Required=8 · **禁止**全量测试 / 零 Finding / 强拉 Deferred / 估算覆盖率。

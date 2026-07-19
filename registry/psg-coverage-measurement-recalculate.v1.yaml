@@ -16,19 +16,22 @@ release_gate_stamp:
   fix_required: 8
   coverage_evidence: VERIFIED
   coverage_metrics: FINAL
-  consistency_control: NOT_ALIGNED
+  consistency_control: ALIGNED_PASS
+  pass_tier: ALIGNED_PASS
   threshold_rollup: NEED_FIX
 consistency_control:
   human_ssot: docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md
   registry: registry/psg-coverage-consistency-control.v1.yaml
   gate: scripts/gates/check-psg-coverage-consistency-control.sh
   rule: only_ALIGNED_PASS_counts_for_threshold_acceptance
-phase3_metrics_cite_local:
+  verdict: ALIGNED_PASS
+phase3_metrics_cite_aligned:
   RBAC: "60/96"
   User_Journey: "5/5"
   Data_Lifecycle: "20/20"
   UI_UX_P0: "24/24"
-  note: LOCAL_PASS_only_until_alignment_loop_closed
+  note: ALIGNED_PASS_after_staging_sha_parity_and_recalculate
+  alignment_base_sha: "678c9c4bed6aac8fdadacc64e79fd23210711d75"
 
 discipline:
   no_estimated_percent: true

@@ -1,20 +1,19 @@
 {
   "schema": "traveltrust.psg_staging_sha_parity.v1",
   "machine_key": "TT_PSG_STAGING_SHA_PARITY",
-  "recorded_utc": "2026-07-19T06:05:49Z",
-  "tip_git_sha": "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16",
+  "recorded_utc": "2026-07-19T06:18:54Z",
+  "tip_git_sha": "678c9c4bed6aac8fdadacc64e79fd23210711d75",
   "staging_api_base": "https://tt-api-staging.fly.dev",
-  "meta_build_git_sha": "406fb32ce00ed2cbd4f2a75d0e1b287416cd4a16",
+  "meta_build_git_sha": "678c9c4bed6aac8fdadacc64e79fd23210711d75",
   "sha_match": true,
   "migration_state": "matched",
-  "register_issues_closed": [
-    "PSG-COV-STG-MIG-01",
-    "PSG-COV-STG-MIG-02"
-  ],
-  "min_fix_note": "Aligned _sqlx_migrations.checksum for 20260713180000 to tip LF SHA384 after MIG-02 CRLF path",
-  "coverage_measurement_recalculate": "DEFERRED",
+  "consistency_gate": "ALIGNED_PASS",
+  "measurement_recalculate": "ALIGNED_BINDING",
+  "pass_tier": "ALIGNED_PASS",
+  "coverage_measurement_recalculate": "DONE",
   "release_gate_stamp": {
     "psg": "CONDITIONAL_GO",
-    "fix_required": 8
+    "fix_required": 8,
+    "threshold_rollup": "NEED_FIX"
   }
 }
