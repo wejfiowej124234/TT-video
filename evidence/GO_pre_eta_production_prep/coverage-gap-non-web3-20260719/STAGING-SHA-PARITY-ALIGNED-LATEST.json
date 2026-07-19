@@ -1,11 +1,12 @@
 {
   "schema": "traveltrust.psg_staging_sha_parity.v1",
   "machine_key": "TT_PSG_STAGING_SHA_PARITY",
-  "recorded_utc": "2026-07-19T06:27:35Z",
-  "tip_git_sha": "4bd9217953a415d5e3eb8624c9a1e7e610876f23",
+  "recorded_utc": "2026-07-19T06:35:36Z",
+  "tip_git_sha": "8fb138d60d6eb4be48154b9d58b63bc0fba879f3",
   "alignment_base_sha": "678c9c4bed6aac8fdadacc64e79fd23210711d75",
+  "recalculate_commit": "4bd9217953a415d5e3eb8624c9a1e7e610876f23",
   "staging_api_base": "https://tt-api-staging.fly.dev",
-  "meta_build_git_sha": "4bd9217953a415d5e3eb8624c9a1e7e610876f23",
+  "meta_build_git_sha": "8fb138d60d6eb4be48154b9d58b63bc0fba879f3",
   "sha_match": true,
   "migration_state": "matched",
   "consistency_gate": "ALIGNED_PASS",
@@ -15,5 +16,9 @@
     "psg": "CONDITIONAL_GO",
     "fix_required": 8,
     "threshold_rollup": "NEED_FIX"
-  }
+  },
+  "git_tip": "227479a1d3ce61e3b8a281da5acc574c4389dc8d",
+  "staging_api_build_git_sha": "227479a1d3ce61e3b8a281da5acc574c4389dc8d",
+  "alignment_status": "ALIGNED",
+  "updated_at": "2026-07-19T07:21:04Z"
 }

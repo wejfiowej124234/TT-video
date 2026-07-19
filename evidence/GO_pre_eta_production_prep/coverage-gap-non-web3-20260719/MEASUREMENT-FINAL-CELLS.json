@@ -3,7 +3,7 @@
   "machine_key": "TT_PSG_COVERAGE_MEASUREMENT_FINAL",
   "status": "METRIC_FINAL",
   "phase": "phase3_residual_cell_fill",
-  "recorded_utc": "2026-07-19T07:09:58Z",
+  "recorded_utc": "2026-07-19T07:19:34Z",
   "mode": "phase1_baseline_plus_phase2_plus_phase3_cell_fill",
   "recalculate": "ALIGNED_BINDING",
   "phase2_cell_log": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/phase2/CELL_PASS.ndjson",
@@ -25,7 +25,7 @@
     "rule": "only_ALIGNED_PASS_counts_for_threshold_acceptance",
     "local_pass_does_not_count": true,
     "coverage_run_path": "evidence/GO_pre_eta_production_prep/coverage-gap-non-web3-20260719/COVERAGE-RUN-LATEST.json",
-    "bound_git_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
+    "bound_git_sha": "227479a1d3ce61e3b8a281da5acc574c4389dc8d",
     "binding_rule": "coverage_run.staging_ALIGNED_PASS_and_sha_equals_HEAD"
   },
   "discipline": {

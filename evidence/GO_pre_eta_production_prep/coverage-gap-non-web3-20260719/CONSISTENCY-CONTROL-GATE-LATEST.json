@@ -1,9 +1,9 @@
 {
   "schema": "traveltrust.psg_coverage_consistency_control_gate.v1",
   "machine_key": "TT_PSG_COVERAGE_CONSISTENCY_CONTROL",
-  "recorded_utc": "2026-07-19T07:09:58Z",
-  "head_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
-  "pinned_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
+  "recorded_utc": "2026-07-19T07:19:46Z",
+  "head_sha": "227479a1d3ce61e3b8a281da5acc574c4389dc8d",
+  "pinned_sha": "227479a1d3ce61e3b8a281da5acc574c4389dc8d",
   "registry_current_verdict": "ALIGNED_PASS",
   "working_tree_dirty": true,
   "coverage_paths_dirty": true,

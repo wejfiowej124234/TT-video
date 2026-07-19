@@ -1,11 +1,11 @@
 # PSG · Coverage Consistency Closure Board
 
 **Machine:** `TT_PSG_COVERAGE_CONSISTENCY_CLOSURE`  
-**Status:** **RECALCULATE_DONE · await tip redeploy lock** · `2026-07-19`  
+**Status:** **RECALCULATE_DONE · CLOSED @ tip 8fb138d6** · `2026-07-19`  
 **Execution mode：** [Domain Batch Closure](./TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST.md) · **Active Domain = RBAC**  
 **Control：** [Consistency Control](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md)  
 **Measurement：** [FINAL](./TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md) · Pass Tier **ALIGNED_PASS**  
-**Alignment base SHA：** `678c9c4bed6aac8fdadacc64e79fd23210711d75`（Staging 已证）  
+**Alignment base SHA：** `678c9c4b` · **Recalculate tip：** `4bd92179` · **Evidence-lock tip：** `8fb138d6`（= Staging `/meta`）  
 **禁止：** 扩测刷 RBAC 100% · Web3 · Fix=8 · 改 Gate · Local-only PASS · Local/Staging/Evidence 漂移
 ```text
 PSG:                 CONDITIONAL_GO

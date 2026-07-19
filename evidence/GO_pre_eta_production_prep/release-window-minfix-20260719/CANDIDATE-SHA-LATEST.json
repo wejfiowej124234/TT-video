@@ -1,5 +1,5 @@
 {
-  "candidate_sha": "39a02c5f94ab735c42b3c0f93aa43e01e714943e",
+  "candidate_sha": "227479a1d3ce61e3b8a281da5acc574c4389dc8d",
   "environment": "staging",
   "psg": "CONDITIONAL_GO",
   "fix_required_open": 2,
@@ -14,5 +14,9 @@
   "open": [
     "PFA-UI-WALLET-01",
     "PFA-UI-ROLE-02"
-  ]
+  ],
+  "git_tip": "227479a1d3ce61e3b8a281da5acc574c4389dc8d",
+  "staging_api_build_git_sha": "227479a1d3ce61e3b8a281da5acc574c4389dc8d",
+  "updated_at": "2026-07-19T07:19:46Z",
+  "note": "Pinned after Recalculate tip; tip=/meta build.git_sha parity"
 }
