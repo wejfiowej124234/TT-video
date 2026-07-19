@@ -3,6 +3,7 @@
 **Machine:** `TT_PSG_COVERAGE_CONSISTENCY_CLOSURE`  
 **Status:** **IN_PROGRESS** · `2026-07-19`  
 **Control：** [Consistency Control](./TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md)  
+**Coverage fix SHA：** `50682517b71171129700eeac130ecbdace274bb4`  
 **禁止：** 扩测刷 RBAC 100% · Web3 · Fix=8 · 改 Gate 裁决（保持 `CONDITIONAL_GO`）
 
 ```text
@@ -10,16 +11,16 @@ PSG:                 CONDITIONAL_GO
 Fix:                 8
 Coverage Evidence:   VERIFIED
 Local Measurement:   FINAL (LOCAL_PASS)
-Release Alignment:   NOT_ALIGNED → (closing)
+Release Alignment:   NOT_ALIGNED (pinned; staging open)
 ```
 
 ## Closure ladder
 
 | Step | Action | Status |
 |------|--------|--------|
-| 1 | Commit Coverage Phase3 + Consistency Control | **IN_PROGRESS** |
-| 2 | Unique commit SHA | pending |
-| 3 | Registry `pinned_sha` | pending |
+| 1 | Commit Coverage Phase3 + Consistency Control | **DONE** `50682517` |
+| 2 | Unique commit SHA | **DONE** `50682517b71171129700eeac130ecbdace274bb4` |
+| 3 | Registry `pinned_sha` | **DONE**（本 pin commit） |
 | 4 | Staging deploy same SHA | pending |
 | 5 | Staging health/meta SHA match | pending |
 | 6 | Staging re-run Phase3 cells only（不扩测） | pending |

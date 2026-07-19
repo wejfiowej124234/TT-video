@@ -158,18 +158,20 @@ Regression Evidence（同格复验）
 
 ---
 
-## 7 · 当前裁决（诚实 · ①）
+## 7 · 当前裁决（诚实 · Consistency Closure）
 
 | 项 | 状态 |
 |----|------|
 | Phase3 Local Measurement | 分母格已填 · Metric FINAL（本地） |
-| Working Tree / Commit | **未**完成「修复 SHA 固化」闭环（见 Gate 实测） |
+| Coverage fix commit | **`50682517b71171129700eeac130ecbdace274bb4`** |
+| Registry `pinned_sha` | **已钉**（同上） |
 | Staging 同 SHA | **未**证 |
-| Consistency Control | **OPEN / NOT_ALIGNED** |
-| ALIGNED 分子 | **0 增量计入**（直至闭环） |
+| Consistency Control | **NOT_ALIGNED**（等 Staging ALIGNED） |
+| ALIGNED 分子 | **0**（直至 L3–L5） |
 | Fix Required / Gate | **8** / **CONDITIONAL_GO**（未改） |
 
-> 本文件 **不**把 Phase3 本地 PASS 升格为 Staging/Acceptance PASS。
+> 本文件 **不**把 Phase3 本地 PASS 升格为 Staging/Acceptance PASS。  
+> Closure Board：[TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST](./TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST.md)
 
 ---
 
