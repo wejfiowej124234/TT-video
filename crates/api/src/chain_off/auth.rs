@@ -424,8 +424,10 @@ pub async fn auth_register(
         .await;
     }
 
-    // 注册 OTP（或 dev 免 OTP）成功后即写入 email_verified_at，与信任页 checklist 同源，避免二次验证。
-    mark_user_email_verified(&state, user_id_reg, now).await;
+    // OTP 成功（REQUIRE_CODE）= 邮箱所有权已证；否则仅显式 AUTO_VERIFY / 测试默认写 verified。
+    if register_marks_email_verified_on_success() {
+        mark_user_email_verified(&state, user_id_reg, now).await;
+    }
 
     let mut reg_json = json!({
         "status": "ok",
@@ -516,6 +518,24 @@ fn register_verification_required() -> bool {
     }
 }
 
+/// 注册成功后是否写入 `email_verified_at`。
+/// - OTP 必填且已通过 → 视为所有权已证（可写 verified）
+/// - 否则仅 `TRAVELTRUST_AUTH_REGISTER_AUTO_VERIFY=1` 或测试默认
+fn register_marks_email_verified_on_success() -> bool {
+    if register_verification_required() {
+        return true;
+    }
+    match std::env::var("TRAVELTRUST_AUTH_REGISTER_AUTO_VERIFY")
+        .ok()
+        .as_deref()
+        .map(str::trim)
+    {
+        Some("1") | Some("true") | Some("yes") | Some("on") => true,
+        Some("0") | Some("false") | Some("no") | Some("off") => false,
+        _ => cfg!(test),
+    }
+}
+
 fn normalize_register_email_key(email: &str) -> String {
     email.trim().to_ascii_lowercase()
 }
@@ -563,13 +583,13 @@ fn verify_register_verification_code(
 }
 
 async fn dispatch_register_verification_code_email(to_email: &str, code: &str) -> bool {
-    let transport = std::env::var("TRAVELTRUST_EMAIL_TRANSPORT")
-        .unwrap_or_default()
-        .trim()
-        .to_ascii_lowercase();
+    use crate::email_transport::{read_email_transport, EmailTransport};
     let subject = "TravelTrust registration verification code";
-    match transport.as_str() {
-        "log" => {
+    let text = format!(
+        "Your TravelTrust registration code is: {code}\nValid for 10 minutes.\n"
+    );
+    match read_email_transport() {
+        EmailTransport::Log => {
             eprintln!(
                 "{}",
                 json!({
@@ -580,9 +600,24 @@ async fn dispatch_register_verification_code_email(to_email: &str, code: &str) -
                     "code": code,
                 })
             );
+            crate::production_metrics::record_email_sent("log", std::time::Duration::from_millis(0));
             true
         }
-        _ => false,
+        EmailTransport::Resend => {
+            let timer = crate::production_metrics::EmailLatencyTimer::start();
+            match crate::email_transport_resend::send_via_resend(to_email, subject, &text).await {
+                Ok(()) => {
+                    crate::production_metrics::record_email_sent("resend", timer.elapsed());
+                    true
+                }
+                Err(e) => {
+                    eprintln!("[audit] register_verification_code resend failed to={to_email} err={e}");
+                    crate::production_metrics::record_email_failed("resend", "http_error");
+                    false
+                }
+            }
+        }
+        EmailTransport::Off => false,
     }
 }
 
@@ -592,15 +627,26 @@ fn register_verification_returns_dev_code() -> bool {
         .as_deref()
         .map(str::trim)
     {
-        Some("1") | Some("true") => return true,
-        Some("0") | Some("false") => return false,
-        _ => {}
+        Some("1") | Some("true") | Some("yes") | Some("on") => true,
+        Some("0") | Some("false") | Some("no") | Some("off") => false,
+        // 默认：仅本地空运输或显式 log 且非 Staging/Prod 时回传（测试友好）；Staging 须显式 =1
+        _ => {
+            let profile = std::env::var("TRAVELTRUST_DEPLOYMENT_PROFILE")
+                .unwrap_or_default()
+                .to_ascii_lowercase();
+            if matches!(
+                profile.as_str(),
+                "staging" | "staging_mirror" | "production" | "prod"
+            ) {
+                return false;
+            }
+            let transport = std::env::var("TRAVELTRUST_EMAIL_TRANSPORT")
+                .unwrap_or_default()
+                .trim()
+                .to_ascii_lowercase();
+            transport.is_empty() || transport == "off" || transport == "log"
+        }
     }
-    let transport = std::env::var("TRAVELTRUST_EMAIL_TRANSPORT")
-        .unwrap_or_default()
-        .trim()
-        .to_ascii_lowercase();
-    transport.is_empty() || transport == "off" || transport == "log"
 }
 
 pub async fn auth_register_send_verification_code(
@@ -848,6 +894,7 @@ pub async fn seed_repair_immutable_business_account_roles(state: &ChainOffState)
 
 /// 开发/测试用：当 SEED_TEST_ACCOUNTS=1 且 store 中尚无测试账号时，注入游客与向导。
 /// **① 仅开发**：`POST /auth/seed-test-accounts` body **`promote_admin_email`** → **admin**（内存 + PG 同步）。
+/// Staging ephemeral `adm-*@traveltrust.test` → **super_admin**（Public Ops publish/unpublish · OCS 10×4 align）。
 pub async fn seed_promote_user_to_admin_if_enabled(
     state: &ChainOffState,
     email: &str,
@@ -862,6 +909,20 @@ pub async fn seed_promote_user_to_admin_if_enabled(
     if is_immutable_business_seed_email(&email_norm) {
         return Err("seed_promote_immutable_business_account");
     }
+    let staging_ephemeral_super = email_norm.starts_with("adm-")
+        && email_norm.ends_with("@traveltrust.test")
+        && matches!(
+            std::env::var("TRAVELTRUST_DEPLOYMENT_PROFILE")
+                .unwrap_or_default()
+                .to_ascii_lowercase()
+                .as_str(),
+            "staging" | "staging_mirror"
+        );
+    let target_role = if staging_ephemeral_super {
+        "super_admin"
+    } else {
+        "admin"
+    };
     let uid = {
         let store = state.store.read().await;
         store
@@ -875,9 +936,10 @@ pub async fn seed_promote_user_to_admin_if_enabled(
     };
     if let Some(ref pool) = state.db_pool {
         let r = sqlx::query(
-            r#"UPDATE users SET role = 'admin', updated_at = now() WHERE id = $1 AND role NOT IN ('admin', 'super_admin')"#,
+            r#"UPDATE users SET role = $2, updated_at = now() WHERE id = $1 AND role NOT IN ('super_admin')"#,
         )
         .bind(uid)
+        .bind(target_role)
         .execute(pool)
         .await
         .map_err(|_| "db_failed")?;
@@ -908,6 +970,8 @@ pub async fn seed_promote_user_to_admin_if_enabled(
                     u.role = role;
                 }
             }
+        } else if staging_ephemeral_super {
+            u.role = "super_admin".to_string();
         } else if u.role != "super_admin" {
             u.role = "admin".to_string();
         }
@@ -1983,28 +2047,524 @@ pub async fn auth_resend_verification_email(
     Ok(Json(out))
 }
 
-/// 50-B2 占位：forgot-password 真实实现待产品排期邮件/令牌后替换。落点 04 §3.1/3.2。
-pub async fn auth_forgot_password_stub(
-    _state: ChainOffState,
-    Json(_body): Json<serde_json::Value>,
+/// 出站邮件链接（password_reset / email_verify）。失败返回人读错误（不含密钥）。
+async fn deliver_auth_email_link(
+    kind: &str,
+    to_email: &str,
+    subject: &str,
+    url: &str,
+) -> Result<(), String> {
+    use crate::email_transport::{log_outbound_auth_email, read_email_transport, EmailTransport};
+    match read_email_transport() {
+        EmailTransport::Off => {
+            crate::production_metrics::record_email_failed("off", "transport_off");
+            Err("email_transport_not_configured".to_string())
+        }
+        EmailTransport::Log => {
+            log_outbound_auth_email(kind, to_email, subject, url);
+            crate::production_metrics::record_email_sent("log", std::time::Duration::from_millis(0));
+            Ok(())
+        }
+        EmailTransport::Resend => {
+            let timer = crate::production_metrics::EmailLatencyTimer::start();
+            let text = format!("{subject}\n\nOpen this link to continue:\n{url}\n");
+            match crate::email_transport_resend::send_via_resend(to_email, subject, &text).await {
+                Ok(()) => {
+                    crate::production_metrics::record_email_sent("resend", timer.elapsed());
+                    Ok(())
+                }
+                Err(e) => {
+                    crate::production_metrics::record_email_failed("resend", "http_error");
+                    Err(e)
+                }
+            }
+        }
+    }
+}
+
+fn auth_email_e2e_log_url_in_response() -> bool {
+    matches!(
+        std::env::var("TRAVELTRUST_AUTH_EMAIL_E2E_LOG_URL_IN_RESPONSE")
+            .ok()
+            .as_deref()
+            .map(str::trim),
+        Some("1") | Some("true") | Some("yes") | Some("on")
+    )
+}
+
+fn request_id_from_headers(headers: &HeaderMap) -> Option<String> {
+    headers
+        .get("x-request-id")
+        .and_then(|v| v.to_str().ok())
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(String::from)
+}
+
+fn user_agent_from_headers(headers: &HeaderMap) -> Option<String> {
+    headers
+        .get("user-agent")
+        .and_then(|v| v.to_str().ok())
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(String::from)
+}
+
+const PASSWORD_RESET_TOKEN_TTL_HOURS: i64 = 1;
+
+async fn issue_and_send_password_reset(
+    pool: &sqlx::postgres::PgPool,
+    user_id: Uuid,
+    to_email: &str,
+) -> Result<String, String> {
+    use crate::email_transport::{
+        auth_token_pepper, gen_opaque_raw_token, hash_raw_email_token, is_public_app_base_url_allowed,
+        read_email_transport, read_public_app_base_allowlist, read_public_app_base_url,
+        EmailTransport,
+    };
+
+    if matches!(read_email_transport(), EmailTransport::Off) {
+        return Err("email_transport_not_configured".to_string());
+    }
+    let pepper = auth_token_pepper().ok_or_else(|| "auth_token_pepper_missing".to_string())?;
+    let base = read_public_app_base_url();
+    let allowlist = read_public_app_base_allowlist();
+    if !is_public_app_base_url_allowed(&base, &allowlist) {
+        return Err("public_app_base_url_not_allowed".to_string());
+    }
+
+    let _ = crate::db::consume_unfinished_for_user_purpose(
+        pool,
+        user_id,
+        crate::db::PURPOSE_PASSWORD_RESET,
+    )
+    .await
+    .map_err(|e| format!("consume_unfinished_failed: {e}"))?;
+
+    let raw = gen_opaque_raw_token();
+    let token_hash = hash_raw_email_token(&raw, &pepper);
+    let expires_at = Utc::now() + Duration::hours(PASSWORD_RESET_TOKEN_TTL_HOURS);
+    let token_id = crate::db::insert_token(
+        pool,
+        user_id,
+        crate::db::PURPOSE_PASSWORD_RESET,
+        &token_hash,
+        expires_at,
+    )
+    .await
+    .map_err(|e| format!("insert_token_failed: {e}"))?;
+
+    #[cfg(test)]
+    crate::email_transport::test_capture_password_reset_raw_for_it(&raw);
+
+    let url = format!(
+        "{}/auth/reset-password?token={}",
+        base.trim_end_matches('/'),
+        raw
+    );
+    if let Err(e) = deliver_auth_email_link(
+        "password_reset",
+        to_email,
+        "TravelTrust password reset",
+        &url,
+    )
+    .await
+    {
+        let _ = crate::db::delete_auth_email_token_by_id(pool, token_id).await;
+        return Err(e);
+    }
+    Ok(url)
+}
+
+/// `POST /auth/forgot-password`：防枚举统一成功文案；出站 Off → 503。
+pub async fn auth_forgot_password(
+    state: ChainOffState,
+    headers: HeaderMap,
+    Json(body): Json<serde_json::Value>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    use crate::email_transport::{read_email_transport, EmailTransport};
+
+    let email_raw = body
+        .get("email")
+        .and_then(|v| v.as_str())
+        .unwrap_or("")
+        .trim();
+    let request_id = request_id_from_headers(&headers);
+    let client_ip = crate::db::client_ip_from_headers(&headers);
+    let user_agent = user_agent_from_headers(&headers);
+    let ip_for_limit = client_ip
+        .as_deref()
+        .filter(|s| !s.is_empty())
+        .unwrap_or("default");
+
+    if email_raw.is_empty() || !is_valid_email_format(email_raw) {
+        // 无效邮箱：仍防枚举（与未知邮箱同文案），不发信。
+        return Ok(Json(json!({
+            "status": "ok",
+            "message": "if_account_exists_email_sent"
+        })));
+    }
+    let email_key = normalize_register_email_key(email_raw);
+
+    let transport = read_email_transport();
+    if matches!(transport, EmailTransport::Off) {
+        let user_id = {
+            let store = state.store.read().await;
+            store
+                .users
+                .values()
+                .find(|u| u.email.eq_ignore_ascii_case(email_raw))
+                .map(|u| u.id)
+        };
+        if let (Some(ref pool), Some(uid)) = (state.db_pool.as_ref(), user_id) {
+            let _ = crate::auth_audit_async::persist_auth_audit_event(
+                pool,
+                "password_reset_request_failure",
+                Some(uid),
+                request_id.as_deref(),
+                client_ip.as_deref(),
+                user_agent.as_deref(),
+                Some("request_failed"),
+                &json!({ "outcome": "transport_off" }),
+            )
+            .await;
+        }
+        crate::production_metrics::record_email_failed("off", "transport_off");
+        return Err((
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(crate::api_json::err_key("email_transport_not_configured")),
+        ));
+    }
+
+    let Some(ref pool) = state.db_pool else {
+        return Err((
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(crate::api_json::err_key("email_transport_not_configured")),
+        ));
+    };
+
+    let user = {
+        let store = state.store.read().await;
+        store
+            .users
+            .values()
+            .find(|u| u.email.eq_ignore_ascii_case(email_raw))
+            .cloned()
+    };
+
+    let mut issued_url: Option<String> = None;
+    if let Some(ref user) = user {
+        let global_ok =
+            crate::auth_forgot_risk_limits::try_consume_forgot_global_slot(Some(pool)).await;
+        let ip_ok =
+            crate::auth_forgot_risk_limits::try_consume_forgot_per_ip_slot(Some(pool), ip_for_limit)
+                .await;
+        let email_ok = crate::auth_forgot_per_email_limit::try_consume_forgot_password_per_email_slot(
+            Some(pool),
+            &email_key,
+        )
+        .await;
+        if global_ok && ip_ok && email_ok {
+            match issue_and_send_password_reset(pool, user.id, &user.email).await {
+                Ok(url) => {
+                    issued_url = Some(url);
+                    crate::production_metrics::inc_password_reset_requested();
+                    let _ = crate::auth_audit_async::persist_auth_audit_event(
+                        pool,
+                        "password_reset_requested",
+                        Some(user.id),
+                        request_id.as_deref(),
+                        client_ip.as_deref(),
+                        user_agent.as_deref(),
+                        None,
+                        &json!({ "outcome": "accepted_if_exists" }),
+                    )
+                    .await;
+                }
+                Err(e) => {
+                    eprintln!(
+                        "[audit] issue_and_send_password_reset failed user_id={} err={}",
+                        user.id, e
+                    );
+                    let _ = crate::auth_audit_async::persist_auth_audit_event(
+                        pool,
+                        "password_reset_request_failure",
+                        Some(user.id),
+                        request_id.as_deref(),
+                        client_ip.as_deref(),
+                        user_agent.as_deref(),
+                        Some("request_failed"),
+                        &json!({ "outcome": "deliver_or_issue_failed" }),
+                    )
+                    .await;
+                    return Err((
+                        StatusCode::SERVICE_UNAVAILABLE,
+                        Json(crate::api_json::err_key("email_transport_not_configured")),
+                    ));
+                }
+            }
+        } else {
+            // 限流：仍 200 防枚举，不发信。
+            let _ = crate::auth_audit_async::persist_auth_audit_event(
+                pool,
+                "password_reset_requested",
+                Some(user.id),
+                request_id.as_deref(),
+                client_ip.as_deref(),
+                user_agent.as_deref(),
+                None,
+                &json!({ "outcome": "accepted_if_exists" }),
+            )
+            .await;
+        }
+    }
+
+    let mut out = json!({
+        "status": "ok",
+        "message": "if_account_exists_email_sent"
+    });
+    if auth_email_e2e_log_url_in_response()
+        && matches!(transport, EmailTransport::Log)
+        && issued_url.is_some()
+    {
+        if let Some(obj) = out.as_object_mut() {
+            obj.insert("_dev_log_url".to_string(), json!(issued_url.unwrap()));
+        }
+    }
+    Ok(Json(out))
+}
+
+/// `POST /auth/reset-password`：消费 HMAC 令牌、轮换密码、吊销会话。
+pub async fn auth_reset_password(
+    state: ChainOffState,
+    headers: HeaderMap,
+    Json(body): Json<serde_json::Value>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    use crate::email_transport::{auth_token_pepper, hash_raw_email_token};
+
+    let request_id = request_id_from_headers(&headers);
+    let client_ip = crate::db::client_ip_from_headers(&headers);
+    let user_agent = user_agent_from_headers(&headers);
+
+    let token = body
+        .get("token")
+        .and_then(|v| v.as_str())
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(String::from);
+    let new_password = body
+        .get("new_password")
+        .and_then(|v| v.as_str())
+        .map(str::trim)
+        .unwrap_or("");
+    let hint_email = body
+        .get("email")
+        .and_then(|v| v.as_str())
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(String::from);
+
+    let hint_user_id = {
+        let store = state.store.read().await;
+        hint_email.as_ref().and_then(|email| {
+            store
+                .users
+                .values()
+                .find(|u| u.email.eq_ignore_ascii_case(email))
+                .map(|u| u.id)
+        })
+    };
+
+    let Some(ref pool) = state.db_pool else {
+        return Err((
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(crate::api_json::err_key("email_transport_not_configured")),
+        ));
+    };
+
+    let Some(token) = token else {
+        let _ = crate::auth_audit_async::persist_auth_audit_event(
+            pool,
+            "password_reset_consume_failure",
+            hint_user_id,
+            request_id.as_deref(),
+            client_ip.as_deref(),
+            user_agent.as_deref(),
+            None,
+            &json!({ "outcome": "consume_failed" }),
+        )
+        .await;
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key("token_required")),
+        ));
+    };
+
+    if new_password.len() < PASSWORD_MIN_LEN {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key_detail(
+                "password_too_short",
+                format!(
+                    "new_password must be at least {} characters",
+                    PASSWORD_MIN_LEN
+                ),
+            )),
+        ));
+    }
+    if new_password.len() > PASSWORD_MAX_LEN {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key_detail(
+                "password_too_long",
+                format!(
+                    "new_password must be at most {} characters",
+                    PASSWORD_MAX_LEN
+                ),
+            )),
+        ));
+    }
+
+    let pepper = match auth_token_pepper() {
+        Some(p) => p,
+        None => {
+            let _ = crate::auth_audit_async::persist_auth_audit_event(
+                pool,
+                "password_reset_consume_failure",
+                hint_user_id,
+                request_id.as_deref(),
+                client_ip.as_deref(),
+                user_agent.as_deref(),
+                None,
+                &json!({ "outcome": "consume_failed" }),
+            )
+            .await;
+            return Err((
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key("invalid_reset_token")),
+            ));
+        }
+    };
+    let token_hash = hash_raw_email_token(&token, &pepper);
+    let row = match crate::db::find_valid_token(pool, &token_hash, crate::db::PURPOSE_PASSWORD_RESET)
+        .await
+    {
+        Ok(r) => r,
+        Err(e) => {
+            eprintln!("[audit] find_valid_token password_reset err={e}");
+            return Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key("db_error")),
+            ));
+        }
+    };
+    let Some(row) = row else {
+        let _ = crate::auth_audit_async::persist_auth_audit_event(
+            pool,
+            "password_reset_consume_failure",
+            hint_user_id,
+            request_id.as_deref(),
+            client_ip.as_deref(),
+            user_agent.as_deref(),
+            None,
+            &json!({ "outcome": "consume_failed" }),
+        )
+        .await;
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key("invalid_reset_token")),
+        ));
+    };
+
+    let new_hash = match bcrypt::hash(new_password, bcrypt::DEFAULT_COST) {
+        Ok(h) => h,
+        Err(_) => {
+            return Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key("password_hash_failed")),
+            ));
+        }
+    };
+
+    let ok = match crate::db::consume_password_reset_token_and_rotate_password(
+        pool,
+        row.id,
+        row.user_id,
+        &new_hash,
+    )
+    .await
+    {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!("[audit] consume_password_reset err={e}");
+            return Err((
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key("db_error")),
+            ));
+        }
+    };
+    if !ok {
+        let _ = crate::auth_audit_async::persist_auth_audit_event(
+            pool,
+            "password_reset_consume_failure",
+            Some(row.user_id),
+            request_id.as_deref(),
+            client_ip.as_deref(),
+            user_agent.as_deref(),
+            None,
+            &json!({ "outcome": "consume_failed" }),
+        )
+        .await;
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key("invalid_reset_token")),
+        ));
+    }
+
+    {
+        let mut store = state.store.write().await;
+        if let Some(u) = store.users.get_mut(&row.user_id) {
+            u.password_hash = Some(new_hash);
+            u.updated_at = Utc::now();
+        }
+        store.sessions.retain(|_, uid| *uid != row.user_id);
+    }
+
+    let _ = crate::auth_audit_async::persist_auth_audit_event(
+        pool,
+        "password_reset_consumed",
+        Some(row.user_id),
+        request_id.as_deref(),
+        client_ip.as_deref(),
+        user_agent.as_deref(),
+        None,
+        &json!({ "outcome": "password_rotated_sessions_revoked" }),
+    )
+    .await;
+    crate::production_metrics::inc_password_reset_success();
+
     Ok(Json(json!({
         "status": "ok",
-        "message": "chain_off_stub",
-        "note": "50-B2 占位，待产品排期邮件/令牌后替换，04 §3.1/3.2"
+        "message": "password_reset"
     })))
 }
 
-/// 50-B2 占位：reset-password 真实实现待产品排期邮件/令牌后替换。落点 04 §3.1/3.2。
-pub async fn auth_reset_password_stub(
-    _state: ChainOffState,
-    Json(_body): Json<serde_json::Value>,
+/// 50-B2 遗留 stub 名（已由 `auth_forgot_password` 取代；保留别名以免外部引用断裂）。
+#[deprecated(note = "use auth_forgot_password")]
+pub async fn auth_forgot_password_stub(
+    state: ChainOffState,
+    Json(body): Json<serde_json::Value>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
-    Ok(Json(json!({
-        "status": "ok",
-        "message": "chain_off_stub",
-        "note": "50-B2 占位，待产品排期邮件/令牌后替换，04 §3.1/3.2"
-    })))
+    auth_forgot_password(state, HeaderMap::new(), Json(body)).await
+}
+
+/// 50-B2 遗留 stub 名（已由 `auth_reset_password` 取代）。
+#[deprecated(note = "use auth_reset_password")]
+pub async fn auth_reset_password_stub(
+    state: ChainOffState,
+    Json(body): Json<serde_json::Value>,
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    auth_reset_password(state, HeaderMap::new(), Json(body)).await
 }
 
 /// 50-B2：修改密码真实实现。校验旧密码、更新 store 与 DB。
@@ -2083,6 +2643,8 @@ pub async fn put_me_password(
     };
     user.password_hash = Some(new_hash.clone());
     user.updated_at = Utc::now();
+    // PCR-SEC-SESSION-REVOKE / Reality-W3：改密与重置同源 — 吊销全部会话（含当前）。
+    store.sessions.retain(|_, uid| *uid != user_id);
     if let Some(ref pool) = state.db_pool {
         if let Err(e) = crate::db::update_user_password(pool, user_id, &new_hash).await {
             eprintln!(
@@ -2090,8 +2652,36 @@ pub async fn put_me_password(
                 user_id, e
             );
         }
+        match crate::db::revoke_all_sessions_for_user(pool, user_id, "password_change").await {
+            Ok(n) => {
+                let _ = crate::auth_audit_async::persist_auth_audit_event(
+                    pool,
+                    "password_changed",
+                    Some(user_id),
+                    None,
+                    None,
+                    None,
+                    None,
+                    &json!({
+                        "outcome": "password_rotated_sessions_revoked",
+                        "sessions_revoked": n
+                    }),
+                )
+                .await;
+            }
+            Err(e) => {
+                eprintln!(
+                    "[audit] put_me_password revoke_all_sessions failed user_id={} error={}",
+                    user_id, e
+                );
+            }
+        }
     }
-    Ok(Json(json!({"status": "ok", "message": "password_updated"})))
+    Ok(Json(json!({
+        "status": "ok",
+        "message": "password_updated",
+        "sessions_revoked": true
+    })))
 }
 
 pub async fn put_me_password_stub(

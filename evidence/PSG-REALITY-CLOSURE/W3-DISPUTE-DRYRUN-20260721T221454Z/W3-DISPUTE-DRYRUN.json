@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.reality_w3_dispute_dryrun.v1",
+  "machine_key": "TT_REALITY_W3_DISPUTE_DRYRUN",
+  "phase": "② Staging",
+  "recorded_utc": "2026-07-21T22:15:30Z",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "api_git_sha": "e9975bc0bb9114047fe48aa9045e6d5dc8498b13",
+  "order_id": "571a8637-ec2c-4023-9920-2d35d79368dd",
+  "dispute_id": "50850d18-bddd-4848-9f6f-ec1facff1e58",
+  "guide_id": "650fbaff-1d9e-4677-b970-16be8fdd9d7b",
+  "steps": {
+    "order_path": "PASS",
+    "dispute_open_or_reuse": "PASS",
+    "dispute_detail": "PASS",
+    "invalid_intent_400": "PASS"
+  },
+  "verdict": "PASS",
+  "note": "SU-PLUS-06 sample dry-run · ≠ Production GO · ≠ mainnet arbitration",
+  "runbook": "docs/runbook/TT-REALITY-W3-DISPUTE-ARBITRATION-RUNBOOK-LATEST.md"
+}
