@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.reality_w1_auth_open.v1",
+  "machine_key": "TT_REALITY_W1_AUTH",
+  "status": "OPEN_RUNNING",
+  "recorded_utc": "2026-07-21T19:08:58Z",
+  "depends_on_w0": "PASS",
+  "w0_pin": "PSG-REL-20260722-STAGING-ALIGN-W0",
+  "w0_tip": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+  "acceptance_pending": [
+    "real_mail_probe",
+    "no_auto_verify_or_owner_decision",
+    "reset_not_stub_ok",
+    "audit_events"
+  ],
+  "evidence_root_pattern": "evidence/PSG-REALITY-CLOSURE/W1-AUTH-*/",
+  "verdict": "OPEN_NOT_PASS",
+  "locked_until_reality_closure_pass": [
+    "production_entry",
+    "hard_gate_flip",
+    "mainnet_wave",
+    "production_go"
+  ],
+  "note": "W1 opened after W0 identity PASS. Requires Staging real-mail / OTP / reset / audit evidence."
+}

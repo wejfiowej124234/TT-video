@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.reality_w0_w7_track_ledger.v1",
   "machine_key": "TT_REALITY_W0_W7_TRACK",
-  "recorded_utc": "2026-07-21T19:07:58Z",
+  "recorded_utc": "2026-07-21T19:08:58Z",
   "status": "ARMED_RUNNING",
   "active_wave": "W1",
   "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
@@ -21,7 +21,8 @@
     {
       "id": "W1",
       "name": "Auth_Production_Harden",
-      "status": "READY"
+      "status": "OPEN_RUNNING",
+      "evidence": "evidence/PSG-REALITY-CLOSURE/W1-AUTH-LATEST.json"
     },
     {
       "id": "W2",
