@@ -253,10 +253,16 @@ pub fn format_chain_contracts_meta_top_keys_contract_759() -> String {
 }
 
 /// **730**：`GET /meta`（及 **`GET /meta/build`**）**`build`** 对象顶层键顺序（机读锁 **`build_top_keys`** / **`build_top_keys_contract_730`**；在 **`meta_build_snapshot`** 的 **`git_sha`****/**`deployed_at`****/**`rule`** 之后追加自描述键，与 **`meta_build_value`** 同源）。
+/// **730**：`GET /meta` **`build`** 对象顶层键顺序（含 Runtime Attestation 字段）。
 pub const META_BUILD_TOP_KEYS: &[&str] = &[
     "git_sha",
     "deployed_at",
     "deployment_profile",
+    "psg_release_version",
+    "image_digest",
+    "build_time",
+    "contract_profile",
+    "attestation_status",
     "rule",
     "build_top_keys",
     "build_top_keys_contract_730",

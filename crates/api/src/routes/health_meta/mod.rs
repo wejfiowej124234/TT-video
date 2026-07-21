@@ -13,7 +13,7 @@ mod router;
 pub use router::router;
 
 // 对外：`build` / startup / internal 嵌入同源
-pub use meta_build::{meta_build_for_startup_log, meta_build_value};
+pub use meta_build::{meta_build_for_startup_log, meta_build_value, release_identity_value};
 
 // crate 内：`handlers` 经 `super::*` 使用 `meta_pause_chain_snapshot`；其余仅 **`tests`** 需要。
 #[cfg(test)]

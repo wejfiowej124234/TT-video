@@ -1,0 +1,138 @@
+# PSG = TravelTrust unique Release Source of Truth (machine)
+# Human: docs/runbook/TT-PSG-RELEASE-SOURCE-OF-TRUTH-LATEST.md
+# Active version pin: registry/psg-release-version-LATEST.yaml
+# Change records: registry/psg-change-records/
+# Gate: scripts/dev/run-psg-version-gate.py
+
+schema: traveltrust.psg_release_source_of_truth.v1
+version: 1
+effective_utc: "2026-07-19"
+
+machine_keys:
+  TT_PSG_RELEASE_SSOT: ENFORCED
+  TT_PSG_VERSION_GATE: ENFORCED
+  TT_PRODUCTION_GO: NO_GO
+
+rule: >
+  PSG is the unique Release Source of Truth for TravelTrust.
+  Any change to code, contracts, API, CMS, data, or infrastructure MUST
+  (1) create a PSG Change Record, (2) sync Registry · Runbook · AGENTS/Cockpit ·
+  Evidence Index, (3) mint/update a unique PSG Release Version, THEN (4) modify
+  code and deploy. All deploys MUST pass PSG Version Gate. Old packages, docs,
+  images, or data baselines referenced against a non-active version = BLOCK.
+  Local and testnet (Staging) MUST share the same active PSG Release Version
+  identity (git SHA + baselines). Bypass PSG = FORBIDDEN.
+
+forbidden:
+  - deploy_without_psg_change_record
+  - deploy_without_psg_release_version
+  - deploy_bypassing_psg_version_gate
+  - cite_stale_package_doc_image_or_data_as_current
+  - local_testnet_version_drift_undocumented
+  - overwrite_active_psg_release_version_in_place
+  - overwrite_frozen_evidence_or_packages
+  - mutate_release_identity_during_fg15
+  - advance_git_sha_without_new_psg_release_version
+
+# Mandatory pre-change sequence (after FG-15: never in-place overwrite of freeze pin)
+change_sequence:
+  - CREATE_PSG_CHANGE_RECORD
+  - SYNC_REGISTRY_RUNBOOK_AGENTS_COCKPIT_EVIDENCE
+  - MINT_NEW_PSG_RELEASE_VERSION  # append prior active → superseded[]; never silently rewrite freeze pin
+  - VERSION_GATE_PASS
+  - THEN_CODE_AND_DEPLOY
+
+# Surfaces covered
+surfaces:
+  - code
+  - contracts
+  - api
+  - cms
+  - data
+  - infrastructure
+
+# Seven-way identity (Version Gate)
+version_gate_axes:
+  - git_sha
+  - artifact_sha
+  - runtime_image_sha
+  - contract_bytecode_pin
+  - database_baseline
+  - cms_baseline
+  - evidence_bundle_sha
+
+local_testnet_consistency:
+  required: true
+  permanent_same_version_axes:
+    - local_git
+    - staging_runtime
+    - artifact
+    - runtime_image
+    - data_baseline
+    - evidence
+  policy_on_mismatch: BLOCK
+  note: >
+    Local, Staging, Artifact, Runtime, Data, and Evidence must forever cite the
+    same Active PSG Release Version identity. Drift = BLOCK.
+
+# FG-15-A archived; FG-15-B / Candidate v2 is Web3 mainline for NEW flows.
+# Do not delete FG-15-A evidence. See registry/web3-mainline.v1.yaml.
+fg15_window:
+  # Archived FG-15-A pin (NOT FOR PROMOTION) — do not confuse with active_version
+  archived_fg15_a_version: PSG-REL-20260719-FG15-09c72b93
+  # LEGACY alias (misread risk) — prefer archived_fg15_a_version
+  archived_version_legacy_alias_fg15_a: PSG-REL-20260719-FG15-09c72b93
+  active_version_legacy_fg15_a: PSG-REL-20260719-FG15-09c72b93  # DEPRECATED key name · equals archived_fg15_a_version
+  active_version: PSG-REL-20260720-WEB3-CAND-V2
+  active_version_file: registry/psg-release-version-LATEST.yaml
+  freeze_git_sha: "652bbab51a1eb0652ea31f18ae4146fbe325a1ea"
+  freeze_status: CANDIDATE_BASELINE_ACTIVE_FG15_B_PENDING_OBSERVATION
+  mutate_freeze_tip: FORBIDDEN_WHILE_FG15_B_RUNNING
+  mutate_release_identity: FORBIDDEN_WHILE_FG15_B_RUNNING
+  overwrite_active_version: FORBIDDEN
+  overwrite_evidence_or_packages: FORBIDDEN
+  pcr_promotion: FORBIDDEN_UNTIL_FG15_B_ELAPSED
+  mint_new_release_version: FORBIDDEN_UNTIL_FG15_B_ELAPSED
+  web3_mainline: registry/web3-mainline.v1.yaml
+  fg15_track: FG-15-B
+  historical_fg15_a:
+    status: ARCHIVED_HISTORICAL
+    promotion: FORBIDDEN
+    pin: PSG-REL-20260719-FG15-09c72b93
+    freeze_git_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
+    archive_registry: registry/fg15-a-historical-archive.v1.yaml
+    evidence_policy: IMMUTABLE_NO_DELETE_NO_OVERWRITE
+  allow_during_window:
+    - evidence_sample_append_only_on_fg15_b_root
+    - evidence_integrity_append_only_on_fg15_b_root
+    - evidence_anomaly_append_only_on_fg15_b_root
+    - living_docs_pcr_doc_only_same_candidate_pin
+    - track_b_ledger_register_verify_no_deploy
+  forbid_during_window:
+    - pcr_promotion_execute
+    - patch_promotion_execute
+    - mint_new_psg_release_version
+    - deploy_staging_patch
+    - overwrite_prior_evidence_stamps
+    - write_evidence_to_fg15_a_root
+    - cite_fg15_a_pin_as_active_ssot
+  living_docs_change_records: ALLOWED_DOC_ONLY_NO_NEW_VERSION
+  track_b_patches: LEDGER_ONLY_UNTIL_ELAPSED_THEN_PROMOTION
+  after_elapsed_required_path:
+    - PCR
+    - SYNC_PSG_REGISTRY_AND_DOCS
+    - MINT_NEW_RELEASE_VERSION
+    - VERSION_GATE
+    - DEPLOY
+  after_elapsed_same_version_rule: >
+    New Release Version becomes Active; Local + Staging + Artifact + Runtime +
+    Data + Evidence must all advance together to that Version — permanent same-version.
+
+related:
+  - registry/psg-release-version-LATEST.yaml
+  - registry/psg-change-records/
+  - registry/deployment-identity-gate.v1.yaml
+  - registry/deploy-freshness-gate.v1.yaml
+  - registry/patch-promotion-gate.v1.yaml
+  - docs/runbook/TT-PSG-RELEASE-SOURCE-OF-TRUTH-LATEST.md
+  - docs/runbook/TT-FG15-OBSERVATION-WINDOW-RUNNING-LATEST.md

@@ -53,6 +53,11 @@ pub(super) async fn meta_build_only() -> Json<serde_json::Value> {
     Json(meta_build_value())
 }
 
+/// GET /meta/release-identity — flat Runtime Attestation for Version Gate STRICT.
+pub(super) async fn meta_release_identity() -> Json<serde_json::Value> {
+    Json(release_identity_value())
+}
+
 /// GET /meta: 版本与运行时默认配置快照（用于 08 drift/evidence 与 FE 版本绑定）；§8.2 暴露 database_connected（55 优化）
 pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse {
     let database_connected = state

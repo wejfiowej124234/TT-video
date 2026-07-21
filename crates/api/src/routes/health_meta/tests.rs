@@ -123,9 +123,14 @@ fn chain_contracts_meta_top_keys_order_and_literals_759() {
 #[test]
 fn meta_build_top_keys_order_and_literals_730() {
     assert_eq!(META_BUILD_TOP_KEYS[2], "deployment_profile");
-    assert_eq!(META_BUILD_TOP_KEYS[3], "rule");
-    assert_eq!(META_BUILD_TOP_KEYS[4], "build_top_keys");
-    assert_eq!(META_BUILD_TOP_KEYS[5], "build_top_keys_contract_730");
+    assert_eq!(META_BUILD_TOP_KEYS[3], "psg_release_version");
+    assert_eq!(META_BUILD_TOP_KEYS[4], "image_digest");
+    assert_eq!(META_BUILD_TOP_KEYS[5], "build_time");
+    assert_eq!(META_BUILD_TOP_KEYS[6], "contract_profile");
+    assert_eq!(META_BUILD_TOP_KEYS[7], "attestation_status");
+    assert_eq!(META_BUILD_TOP_KEYS[8], "rule");
+    assert_eq!(META_BUILD_TOP_KEYS[9], "build_top_keys");
+    assert_eq!(META_BUILD_TOP_KEYS[10], "build_top_keys_contract_730");
     let c = format_meta_build_top_keys_contract_730();
     assert!(c.contains("730"), "contract: {c}");
     for k in META_BUILD_TOP_KEYS {
@@ -3563,6 +3568,7 @@ async fn comp_b091_meta_pause_chain_eth_call_matches_mock_fixture() {
         chain_id: 31337,
         escrow_factory_address: Some("0x0000000000000000000000000000000000000AbC".into()),
         fee_router_address: Some("0x0000000000000000000000000000000000000dEf".into()),
+        settlement_router_address: None,
         ..Default::default()
     };
     let snap = meta_pause_chain_snapshot(Some(&cfg)).await;
@@ -3583,6 +3589,7 @@ async fn b091_get_meta_pause_matches_mock_chain_eth_call() {
         chain_id: 31337,
         escrow_factory_address: Some("0x0000000000000000000000000000000000000AbC".into()),
         fee_router_address: Some("0x0000000000000000000000000000000000000dEf".into()),
+        settlement_router_address: None,
         ..Default::default()
     };
     let mut state = api_meta_state(None);

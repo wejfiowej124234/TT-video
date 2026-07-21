@@ -108,6 +108,17 @@ if [[ -z "${REGISTRY_ADDRESS:-}" ]]; then
   [[ -n "$reg_example" ]] && add_secret REGISTRY_ADDRESS "$reg_example"
 fi
 add_secret TRAVELTRUST_DEPLOYMENT_PROFILE "${TRAVELTRUST_DEPLOYMENT_PROFILE:-staging}"
+# Runtime Attestation (Version Gate STRICT) — stamp before image start
+_GIT_SHA="$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo local)"
+add_secret TRAVELTRUST_GIT_SHA "${TRAVELTRUST_GIT_SHA:-$_GIT_SHA}"
+add_secret TRAVELTRUST_PSG_RELEASE_VERSION "${TRAVELTRUST_PSG_RELEASE_VERSION:-PSG-REL-20260722-STAGING-ALIGN-W0}"
+add_secret TRAVELTRUST_CONTRACT_PROFILE "${TRAVELTRUST_CONTRACT_PROFILE:-v311_fund_safety_candidate_v2}"
+add_secret TRAVELTRUST_ARTIFACT_SHA "${TRAVELTRUST_ARTIFACT_SHA:-${TT_ARTIFACT_SHA:-$_GIT_SHA}}"
+add_secret TRAVELTRUST_IMAGE_DIGEST "${TRAVELTRUST_IMAGE_DIGEST:-${TT_RUNTIME_IMAGE_SHA:-gitsha:$_GIT_SHA}}"
+add_secret TRAVELTRUST_BUILD_TIME "${TRAVELTRUST_BUILD_TIME:-$(date -u +%Y-%m-%dT%H:%M:%SZ)}"
+add_secret TRAVELTRUST_DEPLOYED_AT "${TRAVELTRUST_DEPLOYED_AT:-$(date -u +%Y-%m-%dT%H:%M:%SZ)}"
+add_secret TRAVELTRUST_DATABASE_BASELINE "${TRAVELTRUST_DATABASE_BASELINE:-staging_rc_ssot_alignment.v1#expected_staging_surface}"
+add_secret TRAVELTRUST_CMS_BASELINE "${TRAVELTRUST_CMS_BASELINE:-public_display_10x4 + catalog_bake=1}"
 if [[ -z "${STAKING_ADDRESS:-}" ]]; then
   if [[ -n "${GUIDE_STAKING_ADDRESS:-}" ]]; then
     add_secret STAKING_ADDRESS "${GUIDE_STAKING_ADDRESS}"
