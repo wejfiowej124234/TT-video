@@ -11,13 +11,20 @@
 use std::env;
 
 mod api_json;
+mod auth_audit_async;
+mod auth_forgot_per_email_limit;
+mod auth_forgot_risk_limits;
+mod auth_per_email_send_window;
 mod catalog_geo_validation;
 mod complexity_convergence;
 mod chain;
 #[cfg(test)]
 pub use chain::vacancy_ledger_indexer;
+mod chain_id_env;
 mod chain_off;
 mod db;
+mod email_transport;
+mod email_transport_resend;
 mod pcp;
 mod session_cookie;
 mod production_metrics;
@@ -47,6 +54,8 @@ mod it_db_pool;
 
 #[cfg(test)]
 mod test_env_serial;
+#[cfg(test)]
+mod test_auth_mail_env_mutex;
 
 #[cfg(test)]
 mod idempotency_http_contract_tests;
@@ -70,13 +79,23 @@ fn main() {
         std::env::set_var("SEED_TEST_ACCOUNTS", "1");
     }
     // 本地种子栈：强制开启公众 catalog 过滤（覆盖根 .env 中 =0；与 start-api-with-seed.bat 同源）
+    // Staging/production：禁止自动打开 Unsplash showcase（公开展示仅 OCS 10×4）。
+    let deployment_profile = std::env::var("TRAVELTRUST_DEPLOYMENT_PROFILE")
+        .unwrap_or_default()
+        .to_ascii_lowercase();
+    let is_staging_or_prod = matches!(
+        deployment_profile.as_str(),
+        "staging" | "staging_mirror" | "production" | "prod"
+    );
     if std::env::var("SEED_TEST_ACCOUNTS").as_deref() == Ok("1") {
         std::env::set_var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE", "1");
-        if std::env::var("TRAVELTRUST_MARKET_PUBLIC_SHOWCASE").is_err() {
-            std::env::set_var("TRAVELTRUST_MARKET_PUBLIC_SHOWCASE", "1");
-        }
-        if std::env::var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE").is_err() {
-            std::env::set_var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE", "1");
+        if !is_staging_or_prod {
+            if std::env::var("TRAVELTRUST_MARKET_PUBLIC_SHOWCASE").is_err() {
+                std::env::set_var("TRAVELTRUST_MARKET_PUBLIC_SHOWCASE", "1");
+            }
+            if std::env::var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE").is_err() {
+                std::env::set_var("TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE", "1");
+            }
         }
     } else if std::env::var("TRAVELTRUST_PUBLIC_CATALOG_SURFACE").is_err()
         && std::env::var("TRAVELTRUST_MARKET_PUBLIC_SURFACE").is_err()
