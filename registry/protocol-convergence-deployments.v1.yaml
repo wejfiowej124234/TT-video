@@ -1,28 +1,27 @@
-# Protocol Convergence · ② 测试网部署登记（ABI + SSOT hash + 地址 · R-03 对拍）
-# LEGACY · READ-ONLY: `environments.sepolia.addresses` = pre-convergence 快照 · 非现行 runtime 读口
-# ACTIVE ② SSOT: `environments.gov_freeze_v2_clean_baseline` + `scripts/dev/.env.phase2-chain-deploy.local`
-# 真源：docs/spec/governance-token/protocol-ssot.v1.yaml
-# 机读闸：bash scripts/gates/check-protocol-convergence-pregate.sh
-#         bash scripts/gates/check-phase2-chain-deployment-gate.sh
-# 对拍：bash scripts/gates/check-protocol-quote-parity.sh
-
-schema_version: "1"
-updated: "2026-07-09T03:30:00Z"
-
-# WEB3_PROTOCOL_VERSION — numeric SSOT lives in protocol-ssot.v1.yaml (not this file).
+schema_version: '1'
+updated: '2026-07-20'
+# Web3 mainline for NEW tests / Promotion / Release alignment (Candidate v2).
+# FG-15-A baseline is HISTORICAL snapshot only — NOT FOR PROMOTION.
+# Baseline Migration v2 (2026-07-20): active_deploy_baseline == Candidate (sole SSOT).
+web3_mainline_baseline: v311_fund_safety_candidate_v2
+web3_mainline_ssot: registry/web3-mainline.v1.yaml
+active_deploy_baseline: v311_fund_safety_candidate_v2
+active_deploy_baseline_role: ACTIVE_WEB3_CANDIDATE_BASELINE
+# Forensic pointer only — never cite as ACTIVE for new flows / Promotion.
+historical_fg15_a_deploy_baseline: v311_sepolia_clean_baseline
+historical_fg15_a_deploy_baseline_role: HISTORICAL_FG15_A_SEPOLIA_SNAPSHOT
 protocol_ssot:
-  version: "1.0.3"
+  version: 1.0.5
   md_ref: docs/spec/governance-token/protocol-ssot.v1.md
   yaml_ref: docs/spec/governance-token/protocol-ssot.v1.yaml
-  content_sha256: "3d1daf94ac346c4e7cb169c2cb51f7b7098640f286fb97c7fa071f12cefba616"
+  content_sha256: 5eb44e7e7db80eb62294dc55b1fd0ada904fbf94b2f04a87467c4dd28ffa421b
   master_matrix: registry/traveltrust-web3-protocol-master-matrix.v1.yaml
-
-# Treasury naming (P0-02): never use bare TREASURY_ADDRESS without documenting which treasury.
 treasury_semantics:
   governance_treasury_p4cap:
     contract: GovernanceTreasuryP4Cap
     env_primary: GOVERNANCE_TREASURY_P4CAP_ADDRESS
-    env_aliases: [TREASURY_P4_CAP_ADDRESS]
+    env_aliases:
+    - TREASURY_P4_CAP_ADDRESS
     registry_key: treasury_p4_cap_address
     status: ACTIVE
   legacy_treasury:
@@ -32,15 +31,12 @@ treasury_semantics:
     registry_key: legacy_treasury_address
     status: deprecated
     note: FeeRouter globalOps leg · pre-GovFreeze fund stack only
-
-# 控制面 env（R-02 · 与 contracts/script/Phase2ControlPlane.sol 同源）
 control_plane_env:
   timelock_admin: TIMELOCK_ADMIN_ADDRESS
   chain_owner: PHASE2_CHAIN_OWNER_ADDRESS
   chain_owner_fallback: TIMELOCK_ADDRESS
   escrow_factory_guardian: ESCROW_FACTORY_GUARDIAN_ADDRESS
   escrow_factory_guardian_fallback: TIMELOCK_ADDRESS
-
 contracts:
   GovernanceVotesToken:
     source: contracts/src/GovernanceVotesToken.sol
@@ -85,51 +81,165 @@ contracts:
     source: contracts/src/CountryPoolLedgerV0.sol
     deploy_script: contracts/script/DeployP51CountryLedger.s.sol
     env_address_key: COUNTRY_POOL_LEDGER_PILOT_ADDRESS
-
 api_quote_routes:
   steward_stake_quote: GET /api/v1/steward/stake-quote
   steward_stake_status: GET /api/v1/steward/stake-status
   redemption_quote: GET /api/v1/redemption/quote
   country_ledger: GET /api/v1/governance/country-ledger/:jurisdiction
   protocol_reference: GET /api/v1/governance/protocol-reference
-
 environments:
+  # ACTIVE Web3 candidate baseline (new mainline). Addresses empty until Owner Sepolia deploy.
+  v311_fund_safety_candidate_v2:
+    status: ACTIVE_WEB3_CANDIDATE_BASELINE
+    candidate_id: WEB3-CANDIDATE-V2-FUND-SAFETY-P0
+    psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+    fg15_track: FG-15-B
+    promotion: PROMOTION_CANDIDATE
+    chain_id: 11155111
+    network: sepolia
+    path: FUND_SAFETY_P0_CANDIDATE
+    role: WEB3_MAINLINE
+    does_not_mutate_fg15_a: true
+    historical_fg15_a_ref: v311_sepolia_clean_baseline
+    code_freeze_evidence: evidence/GO_web3_candidate_v2/WEB3-CANDIDATE-V2-CODE-FREEZE-LATEST.json
+    release_identity: evidence/GO_web3_candidate_v2/WEB3-CANDIDATE-V2-RELEASE-IDENTITY-LATEST.json
+    ssot: registry/web3-candidate-v2.v1.yaml
+    mainline: registry/web3-mainline.v1.yaml
+    addresses:
+      chain_id: '11155111'
+      network: sepolia
+      escrow_factory_v2_address: '0x6e9a4c4032d2d0c91e643faa5dea45ba7f86bdef'
+      settlement_router_address: '0x5a6df184e9c6b1285f8beb50a438d82d5f094d6a'
+      fee_router_address: '0xf406e6f1277b990544d4f0556421c3c14df0ab28'
+      protocol_arbitrator_safe: '0x7c018293396325077bb4d039930dcee11b7fb1cf'
+      protocol_fee_recipient: '0xf406e6f1277b990544d4f0556421c3c14df0ab28'
+      timelock_address: '0x462402082b395f218ffb3634ec0611e39bdd504c'
+      settlement_router_owner: '0x462402082b395f218ffb3634ec0611e39bdd504c'
+      is_escrow_factory_wired: true
+      deploy_stamp_utc: '2026-07-20T02:05:00Z'
+      superseded_factory_v2_attempt: '0xa2f35228b079cbb530ee0f8fe5d347eeafbf394d'
+      note: >
+        Candidate Wired FactoryV2 + SettlementRouter (isEscrowFactory).
+        Arb=Timelock.admin Safe. Fee=FeeRouter. SR owner=Timelock.
+        Mainnet Wave FORBIDDEN. FG-15-A untouched.
+    notes: >
+      C2-03 Sepolia addresses filled 2026-07-20 after Owner auth.
+      Mainnet / real ETH Wave forbidden. Hard Gate fail-closed.
+  v311_sepolia_clean_baseline:
+    status: HISTORICAL_FG15_A_SNAPSHOT
+    historical_archive: registry/fg15-a-historical-archive.v1.yaml
+    promotion: FORBIDDEN
+    NOT_FOR_PROMOTION: true
+    chain_id: 11155111
+    network: sepolia
+    path: CLEAN_SEPOLIA_REDEPLOY
+    economic_ssot: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+    stamp: 20260718T092622Z
+    cutover_stamp: 20260718T094030Z
+    superseded_as_web3_mainline_by: v311_fund_safety_candidate_v2
+    addresses:
+      timelock_address: '0x462402082b395f218ffb3634ec0611e39bdd504c'
+      governor_address: '0x1ce4fbe80557bc2111a814f60a2334de41032116'
+      treasury_p4_cap_address: '0x6a10df057c637a295b48d91a8101d22542425905'
+      primary_market_address: '0x98a9bcfe967ba27d5448a1569d1622a7938046c2'
+      seat_registry_address: '0x7574e868da767690fd91b5f8940da7ad3b1efa66'
+      stake_pool_proxy_address: '0xc229d58987e0755467eb4ee53572f7139baf7281'
+      governance_token_address: '0x5d2edabf062e1d8accda2bd35c0d9b26cfcd5ec0'
+      usdc_sink_address: '0x6a10df057c637a295b48d91a8101d22542425905'
+    proxy_implementations:
+      verified_utc: '2026-07-18'
+      upgrade_admin_address: '0x462402082b395f218ffb3634ec0611e39bdd504c'
+      entries:
+        governor:
+          proxy: '0x1ce4fbe80557bc2111a814f60a2334de41032116'
+          implementation: '0xa81c862757810324a03ba8e1c1d7c5e1e9e394cf'
+        treasury_p4_cap:
+          proxy: '0x6a10df057c637a295b48d91a8101d22542425905'
+          implementation: '0xbae315b52bade0a3042f010bd4715e36d01089db'
+        primary_market:
+          proxy: '0x98a9bcfe967ba27d5448a1569d1622a7938046c2'
+          implementation: '0xd9953adf8ee009919b596ffc1d081cdba47d0973'
+        seat_registry:
+          proxy: '0x7574e868da767690fd91b5f8940da7ad3b1efa66'
+          implementation: '0x80ffcff9a560f5aeaf0bfa842826a88341007cbf'
+        region_steward_stake_pool:
+          proxy: '0xc229d58987e0755467eb4ee53572f7139baf7281'
+          implementation: '0xa45d3c1bf55d8c6da7f099a222615b2af4ce491b'
+    notes: >
+      HISTORICAL FG-15-A Sepolia snapshot · NOT FOR PROMOTION · cert freeze 2026-07-18.
+      Web3 ACTIVE address authority = v311_fund_safety_candidate_v2 (Baseline Migration v2).
+  fcg_v2_security_hardened_sepolia:
+    status: DEPLOYED_BOUND_NOT_ACTIVE
+    chain_id: 11155111
+    network: sepolia
+    path: L3_SECURITY_HARDENED_CLEAN_DEPLOY
+    active_baseline_ref: v311_fund_safety_candidate_v2
+    historical_fg15_a_ref: v311_sepolia_clean_baseline
+    ACTIVE_FLIP: FORBIDDEN
+    replaces_legacy_wired:
+      evidence_freeze: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L5-CONTRACT-ADDRESS-FREEZE-LATEST.json
+      role_after_cutover: LEGACY_L5_RUNTIME_EVIDENCE_ONLY
+    owner_policy:
+      must_be: TIMELOCK_OR_SAFE
+      must_not_be: DEPLOYER_EOA
+      default_timelock: '0x462402082b395f218ffb3634ec0611e39bdd504c'
+    deploy_script: contracts/script/DeployFcgV2SecurityHardenedSepolia.s.sol
+    permission_model:
+      escrow_release: bilateral_confirm_then_permissionless
+      executeResolution: onlyArbitrator
+      releasePartialRefund: onlyArbitrator
+      releaseSlashed: onlyArbitrator
+      openDispute: traveler_or_guide_only
+      factory_guardian: FCG_V2_OWNER
+      settlement_router_owner: FCG_V2_OWNER
+      fee_router_owner: FCG_V2_OWNER
+    addresses:
+      timelock_address: '0x462402082B395F218FFB3634ec0611e39BdD504C'
+      settlement_router_address: '0x8cf12bcf7ca2005413f645614029f51d3efaa1c9'
+      fee_router_address: '0xfed657db52120ee91165ca9d907c9df1475e2c86'
+      escrow_factory_address: '0x49b6e57f1ade52cca287da653a8e0e7c23ae286d'
+      project_revenue_pool_address: '0xe8da62b9ac2acdf7f18545fa9af788656df09f27'
+      founder_bootstrap_address: '0x3e79dde670008a204861df63121a7796c025814b'
+    notes: L3 Security Hardened deployed & bound · NOT ACTIVE · original FCG-V2 wired
+      stack remains LEGACY evidence
+    recorded_utc: '2026-07-19T11:38:25Z'
   local_anvil:
     chain_id: 31337
-    notes: "bash scripts/dev/smoke-steward-stake-anvil.sh · deployer EOA fallback allowed"
-
+    notes: bash scripts/dev/smoke-steward-stake-anvil.sh · deployer EOA fallback allowed
   sepolia:
+    status: LEGACY_READ_ONLY_COMPOSITE
+    active_baseline_ref: v311_fund_safety_candidate_v2
+    historical_fg15_a_ref: v311_sepolia_clean_baseline
     chain_id: 11155111
     rpc_env: CHAIN_RPC_URL
     deploy_order:
-      - DeployGovernanceStack.s.sol
-      - DeployFundStackUnderTimelock.s.sol
-      - DeployRegionStewardStakePool.s.sol
-      - DeployCountryPoolRedemptionEpochV0.s.sol
-      - DeployP51CountryLedger.s.sol
+    - DeployGovernanceStack.s.sol
+    - DeployFundStackUnderTimelock.s.sol
+    - DeployRegionStewardStakePool.s.sol
+    - DeployCountryPoolRedemptionEpochV0.s.sol
+    - DeployP51CountryLedger.s.sol
     required_env_before_broadcast:
-      - TIMELOCK_ADMIN_ADDRESS
-      - TIMELOCK_ADDRESS
-      - PRIVATE_KEY
-      - CHAIN_RPC_URL
-      - CHAIN_ID
-    # Active Sepolia SSOT · GovFreeze V2 (20260616T054554Z) · LEGACY V1 → gov_freeze_v1_baseline
+    - TIMELOCK_ADMIN_ADDRESS
+    - TIMELOCK_ADDRESS
+    - PRIVATE_KEY
+    - CHAIN_RPC_URL
+    - CHAIN_ID
     addresses:
-      governance_token_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
-      governor_address: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
-      timelock_address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
-      escrow_factory_address: "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
-      fee_router_address: "0x81A8009210c5215100564c6E4123F672c4459306"
-      region_steward_stake_pool_address: "0x3a89378bfad12d1028707dd37055294854c8784e"
-      country_pool_redemption_epoch_cn_address: "0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829"
-      country_pool_ledger_pilot_address: "0x63bd7d5ee5c5dde707e5e65303f3876267c78e97"
-      region_vault_address: "0x2Ea061d50393c09af2f607Ee9f89679642A3a65B"
-      legacy_treasury_address: "0x6a8323fb2394A1e9655F7132F4E4B8222d2898be"
-      reserve_vault_address: "0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855"
-      guide_staking_pool_address: "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
-      provider_staking_pool_address: "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075"
-      registry_address: "0xc50913e154f850583D0afbE9158a75E0e2167AAb"
-      fund_stack_token_address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+      governance_token_address: '0x2837ea0c50e27d59b88af617abbb231a040062c5'
+      governor_address: '0x847b00ddb6ffed71812abc358a407dad4b099fcb'
+      timelock_address: '0x904a6c4c6aab698afbf08ec6151d317c393520cc'
+      escrow_factory_address: '0xbf746B6a330e61416c6D87aB9b0758f7107C8006'
+      fee_router_address: '0x81A8009210c5215100564c6E4123F672c4459306'
+      region_steward_stake_pool_address: '0x3a89378bfad12d1028707dd37055294854c8784e'
+      country_pool_redemption_epoch_cn_address: '0x712050e4b1517C3f3ab39B32Cabb70CC0E1C0829'
+      country_pool_ledger_pilot_address: '0x63bd7d5ee5c5dde707e5e65303f3876267c78e97'
+      region_vault_address: '0x2Ea061d50393c09af2f607Ee9f89679642A3a65B'
+      legacy_treasury_address: '0x6a8323fb2394A1e9655F7132F4E4B8222d2898be'
+      reserve_vault_address: '0xbC541FAf26e139eF1f0AC22b52c4b4F85FFF7855'
+      guide_staking_pool_address: '0x5bdACF35292bDd681103BBb50865d8D2Fd49653f'
+      provider_staking_pool_address: '0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075'
+      registry_address: '0xc50913e154f850583D0afbE9158a75E0e2167AAb'
+      fund_stack_token_address: '0x241948bE49a778490c8A4Ae8D98b7537fE001f63'
     env_to_registry:
       GOVERNANCE_TOKEN_ADDRESS: governance_token_address
       GOVERNOR_ADDRESS: governor_address
@@ -147,74 +257,84 @@ environments:
       PROVIDER_STAKING_POOL_ADDRESS: provider_staking_pool_address
       REGISTRY_ADDRESS: registry_address
       FUND_STACK_TOKEN_ADDRESS: fund_stack_token_address
-      # ESCROW_FACTORY_V2_ADDRESS: escrow_factory_v2_address — populate after Sepolia V2 broadcast
-    notes: |
-      部署后填 addresses.* 并同步根 .env · 禁止在 R-01/R-02/R-03 未清零前 broadcast。
-      escrow_factory_v2_address: PENDING — Sepolia prod still V1 factory · merge after phase2-sepolia-broadcast-escrow-factory-v2.sh
-      见 docs/runbook/TT-PHASE2-CHAIN-DEPLOYMENT-GATE.md
-
+    notes: >
+      LEGACY_READ_ONLY_COMPOSITE · 非 ACTIVE 部署权威键。
+      ACTIVE Web3 SSOT → environments.v311_fund_safety_candidate_v2
+      (active_deploy_baseline / web3_mainline_baseline · Baseline Migration v2).
+      FG-15-A gov spine snapshot → environments.v311_sepolia_clean_baseline
+      (historical_fg15_a_deploy_baseline · forensic only).
+      gov_freeze_v2_clean_baseline = LEGACY_SUPERSEDED（Evidence 保留）。
+      见 docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md · TT-WEB3-BASELINE-MIGRATION-V2-ALIGNMENT-LATEST.md
 
   gov_freeze_v1_baseline:
-    stamp: "20260616T030117Z"
+    status: LEGACY_SUPERSEDED
+    stamp: 20260616T030117Z
     evidence: evidence/GO_phase2_gov_freeze_v1_sepolia/latest/
+    superseded_by: gov_freeze_v2_clean_baseline
     addresses:
-      timelock_address: "0x462c2351971707A8CEEb3ce789F268B8326C76a0"
-      governor_address: "0xd5225bA81Af40600c9802d20888898193861f161"
-      treasury_p4_cap_address: "0xc0FbFc9A50f551273F5748EB2e45B49719dDc796"
-      primary_market_address: "0x2216A416462366b65d4F6Cc96bE50Db1f6e9fbAc"
-      seat_registry_address: "0x75bF993402eb9aCc6145CBdac0EBd322548317d3"
-      region_steward_stake_pool_proxy_address: "0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806"
-      country_pool_net_profit_ledger_address: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
-    notes: |
-      治理唯一链上基线 · GOV-01～04 Proxy · admin=Timelock · ② Sepolia only
+      timelock_address: '0x462c2351971707A8CEEb3ce789F268B8326C76a0'
+      governor_address: '0xd5225bA81Af40600c9802d20888898193861f161'
+      treasury_p4_cap_address: '0xc0FbFc9A50f551273F5748EB2e45B49719dDc796'
+      primary_market_address: '0x2216A416462366b65d4F6Cc96bE50Db1f6e9fbAc'
+      seat_registry_address: '0x75bF993402eb9aCc6145CBdac0EBd322548317d3'
+      region_steward_stake_pool_proxy_address: '0xBf1F5B8c5b8A1cFC8E4458Eb43C1a0ab24012806'
+      country_pool_net_profit_ledger_address: '0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa'
+    notes: 'LEGACY · 已由 gov_freeze_v2_clean_baseline supersede · **禁止**冒充 ACTIVE 治理基线
 
+      历史：GOV-01～04 Proxy · admin=Timelock · ② Sepolia only · 只读归档
+
+      '
   gov_freeze_v2_clean_baseline:
-    stamp: "20260616T054554Z"
+    status: LEGACY_SUPERSEDED
+    superseded_by: v311_sepolia_clean_baseline
+    stamp: 20260616T054554Z
     evidence: evidence/GO_phase2_gov_freeze_v2_clean_baseline/latest/
     supersedes: gov_freeze_v1_baseline
     addresses:
-      timelock_address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
-      governor_address: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
-      treasury_p4_cap_address: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
-      primary_market_address: "0x7af15f98622b9282298ca3070a698ca4a96a4016"
-      seat_registry_address: "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
-      region_steward_stake_pool_proxy_address: "0x3a89378bfad12d1028707dd37055294854c8784e"
-      governance_token_address: "0x2837ea0c50e27d59b88af617abbb231a040062c5"
-      country_pool_net_profit_ledger_address: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
-      country_pool_steward_path_vault_address: "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA"
-      country_pool_unallocated_steward_vault_address: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
-      country_pool_net_profit_settlement_token_address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
+      timelock_address: '0x904a6c4c6aab698afbf08ec6151d317c393520cc'
+      governor_address: '0x847b00ddb6ffed71812abc358a407dad4b099fcb'
+      treasury_p4_cap_address: '0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2'
+      primary_market_address: '0x7af15f98622b9282298ca3070a698ca4a96a4016'
+      seat_registry_address: '0xc99776e980d33f1857d5bb9a57b35ab7669aad1f'
+      region_steward_stake_pool_proxy_address: '0x3a89378bfad12d1028707dd37055294854c8784e'
+      governance_token_address: '0x2837ea0c50e27d59b88af617abbb231a040062c5'
+      country_pool_net_profit_ledger_address: '0x738D2c133d5F90c13eE9907386136471E1f330f5'
+      country_pool_steward_path_vault_address: '0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA'
+      country_pool_unallocated_steward_vault_address: '0xb7d0Ea9579F80B2090195d49a44941d5546554E9'
+      country_pool_net_profit_settlement_token_address: '0x241948bE49a778490c8A4Ae8D98b7537fE001f63'
     env_to_registry:
       GOVERNANCE_TREASURY_P4CAP_ADDRESS: treasury_p4_cap_address
       COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS: country_pool_net_profit_ledger_address
       COUNTRY_POOL_STEWARD_PATH_VAULT_ADDRESS: country_pool_steward_path_vault_address
       UNALLOCATED_STEWARD_PATH_VAULT_ADDRESS: country_pool_unallocated_steward_vault_address
       COUNTRY_POOL_NET_PROFIT_SETTLEMENT_TOKEN_ADDRESS: country_pool_net_profit_settlement_token_address
-    notes: |
-      G24-CLEAN-BASELINE-01 · 全新 Timelock+Proxy · 10国 Stake init · allow×5 · ② Sepolia only
-      D-4555-B DE triplet + settlement token · config/jurisdiction_country_pool_net_profit.sepolia.json
+    notes: >
+      LEGACY_SUPERSEDED · 非 ACTIVE 部署权威。
+      ACTIVE Web3 SSOT = v311_fund_safety_candidate_v2 (Baseline Migration v2).
+      Historical FG-15-A gov spine = v311_sepolia_clean_baseline (forensic).
+      D-4555-B DE triplet retained for evidence only.
+
     settlement_de_d4555_b:
       jurisdiction: DE
       network: sepolia
       chain_id: 11155111
-      settlement_token_address: "0x241948bE49a778490c8A4Ae8D98b7537fE001f63"
-      owner_timelock_address: "0x904a6C4c6aab698afbf08ec6151d317c393520cc"
-      owner_note: "W7 Vacancy V1 triplet · V2 Governance Timelock owner"
+      settlement_token_address: '0x241948bE49a778490c8A4Ae8D98b7537fE001f63'
+      owner_timelock_address: '0x904a6C4c6aab698afbf08ec6151d317c393520cc'
+      owner_note: W7 Vacancy V1 triplet · V2 Governance Timelock owner
       legacy_qf01:
-        country_pool_net_profit_ledger: "0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa"
-        steward_path_vault: "0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb"
-        unallocated_steward_path_vault: "0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0"
-        owner_timelock_address: "0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f"
-        status: LEGACY_READ_ONLY
+        country_pool_net_profit_ledger: '0x2704566A6657DcbEEBB71e43cEca381f16E1a8Aa'
+        steward_path_vault: '0x6B3391c0b6297A5866c0bB7AD06dA99E08F0a3fb'
+        unallocated_steward_path_vault: '0xAbE36f8eF43D544b9D0e1c0A5F9638dC37Ed33D0'
+        owner_timelock_address: '0x0359d4fB9c4B9f69188A1E9AE2202ABfeD1fEe8f'
       country_pool_net_profit_ledger:
-        address: "0x738D2c133d5F90c13eE9907386136471E1f330f5"
-        implementation_codehash: "0x5f8050acd36cbc556dd8bccd4d5d5ff81fd8c3325262915cc73edb986828f092"
+        address: '0x738D2c133d5F90c13eE9907386136471E1f330f5'
+        implementation_codehash: '0x5f8050acd36cbc556dd8bccd4d5d5ff81fd8c3325262915cc73edb986828f092'
       steward_path_vault:
-        address: "0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA"
-        implementation_codehash: "0xd7f83b453c463eae75f2901a79a0315acc15da84e3f04e08f4255fd9822f277d"
+        address: '0xaB6c15Ebcae78606E0AE5663d831E09e05af32FA'
+        implementation_codehash: '0xd7f83b453c463eae75f2901a79a0315acc15da84e3f04e08f4255fd9822f277d'
       unallocated_steward_path_vault:
-        address: "0xb7d0Ea9579F80B2090195d49a44941d5546554E9"
-        implementation_codehash: "0x48774c1c47707f31698ea1837c3778eeadedfe96819ddc4d6627c8ecf9626670"
+        address: '0xb7d0Ea9579F80B2090195d49a44941d5546554E9'
+        implementation_codehash: '0x48774c1c47707f31698ea1837c3778eeadedfe96819ddc4d6627c8ecf9626670'
         vacancy:
           version: V1
           protocol_gate: VACANCY_LEDGER_V1_PROTOCOL_COMPLETE
@@ -224,33 +344,36 @@ environments:
           readiness_gate: VACANCY_DEPLOYMENT_READINESS
           w7_milestone: VACANCY_LEDGER_V1_SEPOLIA_RUNTIME_ACTIVE_PASS
   proxy_implementations:
-    verified_utc: "2026-07-09"
-    read_method: "cast call implementation() / admin()"
-    upgrade_admin_address: "0x904a6c4c6aab698afbf08ec6151d317c393520cc"
-    upgrade_path: "Governor → Timelock.schedule → Timelock.execute → upgradeTo"
+    verified_utc: '2026-07-09'
+    read_method: cast call implementation() / admin()
+    upgrade_admin_address: '0x904a6c4c6aab698afbf08ec6151d317c393520cc'
+    upgrade_path: Governor → Timelock.schedule → Timelock.execute → upgradeTo
     entries:
       governor:
-        proxy: "0x847b00ddb6ffed71812abc358a407dad4b099fcb"
-        implementation: "0x91C479a93dA2B4D78C03EeE03Db9A5AD65d09968"
-        implementation_codehash: "0x161ed77be8a8fa8701a385ea36ca2a547d0563e3b78eadfca81f17773eb26fe9"
+        proxy: '0x847b00ddb6ffed71812abc358a407dad4b099fcb'
+        implementation: '0x91C479a93dA2B4D78C03EeE03Db9A5AD65d09968'
+        implementation_codehash: '0x161ed77be8a8fa8701a385ea36ca2a547d0563e3b78eadfca81f17773eb26fe9'
       treasury_p4_cap:
-        proxy: "0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2"
-        implementation: "0xeb2542f912215d1cA46394360a854b32586b8303"
-        implementation_codehash: "0x84d2b5dd2fae145c1823d7d0f17ffce6b17ff3f385159b5086a38296deb7fe24"
+        proxy: '0xc1de17cd47b3ef2a68a4dc6cb1a5cc4fd4eb5ce2'
+        implementation: '0xeb2542f912215d1cA46394360a854b32586b8303'
+        implementation_codehash: '0x84d2b5dd2fae145c1823d7d0f17ffce6b17ff3f385159b5086a38296deb7fe24'
       primary_market:
-        proxy: "0x7af15f98622b9282298ca3070a698ca4a96a4016"
-        implementation: "0x94F23511fe808efdc2DDA5b98dCE34c513644F12"
-        implementation_codehash: "0x6c121d6f2a53188e0092ea132945acb571e4304acc5e4ad15c1d78834ce5b9a9"
+        proxy: '0x7af15f98622b9282298ca3070a698ca4a96a4016'
+        implementation: '0x94F23511fe808efdc2DDA5b98dCE34c513644F12'
+        implementation_codehash: '0x6c121d6f2a53188e0092ea132945acb571e4304acc5e4ad15c1d78834ce5b9a9'
       seat_registry:
-        proxy: "0xc99776e980d33f1857d5bb9a57b35ab7669aad1f"
-        implementation: "0xa6326194358C0D8dd22950Ffe8071C7BE1d21e9D"
-        implementation_codehash: "0x3b87c97ee0457cf0e435da71f60c8d1ab8b7accfc76037623539ae0459c42be1"
+        proxy: '0xc99776e980d33f1857d5bb9a57b35ab7669aad1f'
+        implementation: '0xa6326194358C0D8dd22950Ffe8071C7BE1d21e9D'
+        implementation_codehash: '0x3b87c97ee0457cf0e435da71f60c8d1ab8b7accfc76037623539ae0459c42be1'
       region_steward_stake_pool:
-        proxy: "0x3a89378bfad12d1028707dd37055294854c8784e"
-        implementation: "0x7e9B940302E3aEf8e880F49BDe88247A2721ac2f"
-        implementation_codehash: "0xef2101114610e8250467852b4833dc9521a1a72b9e3406385a909a4779a10814"
+        proxy: '0x3a89378bfad12d1028707dd37055294854c8784e'
+        implementation: '0x7e9B940302E3aEf8e880F49BDe88247A2721ac2f'
+        implementation_codehash: '0xef2101114610e8250467852b4833dc9521a1a72b9e3406385a909a4779a10814'
   testnet_template:
     chain_id: null
     region_steward_stake_pool_address: null
     country_pool_redemption_epoch_cn_address: null
-    notes: "deprecated alias — use environments.sepolia"
+    notes: >
+      deprecated alias — ACTIVE addresses → v311_fund_safety_candidate_v2;
+      FG-15-A historical → v311_sepolia_clean_baseline; fund-stack composite →
+      environments.sepolia (LEGACY_READ_ONLY_COMPOSITE); gov_freeze_v2 = LEGACY_SUPERSEDED

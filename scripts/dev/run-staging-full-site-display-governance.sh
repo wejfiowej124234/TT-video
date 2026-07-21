@@ -30,9 +30,17 @@ echo "== [2/8] Display data governance remediation =="
 API_BASE="$API_BASE" ENV_LABEL=staging EVIDENCE_JSON="$EVID/ddg-report.json" \
   bash "$ROOT/scripts/dev/run-display-data-governance.sh" 2>&1 | tee "$EVID/ddg.log"
 
-echo "== [3/8] Seed merchant showcase listing (if empty) =="
-API_BASE="$API_BASE" SEED_EVIDENCE_JSON="$EVID/seed-showcase.json" \
-  node "$ROOT/scripts/dev/seed-staging-showcase-market-listings.cjs" 2>&1 | tee "$EVID/seed-showcase.log" || true
+echo "== [3/8] Showcase re-seed SKIPPED (OCS 10×4 lock · SOPCP) =="
+# Forbidden by default: Unsplash merchant/acquisition showcase conflicts with OCS baseline.
+# Owner-only escape: OWNER_ALLOW_SHOWCASE_SEED=1 (local demo only — never staging RC).
+if [[ "${OWNER_ALLOW_SHOWCASE_SEED:-0}" == "1" ]]; then
+  echo "WARN: OWNER_ALLOW_SHOWCASE_SEED=1 — seeding Unsplash showcase (breaks OCS 10×4)"
+  API_BASE="$API_BASE" SEED_EVIDENCE_JSON="$EVID/seed-showcase.json" \
+    node "$ROOT/scripts/dev/seed-staging-showcase-market-listings.cjs" 2>&1 | tee "$EVID/seed-showcase.log" || true
+else
+  echo "skip seed-staging-showcase-market-listings.cjs — use STAGING_RC_BASELINE_ALIGNING=1 + align-ocs-* instead" \
+    | tee "$EVID/seed-showcase.log"
+fi
 
 echo "== [4/8] Post-remediation full-site scan =="
 API="$API_BASE" FS_DG_JSON="$EVID/fs-dg-audit.json" \

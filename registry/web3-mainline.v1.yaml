@@ -1,0 +1,73 @@
+# Web3 Mainline pointer · UNIQUE entry for new Web3 tests / verification / Release alignment
+#
+# Human: docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md
+# Gate:  bash scripts/gates/check-web3-mainline-candidate-v2-gate.sh
+#
+# Doctrine (2026-07-20):
+#   FG-15-A = ARCHIVED_HISTORICAL (immutable; NOT FOR PROMOTION)
+#   Candidate v2 / FG-15-B = ACTIVE Web3 candidate baseline for all NEW flows
+#   Do not delete or overwrite FG-15-A evidence.
+
+schema: traveltrust.web3_mainline.v1
+version: 1
+effective_utc: "2026-07-20"
+machine_key: TT_WEB3_MAINLINE
+
+active_web3_candidate:
+  id: WEB3-CANDIDATE-V2-FUND-SAFETY-P0
+  status: ACTIVE_WEB3_CANDIDATE_BASELINE
+  registry: registry/web3-candidate-v2.v1.yaml
+  deploy_baseline_key: v311_fund_safety_candidate_v2
+  psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+  release_identity: evidence/GO_web3_candidate_v2/WEB3-CANDIDATE-V2-RELEASE-IDENTITY-LATEST.json
+  contract_digest_bundle_sha256: "20e6d564046bf984e1a02a6feaf5f052dbd2abf2cc18ecd34d38ca7b118740ab"
+  fg15_track: FG-15-B
+  fg15_registry: registry/fg15-b-candidate-v2.v1.yaml
+  evidence_root: evidence/GO_fg15_observation_48h_candidate_v2
+  promotion: PROMOTION_CANDIDATE
+  chain_id: "11155111"
+  real_eth_wave: FORBIDDEN
+  mainnet_hard_gate: FAIL_CLOSED
+
+historical_fg15_a:
+  track_id: FG-15-A
+  status: ARCHIVED_HISTORICAL
+  promotion: FORBIDDEN
+  NOT_FOR_PROMOTION: true
+  registry: registry/fg15-a-historical-archive.v1.yaml
+  psg_release_version: PSG-REL-20260719-FG15-09c72b93
+  git_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
+  deploy_baseline_key: v311_sepolia_clean_baseline
+  evidence_root_hint: evidence/GO_fg15_observation_48h
+  evidence_policy: IMMUTABLE_NO_DELETE_NO_OVERWRITE
+
+# New-flow defaults (scripts / tests MUST use these)
+new_flow_defaults:
+  TRAVELTRUST_WEB3_MAINLINE: candidate_v2
+  TRAVELTRUST_PSG_RELEASE_VERSION: PSG-REL-20260720-WEB3-CAND-V2
+  TRAVELTRUST_CONTRACT_PROFILE: v311_fund_safety_candidate_v2
+  TRAVELTRUST_FG15_TRACK: FG-15-B
+  TRAVELTRUST_FG15_EVIDENCE_ROOT: evidence/GO_fg15_observation_48h_candidate_v2
+  refuse_fg15_a_pin: PSG-REL-20260719-FG15-09c72b93
+  refuse_fg15_a_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
+
+test_entry_points:
+  money_path: scripts/dev/run-web3-candidate-v2-money-path-entry.sh
+  forge_fund_safety: "cd contracts && forge test --match-contract FundSafetyP0Test"
+  escrow_settlement: "cd contracts && forge test --match-contract 'EscrowTest|EscrowSettlementRouterWireV311Test|SettlementRouterV311PrepTest|EscrowV2Test|FundSafetyP0Test'"
+  runtime_attestation: scripts/dev/run-web3-candidate-v2-runtime-attestation-entry.sh
+  readiness_audit: scripts/dev/run-web3-candidate-v2-readiness-entry.sh
+  mainline_lib: scripts/dev/lib/web3-candidate-v2-mainline.sh
+
+forbidden_for_new_flows:
+  - cite_PSG-REL-20260719-FG15-09c72b93_as_active
+  - write_evidence_under_GO_fg15_observation_48h
+  - promote_using_09c72b93
+  - mainnet_package_baseline_v311_sepolia_clean_as_candidate
+  - money_path_require_09c72b93_HEAD
+
+companion:
+  matrix: registry/web3-active-execution-matrix.v1.yaml
+  candidate: registry/web3-candidate-v2.v1.yaml
+  dashboard: docs/runbook/TT-CURRENT-FOCUS-DASHBOARD-LATEST.md
+  human: docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md
