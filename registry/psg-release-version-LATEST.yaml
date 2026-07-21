@@ -12,8 +12,8 @@ active:
   role: ACTIVE_STAGING_RUNTIME_ALIGN
   fg15_track: FG-15-B_ELAPSED
   promotion: STAGING_CANONICAL_DEPLOY
-  freeze: MINT_PIN_AFTER_ATTESTATION_LAND
-  recorded_utc: "2026-07-21T19:00:00Z"
+  freeze: CERTIFICATION_PIN_ACTIVE_TRACK_HEAD
+  recorded_utc: "2026-07-21T18:37:43Z"
   git_sha: "TRACK_HEAD"
   git_sha_short: "TRACK_HEAD"
   artifact_sha: "TRACK_HEAD"

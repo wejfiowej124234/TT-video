@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.psg_release_mint.v1",
+  "machine_key": "TT_PSG_RELEASE_MINT_STAGING_ALIGN_W0",
+  "recorded_utc": "2026-07-21T18:37:43Z",
+  "psg_release_version": "PSG-REL-20260722-STAGING-ALIGN-W0",
+  "registry_git_sha_mode": "TRACK_HEAD",
+  "mint_head_git_sha": "2340b88be51d6fea57be53795cddc2d78714aaac",
+  "mint_head_git_sha_short": "2340b88be51d",
+  "supersedes": "PSG-REL-20260720-WEB3-CAND-V2",
+  "purpose": "Reality-W0 Runtime Attestation + Canonical Deploy",
+  "locked_until_reality_closure_pass": [
+    "production_entry",
+    "hard_gate_flip",
+    "mainnet_wave",
+    "production_go"
+  ],
+  "stamp": "20260721T183743Z"
+}
