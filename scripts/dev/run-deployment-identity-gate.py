@@ -122,8 +122,16 @@ def main() -> int:
         head_full = head_short = branch = ""
         dirty_raw = ""
 
-    dirty = bool(dirty_raw)
-    dirty_count = len([ln for ln in dirty_raw.splitlines() if ln.strip()]) if dirty_raw else 0
+    dirty_lines = []
+    for ln in (dirty_raw or "").splitlines():
+        if not ln.strip():
+            continue
+        path = ln[3:].strip() if len(ln) > 3 else ln.strip()
+        if path.startswith("evidence/GO_") or path.startswith("evidence\\GO_"):
+            continue
+        dirty_lines.append(ln)
+    dirty = bool(dirty_lines)
+    dirty_count = len(dirty_lines)
     if head_full:
         add(
             "git_head_recorded",

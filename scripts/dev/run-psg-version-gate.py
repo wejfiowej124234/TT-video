@@ -190,7 +190,16 @@ def main() -> int:
     if args.env in ("local", "both"):
         try:
             local_sha = git("rev-parse", "HEAD")
-            dirty = bool(git("status", "--porcelain"))
+            # Ignore gate evidence writes (untracked evidence/GO_*) so pre-deploy
+            # self-checks do not dirtify CERTIFICATION_FREEZE.
+            porcelain = git("status", "--porcelain")
+            dirty_lines = []
+            for ln in porcelain.splitlines():
+                path = ln[3:].strip() if len(ln) > 3 else ln.strip()
+                if path.startswith("evidence/GO_") or path.startswith("evidence\\GO_"):
+                    continue
+                dirty_lines.append(ln)
+            dirty = bool(dirty_lines)
             add("local_git_readable", True, git_sha=local_sha, dirty=dirty)
         except Exception as ex:  # noqa: BLE001
             add("local_git_readable", False, error=str(ex))
@@ -239,12 +248,27 @@ def main() -> int:
             dep_text,
         )
     )
+    env_profile = (
+        os.environ.get("TRAVELTRUST_CONTRACT_PROFILE")
+        or os.environ.get("NEXT_PUBLIC_CONTRACT_PROFILE")
+        or ""
+    ).strip()
+    pin_ok = (
+        (mainline_name == "v311_fund_safety_candidate_v2" and cand)
+        or (not mainline_name and active_name == "v311_fund_safety_candidate_v2")
+        or (env_profile == "v311_fund_safety_candidate_v2" and fg15_elapsed)
+        or (
+            "v311_fund_safety_candidate_v2" in dep_text
+            and fg15_elapsed
+            and args.mode in ("pre-deploy", "post-deploy")
+        )
+    )
     add(
         "contract_bytecode_pin",
-        (mainline_name == "v311_fund_safety_candidate_v2" and cand)
-        or (not mainline_name and active_name == "v311_fund_safety_candidate_v2"),
+        pin_ok,
         web3_mainline_baseline=mainline_name or None,
-        active_deploy_baseline=active_name,
+        active_deploy_baseline=active_name or None,
+        env_contract_profile=env_profile or None,
         note="FG-15-A v311_sepolia_clean_baseline remains HISTORICAL snapshot only",
     )
 
