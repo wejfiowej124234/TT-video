@@ -1,0 +1,250 @@
+{
+  "schema": "traveltrust.reality_w0_runtime_alignment.v1",
+  "id": "Reality-W0_Runtime_Alignment",
+  "recorded_utc": "2026-07-21T18:27:47Z",
+  "status": "RUNNING_BLOCKED_STAGING_SHA_DRIFT",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "tip_git_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "staging_probe": {
+    "url": "https://tt-api-staging.fly.dev/meta",
+    "reachable": true,
+    "git_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+    "deployed_at": null,
+    "deployment_profile": "staging",
+    "indexer": {
+      "state_path": "data/indexer_state.json",
+      "checkpoint": {
+        "block_number": 0,
+        "log_index": 0,
+        "source": "runtime",
+        "rule": "与 orders chain_sync.checkpoint、metrics traveltrust_indexer_checkpoint_* 同源；source=runtime 时 block/log 与 indexer.memory 同源；758 GET /meta indexer.checkpoint 对象 indexer_checkpoint_top_keys / indexer_checkpoint_top_keys_contract_758 与 INDEXER_CHECKPOINT_META_TOP_KEYS 六键顺序同源",
+        "indexer_checkpoint_top_keys": [
+          "block_number",
+          "log_index",
+          "source",
+          "rule",
+          "indexer_checkpoint_top_keys",
+          "indexer_checkpoint_top_keys_contract_758"
+        ],
+        "indexer_checkpoint_top_keys_contract_758": "**758**：**`indexer_checkpoint_top_keys`** **与 **`INDEXER_CHECKPOINT_META_TOP_KEYS`** **同源（顺序 `block_number`****→**`log_index`****→**`source`****→**`rule`****→**`indexer_checkpoint_top_keys`****→**`indexer_checkpoint_top_keys_contract_758`）"
+      },
+      "last_seen_finality_n": 12,
+      "replay_required": false,
+      "lag_blocks": 0,
+      "lag_max_blocks": 100,
+      "reorg_detected": false,
+      "finality_n": 12,
+      "memory": {
+        "available": true,
+        "last_block": 0,
+        "last_log_index": 0,
+        "last_block_hash_prefix": null,
+        "events_cached": 0,
+        "rule": "进程内 indexer 句柄快照（available/last_block/last_log_index/last_block_hash_prefix/events_cached）；727 indexer.memory 与 indexer.checkpoint 在 source=runtime 时同源；757 GET /meta indexer.memory 对象 indexer_memory_top_keys / indexer_memory_top_keys_contract_757 与 INDEXER_MEMORY_META_TOP_KEYS 八键顺序同源；758 indexer.checkpoint 机读键序见 indexer_checkpoint_top_keys",
+        "indexer_memory_top_keys": [
+          "available",
+          "last_block",
+          "last_log_index",
+          "last_block_hash_prefix",
+          "events_cached",
+          "rule",
+          "indexer_memory_top_keys",
+          "indexer_memory_top_keys_contract_757"
+        ],
+        "indexer_memory_top_keys_contract_757": "**757**：**`indexer_memory_top_keys`** **与 **`INDEXER_MEMORY_META_TOP_KEYS`** **同源（顺序 `available`****→**`last_block`****→**`last_log_index`****→**`last_block_hash_prefix`****→**`events_cached`****→**`rule`****→**`indexer_memory_top_keys`****→**`indexer_memory_top_keys_contract_757`）"
+      },
+      "finality_discipline": {
+        "tick_logs_upper_bound": "chain_tip - max(1, finality_n)",
+        "postgres_event_log_has_finality_n_used": true,
+        "order_chain_sync_status": {
+          "method_path": "GET /api/v1/orders/:id/chain-sync-status",
+          "method_path_contract_717": "**717**：**`method_path`**=**`GET /api/v1/orders/:id/chain-sync-status`** **与 **`orders::CHAIN_SYNC_STATUS_METHOD_AND_PATH`** **及 **`router`**** **`.route`**** **`/api/v1/orders/:id/chain-sync-status`** **同源**",
+          "status_values": [
+            "pending",
+            "confirmed",
+            "unknown"
+          ],
+          "status_values_contract_719": "**719**：**`status_values`** **[**`pending`****, **`confirmed`****, **`unknown`**]** **与 **`orders::CHAIN_SYNC_STATUS_VALUES`** **及 **`713`**** **`chain_sync_status_enum`** **同源**",
+          "absent_reason_values": [
+            "no_database",
+            "no_chain_context",
+            "no_row",
+            "read_failed",
+            "projection_backend_unavailable"
+          ],
+          "absent_reason_values_contract_720": "**720**：**`absent_reason_values`** **[**`no_database`****, **`no_chain_context`****, **`no_row`****, **`read_failed`****, **`projection_backend_unavailable`**]** **与 **`orders::CHAIN_SYNC_EVENT_LOG_SNAPSHOT_ABSENT_REASONS`** **及 **`703`**** **`optional_event_log_snapshot_absent_reason`** **同源**",
+          "code": "crates/api/src/routes/orders/mod.rs get_order_chain_sync_status",
+          "code_contract_718": "**718**：**`code`**=**`crates/api/src/routes/orders/mod.rs get_order_chain_sync_status`** **与 **`orders::CHAIN_SYNC_STATUS_HANDLER_CODE`** **及 **`get_order_chain_sync_status`** **实现** **锚点** **同源**",
+          "event_log_snapshot_top_keys": [
+            "finality_n_used",
+            "block_number",
+            "log_index",
+            "event_type",
+            "tx_hash",
+            "block_hash"
+          ],
+          "event_log_snapshot_keys_contract_722": "**722**：**`event_log_snapshot_top_keys`** **[**`finality_n_used`****, **`block_number`****, **`log_index`****, **`event_type`****, **`tx_hash`****, **`block_hash`**]** **与 **`db::EVENT_LOG_SNAPSHOT_JSON_TOP_KEYS`** **及 **`escrow_event_finality_snapshot_to_json`** **及 **`702`**** **`chain_sync.event_log_snapshot`** **同源**",
+          "optional_event_log_snapshot": "**702**：**DATABASE_URL** + **event_log** **命中** **时 **`chain_sync.event_log_snapshot`**（**`db::latest_escrow_event_finality_for_order`** → **`escrow_event_finality_snapshot_to_json`**；**722** **`event_log_snapshot_top_keys`** **同源**）：**`finality_n_used`****/**`block_number`****/**`log_index`****/**`event_type`****/**`tx_hash`****/**`block_hash`**；**`tx_hash`****/**`block_hash`** **`event_log`**** **列 **encode** **0x** **hex**，列空则 **null**",
+          "optional_event_log_snapshot_absent_reason": "**703**：无 **event_log_snapshot** 时 **chain_sync.event_log_snapshot_absent_reason** 机器键（**720** **`absent_reason_values`** **同源**）：**`no_database`****/**`no_chain_context`****/**`no_row`****/**`read_failed`****（chain_off）；**`projection_backend_unavailable`**（非 chain_off 最小体）",
+          "last_event_top_keys": [
+            "state",
+            "updated_at",
+            "escrow_address"
+          ],
+          "last_event_keys_contract_721": "**721**：**`last_event_top_keys`** **[**`state`****, **`updated_at`****, **`escrow_address`**]** **与 **`orders::CHAIN_SYNC_LAST_EVENT_TOP_KEYS`** **及 **`706`**** **`chain_sync.last_event`** **同源**",
+          "checkpoint_top_keys": [
+            "block_number",
+            "log_index",
+            "source"
+          ],
+          "checkpoint_keys_contract_723": "**723**：**order_chain_sync_status.checkpoint_top_keys** **与 **`orders::CHAIN_SYNC_CHECKPOINT_TOP_KEYS`** **同源（顺序 **`block_number`****→**`log_index`****→**`source`**）",
+          "checkpoint_source_values": [
+            "runtime",
+            "startup_snapshot"
+          ],
+          "checkpoint_source_values_contract_724": "**724**：**`checkpoint_source_values`** **与 **`orders::CHAIN_SYNC_CHECKPOINT_SOURCE_VALUES`** **同源（**`runtime`****∥**`startup_snapshot`**）",
+          "optional_last_event": "**706**：**chain_off** 时 **chain_sync.last_event**（**state**、**updated_at**、**escrow_address**）；非 **chain_off** 最小体为 **null**（**721** **`last_event_top_keys`** **同源**）",
+          "success_body_order_id": "**707**：**200 **`status=ok`** 根级 **`order_id`**（路径参数回响，UUID 字符串）",
+          "success_body_envelope_status": "**715**：**200** 成功体根级 **`status`** **字面 **`ok`**（**与 **`chain_sync.status`** **三值** **区分**；前端 **`parseOrderChainSyncResponse`**** **非 **`ok`** **则 **`null`**）",
+          "chain_sync_required_top_keys": "**716**：**200** **`chain_sync`** **必有 **`status`****、**`finality_n`****、**`checkpoint`****、**`last_event`**（**`checkpoint`**：**`block_number`****/**`log_index`****/**`source`**；**`last_event`**：**chain_off** **非 **null** **对象** **/** **非 chain_off** **JSON **`null`**；**703** **可附加 **`event_log_snapshot`** **或 **`event_log_snapshot_absent_reason`**）",
+          "minimal_body_requester": "**708**：非 **chain_off** 最小成功体根级 **`requester`**（当前会话用户 UUID，与 **`note`**/**`order_id`** 同批）",
+          "minimal_body_chain_sync_status_unknown": "**709**：非 **chain_off** 最小成功体 **`chain_sync.status`**=`**unknown**`（与 **`event_log_snapshot_absent_reason`**=`projection_backend_unavailable` **同批**）",
+          "chain_sync_checkpoint": "**710**：成功体 **`chain_sync.checkpoint`**（**`state.indexer_checkpoint`** 写入；与 **`GET /meta.indexer.checkpoint`** 同源对读；非 **chain_off** 最小体同形；**723** **`checkpoint_top_keys`** **同源**）：**`block_number`****→**`log_index`****→**`source`**",
+          "chain_sync_finality_n": "**711**：成功体 **`chain_sync.finality_n`** 与 **`GET /meta.finality_n`**、**`GET /meta.indexer.finality_n`** **同源**（**FINALITY_N**；与 **`event_log_snapshot.finality_n_used`** 对读见 **110 §3.3**）",
+          "chain_sync_checkpoint_source": "**712**：成功体 **`chain_sync.checkpoint.source`** 与 **`GET /meta.indexer.checkpoint.source`** **同源**（**724** **`checkpoint_source_values`** **同源**：**`runtime`****∥**`startup_snapshot`**；与 **710** block/log 对读）",
+          "chain_sync_status_enum": "**713**：成功体 **`chain_sync.status`** **仅** **`pending`****/**`confirmed`****/**`unknown`**（与上列 **`status_values`** **同源**；**chain_off** 为 **pending**/**confirmed**；非 **chain_off** 最小体 **unknown**）",
+          "minimal_body_note_stable": "**714**：非 **chain_off** 最小成功体根级 **`note`** **稳定句**（**705** **`chainSyncNote`** **同源**）：**`minimal runtime snapshot when order projection backend is unavailable`**",
+          "order_chain_sync_status_top_keys": [
+            "method_path",
+            "method_path_contract_717",
+            "status_values",
+            "status_values_contract_719",
+            "absent_reason_values",
+            "absent_reason_values_contract_720",
+            "code",
+            "code_contract_718",
+            "event_log_snapshot_top_keys",
+            "event_log_snapshot_keys_contract_722",
+            "optional_event_log_snapshot",
+            "optional_event_log_snapshot_absent_reason",
+            "last_event_top_keys",
+            "last_event_keys_contract_721",
+            "checkpoint_top_keys",
+            "checkpoint_keys_contract_723",
+            "checkpoint_source_values",
+            "checkpoint_source_values_contract_724",
+            "optional_last_event",
+            "success_body_order_id",
+            "success_body_envelope_status",
+            "chain_sync_required_top_keys",
+            "minimal_body_requester",
+            "minimal_body_chain_sync_status_unknown",
+            "chain_sync_checkpoint",
+            "chain_sync_finality_n",
+            "chain_sync_checkpoint_source",
+            "chain_sync_status_enum",
+            "minimal_body_note_stable",
+            "order_chain_sync_status_top_keys",
+            "order_chain_sync_status_top_keys_contract_725",
+            "rule"
+          ],
+          "order_chain_sync_status_top_keys_contract_725": "**725**：**`order_chain_sync_status_top_keys`** **与 **`orders::ORDER_CHAIN_SYNC_STATUS_META_TOP_KEYS`** **同源（顺序 `method_path`****→**`method_path_contract_717`****→**`status_values`****→**`status_values_contract_719`****→**`absent_reason_values`****→**`absent_reason_values_contract_720`****→**`code`****→**`code_contract_718`****→**`event_log_snapshot_top_keys`****→**`event_log_snapshot_keys_contract_722`****→**`optional_event_log_snapshot`****→**`optional_event_log_snapshot_absent_reason`****→**`last_event_top_keys`****→**`last_event_keys_contract_721`****→**`checkpoint_top_keys`****→**`checkpoint_keys_contract_723`****→**`checkpoint_source_values`****→**`checkpoint_source_values_contract_724`****→**`optional_last_event`****→**`success_body_order_id`****→**`success_body_envelope_status`****→**`chain_sync_required_top_keys`****→**`minimal_body_requester`****→**`minimal_body_chain_sync_status_unknown`****→**`chain_sync_checkpoint`****→**`chain_sync_finality_n`****→**`chain_sync_checkpoint_source`****→**`chain_sync_status_enum`****→**`minimal_body_note_stable`****→**`order_chain_sync_status_top_keys`****→**`order_chain_sync_status_top_keys_contract_725`****→**`rule`）",
+          "rule": "110 §3.3 Partial：订单级 pending/confirmed 读模型；可选 **event_log_snapshot**（**finality_n_used**、**block_number**、**log_index**、**event_type**、**702** **tx_hash**/**block_hash**）；**722** **`event_log_snapshot_top_keys`**/**`event_log_snapshot_keys_contract_722`** **与 **`db::EVENT_LOG_SNAPSHOT_JSON_TOP_KEYS`** **`702`**** **`chain_sync.event_log_snapshot`** **六键** **同源**；**703** **absent_reason** 可观测性；**720** **`absent_reason_values`**/**`absent_reason_values_contract_720`** **与 **`orders::CHAIN_SYNC_EVENT_LOG_SNAPSHOT_ABSENT_REASONS`** **`703`**** **`event_log_snapshot_absent_reason`** **五键** **同源**；**721** **`last_event_top_keys`**/**`last_event_keys_contract_721`** **与 **`orders::CHAIN_SYNC_LAST_EVENT_TOP_KEYS`** **`706`**** **`chain_sync.last_event`** **三键** **同源**；**723** **`checkpoint_top_keys`**/**`checkpoint_keys_contract_723`** **与 **`orders::CHAIN_SYNC_CHECKPOINT_TOP_KEYS`** **`710`**** **`chain_sync.checkpoint`** **三键** **同源**；**724** **`checkpoint_source_values`**/**`checkpoint_source_values_contract_724`** **与 **`orders::CHAIN_SYNC_CHECKPOINT_SOURCE_VALUES`** **`712`**** **`chain_sync.checkpoint.source`** **二值** **同源**；**725** **`order_chain_sync_status_top_keys`**/**`order_chain_sync_status_top_keys_contract_725`** **与 **`orders::ORDER_CHAIN_SYNC_STATUS_META_TOP_KEYS`** **32** **顶层键** **顺序** **同源**；**706** **last_event**（chain_off）；**707** 成功体根级 **order_id**；**715** 成功体根级 **`status`** **`ok`** **信封**；**716** **`chain_sync`** **四顶层键**；**717** **`method_path`** **与 **`router`**** **`.route`** **同源**；**718** **`code`**/**`code_contract_718`** **与 **`orders::CHAIN_SYNC_STATUS_HANDLER_CODE`** **`get_order_chain_sync_status`** **锚点** **同源**；**719** **`status_values`**/**`status_values_contract_719`** **与 **`orders::CHAIN_SYNC_STATUS_VALUES`** **`713`**** **`chain_sync.status`** **三值** **同源**；**708** 最小体 **requester**；**709** 最小体 **`chain_sync.status`** **unknown**；**710** **`chain_sync.checkpoint`**；**711** **`chain_sync.finality_n`**；**712** **`chain_sync.checkpoint.source`**；**713** **`chain_sync.status`** **枚举**；**714** 最小体根级 **`note`** **稳定句**；全量 pending vs finalized 双视图 API 仍为 Target"
+        },
+        "chain_tip_not_in_meta": true,
+        "chain_tip_hint": "Use POST /api/v1/internal/indexer-tick response chain_tip or external RPC; GET /meta avoids RPC per request",
+        "finality_discipline_top_keys": [
+          "tick_logs_upper_bound",
+          "postgres_event_log_has_finality_n_used",
+          "order_chain_sync_status",
+          "chain_tip_not_in_meta",
+          "chain_tip_hint",
+          "finality_discipline_top_keys",
+          "finality_discipline_top_keys_contract_726"
+        ],
+        "finality_discipline_top_keys_contract_726": "**726**：**`finality_discipline_top_keys`** **与 **`FINALITY_DISCIPLINE_META_TOP_KEYS`** **同源（顺序 `tick_logs_upper_bound`****→**`postgres_event_log_has_finality_n_used`****→**`order_chain_sync_status`****→**`chain_tip_not_in_meta`****→**`chain_tip_hint`****→**`finality_discipline_top_keys`****→**`finality_discipline_top_keys_contract_726`）"
+      },
+      "rule": "110 §3.3 Partial：finality_n 与根字段同源（FINALITY_N）；indexer-tick 仅拉取至 chain_tip−max(1,FINALITY_N)；checkpoint 单调；reorg 全量回滚仍为 Target；lag/reorg 时见 authority.degraded_mode；indexer.checkpoint.source=runtime 时与 indexer.memory 同源；无句柄时为 startup_snapshot；indexer.finality_discipline 为 pending/confirmed 口径说明（无链上 tip）；726 finality_discipline_top_keys / finality_discipline_top_keys_contract_726 与 FINALITY_DISCIPLINE_META_TOP_KEYS 七键顺序同源；727 indexer_top_keys / indexer_top_keys_contract_727 与 INDEXER_META_TOP_KEYS 十三键顺序同源；757 indexer.memory indexer_memory_top_keys / indexer_memory_top_keys_contract_757 与 INDEXER_MEMORY_META_TOP_KEYS 八键顺序同源；758 indexer.checkpoint indexer_checkpoint_top_keys / indexer_checkpoint_top_keys_contract_758 与 INDEXER_CHECKPOINT_META_TOP_KEYS 六键顺序同源",
+      "indexer_top_keys": [
+        "state_path",
+        "checkpoint",
+        "last_seen_finality_n",
+        "replay_required",
+        "lag_blocks",
+        "lag_max_blocks",
+        "reorg_detected",
+        "finality_n",
+        "memory",
+        "finality_discipline",
+        "rule",
+        "indexer_top_keys",
+        "indexer_top_keys_contract_727"
+      ],
+      "indexer_top_keys_contract_727": "**727**：**`indexer_top_keys`** **与 **`INDEXER_META_TOP_KEYS`** **同源（顺序 `state_path`****→**`checkpoint`****→**`last_seen_finality_n`****→**`replay_required`****→**`lag_blocks`****→**`lag_max_blocks`****→**`reorg_detected`****→**`finality_n`****→**`memory`****→**`finality_discipline`****→**`rule`****→**`indexer_top_keys`****→**`indexer_top_keys_contract_727`）"
+    },
+    "chain_id": "11155111",
+    "ssot_sample_keys": [
+      "expected_sha256",
+      "computed_sha256",
+      "match",
+      "file",
+      "rule",
+      "ssot_top_keys",
+      "ssot_top_keys_contract_733"
+    ],
+    "raw_build": {
+      "git_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+      "deployed_at": null,
+      "deployment_profile": "staging",
+      "rule": "120/140：预发/生产建议在容器或进程注入 TRAVELTRUST_GIT_SHA（或 GIT_COMMIT_SHA、SOURCE_VERSION）与 TRAVELTRUST_DEPLOYED_AT（UTC ISO8601）；镜像构建可在 cargo 前 export TRAVELTRUST_BUILD_GIT_SHA 写入编译期兜底；deployment_profile 来自 TRAVELTRUST_DEPLOYMENT_PROFILE（local/staging/production）；730 GET /meta build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 五键顺序同源",
+      "build_top_keys": [
+        "git_sha",
+        "deployed_at",
+        "deployment_profile",
+        "rule",
+        "build_top_keys",
+        "build_top_keys_contract_730"
+      ],
+      "build_top_keys_contract_730": "**730**：**`build_top_keys`** **与 **`META_BUILD_TOP_KEYS`** **同源（顺序 `git_sha`****→**`deployed_at`****→**`deployment_profile`****→**`rule`****→**`build_top_keys`****→**`build_top_keys_contract_730`）"
+    }
+  },
+  "alignment_table": [
+    {
+      "item": "API_SHA",
+      "staging_live": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+      "target_tip": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+      "pass": false
+    },
+    {
+      "item": "chain_id",
+      "staging_live": "11155111",
+      "target_tip": "11155111",
+      "pass": true
+    },
+    {
+      "item": "deployed_at",
+      "staging_live": null,
+      "target_tip": "non-null UTC ISO8601",
+      "pass": false
+    }
+  ],
+  "acceptance": {
+    "meta_git_sha_eq_tip": false,
+    "version_gate": "PENDING",
+    "deploy_identity": "PENDING",
+    "runtime_certification": "PENDING",
+    "contract_projection": "PENDING_AFTER_DEPLOY",
+    "indexer_explainable": "PENDING"
+  },
+  "blocker": {
+    "id": "STAGING_SHA_DRIFT",
+    "detail": "Staging /meta git_sha=f8181b63507fe339e23a1e5285c4242a8bb3507e ≠ tip=652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+    "remediation": "Owner-authorized Staging tip deploy via Version Gate + Deploy Identity (scripts/deploy/staging-all.sh or phase2-staging-fly-deploy-and-sync.sh) — no bare fly deploy"
+  },
+  "evidence_root": "evidence/PSG-REALITY-CLOSURE/W0-RUNTIME-ALIGNMENT-20260721T182747Z",
+  "pcr": "registry/psg-change-records/PCR-20260721-002-STAGING-ALIGN-CAND-V2.yaml",
+  "staging_grade_go_freeze": "evidence/PSG-REALITY-CLOSURE/STAGING-GRADE-GO-FREEZE-20260721T182747Z",
+  "unlocks_w1_plus": false,
+  "honesty": "W0 probe recorded — not Reality Closure PASS — not Production GO"
+}

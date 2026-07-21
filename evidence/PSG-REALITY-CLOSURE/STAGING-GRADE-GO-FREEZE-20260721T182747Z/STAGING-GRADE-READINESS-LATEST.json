@@ -1,0 +1,25 @@
+{
+  "schema": "traveltrust.psg_staging_grade_readiness.v1",
+  "recorded_utc": "2026-07-21T18:25:08Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "s7_ssot": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/PSG-COMPLETION-MATRIX-RECALCULATE-LATEST.json",
+  "psg_complete": true,
+  "s7_verdict": "PSG_COMPLETE_PASS_AWAIT_OWNER_PRODUCTION_GO_GATE",
+  "s7_blockers": [],
+  "pillars_pass": {
+    "L1_Product": true,
+    "L2_Data": true,
+    "L3_Security": true,
+    "L4_Operations": true,
+    "L5_Financial_Grade_Web3": true
+  },
+  "release_identity_pass": true,
+  "owner_signoff_signed": true,
+  "formal_baseline": "FORMAL_WEB3_RELEASE_BASELINE",
+  "hard_gate": "CUTOVER_REFUSED",
+  "reality_w0_w7": "NOT_STARTED",
+  "production_go": false,
+  "status": "READINESS_PASS",
+  "honesty": "Readiness for Staging-grade only — Reality Waves not started — Production GO forbidden"
+}

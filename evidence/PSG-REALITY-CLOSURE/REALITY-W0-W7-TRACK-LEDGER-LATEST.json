@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.reality_w0_w7_track_ledger.v1",
+  "machine_key": "TT_REALITY_W0_W7_TRACK",
+  "recorded_utc": "2026-07-21T19:07:58Z",
+  "status": "ARMED_RUNNING",
+  "active_wave": "W1",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "tip_git_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "staging_grade_go_baseline": "FROZEN_IMMUTABLE",
+  "staging_grade_go_freeze": "evidence/PSG-REALITY-CLOSURE/STAGING-GRADE-GO-FREEZE-20260721T182747Z",
+  "waves": [
+    {
+      "id": "W0",
+      "name": "Reality-W0_Runtime_Alignment",
+      "status": "PASS",
+      "evidence": "D:/TravelTrust-V1.1/evidence/PSG-REALITY-CLOSURE/W0-RUNTIME-ALIGNMENT-20260721T190758Z",
+      "tip": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "pin": "PSG-REL-20260722-STAGING-ALIGN-W0"
+    },
+    {
+      "id": "W1",
+      "name": "Auth_Production_Harden",
+      "status": "READY"
+    },
+    {
+      "id": "W2",
+      "name": "CMS_Governance",
+      "status": "BLOCKED_UNTIL_W1_PASS"
+    },
+    {
+      "id": "W3",
+      "name": "Sec_User_Admin_Reality-W3",
+      "status": "BLOCKED_UNTIL_W2_PASS"
+    },
+    {
+      "id": "W4",
+      "name": "DB_Ops",
+      "status": "BLOCKED_UNTIL_W3_PASS"
+    },
+    {
+      "id": "W5",
+      "name": "Reality-W5_UI_UX_Closure",
+      "status": "BLOCKED_UNTIL_W4_PASS"
+    },
+    {
+      "id": "W6",
+      "name": "Documentation_Hygiene",
+      "status": "BLOCKED_UNTIL_W5_PASS"
+    },
+    {
+      "id": "W7",
+      "name": "Delta_Recertify",
+      "status": "BLOCKED_UNTIL_W6_PASS"
+    }
+  ],
+  "reality_closure_gate": "NOT_ARMED",
+  "locked_until_reality_closure_pass": {
+    "production_entry": "LOCKED",
+    "hard_gate": "CUTOVER_REFUSED_LOCKED",
+    "mainnet_wave": "FORBIDDEN_LOCKED",
+    "production_go": "NOT_CLAIMED_LOCKED"
+  },
+  "execution_order": [
+    "freeze_staging_grade_go_baseline",
+    "reality_w0_runtime_alignment",
+    "w1_auth",
+    "w2_cms",
+    "reality_w3_sec_user_admin",
+    "w4_db_ops",
+    "reality_w5_ui_ux_closure",
+    "w6_documentation_hygiene",
+    "w7_delta_recertify",
+    "reality_closure_gate_pass",
+    "production_entry",
+    "hard_gate_review",
+    "mainnet_wave",
+    "production_go_only_after_all_gates"
+  ],
+  "forbid": [
+    "skip_w0",
+    "docs_only_reality_pass",
+    "hard_gate_before_reality_closure",
+    "mainnet_wave_before_hard_gate",
+    "production_go_before_all_gates",
+    "mutate_staging_grade_go_freeze"
+  ],
+  "honesty": "Reality track ARMED. Staging-grade GO frozen. Production Entry / Hard Gate / Mainnet Wave / Production GO locked until Reality Closure PASS and subsequent gates complete.",
+  "locks": {
+    "production_entry": "LOCKED",
+    "hard_gate_flip": "LOCKED",
+    "mainnet_wave": "LOCKED",
+    "production_go": "LOCKED"
+  }
+}

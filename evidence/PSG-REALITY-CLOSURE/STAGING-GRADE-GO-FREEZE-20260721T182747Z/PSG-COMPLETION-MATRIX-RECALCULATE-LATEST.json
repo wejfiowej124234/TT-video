@@ -1,0 +1,265 @@
+{
+  "schema": "traveltrust.psg_completion_matrix_recalculate.v1",
+  "machine_key": "TT_PSG_PRODUCTION_COMPLETION_MATRIX",
+  "step": "S7_Recalculate",
+  "recorded_utc": "2026-07-21T18:24:55Z",
+  "equation": "PSG_COMPLETE = L1 ∧ L2 ∧ L3 ∧ L4 ∧ L5 (incl. FG-15) ∧ Release_Identity_current ∧ Owner_Signoff",
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+  "active_flip_executed": false,
+  "production_go": false,
+  "production_go_executed": false,
+  "pillars": {
+    "L1_Product": {
+      "layer": "L1_Product",
+      "artifact": "L1-PRODUCT-VALIDATION-LATEST.json",
+      "pass": true,
+      "status": "PASS",
+      "verdict": "L1_PRODUCT_VALIDATION_PASS_STAGING_GRADE",
+      "notes": []
+    },
+    "L2_Data": {
+      "layer": "L2_Data",
+      "artifact": "L2-DATA-VALIDATION-HARDENED-LATEST.json",
+      "pass": true,
+      "status": "PASS",
+      "verdict": "L2_DATA_VALIDATION_PASS_STAGING_GRADE",
+      "l2_sepolia_live_lifecycle_pass": true,
+      "deferred": [],
+      "notes": []
+    },
+    "L3_Security": {
+      "layer": "L3_Security",
+      "artifact": "L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+      "pass": true,
+      "status": "PASS",
+      "verdict": "L3_SECURITY_VALIDATION_PASS_STAGING_GRADE_WITH_ACCEPTED_RESIDUAL",
+      "superseded_finding_artifact": {
+        "path": "L3-SECURITY-VALIDATION-LATEST.json",
+        "l3_pass": false,
+        "note": "pre-remediation finding; Hardened revalidation is authoritative"
+      },
+      "notes": []
+    },
+    "L4_Operations": {
+      "layer": "L4_Operations",
+      "artifact": "L4-OPERATIONS-VALIDATION-LATEST.json",
+      "pass": true,
+      "status": "PASS",
+      "verdict": "L4_OPERATIONS_VALIDATION_PASS_STAGING_GRADE",
+      "notes": []
+    },
+    "L5_Financial_Grade_Web3": {
+      "layer": "L5_Financial_Grade_Web3",
+      "pass": true,
+      "status": "PASS",
+      "artifacts": {
+        "empirical": "L5-FG-WEB3-EMPIRICAL-LATEST.json",
+        "validation": "L5-FG-WEB3-VALIDATION-STATUS-LATEST.json",
+        "l5b_equality": "L5B-FIVE-LAYER-EQUALITY-CLOSURE-LATEST.json",
+        "l5c_runtime": "L5C-PRODUCTION-RUNTIME-INTEGRATION-LATEST.json",
+        "address_freeze": "L5-CONTRACT-ADDRESS-FREEZE-LATEST.json",
+        "observation_frame": "OBSERVATION-48H-FRAME-READY-LATEST.json"
+      },
+      "slices": {
+        "empirical_pass": true,
+        "equality_slice_pass": true,
+        "production_runtime_pass": true,
+        "fg15_observation_48h_pass": true,
+        "observation_frame_ready": false,
+        "observation_window_started": true,
+        "observation_window_elapsed": true
+      },
+      "deferred": [],
+      "open_gaps_from_empirical": [],
+      "verdicts": {
+        "empirical": "L5_FG_WEB3_EMPIRICAL_PASS_STAGING_GRADE",
+        "validation": null,
+        "l5b": "L5B_FIVE_LAYER_EQUALITY_CLOSED",
+        "l5c": "L5C_PRODUCTION_RUNTIME_EQUALITY_CLOSED"
+      },
+      "notes": [
+        "L5 PASS for PSG Complete requires empirical closure AND FG-15 elapsed observation",
+        "FRAME_READY ≠ 48H PASS"
+      ]
+    }
+  },
+  "pillars_pass": {
+    "L1_Product": true,
+    "L2_Data": true,
+    "L3_Security": true,
+    "L4_Operations": true,
+    "L5_Financial_Grade_Web3": true
+  },
+  "all_five_layers_pass": true,
+  "release_identity": {
+    "chain": "Source_SHA = Deploy_Artifact = Contract_Bytecode = Evidence_Package",
+    "pin_id": "FINAL-COMPLETION-CLOSURE",
+    "Release_SHA": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+    "Source_SHA": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+    "workspace_HEAD": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+    "head_matches_release_sha": true,
+    "source_matches_release": true,
+    "cdr19_status": "PASS_IDENTITY_REPIN",
+    "equivalence_binding_status": "BINDING_COMPLETE",
+    "equivalence_binding_verdict": "FINAL_COMPLETION_IDENTITY_REPINNED",
+    "historical_pin_complete_at_record_time": true,
+    "current_workspace_equivalence_ok": true,
+    "Deploy_Artifact_sample_checks": [
+      {
+        "path": "contracts/src/Escrow.sol",
+        "expected_sha256": "c60b95c8a9cb28702bc0c70d617ee8ef8af011b4236794b4b902457cc40aec2e",
+        "actual_sha256": "c60b95c8a9cb28702bc0c70d617ee8ef8af011b4236794b4b902457cc40aec2e",
+        "match": true
+      },
+      {
+        "path": "contracts/src/EscrowFactory.sol",
+        "expected_sha256": "fc5daa1a98b52b1289bb21fc828502d668251a1a9a669898b9e4a801bed93012",
+        "actual_sha256": "fc5daa1a98b52b1289bb21fc828502d668251a1a9a669898b9e4a801bed93012",
+        "match": true
+      },
+      {
+        "path": "contracts/src/SettlementRouter.sol",
+        "expected_sha256": "b3a099e73341dcd906ad2d75d378389b6eb6e896519849462674bbc664046bd8",
+        "actual_sha256": "b3a099e73341dcd906ad2d75d378389b6eb6e896519849462674bbc664046bd8",
+        "match": true
+      },
+      {
+        "path": "contracts/src/ISettlementRouter.sol",
+        "expected_sha256": "c8c7a77cb9e8f89b5eede23a88298d66799e9e55d8582cde6814d6c69ebf0970",
+        "actual_sha256": "c8c7a77cb9e8f89b5eede23a88298d66799e9e55d8582cde6814d6c69ebf0970",
+        "match": true
+      },
+      {
+        "path": "contracts/src/FeeRouter.sol",
+        "expected_sha256": "88da597bb8f8cff06204179d400f9da5307fd90b22188edd90732c4d811b1203",
+        "actual_sha256": "88da597bb8f8cff06204179d400f9da5307fd90b22188edd90732c4d811b1203",
+        "match": true
+      },
+      {
+        "path": "contracts/script/DeployFcgV2SecurityHardenedSepolia.s.sol",
+        "expected_sha256": "85cc4d153905f1915696a4fdaffedca163bbfd141dedeceeb9ed4fee354879d9",
+        "actual_sha256": "85cc4d153905f1915696a4fdaffedca163bbfd141dedeceeb9ed4fee354879d9",
+        "match": true
+      },
+      {
+        "path": "contracts/script/DeployFcgFullCapabilityV2Sepolia.s.sol",
+        "expected_sha256": "359cf3bd65e7e7786a6563a64e68ab686bd46e8607d2cda056d9fafaadb7a454",
+        "actual_sha256": "359cf3bd65e7e7786a6563a64e68ab686bd46e8607d2cda056d9fafaadb7a454",
+        "match": true
+      },
+      {
+        "path": "contracts/abi/Escrow.json",
+        "expected_sha256": "19c1c464804f997326e2c457b11fdb1e174e51fed7f5d0b92e7b14a7bd8d77db",
+        "actual_sha256": "19c1c464804f997326e2c457b11fdb1e174e51fed7f5d0b92e7b14a7bd8d77db",
+        "match": true
+      },
+      {
+        "path": "contracts/abi/EscrowFactory.json",
+        "expected_sha256": "f1ef8c37c9fc2b3fd704f371bad468e98a7d0d6298bf5737412da655f145ad00",
+        "actual_sha256": "f1ef8c37c9fc2b3fd704f371bad468e98a7d0d6298bf5737412da655f145ad00",
+        "match": true
+      },
+      {
+        "path": "contracts/abi/SettlementRouter.json",
+        "expected_sha256": "01bab96a8e68f969d94dc1146c8086ff01c648deca77f513702e0c8ecc9b9e6d",
+        "actual_sha256": "01bab96a8e68f969d94dc1146c8086ff01c648deca77f513702e0c8ecc9b9e6d",
+        "match": true
+      },
+      {
+        "path": "contracts/abi/FeeRouter.json",
+        "expected_sha256": "f3d6df9a8e41ce6783f77714133503d1fd9993f0ae733b27cad230b596d798ee",
+        "actual_sha256": "f3d6df9a8e41ce6783f77714133503d1fd9993f0ae733b27cad230b596d798ee",
+        "match": true
+      },
+      {
+        "path": "registry/protocol-convergence-deployments.v1.yaml",
+        "expected_sha256": "039d9038888aa9944ba3f179ad61cbdaf71ad60d74ecf155b1c9fb828a45a03e",
+        "actual_sha256": "039d9038888aa9944ba3f179ad61cbdaf71ad60d74ecf155b1c9fb828a45a03e",
+        "match": true
+      }
+    ],
+    "Contract_Bytecode_present": true,
+    "Evidence_Package_present": true,
+    "hardened_bind_present": true,
+    "hardened_verdict": "SECURITY_HARDENED_DEPLOYED_BOUND_AWAIT_L3_REVALIDATION",
+    "wired_bind_verdict": "CLEAN_DEPLOY_BROADCAST_BOUND_ENTER_L1_L5",
+    "ACTIVE_FLIP": "FORBIDDEN",
+    "findings": [],
+    "pass": true
+  },
+  "observation_48h": {
+    "status": "ELAPSED_PASS",
+    "track": "FG-15-B",
+    "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+    "frame_artifact": null,
+    "start_artifact_present": true,
+    "baseline_artifact_present": true,
+    "elapsed_pass_artifact_present": true,
+    "window_started_utc": "2026-07-19T18:06:48Z",
+    "window_ends_utc": "2026-07-21T18:06:48Z",
+    "planes": [
+      "Chain",
+      "Indexer",
+      "API",
+      "DB",
+      "Error",
+      "Security_Events"
+    ],
+    "pass_for_fg15": true,
+    "honesty": "FG-15-B Candidate track; ELAPSED required for L5/PSG Complete",
+    "hard_gate": "CUTOVER_REFUSED",
+    "real_eth_wave": "FORBIDDEN"
+  },
+  "owner_signoff": {
+    "signoff_artifact": "PSG-COMPLETION-OWNER-SIGNOFF-LATEST.json",
+    "signoff_present": true,
+    "signoff_signed": true,
+    "package_status": "SIGNED",
+    "g_rc_owner_declaration": {
+      "present": true,
+      "g_rc_closed": true,
+      "note": "Owner declared G-RC CLOSED = TRUE; CDR-19 Dirty Audit started; Clean Deploy still LOCKED until CDR-19 PASS"
+    },
+    "conditions": {
+      "all_five_layers_pass": true,
+      "fg15_observation_elapsed": true,
+      "release_identity_current_ok": true,
+      "active_flip_not_auto": true,
+      "production_go_not_auto": true,
+      "owner_signoff_artifact_present": true,
+      "owner_signoff_signed": true,
+      "g_rc_closed_declared": true,
+      "package_status": "SIGNED"
+    },
+    "eligible_for_signoff": false,
+    "signed": true
+  },
+  "deferred": [
+    {
+      "id": "ACTIVE-FLIP-DEFERRED",
+      "summary": "ACTIVE = v311_fund_safety_candidate_v2 (Candidate v2); FG-15-A clean = historical; Hardened = DEPLOYED_BOUND_NOT_ACTIVE; flip FORBIDDEN until FG-15-B ELAPSED",
+      "blocking_for_psg_complete": false,
+      "blocking_for_production_go": true
+    },
+    {
+      "id": "PRODUCTION-GO-NOT-AUTO",
+      "summary": "Recalculate never executes Production GO",
+      "blocking_for_psg_complete": false
+    }
+  ],
+  "blockers": [],
+  "psg_complete": true,
+  "verdict": "PSG_COMPLETE_PASS_AWAIT_OWNER_PRODUCTION_GO_GATE",
+  "honesty": {
+    "single_layer_pass_does_not_imply_psg_complete": true,
+    "l5_equality_slice_does_not_imply_l5_pass": true,
+    "frame_ready_does_not_imply_48h_pass": true,
+    "recalculate_does_not_flip_active": true,
+    "recalculate_does_not_execute_production_go": true,
+    "historical_cdr19_pin_is_not_current_workspace_equivalence": false
+  },
+  "next": [
+    "Production_Certification_gate_only_after_psg_complete"
+  ]
+}

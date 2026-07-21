@@ -1,0 +1,18 @@
+{
+  "recorded_utc": "2026-07-21T18:27:47Z",
+  "staging_grade_go_baseline": "FROZEN_IMMUTABLE",
+  "freeze_dir": "evidence/PSG-REALITY-CLOSURE/STAGING-GRADE-GO-FREEZE-20260721T182747Z",
+  "reality_track": "ARMED_RUNNING",
+  "active_wave": "W0",
+  "w0_status": "RUNNING_BLOCKED_STAGING_SHA_DRIFT",
+  "tip_git_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "staging_git_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+  "sha_aligned": false,
+  "pcr": "PCR-20260721-002-STAGING-ALIGN-CAND-V2.yaml",
+  "reality_closure_gate": "rc=1",
+  "hard_gate_stdout_tail": "",
+  "production_entry": "LOCKED",
+  "mainnet_wave": "FORBIDDEN_LOCKED",
+  "production_go": "NOT_CLAIMED_LOCKED",
+  "next": "Owner-authorized Staging tip deploy (Version Gate → Deploy Identity) to clear W0 STAGING_SHA_DRIFT, then W1→W7 serially"
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "traveltrust.reality_w0_runtime_certification.v1",
+  "machine_key": "TT_REALITY_W0_RUNTIME_CERT",
+  "recorded_utc": "2026-07-21T19:07:58Z",
+  "psg_release_version": "PSG-REL-20260722-STAGING-ALIGN-W0",
+  "tip_git_sha": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+  "deploy": {
+    "target": "CERTIFICATION_FREEZE",
+    "state": "sync",
+    "entry": "scripts/deploy/staging-*.sh"
+  },
+  "checks": {
+    "api_attestation_ok": true,
+    "web_attestation_ok": true,
+    "fee_router_candidate": true,
+    "factory_address": "0xbf746b6a330e61416c6d87ab9b0758f7107c8006"
+  },
+  "probe": {
+    "api": {
+      "psg_release_version": "PSG-REL-20260722-STAGING-ALIGN-W0",
+      "git_sha": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "artifact_sha": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "image_digest": "gitsha:7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "build_time": "2026-07-21T18:48:36Z",
+      "contract_profile": "v311_fund_safety_candidate_v2",
+      "database_baseline": "staging_rc_ssot_alignment.v1#expected_staging_surface",
+      "cms_baseline": "public_display_10x4 + catalog_bake=1",
+      "attestation_status": "ok"
+    },
+    "web": {
+      "psg_release_version": "PSG-REL-20260722-STAGING-ALIGN-W0",
+      "git_sha": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "artifact_sha": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "image_digest": "gitsha:7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "build_time": "2026-07-21T19:06:32Z",
+      "contract_profile": "v311_fund_safety_candidate_v2",
+      "database_baseline": "staging_rc_ssot_alignment.v1#expected_staging_surface",
+      "cms_baseline": "public_display_10x4 + catalog_bake=1",
+      "attestation_status": "ok"
+    },
+    "chain_contracts": {
+      "guide_staking_address": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f",
+      "staking_provider_address": "0xa90cA23767C1DdcA1Eb8AB292185e9af1106b075",
+      "governor_address": "0x1ce4fbE80557bC2111A814f60A2334de41032116",
+      "timelock_address": "0x462402082B395F218FFB3634ec0611e39BdD504C",
+      "governance_token_address": "0x5D2eDABF062E1d8AccDA2bd35c0d9B26CFCd5Ec0",
+      "fee_router_address": "0xf406e6f1277b990544d4f0556421c3c14df0ab28",
+      "treasury_address": null,
+      "registry_address": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+      "escrow_factory_address": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+      "escrow_factory_v2_address": null,
+      "region_steward_stake_pool_address": "0xc229D58987e0755467eB4EE53572F7139bAf7281",
+      "rule": "\u4ec5\u5f53 CHAIN_RPC_URL \u7b49\u5df2\u52a0\u8f7d ChainConfig \u65f6\u6709\u503c\uff1bguide_staking_address \u4e0e STAKING_ADDRESS/GUIDE_STAKING_ADDRESS \u540c\u6e90\uff1bstaking_provider_address \u4e0e STAKING_PROVIDER_ADDRESS \u540c\u6e90\uff1bgovernance_token_address \u4e0e GOVERNANCE_VOTES_TOKEN_ADDRESS/GOVERNANCE_TOKEN_ADDRESS \u540c\u6e90\uff1bregistry_address/escrow_factory_address \u4e0e REGISTRY_ADDRESS/ESCROW_FACTORY_ADDRESS \u540c\u6e90\uff1bescrow_factory_v2_address \u4e0e ESCROW_FACTORY_V2_ADDRESS \u540c\u6e90\uff08V2 bilateral \u00b7 optional until Sepolia broadcast\uff09\uff1bregion_steward_stake_pool_address \u4e0e REGION_STEWARD_STAKE_POOL_ADDRESS \u540c\u6e90\uff1bFEE_ROUTER_ADDRESS \u8bbe\u540e indexer-tick \u62c9\u53d6 PlatformFeeRouted\uff1bGOVERNOR_ADDRESS \u8bbe\u540e\u62c9\u53d6 Governor \u4e8b\u4ef6\uff08B-089\uff09\uff1b\u524d\u7aef NEXT_PUBLIC_* \u987b\u4e0e\u90e8\u7f72\u4e00\u81f4\uff1b759 GET /meta chain.contracts \u5bf9\u8c61 chain_contracts_top_keys / chain_contracts_top_keys_contract_759 \u4e0e CHAIN_CONTRACTS_META_TOP_KEYS \u5341\u4e09\u952e\u987a\u5e8f\u540c\u6e90",
+      "chain_contracts_top_keys": [
+        "guide_staking_address",
+        "staking_provider_address",
+        "governor_address",
+        "timelock_address",
+        "governance_token_address",
+        "fee_router_address",
+        "treasury_address",
+        "registry_address",
+        "escrow_factory_address",
+        "escrow_factory_v2_address",
+        "region_steward_stake_pool_address",
+        "rule",
+        "chain_contracts_top_keys",
+        "chain_contracts_top_keys_contract_759"
+      ],
+      "chain_contracts_top_keys_contract_759": "**759**\uff1a**`chain_contracts_top_keys`** **\u4e0e **`CHAIN_CONTRACTS_META_TOP_KEYS`** **\u540c\u6e90\uff08\u987a\u5e8f `guide_staking_address`****\u2192**`staking_provider_address`****\u2192**`governor_address`****\u2192**`timelock_address`****\u2192**`governance_token_address`****\u2192**`fee_router_address`****\u2192**`treasury_address`****\u2192**`registry_address`****\u2192**`escrow_factory_address`****\u2192**`escrow_factory_v2_address`****\u2192**`region_steward_stake_pool_address`****\u2192**`rule`****\u2192**`chain_contracts_top_keys`****\u2192**`chain_contracts_top_keys_contract_759`\uff09"
+    }
+  },
+  "verdict": "PASS",
+  "residuals": [],
+  "locked_until_reality_closure_pass": [
+    "production_entry",
+    "hard_gate_flip",
+    "mainnet_wave",
+    "production_go"
+  ],
+  "next_wave": "W1"
+}

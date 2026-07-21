@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.web3_candidate_v2_formal_release_baseline.v1",
+  "recorded_utc": "20260721T182227Z",
+  "status": "FORMAL_WEB3_RELEASE_BASELINE",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "prior_role": "ACTIVE_WEB3_CANDIDATE",
+  "new_role": "PSG_WEB3_RELEASE_BASELINE",
+  "fg15_track": "FG-15-B",
+  "fg15_b_elapsed": true,
+  "l5_final_evidence": "D:/TravelTrust-V1.1/evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-FINAL-LATEST.json",
+  "l5_verdict": "L5_RUNTIME_FINAL_GO",
+  "recalculate_artifact": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/PSG-COMPLETION-MATRIX-RECALCULATE-LATEST.json",
+  "economic_constitution": {
+    "document": "TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL",
+    "economic_model_freeze": true,
+    "appendix_f_candidate_binding": true,
+    "economic_chapters_1_11_unchanged": true
+  },
+  "hard_gate": "CUTOVER_REFUSED",
+  "real_eth_wave": "FORBIDDEN",
+  "ACTIVE_FLIP": "NOT_EXECUTED",
+  "production_go": "NOT_CLAIMED",
+  "mainnet_wave_triggered": false,
+  "addresses": {
+    "escrow_factory_v2": "0x6e9a4c4032d2d0c91e643faa5dea45ba7f86bdef",
+    "settlement_router": "0x5A6df184e9C6B1285F8BEB50a438d82D5f094d6A",
+    "chain_id": "11155111"
+  },
+  "honesty": "Formal Web3 Release Baseline ≠ Hard Gate AUTHORIZED ≠ Mainnet Wave ≠ Production GO"
+}

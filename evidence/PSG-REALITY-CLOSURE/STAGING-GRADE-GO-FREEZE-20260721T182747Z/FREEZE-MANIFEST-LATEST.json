@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.psg_staging_grade_go_baseline_freeze.v1",
+  "id": "STAGING-GRADE-GO-FREEZE-20260721T182747Z",
+  "recorded_utc": "2026-07-21T18:27:47Z",
+  "status": "FROZEN_IMMUTABLE",
+  "immutable": true,
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "tip_git_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "owner": "Sebastian Ward",
+  "staging_grade_go": {
+    "decision": "STAGING_GRADE_GO",
+    "verdict": "STAGING_GRADE_GO_DECLARED",
+    "signed_utc": "2026-07-21T18:25:08Z"
+  },
+  "readiness": "READINESS_PASS",
+  "s7": {
+    "psg_complete": true,
+    "verdict": "PSG_COMPLETE_PASS_AWAIT_OWNER_PRODUCTION_GO_GATE",
+    "blockers": [],
+    "production_go": false
+  },
+  "formal_baseline": "FORMAL_WEB3_RELEASE_BASELINE",
+  "members": [
+    {
+      "name": "STAGING-GRADE-GO-JUDGMENT-LATEST.json",
+      "source": "evidence/PSG-EVIDENCE-CONSOLIDATION/STAGING-GRADE-GO-JUDGMENT-LATEST.json",
+      "sha256": "sha256:50b80fa902e7ee245371ada694a18f6e6845202b1817ebb931f25ef166431f28",
+      "bytes": 1097
+    },
+    {
+      "name": "STAGING-GRADE-READINESS-LATEST.json",
+      "source": "evidence/PSG-EVIDENCE-CONSOLIDATION/STAGING-GRADE-READINESS-LATEST.json",
+      "sha256": "sha256:baf78610a59c7c0ae060f7efdb87190d7181f3a66cb49b03aab52cbd5e20dced",
+      "bytes": 980
+    },
+    {
+      "name": "PSG-COMPLETION-MATRIX-RECALCULATE-LATEST.json",
+      "source": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/PSG-COMPLETION-MATRIX-RECALCULATE-LATEST.json",
+      "sha256": "sha256:eaa56aedf0098dd087d0865c0aa09a5fccb21497f08fc5b54339752f71a1a434",
+      "bytes": 10529
+    },
+    {
+      "name": "WEB3-CANDIDATE-V2-FORMAL-RELEASE-BASELINE-LATEST.json",
+      "source": "evidence/GO_web3_candidate_v2/WEB3-CANDIDATE-V2-FORMAL-RELEASE-BASELINE-LATEST.json",
+      "sha256": "sha256:9ce928712c300839ac79856d887ee6d919de7bc77de2b8e58d2baa0be5c09ab8",
+      "bytes": 1447
+    },
+    {
+      "name": "FG15-CANDIDATE-V2-STATUS-LATEST.json",
+      "source": "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+      "sha256": "sha256:eb71770e71b17270b0d5febbc8c92375d7d007cec3a7e2846400d86673e785c6",
+      "bytes": 2091
+    },
+    {
+      "name": "L5-FINAL-EVIDENCE-LATEST.json",
+      "source": "evidence/GO_fg15_observation_48h_candidate_v2/L5-FINAL-EVIDENCE-LATEST.json",
+      "sha256": "sha256:7d9988871c0315a84ca8fb2b618266765157bea0057ae854a3fac5a9758bba7c",
+      "bytes": 3799
+    }
+  ],
+  "forbid_mutate": true,
+  "next_track": "REALITY_W0_W7",
+  "honesty": "Frozen Staging-grade GO baseline ≠ Reality Closure PASS ≠ Hard Gate PASS ≠ Mainnet Wave ≠ ③ Production GO"
+}

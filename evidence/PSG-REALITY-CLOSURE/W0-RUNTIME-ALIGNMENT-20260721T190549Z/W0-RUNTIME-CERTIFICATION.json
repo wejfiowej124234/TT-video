@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.reality_w0_runtime_certification.v1",
+  "machine_key": "TT_REALITY_W0_RUNTIME_CERT",
+  "recorded_utc": "2026-07-21T19:05:49Z",
+  "psg_release_version": "PSG-REL-20260722-STAGING-ALIGN-W0",
+  "tip_git_sha": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+  "deploy_mode": "CERTIFICATION_FREEZE",
+  "deployment_state": "sync",
+  "canonical_deploy": "scripts/deploy/staging-all.sh + staging-web.sh",
+  "checks": {
+    "api_attestation_ok": true,
+    "web_attestation_ok": false,
+    "fee_router_candidate": true,
+    "factory_present": true,
+    "version_gate_post_deploy": "see GO_psg_version_gate"
+  },
+  "probe": {
+    "api_release_identity": {
+      "http": 200,
+      "git_sha": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "psg_release_version": "PSG-REL-20260722-STAGING-ALIGN-W0",
+      "attestation_status": "ok",
+      "image_digest": "gitsha:7c84ca23993df43d1a1d9b3394cd5901978147df"
+    },
+    "web_release_identity": {
+      "http": 200,
+      "git_sha": "unknown",
+      "psg_release_version": "PSG-REL-20260722-STAGING-ALIGN-W0",
+      "attestation_status": "unknown",
+      "image_digest": "registry.fly.io/tt-web-staging:deployment-01KY30Q25CRS41BKGVGX2W2KNW"
+    },
+    "contract_projection": {
+      "escrow_factory_v2": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+      "fee_router": "0xf406e6f1277b990544d4f0556421c3c14df0ab28",
+      "settlement_router": null,
+      "governor": "0x1ce4fbE80557bC2111A814f60A2334de41032116"
+    }
+  },
+  "verdict": "PARTIAL",
+  "residuals": [
+    "contract_projection_may_need_factory_v2_secret_sync"
+  ],
+  "locked_until_reality_closure_pass": [
+    "production_entry",
+    "hard_gate_flip",
+    "mainnet_wave",
+    "production_go"
+  ],
+  "next_wave": "W1"
+}

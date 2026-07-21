@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.psg_staging_grade_go_judgment.v1",
+  "recorded_utc": "2026-07-21T18:25:08Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "decision": "STAGING_GRADE_GO",
+  "decided": true,
+  "signed": true,
+  "signer": "Sebastian Ward",
+  "signed_utc": "2026-07-21T18:25:08Z",
+  "inputs": {
+    "s7_psg_complete": true,
+    "s7_blockers": [],
+    "s7_verdict": "PSG_COMPLETE_PASS_AWAIT_OWNER_PRODUCTION_GO_GATE",
+    "readiness": "READINESS_PASS",
+    "formal_baseline": "FORMAL_WEB3_RELEASE_BASELINE",
+    "hard_gate": "CUTOVER_REFUSED"
+  },
+  "forbid": {
+    "reality_w0_w7": true,
+    "mainnet_wave": true,
+    "hard_gate_flip": true,
+    "production_go_claim": true,
+    "active_flip": true
+  },
+  "equals_production_go": false,
+  "equals_mainnet_go": false,
+  "equals_reality_closure": false,
+  "equals_psg_production_go": false,
+  "verdict": "STAGING_GRADE_GO_DECLARED",
+  "honesty": "Staging-grade GO ≠ Reality Closure ≠ Mainnet Wave ≠ ③ Public/Mainnet Production GO"
+}
