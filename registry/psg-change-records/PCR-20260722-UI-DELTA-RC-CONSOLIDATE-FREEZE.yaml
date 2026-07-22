@@ -30,15 +30,15 @@ delta_scope:
 
 gates:
   engineering_ssot_anchor: PASS
-  staging_web_tip: PENDING_BAKE_1ed03a9a
+  staging_web_tip: ALIGNED_1ed03a9a
   delta_recertify_dry_run: RUN_AFTER_ALIGN_COMMIT
 
 expected_difference:
-  - id: STAGING_WEB_TIP_PENDING_BAKE
+  - id: PAGE_SURFACE_UNSPLASH_RESIDUAL
     disposition: CONFIRM_DESIGN
     detail: >
-      RC tip 1ed03a9a is Freeze SSOT. Staging Web still on 6b85bde9 until
-      clean tip redeploy completes.
+      Post-deploy page surfaces may report Unsplash residuals on `/` and `/market`.
+      10×4 LOCKED; Web tip aligned. CMS Expected Difference for this UI Delta (≠ P0).
   - id: STAGING_API_TIP_LAG
     disposition: CONFIRM_DESIGN
     detail: FE-only Delta; API tip lag Expected.

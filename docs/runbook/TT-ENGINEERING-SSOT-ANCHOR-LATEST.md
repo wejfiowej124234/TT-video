@@ -65,7 +65,7 @@ FG-15-B 48h ELAPSED（证据已 ELAPSED · Registry 须对齐）
   →（另闸）Production GO
 ```
 
-**当前：** FINAL RELEASE `freeze_status=FROZEN` · RC tip `1ed03a9a959d`（含 ACL `6b85bde9`）· Staging Web tip **待烤** · 认证套件 **暂停** · P1-05/06/07 **暂缓**。
+**当前：** FINAL RELEASE `freeze_status=FROZEN` · RC tip `1ed03a9a959d`（含 ACL `6b85bde9`）· Staging Web tip **已烤** · 认证套件 **暂停**。
 
 ---
 

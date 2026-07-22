@@ -1,16 +1,16 @@
 {
   "schema": "traveltrust.psg_delta_recertify_three_baseline_dry_run.v1",
   "machine_key": "TT_PSG_DELTA_RECERTIFY_THREE_BASELINE_DRY_RUN",
-  "recorded_utc": "2026-07-22T08:15:38Z",
+  "recorded_utc": "2026-07-22T08:38:16Z",
   "mode": "DRY_RUN_REPORT_ONLY",
   "equals_production_go": false,
   "equals_staging_grade_go": false,
   "formal_cert_started": false,
   "core_version_modified": false,
   "pin": "PSG-REL-20260720-WEB3-CAND-V2",
-  "freeze_tip": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
-  "staging_runtime_tip": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
-  "head": "a190592afdf1c2225544659902a213f028357465",
+  "freeze_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+  "staging_runtime_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+  "head": "4f9fc727b7a0384ee6c30bbbc4876213a8f0cae1",
   "baselines": [
     "Candidate_v2",
     "V3.1.1_Final",
@@ -24,7 +24,7 @@
     },
     "registry_active": {
       "pin": "PSG-REL-20260720-WEB3-CAND-V2",
-      "sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+      "sha": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
       "ok": true
     },
     "baseline_candidate": {
@@ -45,10 +45,10 @@
       "ok": true
     },
     "git": {
-      "head": "a190592afdf1c2225544659902a213f028357465",
-      "dirty": 41,
-      "freeze_tip": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
-      "staging_runtime_tip": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+      "head": "4f9fc727b7a0384ee6c30bbbc4876213a8f0cae1",
+      "dirty": 42,
+      "freeze_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+      "staging_runtime_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
       "head_eq_freeze_tip": false,
       "worktree_clean": false,
       "note": "Freeze UI tip may differ from Staging bake tip (Expected Difference until redeploy)"
@@ -62,7 +62,7 @@
       "expected_difference": true
     },
     "staging_web": {
-      "bake_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+      "bake_sha": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
       "bake_pin": "PSG-REL-20260720-WEB3-CAND-V2",
       "db": "staging_rc_ssot_alignment.v1#expected_staging_surface",
       "cms": "public_display_10x4 + catalog_bake=1",
@@ -71,7 +71,7 @@
       "expected_difference": false
     },
     "evidence": {
-      "sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+      "sha": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
       "pin": "PSG-REL-20260720-WEB3-CAND-V2",
       "ok": true,
       "expected_difference": false
@@ -85,18 +85,18 @@
     {
       "sev": "EXPECTED",
       "id": "STAGING_API_TIP_LAG",
-      "detail": "api=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a freeze_tip=6b85bde9773788638c4d8cf031dfe48ef56d1706"
+      "detail": "api=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a freeze_tip=1ed03a9a959d2404fd561a72dc724b59ecf1635e"
     }
   ],
   "expected_differences": [
     {
       "sev": "EXPECTED",
       "id": "STAGING_API_TIP_LAG",
-      "detail": "api=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a freeze_tip=6b85bde9773788638c4d8cf031dfe48ef56d1706"
+      "detail": "api=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a freeze_tip=1ed03a9a959d2404fd561a72dc724b59ecf1635e"
     },
     {
       "id": "FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP",
-      "detail": "HEAD=a190592afdf1 freeze_tip=6b85bde97737 — commit freeze artifacts or clean worktree"
+      "detail": "HEAD=4f9fc727b7a0 freeze_tip=1ed03a9a959d — commit freeze artifacts or clean worktree"
     }
   ],
   "verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",

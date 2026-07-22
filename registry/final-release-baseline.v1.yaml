@@ -12,8 +12,8 @@ machine_key: TT_FINAL_RELEASE_BASELINE
 status: BASELINE_FROZEN
 freeze_status: FROZEN
 cert_suite: DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO
-ui_delta_status: PRODUCT_TIP_FROZEN_PENDING_WEB_BAKE
-recorded_utc: "2026-07-22T08:22:54Z"
+ui_delta_status: WEB_TIP_ALIGNED_API_EXPECTED_LAG
+recorded_utc: "2026-07-22T08:38:04Z"
 frozen_utc: "2026-07-22T08:22:54Z"
 freeze_pcr: PCR-20260722-UI-DELTA-RC-CONSOLIDATE-FREEZE
 prior_freeze_pcr: PCR-20260722-UI-DELTA-MARKET-ESCROW-ACL-GATE-FREEZE
@@ -23,8 +23,8 @@ equals_staging_grade_go: false
 equals_psg_complete: false
 equals_reality_closure_pass: false
 cert_executed_this_session: false
-delta_dry_run_verdict: PENDING_AFTER_WEB_TIP_BAKE
-delta_dry_run_recorded_utc: null
+delta_dry_run_verdict: DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE
+delta_dry_run_recorded_utc: "2026-07-22T08:38:04Z"
 
 engineering_ssot_anchor: registry/engineering-ssot-anchor.v1.yaml
 system_architecture_human: docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md
@@ -58,8 +58,9 @@ unique_system:
     worktree_policy: UI_DELTA_COMMITTED_TRACK_B_DIRT_ISOLATED
     freeze_commit_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
     runtime_tip_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
-    runtime_redeploy_required_before_cert: true
+    runtime_redeploy_required_before_cert: false
     note: >
       Single RC tip consolidates ACL (6b85bde9) + Unlock/gov (1ed03a9a).
-      Staging Web bake pending @ tip. API tip lag Expected Difference.
+      Staging Web bake aligned @ tip. API tip lag Expected Difference.
+      Page-surface Unsplash residuals = CMS Expected Difference (≠ ACL P0).
       Prior product commits retained in ancestry — do not drop.
