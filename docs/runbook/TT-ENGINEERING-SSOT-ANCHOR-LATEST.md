@@ -1,6 +1,7 @@
 # TT · Engineering SSOT Anchor（工程实体绑定 · 在 PSG 之下）
 
 **STATUS:** `ACTIVE_UNDER_PSG` · **≠** FREEZE · **≠** GO  
+**Machine key:** `TT_ENGINEERING_SSOT_ANCHOR`  
 **Machine:** [`registry/engineering-ssot-anchor.v1.yaml`](../../registry/engineering-ssot-anchor.v1.yaml)  
 **Parent:** PSG Release SSOT · [`TT-PSG-RELEASE-SOURCE-OF-TRUTH-LATEST`](./TT-PSG-RELEASE-SOURCE-OF-TRUTH-LATEST.md)  
 **Unique system:** [`TT-FINAL-RELEASE-BASELINE-LATEST`](./TT-FINAL-RELEASE-BASELINE-LATEST.md)  
