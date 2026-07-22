@@ -13,10 +13,10 @@ active:
   fg15_track: FG-15-B_ELAPSED
   promotion: PROMOTION_CANDIDATE
   freeze: FINAL_RELEASE_BASELINE_FROZEN
-  recorded_utc: "2026-07-22T07:05:00Z"
-  git_sha: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
-  git_sha_short: "1b6229234ab6"
-  artifact_sha: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
+  recorded_utc: "2026-07-22T07:45:00Z"
+  git_sha: "6b85bde9773788638c4d8cf031dfe48ef56d1706"
+  git_sha_short: "6b85bde97737"
+  artifact_sha: "6b85bde9773788638c4d8cf031dfe48ef56d1706"
   runtime_image_sha: "gitsha:97289a7185610ef0ad8822f0af04bfa533e42986"
   contract_bytecode_pin: "v311_fund_safety_candidate_v2"
   contract_digest_bundle_sha256: "20e6d564046bf984e1a02a6feaf5f052dbd2abf2cc18ecd34d38ca7b118740ab"

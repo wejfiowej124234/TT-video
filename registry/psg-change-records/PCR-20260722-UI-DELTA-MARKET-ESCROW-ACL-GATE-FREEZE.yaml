@@ -1,0 +1,64 @@
+# PCR-20260722-UI-DELTA-MARKET-ESCROW-ACL-GATE-FREEZE
+#
+# Delta Change under Candidate pin (no new PSG Release Version mint).
+# UI: Market→Escrow/Pay participant ACL CTAs + Escrow 401/403 guidance.
+# Does NOT relax backend order_is_participant / GET /orders/:id ACL.
+# Prior UI Delta tip 1b622923 (home AI preview gate) remains in lineage.
+# Re-Freeze FINAL RELEASE BASELINE at product tip 6b85bde9.
+
+schema: traveltrust.psg_change_record.v1
+pcr_id: PCR-20260722-UI-DELTA-MARKET-ESCROW-ACL-GATE-FREEZE
+recorded_utc: "2026-07-22T07:45:00Z"
+class: DELTA_CHANGE_UI
+equals_production_go: false
+equals_staging_grade_go: false
+new_psg_release_version_minted: false
+
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+prior_runtime_tip: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
+ui_delta_git_sha: "6b85bde9773788638c4d8cf031dfe48ef56d1706"
+freeze_status: FROZEN
+
+delta_scope:
+  - frontend/components/market/OrderDetailDrawer.tsx
+  - frontend/components/market/OrderDetailDrawerFooterActions.tsx
+  - frontend/components/market/OrderCard.tsx
+  - frontend/components/escrow/EscrowDetail/useEscrowDetail.ts
+  - frontend/components/escrow/EscrowDetail/EscrowDetailLoadErrorView.tsx
+  - frontend/lib/orderEscrowPrefetch.ts
+  - frontend/locales/zh.ts
+  - frontend/locales/en.ts
+
+gates:
+  engineering_ssot_anchor: PASS
+  staging_web_tip: PENDING_BAKE_6b85bde9
+  delta_recertify_dry_run: RUN_AFTER_ALIGN_COMMIT
+
+expected_difference:
+  - id: STAGING_WEB_TIP_PENDING_BAKE
+    disposition: CONFIRM_DESIGN
+    detail: >
+      Product tip 6b85bde9 is Freeze SSOT. Staging Web still on prior tip until
+      Owner redeploys from clean tip worktree.
+  - id: STAGING_API_TIP_LAG
+    disposition: CONFIRM_DESIGN
+    detail: >
+      Staging API may remain on prior tip. This Delta is frontend-only; API
+      redeploy not required for product behavior.
+  - id: FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP
+    disposition: CONFIRM_DESIGN
+    detail: Freeze overlay docs commit may sit ahead of product tip 6b85bde9.
+
+forbidden:
+  - Reality_W0_W7_as_mainline
+  - Hard_Gate_flip
+  - Production_GO
+  - new_pin_mint
+  - mutate_FG15_A_archive
+  - mutate_psg_go_archive_v1_1_0_20260717
+  - relax_backend_order_participant_acl
+
+next:
+  - Staging Web redeploy @ 6b85bde9 (clean tip worktree)
+  - eight-way consistency + Delta dry-run
+  - Inventory/Reality/GO remain paused unless Owner restarts

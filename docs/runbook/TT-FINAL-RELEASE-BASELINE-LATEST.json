@@ -4,11 +4,11 @@
   "status": "BASELINE_FROZEN",
   "freeze_status": "FROZEN",
   "cert_suite": "DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO",
-  "ui_delta_status": "WEB_TIP_ALIGNED_API_EXPECTED_LAG",
-  "recorded_utc": "2026-07-22T07:20:33Z",
-  "frozen_utc": "2026-07-22T07:05:00Z",
-  "freeze_pcr": "PCR-20260722-UI-DELTA-HOME-AI-PREVIEW-GATE-FREEZE",
-  "prior_freeze_pcr": "PCR-20260722-UI-DELTA-CINEMA-PROMO-FREEZE",
+  "ui_delta_status": "PRODUCT_TIP_FROZEN_PENDING_WEB_BAKE",
+  "recorded_utc": "2026-07-22T07:45:00Z",
+  "frozen_utc": "2026-07-22T07:45:00Z",
+  "freeze_pcr": "PCR-20260722-UI-DELTA-MARKET-ESCROW-ACL-GATE-FREEZE",
+  "prior_freeze_pcr": "PCR-20260722-UI-DELTA-HOME-AI-PREVIEW-GATE-FREEZE",
   "engineering_ssot_anchor": "registry/engineering-ssot-anchor.v1.yaml",
   "system_architecture": "docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md",
   "pollution_cleanup": "docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md",
@@ -18,11 +18,14 @@
     "deploy_baseline": "v311_fund_safety_candidate_v2",
     "constitution": "V3.1.1_Final",
     "egm": "PSG_EGM_Final",
-    "git_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
+    "git_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706"
   },
-  "alignment_status": "FROZEN_UI_DELTA_WEB_TIP_ALIGNED",
-  "alignment_blockers": [],
+  "alignment_status": "FROZEN_UI_DELTA_PENDING_WEB_BAKE",
+  "alignment_blockers": [
+    "STAGING_WEB_TIP_PENDING_BAKE"
+  ],
   "expected_differences": [
+    "STAGING_WEB_TIP_PENDING_BAKE",
     "STAGING_API_TIP_LAG",
     "FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP"
   ],
@@ -37,16 +40,17 @@
     "Production_GO"
   ],
   "next_owner": [
-    "API tip lag is Expected Difference (FE-only Delta) unless Owner wants API redeploy",
-    "Cert suite remains paused"
+    "Redeploy Staging Web @ 6b85bde9 from clean tip worktree",
+    "Then eight-way + Delta dry-run; keep Inventory/Reality paused until Owner restart",
+    "Do not relax backend order participant ACL"
   ],
   "equals_production_go": false,
   "equals_staging_grade_go": false,
-  "freeze_commit_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
-  "runtime_tip_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
-  "runtime_redeploy_required_before_cert": false,
-  "delta_dry_run_verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",
+  "freeze_commit_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+  "runtime_tip_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+  "runtime_redeploy_required_before_cert": true,
+  "delta_dry_run_verdict": "PENDING_AFTER_WEB_TIP_BAKE",
   "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
-  "git_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
-  "delta_dry_run_recorded_utc": "2026-07-22T07:21:48Z"
+  "git_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+  "delta_dry_run_recorded_utc": null
 }

@@ -1,0 +1,183 @@
+{
+  "schema": "traveltrust.ui_ux_reality_alignment_audit.v1",
+  "machine_key": "TT_UI_UX_REALITY_ALIGNMENT_AUDIT",
+  "status": "P0_PRODUCT_TIP_LANDED_PENDING_WEB_BAKE",
+  "equals_production_go": false,
+  "equals_staging_grade_go": false,
+  "mutates_baseline_tip": true,
+  "recorded_utc": "2026-07-22T07:28:47Z",
+  "remediation_utc": "2026-07-22T07:45:00Z",
+  "governance_anchor": {
+    "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+    "product_tip": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+    "contract_profile": "v311_fund_safety_candidate_v2",
+    "final_release_freeze": "FROZEN",
+    "freeze_pcr": "PCR-20260722-UI-DELTA-MARKET-ESCROW-ACL-GATE-FREEZE",
+    "staging_web_tip": "PENDING_BAKE_6b85bde9",
+    "staging_api_tip": "EXPECTED_DIFFERENCE_FE_ONLY",
+    "product_fix_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706"
+  },
+  "p0_remediation": {
+    "P0-01": "LANDED_PRODUCT_TIP",
+    "P0-02": "LANDED_PRODUCT_TIP",
+    "P0-03": "LANDED_PRODUCT_TIP",
+    "backend_acl_relaxed": false
+  },
+  "corridor": [
+    "home",
+    "market_acquisition",
+    "guide",
+    "provider",
+    "orders",
+    "escrow",
+    "payment",
+    "community",
+    "governance",
+    "admin"
+  ],
+  "summary": {
+    "p0": 3,
+    "p1": 7,
+    "p2": 12,
+    "legacy": 4
+  },
+  "staging_probes": [
+    { "url": "https://tt-web-staging.fly.dev/api/release-identity", "result": "200 git_sha=1b622923 ok" },
+    { "url": "https://tt-api-staging.fly.dev/meta", "result": "200 git_sha=f9c227de ok" },
+    { "url": "https://tt-api-staging.fly.dev/api/v1/discover/orders?limit=1", "result": "200" },
+    { "url": "https://tt-api-staging.fly.dev/api/v1/orders/:id (no bearer)", "result": "401 STRICT_SESSION_GATE" },
+    { "url": "https://tt-web-staging.fly.dev/admin", "result": "307 → /auth/login" },
+    { "url": "https://tt-web-staging.fly.dev/discover", "result": "307 → /market" }
+  ],
+  "findings": [
+    {
+      "id": "P0-01",
+      "sev": "P0",
+      "corridor": "market",
+      "title": "Public discover OrderDetailDrawer always links to /escrow and optionally /pay",
+      "ui": "OrderDetailDrawer.tsx footer CTAs always rendered for opened discover order",
+      "api": "GET /api/v1/orders/:id requires participant → 403 forbidden for non-participants",
+      "ssot_conflict": "Public list vs private order read",
+      "evidence": ["frontend/components/market/OrderDetailDrawer.tsx", "crates/api/src/chain_off/orders.rs#order_get_impl"],
+      "fix_after_confirm": "Gate escrow/pay CTAs on successful getOrder or ownership; else accept/login CTA"
+    },
+    {
+      "id": "P0-02",
+      "sev": "P0",
+      "corridor": "market",
+      "title": "OrderCard fallback direct /escrow link when onViewDetail absent",
+      "ui": "OrderCard.tsx fallback href",
+      "api": "Same participant gate → 403",
+      "ssot_conflict": "Same as P0-01",
+      "evidence": ["frontend/components/market/OrderCard.tsx"],
+      "fix_after_confirm": "Remove fallback direct escrow; unify gated path"
+    },
+    {
+      "id": "P0-03",
+      "sev": "P0",
+      "corridor": "home_escrow",
+      "title": "Cross-account or stale prefetch → 查看订单详情 → 403",
+      "ui": "landing_view_order_detail → /escrow/:id after unlock",
+      "api": "order_get_impl participant; 401 if no session",
+      "ssot_conflict": "Home unlock success ≠ durable cross-session ACL",
+      "evidence": ["ItineraryResultsSection.tsx", "useEscrowDetail.ts", "landingItinerarySession.ts"],
+      "fix_after_confirm": "401→login like /pay; 403 clear prefetch; optional re-validate before link"
+    },
+    {
+      "id": "P1-01",
+      "sev": "P1",
+      "corridor": "home",
+      "title": "Unlock modal copy implies payment; API is GET preview only",
+      "evidence": ["UnlockModal.tsx", "useLandingPage.ts handleUnlockPay"]
+    },
+    {
+      "id": "P1-02",
+      "sev": "P1",
+      "corridor": "escrow",
+      "title": "Escrow does not redirect on login_required; Pay does",
+      "evidence": ["useEscrowDetail.ts", "usePayPageOrderSliceLoad.ts"]
+    },
+    {
+      "id": "P1-03",
+      "sev": "P1",
+      "corridor": "payment",
+      "title": "Pay CTA exposed from market for non-participants (page handles forbidden)",
+      "evidence": ["OrderDetailDrawer.tsx", "usePayPageOrderSliceLoad.ts"]
+    },
+    {
+      "id": "P1-04",
+      "sev": "P1",
+      "corridor": "governance",
+      "title": "Off-chain vote UI ignores can_cast_vote; on-chain path gates correctly",
+      "evidence": ["GovernanceProposalDetailLoadedArticle.tsx", "GovernanceOnChainVotePanel.tsx"]
+    },
+    {
+      "id": "P1-05",
+      "sev": "P1",
+      "corridor": "admin",
+      "title": "Admin UI RBAC advisory — write buttons may 403 at API",
+      "evidence": ["adminUiRbacAdvisory.ts", "AdminPermissionDeniedBanner.tsx"]
+    },
+    {
+      "id": "P1-06",
+      "sev": "P1",
+      "corridor": "community",
+      "title": "Dev community showcase can look like real UGC; writes fail",
+      "evidence": ["lib/communityShowcase.ts"]
+    },
+    {
+      "id": "P1-07",
+      "sev": "P1",
+      "corridor": "acquisition_provider",
+      "title": "Bond/studio/publish clickable before readiness; fail at API",
+      "evidence": ["AcquisitionFulfillmentBondBanner.tsx", "useMerchantShowcaseStudioModal.ts"]
+    },
+    {
+      "id": "P2-05",
+      "sev": "P2",
+      "corridor": "community",
+      "title": "/community/feed referenced but no page.tsx → 404",
+      "evidence": ["CommunityRouteShellMobileBottomNav.tsx"]
+    },
+    {
+      "id": "L-01",
+      "sev": "Legacy",
+      "corridor": "market",
+      "title": "/discover → /market redirect (OK keep)",
+      "evidence": ["frontend/middleware.ts"]
+    },
+    {
+      "id": "L-02",
+      "sev": "Legacy",
+      "corridor": "market",
+      "title": "/market/travel → /market redirect (OK keep)",
+      "evidence": ["frontend/middleware.ts"]
+    },
+    {
+      "id": "L-03",
+      "sev": "Legacy",
+      "corridor": "all",
+      "title": "archive/ui-v1 not linked from live nav",
+      "evidence": ["nav/footer grep"]
+    },
+    {
+      "id": "L-04",
+      "sev": "Legacy",
+      "corridor": "orders_home",
+      "title": "Dual create paths /orders/new vs POST /itineraries",
+      "evidence": ["app/orders/new", "useLandingPage.ts"]
+    }
+  ],
+  "owner_confirm_required_before_fix": [
+    "P0-01",
+    "P0-02",
+    "P0-03"
+  ],
+  "next": [
+    "Owner confirm P0 set",
+    "Minimal Delta fix per finding",
+    "Git tip + PCR + Staging Web tip align + Delta dry-run",
+    "Manual C1/C2 reproduce",
+    "Do not start Inventory/Reality/GO unless Owner restarts that track"
+  ]
+}
