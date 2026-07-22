@@ -20,5 +20,8 @@ describe("admin users page L5 (①)", () => {
     expect(src).not.toContain("headerAside={<AdminOpsQueueBackLinks />}");
     expect(src).toContain("AdminOpsDetailRelatedFold");
     expect(src).toContain("USERS_LIST_RELATED_FOLD_LINKS");
+    expect(src).toContain("useAdminCanWrite");
+    expect(src).toContain("ADMIN_PERM.USERS_WRITE");
+    expect(src).toContain("data-tt-admin-users-write-gate");
   });
 });

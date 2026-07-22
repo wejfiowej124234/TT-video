@@ -11,6 +11,8 @@ import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptySt
 import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { ADMIN_EMPTY_NEXT_USERS_FILTERED_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { useAdminCanWrite } from "@/lib/admin/useAdminCanWrite";
 import { sortRowsByKey, useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import {
   ADMIN_INLINE_LINK_CLASS,
@@ -64,6 +66,8 @@ export function AdminUsersDataSection({
   suspendInlineErrorKind: AdminFetchErrorKind | null;
   t: LocaleTranslateFn;
 }) {
+  const { canWrite: canUsersWrite } = useAdminCanWrite(ADMIN_PERM.USERS_WRITE);
+  const { canWrite: canAcquisitionSuspend } = useAdminCanWrite(ADMIN_PERM.ACQUISITION_SUSPEND);
   const { sort, toggle, ariaSort } = useAdminTableSort<UserSortKey>("created_at", "desc");
   const sortedItems = useMemo(
     () =>
@@ -82,6 +86,18 @@ export function AdminUsersDataSection({
       ) : null}
 
       {error ? <AdminListFetchError errorKind={error} message={fetchErrorUserText(error)} /> : null}
+
+      {!canUsersWrite || !canAcquisitionSuspend ? (
+        <p
+          className="mt-3 text-meta text-ink-500"
+          role="status"
+          data-tt-admin-users-write-gate="advisory-disabled-v1"
+        >
+          {!canUsersWrite ? t("admin_perm_denied_users_write") : null}
+          {!canUsersWrite && !canAcquisitionSuspend ? " " : null}
+          {!canAcquisitionSuspend ? t("admin_perm_denied_acquisition_suspend") : null}
+        </p>
+      ) : null}
 
       {!loading && !error && appliedFilters && (
         <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="card">
@@ -159,19 +175,28 @@ export function AdminUsersDataSection({
                       )}
                       <button
                         type="button"
-                        className={`${touchTargetLink44Classes} !justify-start text-left whitespace-nowrap ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
+                        className={`${touchTargetLink44Classes} !justify-start text-left whitespace-nowrap ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS} disabled:opacity-50 disabled:cursor-not-allowed`}
                         aria-label={t("admin_users_acquisitionSuspendManage_aria", { email: u.email })}
-                        onClick={() => openSuspendModal(u)}
+                        disabled={!canAcquisitionSuspend}
+                        title={!canAcquisitionSuspend ? t("admin_perm_denied_acquisition_suspend") : undefined}
+                        onClick={() => {
+                          if (!canAcquisitionSuspend) return;
+                          openSuspendModal(u);
+                        }}
                       >
                         {t("admin_users_acquisitionSuspendManage")}
                       </button>
                       {u.acquisition_publish_suspended === true ? (
                         <button
                           type="button"
-                          className={`${touchTargetLink44Classes} !justify-start text-left whitespace-nowrap ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
-                          disabled={suspendInlineUserId === u.id}
+                          className={`${touchTargetLink44Classes} !justify-start text-left whitespace-nowrap ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS} disabled:opacity-50 disabled:cursor-not-allowed`}
+                          disabled={!canAcquisitionSuspend || suspendInlineUserId === u.id}
+                          title={!canAcquisitionSuspend ? t("admin_perm_denied_acquisition_suspend") : undefined}
                           aria-label={t("admin_users_acquisitionLiftInline_aria", { email: u.email })}
-                          onClick={() => quickLiftSuspend(u)}
+                          onClick={() => {
+                            if (!canAcquisitionSuspend) return;
+                            quickLiftSuspend(u);
+                          }}
                         >
                           {suspendInlineUserId === u.id
                             ? t("admin_users_acquisitionLiftInlineLoading")
@@ -194,9 +219,15 @@ export function AdminUsersDataSection({
                       </Link>
                       <button
                         type="button"
-                        className={adminTableRowSecondaryActionClass()}
+                        className={`${adminTableRowSecondaryActionClass()} disabled:opacity-50 disabled:cursor-not-allowed`}
                         aria-label={t("admin_users_roleRequest_aria", { email: u.email })}
-                        onClick={() => openRoleModal(u)}
+                        disabled={!canUsersWrite}
+                        title={!canUsersWrite ? t("admin_perm_denied_users_write") : undefined}
+                        data-tt-admin-users-role-write-gated={canUsersWrite ? undefined : "1"}
+                        onClick={() => {
+                          if (!canUsersWrite) return;
+                          openRoleModal(u);
+                        }}
                       >
                         {t("admin_users_roleRequest")}
                       </button>

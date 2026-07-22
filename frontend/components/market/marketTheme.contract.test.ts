@@ -437,6 +437,7 @@ describe("market theme V1 (contract)", () => {
     expect(src).toContain("MarketSubsiteListingDetailDrawer");
     expect(src).toContain("MerchantShowcaseStudioModal");
     expect(src).toContain("AcquisitionCarryStudioModal");
+    expect(src).toContain("data-tt-market-subsite-studio-gated");
     expect(src).not.toMatch(/border-amber-400/);
     expect(src).not.toMatch(/bg-amber-500/);
   });

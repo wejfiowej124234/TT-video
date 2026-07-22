@@ -43,12 +43,44 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
   }, [searchParams]);
 
   const [studioOpen, setStudioOpen] = useState(false);
+  /** null = eligibility loading; false = CTA gated; true = may open studio */
+  const [studioEligible, setStudioEligible] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (studioAutoOpen) setStudioOpen(true);
-  }, [studioAutoOpen]);
+    let cancelled = false;
+    const refresh = () => {
+      setStudioEligible(null);
+      const load = isProvider
+        ? import("@/lib/provider/merchantPublishEligibility").then((m) =>
+            m.fetchMerchantPublishEligibility(),
+          )
+        : import("@/lib/acquisition/acquisitionPublishEligibility").then((m) =>
+            m.fetchAcquisitionPublishEligibility(),
+          );
+      void load.then((gate) => {
+        if (!cancelled) setStudioEligible(gate.ok === true);
+      });
+    };
+    refresh();
+    const onAuth = () => refresh();
+    window.addEventListener("traveltrust:auth-change", onAuth);
+    window.addEventListener("traveltrust:profile-updated", onAuth);
+    return () => {
+      cancelled = true;
+      window.removeEventListener("traveltrust:auth-change", onAuth);
+      window.removeEventListener("traveltrust:profile-updated", onAuth);
+    };
+  }, [isProvider]);
 
-  const openStudio = useCallback(() => setStudioOpen(true), []);
+  useEffect(() => {
+    if (!studioAutoOpen) return;
+    if (studioEligible === true) setStudioOpen(true);
+  }, [studioAutoOpen, studioEligible]);
+
+  const openStudio = useCallback(() => {
+    if (studioEligible !== true) return;
+    setStudioOpen(true);
+  }, [studioEligible]);
 
   const closeStudio = useCallback(() => {
     setStudioOpen(false);
@@ -198,6 +230,7 @@ export function useMarketStandaloneBusinessPage(variant: MarketStandaloneBusines
     openStudio,
     closeStudio,
     studioAutoOpen,
+    studioEligible,
     masonryItems,
     listSummaryMode,
     catalogHasMore,

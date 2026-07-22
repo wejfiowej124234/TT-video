@@ -1627,6 +1627,7 @@ export default {
   admin_shell_nav_rank_snapshots: "排序快照",
   admin_shell_nav_comment_vis: "评论可见性",
   admin_perm_denied_users_write: "当前账号无用户角色变更权限，相关操作已禁用。",
+  admin_perm_denied_acquisition_suspend: "当前账号无收购发布冻结权限，相关操作已禁用。",
   admin_perm_denied_users_read: "当前账号无用户台账查看权限，列表可能为空。",
   admin_perm_denied_provider_review: "当前账号无商家审核写权限，队列操作已禁用。",
   admin_perm_denied_steward_review: "当前账号无主理人审核写权限，队列操作已禁用。",
@@ -5149,6 +5150,8 @@ export default {
   /** `/market/provider` · `/market/acquisition` 顶部入口：打开链下创作台（须登录；草稿/发布依赖 `DATABASE_URL` 与 API） */
   market_subsite_open_merchant_studio: "发布橱窗商品（创作台）",
   market_subsite_open_acquisition_studio: "发布收购意向（创作台）",
+  market_subsite_studio_gated_hint: "请先完成发布就绪检查（登录、钱包/入驻与门闸）后再打开创作台。",
+  market_subsite_studio_gated_aria: "创作台暂不可用：发布条件未满足",
 
   /** 94 市场子站：列表 / 右侧抽屉 / 详情体（与 `MarketSubsite*` 组件键一致） */
   market_subsite_masonry_demo_badge: "演示橱窗 · 非真实接单",
@@ -6370,6 +6373,8 @@ export default {
   community_friends_desc: "关注、粉丝与好友",
   community_friends_relational_showcase_hint:
     "开发/演示模式下，关系链 API 为空时可能展示 curated 演示用户，非线上真实社交数据。",
+  community_friends_showcase_add_blocked: "演示用户无法发送真实好友申请。",
+  community_friends_showcase_add_blocked_short: "演示不可加",
   community_messages_relational_showcase_hint:
     "开发/演示模式下，会话 API 为空时可能展示演示会话；演示线程只读，无法真实发送。",
   community_friends_login_hint: "登录后可查看关注、粉丝与好友列表，并处理好友申请。",

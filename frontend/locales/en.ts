@@ -1712,6 +1712,8 @@ export default {
   admin_shell_nav_rank_snapshots: "Ranking snapshots",
   admin_shell_nav_comment_vis: "Comment visibility",
   admin_perm_denied_users_write: "Your role cannot change user roles. Write actions are disabled.",
+  admin_perm_denied_acquisition_suspend:
+    "Your role cannot manage acquisition publish suspend. Those actions are disabled.",
   admin_perm_denied_users_read: "Your role cannot view the user directory. The list may be empty.",
   admin_perm_denied_provider_review: "Missing provider review write — queue actions disabled.",
   admin_perm_denied_steward_review: "Missing steward review write — queue actions disabled.",
@@ -5264,6 +5266,9 @@ export default {
   /** `/market/provider` · `/market/acquisition` header CTA: opens chain-off studio modal (login required; drafts/publish need `DATABASE_URL` + API). */
   market_subsite_open_merchant_studio: "Publish showcase listing (studio)",
   market_subsite_open_acquisition_studio: "Publish acquisition intent (studio)",
+  market_subsite_studio_gated_hint:
+    "Complete publish readiness (sign-in, wallet/onboarding, and gates) before opening the studio.",
+  market_subsite_studio_gated_aria: "Studio unavailable: publish requirements not met",
 
   /** §94 market subsite: list / right drawer / detail bodies (`MarketSubsite*` keys) */
   market_subsite_masonry_demo_badge: "Demo showcase · not live checkout",
@@ -6541,6 +6546,8 @@ export default {
   community_friends_desc: "Following, followers & friends",
   community_friends_relational_showcase_hint:
     "In dev/demo mode, curated demo users may appear when the friends API returns empty—not live social data.",
+  community_friends_showcase_add_blocked: "Demo users cannot receive real friend requests.",
+  community_friends_showcase_add_blocked_short: "Demo only",
   community_messages_relational_showcase_hint:
     "In dev/demo mode, demo conversations may appear when the inbox API is empty; demo threads are read-only.",
   community_friends_login_hint: "Sign in to see following, followers, friends, and manage friend requests.",

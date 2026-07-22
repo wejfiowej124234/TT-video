@@ -113,7 +113,13 @@ export default function MarketStandaloneBusinessPage({ variant }: { variant: "pr
               <button
                 type="button"
                 onClick={() => page.openStudio()}
-                className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_PRIMARY} px-5 py-2.5 text-small ${travelFocusRingOffset2Classes}`}
+                disabled={page.studioEligible !== true}
+                title={
+                  page.studioEligible === false ? t("market_subsite_studio_gated_hint") : undefined
+                }
+                aria-disabled={page.studioEligible !== true ? true : undefined}
+                data-tt-market-subsite-studio-gated={page.studioEligible === false ? "1" : undefined}
+                className={`${touchTargetLink44Classes} ${TT_MARKETING_BTN_MARKET_PRIMARY} px-5 py-2.5 text-small ${travelFocusRingOffset2Classes} disabled:opacity-55 disabled:cursor-not-allowed`}
               >
                 {studioLabel}
               </button>

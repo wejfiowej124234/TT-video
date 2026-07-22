@@ -27,6 +27,7 @@ import {
   CommunityRelationalShowcaseHonestyNote,
   communityRelationalShowcaseDataAttr,
 } from "@/components/community/CommunityRelationalShowcaseHonestyNote";
+import { isShowcaseAuthorId } from "@/lib/communityShowcase";
 import {
   communityAvatarLinkFocus,
   communityCardLinkFocus,
@@ -533,6 +534,10 @@ function CommunityFriendsPageInner() {
                         className="inline"
                         onSubmit={(e: FormEvent) => {
                           e.preventDefault();
+                          if (isShowcaseAuthorId(user.id)) {
+                            showFriendsToast(t("community_friends_showcase_add_blocked"));
+                            return;
+                          }
                           if (addRequestSent.has(user.id) || addRequestPendingId === user.id) return;
                           if (typeof navigator !== "undefined" && !navigator.onLine) {
                             showFriendsToast(t("community_interaction_offline"));
@@ -563,15 +568,29 @@ function CommunityFriendsPageInner() {
                       >
                         <button
                           type="submit"
-                          disabled={addRequestSent.has(user.id) || addRequestPendingId === user.id}
+                          disabled={
+                            isShowcaseAuthorId(user.id) ||
+                            addRequestSent.has(user.id) ||
+                            addRequestPendingId === user.id
+                          }
+                          title={
+                            isShowcaseAuthorId(user.id)
+                              ? t("community_friends_showcase_add_blocked")
+                              : undefined
+                          }
+                          data-tt-community-friends-showcase-add-gated={
+                            isShowcaseAuthorId(user.id) ? "1" : undefined
+                          }
                           aria-busy={addRequestPendingId === user.id ? true : undefined}
-                          className={`${TT_COMMUNITY_PAGE_L5.pillCompact} disabled:opacity-70 disabled:cursor-wait ${communityCyanPillFocus}`}
+                          className={`${TT_COMMUNITY_PAGE_L5.pillCompact} disabled:opacity-70 disabled:cursor-not-allowed ${communityCyanPillFocus}`}
                         >
                           {addRequestPendingId === user.id
                             ? t("common_loading")
                             : addRequestSent.has(user.id)
                               ? t("community_request_sent")
-                              : t("community_friends_add")}
+                              : isShowcaseAuthorId(user.id)
+                                ? t("community_friends_showcase_add_blocked_short")
+                                : t("community_friends_add")}
                         </button>
                       </form>
                     )}

@@ -15,6 +15,9 @@ describe("providerWorkbench (① · merchant operator UX)", () => {
     const hook = read("components/market/useMarketStandaloneBusinessPage.ts");
     expect(hook).toContain('searchParams.get("studio")');
     expect(hook).toContain("closeStudio");
+    expect(hook).toContain("studioEligible");
+    expect(hook).toContain("fetchAcquisitionPublishEligibility");
+    expect(hook).toContain("fetchMerchantPublishEligibility");
   });
 
   it("workbench uses market exposure card (not legacy showcase section)", () => {
