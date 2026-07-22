@@ -23,10 +23,12 @@ except ImportError:
     yaml = None  # type: ignore
 
 ROOT = Path(__file__).resolve().parents[2]
-TIP = "4050f50a7d0c94939c0e471e197806f766d4391f"
+TIP = "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
 PIN = "PSG-REL-20260720-WEB3-CAND-V2"
 PROFILE = "v311_fund_safety_candidate_v2"
-RUNTIME_TIP_STAGING = "97289a7185610ef0ad8822f0af04bfa533e42986"
+WEB_TIP_STAGING = "4050f50a7d0c94939c0e471e197806f766d4391f"
+API_TIP_STAGING = "97289a7185610ef0ad8822f0af04bfa533e42986"
+RUNTIME_TIP_STAGING = WEB_TIP_STAGING
 OUT_JSON = ROOT / "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.json"
 OUT_MD = ROOT / "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.md"
 
@@ -130,7 +132,7 @@ def main() -> int:
         b = api.get("build") or {}
         api_sha = b.get("git_sha")
         api_at_freeze = api_sha == TIP
-        api_at_staging_lag = api_sha == RUNTIME_TIP_STAGING
+        api_at_staging_lag = api_sha in (WEB_TIP_STAGING, API_TIP_STAGING)
         api_ok = (
             (api_at_freeze or api_at_staging_lag)
             and b.get("psg_release_version") == PIN
@@ -172,7 +174,7 @@ def main() -> int:
     if bake is not None and ident is not None:
         bake_sha = bake.get("git_sha")
         web_at_freeze = bake_sha == TIP
-        web_at_staging_lag = bake_sha == RUNTIME_TIP_STAGING
+        web_at_staging_lag = bake_sha in (WEB_TIP_STAGING, API_TIP_STAGING)
         web_ok = (
             (web_at_freeze or web_at_staging_lag)
             and bake.get("psg_release_version") == PIN

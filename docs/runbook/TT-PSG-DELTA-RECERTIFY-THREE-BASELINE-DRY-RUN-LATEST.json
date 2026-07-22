@@ -1,16 +1,16 @@
 {
   "schema": "traveltrust.psg_delta_recertify_three_baseline_dry_run.v1",
   "machine_key": "TT_PSG_DELTA_RECERTIFY_THREE_BASELINE_DRY_RUN",
-  "recorded_utc": "2026-07-22T05:03:03Z",
+  "recorded_utc": "2026-07-22T06:01:58Z",
   "mode": "DRY_RUN_REPORT_ONLY",
   "equals_production_go": false,
   "equals_staging_grade_go": false,
   "formal_cert_started": false,
   "core_version_modified": false,
   "pin": "PSG-REL-20260720-WEB3-CAND-V2",
-  "freeze_tip": "4050f50a7d0c94939c0e471e197806f766d4391f",
-  "staging_runtime_tip": "97289a7185610ef0ad8822f0af04bfa533e42986",
-  "head": "4050f50a7d0c94939c0e471e197806f766d4391f",
+  "freeze_tip": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
+  "staging_runtime_tip": "4050f50a7d0c94939c0e471e197806f766d4391f",
+  "head": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
   "baselines": [
     "Candidate_v2",
     "V3.1.1_Final",
@@ -19,12 +19,12 @@
   "axes": {
     "final_release": {
       "freeze_status": "FROZEN",
-      "cert_suite": "UI_DELTA_DRY_PASS_PENDING_STAGING_REDEPLOY",
+      "cert_suite": "DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO",
       "ok": true
     },
     "registry_active": {
       "pin": "PSG-REL-20260720-WEB3-CAND-V2",
-      "sha": "4050f50a7d0c94939c0e471e197806f766d4391f",
+      "sha": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
       "ok": true
     },
     "baseline_candidate": {
@@ -45,10 +45,10 @@
       "ok": true
     },
     "git": {
-      "head": "4050f50a7d0c94939c0e471e197806f766d4391f",
-      "dirty": 39,
-      "freeze_tip": "4050f50a7d0c94939c0e471e197806f766d4391f",
-      "staging_runtime_tip": "97289a7185610ef0ad8822f0af04bfa533e42986",
+      "head": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
+      "dirty": 48,
+      "freeze_tip": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
+      "staging_runtime_tip": "4050f50a7d0c94939c0e471e197806f766d4391f",
       "head_eq_freeze_tip": true,
       "worktree_clean": false,
       "note": "Freeze UI tip may differ from Staging bake tip (Expected Difference until redeploy)"
@@ -62,7 +62,7 @@
       "expected_difference": true
     },
     "staging_web": {
-      "bake_sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
+      "bake_sha": "4050f50a7d0c94939c0e471e197806f766d4391f",
       "bake_pin": "PSG-REL-20260720-WEB3-CAND-V2",
       "db": "staging_rc_ssot_alignment.v1#expected_staging_surface",
       "cms": "public_display_10x4 + catalog_bake=1",
@@ -73,8 +73,8 @@
     "evidence": {
       "sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
       "pin": "PSG-REL-20260720-WEB3-CAND-V2",
-      "ok": true,
-      "expected_difference": true
+      "ok": false,
+      "expected_difference": false
     },
     "deploy_defaults": {
       "polluted_lines": [],
@@ -85,34 +85,34 @@
     {
       "sev": "EXPECTED",
       "id": "STAGING_API_TIP_LAG",
-      "detail": "api=97289a7185610ef0ad8822f0af04bfa533e42986 freeze_tip=4050f50a7d0c94939c0e471e197806f766d4391f"
+      "detail": "api=97289a7185610ef0ad8822f0af04bfa533e42986 freeze_tip=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
     },
     {
       "sev": "EXPECTED",
       "id": "STAGING_WEB_TIP_LAG",
-      "detail": "web=97289a7185610ef0ad8822f0af04bfa533e42986 freeze_tip=4050f50a7d0c94939c0e471e197806f766d4391f"
+      "detail": "web=4050f50a7d0c94939c0e471e197806f766d4391f freeze_tip=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
     },
     {
-      "sev": "EXPECTED",
-      "id": "EVIDENCE_TIP_LAG",
-      "detail": "evidence=97289a7185610ef0ad8822f0af04bfa533e42986 freeze_tip=4050f50a7d0c94939c0e471e197806f766d4391f"
+      "sev": "P1",
+      "id": "EVIDENCE_IDENTITY_DRIFT",
+      "detail": {
+        "sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
+        "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+        "ok": false,
+        "expected_difference": false
+      }
     }
   ],
   "expected_differences": [
     {
       "sev": "EXPECTED",
       "id": "STAGING_API_TIP_LAG",
-      "detail": "api=97289a7185610ef0ad8822f0af04bfa533e42986 freeze_tip=4050f50a7d0c94939c0e471e197806f766d4391f"
+      "detail": "api=97289a7185610ef0ad8822f0af04bfa533e42986 freeze_tip=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
     },
     {
       "sev": "EXPECTED",
       "id": "STAGING_WEB_TIP_LAG",
-      "detail": "web=97289a7185610ef0ad8822f0af04bfa533e42986 freeze_tip=4050f50a7d0c94939c0e471e197806f766d4391f"
-    },
-    {
-      "sev": "EXPECTED",
-      "id": "EVIDENCE_TIP_LAG",
-      "detail": "evidence=97289a7185610ef0ad8822f0af04bfa533e42986 freeze_tip=4050f50a7d0c94939c0e471e197806f766d4391f"
+      "detail": "web=4050f50a7d0c94939c0e471e197806f766d4391f freeze_tip=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
     }
   ],
   "verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",

@@ -1,0 +1,53 @@
+# PCR-20260722-UI-DELTA-CINEMA-PROMO-FREEZE
+#
+# Delta Change under Candidate pin (no new PSG Release Version mint).
+# UI: L5 role cinema overlay · Owner promo video sync (4 roles) · merchant/acquisition defaults.
+# Prior UI Delta tip 4050f50a (home scroll / AI frost / social six) remains in lineage.
+# Then re-Freeze FINAL RELEASE BASELINE at tip f9c227de.
+
+schema: traveltrust.psg_change_record.v1
+pcr_id: PCR-20260722-UI-DELTA-CINEMA-PROMO-FREEZE
+recorded_utc: "2026-07-22T06:05:00Z"
+class: DELTA_CHANGE_UI
+equals_production_go: false
+equals_staging_grade_go: false
+new_psg_release_version_minted: false
+
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+prior_runtime_tip: "4050f50a7d0c94939c0e471e197806f766d4391f"
+ui_delta_git_sha: "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+freeze_status: FROZEN
+
+delta_scope:
+  - frontend/components/traveltrust/cinematic/TravelTrustRoleVideoCinemaOverlay.tsx
+  - frontend/components/traveltrust/cinematic/TravelTrustRoleVideoPlayer.tsx
+  - frontend/lib/traveltrust/l5/meta.ts
+  - frontend/app/traveltrust/traveltrustIdentityModel.ts
+  - scripts/dev/sync-traveltrust-role-promo-videos.cjs
+  - frontend/scripts/copy-traveltrust-tier1-media.mjs
+  - frontend/public/media/traveltrust/roles/README.md
+  - 首页角色宣传片/  # Owner drop zone (binaries gitignored)
+
+gates:
+  engineering_ssot_anchor: PASS
+  delta_recertify_dry_run: DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE
+
+expected_difference:
+  - id: STAGING_WEB_TIP_LAG
+    disposition: CONFIRM_DESIGN_UNTIL_WEB_REDEPLOY
+    detail: >
+      Staging Web bake still 4050f50a until Owner Web redeploy of f9c227de
+      (Cinema + promo wiring). Promo MP4s sync into public/ before bake.
+  - id: STAGING_API_TIP_LAG
+    disposition: CONFIRM_DESIGN_UNTIL_API_REDEPLOY_OR_ACCEPT
+    detail: Staging API bake still 97289a71 (Expected Difference).
+
+forbidden:
+  - Reality_W0_W7_as_mainline
+  - Hard_Gate_flip
+  - Production_GO
+  - new_pin_mint
+
+next:
+  - Staging Web redeploy @ f9c227de after `node scripts/dev/sync-traveltrust-role-promo-videos.cjs`
+  - then Feature Inventory / Reality Closure under FROZEN
