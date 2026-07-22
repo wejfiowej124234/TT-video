@@ -48,6 +48,13 @@ export default function UnlockModal({
         onClick={(e) => e.stopPropagation()}
       >
         <h3 id={titleId} className="text-h4 font-semibold text-white mb-2">{t("unlock_title")}</h3>
+        <p
+          className="mb-3 inline-flex items-center rounded-[var(--radius-sm)] border border-amber-400/40 bg-amber-500/15 px-2.5 py-1 text-meta font-medium text-amber-100"
+          role="status"
+          data-tt-landing-unlock-honesty-badge="1"
+        >
+          {t("unlock_honesty_badge")}
+        </p>
         <p id={descId} className="text-body text-white/85 mb-3">{t("unlock_desc")}</p>
         <p id={paymentNoteId} className="text-small text-white/70 mb-4">{paymentNote}</p>
         {unlockError ? (

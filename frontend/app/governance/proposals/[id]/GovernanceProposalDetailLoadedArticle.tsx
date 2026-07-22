@@ -327,11 +327,24 @@ export function GovernanceProposalDetailLoadedArticle(props: GovernanceProposalD
                 {t("governance_proposal_detail_vote_submitting")}
               </p>
             ) : null}
+            {hasSession && votingPower?.can_cast_vote === false ? (
+              <p
+                className={`mt-3 text-body ${GOV_PROPOSALS_L5.cardHint}`}
+                role="status"
+                data-tt-gov-offchain-vote-gated="1"
+              >
+                {votingPower.reason === "delegation_active_cannot_vote"
+                  ? t("governance_proposal_detail_vote_blocked_delegation")
+                  : t("governance_proposal_detail_vote_blocked")}
+              </p>
+            ) : null}
             <div className="mt-2 flex flex-wrap gap-2">
               <button
                 type="button"
                 className={voteBtnClass}
-                disabled={voteBusy || !hasSession}
+                disabled={
+                  voteBusy || !hasSession || votingPower?.can_cast_vote === false
+                }
                 aria-busy={voteBusy ? true : undefined}
                 onClick={() => void submitVote("yes")}
               >
@@ -340,7 +353,9 @@ export function GovernanceProposalDetailLoadedArticle(props: GovernanceProposalD
               <button
                 type="button"
                 className={voteBtnClass}
-                disabled={voteBusy || !hasSession}
+                disabled={
+                  voteBusy || !hasSession || votingPower?.can_cast_vote === false
+                }
                 aria-busy={voteBusy ? true : undefined}
                 onClick={() => void submitVote("no")}
               >
@@ -349,7 +364,9 @@ export function GovernanceProposalDetailLoadedArticle(props: GovernanceProposalD
               <button
                 type="button"
                 className={voteBtnClass}
-                disabled={voteBusy || !hasSession}
+                disabled={
+                  voteBusy || !hasSession || votingPower?.can_cast_vote === false
+                }
                 aria-busy={voteBusy ? true : undefined}
                 onClick={() => void submitVote("abstain")}
               >

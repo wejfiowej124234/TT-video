@@ -14,5 +14,7 @@ describe("UnlockModal preview honesty (①)", () => {
     expect(src).toContain('role="alert"');
     expect(src).toContain("unlockError");
     expect(src).toContain('data-tt-landing-unlock-honesty="phase1-preview-no-usdc"');
+    expect(src).toContain("unlock_honesty_badge");
+    expect(src).toContain('data-tt-landing-unlock-honesty-badge="1"');
   });
 });

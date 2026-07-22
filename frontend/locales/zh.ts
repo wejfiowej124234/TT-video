@@ -9256,6 +9256,9 @@ export default {
   governance_proposal_detail_my_vote: "我的投票",
   governance_proposal_detail_my_vote_none: "（未投票）",
   governance_proposal_detail_login_to_vote: "登录后可参与投票；未登录也可查看详情与计票。",
+  governance_proposal_detail_vote_blocked_delegation:
+    "您已将投票权委托给他人，链下投票已禁用。请先到「投票委托」撤销后再投。",
+  governance_proposal_detail_vote_blocked: "当前账号暂不可投票（投票权未满足）。",
   governance_proposal_detail_go_login: "去登录",
   governance_proposal_detail_vote_section: "投票",
   governance_proposal_detail_vote_submitting: "提交中…",
@@ -11362,9 +11365,10 @@ export default {
 
   /** 解锁行程弹窗 */
   unlock_title: "查看完整行程",
-  unlock_desc: "将加载该订单的每日安排、景点路线与预算摘要。",
-  unlock_payment_note: "当前为预览模式，无需付款。",
-  unlock_btn_pay: "查看行程",
+  unlock_desc: "将加载该订单的每日安排、景点路线与预算摘要（本地预览，调用订单详情读取）。",
+  unlock_payment_note: "① 预览解锁 · 无需支付 · 无 USDC · 非链上托管。仅加载行程详情供本页查看。",
+  unlock_honesty_badge: "预览 · 非支付",
+  unlock_btn_pay: "加载行程预览",
   unlock_btn_paying: "加载中…",
 
   /** Landing 行程结果区 */

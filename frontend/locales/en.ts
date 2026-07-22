@@ -9518,6 +9518,9 @@ export default {
   governance_proposal_detail_my_vote: "Your vote",
   governance_proposal_detail_my_vote_none: "(Not voted)",
   governance_proposal_detail_login_to_vote: "Sign in to cast a vote. You can still read the proposal and tallies while signed out.",
+  governance_proposal_detail_vote_blocked_delegation:
+    "You delegated your voting power away. Off-chain vote is disabled — revoke delegation first.",
+  governance_proposal_detail_vote_blocked: "Your account cannot cast a vote right now (voting power not eligible).",
   governance_proposal_detail_go_login: "Sign in",
   governance_proposal_detail_vote_section: "Vote",
   governance_proposal_detail_vote_submitting: "Submitting…",
@@ -11679,11 +11682,14 @@ export default {
 
   /** Unlock itinerary modal */
   unlock_title: "View full itinerary",
-  unlock_desc: "This loads the day-by-day plan, routes, and budget summary for this order.",
+  unlock_desc:
+    "Loads the day-by-day plan, routes, and budget summary for this order (local preview via order detail read).",
   landing_hero_itinerary_disclaimer:
     "Preview your daily plan below after generating; choose a guide and pay on the order page.",
-  unlock_payment_note: "Preview mode — no payment required.",
-  unlock_btn_pay: "View itinerary",
+  unlock_payment_note:
+    "① Preview unlock · no payment · no USDC · not on-chain escrow. Only loads itinerary detail for this page.",
+  unlock_honesty_badge: "Preview · not a payment",
+  unlock_btn_pay: "Load itinerary preview",
   unlock_btn_paying: "Loading…",
 
   /** Landing results section */
