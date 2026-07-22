@@ -1,11 +1,11 @@
 {
   "schema": "traveltrust.web3_candidate_v2_release_identity.v1",
-  "recorded_utc": "2026-07-22T07:21:14Z",
+  "recorded_utc": "2026-07-22T08:14:52Z",
   "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
   "role": "ACTIVE_WEB3_CANDIDATE_BASELINE",
   "fg15_track": "FG-15-B",
   "promotion": "PROMOTION_CANDIDATE",
-  "git_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
+  "git_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
   "git_sha_short": "97289a718561",
   "contract_bytecode_pin": "v311_fund_safety_candidate_v2",
   "contract_digest_bundle_sha256": "20e6d564046bf984e1a02a6feaf5f052dbd2abf2cc18ecd34d38ca7b118740ab",
@@ -72,13 +72,14 @@
   "historical_prior_identity_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
   "pin_policy": "FROZEN_FOR_PROJECT_A",
   "honesty": "Identity tip-aligned · ≠ Production GO · ≠ Hard Gate",
-  "artifact_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
+  "artifact_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
   "contract_profile": "v311_fund_safety_candidate_v2",
   "attestation_status": "ok",
   "web_git_sha": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
   "api_git_sha": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
-  "note": "UI Delta home AI preview gate tip; Staging Web aligned; API lag Expected Difference",
+  "note": "Aligned after clean tip Staging Web redeploy @ 6b85bde9 (Market→Escrow ACL Delta). API tip lag Expected.",
   "equals_production_go": false,
   "equals_staging_grade_go": false,
-  "image_digest": "gitsha:1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
+  "image_digest": "gitsha:6b85bde9773788638c4d8cf031dfe48ef56d1706",
+  "source": "staging_web_tip_bake_align"
 }

@@ -31,15 +31,15 @@ delta_scope:
 
 gates:
   engineering_ssot_anchor: PASS
-  staging_web_tip: PENDING_BAKE_6b85bde9
+  staging_web_tip: ALIGNED_6b85bde9
   delta_recertify_dry_run: RUN_AFTER_ALIGN_COMMIT
 
 expected_difference:
-  - id: STAGING_WEB_TIP_PENDING_BAKE
+  - id: PAGE_SURFACE_HOME_UNSPLASH_RESIDUAL
     disposition: CONFIRM_DESIGN
     detail: >
-      Product tip 6b85bde9 is Freeze SSOT. Staging Web still on prior tip until
-      Owner redeploys from clean tip worktree.
+      Post-deploy page surfaces reported page_/_unsplash. 10×4 LOCKED; Web tip
+      aligned. Treated as CMS Expected Difference for this ACL Delta (≠ P0).
   - id: STAGING_API_TIP_LAG
     disposition: CONFIRM_DESIGN
     detail: >

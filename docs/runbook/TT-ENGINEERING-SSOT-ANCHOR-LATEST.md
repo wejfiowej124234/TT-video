@@ -65,7 +65,7 @@ FG-15-B 48h ELAPSED（证据已 ELAPSED · Registry 须对齐）
   →（另闸）Production GO
 ```
 
-**当前：** FINAL RELEASE `freeze_status=FROZEN` · UI Delta tip `6b85bde9` · Staging Web tip **待烤** · 认证套件 **暂停**（须 Owner 明确再开）。
+**当前：** FINAL RELEASE `freeze_status=FROZEN` · UI Delta tip `6b85bde9` · Staging Web tip **已烤** · 认证套件 **暂停**（须 Owner 明确再开）。
 
 ---
 

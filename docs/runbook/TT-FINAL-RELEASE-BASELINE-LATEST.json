@@ -4,8 +4,8 @@
   "status": "BASELINE_FROZEN",
   "freeze_status": "FROZEN",
   "cert_suite": "DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO",
-  "ui_delta_status": "PRODUCT_TIP_FROZEN_PENDING_WEB_BAKE",
-  "recorded_utc": "2026-07-22T07:45:00Z",
+  "ui_delta_status": "WEB_TIP_ALIGNED_API_EXPECTED_LAG",
+  "recorded_utc": "2026-07-22T08:15:27Z",
   "frozen_utc": "2026-07-22T07:45:00Z",
   "freeze_pcr": "PCR-20260722-UI-DELTA-MARKET-ESCROW-ACL-GATE-FREEZE",
   "prior_freeze_pcr": "PCR-20260722-UI-DELTA-HOME-AI-PREVIEW-GATE-FREEZE",
@@ -20,14 +20,12 @@
     "egm": "PSG_EGM_Final",
     "git_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706"
   },
-  "alignment_status": "FROZEN_UI_DELTA_PENDING_WEB_BAKE",
-  "alignment_blockers": [
-    "STAGING_WEB_TIP_PENDING_BAKE"
-  ],
+  "alignment_status": "FROZEN_UI_DELTA_WEB_TIP_ALIGNED",
+  "alignment_blockers": [],
   "expected_differences": [
-    "STAGING_WEB_TIP_PENDING_BAKE",
     "STAGING_API_TIP_LAG",
-    "FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP"
+    "FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP",
+    "PAGE_SURFACE_HOME_UNSPLASH_RESIDUAL"
   ],
   "cert_executed_this_session": false,
   "forbid_auto_start": [
@@ -40,17 +38,17 @@
     "Production_GO"
   ],
   "next_owner": [
-    "Redeploy Staging Web @ 6b85bde9 from clean tip worktree",
-    "Then eight-way + Delta dry-run; keep Inventory/Reality paused until Owner restart",
-    "Do not relax backend order participant ACL"
+    "API tip lag is Expected Difference (FE-only Delta) unless Owner wants API redeploy",
+    "Home page_/_unsplash residual = CMS Expected Difference (≠ ACL P0)",
+    "Continue P1 UI/UX Alignment; Inventory/Reality/GO remain paused"
   ],
   "equals_production_go": false,
   "equals_staging_grade_go": false,
   "freeze_commit_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
   "runtime_tip_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
-  "runtime_redeploy_required_before_cert": true,
-  "delta_dry_run_verdict": "PENDING_AFTER_WEB_TIP_BAKE",
+  "runtime_redeploy_required_before_cert": false,
+  "delta_dry_run_verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",
   "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
   "git_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
-  "delta_dry_run_recorded_utc": null
+  "delta_dry_run_recorded_utc": "2026-07-22T08:15:27Z"
 }

@@ -1,17 +1,17 @@
 {
   "schema": "traveltrust.staging_public_page_surfaces.v1",
-  "recorded_utc": "2026-07-22T02:14:51.660Z",
+  "recorded_utc": "2026-07-22T08:07:03.032Z",
   "api": "https://tt-api-staging.fly.dev",
   "web": "https://tt-web-staging.fly.dev",
-  "ocs_runtime_state": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\20260708T121151Z\\state.json",
+  "ocs_runtime_state": "D:\\dev\\temp\\tt-web-acl-tip-6b85bde9\\evidence\\GO_official_cold_start_dataset\\20260708T121151Z\\state.json",
   "surfaces": {
     "identity": {
-      "web_sha": "2868bbf72243292b678257a274e99b7a249963e8",
-      "api_sha": "a9730cdaadb33e71059079a93e6a25a8e434b5be",
+      "web_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+      "api_sha": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
       "identity_source": "docker-bake",
       "cms_baseline": "public_display_10x4 + catalog_bake=1",
       "web_api_match": false,
-      "expect": "2868bbf72243292b678257a274e99b7a249963e8"
+      "expect": "6b85bde9773788638c4d8cf031dfe48ef56d1706"
     },
     "guides": {
       "http": 200,
@@ -116,27 +116,27 @@
     "pages": {
       "/": {
         "http": 200,
-        "unsplash": 0,
-        "cos": 24,
-        "len": 64995
+        "unsplash": 4,
+        "cos": 15,
+        "len": 76890
       },
       "/market": {
         "http": 200,
         "unsplash": 0,
         "cos": 0,
-        "len": 125940
+        "len": 135115
       },
       "/market/provider": {
         "http": 200,
         "unsplash": 0,
         "cos": 0,
-        "len": 33333
+        "len": 33593
       },
       "/market/acquisition": {
         "http": 200,
         "unsplash": 0,
         "cos": 0,
-        "len": 33425
+        "len": 33631
       },
       "/did-rank": {
         "http": 200,
@@ -154,12 +154,14 @@
         "http": 200,
         "unsplash": 0,
         "cos": 0,
-        "len": 194401
+        "len": 188389
       }
     },
     "wallet_dropdown_in_js": true
   },
-  "fails": [],
-  "verdict": "PAGE_SURFACE_OK",
+  "fails": [
+    "page_/_unsplash"
+  ],
+  "verdict": "PAGE_SURFACE_DRIFT",
   "honest_boundary": "PAGE_SURFACE_OK ≠ Reality Closure PASS ≠ Production GO"
 }
