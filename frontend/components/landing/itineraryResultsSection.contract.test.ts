@@ -35,6 +35,9 @@ describe("ItineraryResultsSection L5 polish", () => {
     expect(src).toContain("landing_trust_preview");
     expect(src).toContain("data-tt-home-ai-itinerary-locked");
     expect(src).toContain("previewLocked");
+    expect(src).toContain("showLiveAiResults");
+    expect(src).toContain("data-tt-home-ai-preview-locked");
+    expect(src).toContain("data-tt-home-ai-live");
     expect(src).toContain("landing_placeholder_hint");
 
     expect(src).not.toContain("landing_rating");
@@ -47,7 +50,8 @@ describe("ItineraryResultsSection L5 polish", () => {
     expect(src).toContain('data-tt-home-itinerary-honesty="phase1-mock-ai-not-production"');
     expect(src).toContain("landing_results_count_note");
     expect(src).toContain("landing_results_unlock_note");
-
+    expect(src).toContain('renderPreviewSlotCards("empty")');
+    expect(src).not.toContain("const previewLocked = !country");
   });
 
 });

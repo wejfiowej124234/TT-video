@@ -11589,6 +11589,9 @@ export default {
   landing_standard_lightLuxury: "Light luxury",
   landing_standard_premium: "Premium",
   landing_error_budget: "Please enter a valid budget",
+  landing_error_party: "Enter party size (at least 1)",
+  landing_error_form_incomplete:
+    "Fill country, cities, dates, party size, and budget, then tap AI Generate Itinerary",
   landing_error_country: "Please select a country",
   landing_error_draft_cap:
     "Draft itinerary limit reached ({{count}}/{{cap}}). Delete unneeded drafts before generating another.",
@@ -11702,7 +11705,8 @@ export default {
   landing_quote_mid_label: "Quote midpoint",
   landing_per_unlock: "Free preview",
   landing_view_order_detail: "View order details →",
-  landing_placeholder_hint: "Fill in the form above and tap Generate to create 1 AI itinerary; the preview card appears below.",
+  landing_placeholder_hint:
+    "Fill country, cities, dates, party size, and budget, then tap AI Generate Itinerary; until then only a frosted preview is shown—no real itinerary.",
   landing_placeholder_card: "Preview slot {{n}}",
   landing_placeholder_pending: "Pending",
   landing_generating_card: "Generating…",

@@ -33,6 +33,10 @@ import {
   pushMarketOrderBookmarkToggle,
 } from "@/lib/marketTravelBookmarksSync";
 import {
+  isLandingAiItineraryFormReady,
+  parseLandingAiBudget,
+} from "@/lib/landingAiItineraryFormReady";
+import {
   dateToString,
   daysFromRange,
 } from "./constants";
@@ -70,6 +74,11 @@ export function useLandingPage(t: (key: string) => string) {
     blocked: false,
   });
   const [resultOrderIds, setResultOrderIds] = useState<string[]>([]);
+  /**
+   * 本会话内主动点击「AI 生成行程」且创建成功后才为 true。
+   * 会话恢复的 orderId 不单独解锁真卡（避免未填表即露出订单入口）。
+   */
+  const [aiGenerateCommitted, setAiGenerateCommitted] = useState(false);
   /** 按订单 ID 记录解锁（一单一卡，整单解锁） */
   const [unlockedOrderIds, setUnlockedOrderIds] = useState<Set<string>>(new Set());
   /** 解锁弹窗内错误（与 Hero submitError 分离） */
@@ -273,8 +282,8 @@ export function useLandingPage(t: (key: string) => string) {
     setValidationErrorKey(null);
     setSubmitError(null);
     setLoginRequired(false);
-    const budgetNum = budget ? parseFloat(budget) : undefined;
-    if (budgetNum !== undefined && (isNaN(budgetNum) || budgetNum <= 0)) {
+    const budgetNum = parseLandingAiBudget(budget);
+    if (budgetNum == null) {
       setValidationErrorKey("landing_error_budget");
       return;
     }
@@ -298,10 +307,28 @@ export function useLandingPage(t: (key: string) => string) {
       setValidationErrorKey("landing_error_days");
       return;
     }
+    if (!Number.isFinite(partySize) || partySize < 1) {
+      setValidationErrorKey("landing_error_party");
+      return;
+    }
+    if (
+      !isLandingAiItineraryFormReady({
+        country,
+        cities,
+        startDate,
+        endDate,
+        partySize,
+        budget,
+      })
+    ) {
+      setValidationErrorKey("landing_error_form_incomplete");
+      return;
+    }
     if (draftQuota.blocked) {
       setValidationErrorKey("landing_error_draft_cap");
       return;
     }
+    setAiGenerateCommitted(false);
     setSubmitting(true);
     try {
       const body = {
@@ -316,7 +343,7 @@ export function useLandingPage(t: (key: string) => string) {
           attractionTypes.length > 0
             ? t("landing_notes_attraction_types").replace(/\{\{list\}\}/g, attractionTypes.join(","))
             : undefined,
-        budget_min: budgetNum ? budgetNum * 0.8 : undefined,
+        budget_min: budgetNum * 0.8,
         budget_max: budgetNum,
         party_size: partySize,
         num_rooms: numRooms,
@@ -329,6 +356,7 @@ export function useLandingPage(t: (key: string) => string) {
         return;
       }
       setResultOrderIds([orderIdRaw]);
+      setAiGenerateCommitted(true);
       clearCachedLandingDraftCap();
       refreshDraftQuota();
     } catch (err) {
@@ -370,11 +398,46 @@ export function useLandingPage(t: (key: string) => string) {
     refreshDraftQuota,
   ]);
 
+  const formReady = isLandingAiItineraryFormReady({
+    country,
+    cities,
+    startDate,
+    endDate,
+    partySize,
+    budget,
+  });
+  /** 未齐条件：磨砂锁；齐条件后仍须本会话 generate 成功才露真卡 */
+  const previewLocked = !formReady;
+  const showLiveAiResults =
+    formReady && aiGenerateCommitted && resultOrderIds.length > 0;
+
   const handleUnlockClick = useCallback((orderId: string, index: number) => {
+    if (
+      !isLandingAiItineraryFormReady({
+        country,
+        cities,
+        startDate,
+        endDate,
+        partySize,
+        budget,
+      })
+    ) {
+      return;
+    }
+    if (!aiGenerateCommitted) return;
     if (unlockedOrderIds.has(orderId)) return;
     setUnlockError(null);
     setSelectedForUnlock({ orderId, index });
-  }, [unlockedOrderIds]);
+  }, [
+    unlockedOrderIds,
+    country,
+    cities,
+    startDate,
+    endDate,
+    partySize,
+    budget,
+    aiGenerateCommitted,
+  ]);
 
   const handleUnlockPay = useCallback(async () => {
     if (!selectedForUnlock) return;
@@ -437,6 +500,10 @@ export function useLandingPage(t: (key: string) => string) {
     refreshDraftQuota,
     resultOrderIds,
     unlockedOrderIds,
+    previewLocked,
+    showLiveAiResults,
+    formReady,
+    aiGenerateCommitted,
     selectedForUnlock,
     setSelectedForUnlock,
     unlockPaying,

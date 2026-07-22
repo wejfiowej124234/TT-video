@@ -62,7 +62,7 @@ export default function Home() {
           loginRequired={data.loginRequired}
           handleSubmit={data.handleSubmit}
           marketHref={data.marketHref}
-          showConsumerValue={data.resultOrderIds.length === 0 && !data.submitting}
+          showConsumerValue={!data.showLiveAiResults && !data.submitting}
           draftQuota={data.draftQuota}
         />
         <ColdStartHomeHeroHighlights className="relative z-10 mt-3 mb-1" />
@@ -79,6 +79,8 @@ export default function Home() {
           handleUnlockClick={data.handleUnlockClick}
           country={data.country}
           cities={data.cities}
+          previewLocked={data.previewLocked}
+          showLiveAiResults={data.showLiveAiResults}
           resultsSectionRef={data.resultsSectionRef}
         />
         {data.selectedForUnlock ? (

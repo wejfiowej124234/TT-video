@@ -31,13 +31,14 @@ describe("Home consumer experience L5 audit", () => {
     expect(src).not.toContain("pes2_escrow");
   });
 
-  it("itinerary results hide empty state and defer escrow trust chrome", () => {
+  it("itinerary results keep frosted empty preview until generate; escrow trust chrome deferred", () => {
     const src = readFileSync(resultsSection, "utf8");
-    expect(src).toContain("return null");
+    expect(src).toContain('renderPreviewSlotCards("empty")');
+    expect(src).toContain("showLiveAiResults");
+    expect(src).toContain("previewLocked");
     expect(src).not.toContain("RoleEntryQuickGrid");
     expect(src).not.toContain("EscrowTrustMicro");
     expect(src).not.toContain("TouchpointConversionStrip");
-    expect(src).not.toContain('renderPreviewSlotCards("empty")');
     expect(src).toContain("home_consumer_funds_protected");
     expect(src).not.toContain("market_hero_pill_escrow");
   });

@@ -62,6 +62,7 @@ page.tsx
 | 功能 | 行为 | 代码 |
 |------|------|------|
 | 创单 | **1×** `postItineraryCreate` → **1** 张预览卡（`ITINERARY_CARD_COUNT=1`） | `useLandingPage.handleSubmit` |
+| AI 卡状态机 | **磨砂锁**直至国家/城市/时间/人数/预算齐备；**仅**本会话点击「AI 生成行程」成功后 `showLiveAiResults` 露真卡与订单入口（会话恢复 id **不**单独解锁） | `landingAiItineraryFormReady.ts` · `previewLocked` / `aiGenerateCommitted` |
 | 行程内容 | HTTP 真 POST；body 由 **`generate_itinerary_mock`** 生成（**非 AI**） | `crates/api/.../itineraries.rs` |
 | 预览解锁 | `UnlockModal` → **`getOrder`**；**无** `/pay` · **无** 真 USDC | `handleUnlockPay` |
 | 持久化 | **`localStorage`**：`tt_landing_result_order_ids_v1` · `tt_landing_unlocked_order_ids_v1`；旧 session **一次迁移** | `landingItinerarySession.ts` · `localStorageJson.ts` |

@@ -57,6 +57,11 @@ describe("useLandingPage product honesty (①)", () => {
     expect(src).toContain("pushMarketOrderBookmarkToggle");
     expect(src).toContain("prevSubmittingRef");
     expect(src).toContain("scrollRestoration");
+    expect(src).toContain("isLandingAiItineraryFormReady");
+    expect(src).toContain("parseLandingAiBudget");
+    expect(src).toContain("aiGenerateCommitted");
+    expect(src).toContain("showLiveAiResults");
+    expect(src).toContain("previewLocked");
   });
 
 });
