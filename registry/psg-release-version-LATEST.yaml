@@ -1,47 +1,50 @@
 # Active PSG Release Version · unique Release identity pin
 # SSOT policy: registry/psg-release-source-of-truth.v1.yaml
-# Mint: PSG-REL-20260722-STAGING-ALIGN-W0 (FG-15-B ELAPSED · Reality-W0 Runtime Alignment)
-# Prior candidate tip PSG-REL-20260720-WEB3-CAND-V2 @ 652bbab5 → SUPERSEDED (immutable cite OK)
+# FINAL RELEASE BASELINE (FROZEN): Candidate v2 is the unique ACTIVE pin.
+# PSG-REL-20260722-STAGING-ALIGN-W0 = SUPERSEDED (Reality-W0 align mint · not release mainline).
 
 schema: traveltrust.psg_release_version.v1
 version: 1
 
 active:
-  psg_release_version: "PSG-REL-20260722-STAGING-ALIGN-W0"
-  status: STAGING_ALIGN_W0_ACTIVE
-  role: ACTIVE_STAGING_RUNTIME_ALIGN
+  psg_release_version: "PSG-REL-20260720-WEB3-CAND-V2"
+  status: WEB3_CANDIDATE_BASELINE_ACTIVE
+  role: ACTIVE_WEB3_CANDIDATE_BASELINE
   fg15_track: FG-15-B_ELAPSED
-  promotion: STAGING_CANONICAL_DEPLOY
-  freeze: CERTIFICATION_PIN_ACTIVE_TRACK_HEAD
-  recorded_utc: "2026-07-21T18:37:43Z"
-  git_sha: "TRACK_HEAD"
-  git_sha_short: "TRACK_HEAD"
-  artifact_sha: "TRACK_HEAD"
-  runtime_image_sha: "gitsha:TRACK_HEAD"
+  promotion: PROMOTION_CANDIDATE
+  freeze: FINAL_RELEASE_BASELINE_FROZEN
+  recorded_utc: "2026-07-22T04:50:00Z"
+  git_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+  git_sha_short: "97289a718561"
+  artifact_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+  runtime_image_sha: "gitsha:97289a7185610ef0ad8822f0af04bfa533e42986"
   contract_bytecode_pin: "v311_fund_safety_candidate_v2"
   contract_digest_bundle_sha256: "20e6d564046bf984e1a02a6feaf5f052dbd2abf2cc18ecd34d38ca7b118740ab"
-  release_identity_evidence: "evidence/PSG-REALITY-CLOSURE/W0-RUNTIME-ALIGNMENT-LATEST.json"
+  release_identity_evidence: "evidence/GO_web3_candidate_v2/WEB3-CANDIDATE-V2-RELEASE-IDENTITY-LATEST.json"
   database_baseline: "staging_rc_ssot_alignment.v1#expected_staging_surface"
   cms_baseline: "public_display_10x4 + catalog_bake=1"
-  evidence_bundle: "evidence/PSG-REALITY-CLOSURE"
-  evidence_policy: APPEND_ONLY_REALITY_CLOSURE
+  evidence_bundle: "evidence/GO_web3_candidate_v2"
+  evidence_policy: APPEND_ONLY_CANDIDATE_V2
   local_testnet_consistency: REQUIRED_SAME_VERSION
   permanent_same_version: [local, staging, artifact, runtime, data, evidence]
   release_identity_mutate: ALLOWED_NEW_MINT_ONLY
-  pcr_promotion: PCR-20260721-002-STAGING-ALIGN-CAND-V2
-  mint_new_release_version: ALLOWED_AFTER_FG15_B_ELAPSED
+  pcr_promotion: PCR-20260722-DEEP-AUDIT-RESTORE-CAND-V2-ACTIVE
+  mint_new_release_version: FORBIDDEN_WHILE_FINAL_RELEASE_FROZEN
   web3_mainline: registry/web3-mainline.v1.yaml
+  final_release_baseline: registry/final-release-baseline.v1.yaml
+  engineering_ssot_anchor: registry/engineering-ssot-anchor.v1.yaml
   notes: >
-    Mint after FG-15-B ELAPSED for Reality-W0: Runtime Attestation + Canonical Deploy
-    wrappers. Does NOT unlock Production Entry / Hard Gate / Mainnet / Production GO.
-    Prior Candidate v2 pin remains citable as SUPERSEDED_CANDIDATE_TIP.
+    Restored as unique ACTIVE under FINAL RELEASE FROZEN after deep consistency audit
+    found STAGING-ALIGN still ACTIVE in committed registry (pollution). Staging runtime
+    already attests Candidate tip. Does NOT unlock Production GO / Hard Gate / new pin mint.
 
 superseded:
-  - psg_release_version: "PSG-REL-20260720-WEB3-CAND-V2"
-    status: SUPERSEDED_CANDIDATE_TIP
-    git_sha: "652bbab51a1eb0652ea31f18ae4146fbe325a1ea"
-    superseded_by: "PSG-REL-20260722-STAGING-ALIGN-W0"
-    reason: reality_w0_attestation_and_canonical_deploy_mint
+  - psg_release_version: "PSG-REL-20260722-STAGING-ALIGN-W0"
+    status: SUPERSEDED_REALITY_W0_ALIGN_MINT
+    git_sha: "TRACK_HEAD"
+    superseded_by: "PSG-REL-20260720-WEB3-CAND-V2"
+    reason: final_release_unique_baseline_forbids_staging_align_as_active
+    recorded_utc: "2026-07-22T04:50:00Z"
   - psg_release_version: "PSG-REL-20260719-FG15-09c72b93"
     status: ARCHIVED_HISTORICAL
     git_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"

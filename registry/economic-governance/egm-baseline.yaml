@@ -1,0 +1,220 @@
+# schema: traveltrust.psg_egm_baseline.v1
+# PSG-EGM · Economic Governance Model Certification
+# Type: Cross-Cutting Certification Package (NOT a PSG Gate)
+# Final Decision: 2026-07-20 · Boundary reconfirm + Framework Design CLOSED
+machine_key: TT_PSG_EGM
+package_id: PSG-EGM
+title: Economic Governance Model Certification
+title_zh: 经济治理模型认证包
+type: CROSS_CUTTING_CERTIFICATION_PACKAGE
+not:
+  - PSG_GATE
+  - PSG_COMPLETE_CONDITION
+  - PRODUCTION_RELEASE_BLOCKER
+  - HARD_GATE_INPUT
+  - MAINNET_WAVE_INPUT
+
+adjudication: CLOSED_AS_FRAMEWORK_DESIGN
+next_phase: WAIT_FOR_EVIDENCE_PHASE
+status: CLOSED_AS_FRAMEWORK_DESIGN
+evidence_status: NOT_STARTED
+certification_status: WAITING
+blocking: NONE
+economic_changes: FORBIDDEN
+hard_gate_impact: NONE
+production_go_impact: NONE
+candidate_v2_impact: NONE
+recalculate_impact: NONE
+release_mainline_interference: FORBIDDEN
+
+final_state:
+  framework: CLOSED
+  evidence: NOT_STARTED
+  certification: WAITING
+  blocking: NONE
+
+# Design complete ≠ Certification complete (Owner 2026-07-20)
+lifecycle:
+  design: CLOSED_AS_FRAMEWORK_DESIGN
+  certification: WAITING_FOR_EVIDENCE
+  path_to_certification:
+    - real_operations_data
+    - market_data
+    - onchain_execution_evidence
+  forbid_path_to_certification:
+    - economic_number_optimization
+    - document_rewrite_as_certification
+
+next_phase_doctrine: >
+  Do not further optimize economic numbers. Fill real operations data,
+  market data, and on-chain execution evidence. Only then EGM moves from
+  design-complete to certification-complete.
+
+psg_complete_equation_unchanged: true
+psg_complete_equation: "L1 ∧ L2 ∧ L3 ∧ L4 ∧ L5"
+sole_exit_remains: registry/psg-production-completion-matrix.v1.yaml
+
+purpose: >
+  Prove TravelTrust economic governance rules stay consistent across
+  Constitution, Registry, protocol docs, and investor materials, and that
+  the Regional Seat Framework can scale globally via Country Cases
+  (not per-country economic models).
+
+boundary:
+  l5_fg_web3_owns:
+    - onchain_money_path
+    - treasury_contracts
+    - governance_contracts
+    - timelock
+    - money_path_runtime
+    - fg15_b_evidence
+  psg_egm_owns:
+    - economic_rule_consistency
+    - global_regional_seat_framework
+    - revenue_distribution_policy_doc_alignment
+    - market_assumption_evidence
+    - regional_seat_valuation_cases
+    - long_term_economic_sustainability_analysis
+    - case_management_rules
+
+case_management:
+  hierarchy:
+    - Global_Framework
+    - Regional_Seat_Instance
+    - Country_Case_Evidence
+  forbid_parallel_national_models:
+    - China_Economic_Model_v1
+    - Japan_Economic_Model_v1
+    - Thailand_Economic_Model_v1
+  cases_under_egm_05_only: true
+
+relationship:
+  completion_matrix: orthogonal_input_only
+  l5_fg_web3: >
+    L5 verifies on-chain / runtime execution of money-path and fee flows.
+    EGM verifies rule completeness, unity, and auditability — not chain execution.
+  economic_constitution: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+  economic_model_freeze: ACTIVE
+  appendix_f_candidate_binding: LOCKED
+  fg15_b: STANDBY_APPEND_ONLY
+
+current_window:
+  ECONOMIC_MODEL_FREEZE: ACTIVE
+  FG_15_B: STANDBY
+  Hard_Gate: REFUSED
+  Recalculate: WAIT
+
+current_phase_allows:
+  - framework
+  - registry
+  - evidence_structure
+  - cockpit_visibility
+
+current_phase_forbids:
+  - economic_parameter_optimization
+  - roi_finalization
+  - seat_price_negotiation
+  - investor_return_promise
+  - token_allocation_change
+
+evidence_phase_entry_requires_all:
+  - fg15_b_final_evidence
+  - l5_final_evidence
+  - economic_freeze_window_closed
+evidence_phase_entry_active: false
+
+evidence_phase_ladder:
+  - EGM-00
+  - EGM-01
+  - EGM-02
+  - EGM-03
+  - EGM-04
+  - EGM-05
+  - EGM-06
+
+release_mainline_priority:
+  - FG-15-B
+  - L5_Final_Evidence
+  - PSG_Recalculate
+  - Formal_Release_Baseline
+psg_egm_role_during_release: frozen_framework_non_blocking
+
+financing_prep_ladder_future_only:
+  - economic_freeze_lift
+  - egm_evidence_collection
+  - market_model_validation
+  - regional_seat_valuation_cases
+  - investor_economic_appendix
+  - regional_seat_offering_package
+financing_prep_active_now: false
+
+constraints:
+  forbid_modify_ttg_allocation: true
+  forbid_modify_45_55_split: true
+  forbid_modify_regional_seat_economic_rules: true
+  forbid_reprice_china_80m_as_new_model: true
+  forbid_financing_commitment_models_now: true
+  forbid_constitution_economic_edits: true
+  forbid_trigger_recalculate: true
+  forbid_hard_gate_flip: true
+  forbid_mainnet_wave: true
+
+modules:
+  - id: EGM-00
+    name: Economic_SSOT_Integrity
+    output: ALIGNED|DRIFT
+    status: FRAMEWORK_CLOSED
+    evidence: NOT_STARTED
+  - id: EGM-01
+    name: Token_Governance_Alignment
+    note: Verify only — do not redesign Tokenomics
+    status: FRAMEWORK_CLOSED
+    evidence: NOT_STARTED
+  - id: EGM-02
+    name: Regional_Seat_Framework
+    structure: Global_Framework_to_Regional_Seat_to_Country_Instance_to_Local_Ecosystem
+    cases_not_models: true
+    status: FRAMEWORK_CLOSED
+    evidence: NOT_STARTED
+  - id: EGM-03
+    name: Revenue_Distribution_Policy
+    rule_example: Regional_45_Protocol_DAO_55
+    verifies: rule_consistency_not_onchain_execution
+    onchain_belongs_to: L5_FG_Web3
+    status: FRAMEWORK_CLOSED
+    evidence: NOT_STARTED
+  - id: EGM-04
+    name: Market_and_Growth_Evidence
+    type: Investor_Governance_Evidence
+    production_go_condition: false
+    status: FRAMEWORK_CLOSED
+    evidence: NOT_STARTED
+  - id: EGM-05
+    name: Regional_Seat_Valuation
+    case_slots:
+      - Case-CN-001
+      - Case-JP-001
+      - Case-TH-001
+    not_named: National_Economic_Model
+    status: FRAMEWORK_CLOSED
+    evidence: NOT_STARTED
+  - id: EGM-06
+    name: Sustainability_Model
+    checks:
+      - treasury_health
+      - incentive_reasonableness
+      - no_dependency_on_token_price_appreciation
+      - revenue_closed_loop
+    status: FRAMEWORK_CLOSED
+    evidence: NOT_STARTED
+
+paths:
+  human_master: docs/governance/economic-governance/TT-EGM-MASTER.md
+  cockpit: docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md
+  evidence_root: evidence/PSG-EGM/
+  registry_dir: registry/economic-governance/
+
+recorded_utc: "2026-07-20T01:42:00Z"
+decision: PSG_EGM_FINAL_ARCHITECTURE_CROSS_CUTTING_20260720
+boundary_reconfirm_utc: "2026-07-20T01:42:00Z"
+evidence_phase_entry_recorded_utc: "2026-07-20T02:00:00Z"

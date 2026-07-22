@@ -1,0 +1,31 @@
+# PCR · Deep consistency audit — restore Candidate ACTIVE + EGM files + deploy defaults
+# ≠ new pin mint · ≠ GO · ≠ formal cert
+
+schema: traveltrust.psg_change_record.v1
+id: PCR-20260722-DEEP-AUDIT-RESTORE-CAND-V2-ACTIVE
+recorded_utc: "2026-07-22T04:50:00Z"
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+git_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+change_class: POLLUTION_RESTORE_UNDER_FROZEN_BASELINE
+equals_production_go: false
+core_version_modified: false
+
+summary: >
+  Deep audit found committed registry ACTIVE still STAGING-ALIGN-W0 and deploy
+  script defaults still STAGING-ALIGN; EGM machine/human paths missing from tree
+  (restored from git blobs). Restored unique ACTIVE = Candidate v2 @ 97289a71
+  without minting a new Release Version. Then three-baseline Delta dry-run.
+
+artifacts:
+  - registry/psg-release-version-LATEST.yaml
+  - scripts/deploy/_lib.sh
+  - scripts/dev/deploy-tt-web-staging.sh
+  - scripts/dev/phase2-staging-fly-deploy-and-sync.sh
+  - registry/economic-governance/egm-baseline.yaml
+  - docs/governance/economic-governance/TT-EGM-MASTER.md
+  - scripts/dev/run-psg-delta-recertify-three-baseline-dry-run.py
+
+forbidden:
+  - Production_GO
+  - Hard_Gate_flip
+  - formal_cert_suite_execution_as_PASS
