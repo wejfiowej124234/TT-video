@@ -1,0 +1,97 @@
+{
+  "schema": "traveltrust.ui_delta_inventory.v1",
+  "machine_key": "TT_UI_DELTA_INVENTORY",
+  "status": "BASELINE_ACTIVE",
+  "equals_production_go": false,
+  "equals_staging_grade_go": false,
+  "equals_inventory_pass": false,
+  "rc_tip": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
+  "prior_frozen_rc_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+  "staging_web_tip": null,
+  "staging_web_tip_status": "PENDING_CLEAN_BAKE",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "freeze_pcr": "PCR-20260722-UI-DELTA-P1-05-06-07-FREEZE",
+  "forbidden": [
+    "git_reset_hard_drop_delta",
+    "revert_closed_ui_delta",
+    "dirty_staging_web_bake",
+    "relax_backend_acl",
+    "claim_inventory_or_reality_or_go"
+  ],
+  "must_retain": [
+    {
+      "id": "D-HOME-AI",
+      "tip": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
+      "paths": ["frontend/lib/landingAiItineraryFormReady.ts"],
+      "markers": ["formReady", "aiGenerateCommitted"]
+    },
+    {
+      "id": "D-ACL-MARKET",
+      "tip": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+      "paths": [
+        "frontend/components/market/OrderDetailDrawer.tsx",
+        "frontend/components/market/OrderCard.tsx"
+      ],
+      "markers": ["participantReadOk", "data-tt-market-card-own-escrow"]
+    },
+    {
+      "id": "D-ACL-ESCROW",
+      "tip": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+      "paths": ["frontend/components/escrow/EscrowDetail/useEscrowDetail.ts"],
+      "markers": ["login_required", "clearEscrowOrderPrefetch"]
+    },
+    {
+      "id": "D-UNLOCK",
+      "tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+      "paths": ["frontend/components/landing/UnlockModal.tsx"],
+      "markers": ["unlock_honesty_badge"]
+    },
+    {
+      "id": "D-GOV-VOTE",
+      "tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+      "paths": [
+        "frontend/app/governance/proposals/[id]/GovernanceProposalDetailLoadedArticle.tsx"
+      ],
+      "markers": ["data-tt-gov-offchain-vote-gated"]
+    },
+    {
+      "id": "D-ADMIN-WRITE",
+      "tip": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
+      "paths": ["frontend/app/admin/users/AdminUsersDataSection.tsx"],
+      "markers": ["data-tt-admin-users-write-gate", "useAdminCanWrite"]
+    },
+    {
+      "id": "D-COMM-SHOWCASE",
+      "tip": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
+      "paths": [
+        "frontend/components/community/CommunityRelationalShowcaseHonestyNote.tsx",
+        "frontend/app/community/friends/page.tsx"
+      ],
+      "markers": [
+        "data-tt-community-relational-showcase",
+        "data-tt-community-friends-showcase-add-gated"
+      ]
+    },
+    {
+      "id": "D-STUDIO-GATE",
+      "tip": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
+      "paths": [
+        "frontend/components/market/useMarketStandaloneBusinessPage.ts",
+        "frontend/components/market/MarketStandaloneBusinessPage.tsx"
+      ],
+      "markers": ["studioEligible", "data-tt-market-subsite-studio-gated"]
+    }
+  ],
+  "audit_closure": {
+    "P0-01": "CLOSED_IN_6b85bde9",
+    "P0-02": "CLOSED_IN_6b85bde9",
+    "P0-03": "CLOSED_IN_6b85bde9",
+    "P1-01": "CLOSED_IN_1ed03a9a",
+    "P1-02": "CLOSED_IN_6b85bde9",
+    "P1-03": "CLOSED_IN_6b85bde9",
+    "P1-04": "CLOSED_IN_1ed03a9a",
+    "P1-05": "CLOSED_IN_3b310ca8_PENDING_BAKE",
+    "P1-06": "CLOSED_IN_3b310ca8_PENDING_BAKE",
+    "P1-07": "CLOSED_IN_3b310ca8_PENDING_BAKE"
+  }
+}

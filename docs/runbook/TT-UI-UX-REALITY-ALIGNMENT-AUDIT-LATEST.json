@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.ui_ux_reality_alignment_audit.v1",
   "machine_key": "TT_UI_UX_REALITY_ALIGNMENT_AUDIT",
-  "status": "P0_CLOSED_P1_IN_PROGRESS",
+  "status": "P0_CLOSED_P1_05_06_07_PENDING_WEB_BAKE",
   "equals_production_go": false,
   "equals_staging_grade_go": false,
   "mutates_baseline_tip": true,
@@ -239,13 +239,14 @@
     "Do not start Inventory/Reality/GO unless Owner restarts that track"
   ],
   "p1_remediation": {
-    "P1-01": "LANDED_PRODUCT_TIP_PENDING_WEB_BAKE",
+    "P1-01": "CLOSED_IN_1ed03a9a",
     "P1-02": "CLOSED_IN_6b85bde9",
     "P1-03": "CLOSED_IN_6b85bde9",
-    "P1-04": "LANDED_PRODUCT_TIP_PENDING_WEB_BAKE",
-    "P1-05": "OPEN",
-    "P1-06": "OPEN",
-    "P1-07": "OPEN"
+    "P1-04": "CLOSED_IN_1ed03a9a",
+    "P1-05": "CLOSED_IN_3b310ca8_PENDING_BAKE",
+    "P1-06": "CLOSED_IN_3b310ca8_PENDING_BAKE",
+    "P1-07": "CLOSED_IN_3b310ca8_PENDING_BAKE"
   },
-  "staging_web_tip_acl": "6b85bde9773788638c4d8cf031dfe48ef56d1706"
+  "staging_web_tip_acl": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+  "product_tip_p1_050607": "3b310ca856ce2850b37a6f993f8c5649e87903b1"
 }

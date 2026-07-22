@@ -23,7 +23,7 @@ except ImportError:
     yaml = None  # type: ignore
 
 ROOT = Path(__file__).resolve().parents[2]
-TIP = "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+TIP = "3b310ca856ce2850b37a6f993f8c5649e87903b1"
 PIN = "PSG-REL-20260720-WEB3-CAND-V2"
 PROFILE = "v311_fund_safety_candidate_v2"
 # Documented Staging lag tips accepted as Expected Difference (not P0).

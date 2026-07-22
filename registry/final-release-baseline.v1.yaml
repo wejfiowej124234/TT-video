@@ -3,7 +3,7 @@
 # JSON: docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.json
 # Gate: bash scripts/gates/check-final-release-baseline-freeze-gate.sh
 #
-# Prior freeze (home AI preview) superseded as living tip by Market→Escrow ACL Delta.
+# P1-05/06/07 tip 3b310ca8 extends FROZEN RC 1ed03a9a without dropping ancestry.
 # Pin unchanged. ≠ Staging-grade GO ≠ Production GO ≠ Hard Gate.
 
 schema: traveltrust.final_release_baseline.v1
@@ -12,19 +12,19 @@ machine_key: TT_FINAL_RELEASE_BASELINE
 status: BASELINE_FROZEN
 freeze_status: FROZEN
 cert_suite: DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO
-ui_delta_status: WEB_TIP_ALIGNED_API_EXPECTED_LAG
-recorded_utc: "2026-07-22T08:38:04Z"
-frozen_utc: "2026-07-22T08:22:54Z"
-freeze_pcr: PCR-20260722-UI-DELTA-RC-CONSOLIDATE-FREEZE
-prior_freeze_pcr: PCR-20260722-UI-DELTA-MARKET-ESCROW-ACL-GATE-FREEZE
+ui_delta_status: PRODUCT_TIP_FROZEN_PENDING_WEB_BAKE
+recorded_utc: "2026-07-22T08:47:56Z"
+frozen_utc: "2026-07-22T08:47:56Z"
+freeze_pcr: PCR-20260722-UI-DELTA-P1-05-06-07-FREEZE
+prior_freeze_pcr: PCR-20260722-UI-DELTA-RC-CONSOLIDATE-FREEZE
 pollution_cleanup: docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md
 equals_production_go: false
 equals_staging_grade_go: false
 equals_psg_complete: false
 equals_reality_closure_pass: false
 cert_executed_this_session: false
-delta_dry_run_verdict: DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE
-delta_dry_run_recorded_utc: "2026-07-22T08:38:04Z"
+delta_dry_run_verdict: PENDING_AFTER_WEB_TIP_BAKE
+delta_dry_run_recorded_utc: null
 
 engineering_ssot_anchor: registry/engineering-ssot-anchor.v1.yaml
 system_architecture_human: docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md
@@ -52,15 +52,15 @@ unique_system:
     machine: registry/economic-governance/egm-baseline.yaml
     evidence_status: NOT_STARTED
   code_release_tip:
-    git_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
-    git_sha_short: "1ed03a9a959d"
-    selection_reason: ui_delta_rc_consolidate_acl_plus_unlock_gov_vote
+    git_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+    git_sha_short: "3b310ca856ce"
+    selection_reason: ui_delta_p1_05_06_07_admin_showcase_studio
     worktree_policy: UI_DELTA_COMMITTED_TRACK_B_DIRT_ISOLATED
-    freeze_commit_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+    freeze_commit_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
     runtime_tip_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
-    runtime_redeploy_required_before_cert: false
+    runtime_redeploy_required_before_cert: true
     note: >
-      Single RC tip consolidates ACL (6b85bde9) + Unlock/gov (1ed03a9a).
-      Staging Web bake aligned @ tip. API tip lag Expected Difference.
-      Page-surface Unsplash residuals = CMS Expected Difference (≠ ACL P0).
-      Prior product commits retained in ancestry — do not drop.
+      RC tip 3b310ca8 closes P1-05/06/07; retains 1ed03a9a + 6b85bde9 ancestry.
+      Staging Web bake PENDING (clean tip worktree). API tip lag Expected.
+      Page-surface Unsplash residuals = CMS Expected Difference.
+      Prior product commits retained — do not drop / reset / revert.

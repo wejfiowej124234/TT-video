@@ -1,7 +1,7 @@
 # TT · UI/UX Reality Alignment Audit（用户真实路径一致性扫描）
 
 **Machine key:** `TT_UI_UX_REALITY_ALIGNMENT_AUDIT`  
-**Status:** `P0_CLOSED_P1_IN_PROGRESS` · **≠** GO · **≠** Inventory/Reality 恢复  
+**Status:** `P0_CLOSED_P1_05_06_07_PENDING_WEB_BAKE` · **≠** GO · **≠** Inventory/Reality 恢复  
 **Recorded UTC:** `2026-07-22T07:28:47Z` · **Remediation UTC:** `2026-07-22T07:45:00Z`  
 **JSON:** [`TT-UI-UX-REALITY-ALIGNMENT-AUDIT-LATEST.json`](./TT-UI-UX-REALITY-ALIGNMENT-AUDIT-LATEST.json)  
 **Policy:** [`TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY`](./TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md)

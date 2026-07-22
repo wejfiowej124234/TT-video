@@ -14,9 +14,9 @@ active:
   promotion: PROMOTION_CANDIDATE
   freeze: FINAL_RELEASE_BASELINE_FROZEN
   recorded_utc: "2026-07-22T08:22:54Z"
-  git_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
-  git_sha_short: "1ed03a9a959d"
-  artifact_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+  git_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+  git_sha_short: "3b310ca856ce"
+  artifact_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
   runtime_image_sha: "gitsha:97289a7185610ef0ad8822f0af04bfa533e42986"
   contract_bytecode_pin: "v311_fund_safety_candidate_v2"
   contract_digest_bundle_sha256: "20e6d564046bf984e1a02a6feaf5f052dbd2abf2cc18ecd34d38ca7b118740ab"

@@ -1,0 +1,72 @@
+# PCR-20260722-UI-DELTA-P1-05-06-07-FREEZE
+#
+# Continue UI/UX Reality Alignment from FROZEN RC 1ed03a9a without dropping ancestry.
+# Product tip 3b310ca8 closes P1-05/06/07 (Admin write gate · Community showcase honesty ·
+# Market studio publish eligibility). Prior Deltas retained (Home AI · Cinema · ACL · Unlock · gov).
+# Inventory/Reality/GO remain paused. No new PSG pin mint.
+
+schema: traveltrust.psg_change_record.v1
+pcr_id: PCR-20260722-UI-DELTA-P1-05-06-07-FREEZE
+recorded_utc: "2026-07-22T08:47:56Z"
+class: DELTA_CHANGE_UI
+equals_production_go: false
+equals_staging_grade_go: false
+new_psg_release_version_minted: false
+
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+prior_runtime_tip: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+ui_delta_git_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+freeze_status: FROZEN
+release_candidate_tip: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+
+must_retain_ancestry:
+  - "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566" # Home AI previewLocked
+  - "f9c227de" # Cinema / promo lineage (abbrev ok in note)
+  - "6b85bde9773788638c4d8cf031dfe48ef56d1706" # Market/Escrow ACL
+  - "1ed03a9a959d2404fd561a72dc724b59ecf1635e" # Unlock + off-chain vote
+
+delta_scope:
+  - frontend/app/admin/users/AdminUsersDataSection.tsx
+  - frontend/app/community/friends/page.tsx
+  - frontend/components/community/CommunityRelationalShowcaseHonestyNote.tsx
+  - frontend/components/market/MarketStandaloneBusinessPage.tsx
+  - frontend/components/market/useMarketStandaloneBusinessPage.ts
+  - frontend/locales/zh.ts
+  - frontend/locales/en.ts
+  - docs/runbook/TT-UI-DELTA-INVENTORY-LATEST.md
+
+gates:
+  engineering_ssot_anchor: PASS
+  staging_web_tip: PENDING_BAKE_3b310ca8
+  delta_recertify_dry_run: RUN_AFTER_WEB_TIP_BAKE
+  ui_delta_inventory_baseline: ACTIVE
+
+expected_difference:
+  - id: STAGING_WEB_TIP_PENDING_BAKE
+    disposition: CONFIRM_DESIGN
+    detail: Product tip frozen; Staging Web clean-tip bake required before align.
+  - id: STAGING_API_TIP_LAG
+    disposition: CONFIRM_DESIGN
+    detail: FE-only Delta; API tip lag Expected.
+  - id: FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP
+    disposition: CONFIRM_DESIGN
+    detail: Freeze overlay docs commit may sit ahead of product tip 3b310ca8.
+  - id: PAGE_SURFACE_UNSPLASH_RESIDUAL
+    disposition: CONFIRM_DESIGN
+    detail: CMS page-surface Unsplash residuals ≠ this UI Delta P0.
+
+forbidden:
+  - Reality_W0_W7_as_mainline
+  - Hard_Gate_flip
+  - Production_GO
+  - new_pin_mint
+  - mutate_FG15_A_archive
+  - drop_prior_ui_delta_commits
+  - git_reset_hard_drop_delta
+  - dirty_staging_web_bake
+
+next:
+  - Staging Web redeploy @ 3b310ca8 (clean tip worktree)
+  - eight-way + Delta dry-run
+  - align FINAL RELEASE WEB_TIP_ALIGNED
+  - Inventory/Reality/GO stay paused
