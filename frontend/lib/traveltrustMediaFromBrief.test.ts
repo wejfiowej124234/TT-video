@@ -26,16 +26,17 @@ describe("traveltrustMediaFromBrief role env keys", () => {
     );
   });
 
-  it("dedupes layout video prefetch when roles share the same default mp4", () => {
+  it("keeps distinct default mp4 per role and dedupes prefetch by href", () => {
     const roles = resolveAllRoleMediaUrls(TRAVELTRUST_PAGE_BRIEF_DEV_FALLBACK);
     const merchant = roles.find((r) => r.roleId === "merchant");
     const acquisition = roles.find((r) => r.roleId === "acquisition");
-    expect(merchant?.mp4).toBeTruthy();
-    expect(acquisition?.mp4).toBe(merchant?.mp4);
+    expect(merchant?.mp4).toBe("/media/traveltrust/roles/merchant.mp4");
+    expect(acquisition?.mp4).toBe("/media/traveltrust/roles/acquisition.mp4");
+    expect(acquisition?.mp4).not.toBe(merchant?.mp4);
     const prefetch = uniqueRoleVideoPrefetchEntries(roles);
     const mp4s = prefetch.map((r) => r.mp4);
     expect(new Set(mp4s).size).toBe(mp4s.length);
-    expect(prefetch.length).toBeLessThan(roles.length);
+    expect(prefetch.length).toBe(roles.length);
     expect(prefetch.every((r) => r.roleId)).toBe(true);
   });
 });

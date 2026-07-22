@@ -59,8 +59,8 @@ export const TRAVELTRUST_HERO_DEFAULT_LOOP = "/media/traveltrust/hero-loop.mp4";
 const ROLE_DEFAULT_MP4: Record<TravelTrustRoleId, string> = {
   traveler: "/media/traveltrust/roles/traveler.mp4",
   guide: "/media/traveltrust/roles/guide.mp4",
-  merchant: "/media/traveltrust/roles/provider.mp4",
-  acquisition: "/media/traveltrust/roles/provider.mp4",
+  merchant: "/media/traveltrust/roles/merchant.mp4",
+  acquisition: "/media/traveltrust/roles/acquisition.mp4",
   region_steward: "/media/traveltrust/roles/region_steward.mp4",
 };
 

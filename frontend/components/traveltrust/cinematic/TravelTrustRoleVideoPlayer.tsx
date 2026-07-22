@@ -8,6 +8,7 @@ import type { TravelTrustRoleConfig } from "@/app/traveltrust/traveltrustIdentit
 import { trackTravelTrustEvent } from "@/lib/analytics";
 import { useTravelTrustPageBriefContext } from "@/app/traveltrust/TravelTrustPageBriefContext";
 import { useRoleMediaUrlsHydrated } from "@/lib/useTraveltrustMediaUrlsHydrated";
+import { TravelTrustRoleVideoCinemaOverlay } from "./TravelTrustRoleVideoCinemaOverlay";
 import {
   prefersTheaterWarmPlaceholder,
   resolveTheaterRoleWarmUi,
@@ -26,6 +27,7 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
   const reduceMotion = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [cinemaOpen, setCinemaOpen] = useState(false);
   const [mediaError, setMediaError] = useState(false);
   const { brief } = useTravelTrustPageBriefContext();
   const { media: roleMedia, hydrationSettled } = useRoleMediaUrlsHydrated(role, brief);
@@ -46,14 +48,15 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
   useEffect(() => {
     if (!active) {
       setPlaying(false);
+      setCinemaOpen(false);
       setMediaError(false);
       videoRef.current?.pause();
     }
   }, [active, role.id]);
 
-  /** 生产素材：Tab 切换后静音自动预览；暖占位需用户点播放 */
+  /** 生产素材：Tab 切换后静音自动预览；暖占位 / 剧场打开时不卡内抢播 */
   useEffect(() => {
-    if (!active || !playable || reduceMotion || mediaError || preferWarmPlaceholder) return;
+    if (!active || !playable || reduceMotion || mediaError || preferWarmPlaceholder || cinemaOpen) return;
     const el = videoRef.current;
     if (!el) return;
     el.muted = true;
@@ -66,20 +69,32 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
         });
     }, 400);
     return () => window.clearTimeout(timer);
-  }, [active, playable, reduceMotion, mediaError, preferWarmPlaceholder, role.id, flashKey]);
+  }, [active, playable, reduceMotion, mediaError, preferWarmPlaceholder, cinemaOpen, role.id, flashKey]);
 
-  const onPlay = useCallback(() => {
+  const onCinemaClose = useCallback((_reason: "ended" | "user") => {
+    setCinemaOpen(false);
+    setPlaying(false);
     const el = videoRef.current;
-    if (!el) return;
+    if (el) {
+      el.pause();
+      el.currentTime = 0;
+    }
+  }, []);
+
+  /** 用户点播：打开 L5 cinematic 剧场（入场动画 · 播完自动返回） */
+  const onPlay = useCallback(() => {
+    if (!playable || !mp4Src) return;
     trackTravelTrustEvent("traveltrust_role_video_play", {
       source: "roles",
       target: role.id,
       role: role.id,
     });
-    void el.play().then(() => setPlaying(true)).catch(() => setMediaError(true));
-  }, [role.id]);
+    videoRef.current?.pause();
+    setPlaying(false);
+    setCinemaOpen(true);
+  }, [mp4Src, playable, role.id]);
 
-  const showVideoLayer = active && playable && !reduceMotion && playing;
+  const showVideoLayer = active && playable && !reduceMotion && playing && !cinemaOpen;
   const showStaticFrame = active && reduceMotion && Boolean(posterSrc);
 
   return (
@@ -103,15 +118,17 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
         data-tt-traveltrust-role-media-hydration-settled={hydrationSettled ? "1" : "0"}
         data-tt-traveltrust-role-video-warm-placeholder-l5={preferWarmPlaceholder ? "1" : "0"}
         data-tt-traveltrust-role-video-playing={playing ? "1" : "0"}
+        data-tt-traveltrust-role-video-cinema-open={cinemaOpen ? "1" : "0"}
+        data-tt-traveltrust-role-video-fullscreen-on-user-play="cinema-l5"
         data-tt-traveltrust-role-video-autoplay="muted"
         data-tt-traveltrust-role-video-static-frame={showStaticFrame ? "1" : "0"}
-        className={`${TT_ROLE_VIDEO_L5.frameClass} ${warmUi.ring} ${active ? warmUi.glow : TT_ROLE_VIDEO_L5.idleFrameBorderClass} ${playable && !playing && !reduceMotion ? "cursor-pointer" : ""}`}
+        className={`${TT_ROLE_VIDEO_L5.frameClass} ${warmUi.ring} ${active ? warmUi.glow : TT_ROLE_VIDEO_L5.idleFrameBorderClass} ${playable && !cinemaOpen && !reduceMotion ? "cursor-pointer" : ""}`}
         initial={reduceMotion ? false : { opacity: 0.92 }}
         animate={active && !reduceMotion ? { opacity: 1 } : { opacity: 1 }}
         transition={{ opacity: { duration: TT_ROLE_VIDEO_L5.panelRotateDuration } }}
         whileHover={active && !reduceMotion ? TT_ROLE_VIDEO_L5.panelHoverLift : undefined}
         onClick={(e) => {
-          if (!playable || playing || reduceMotion) return;
+          if (!playable || cinemaOpen || reduceMotion) return;
           if ((e.target as HTMLElement).closest("[data-tt-traveltrust-role-video-play-cta]")) return;
           onPlay();
         }}
@@ -349,7 +366,7 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
           />
         ) : null}
 
-        {!playing && active && !showStaticFrame ? (
+        {!playing && active && !showStaticFrame && !cinemaOpen ? (
           <motion.div
             className="absolute inset-0 z-[3] flex flex-col items-center justify-center gap-2.5 px-4"
             data-tt-traveltrust-role-video-play-overlay="1"
@@ -416,6 +433,24 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
           </motion.div>
         ) : null}
       </motion.div>
+      {mp4Src ? (
+        <TravelTrustRoleVideoCinemaOverlay
+          open={cinemaOpen}
+          roleLabel={roleLabel}
+          mp4Src={mp4Src}
+          webmSrc={webmSrc || undefined}
+          posterSrc={posterSrc || undefined}
+          reduceMotion={reduceMotion}
+          onClose={onCinemaClose}
+          closeLabel={t("traveltrust_role_video_cinema_close")}
+          dismissHint={t("traveltrust_role_video_cinema_dismiss_hint")}
+          regionLabel={t("traveltrust_role_video_cinema_region_aria", { role: roleLabel })}
+          playLabel={t("traveltrust_video_play")}
+          pauseLabel={t("traveltrust_role_video_cinema_pause")}
+          muteLabel={t("traveltrust_role_video_cinema_mute")}
+          unmuteLabel={t("traveltrust_role_video_cinema_unmute")}
+        />
+      ) : null}
     </motion.div>
   );
 }

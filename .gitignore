@@ -97,3 +97,14 @@ tmp-recon-classify.py
 
 # RC1 Release Lock · untracked code quarantine (not part of candidate)
 .rc1-quarantine/
+
+# TravelTrust role promo MP4s (Owner drop → sync script; not git SSOT)
+frontend/public/media/traveltrust/roles/traveler.mp4
+frontend/public/media/traveltrust/roles/guide.mp4
+frontend/public/media/traveltrust/roles/merchant.mp4
+frontend/public/media/traveltrust/roles/acquisition.mp4
+frontend/public/media/traveltrust/roles/provider.mp4
+frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json
+
+# Owner role promo drop zone (binaries; sync into public/media)
+首页角色宣传片/*.mp4

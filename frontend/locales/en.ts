@@ -7781,10 +7781,16 @@ export default {
   traveltrust_role_video_poster_alt: "{{role}} role video poster",
   traveltrust_role_video_play_hint:
     "Plays tier-1 placeholder clip muted until you use controls; not production media.",
-  traveltrust_role_video_tap_to_play: "Tap the ▶ in the center to play the preview clip",
+  traveltrust_role_video_tap_to_play: "Tap ▶ to play in theater mode",
   traveltrust_role_video_error: "Could not load role video — showing poster only",
   traveltrust_video_placeholder_short: "Video preview not loaded — tap play when available",
   traveltrust_role_video_placeholder_tourism_badge: "Travel narrative",
+  traveltrust_role_video_cinema_close: "Close theater playback",
+  traveltrust_role_video_cinema_dismiss_hint: "Returns automatically when finished · Esc / tap backdrop to close",
+  traveltrust_role_video_cinema_region_aria: "{{role}} role theater playback",
+  traveltrust_role_video_cinema_pause: "Pause",
+  traveltrust_role_video_cinema_mute: "Mute",
+  traveltrust_role_video_cinema_unmute: "Unmute",
   traveltrust_role_video_placeholder_tourism:
     "Warm travel narrative preview — tap the center play button to preview",
   traveltrust_illustrative_badge: "Demo data · not live on-chain",

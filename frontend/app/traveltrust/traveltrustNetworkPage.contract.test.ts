@@ -659,6 +659,24 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(cinematicDir, "TravelTrustRoleVideoPlayer.tsx"), "utf8")).toContain(
       "useRoleMediaUrlsHydrated",
     );
+    expect(readFileSync(join(cinematicDir, "TravelTrustRoleVideoPlayer.tsx"), "utf8")).toContain(
+      "TravelTrustRoleVideoCinemaOverlay",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustRoleVideoCinemaOverlay.tsx"), "utf8")).toContain(
+      "data-tt-traveltrust-role-video-cinema-l5",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustRoleVideoCinemaOverlay.tsx"), "utf8")).toContain(
+      'onEnded={() => requestClose("ended")}',
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustRoleVideoCinemaOverlay.tsx"), "utf8")).toContain(
+      "data-tt-traveltrust-role-video-cinema-cover",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustRoleVideoCinemaOverlay.tsx"), "utf8")).toContain(
+      "data-tt-traveltrust-role-video-cinema-chrome",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustRoleVideoCinemaOverlay.tsx"), "utf8")).not.toContain(
+      "controlsList=",
+    );
     expect(readFileSync(join(__dir, "layout.tsx"), "utf8")).toContain("TravelTrustLayoutDeferredPreload");
     expect(
       readFileSync(join(__dirname, "../../lib/traveltrustPageBrief.server.ts"), "utf8"),

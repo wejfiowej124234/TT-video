@@ -64,6 +64,8 @@ export const TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_MODULES = [
   "theater-tab-tap",
   "start-route-card-shimmer",
   "role-video-play-cta",
+  "role-video-cinema",
+  "role-video-cinema-chrome",
   "role-video-frame-pulse",
   "faq-trigger-tap",
   "trust-facts-card-tap",
@@ -253,7 +255,42 @@ export const TT_ROLE_VIDEO_L5 = {
   idleFrameBorderClass: "border-ref-sun/16",
   playCtaClass:
     "relative flex h-16 w-16 items-center justify-center rounded-full border border-ref-sun/35 bg-ink-900/72 text-ref-sun/95 shadow-[0_8px_32px_rgba(0,0,0,0.45)] ring-1 ring-ref-sun/40 backdrop-blur-md transition hover:scale-105 hover:border-ref-sun/55 hover:bg-ref-sun/10 hover:shadow-[0_0_28px_-8px_rgba(252,164,124,0.45)] motion-sub motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/55",
+  /** 用户点播：站内 cinematic 剧场（非浏览器原生 Fullscreen）· RC 视觉收尾 */
+  cinemaPortalClass: "fixed inset-0 z-[280] flex items-center justify-center p-4 sm:p-6",
+  cinemaScrimClass:
+    "absolute inset-0 bg-[radial-gradient(ellipse_90%_70%_at_50%_42%,rgba(28,20,16,0.72)_0%,rgba(12,10,9,0.92)_55%,rgba(8,6,5,0.97)_100%)] backdrop-blur-md",
+  cinemaStageClass:
+    "relative z-[1] w-full max-w-5xl overflow-hidden rounded-2xl border-2 border-ref-sun/45 bg-ink-950 shadow-[0_28px_90px_-20px_rgba(0,0,0,0.82),0_0_56px_-12px_rgba(252,164,124,0.42),inset_0_1px_0_rgba(255,212,168,0.18)] ring-1 ring-ref-sun/25",
+  cinemaFrameClass: "relative aspect-video w-full overflow-hidden bg-ink-950",
+  cinemaVideoClass: "absolute inset-0 h-full w-full object-cover",
+  cinemaTopBarClass:
+    "pointer-events-none absolute inset-x-0 top-0 z-[2] flex items-start justify-between gap-3 bg-gradient-to-b from-ink-950/95 via-ink-950/70 to-transparent px-3 pb-12 pt-2.5 sm:px-4 sm:pt-3",
+  cinemaTopMetaClass:
+    "pointer-events-none min-w-0 max-w-[min(100%,22rem)] flex-1 rounded-xl border border-ref-sun/25 bg-ink-950/72 px-3 py-2 shadow-[0_8px_24px_-10px_rgba(0,0,0,0.65)] backdrop-blur-md",
+  cinemaTitleClass:
+    "truncate text-meta font-semibold tracking-wide text-[#ffe0c2] drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)] sm:text-small",
+  cinemaHintClass:
+    "mt-0.5 text-[11px] font-medium leading-snug text-[#f3e6d8]/95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] sm:text-meta",
+  cinemaCloseClass:
+    "pointer-events-auto inline-flex min-h-10 min-w-10 shrink-0 items-center justify-center rounded-full border-2 border-ref-sun/55 bg-ink-950/90 text-[#ffe0c2] shadow-[0_8px_24px_-6px_rgba(0,0,0,0.7)] backdrop-blur-md transition hover:border-ref-sun/75 hover:bg-ref-sun/20 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/60",
+  cinemaCloseGlyphClass: "text-base font-semibold leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.9)]",
+  cinemaChromeClass:
+    "absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-ink-950 via-ink-950/88 to-transparent px-3 pb-3 pt-12 sm:px-4 sm:pb-3.5",
+  cinemaChromeRowClass: "flex items-center gap-2.5 sm:gap-3",
+  cinemaChromeBtnClass:
+    "inline-flex min-h-9 min-w-9 shrink-0 items-center justify-center rounded-full border border-ref-sun/40 bg-ink-950/80 text-[#ffe0c2] shadow-sm backdrop-blur-sm transition hover:border-ref-sun/60 hover:bg-ref-sun/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50",
+  cinemaProgressClass:
+    "h-1.5 w-full cursor-pointer appearance-none rounded-full bg-ref-sun/25 accent-[#fca47c] [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#fca47c] [&::-webkit-slider-thumb]:shadow-[0_0_0_2px_rgba(12,10,9,0.55)] [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-[#fca47c]",
+  cinemaTimeClass:
+    "shrink-0 tabular-nums text-[11px] font-medium text-[#f3e6d8]/95 drop-shadow-[0_1px_1px_rgba(0,0,0,0.75)] sm:text-meta",
+  cinemaEnterDuration: 0.48,
+  cinemaExitDuration: 0.34,
+  cinemaScrimEnterDuration: 0.4,
+  cinemaStageInitial: { opacity: 0, scale: 0.9, y: 28 },
+  cinemaStageAnimate: { opacity: 1, scale: 1, y: 0 },
+  cinemaStageExit: { opacity: 0, scale: 0.94, y: 12 },
   posterKenBurnsRepeat: 0 as const,
+
   placeholderPulseDuration: 4.8,
   placeholderRouteOpacity: 0.14,
   placeholderFrameClass:
