@@ -1,0 +1,60 @@
+# PCR-20260722-UI-DELTA-RC-CONSOLIDATE-FREEZE
+#
+# Consolidate completed UI/UX Delta into a single Release Candidate tip:
+#   6b85bde9 (Market→Escrow/Pay ACL) + 1ed03a9a (Unlock honesty + off-chain vote gate)
+# Tip = 1ed03a9a (ancestor includes 6b85bde9). No product loss. No new PSG pin mint.
+# Inventory/Reality/GO remain paused. P1-05/06/07 deferred until Web tip bake + dry-run.
+
+schema: traveltrust.psg_change_record.v1
+pcr_id: PCR-20260722-UI-DELTA-RC-CONSOLIDATE-FREEZE
+recorded_utc: "2026-07-22T08:22:54Z"
+class: DELTA_CHANGE_UI
+equals_production_go: false
+equals_staging_grade_go: false
+new_psg_release_version_minted: false
+
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+prior_runtime_tip: "6b85bde9773788638c4d8cf031dfe48ef56d1706"
+ui_delta_git_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+freeze_status: FROZEN
+release_candidate_tip: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+
+delta_scope:
+  - frontend/components/market/OrderDetailDrawer.tsx
+  - frontend/components/market/OrderCard.tsx
+  - frontend/components/escrow/EscrowDetail/useEscrowDetail.ts
+  - frontend/components/landing/UnlockModal.tsx
+  - frontend/app/governance/proposals/[id]/GovernanceProposalDetailLoadedArticle.tsx
+  - frontend/locales/zh.ts
+  - frontend/locales/en.ts
+
+gates:
+  engineering_ssot_anchor: PASS
+  staging_web_tip: PENDING_BAKE_1ed03a9a
+  delta_recertify_dry_run: RUN_AFTER_ALIGN_COMMIT
+
+expected_difference:
+  - id: STAGING_WEB_TIP_PENDING_BAKE
+    disposition: CONFIRM_DESIGN
+    detail: >
+      RC tip 1ed03a9a is Freeze SSOT. Staging Web still on 6b85bde9 until
+      clean tip redeploy completes.
+  - id: STAGING_API_TIP_LAG
+    disposition: CONFIRM_DESIGN
+    detail: FE-only Delta; API tip lag Expected.
+  - id: FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP
+    disposition: CONFIRM_DESIGN
+    detail: Freeze overlay docs commit may sit ahead of product tip 1ed03a9a.
+
+forbidden:
+  - Reality_W0_W7_as_mainline
+  - Hard_Gate_flip
+  - Production_GO
+  - new_pin_mint
+  - mutate_FG15_A_archive
+  - drop_prior_ui_delta_commits
+
+next:
+  - Staging Web redeploy @ 1ed03a9a (clean tip worktree)
+  - eight-way + Delta dry-run
+  - then P1-05/06/07 only if no unexpected drift

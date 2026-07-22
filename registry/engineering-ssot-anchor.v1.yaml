@@ -12,7 +12,7 @@ schema: traveltrust.engineering_ssot_anchor.v1
 version: 1
 machine_key: TT_ENGINEERING_SSOT_ANCHOR
 status: ACTIVE_UNDER_PSG
-recorded_utc: "2026-07-22T07:45:00Z"
+recorded_utc: "2026-07-22T08:22:54Z"
 equals_production_go: false
 equals_staging_grade_go: false
 
@@ -21,7 +21,7 @@ governance_parent:
   architecture_constitution: registry/architecture-constitution.v1.yaml
   final_release_baseline: registry/final-release-baseline.v1.yaml
   active_psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
-  git_sha: "6b85bde9773788638c4d8cf031dfe48ef56d1706"
+  git_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
   contract_profile: v311_fund_safety_candidate_v2
   constitution_economic: V3.1.1_Final
   egm: PSG_EGM_Final
