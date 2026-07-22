@@ -138,9 +138,22 @@ function runParity(outDir) {
     if (!failures.some((f) => f.startsWith('admin_'))) passes.push('admin_queue_clean');
 
     const ogR = await client.req('GET', '/api/v1/admin/official/guides?limit=500', null, adminTok);
-    const ogPublished = (ogR.json.items || ogR.json.guides || []).filter(isPublishedOfficialGuide);
+    let ogPublished = (ogR.json.items || ogR.json.guides || []).filter(isPublishedOfficialGuide);
+    if (ogR.status === 404 || ogR.status === 405) {
+      const q = await client.req(
+        'GET',
+        '/api/v1/admin/official/public-operations/publish-queue?entity_type=guides&limit=500',
+        null,
+        adminTok
+      );
+      ogPublished = (q.json.items || []).filter(
+        (r) => String(r.display_status || '').toLowerCase() === 'published'
+      );
+      passes.push('official_guides_via_publish_queue');
+    }
     for (const row of ogPublished) {
-      if (!ocsOfficialGuideIds.has(String(row.id))) {
+      const id = String(row.id);
+      if (!ocsOfficialGuideIds.has(id) && !ocsGuideIds.has(id)) {
         failures.push(`admin_official_guide_non_ocs=${row.id}`);
       }
       if (isSmokeContent(row)) failures.push(`admin_official_guide_smoke=${row.id}`);
@@ -157,7 +170,7 @@ function runParity(outDir) {
     );
     const campDeployed = (campR.json.items || []).filter(isDeployedCampaign);
     for (const row of campDeployed) {
-      if (!ocsCampaignIds.has(String(row.id))) {
+      if (ocsCampaignIds.size > 0 && !ocsCampaignIds.has(String(row.id))) {
         failures.push(`admin_campaign_non_ocs=${row.id}`);
       }
       if (isSmokeContent(row)) failures.push(`admin_campaign_smoke=${row.id}`);

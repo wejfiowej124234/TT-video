@@ -81,6 +81,11 @@ if [[ -n "${STAGING_DATABASE_URL:-}${DATABASE_URL:-}" ]]; then
     node "$ROOT/scripts/dev/purge-staging-community-feed-sql.cjs" 2>&1 | tee "$EVID/purge-community-sql.log" || echo "WARN sql purge" | tee -a "$EVID/purge-community-sql.log"
 fi
 
+echo "== [5c/7] Lock campaigns → dataset 10 (name match · rollback extras) =="
+API_BASE="$API_BASE" OUT="$EVID/lock-campaigns.json" DRY_RUN="$DRY_RUN" \
+  node "$ROOT/scripts/dev/lock-staging-campaigns-10-by-dataset.cjs" 2>&1 | tee "$EVID/lock-campaigns.log" \
+  || echo "WARN lock-campaigns — homepage surfaces may still show multi-campaign pollution" | tee -a "$EVID/lock-campaigns.log"
+
 echo "== [6/7] SOPCP unpublish extras (guides + listings) =="
 API_BASE="$API_BASE" STATE="$STATE" OUT="$EVID/sopcp-align.json" DRY_RUN="$DRY_RUN" \
   node "$ROOT/scripts/dev/align-single-official-baseline-staging.cjs" 2>&1 | tee "$EVID/sopcp-align.log" \

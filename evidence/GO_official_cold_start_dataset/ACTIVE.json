@@ -1,0 +1,13 @@
+{
+  "schema": "traveltrust.ocs_runtime_state_active.v1",
+  "status": "ACTIVE",
+  "machine_key": "TT_OCS_RUNTIME_STATE",
+  "ocs_runtime_state": "evidence/GO_official_cold_start_dataset/20260708T121151Z/state.json",
+  "locked_for": "TT_PUBLIC_DISPLAY_10X4_LOCK + TT_STAGING_RC_BASELINE",
+  "recorded_utc": "2026-07-22T01:40:00Z",
+  "forbidden": [
+    "lexicographic_pick_of_nested_ocs_experiment_states",
+    "parallel_state_json_as_runtime_ssot"
+  ],
+  "honest_boundary": "OCS ACTIVE pin ≠ Production GO ≠ PSG Archive mutate"
+}

@@ -55,14 +55,40 @@ function createClient(apiBase) {
   async function adminLogin(email, password) {
     // C1–C4 / tourist@test.com 不可 promote（immutable business）。默认改用临时 adm-*。
     let adminEmail = email;
-    let adminPass = password;
+    let adminPass = password || 'Test123!';
+
+    async function tryLogin(em, pass) {
+      const r = await req('POST', '/auth/login', { email: em, password: pass });
+      if (r.json && r.json.token) return r.json.token;
+      return null;
+    }
+
+    // Staging: login is in-memory (hydrate-on-boot). Prefer an already-hydrated admin —
+    // PG-only inserts are invisible to /auth/login until API restart.
+    if (process.env.ADMIN_EMAIL) {
+      adminEmail = process.env.ADMIN_EMAIL;
+      adminPass = process.env.ADMIN_PASS || adminPass;
+      const tok = await tryLogin(adminEmail, adminPass);
+      if (tok) return tok;
+    }
+
+    const stagingBootstrap =
+      process.env.STAGING_OCS_ADMIN_EMAIL ||
+      'adm-10x4-20260719143519@traveltrust.test';
     if (
       !process.env.ADMIN_EMAIL &&
       (!email || /^(tourist|guide|merchant|multi-demo)@test\.com$/i.test(email))
     ) {
+      const bootstrapTok = await tryLogin(stagingBootstrap, adminPass);
+      if (bootstrapTok) {
+        console.log(`ocs-admin-client: using hydrated Staging admin ${stagingBootstrap}`);
+        process.env.ADMIN_EMAIL = stagingBootstrap;
+        process.env.ADMIN_PASS = adminPass;
+        return bootstrapTok;
+      }
+
       const stamp = new Date().toISOString().replace(/[-:TZ.]/g, '').slice(0, 14);
       adminEmail = `adm-10x4-${stamp}@traveltrust.test`;
-      adminPass = password || 'Test123!';
       const reg = await req('POST', '/auth/register', {
         email: adminEmail,
         password: adminPass,
@@ -86,14 +112,31 @@ function createClient(apiBase) {
             const id = crypto.randomUUID();
             await pg.query(
               `INSERT INTO users (id, email, password_hash, role, kyc_status, nickname, created_at, updated_at, email_verified_at, growth_points, growth_fraud_status)
-               VALUES ($1::uuid, $2, $3, 'tourist', 'none', 'OCS Align Admin', now(), now(), now(), 0, 'normal')
-               ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash, updated_at = now(), email_verified_at = now()`,
+               VALUES ($1::uuid, $2, $3, 'super_admin', 'none', 'OCS Align Admin', now(), now(), now(), 0, 'normal')
+               ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash, role = 'super_admin', updated_at = now(), email_verified_at = now()`,
               [id, adminEmail, bcryptHash]
             );
-            console.log(`ocs-admin-client: provisioned ephemeral via PG (${adminEmail}) after register ${errCode}`);
+            await pg.query(
+              `UPDATE users u
+               SET password_hash = COALESCE(
+                 (SELECT t.password_hash FROM users t WHERE lower(t.email) = 'tourist@test.com' LIMIT 1),
+                 u.password_hash
+               ),
+               role = 'super_admin',
+               email_verified_at = COALESCE(u.email_verified_at, now()),
+               updated_at = now()
+               WHERE lower(u.email) = lower($1)`,
+              [adminEmail]
+            );
+            console.log(
+              `ocs-admin-client: PG-provisioned ${adminEmail} — requires API restart to hydrate memory before login`
+            );
           } finally {
             await pg.end();
           }
+          throw new Error(
+            `ephemeral admin needs API hydrate (fly apps restart tt-api-staging) then retry; prefer STAGING_OCS_ADMIN_EMAIL=${stagingBootstrap}`
+          );
         } else {
           throw new Error(`ephemeral admin register failed: HTTP ${reg.status} ${JSON.stringify(reg.json)}`);
         }
@@ -105,13 +148,8 @@ function createClient(apiBase) {
       adminEmail = process.env.ADMIN_EMAIL;
       adminPass = process.env.ADMIN_PASS || password || 'Test123!';
     }
-    const promote = await req('POST', '/auth/seed-test-accounts', { promote_admin_email: adminEmail });
-    if (promote.status >= 400) {
-      throw new Error(
-        `admin promote failed: ${adminEmail} HTTP ${promote.status} ${JSON.stringify(promote.json)}`
-      );
-    }
-    // Staging: Public Ops publish/unpublish needs super_admin (Ops lacks PERM_OFFICIAL_PUBLISH until API redeploy).
+    // Staging: elevate via PG first (seed promote often misses PG-provisioned users).
+    let elevated = false;
     if (process.env.STAGING_DATABASE_URL || process.env.DATABASE_URL) {
       try {
         const { spawnSync } = require('child_process');
@@ -124,8 +162,8 @@ function createClient(apiBase) {
           }
         );
         if (elev.status === 0) {
+          elevated = true;
           console.log('ocs-admin-client: elevated to super_admin via PG');
-          await req('POST', '/auth/seed-test-accounts', { promote_admin_email: adminEmail });
         } else {
           console.warn('ocs-admin-client: elevate skipped', (elev.stderr || elev.stdout || '').slice(0, 200));
         }
@@ -133,9 +171,20 @@ function createClient(apiBase) {
         console.warn('ocs-admin-client: elevate error', String(e).slice(0, 200));
       }
     }
-    const r = await req('POST', '/auth/login', { email: adminEmail, password: adminPass });
-    if (!r.json.token) throw new Error(`admin login failed: ${adminEmail} HTTP ${r.status}`);
-    return r.json.token;
+    const promote = await req('POST', '/auth/seed-test-accounts', { promote_admin_email: adminEmail });
+    if (promote.status >= 400 && !elevated) {
+      throw new Error(
+        `admin promote failed: ${adminEmail} HTTP ${promote.status} ${JSON.stringify(promote.json)}`
+      );
+    }
+    if (promote.status >= 400 && elevated) {
+      console.warn(
+        `ocs-admin-client: seed promote skipped after PG elevate (${promote.status} ${JSON.stringify(promote.json).slice(0, 120)})`
+      );
+    }
+    const tok = await tryLogin(adminEmail, adminPass);
+    if (!tok) throw new Error(`admin login failed: ${adminEmail} HTTP 401`);
+    return tok;
   }
 
   async function userLogin(email, password) {

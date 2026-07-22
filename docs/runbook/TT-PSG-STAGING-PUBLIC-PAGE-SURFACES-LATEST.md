@@ -12,7 +12,7 @@
 | 页面 / 面 | 真源 | 部署后必须 |
 |-----------|------|------------|
 | 首页 Ambient / 定制旅行国图 | Catalog `landing_ambient` + COS Tigris | count=10 · **0 Unsplash** · 无双刷 |
-| 首页公告 / Pulse | `GET /api/v1/public/announcements` · `/pulse` | HTTP 200 · 非空运营面（允许数量随 CMS） |
+| 首页公告 / Pulse | `GET /api/v1/public/announcements` · `/pulse` · **Campaigns ≤10 deployed**（dataset 名锁） | HTTP 200 · 非空运营面 · **禁止 127 重复 campaign 污染** |
 | 自由市场主 `/market` | Discover + 子站入口 | HTML 200 · 0 Unsplash |
 | 商家 `/market/provider` | OCS 10 provider | **恰好 10** · COS cover |
 | 旅行收购 `/market/acquisition` | OCS 10 acquisition | **恰好 10** · COS cover · 角标暖金 |
@@ -20,7 +20,8 @@
 | TT 社区 `/community` | OCS 10 posts | **恰好 10** · COS media |
 | 排行榜 `/did-rank` | `did-rank/guides` | HTTP 200 · 可读榜（现行抽样 10） |
 | 钱包顶栏 | ① 下拉 SSOT | JS 含 `wallet-header-dropdown` · **禁止** tip 弹窗 `createPortal z-[320]` |
-| Web/API tip | bake.json + secrets sync | **同 SHA** · `identity_source=docker-bake` |
+| Web tip | bake.json + secrets sync | **= 本次 deploy HEAD** · `identity_source=docker-bake`（FE-only 时 API tip 可落后） |
+| OCS UUID 包 | `evidence/GO_official_cold_start_dataset/ACTIVE.json` → `20260708T121151Z/state.json` | **禁止** lexicographic 误选 `ocs-surface-expansion-*` |
 
 **禁止：** clean tip 部署覆盖未提交 UI · Fly 钉死旧 `TRAVELTRUST_GIT_SHA` · showcase re-seed · Catalog bake=0 · 用 redeploy「碰运气」修展示。
 
@@ -34,6 +35,8 @@ node scripts/dev/check-staging-public-page-surfaces.cjs
 
 # 展示锁（数据面乱时先跑这个，不要先部署）
 STAGING_RC_BASELINE_ALIGNING=1 bash scripts/dev/run-lock-public-display-10x4-staging.sh
+# 含：guides/market/community SQL + campaigns dataset-10 rollback
+# OCS UUID SSOT：evidence/GO_official_cold_start_dataset/ACTIVE.json
 
 # 部署（自动：tip SHA · secrets sync · no-cache · post 10×4 · post page surfaces）
 DEPLOYMENT_STATE=sync bash scripts/dev/deploy-tt-web-staging.sh

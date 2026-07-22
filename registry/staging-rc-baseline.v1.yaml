@@ -8,6 +8,29 @@ effective_utc: "2026-07-04"
 machine_key: TT_STAGING_RC_BASELINE
 required_status: READY
 
+# Living ops gates (② · not PSG Archive mutate)
+companion_gates:
+  TT_PSG_RELEASE_SSOT: ENFORCED
+  TT_PSG_VERSION_GATE: ENFORCED
+  TT_PATCH_PROMOTION_GATE: ENFORCED
+  TT_DEPLOYMENT_IDENTITY_GATE: ENFORCED
+  TT_DEPLOY_FRESHNESS_GATE: ENFORCED
+  TT_PUBLIC_DISPLAY_10X4_LOCK: ENFORCED
+  TT_DUAL_TRACK_RELEASE: ENFORCED
+  deploy_target_required: CERTIFICATION_FREEZE|STAGING_PATCH|EXPERIMENT
+  psg_release_ssot: docs/runbook/TT-PSG-RELEASE-SOURCE-OF-TRUTH-LATEST.md
+  psg_release_version_pin: registry/psg-release-version-LATEST.yaml
+  dual_track_runbook: docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md
+  patch_ledger: docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md
+  patch_promotion_runbook: docs/runbook/TT-PSG-PATCH-PROMOTION-GATE-LATEST.md
+  deploy_freshness_runbook: docs/runbook/TT-PSG-DEPLOY-FRESHNESS-GATE-LATEST.md
+  display_10x4_runbook: docs/runbook/TT-PSG-PUBLIC-DISPLAY-10X4-LOCK-LATEST.md
+  wired_via: scripts/dev/lib/staging-rc-baseline-gate.sh → identity → psg-version → freshness
+  note: >
+    PSG is unique Release SSOT. Pre-deploy: Change Record + Version pin, then
+    Identity → PSG Version Gate (local=testnet) → Freshness. FG-15: maintain
+    09c72b93 only; Track B Ledger-only until ELAPSED + Promotion.
+
 # 写死 · Public Surface / 业务模块 / 公开展示能力 · 准入纪律（canonical）
 canonical_admission_policy: >-
   任何新增 Public Surface、业务模块或公开展示能力，必须先完成 Baseline 注册、SSOT 建模、
@@ -75,6 +98,9 @@ ssot_chain:
   official_media: data/official-cold-start/media/
   ocs_registry: registry/official-cold-start-dataset.v1.yaml
   alignment_registry: registry/staging-rc-ssot-alignment.v1.yaml
+  # Runtime UUID pack for Staging public surfaces (10×4). Nested ocs-* evidence is NOT SSOT.
+  ocs_runtime_state: evidence/GO_official_cold_start_dataset/20260708T121151Z/state.json
+  ocs_runtime_active_pointer: evidence/GO_official_cold_start_dataset/ACTIVE.json
 
 active_pointer: evidence/GO_staging_rc_baseline/ACTIVE.json
 
@@ -86,6 +112,9 @@ forbidden_on_staging:
   - unsplash_showcase_demo_seed_urls
   - stateless_staging_deploy_without_deployment_state
   - old_api_public_surface_drift
+  - deploy_without_TT_DEPLOY_FRESHNESS_GATE
+  - public_catalog_counts_not_10x4
+  - next_public_catalog_api_enabled_not_1_on_web_bake
 
 allowed_changes:
   - deployment_sync

@@ -38,10 +38,6 @@ CHECK_ONLY=0
 source "$ROOT/scripts/ops/lib/deploy-governance-phase3-guard.sh"
 [[ "$CHECK_ONLY" -eq 1 ]] || deploy_governance_phase3_assert_s5_allowed "$ROOT"
 
-# shellcheck source=lib/staging-rc-baseline-gate.sh
-source "$ROOT/scripts/dev/lib/staging-rc-baseline-gate.sh"
-[[ "$CHECK_ONLY" -eq 1 ]] || staging_rc_baseline_gate_pre_deploy pre-deploy || fail "TT_STAGING_RC_BASELINE gate"
-
 command -v fly >/dev/null 2>&1 || fail "fly CLI not found"
 [[ -f "$FLY_CONFIG" ]] || fail "missing $FLY_CONFIG"
 
@@ -65,14 +61,24 @@ merge_env() {
   done < "$f"
 }
 
+# Load build + onboarding BEFORE RC baseline gate so admin PG fallback / DSN work
 merge_env "$BUILD_ENV"
+ONBOARDING="${STAGING_ENV_FILE:-$ROOT/scripts/dev/.env.staging-onboarding.local}"
+merge_env "$ONBOARDING"
+# Prefer public/proxy DSN for gate probes (flycast host fails outside Fly private net)
+# shellcheck source=lib/staging-adm-u01-env.sh
+source "$ROOT/scripts/dev/lib/staging-adm-u01-env.sh"
+REPO_ROOT="$ROOT" staging_adm_u01_prepare_dsn 2>/dev/null \
+  || info "WARN: staging DSN prepare skipped — admin_queue_probe may fail without STAGING_DATABASE_URL"
+export DATABASE_URL="${STAGING_DATABASE_URL:-${DATABASE_URL:-}}"
+export STAGING_DATABASE_URL="${STAGING_DATABASE_URL:-${DATABASE_URL:-}}"
+
+# shellcheck source=lib/staging-rc-baseline-gate.sh
+source "$ROOT/scripts/dev/lib/staging-rc-baseline-gate.sh"
+[[ "$CHECK_ONLY" -eq 1 ]] || staging_rc_baseline_gate_pre_deploy pre-deploy || fail "TT_STAGING_RC_BASELINE gate"
 
 # registry JSON 须在 Docker build context（frontend/）内
 node "$ROOT/frontend/scripts/sync-registry-for-build.mjs"
-
-# 从 staging onboarding 补全 Sepolia 地址（若 build.env 未填）
-ONBOARDING="${STAGING_ENV_FILE:-$ROOT/scripts/dev/.env.staging-onboarding.local}"
-merge_env "$ONBOARDING"
 
 export NEXT_PUBLIC_API_BASE_URL="${NEXT_PUBLIC_API_BASE_URL:-$API_BASE}"
 export NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-$WEB_BASE}"

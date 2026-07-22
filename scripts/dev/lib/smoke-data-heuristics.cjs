@@ -171,22 +171,45 @@ function resolveOcsMediaUrl(apiBase, urlOrPath) {
   return `${base}${u.startsWith('/') ? '' : '/'}${u}`;
 }
 
+/**
+ * Canonical Staging OCS runtime pack (10×4 lock).
+ * Nested ocs-* experiment folders must NOT win lexicographic "latest" (that caused
+ * gate false-positives: live 20260708 UUIDs vs expansion-staging UUIDs).
+ */
+const CANONICAL_OCS_RUNTIME_STATE_REL =
+  'evidence/GO_official_cold_start_dataset/20260708T121151Z/state.json';
+
 function findLatestOcsStatePath(root) {
   const base = path.join(root, 'evidence/GO_official_cold_start_dataset');
   if (!fs.existsSync(base)) return null;
-  const candidates = [];
-  const walk = (dir, depth = 0) => {
-    if (depth > 4) return;
-    for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
-      const p = path.join(dir, ent.name);
-      if (ent.isDirectory()) {
-        const statePath = path.join(p, 'state.json');
-        if (fs.existsSync(statePath)) candidates.push(statePath);
-        walk(p, depth + 1);
+
+  // 1) ACTIVE pointer (PSG / 10×4 lock)
+  const activePtr = path.join(base, 'ACTIVE.json');
+  if (fs.existsSync(activePtr)) {
+    try {
+      const active = JSON.parse(fs.readFileSync(activePtr, 'utf8'));
+      const rel = String(active.ocs_runtime_state || active.state_path || '').replace(/\\/g, '/');
+      if (rel) {
+        const abs = path.isAbsolute(rel) ? rel : path.join(root, rel);
+        if (fs.existsSync(abs)) return abs;
       }
+    } catch {
+      /* fall through */
     }
-  };
-  walk(base);
+  }
+
+  // 2) Registry-pinned canonical pack (top-level stamp only)
+  const canonical = path.join(root, CANONICAL_OCS_RUNTIME_STATE_REL);
+  if (fs.existsSync(canonical)) return canonical;
+
+  // 3) Top-level YYYYMMDDTHHMMSSZ stamps only — never nested ocs-* experiments
+  const stampRe = /^\d{8}T\d{6}Z$/;
+  const candidates = [];
+  for (const ent of fs.readdirSync(base, { withFileTypes: true })) {
+    if (!ent.isDirectory() || !stampRe.test(ent.name)) continue;
+    const statePath = path.join(base, ent.name, 'state.json');
+    if (fs.existsSync(statePath)) candidates.push(statePath);
+  }
   candidates.sort();
   return candidates.length ? candidates[candidates.length - 1] : null;
 }
@@ -314,6 +337,7 @@ module.exports = {
   rowHasRealLeakMedia,
   rowMediaUrls,
   resolveOcsMediaUrl,
+  CANONICAL_OCS_RUNTIME_STATE_REL,
   findLatestOcsStatePath,
   loadOcsEntityIds,
   classifyDdgTier,
