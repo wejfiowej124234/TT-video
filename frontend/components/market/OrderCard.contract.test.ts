@@ -15,6 +15,12 @@ describe("OrderCard L5 market guards (contract)", () => {
     expect(src).toContain("market_own_binding_back_escrow");
     expect(src).toContain("CONSUMER_TRIP_CURRENCY_LOCALE_KEY");
     expect(src).toContain("useViewerUserId");
+    expect(src).toContain("data-tt-market-card-own-escrow");
+    expect(src).toContain("data-tt-market-card-own-pay");
     expect(src).not.toMatch(/typeof window !== "undefined"\s*\?\s*localStorage/);
+    /** P0：禁止无 onViewDetail 时 fallback 直链 /escrow（他人订单） */
+    expect(src).not.toMatch(
+      /onViewDetail \?[\s\S]*?: \(\s*<Link[\s\S]*?href=\{`\/escrow\/\$\{encodeURIComponent\(item\.id\)\}`\}/,
+    );
   });
 });

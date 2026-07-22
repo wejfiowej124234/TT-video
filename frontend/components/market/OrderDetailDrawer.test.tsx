@@ -24,8 +24,18 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("next/link", () => ({
-  default: ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
+  default: ({
+    children,
+    href,
+    ...rest
+  }: {
+    children: React.ReactNode;
+    href: string;
+    [key: string]: unknown;
+  }) => (
+    <a href={href} {...rest}>
+      {children}
+    </a>
   ),
 }));
 
@@ -175,6 +185,64 @@ describe("OrderDetailDrawer", () => {
           `/auth/login?returnUrl=${encodeURIComponent(back)}`,
         );
       });
+    } finally {
+      errSpy.mockRestore();
+    }
+  });
+
+  it("P0: escrow/pay CTAs only after participant GET succeeds", async () => {
+    const oid = "cccccccc-cccc-cccc-cccc-cccccccccccc";
+    getOrderMock.mockResolvedValue({
+      order: { id: oid, state: "created" },
+      itinerary: {
+        daily_itinerary: [{ day_index: 1, city: "Osaka", description: "Castle" }],
+      },
+    });
+    render(
+      <OrderDetailDrawer
+        order={{
+          id: oid,
+          destination: "Japan",
+          amount: "100",
+          currency: "USDC",
+          days: 3,
+          version: 1,
+        }}
+        onClose={() => {}}
+      />,
+    );
+    await waitFor(() => {
+      expect(document.querySelector('[data-tt-order-drawer-escrow="1"]')).toBeTruthy();
+    });
+    expect(screen.getByText("order_detail_cta")).toBeTruthy();
+  });
+
+  it("P0: forbidden GET hides escrow CTA and shows gated hint", async () => {
+    const errSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      const oid = "dddddddd-dddd-dddd-dddd-dddddddddddd";
+      getOrderMock.mockRejectedValue(new Error("forbidden"));
+      render(
+        <OrderDetailDrawer
+          order={{
+            id: oid,
+            destination: "Japan",
+            amount: "100",
+            currency: "USDC",
+            days: 3,
+            version: 1,
+            itinerary: {
+              daily_itinerary: [{ day_index: 1, city: "Kyoto", description: "Temple" }],
+            },
+          }}
+          onClose={() => {}}
+        />,
+      );
+      await waitFor(() => {
+        expect(document.querySelector('[data-tt-order-drawer-escrow-gated="1"]')).toBeTruthy();
+      });
+      expect(document.querySelector('[data-tt-order-drawer-escrow="1"]')).toBeNull();
+      expect(screen.getByText("order_detail_escrow_gated_hint")).toBeTruthy();
     } finally {
       errSpy.mockRestore();
     }

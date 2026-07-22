@@ -40,6 +40,16 @@ export type EscrowOrderPrefetchPayload = {
   itinerary: ItineraryBlock | null;
 };
 
+/** 权限失败 / 换账号时主动丢弃预填，避免 403 前闪出他人订单壳 */
+export function clearEscrowOrderPrefetch(orderId: string): void {
+  if (typeof window === "undefined" || !orderId) return;
+  try {
+    window.sessionStorage.removeItem(keyFor(String(orderId)));
+  } catch {
+    /* private mode */
+  }
+}
+
 /** 托管页挂载时读取并删除；过期或损坏返回 null */
 export function consumeEscrowOrderPrefetch(orderId: string): EscrowOrderPrefetchPayload | null {
   if (typeof window === "undefined" || !orderId) return null;

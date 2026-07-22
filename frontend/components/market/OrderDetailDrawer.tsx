@@ -236,6 +236,11 @@ export default function OrderDetailDrawer({
   const [detailFetchRetryTick, setDetailFetchRetryTick] = useState(0);
   /** B-069：`getOrder` 轮询合并 state/escrow，避免列表/首屏快照滞后于 mock-pay 或入金 */
   const [escrowSyncPatch, setEscrowSyncPatch] = useState<Partial<OrderDetailItem> | null>(null);
+  /**
+   * P0：仅当 GET /orders/:id 成功（参与方）才允许托管/支付入口。
+   * `null` = 探测中；`false` = 无权限/失败；`true` = 可进 escrow/pay。
+   */
+  const [participantReadOk, setParticipantReadOk] = useState<boolean | null>(null);
   const orderRef = useRef(order);
   orderRef.current = order;
   const tRef = useRef(t);
@@ -268,24 +273,21 @@ export default function OrderDetailDrawer({
     return () => { document.body.style.overflow = prevOverflow; };
   }, [order]);
 
-  /** B-046：换单首帧即进入 loading（需 GET 时），避免仍显示上一单的骨架/闲态 */
+  /** B-046：换单首帧即进入 loading（需 GET ACL 时），避免仍显示上一单的骨架/闲态 */
   useLayoutEffect(() => {
     if (!order?.id) {
       setLoadingDetail(false);
+      setParticipantReadOk(null);
       return;
     }
     if (isMarketDevVarietyOrderId(order.id)) {
       setLoadingDetail(false);
-      return;
-    }
-    const hasIt =
-      order.itinerary?.daily_itinerary && order.itinerary.daily_itinerary.length > 0;
-    if (hasIt) {
-      setLoadingDetail(false);
+      setParticipantReadOk(false);
       return;
     }
     setLoadingDetail(true);
-  }, [order?.id, embeddedItineraryLen]);
+    setParticipantReadOk(null);
+  }, [order?.id]);
 
   useEffect(() => {
     if (!orderId) {
@@ -293,6 +295,7 @@ export default function OrderDetailDrawer({
       setLoadingDetail(false);
       setDetailFetchError(null);
       setDetailFetchErrorForId(null);
+      setParticipantReadOk(null);
       return;
     }
     const o = orderRef.current;
@@ -301,14 +304,7 @@ export default function OrderDetailDrawer({
       setLoadingDetail(false);
       setDetailFetchError(null);
       setDetailFetchErrorForId(null);
-      return;
-    }
-    const hasItinerary = o.itinerary?.daily_itinerary && o.itinerary.daily_itinerary.length > 0;
-    if (hasItinerary) {
-      setEnrichedOrder(null);
-      setLoadingDetail(false);
-      setDetailFetchError(null);
-      setDetailFetchErrorForId(null);
+      setParticipantReadOk(null);
       return;
     }
     if (isMarketDevVarietyOrderId(orderId)) {
@@ -316,14 +312,15 @@ export default function OrderDetailDrawer({
       setLoadingDetail(false);
       setDetailFetchError(null);
       setDetailFetchErrorForId(null);
+      setParticipantReadOk(false);
       return;
     }
-    /** B-046：与 `orderRef` 比对，避免新单已选后上一单 promise 仍落状态 */
+    /** P0：无论列表是否已带 itinerary，均须 GET 校验参与方后再露托管/支付入口 */
     const requestedId = orderId;
     setLoadingDetail(true);
-    setEnrichedOrder(null);
     setDetailFetchError(null);
     setDetailFetchErrorForId(null);
+    setParticipantReadOk(null);
     getOrder(requestedId)
       .then((res) => {
         if (orderRef.current?.id !== requestedId) return;
@@ -331,20 +328,19 @@ export default function OrderDetailDrawer({
         if (!base || base.id !== requestedId) return;
         const data = res as { order?: Record<string, unknown>; itinerary?: { daily_itinerary?: unknown[]; amount_breakdown?: Record<string, unknown> } };
         const itinerary = data?.itinerary;
-        if (!itinerary) {
-          setDetailFetchError(null);
-          setDetailFetchErrorForId(null);
-          setEnrichedOrder(null);
-          return;
-        }
         const apiOrder = data?.order;
         const escrowFromApi =
           typeof apiOrder?.escrow_address === "string" ? apiOrder.escrow_address : undefined;
         const stateFromApi = typeof apiOrder?.state === "string" ? apiOrder.state : undefined;
-        const daily = Array.isArray(itinerary.daily_itinerary) ? itinerary.daily_itinerary : [];
-        const ab = itinerary.amount_breakdown;
         setDetailFetchError(null);
         setDetailFetchErrorForId(null);
+        setParticipantReadOk(true);
+        if (!itinerary) {
+          setEnrichedOrder(null);
+          return;
+        }
+        const daily = Array.isArray(itinerary.daily_itinerary) ? itinerary.daily_itinerary : [];
+        const ab = itinerary.amount_breakdown;
         const merged: OrderDetailItem = {
           ...base,
           escrow_address: escrowFromApi ?? base.escrow_address,
@@ -385,6 +381,7 @@ export default function OrderDetailDrawer({
         }
         if (orderRef.current?.id !== requestedId) return;
         if (err instanceof Error && err.message === "login_required") {
+          setParticipantReadOk(false);
           const back = loginReturnPath?.trim();
           if (back) {
             router.replace(`/auth/login?returnUrl=${encodeURIComponent(back)}`);
@@ -392,19 +389,20 @@ export default function OrderDetailDrawer({
           }
         }
         setEnrichedOrder(null);
+        setParticipantReadOk(false);
         setDetailFetchError(mapApiReadError(err, tRef.current, "escrow_loadFailed"));
         setDetailFetchErrorForId(requestedId);
       })
       .finally(() => {
         if (orderRef.current?.id === requestedId) setLoadingDetail(false);
       });
-  }, [orderId, embeddedItineraryLen, detailFetchRetryTick, loginReturnPath, router]);
+  }, [orderId, detailFetchRetryTick, loginReturnPath, router]);
 
   const watchEscrowSync = useMemo(() => {
-    if (!order) return false;
+    if (!order || participantReadOk !== true) return false;
     const merged = { ...order, ...escrowSyncPatch } as OrderDetailItem;
     return orderDetailItemWatchesForBackendEscrowSync(merged);
-  }, [order, escrowSyncPatch]);
+  }, [order, escrowSyncPatch, participantReadOk]);
 
   useEffect(() => {
     if (!orderId || !order || !watchEscrowSync) return;
@@ -465,7 +463,11 @@ export default function OrderDetailDrawer({
     detailFetchErrorForId === orderId &&
     !loadingDetail &&
     !displayOrder.itinerary?.daily_itinerary?.length;
-  const stashDrawerEscrowPayPrefetch = () => stashEscrowOrderPrefetchFromDetailDrawer(displayOrder);
+  const stashDrawerEscrowPayPrefetch = () => {
+    if (participantReadOk !== true) return;
+    stashEscrowOrderPrefetchFromDetailDrawer(displayOrder);
+  };
+  const showParticipantEscrowPay = participantReadOk === true;
   const dash = t("ui_em_dash");
   const orderCurrency = displayOrder.currency ?? t("order_defaultSettlementToken");
 
@@ -829,22 +831,31 @@ export default function OrderDetailDrawer({
                 </button>
               </form>
             )}
-          <Link
-            href={`/escrow/${encodeURIComponent(order.id)}`}
-            onClick={stashDrawerEscrowPayPrefetch}
-            className={marketDetailDrawerBlockLink}
-          >
-            {t("order_detail_cta")}
-          </Link>
-          {orderLikeMayOnchainDeposit(displayOrder) && (
+          {showParticipantEscrowPay ? (
+            <Link
+              href={`/escrow/${encodeURIComponent(order.id)}`}
+              onClick={stashDrawerEscrowPayPrefetch}
+              className={marketDetailDrawerBlockLink}
+              data-tt-order-drawer-escrow="1"
+            >
+              {t("order_detail_cta")}
+            </Link>
+          ) : null}
+          {showParticipantEscrowPay && orderLikeMayOnchainDeposit(displayOrder) ? (
             <Link
               href={`/pay?orderId=${encodeURIComponent(displayOrder.id)}`}
               onClick={stashDrawerEscrowPayPrefetch}
               className={`${touchTargetLink44Classes} text-small font-medium text-center ${TT_MARKETING_MARKET_DARK_PATH.inlineLinkUnderline} ${TT_MARKETING_MARKET_DARK_PATH.drawerControlFocus}`}
+              data-tt-order-drawer-pay="1"
             >
               {t("orders_payHub")}
             </Link>
-          )}
+          ) : null}
+          {participantReadOk === false ? (
+            <p className={`${marketDetailDrawerHintText} pt-1`} role="status" data-tt-order-drawer-escrow-gated="1">
+              {t("order_detail_escrow_gated_hint")}
+            </p>
+          ) : null}
         </div>
       </div>
     </MarketDetailDrawerFrame>

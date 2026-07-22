@@ -20,6 +20,7 @@ export function OrderDetailDrawerFooterActions({
   onAcceptSubmit,
   acceptLoading,
   acceptError,
+  showParticipantEscrowPay = false,
 }: {
   orderId: string;
   displayOrder: OrderDetailItem;
@@ -28,8 +29,13 @@ export function OrderDetailDrawerFooterActions({
   onAcceptSubmit: (e: FormEvent<HTMLFormElement>) => void;
   acceptLoading: boolean;
   acceptError: string | null;
+  /** P0：仅 GET /orders/:id 参与方成功后为 true */
+  showParticipantEscrowPay?: boolean;
 }) {
-  const stashDrawerEscrowPayPrefetch = () => stashEscrowOrderPrefetchFromDetailDrawer(displayOrder);
+  const stashDrawerEscrowPayPrefetch = () => {
+    if (!showParticipantEscrowPay) return;
+    stashEscrowOrderPrefetchFromDetailDrawer(displayOrder);
+  };
 
   return (
     <>
@@ -56,18 +62,24 @@ export function OrderDetailDrawerFooterActions({
               </button>
             </form>
           )}
-        <Link
-          data-tt-order-drawer-escrow="1"
-          href={`/escrow/${encodeURIComponent(orderId)}`}
-          onClick={() => {
-            trackMarketEvent("market_order_drawer_escrow_click", { orderId: displayOrder.id });
-            stashDrawerEscrowPayPrefetch();
-          }}
-          className={marketDetailDrawerBlockLink}
-        >
-          {t("order_detail_cta")}
-        </Link>
-        {orderLikeMayOnchainDeposit(displayOrder) && (
+        {showParticipantEscrowPay ? (
+          <Link
+            data-tt-order-drawer-escrow="1"
+            href={`/escrow/${encodeURIComponent(orderId)}`}
+            onClick={() => {
+              trackMarketEvent("market_order_drawer_escrow_click", { orderId: displayOrder.id });
+              stashDrawerEscrowPayPrefetch();
+            }}
+            className={marketDetailDrawerBlockLink}
+          >
+            {t("order_detail_cta")}
+          </Link>
+        ) : (
+          <p className="text-small text-slate-400" role="status" data-tt-order-drawer-escrow-gated="1">
+            {t("order_detail_escrow_gated_hint")}
+          </p>
+        )}
+        {showParticipantEscrowPay && orderLikeMayOnchainDeposit(displayOrder) ? (
           <Link
             data-tt-order-drawer-pay="1"
             href={`/pay?orderId=${encodeURIComponent(displayOrder.id)}`}
@@ -79,7 +91,7 @@ export function OrderDetailDrawerFooterActions({
           >
             {t("orders_payHub")}
           </Link>
-        )}
+        ) : null}
       </div>
     </>
   );

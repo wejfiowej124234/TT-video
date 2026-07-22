@@ -1,8 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getOrder, getOrderChainSyncStatus, isComplianceError } from "@/lib/apiClient";
-import { consumeEscrowOrderPrefetch } from "@/lib/orderEscrowPrefetch";
+import { clearEscrowOrderPrefetch, consumeEscrowOrderPrefetch } from "@/lib/orderEscrowPrefetch";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { mapEscrowForbiddenError } from "@/lib/orderParticipantHint";
 import type { OrderRow, OrderResponse, ItineraryBlock, OrderChainSyncState } from "./types";
@@ -19,10 +20,41 @@ export function useEscrowDetailOrderChainSyncLoad(
   chainSync: OrderChainSyncState | null;
   refreshOrder: () => void;
 } {
+  const router = useRouter();
   const [order, setOrder] = useState<OrderRow | null>(null);
   const [itinerary, setItinerary] = useState<ItineraryBlock | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [chainSync, setChainSync] = useState<OrderChainSyncState | null>(null);
+
+  const applyOrderGetFailure = useCallback(
+    (err: unknown) => {
+      const msg = err instanceof Error ? err.message : "";
+      if (msg === "login_required") {
+        clearEscrowOrderPrefetch(escrowId);
+        setOrder(null);
+        setItinerary(null);
+        setError(t("order_error_login_required"));
+        if (typeof window !== "undefined") {
+          const returnUrl = `/escrow/${encodeURIComponent(escrowId)}`;
+          router.replace(`/auth/login?returnUrl=${encodeURIComponent(returnUrl)}`);
+        }
+        return;
+      }
+      if (isComplianceError(err)) {
+        setError(msg || t("escrow_loadFailed"));
+        return;
+      }
+      if (/403|forbidden|权限|暂无权限/i.test(msg)) {
+        clearEscrowOrderPrefetch(escrowId);
+        setOrder(null);
+        setItinerary(null);
+        setError(mapEscrowForbiddenError(err, t));
+        return;
+      }
+      setError(mapApiReadError(err, t, "escrow_loadFailed"));
+    },
+    [escrowId, router, t],
+  );
 
   const fetchChainSync = useCallback(() => {
     getOrderChainSyncStatus(escrowId)
@@ -63,15 +95,12 @@ export function useEscrowDetailOrderChainSyncLoad(
         if (typeof window !== "undefined") {
           console.error("useEscrowDetailOrderChainSyncLoad getOrder:", err);
         }
-        const msg = err instanceof Error ? err.message : "";
-        if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-        else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(mapEscrowForbiddenError(err, t));
-        else setError(mapApiReadError(err, t, "escrow_loadFailed"));
+        applyOrderGetFailure(err);
       });
     return () => {
       cancelled = true;
     };
-  }, [escrowId, t]);
+  }, [escrowId, t, applyOrderGetFailure]);
 
   const refreshOrder = useCallback(() => {
     getOrder(escrowId)
@@ -87,12 +116,9 @@ export function useEscrowDetailOrderChainSyncLoad(
         if (typeof window !== "undefined") {
           console.error("useEscrowDetailOrderChainSyncLoad refreshOrder getOrder:", err);
         }
-        const msg = err instanceof Error ? err.message : "";
-        if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-        else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(mapEscrowForbiddenError(err, t));
-        else setError(mapApiReadError(err, t, "escrow_loadFailed"));
+        applyOrderGetFailure(err);
       });
-  }, [escrowId, t, fetchChainSync]);
+  }, [escrowId, fetchChainSync, applyOrderGetFailure]);
 
   return { order, itinerary, error, chainSync, refreshOrder };
 }

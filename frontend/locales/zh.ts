@@ -5680,6 +5680,8 @@ export default {
   escrow_ordersBreadcrumb_aria: "订单导航",
   escrow_backToMarket: "返回自由市场",
   escrow_403_message: "您暂无权限查看该订单，请返回订单列表或自由市场。",
+  escrow_403_next_step_hint: "该订单仅参与方可打开托管页。请从「我的订单」进入，或返回市场继续浏览。",
+  escrow_error_go_login: "去登录",
   escrow_403_guide_hint:
     "您暂无权限查看该订单。本单属于「{{chain}}」联调链，应由向导 {{email}} 接单（旅行者 {{tourist}}）。请退出后切换正确账号，避免混链手测。",
   escrow_wrong_guide_accept_hint:
@@ -8808,6 +8810,7 @@ export default {
   order_detail_snapshotHash: "快照哈希：确认后将生成",
   order_detail_guideCta: "向导可在此抢单，确认后进入 Escrow 页面完成托管与支付。",
   order_detail_cta: "查看完整订单",
+  order_detail_escrow_gated_hint: "仅订单参与方可打开托管与付款入口。公开行程可浏览；接单或登录本人账号后再进入。",
   order_detail_confirmAccept: "确认接该项目",
   order_bilateralConfirmTitle: "双边确认",
   order_bilateralConfirmed: "已确认",

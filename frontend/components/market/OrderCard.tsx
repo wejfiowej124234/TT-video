@@ -287,6 +287,7 @@ export default memo(function OrderCard({
                   stashMarketCardEscrowPayPrefetch();
                 }}
                 className={`${touchTargetLink44Classes} ${btnSecClass}`}
+                data-tt-market-card-own-escrow="1"
               >
                 {t("market_own_binding_back_escrow")}
               </Link>
@@ -303,19 +304,16 @@ export default memo(function OrderCard({
               {t("order_cta_viewItinerary")}
             </button>
           ) : (
-            <Link
-              href={`/escrow/${encodeURIComponent(item.id)}`}
-              onClick={stashMarketCardEscrowPayPrefetch}
-              className={`${touchTargetLink44Classes} ${btnSecClass}`}
-            >
+            <span className={`${touchTargetLink44Classes} ${btnSecClass} opacity-60 pointer-events-none`} aria-disabled>
               {t("order_cta_viewItinerary")}
-            </Link>
+            </span>
           )}
-          {orderLikeMayOnchainDeposit(item) && (
+          {isOwnBindingOrder && orderLikeMayOnchainDeposit(item) && (
             <Link
               href={`/pay?orderId=${encodeURIComponent(item.id)}`}
               onClick={stashMarketCardEscrowPayPrefetch}
               className={`${touchTargetLink44Classes} ${btnPayHubClass}`}
+              data-tt-market-card-own-pay="1"
             >
               {t("orders_payHub")}
             </Link>

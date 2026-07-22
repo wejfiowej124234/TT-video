@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState, useCallback, useMemo, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { isAddress } from "viem";
 import { useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { useEscrowChainSync } from "./useEscrowChainSync";
 import { getOrder, getOrderChainSyncStatus, getMe, isComplianceError } from "@/lib/apiClient";
-import { consumeEscrowOrderPrefetch } from "@/lib/orderEscrowPrefetch";
+import { clearEscrowOrderPrefetch, consumeEscrowOrderPrefetch } from "@/lib/orderEscrowPrefetch";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { mapEscrowForbiddenError } from "@/lib/orderParticipantHint";
 import { useEscrowRelease, useEscrowDeposit, useEscrowRefund, useEscrowOpenDispute } from "@/dapp/hooks/useEscrowActions";
@@ -61,10 +62,15 @@ function itineraryOrPlaceholderForPreEscrow(
   };
 }
 
+/** Escrow GET 失败引导：401→登录 · 403→市场/订单（不放宽 ACL） */
+export type EscrowLoadErrorKind = "login" | "forbidden" | "generic";
+
 export interface UseEscrowDetailResult {
   order: OrderRow | null;
   itinerary: ItineraryBlock | null;
   error: string | null;
+  /** P0：与 error 同批；供 LoadErrorView 选下一步 CTA */
+  loadErrorKind: EscrowLoadErrorKind | null;
   refreshOrder: (options?: { force?: boolean }) => void;
   /** PATCH itinerary 后本地对齐 order.amount / breakdown，避免立刻 GET（易 429） */
   applyOptimisticItineraryPatch: (patch: {
@@ -161,10 +167,12 @@ export interface UseEscrowDetailResult {
 }
 
 export function useEscrowDetail(escrowId: string, t: (key: string) => string): UseEscrowDetailResult {
+  const router = useRouter();
   const [order, setOrder] = useState<OrderRow | null>(null);
   const [orderGetRateLimited, setOrderGetRateLimited] = useState(false);
   const [itinerary, setItinerary] = useState<ItineraryBlock | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loadErrorKind, setLoadErrorKind] = useState<EscrowLoadErrorKind | null>(null);
   const [confirmAction, setConfirmAction] = useState<ConfirmAction>(null);
   const [dismissReorgBanner, setDismissReorgBanner] = useState(false);
   const [meData, setMeData] = useState<{
@@ -498,6 +506,41 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
     );
   }, []);
 
+  /** P0：401→登录回跳；403→清 prefetch 壳 + 引导；禁止放宽后端 ACL */
+  const applyOrderGetFailure = useCallback(
+    (err: unknown) => {
+      const msg = err instanceof Error ? err.message : "";
+      if (msg === "login_required") {
+        clearEscrowOrderPrefetch(escrowId);
+        setOrder(null);
+        setItinerary(null);
+        setLoadErrorKind("login");
+        setError(t("order_error_login_required"));
+        if (typeof window !== "undefined") {
+          const returnUrl = `/escrow/${encodeURIComponent(escrowId)}`;
+          router.replace(`/auth/login?returnUrl=${encodeURIComponent(returnUrl)}`);
+        }
+        return;
+      }
+      if (isComplianceError(err)) {
+        setLoadErrorKind("generic");
+        setError(msg || t("escrow_loadFailed"));
+        return;
+      }
+      if (/403|forbidden|权限|暂无权限/i.test(msg)) {
+        clearEscrowOrderPrefetch(escrowId);
+        setOrder(null);
+        setItinerary(null);
+        setLoadErrorKind("forbidden");
+        setError(mapEscrowForbiddenError(err, t));
+        return;
+      }
+      setLoadErrorKind("generic");
+      setError(mapApiReadError(err, t, "escrow_loadFailed"));
+    },
+    [escrowId, router, t],
+  );
+
   const fetchOrderFromApi = useCallback(
     async (options?: { bypassThrottle?: boolean }): Promise<OrderGetFetchResult> => {
       const gate = orderGetGateRef.current;
@@ -520,6 +563,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
           const data = await getOrder(escrowId);
           applyOrderResponse(data);
           setError(null);
+          setLoadErrorKind(null);
           setOrderGetRateLimited(false);
           gate.lastOkAt = Date.now();
           return "ok";
@@ -594,6 +638,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
   useEffect(() => {
     let cancelled = false;
     setError(null);
+    setLoadErrorKind(null);
     const pref = consumeEscrowOrderPrefetch(escrowId);
     let deferTimer: ReturnType<typeof setTimeout> | undefined;
     if (pref) {
@@ -611,10 +656,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
           if (typeof window !== "undefined") {
             console.error("useEscrowDetail getOrder:", err);
           }
-          const msg = err instanceof Error ? err.message : "";
-          if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-          else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(mapEscrowForbiddenError(err, t));
-          else setError(mapApiReadError(err, t, "escrow_loadFailed"));
+          applyOrderGetFailure(err);
         });
     };
     if (pref) {
@@ -626,7 +668,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
       cancelled = true;
       if (deferTimer) clearTimeout(deferTimer);
     };
-  }, [escrowId, t, fetchOrderFromApi]);
+  }, [escrowId, t, fetchOrderFromApi, applyOrderGetFailure]);
 
   useEffect(() => {
     if (!orderGetRateLimited) return;
@@ -666,10 +708,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
             console.error("useEscrowDetail refreshOrder getOrder:", err);
           }
           if (isOrderGetRateLimited(err)) return;
-          const msg = err instanceof Error ? err.message : "";
-          if (isComplianceError(err)) setError(msg || t("escrow_loadFailed"));
-          else if (/403|forbidden|权限|暂无权限/i.test(msg)) setError(mapEscrowForbiddenError(err, t));
-          else setError(mapApiReadError(err, t, "escrow_loadFailed"));
+          applyOrderGetFailure(err);
           });
       };
       if (options?.force === true) {
@@ -686,7 +725,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
         run();
       }, ORDER_GET_DEBOUNCE_MS);
     },
-    [fetchOrderFromApi, isOrderGetRateLimited, t],
+    [fetchOrderFromApi, isOrderGetRateLimited, applyOrderGetFailure],
   );
 
   useEffect(
@@ -777,6 +816,7 @@ export function useEscrowDetail(escrowId: string, t: (key: string) => string): U
     order,
     itinerary,
     error,
+    loadErrorKind,
     refreshOrder,
     applyOptimisticItineraryPatch,
     orderGetRateLimited,

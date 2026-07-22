@@ -5804,6 +5804,9 @@ export default {
   escrow_ordersBreadcrumb_aria: "Order navigation",
   escrow_backToMarket: "Back to market",
   escrow_403_message: "You don't have permission to view this order. Please go back to orders or market.",
+  escrow_403_next_step_hint:
+    "Only order participants can open escrow. Use My Orders, or return to the market to keep browsing.",
+  escrow_error_go_login: "Sign in",
   escrow_403_guide_hint:
     "You can't view this order. It belongs to the {{chain}} debug chain and should be accepted by guide {{email}} (traveler {{tourist}}). Sign out and switch accounts to avoid mixing local test chains.",
   escrow_wrong_guide_accept_hint:
@@ -9060,6 +9063,8 @@ export default {
   order_detail_snapshotHash: "Snapshot hash: generated after confirm",
   order_detail_guideCta: "Guides can accept here; after confirm go to Escrow to complete payment.",
   order_detail_cta: "View full order",
+  order_detail_escrow_gated_hint:
+    "Only order participants can open escrow or pay. Browse the public itinerary here; sign in as a participant or accept the order first.",
   order_detail_confirmAccept: "Confirm this project",
   order_bilateralConfirmTitle: "Bilateral confirmation",
   order_bilateralConfirmed: "Confirmed",

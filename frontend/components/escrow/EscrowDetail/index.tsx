@@ -478,6 +478,8 @@ export default function EscrowDetail({ escrowId }: EscrowDetailProps) {
         cancelPolicyHeadingId={cancelPolicyHeadingId}
         t={t}
         orderGetRateLimited={data.orderGetRateLimited}
+        loadErrorKind={data.loadErrorKind}
+        escrowId={typeof escrowId === "string" ? escrowId : undefined}
         variantExperience
       />
     );
