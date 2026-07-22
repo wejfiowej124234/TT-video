@@ -508,9 +508,15 @@ describe("traveltrust network page (contract)", () => {
       "MarketingFooterSocial",
     );
     expect(readFileSync(join(__dir, "../../lib/traveltrustOfficialSocialLinks.ts"), "utf8")).toContain(
-      'platform: "github"',
+      'platform: "instagram"',
     );
     expect(readFileSync(join(__dir, "../../lib/traveltrustOfficialSocialLinks.ts"), "utf8")).toContain(
+      'platform: "x"',
+    );
+    expect(readFileSync(join(__dir, "../../lib/traveltrustOfficialSocialLinks.ts"), "utf8")).not.toContain(
+      'platform: "github"',
+    );
+    expect(readFileSync(join(__dir, "../../lib/traveltrustOfficialSocialLinks.ts"), "utf8")).not.toContain(
       'platform: "telegram"',
     );
     expect(marketingSocialSrc).toContain('href="/community"');

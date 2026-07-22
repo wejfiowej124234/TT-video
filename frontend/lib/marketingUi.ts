@@ -1037,9 +1037,9 @@ export const TT_MARKETING_MARKET_DARK_PATH = {
     "pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/88 via-[#0a0a0a]/20 to-transparent",
   cardCoverChip:
     "inline-flex items-center rounded-[var(--radius-sm)] border border-ref-sun/30 bg-ink-900/70 px-2 py-0.5 text-meta font-semibold text-ref-sun backdrop-blur-sm [color:var(--ref-sun)] shadow-[0_2px_8px_-6px_rgba(0,0,0,0.55)]",
-  /** 列表/抽屉 · Escrow 短角标（暖金 · 非 success 绿） */
+  /** 列表/抽屉 · Escrow/收购 短角标（暖金 · 非 success 绿）· 强制 color 防 `a { color: inherit }` 压掉 */
   trustEscrowBadge:
-    "inline-flex shrink-0 whitespace-nowrap items-center gap-1 rounded-[var(--radius-sm)] border border-ref-sun/28 bg-ink-900/60 px-2 py-0.5 text-meta font-medium text-ref-sun/95 backdrop-blur-sm shadow-[0_2px_8px_-6px_rgba(0,0,0,0.5)]",
+    "inline-flex shrink-0 whitespace-nowrap items-center gap-1 rounded-[var(--radius-sm)] border border-ref-sun/28 bg-ink-900/60 px-2 py-0.5 text-meta font-medium text-ref-sun/95 [color:var(--ref-sun)] backdrop-blur-sm shadow-[0_2px_8px_-6px_rgba(0,0,0,0.5)]",
   /** 深色底 · USDC/结算 pill */
   trustTokenPill:
     "inline-flex items-center gap-1 rounded-full border border-ref-sun/26 bg-ink-900/70 px-2 py-0.5 text-meta font-medium text-ref-sun shadow-[inset_0_0_0_1px_rgba(249,215,121,0.08)]",

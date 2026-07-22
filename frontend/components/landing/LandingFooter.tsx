@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import TrustInfraWall from "@/components/trust/TrustInfraWall";
 import { ProductCrossNav } from "@/components/nav/ProductCrossNav";
+import { MarketingFooterSocial } from "@/components/marketing/MarketingFooterSocial";
 import { MARKETING_FOOTER_PRODUCT_LINKS } from "@/lib/marketingSiteFooter";
 import {
   TT_MARKETING_HOME_FOOTER,
@@ -15,13 +16,14 @@ import {
   TT_MARKETING_HOME_FOOTER_LINK,
 } from "@/lib/marketingUi";
 
-/** 54-S16、§2.9：页脚多栏（关于/产品/账户/法律/技术栈），仅 Web3 旅游相关；不含未运营社交链接；版权年 + 视觉优化 */
+/** 54-S16、§2.9：页脚多栏（关于/产品/账户/法律/信任）+ Owner 官方关注我们 */
 function LandingFooter() {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
   return (
     <footer className={TT_MARKETING_HOME_FOOTER} role="contentinfo">
       <div className="mx-auto max-w-5xl">
+        <MarketingFooterSocial centered surface="marketing" className="mb-8" />
         <div className={`grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5 ${TT_MARKETING_HOME_FOOTER_BODY}`}>
           <div className="col-span-2 sm:col-span-1">
             <h3 className={TT_MARKETING_HOME_FOOTER_HEADING}>{t("footer_col_about")}</h3>

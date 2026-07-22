@@ -33,6 +33,9 @@ describe("ItineraryResultsSection L5 polish", () => {
     expect(src).toContain("landing_results_section_lead");
 
     expect(src).toContain("landing_trust_preview");
+    expect(src).toContain("data-tt-home-ai-itinerary-locked");
+    expect(src).toContain("previewLocked");
+    expect(src).toContain("landing_placeholder_hint");
 
     expect(src).not.toContain("landing_rating");
 

@@ -145,12 +145,8 @@ function ItineraryResultsSection({
 
   const showGenerating = submitting && resultOrderIds.length === 0;
   const destinationCover = useLandingAmbientUrl(country, CARD_SCENIC_IMAGES[0]!);
-
-  if (resultOrderIds.length === 0 && !showGenerating) {
-    return null;
-  }
-
-
+  /** 未选国家/未生成：磨砂占位，不可点；生成后才进入可解锁预览 */
+  const previewLocked = !country || cities.length === 0;
 
   const renderPreviewSlotCards = (mode: "empty" | "generating") => (
 
@@ -168,7 +164,11 @@ function ItineraryResultsSection({
 
           <div
 
-            className={`${TT_MARKETING_HOME_PREVIEW_SLOT_CARD} ${mode === "generating" ? "animate-pulse" : ""}`}
+            className={`${TT_MARKETING_HOME_PREVIEW_SLOT_CARD} ${mode === "generating" ? "animate-pulse" : ""} ${mode === "empty" ? "pointer-events-none select-none opacity-80 saturate-[0.7]" : ""}`}
+
+            aria-disabled={mode === "empty" ? true : undefined}
+
+            data-tt-home-ai-itinerary-locked={mode === "empty" ? "1" : undefined}
 
           >
 
@@ -186,7 +186,7 @@ function ItineraryResultsSection({
 
                 fetchPriority="low"
 
-                className="absolute inset-0 h-full w-full object-cover opacity-35 saturate-[0.85]"
+                className={`absolute inset-0 h-full w-full object-cover opacity-35 saturate-[0.85] ${mode === "empty" ? "blur-[4px] scale-105" : ""}`}
 
                 draggable={false}
 
@@ -405,6 +405,12 @@ function ItineraryResultsSection({
 
                                 className={TT_MARKETING_HOME_UNLOCK_BTN}
 
+                                disabled={previewLocked}
+
+                                aria-disabled={previewLocked ? true : undefined}
+
+                                title={previewLocked ? t("landing_placeholder_hint") : undefined}
+
                               >
 
                                 {t("landing_btn_unlock")}
@@ -437,12 +443,21 @@ function ItineraryResultsSection({
 
                       )}
 
-                      {unlocked ? (
+                      {unlocked && !previewLocked ? (
 
                         <span className="absolute left-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full bg-black/65 backdrop-blur-sm px-3 py-1.5 text-meta font-medium text-white">
 
                           {t("landing_trust_preview")}
 
+                        </span>
+
+                      ) : !unlocked ? (
+
+                        <span
+                          className="absolute left-3 top-3 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/55 backdrop-blur-md px-3 py-1.5 text-meta font-medium text-white/70 pointer-events-none"
+                          aria-hidden
+                        >
+                          {t("landing_ai_itinerary")}
                         </span>
 
                       ) : null}
@@ -606,7 +621,7 @@ function ItineraryResultsSection({
 
         </>
 
-      ) : (
+      ) : showGenerating ? (
 
         <>
 
@@ -615,6 +630,16 @@ function ItineraryResultsSection({
           <p className="text-small text-white/90 mb-3">{t("landing_generating_hint")}</p>
 
           {renderPreviewSlotCards("generating")}
+
+        </>
+
+      ) : (
+
+        <>
+
+          <p className="text-small text-white/80 mb-4">{t("landing_placeholder_hint")}</p>
+
+          {renderPreviewSlotCards("empty")}
 
         </>
 

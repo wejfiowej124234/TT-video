@@ -10,22 +10,30 @@ describe("traveltrustOfficialSocialLinks", () => {
     vi.unstubAllEnvs();
   });
 
-  it("always exposes twelve platform slots for footer UI (reference row)", () => {
+  it("exposes six Owner platforms with default https hrefs", () => {
     const slots = listTraveltrustOfficialSocialSlots();
-    expect(slots.map((s) => s.platform)).toEqual(
-      TRAVELTRUST_OFFICIAL_SOCIAL_PLATFORMS.map((p) => p.platform),
-    );
-    expect(slots).toHaveLength(12);
-    expect(slots.every((s) => s.href == null)).toBe(true);
-    expect(slots.every((s) => s.envKey.startsWith("NEXT_PUBLIC_TRAVELTRUST_SOCIAL_"))).toBe(true);
+    expect(slots.map((s) => s.platform)).toEqual([
+      "instagram",
+      "tiktok",
+      "threads",
+      "medium",
+      "discord",
+      "x",
+    ]);
+    expect(slots).toHaveLength(6);
+    expect(TRAVELTRUST_OFFICIAL_SOCIAL_PLATFORMS).toHaveLength(6);
+    expect(slots.every((s) => s.href?.startsWith("https://"))).toBe(true);
+    expect(listTraveltrustOfficialSocialLinksActive()).toHaveLength(6);
   });
 
-  it("activates only platforms with valid https env URLs", () => {
-    vi.stubEnv("NEXT_PUBLIC_TRAVELTRUST_SOCIAL_X_URL", "https://x.com/traveltrust");
-    vi.stubEnv("NEXT_PUBLIC_TRAVELTRUST_SOCIAL_GITHUB_URL", "http://github.com/bad");
+  it("lets env override default href when https", () => {
+    vi.stubEnv("NEXT_PUBLIC_TRAVELTRUST_SOCIAL_X_URL", "https://x.com/traveltrust-override");
+    vi.stubEnv("NEXT_PUBLIC_TRAVELTRUST_SOCIAL_INSTAGRAM_URL", "http://instagram.com/bad");
     const slots = listTraveltrustOfficialSocialSlots();
-    expect(slots.find((s) => s.platform === "x")?.href).toBe("https://x.com/traveltrust");
-    expect(slots.find((s) => s.platform === "github")?.href).toBeNull();
-    expect(listTraveltrustOfficialSocialLinksActive()).toHaveLength(1);
+    expect(slots.find((s) => s.platform === "x")?.href).toBe("https://x.com/traveltrust-override");
+    // invalid env falls back to default
+    expect(slots.find((s) => s.platform === "instagram")?.href).toBe(
+      "https://www.instagram.com/traveltrust.ir/",
+    );
   });
 });

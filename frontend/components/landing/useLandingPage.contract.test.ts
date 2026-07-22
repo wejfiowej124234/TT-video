@@ -55,6 +55,8 @@ describe("useLandingPage product honesty (①)", () => {
     expect(src).toContain("unlockError");
     expect(src).toContain("pullMarketTravelBookmarksIntoLocal");
     expect(src).toContain("pushMarketOrderBookmarkToggle");
+    expect(src).toContain("prevSubmittingRef");
+    expect(src).toContain("scrollRestoration");
   });
 
 });

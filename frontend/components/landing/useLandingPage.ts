@@ -235,10 +235,28 @@ export function useLandingPage(t: (key: string) => string) {
     });
   }, []);
 
+  /** 仅在用户主动「生成」后滚到结果区；会话恢复 / 首屏进入定制旅行须停在页顶（勿跳到官方精选或结果） */
+  const prevSubmittingRef = useRef(false);
   useEffect(() => {
-    if ((submitting || resultOrderIds.length > 0) && resultsSectionRef.current) {
-      resultsSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (typeof window === "undefined") return;
+    const hash = (window.location.hash || "").replace(/^#/, "");
+    if (!hash || hash === "form" || hash === "hero") {
+      try {
+        history.scrollRestoration = "manual";
+      } catch {
+        /* noop */
+      }
+      window.scrollTo(0, 0);
     }
+  }, []);
+  useEffect(() => {
+    const justStartedSubmit = submitting && !prevSubmittingRef.current;
+    const justFinishedSubmit =
+      !submitting && prevSubmittingRef.current && resultOrderIds.length > 0;
+    prevSubmittingRef.current = submitting;
+    if (!(justStartedSubmit || justFinishedSubmit)) return;
+    if (!resultsSectionRef.current) return;
+    resultsSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [submitting, resultOrderIds.length]);
 
   useEffect(() => {

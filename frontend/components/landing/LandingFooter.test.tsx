@@ -1,5 +1,5 @@
 /**
- * 54-S16 / §2.9：页脚多栏含法律（条款、隐私）；不含未运营社交外链
+ * 54-S16 / §2.9：页脚多栏含法律；关注我们为 Owner 官方六席外链
  */
 import React from "react";
 import { describe, it, expect } from "vitest";
@@ -34,12 +34,17 @@ describe("LandingFooter (54-S16)", () => {
     expect(screen.queryByRole("link", { name: "费路由自检" })).toBeNull();
   });
 
-  it("has no social platform outbound links in footer", () => {
+  it("follow-us row exposes Owner Instagram / X / Discord (no stale platforms)", () => {
     renderFooter();
+    expect(screen.getByRole("heading", { name: "关注我们" })).toBeTruthy();
     const hrefs = screen
       .getAllByRole("link")
       .map((a) => a.getAttribute("href") ?? "");
-    const socialPattern = /twitter\.com|x\.com\/|youtube\.com|tiktok\.com|discord\.(gg|com)|t\.me\/|facebook\.com|instagram\.com/i;
-    expect(hrefs.filter((h) => socialPattern.test(h))).toEqual([]);
+    expect(hrefs.some((h) => h.includes("instagram.com/traveltrust.ir"))).toBe(true);
+    expect(hrefs.some((h) => h.includes("x.com/TravelTrust_"))).toBe(true);
+    expect(hrefs.some((h) => h.includes("discord.com/channels/"))).toBe(true);
+    expect(hrefs.some((h) => /github\.com|youtube\.com|snapchat|facebook\.com|reddit\.com|t\.me\//i.test(h))).toBe(
+      false,
+    );
   });
 });

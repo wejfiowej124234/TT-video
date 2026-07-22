@@ -1,55 +1,59 @@
-/** `/traveltrust` 页脚官方社媒 — 槽位常驻（参考站金色横排）；`NEXT_PUBLIC_*` 填 https URL 后启用外链 */
+/** 官方社媒页脚 — Owner 给定平台与 URL（可 env 覆盖）；无 URL 的平台不展示 */
 
 export type TraveltrustOfficialSocialPlatform =
-  | "github"
-  | "youtube"
-  | "snapchat"
+  | "instagram"
   | "tiktok"
   | "threads"
-  | "instagram"
-  | "facebook"
   | "medium"
-  | "reddit"
   | "discord"
-  | "telegram"
   | "x";
 
 export type TraveltrustOfficialSocialPlatformConfig = {
   platform: TraveltrustOfficialSocialPlatform;
   envKey: string;
   labelKey: `traveltrust_social_${TraveltrustOfficialSocialPlatform}`;
+  /** Owner 书面官方址；env 非空时优先 */
+  defaultHref: string;
 };
 
-/** 展示顺序（与参考页脚金色图标横排一致） */
+/** 展示顺序（Owner 2026-07-22 · 仅此六席） */
 export const TRAVELTRUST_OFFICIAL_SOCIAL_PLATFORMS: readonly TraveltrustOfficialSocialPlatformConfig[] = [
-  { platform: "github", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_GITHUB_URL", labelKey: "traveltrust_social_github" },
-  { platform: "youtube", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_YOUTUBE_URL", labelKey: "traveltrust_social_youtube" },
-  {
-    platform: "snapchat",
-    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_SNAPCHAT_URL",
-    labelKey: "traveltrust_social_snapchat",
-  },
-  { platform: "tiktok", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_TIKTOK_URL", labelKey: "traveltrust_social_tiktok" },
-  { platform: "threads", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_THREADS_URL", labelKey: "traveltrust_social_threads" },
   {
     platform: "instagram",
     envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_INSTAGRAM_URL",
     labelKey: "traveltrust_social_instagram",
+    defaultHref: "https://www.instagram.com/traveltrust.ir/",
   },
   {
-    platform: "facebook",
-    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_FACEBOOK_URL",
-    labelKey: "traveltrust_social_facebook",
+    platform: "tiktok",
+    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_TIKTOK_URL",
+    labelKey: "traveltrust_social_tiktok",
+    defaultHref: "https://www.tiktok.com/@traveltrust_?lang=zh-Hans",
   },
-  { platform: "medium", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_MEDIUM_URL", labelKey: "traveltrust_social_medium" },
-  { platform: "reddit", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_REDDIT_URL", labelKey: "traveltrust_social_reddit" },
-  { platform: "discord", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_DISCORD_URL", labelKey: "traveltrust_social_discord" },
   {
-    platform: "telegram",
-    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_TELEGRAM_URL",
-    labelKey: "traveltrust_social_telegram",
+    platform: "threads",
+    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_THREADS_URL",
+    labelKey: "traveltrust_social_threads",
+    defaultHref: "https://www.threads.com/@traveltrust.ir",
   },
-  { platform: "x", envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_X_URL", labelKey: "traveltrust_social_x" },
+  {
+    platform: "medium",
+    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_MEDIUM_URL",
+    labelKey: "traveltrust_social_medium",
+    defaultHref: "https://medium.com/@traveltrust.ir",
+  },
+  {
+    platform: "discord",
+    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_DISCORD_URL",
+    labelKey: "traveltrust_social_discord",
+    defaultHref: "https://discord.com/channels/1514266600654639184/1514266603817009274",
+  },
+  {
+    platform: "x",
+    envKey: "NEXT_PUBLIC_TRAVELTRUST_SOCIAL_X_URL",
+    labelKey: "traveltrust_social_x",
+    defaultHref: "https://x.com/TravelTrust_",
+  },
 ] as const;
 
 export type TraveltrustOfficialSocialSlot = TraveltrustOfficialSocialPlatformConfig & {
@@ -68,14 +72,13 @@ function readHttpsUrl(raw: string | undefined): string | null {
   }
 }
 
-/** 全部外链槽位（无 URL 时 `href` 为 null，UI 显示待配置态） */
+/** 外链槽位（env 覆盖 defaultHref；均须 https） */
 export function listTraveltrustOfficialSocialSlots(): TraveltrustOfficialSocialSlot[] {
-  return TRAVELTRUST_OFFICIAL_SOCIAL_PLATFORMS.map(({ platform, envKey, labelKey }) => ({
-    platform,
-    envKey,
-    labelKey,
-    href: readHttpsUrl(process.env[envKey]),
-  }));
+  return TRAVELTRUST_OFFICIAL_SOCIAL_PLATFORMS.map(({ platform, envKey, labelKey, defaultHref }) => {
+    const fromEnv = readHttpsUrl(process.env[envKey]);
+    const href = fromEnv ?? readHttpsUrl(defaultHref);
+    return { platform, envKey, labelKey, defaultHref, href };
+  });
 }
 
 /** 已配置且可点击的外链（埋点 / 测试用） */
