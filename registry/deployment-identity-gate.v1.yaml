@@ -1,0 +1,99 @@
+# Deployment Identity Gate · SSOT (machine)
+# Human: docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md
+# Script: scripts/dev/run-deployment-identity-gate.py
+# Wired: scripts/dev/lib/deploy-freshness-gate.sh (pre-deploy)
+# Baseline Migration v2 phase-2: freeze tip = Candidate v2 (FG-15-B)
+
+schema: traveltrust.deployment_identity_gate.v1
+version: 1
+effective_utc: "2026-07-20"
+
+machine_keys:
+  TT_DEPLOYMENT_IDENTITY_GATE: ENFORCED
+  TT_PRODUCTION_GO: NO_GO
+
+rule: >
+  Every deploy MUST declare DEPLOY_TARGET and answer: (1) Release SHA source,
+  (2) whether worktree dirty/uncommitted changes are included, (3) target class.
+  Mixing CERTIFICATION_FREEZE with dirty Staging ops patches is FORBIDDEN.
+  During FG-15-B ELAPSED (set FG15_ELAPSED=1): STAGING_PATCH still requires Patch
+  Promotion path — patches must not bypass PSG into Staging/Production claims.
+  Only maintain Candidate tip PSG-REL-20260720-WEB3-CAND-V2 / FINAL RELEASE baseline.
+  FG-15-A (09c72b93) is ARCHIVED_HISTORICAL — NOT FOR PROMOTION.
+  After FINAL RELEASE FREEZE: one-shot cert only when Owner explicitly starts suite.
+
+fg15_window:
+  status_env: FG15_ELAPSED
+  track: FG-15-B
+  psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+  default_when_unset: ELAPSED
+  while_running:
+    CERTIFICATION_FREEZE: ALLOWED_CLEAN_TIP_ONLY  # historical branch · window elapsed
+    STAGING_PATCH: FORBIDDEN
+    EXPERIMENT: FORBIDDEN
+    promote_execute: FORBIDDEN
+    continue: [fg15b_sample, maintain, settlement_finalize_after_eta]
+  after_elapsed:
+    STAGING_PATCH: ALLOWED_ONLY_AFTER_PROMOTION_PATH
+    require_pipeline:
+      - Patch_Promotion_Gate
+      - PSG_living_update
+      - Release_Identity_rebuild
+      - next_Certification
+
+required_env:
+  DEPLOY_TARGET:
+    enum:
+      - CERTIFICATION_FREEZE
+      - STAGING_PATCH
+      - EXPERIMENT
+    meaning:
+      CERTIFICATION_FREEZE: Candidate v2 / FG-15-B pinned SHA only
+      STAGING_PATCH: Track B operational patch (must cite TT_STAGING_PATCH_IDS)
+      EXPERIMENT: Temporary; Owner override required
+
+identity_questions:
+  - id: Q1_DEPLOY_SOURCE
+    fields: [git_head, release_sha_expected, matches_freeze]
+  - id: Q2_INCLUDES_WORKTREE
+    fields: [dirty, dirty_paths_count, artifact_note]
+  - id: Q3_DEPLOY_TARGET
+    fields: [DEPLOY_TARGET]
+
+targets:
+  CERTIFICATION_FREEZE:
+    expected_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+    expected_psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+    deploy_baseline: v311_fund_safety_candidate_v2
+    historical_fg15_a_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
+    dirty_worktree: FORBIDDEN
+    patch_ids: FORBIDDEN
+    allows: [FG-15-B, Candidate_v2, PSG_Completion_after_ELAPSED]
+  STAGING_PATCH:
+    expected_sha: ANY_COMMITTED_OR_DECLARED
+    dirty_worktree: ALLOWED_IF_DECLARED
+    requires_env: TT_STAGING_PATCH_IDS
+    requires_fg15_elapsed: true
+    patch_ids_must_exist_in: registry/staging-patch-queue.v1.yaml
+    forbids: [claim_production_go, mutate_psg_archive, redeploy_frozen_contracts, bypass_psg_promotion]
+  EXPERIMENT:
+    requires_env: TRAVELTRUST_DEPLOY_EXPERIMENT_OK=1
+    requires_fg15_elapsed: true
+    dirty_worktree: ALLOWED
+    forbids: [claim_production_go, certification_evidence]
+
+checks:
+  - deploy_target_declared
+  - fg15_blocks_patch_and_experiment_deploy
+  - git_head_recorded
+  - dirty_vs_target_policy
+  - patch_ids_valid_when_staging_patch
+  - freeze_sha_match_when_certification
+  - four_way_freshness_hook
+
+# Four-way consistency (with Deploy Freshness Gate)
+four_way:
+  - git_sha
+  - artifact_or_build
+  - runtime_image
+  - evidence_or_meta

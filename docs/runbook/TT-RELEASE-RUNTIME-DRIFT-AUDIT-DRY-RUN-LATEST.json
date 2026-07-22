@@ -1,0 +1,81 @@
+{
+  "_superseded_banner": "SUPERSEDED_SNAPSHOT · tip 652bbab5 ≠ current Active tip 97289a71 · pin PSG-REL-20260720-WEB3-CAND-V2 · FG-15-B ELAPSED · not release mainline",
+  "schema": "traveltrust.release_runtime_drift_audit_dry_run.v1",
+  "machine_key": "TT_RELEASE_RUNTIME_DRIFT_AUDIT_DRY_RUN",
+  "status": "DRY_RUN_COMPLETE",
+  "mode": "REPORT_ONLY",
+  "recorded_utc": "2026-07-20T06:30:00Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline_key": "v311_fund_safety_candidate_v2",
+  "auto_modified_code": false,
+  "redeployed": false,
+  "touched_candidate_v2": false,
+  "touched_settlement_s7": false,
+  "equals_psg_complete": false,
+  "local_head": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "registry_active_git_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "candidate_release_identity_git_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "staging_meta_git_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+  "staging_is_ancestor_of_local": true,
+  "commits_staging_to_local": 4,
+  "fly": {
+    "tt_api_staging_version": 279,
+    "tt_api_staging_updated": "2026-07-19T07:29:00Z",
+    "tt_web_staging_updated": "2026-07-19T07:08:53Z"
+  },
+  "answers": {
+    "running_is_latest_candidate": false,
+    "psg_proves_same_version": "partial",
+    "regressions_from_old_deploy": true,
+    "regressions_primary": "web3_contract_env_mismatch_on_staging_meta"
+  },
+  "web3_contract_compare": {
+    "timelock": "MATCH",
+    "escrow_factory_v2": "STAGING_NULL_VS_CANDIDATE",
+    "settlement_router": "STAGING_ABSENT_VS_CANDIDATE",
+    "fee_router": "MISMATCH",
+    "indexer_checkpoint_block": 0
+  },
+  "auth_module": {
+    "auth_rs_tip_in_staging_ancestry": true,
+    "production_grade_ready": false,
+    "old_runtime_missing_otp_patch": false,
+    "note": "Auth gaps are design/production-grade debt, not primarily stale Fly image for auth.rs"
+  },
+  "psg_layers": {
+    "l1_l5_claim_pass": false,
+    "status": "READY_OR_PREP_NOT_PASS"
+  },
+  "buckets": {
+    "VALID": [
+      "local_head_eq_registry_eq_candidate_identity",
+      "l_status_honest_not_pass",
+      "timelock_overlap",
+      "wait_eta_audits_report_only"
+    ],
+    "OLD_RUNTIME": [
+      "staging_meta_git_sha",
+      "fly_v279_image",
+      "staging_contracts_not_candidate_money_path",
+      "indexer_checkpoint_zero"
+    ],
+    "EVIDENCE_DRIFT": [
+      "candidate_code_freeze_readme_old_active_narrative",
+      "doc_vs_deploy_audit_still_09c72b93_tip",
+      "cms_sg_qa_latest_fr_keys"
+    ],
+    "REGISTRY_DRIFT": [
+      "active_baseline_key_clean_alias_debt",
+      "master_matrix_factory_v2_future_vs_candidate_addr"
+    ],
+    "NEEDS_RECERTIFY": [
+      "after_owner_staging_align_redeploy_smoke",
+      "money_path_meta_contract_projection",
+      "cms_bake_chaos_on_aligned_image"
+    ],
+    "MISMATCH": [
+      "candidate_vs_staging_factory_fee_router_settlement"
+    ]
+  },
+  "human_ssot": "docs/runbook/TT-RELEASE-RUNTIME-DRIFT-AUDIT-DRY-RUN-LATEST.md"
+}

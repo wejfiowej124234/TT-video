@@ -43,7 +43,7 @@ export async function GET() {
   const psg_release_version =
     bake?.psg_release_version?.trim() ||
     nonempty("NEXT_PUBLIC_PSG_RELEASE_VERSION", "TRAVELTRUST_PSG_RELEASE_VERSION", "PSG_RELEASE_VERSION") ||
-    "PSG-REL-20260722-STAGING-ALIGN-W0";
+    "PSG-REL-20260720-WEB3-CAND-V2";
   const git_sha =
     bake?.git_sha?.trim() ||
     nonempty("NEXT_PUBLIC_GIT_SHA", "TRAVELTRUST_GIT_SHA", "GIT_COMMIT_SHA", "SOURCE_VERSION") ||

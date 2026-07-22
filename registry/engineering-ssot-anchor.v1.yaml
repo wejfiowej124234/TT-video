@@ -1,0 +1,85 @@
+# TravelTrust · Engineering SSOT Anchor (machine)
+# Human: docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md
+# Parent: PSG = unique Release SSOT (registry/psg-release-source-of-truth.v1.yaml)
+# Unique system: registry/final-release-baseline.v1.yaml
+# Gate: scripts/gates/check-engineering-ssot-anchor-gate.sh
+#
+# Doctrine: PSG is the highest governance anchor. This package binds every
+# engineering entity to the same Active PSG Release Version identity.
+# ≠ Production GO ≠ Staging-grade GO ≠ Reality Closure PASS.
+
+schema: traveltrust.engineering_ssot_anchor.v1
+version: 1
+machine_key: TT_ENGINEERING_SSOT_ANCHOR
+status: ACTIVE_UNDER_PSG
+recorded_utc: "2026-07-22T04:30:00Z"
+equals_production_go: false
+equals_staging_grade_go: false
+
+governance_parent:
+  psg_release_ssot: registry/psg-release-source-of-truth.v1.yaml
+  architecture_constitution: registry/architecture-constitution.v1.yaml
+  final_release_baseline: registry/final-release-baseline.v1.yaml
+  active_psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+  git_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+  contract_profile: v311_fund_safety_candidate_v2
+  constitution_economic: V3.1.1_Final
+  egm: PSG_EGM_Final
+
+# Entities that MUST cite Active pin + tip (or Explicit Expected Difference)
+bound_entities:
+  git:
+    axis: local_git
+    ssot: git rev-parse HEAD == active.git_sha
+  web:
+    axis: web_image
+    ssot: tt-web-staging bake + /api/release-identity
+    defaults_must_not: PSG-REL-20260722-STAGING-ALIGN-W0
+  api:
+    axis: api_image
+    ssot: GET /meta build.*
+    defaults_must_not: PSG-REL-20260722-STAGING-ALIGN-W0
+  runtime:
+    axis: runtime_meta
+    ssot: attestation_status=ok · same pin/sha/profile
+  contract:
+    axis: contract_bytecode_pin
+    ssot: v311_fund_safety_candidate_v2
+    legacy_forbidden_as_active:
+      - gov_freeze_v2_clean_baseline
+      - v311_sepolia_clean_baseline
+  database:
+    axis: database_baseline
+    ssot: staging_rc_ssot_alignment.v1#expected_staging_surface
+  migration:
+    axis: migration_checksum
+    ssot: crates/api/migrations/*.sql eol=lf · match applied ledger
+  registry:
+    axis: registry_active
+    ssot: registry/psg-release-version-LATEST.yaml#active
+  evidence:
+    axis: evidence_bundle
+    ssot: evidence/GO_web3_candidate_v2
+    append_only: evidence/GO_fg15_observation_48h_candidate_v2
+  docs:
+    axis: runbook_cites
+    ssot: FINAL RELEASE + Candidate v2 + V3.1.1 + EGM Final
+
+forbidden_as_active_defaults:
+  - PSG-REL-20260722-STAGING-ALIGN-W0
+  - PSG-REL-20260719-FG15-09c72b93
+  - gov_freeze_v2_clean_baseline_as_ACTIVE_money_path
+  - FG15_A_living_RUNNING
+  - Reality_W0_W7_as_release_mainline
+  - Draft_economic_constitution
+
+task_chain_after_freeze:
+  - ELAPSED_48h_FG15_B  # evidence already ELAPSED · registry must match
+  - Project_A
+  - PSG_Recalculate_Inventory_Delta
+  - Reality_Closure
+  - Staging_grade_GO_judgment
+  - Production_GO  # separate · requires TT_PSG_PRODUCTION_CERT=PASS
+
+honesty: >
+  Engineering SSOT Anchor ≠ FREEZE ≠ cert PASS ≠ Staging-grade GO ≠ Production GO.

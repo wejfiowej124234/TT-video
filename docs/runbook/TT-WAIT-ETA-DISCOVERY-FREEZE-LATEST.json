@@ -1,0 +1,54 @@
+{
+  "_superseded_banner": "SUPERSEDED_SNAPSHOT · tip 652bbab5 ≠ current Active tip 97289a71 · pin PSG-REL-20260720-WEB3-CAND-V2 · FG-15-B ELAPSED · not release mainline",
+  "schema": "traveltrust.wait_eta_discovery_freeze.v1",
+  "machine_key": "TT_WAIT_ETA_DISCOVERY_FREEZE",
+  "status": "DISCOVERY_FROZEN",
+  "recorded_utc": "2026-07-20T07:00:00Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline_key": "v311_fund_safety_candidate_v2",
+  "eta_gate": "WAITING_WINDOW",
+  "project_a_impact": "NONE_CONTINUE_WAIT_ETA_LADDER",
+  "psg_complete": false,
+  "layers_pass": false,
+  "false_cert_on_wrong_runtime": false,
+  "key_finding": "CANDIDATE_TIP_NE_STAGING_RUNTIME",
+  "candidate_tip_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "staging_meta_git_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+  "discovery_packs_frozen": [
+    "TT-RELEASE-RUNTIME-DRIFT-AUDIT-DRY-RUN",
+    "TT-RELEASE-RUNTIME-CONSISTENCY-AUDIT-DRY-RUN",
+    "TT-WAIT-ETA-PRODUCTION-READINESS-GAP-AUDIT-DRY-RUN",
+    "TT-PSG-SSOT-CONSISTENCY-AUDIT-DRY-RUN",
+    "TT-PSG-PRODUCTION-REALITY-CONSISTENCY-AUDIT-DRY-RUN",
+    "TT-PRODUCTION-IMPLEMENTATION-REALITY-MAPPING-AUDIT-DRY-RUN",
+    "TT-PSG-DELTA-RECERTIFY-AUTH-IDENTITY-DRY-RUN",
+    "TT-WAIT-ETA-PRODUCTION-FEATURE-READINESS-AUDIT",
+    "TT-WAIT-ETA-CMS-PRODUCTION-GOVERNANCE-AUDIT",
+    "TT-WAIT-ETA-RELEASE-HYGIENE-AUDIT"
+  ],
+  "psg_ssot_verdict": {
+    "trustworthy_incomplete_candidacy": true,
+    "psg_complete": false,
+    "equation_cert_local_ok_deploy_fail": true
+  },
+  "forbid_now": [
+    "redeploy_staging",
+    "modify_candidate_pin",
+    "fix_auth_cms_code",
+    "mutate_registry_for_discovery",
+    "start_project_b",
+    "rerun_l5_final_or_s7"
+  ],
+  "allow_now": [
+    "fg15b_maintain",
+    "eta_gate_readonly"
+  ],
+  "post_baseline_streams": [
+    "AUTH-PROD-HARDENING",
+    "CMS-GOV-CLEANUP",
+    "STAGING-RUNTIME-ALIGNMENT",
+    "DELTA_RECERTIFY_INDEPENDENT"
+  ],
+  "backlog_ssot": "docs/runbook/TT-POST-BASELINE-INDEPENDENT-BACKLOG-LATEST.md",
+  "human_ssot": "docs/runbook/TT-WAIT-ETA-DISCOVERY-FREEZE-LATEST.md"
+}

@@ -1,0 +1,104 @@
+{
+  "_superseded_banner": "SUPERSEDED_SNAPSHOT · tip 652bbab5 ≠ current Active tip 97289a71 · pin PSG-REL-20260720-WEB3-CAND-V2 · FG-15-B ELAPSED · not release mainline",
+  "schema": "traveltrust.psg_delta_recertify_auth_identity_dry_run.v1",
+  "machine_key": "TT_PSG_DELTA_RECERTIFY_AUTH_IDENTITY_DRY_RUN",
+  "status": "DRY_RUN_COMPLETE",
+  "mode": "REPORT_ONLY",
+  "recorded_utc": "2026-07-20T06:25:00Z",
+  "git_head": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "project_b": "FROZEN",
+  "equals_project_b_start": false,
+  "auto_modified_code": false,
+  "touched_candidate_v2": false,
+  "touched_web3_l5": false,
+  "touched_s7": false,
+  "equals_psg_complete": false,
+  "prior_audit_ssot": "docs/runbook/TT-WAIT-ETA-PRODUCTION-FEATURE-READINESS-AUDIT-LATEST.md",
+  "human_ssot": "docs/runbook/TT-PSG-DELTA-RECERTIFY-AUTH-IDENTITY-DRY-RUN-LATEST.md",
+  "scope": [
+    "AIL-01_register_email_otp",
+    "AIL-02_password_recovery",
+    "AIL-03_email_change",
+    "AIL-04_session_recovery"
+  ],
+  "delta_detect": {
+    "verdict": "NO_MATERIAL_CODE_DELTA_VS_PRIOR_AUDIT",
+    "prior_audit_still_valid": true,
+    "material_code_delta": false,
+    "classes": {
+      "NONE_CONFIRMED": 7,
+      "DRIFT_TEST_VS_RUNTIME": 1,
+      "NEW_FEATURE": 0,
+      "REGRESSION": 0
+    },
+    "file_fingerprints": [
+      {
+        "path": "crates/api/src/chain_off/auth.rs",
+        "sha256_12": "1812f679935b",
+        "bytes": 79766
+      },
+      {
+        "path": "crates/api/src/db/auth_email_tokens.rs",
+        "sha256_12": "9b1ca0ba1e61",
+        "bytes": 6804
+      },
+      {
+        "path": "crates/api/src/email_transport_resend.rs",
+        "sha256_12": "0c4518227c23",
+        "bytes": 2685
+      },
+      {
+        "path": "crates/api/src/routes/auth.rs",
+        "sha256_12": "e2a3872e22d3",
+        "bytes": 10778
+      },
+      {
+        "path": "crates/api/src/routes/me_security.rs",
+        "sha256_12": "0523772fad00",
+        "bytes": 12628
+      }
+    ]
+  },
+  "classify": {
+    "AIL-01": {
+      "feature_complete": true,
+      "production_grade": false,
+      "class": "GAP_PRODUCTION"
+    },
+    "AIL-02": {
+      "feature_complete": false,
+      "production_grade": false,
+      "class": "GAP_MISSING"
+    },
+    "AIL-03": {
+      "feature_complete": false,
+      "production_grade": false,
+      "class": "GAP_MISSING"
+    },
+    "AIL-04": {
+      "feature_complete": "partial",
+      "production_grade": false,
+      "class": "GAP_PARTIAL"
+    }
+  },
+  "production_grade_bar_note": "Auth industry production bar ≠ PSG Layer5 Financial-Grade Web3",
+  "production_grade_ready": false,
+  "gaps": [
+    "GAP-AIL-01",
+    "GAP-AIL-02",
+    "GAP-AIL-03",
+    "GAP-AIL-04",
+    "GAP-AIL-05",
+    "GAP-AIL-06",
+    "GAP-AIL-07",
+    "GAP-AIL-08",
+    "GAP-AIL-09"
+  ],
+  "execution_gate": {
+    "earliest": "AFTER_CANDIDATE_FORMAL_BASELINE",
+    "vehicle": "INDEPENDENT_PCR_AUTH_STAR",
+    "forbid_candidate_pin": true,
+    "forbid_web3_l5_s7": true
+  }
+}

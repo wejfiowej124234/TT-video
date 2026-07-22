@@ -1,0 +1,62 @@
+{
+  "_superseded_banner": "SUPERSEDED_SNAPSHOT · tip 652bbab5 ≠ current Active tip 97289a71 · pin PSG-REL-20260720-WEB3-CAND-V2 · FG-15-B ELAPSED · not release mainline",
+  "schema": "traveltrust.production_implementation_reality_mapping_audit_dry_run.v1",
+  "machine_key": "TT_PRODUCTION_IMPLEMENTATION_REALITY_MAPPING_AUDIT_DRY_RUN",
+  "status": "DRY_RUN_COMPLETE",
+  "mode": "REPORT_ONLY",
+  "recorded_utc": "2026-07-20T07:25:00Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "candidate_tip_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "staging_meta_git_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+  "primary_risk": "IMPLEMENTATION_STATUS_OPACITY",
+  "answer_code_exists_but_unsynced": {
+    "partial_yes": true,
+    "not_all_doc_only": true,
+    "auth_is_design_gap_not_old_deploy": true
+  },
+  "reality_classes": [
+    "IMPLEMENTED_ALIGNED",
+    "IMPLEMENTED_NOT_REGISTERED",
+    "IMPLEMENTED_NOT_PRODUCTION_READY",
+    "OLD_RUNTIME",
+    "OLD_DATA",
+    "DOCUMENT_DRIFT",
+    "TRUE_MISSING"
+  ],
+  "opacity_types": {
+    "A_true_missing": [
+      "email_change",
+      "user_mfa",
+      "soft_delete_pattern"
+    ],
+    "B_doc_ahead_or_unacked": [
+      "forgot_IT_vs_stub",
+      "resend_unused_by_otp"
+    ],
+    "C_code_unwired": [
+      "auth_email_tokens",
+      "outbox_default_off",
+      "incident_placeholder"
+    ]
+  },
+  "ops_elevated": true,
+  "ops_pillars": {
+    "runtime": "IMPLEMENTED_ALIGNED_plus_OLD_RUNTIME_sha",
+    "incident": "IMPLEMENTED_NOT_PRODUCTION_READY",
+    "alerts": "IMPLEMENTED_NOT_PRODUCTION_READY",
+    "recovery": "IMPLEMENTED_NOT_PRODUCTION_READY",
+    "release": "PARTIAL_plus_OLD_RUNTIME",
+    "governance_audit": "IMPLEMENTED_ALIGNED_partial_approval"
+  },
+  "auth_summary": {
+    "schema_ready": true,
+    "code_partial": true,
+    "runtime_not_prod": true,
+    "business_flow_not_closed": true
+  },
+  "forbid_candidate_mutation": true,
+  "forbid_deploy": true,
+  "forbid_eta_l5_s7_impact": true,
+  "human_ssot": "docs/runbook/TT-PRODUCTION-IMPLEMENTATION-REALITY-MAPPING-AUDIT-DRY-RUN-LATEST.md",
+  "backlog_ssot": "docs/runbook/TT-POST-BASELINE-INDEPENDENT-BACKLOG-LATEST.md"
+}

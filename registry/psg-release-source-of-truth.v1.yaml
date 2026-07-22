@@ -85,16 +85,18 @@ fg15_window:
   active_version_legacy_fg15_a: PSG-REL-20260719-FG15-09c72b93  # DEPRECATED key name · equals archived_fg15_a_version
   active_version: PSG-REL-20260720-WEB3-CAND-V2
   active_version_file: registry/psg-release-version-LATEST.yaml
-  freeze_git_sha: "652bbab51a1eb0652ea31f18ae4146fbe325a1ea"
-  freeze_status: CANDIDATE_BASELINE_ACTIVE_FG15_B_PENDING_OBSERVATION
-  mutate_freeze_tip: FORBIDDEN_WHILE_FG15_B_RUNNING
-  mutate_release_identity: FORBIDDEN_WHILE_FG15_B_RUNNING
+  freeze_git_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+  freeze_status: CANDIDATE_BASELINE_ACTIVE_FG15_B_ELAPSED_FINAL_RELEASE_NOT_FROZEN
+  mutate_freeze_tip: FORBIDDEN_UNTIL_FINAL_RELEASE_BASELINE_FROZEN_THEN_NEW_MINT
+  mutate_release_identity: ALLOWED_NEW_MINT_ONLY
   overwrite_active_version: FORBIDDEN
   overwrite_evidence_or_packages: FORBIDDEN
-  pcr_promotion: FORBIDDEN_UNTIL_FG15_B_ELAPSED
-  mint_new_release_version: FORBIDDEN_UNTIL_FG15_B_ELAPSED
+  pcr_promotion: ALLOWED_AFTER_FG15_B_ELAPSED_AND_FINAL_RELEASE_FREEZE
+  mint_new_release_version: FORBIDDEN_UNTIL_FINAL_RELEASE_BASELINE_FROZEN
   web3_mainline: registry/web3-mainline.v1.yaml
-  fg15_track: FG-15-B
+  fg15_track: FG-15-B_ELAPSED
+  engineering_ssot_anchor: registry/engineering-ssot-anchor.v1.yaml
+  final_release_baseline: registry/final-release-baseline.v1.yaml
   historical_fg15_a:
     status: ARCHIVED_HISTORICAL
     promotion: FORBIDDEN

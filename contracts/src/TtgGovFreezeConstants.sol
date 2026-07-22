@@ -7,7 +7,8 @@ pragma solidity 0.8.19;
  * @dev L3-03 Seq4 · D-CONST-DOCID:
  *      Allocation authoritative: docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md
  *      GOV gates prose:          docs/spec/governance-token/TTG-TOKENOMICS-FREEZE-V1.md
- *      ACTIVE deploy baseline:   gov_freeze_v2_clean_baseline
+ *      ACTIVE money-path baseline: v311_fund_safety_candidate_v2 (Candidate v2)
+ *      LEGACY_SUPERSEDED baseline: gov_freeze_v2_clean_baseline (do not cite as ACTIVE)
  *      YAML mirror:              protocol-ssot.v1.yaml `genesis_v2` + `governance_freeze_v1`
  *      Public round caps:        Registry initial 800k / 1.2M / 3M · sum = 5M (Genesis V2 Public Sale)
  */
@@ -48,8 +49,13 @@ library TtgGovFreezeConstants {
         return "TTG-TOKENOMICS-FREEZE-V1";
     }
 
-    /// @notice ACTIVE deployment baseline key in protocol-convergence-deployments
+    /// @notice ACTIVE money-path deploy baseline (Candidate v2 · FINAL RELEASE)
     function activeDeployBaselineId() internal pure returns (string memory) {
+        return "v311_fund_safety_candidate_v2";
+    }
+
+    /// @notice LEGACY_SUPERSEDED · forensic / historical DeployGovFreeze scripts only
+    function legacyGovFreezeCleanBaselineId() internal pure returns (string memory) {
         return "gov_freeze_v2_clean_baseline";
     }
 }

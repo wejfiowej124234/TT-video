@@ -1,0 +1,38 @@
+# PCR · Engineering SSOT Anchor + P0 pollution cleanup (FINAL RELEASE)
+# Does NOT flip freeze_status. Does NOT unlock cert suite. ≠ GO.
+
+schema: traveltrust.psg_change_record.v1
+id: PCR-20260722-ENGINEERING-SSOT-ANCHOR-P0-CLEAN
+recorded_utc: "2026-07-22T04:30:00Z"
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+git_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+change_class: DOCS_REGISTRY_ENGINEERING_BIND_AND_DEFAULT_REPIN
+equals_production_go: false
+equals_freeze: false
+
+summary: >
+  Establish Engineering SSOT Anchor under PSG; publish FINAL RELEASE system
+  architecture view; retarget P0 defaults from STAGING-ALIGN-W0 / 652bbab5 to
+  Candidate pin + tip 97289a71; align FG-15-B registry to ELAPSED; refuse
+  mint-staging-align-w0 unless historical override.
+
+artifacts:
+  - registry/engineering-ssot-anchor.v1.yaml
+  - docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md
+  - docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md
+  - scripts/gates/check-engineering-ssot-anchor-gate.sh
+  - registry/final-release-baseline.v1.yaml
+  - registry/psg-release-source-of-truth.v1.yaml
+  - registry/fg15-b-candidate-v2.v1.yaml
+
+forbidden_claims:
+  - freeze_status_FROZEN
+  - cert_suite_PASS
+  - Staging_grade_GO
+  - Production_GO
+  - Hard_Gate_flip
+
+next:
+  - Owner worktree Exit Criteria #4
+  - flip FINAL RELEASE freeze_status=FROZEN
+  - one-shot Project A → PSG → Reality → Staging-grade judgment

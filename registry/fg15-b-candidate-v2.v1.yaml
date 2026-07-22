@@ -1,0 +1,42 @@
+# FG-15-B · Candidate v2 Observation (Promotion Candidate)
+#
+# Human: docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md
+# Evidence root: evidence/GO_fg15_observation_48h_candidate_v2/
+# Mainline: registry/web3-mainline.v1.yaml
+#
+# Doctrine: PROMOTION CANDIDATE · independent of FG-15-A archive.
+#   Window starts after Owner Sepolia deploy + Money Path PASS.
+
+schema: traveltrust.fg15_b_candidate_v2.v1
+version: 1
+track_id: FG-15-B
+status: OBSERVATION_ELAPSED
+promotion: PROMOTION_CANDIDATE
+effective_utc: "2026-07-20"
+elapsed_recorded_utc: "2026-07-22T04:30:00Z"
+
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+web3_candidate: WEB3-CANDIDATE-V2-FUND-SAFETY-P0
+deploy_baseline_key: v311_fund_safety_candidate_v2
+
+evidence:
+  root: evidence/GO_fg15_observation_48h_candidate_v2
+  status_file: evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json
+  forbid_write_to_fg15_a: true
+
+ladder_prereq:
+  - C2-02_owner_sepolia_auth
+  - C2-03_sepolia_deploy
+  - C2-04_money_path_pass
+
+window:
+  started: true
+  elapsed_pass: true
+  ACTIVE_FLIP: FORBIDDEN_UNTIL_OWNER
+  note: >
+    Evidence OBSERVATION_ELAPSED. Hard Gate / Wave / Production GO still fail-closed.
+    Formal cert suite still FORBIDDEN until FINAL RELEASE BASELINE freeze.
+
+historical_fg15_a:
+  registry: registry/fg15-a-historical-archive.v1.yaml
+  citation_for_promotion: FORBIDDEN

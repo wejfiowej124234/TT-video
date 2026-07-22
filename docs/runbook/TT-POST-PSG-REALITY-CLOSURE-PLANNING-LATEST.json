@@ -1,0 +1,355 @@
+{
+  "_superseded_banner": "SUPERSEDED_SNAPSHOT · tip 652bbab5 ≠ current Active tip 97289a71 · pin PSG-REL-20260720-WEB3-CAND-V2 · FG-15-B ELAPSED · not release mainline",
+  "schema": "traveltrust.post_psg_reality_closure_planning.v1",
+  "machine_key": "TT_POST_PSG_REALITY_CLOSURE_PLANNING",
+  "status": "EXECUTION_PREP_FROZEN",
+  "steady_state": "WAIT_ETA_STEADY_MAINTAIN_ONLY",
+  "phase_judgment": "RELEASE_ENGINEERING_FREEZE_NOT_DEV",
+  "post_eta_ladder": "Project_A_PSG_closure → Formal_Baseline → W0_W7_Reality_Closure → Gates → Readiness → GO",
+  "post_eta_phase_1": {
+    "name": "Project_A_PSG_closure",
+    "steps": [
+      "Settlement_finalize",
+      "Bridge_A",
+      "Manifest",
+      "Baseline_Gate",
+      "FG_Capture",
+      "L5_Final",
+      "S7",
+      "Formal_Baseline"
+    ],
+    "targets": [
+      "time_lock_elapsed",
+      "L5_path",
+      "formal_baseline",
+      "psg_complete_definition_path"
+    ],
+    "honest_note": "TRUE_FEATURE_GAP Auth may still need W1 after Baseline"
+  },
+  "post_eta_phase_2": {
+    "name": "Reality_Closure",
+    "waves": [
+      "W0",
+      "W1",
+      "W2",
+      "W3",
+      "W4",
+      "W5",
+      "W6",
+      "W7_Delta"
+    ],
+    "maps": {
+      "W0": "OLD_RUNTIME_tip_ne_staging",
+      "W1": "L3_Auth_production_lifecycle",
+      "W2": "CMS_ops_lifecycle",
+      "W3": "L3_residual_user_admin",
+      "W4": "L2_Data_L4_Ops",
+      "W5": "L1_Product_UX_closure",
+      "W6": "DOC_DRIFT",
+      "W7": "Delta_Recertify_then_gates"
+    }
+  },
+  "mature_ladder_stages": {
+    "S0": "WAIT_ETA_Maintain",
+    "S1": "Project_A_Finalize_L5_S7_Recalc1_Formal_Baseline",
+    "S2": "PSG_Layer_Status_Attest_after_Baseline",
+    "S3": "Reality_Closure_W0_to_W6",
+    "S4": "W7_Delta_and_Closure_Gates",
+    "S5": "PSG_Recalculate_2_Post_Reality_maybe_complete",
+    "S6": "Production_Readiness_and_Owner_Signoff",
+    "S7": "Production_GO"
+  },
+  "recalculate_twice_clarified": {
+    "recalc_1": "inside_Project_A_before_Formal_Baseline_S7",
+    "stage_2": "status_attest_not_full_recalc",
+    "recalc_2": "after_Reality_Delta_may_flip_psg_complete"
+  },
+  "mature_verdict": "YES_WITH_RECALC_CLARIFICATION",
+  "impact_priority_post_eta": [
+    {
+      "P0": "Project_A_PSG_hard_gate",
+      "raises": [
+        "psg_complete_path",
+        "L5",
+        "Formal_Baseline"
+      ]
+    },
+    {
+      "P1": "W0_Runtime_Alignment",
+      "raises": [
+        "D04",
+        "D06",
+        "D12"
+      ]
+    },
+    {
+      "P2": "W1_Auth_Production_Harden",
+      "raises": [
+        "D07",
+        "L3"
+      ]
+    },
+    {
+      "P3": "W4_DB_Ops",
+      "raises": [
+        "D08",
+        "D09",
+        "L2",
+        "L4"
+      ]
+    },
+    {
+      "P4": "W2_CMS_W5_UI",
+      "raises": [
+        "L1_UX",
+        "CMS_ops"
+      ]
+    },
+    {
+      "then": "W7_Delta_Recertify_and_gates"
+    }
+  ],
+  "score_strategy": {
+    "do_not_raise": "Governance_Design_8_to_9",
+    "must_raise": "Execution_5_to_8_plus",
+    "method": "Project_A_then_W0_W6_fix_then_W7_proof"
+  },
+  "forbid_until_eta": [
+    "code_change",
+    "deploy",
+    "audit_expansion",
+    "s7",
+    "delta_early",
+    "auth_cms_db_fix",
+    "new_governance_framework"
+  ],
+  "governance_surface": "FROZEN_NO_NEW_GATES",
+  "three_principles": [
+    "no_scope_expansion",
+    "no_prod_debt_fix_in_wait_window",
+    "maintain_protects_candidate_not_complete_percent"
+  ],
+  "wait_window_status": {
+    "psg_candidate": "Frozen",
+    "eta": "Waiting",
+    "maintain": "Running",
+    "reality_closure": "Prepared",
+    "feature_inventory": "Prepared",
+    "db_audit": "Prepared",
+    "auth_cms_fix": "Waiting",
+    "delta_recertify": "Waiting",
+    "problem_discovery_classified": true,
+    "fix_execution": "AFTER_FORMAL_BASELINE"
+  },
+  "final_model": {
+    "order": [
+      "PSG_prove_candidate_version",
+      "Formal_Baseline",
+      "Reality_Closure_prove_runtime_is_that_version",
+      "Feature_Inventory_prove_feature_really_complete",
+      "Wave_fix_W0_W6_close_reality_gap",
+      "Delta_Recertify_W7_prove_ten_dim_still_equal",
+      "Production_Readiness_Review",
+      "Production_GO"
+    ],
+    "four_roles": {
+      "PSG": "certify_version_authenticity",
+      "Reality_Closure": "runtime_consistency",
+      "Feature_Inventory": "feature_reality",
+      "Delta_Recertify": "post_fix_reproof_of_equality"
+    },
+    "forbid": [
+      "GO_on_PSG_alone",
+      "delta_as_treatment",
+      "new_gate_framework"
+    ],
+    "closer_to_enterprise_release_than_psg_pass_alone": true
+  },
+  "locked_production_risks": {
+    "P0": "W0_Runtime_Alignment_652bbab5_ne_f8181b63",
+    "P1_auth": "W1_production_lifecycle_not_redeploy_only",
+    "P1_db": "W4_schema_behavior_lifecycle_reliability_concurrency",
+    "P2_cms": "W2_content_operation_system"
+  },
+  "frozen_gates_only": [
+    "PSG_gate_family",
+    "Reality_Closure_Gate",
+    "Feature_Inventory_Gate",
+    "Delta_Recertify_as_W7"
+  ],
+  "not_gates": [
+    "DB_Audit_checklist",
+    "Wave_Acceptance",
+    "93_96_R002_mapping"
+  ],
+  "wait_eta_max_remaining": [
+    "inventory_domain_cell_notes",
+    "db_audit_table_notes",
+    "w0_runtime_field_alignment_notes",
+    "section6_mapping_pointer_rows"
+  ],
+  "wait_eta_then_stop_expansion": true,
+  "delta_recertify": {
+    "wave": "W7",
+    "is": "post_fix_consistency_proof",
+    "is_not": [
+      "treatment",
+      "skip_W0_W6",
+      "first_response_to_defect",
+      "production_go"
+    ],
+    "prerequisite": "W0_through_W6_complete",
+    "micro_ladder": [
+      "discover",
+      "classify",
+      "wave_fix",
+      "version_gate",
+      "runtime_verify",
+      "delta_recertify",
+      "reality_closure_pass",
+      "production_readiness",
+      "production_go"
+    ],
+    "foundation_wave": "W0"
+  },
+  "root_mechanism": "missing_ten_dimension_equality",
+  "problem_classes": [
+    "OLD_RUNTIME_W0",
+    "IMPLEMENTED_NOT_PRODUCTION_READY_W1",
+    "CMS_OPS_LIFECYCLE_W2",
+    "DB_SCHEMA_BEHAVIOR_LIFECYCLE_W4"
+  ],
+  "prep_closed": {
+    "maintain_anti_drift": true,
+    "feature_inventory_deep": true,
+    "db_audit_p0_p1_locked": true,
+    "wave_acceptance": true,
+    "reality_closure_gate_spec": true,
+    "feature_inventory_gate_spec": true,
+    "code_changes_forbidden": true
+  },
+  "after_formal_baseline_first_wave": "W0_Runtime_Alignment",
+  "recorded_utc": "2026-07-20T08:20:00Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "goal_upgrade": {
+    "was": "MAKE_PSG_PASS",
+    "now": "PSG_PASS_THEN_NO_CERT_A_RUN_B"
+  },
+  "ten_dimension_equality": [
+    "PSG_Certification",
+    "Code",
+    "Migration",
+    "Database",
+    "Deploy",
+    "Runtime",
+    "Document",
+    "Evidence",
+    "User_Experience",
+    "Operations"
+  ],
+  "phase_1_project_a": [
+    "Settlement_finalize",
+    "Bridge_A",
+    "Manifest",
+    "Baseline_Gate",
+    "FG_Capture",
+    "L5_Final",
+    "S7",
+    "Formal_Baseline"
+  ],
+  "phase_2_reality_closure_waves": [
+    "W0_Runtime_Alignment",
+    "W1_Auth_Production_Harden",
+    "W2_CMS_Governance",
+    "W3_Security_User_Admin",
+    "W4_DB_Ops",
+    "W5_UI_UX_Production",
+    "W6_Documentation_Hygiene",
+    "W7_Delta_Recertify"
+  ],
+  "forbid_now": [
+    "modify_candidate",
+    "redeploy",
+    "inject_reality_fixes_into_final_closure",
+    "early_l5_s7"
+  ],
+  "human_ssot": "docs/runbook/TT-POST-PSG-REALITY-CLOSURE-PLANNING-LATEST.md",
+  "mapping_input": "docs/runbook/TT-PRODUCTION-IMPLEMENTATION-REALITY-MAPPING-AUDIT-DRY-RUN-LATEST.md",
+  "backlog_ssot": "docs/runbook/TT-POST-BASELINE-INDEPENDENT-BACKLOG-LATEST.md",
+  "wait_eta_prep_pack": {
+    "feature_inventory": "docs/runbook/TT-PRODUCTION-FEATURE-INVENTORY-LATEST.md",
+    "feature_inventory_gate": "docs/runbook/TT-PRODUCTION-FEATURE-INVENTORY-GATE-LATEST.md",
+    "db_audit": "docs/runbook/TT-DATABASE-PRODUCTION-READINESS-AUDIT-LATEST.md",
+    "w0_alignment_checklist": "docs/runbook/TT-W0-RUNTIME-ALIGNMENT-CHECKLIST-LATEST.md",
+    "owner_input_confirm": "docs/runbook/TT-OWNER-INPUT-CONFIRM-WAIT-ETA-LATEST.md",
+    "staging_old_runtime_checklist": "docs/runbook/TT-STAGING-OLD-RUNTIME-MULTI-DIM-CHECKLIST-LATEST.md",
+    "enterprise_maturity_planning": "docs/runbook/TT-POST-BASELINE-ENTERPRISE-MATURITY-PLANNING-LATEST.md",
+    "execution_prep_residual_binding": "docs/runbook/TT-POST-BASELINE-REALITY-CLOSURE-EXECUTION-PREP-LATEST.md",
+    "production_gap_register": "docs/runbook/TT-PRODUCTION-GAP-REGISTER-LATEST.md",
+    "kyc_product_scope_alignment": "docs/runbook/TT-KYC-PRODUCT-SCOPE-ALIGNMENT-LATEST.md",
+    "project_score_uplift_plan": "docs/runbook/TT-PROJECT-SCORE-UPLIFT-PLAN-LATEST.md",
+    "residual_risk_audit": "docs/runbook/TT-POST-ETA-ORDER-PSG-RESIDUAL-RISK-LATEST.md",
+    "wave_acceptance": "docs/runbook/TT-REALITY-CLOSURE-WAVE-ACCEPTANCE-LATEST.md",
+    "hygiene_plan": "docs/runbook/TT-DOCUMENT-HYGIENE-CLASSIFICATION-PLAN-LATEST.md",
+    "auth_design_prep": "docs/runbook/TT-AUTH-PRODUCTION-DESIGN-PREP-LATEST.md",
+    "cms_design_prep": "docs/runbook/TT-CMS-PRODUCTION-GOVERNANCE-DESIGN-PREP-LATEST.md",
+    "ui_checklist": "docs/runbook/TT-UI-UX-PRODUCTION-AUDIT-CHECKLIST-LATEST.md"
+  },
+  "enterprise_maturity": {
+    "status": "PLAN_FROZEN",
+    "mounts": {
+      "security": "W3",
+      "sre": "W4",
+      "business_ops": "W2_W3_W6"
+    },
+    "forbid_new_gate": true,
+    "ssot": "docs/runbook/TT-POST-BASELINE-ENTERPRISE-MATURITY-PLANNING-LATEST.md"
+  },
+  "execution_prep": {
+    "status": "EXECUTION_PREP_FROZEN",
+    "equals_new_framework": false,
+    "ssot": "docs/runbook/TT-POST-BASELINE-REALITY-CLOSURE-EXECUTION-PREP-LATEST.md",
+    "residual_binding": "docs/runbook/TT-POST-ETA-ORDER-PSG-RESIDUAL-RISK-LATEST.md"
+  },
+  "reality_closure_gate": {
+    "script": "scripts/gates/check-reality-closure-gate.sh",
+    "ssot": "docs/runbook/TT-REALITY-CLOSURE-GATE-LATEST.md",
+    "current": "REALITY_CLOSURE_NOT_ARMED",
+    "pass_unlocks": "Production_Readiness_Review",
+    "forbid_docs_only_pass": true
+  },
+  "feature_inventory_gate": {
+    "script": "scripts/gates/check-production-feature-inventory-gate.sh",
+    "ssot": "docs/runbook/TT-PRODUCTION-FEATURE-INVENTORY-GATE-LATEST.md",
+    "matrix": "docs/runbook/TT-PRODUCTION-FEATURE-INVENTORY-LATEST.json",
+    "current": "FEATURE_INVENTORY_MATRIX_OK_NOT_ALL_READY",
+    "required_domains": [
+      "Auth",
+      "CMS",
+      "Market",
+      "Order",
+      "Escrow",
+      "Payment",
+      "Settlement",
+      "Admin",
+      "Governance"
+    ],
+    "forbid_docs_only_all_ready": true
+  },
+  "wait_eta_only": [
+    "Maintain",
+    "Integrity",
+    "Catalog",
+    "Freshness",
+    "ETA_Gate"
+  ],
+  "wait_eta_forbid": [
+    "fix_auth",
+    "fix_cms",
+    "change_db",
+    "redeploy",
+    "fake_reality_closure_pass",
+    "skip_wave0",
+    "modify_candidate"
+  ]
+}

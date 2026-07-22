@@ -1,0 +1,193 @@
+# Staging Operational Patch Queue · SSOT (machine)
+# Human ledger: docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md
+# Dual-track: docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md
+# Identity gate: registry/deployment-identity-gate.v1.yaml
+# Promotion gate: registry/patch-promotion-gate.v1.yaml
+
+schema: traveltrust.staging_patch_queue.v1
+version: 1
+effective_utc: "2026-07-19"
+
+machine_keys:
+  TT_STAGING_PATCH_QUEUE: LEDGER_ONLY_DURING_FG15
+  TT_DUAL_TRACK_RELEASE: ENFORCED
+  TT_PATCH_PROMOTION_GATE: ENFORCED
+  TT_PRODUCTION_GO: NO_GO
+
+# Track A — Web3 Candidate v2 / FG-15-B (sole SSOT). FG-15-A SHA retained as archive only.
+certification_freeze:
+  release_version: "PSG-REL-20260720-WEB3-CAND-V2"
+  deploy_baseline: v311_fund_safety_candidate_v2
+  release_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+  release_sha_short: "97289a718561"
+  historical_fg15_a_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
+  historical_fg15_a_sha_short: "09c72b93"
+  note: "Baseline Migration v2 — do not use historical_fg15_a_sha as ACTIVE"
+  serves:
+    - FG-15
+    - PSG_Completion
+    - Production_Certification
+  mutate: FORBIDDEN_FOR_STAGING_OPS_PATCH
+
+# Track B — TEMPORARY queue (must promote; not a permanent fork)
+queue_policy:
+  id_prefix: PATCH-STG-
+  temporary_only: true
+  must_promote_via: registry/patch-promotion-gate.v1.yaml
+  allowed_change_classes:
+    - cms_display_data
+    - ops_script
+    - staging_web_api_stability
+    - docs_living
+    - deploy_gate
+  forbidden_in_patch_queue:
+    - financial_protocol
+    - contract_bytecode
+    - on_chain_permissions
+    - web3_runtime_reauth_required
+    - production_go_claim
+    - replace_certification_freeze
+
+# Classification → track (write-once policy)
+change_classification:
+  financial_rules_contracts_permissions:
+    track: A_RELEASE
+    action: reenter_release_ladder
+  web3_runtime:
+    track: A_RELEASE
+    action: recertify
+  user_facing_product_feature:
+    track: A_RELEASE
+    action: release_candidate
+  cms_display_data:
+    track: B_STAGING_PATCH
+    action: patch_ledger_then_promote
+  docs_living:
+    track: B_STAGING_PATCH
+    action: living_docs_only_no_archive_mutate
+  ops_scripts_gates:
+    track: B_STAGING_PATCH
+    action: patch_ledger_then_promote
+
+patches:
+  - id: PATCH-STG-001
+    title: Public Display 10×4 lock
+    scope: Staging Web/API data + showcase hard-off + market display_status
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: true
+    impacts_fg_or_web3: false
+    verification_result: DATA_LOCKED_10X4_PASS
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: cms_display
+    promotion_status: BLOCKED_FG15
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: DATA_LOCKED_CODE_PENDING_DEPLOY
+    runbook: docs/runbook/TT-PSG-PUBLIC-DISPLAY-10X4-LOCK-LATEST.md
+
+  - id: PATCH-STG-002
+    title: Deploy Freshness Gate
+    scope: registry + scripts + staging-rc-baseline-gate wire
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: true
+    impacts_fg_or_web3: false
+    verification_result: LIVING_ENFORCED
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: ops_gate_docs
+    promotion_status: BLOCKED_FG15
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: LIVING_ENFORCED
+    runbook: docs/runbook/TT-PSG-DEPLOY-FRESHNESS-GATE-LATEST.md
+
+  - id: PATCH-STG-003
+    title: Market public list respects display_status
+    scope: crates/api market_listings filter
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: true
+    impacts_fg_or_web3: false
+    verification_result: PENDING
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: api_behavior_change
+    promotion_status: BLOCKED_FG15
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: CODE_IN_WORKTREE_PENDING_STAGING_DEPLOY
+
+  - id: PATCH-STG-004
+    title: CMS/COS anti-chaos + Catalog bake hard-fail
+    scope: FE bake gate + ambient anti-fallback discipline
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: true
+    impacts_fg_or_web3: false
+    verification_result: PARTIAL_IMAGE_STALE
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: cms_display
+    promotion_status: BLOCKED_FG15
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: LIVING_PARTIAL_IMAGE_STALE
+    runbook: docs/runbook/TT-CMS-COS-ANTI-CHAOS-PERSISTENCE-LATEST.md
+
+  - id: PATCH-STG-005
+    title: Acquisition badge contrast trustEscrowBadge
+    scope: frontend/lib/marketingUi.ts + marketTheme contract
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: false
+    impacts_fg_or_web3: false
+    verification_result: VITEST_PASS_LOCAL
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: bug_fix
+    promotion_status: BLOCKED_FG15
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: CODE_IN_WORKTREE_PENDING_STAGING_DEPLOY
+    note: >
+      UI Presentation only (color/contrast). Local fix + vitest OK.
+      MUST NOT deploy to FG-15 certification Staging until ELAPSED + Promotion + new PSG Version.
+      Prior fix 1e1171d0 never merged to freeze tip; re-applied on worktree.
+
+  - id: PATCH-STG-006
+    title: Dual-track + Deployment Identity Gate
+    scope: registry + runbooks + identity gate script
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: true
+    impacts_fg_or_web3: false
+    verification_result: LIVING_ENFORCED
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: ops_gate_docs
+    promotion_status: BLOCKED_FG15
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: LIVING_ENFORCED
+    runbook: docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md
+
+  - id: PATCH-STG-007
+    title: Patch Promotion Gate (anti permanent fork)
+    scope: registry + runbook + promotion gate script
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: true
+    impacts_fg_or_web3: false
+    verification_result: LIVING_ENFORCED
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: ops_gate_docs
+    promotion_status: BLOCKED_FG15
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: LIVING_ENFORCED
+    runbook: docs/runbook/TT-PSG-PATCH-PROMOTION-GATE-LATEST.md
+
+related:
+  - docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md
+  - docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md
+  - docs/runbook/TT-PSG-PATCH-PROMOTION-GATE-LATEST.md
+  - registry/deployment-identity-gate.v1.yaml
+  - registry/deploy-freshness-gate.v1.yaml
+  - registry/patch-promotion-gate.v1.yaml

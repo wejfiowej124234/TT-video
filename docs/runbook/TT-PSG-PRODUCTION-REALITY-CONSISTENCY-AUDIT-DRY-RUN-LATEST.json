@@ -1,0 +1,86 @@
+{
+  "_superseded_banner": "SUPERSEDED_SNAPSHOT · tip 652bbab5 ≠ current Active tip 97289a71 · pin PSG-REL-20260720-WEB3-CAND-V2 · FG-15-B ELAPSED · not release mainline",
+  "schema": "traveltrust.psg_production_reality_consistency_audit_dry_run.v1",
+  "machine_key": "TT_PSG_PRODUCTION_REALITY_CONSISTENCY_AUDIT_DRY_RUN",
+  "aliases": [
+    "Production_System_Reality_Audit",
+    "Production_Reality_Alignment_Audit"
+  ],
+  "status": "DRY_RUN_COMPLETE",
+  "mode": "REPORT_ONLY",
+  "discovery_role": "TERMINAL_PACK_WAIT_ETA",
+  "recorded_utc": "2026-07-20T07:15:00Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "candidate_tip_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "staging_meta_git_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+  "eta_gate": "WAITING_WINDOW",
+  "six_dimension_equation": {
+    "cert_version": true,
+    "code_version_local": true,
+    "deploy_version": false,
+    "database_version": "partial_fail",
+    "doc_version": "partial_fail",
+    "user_experience_production": false
+  },
+  "six_surfaces": [
+    "Identity_Auth",
+    "Database_Schema_Lifecycle",
+    "Core_Business_Flows",
+    "UI_API_Consistency",
+    "CMS_Admin_Ops",
+    "Web3_Runtime_Money_Path"
+  ],
+  "classes": [
+    "OLD_RUNTIME",
+    "OLD_DATA",
+    "SCHEMA_DRIFT",
+    "CODE_DRIFT",
+    "TRUE_FEATURE_GAP",
+    "EVIDENCE_DRIFT",
+    "NEEDS_OWNER"
+  ],
+  "post_formal_baseline_required": true,
+  "gaps_remain_after_candidate_closure_if_no_independent_pcr": true,
+  "owner_priority_locked": {
+    "P0": "STAGING_RUNTIME_ALIGNMENT_cert_A_run_B",
+    "P1_auth": "TRUE_FEATURE_GAP_not_old_deploy",
+    "P1_data": "SCHEMA_NE_PRODUCTION_LIFECYCLE",
+    "P2_cms": "CMS_AS_PRODUCTION_OPS",
+    "P2_ui": "PRODUCTION_CLOSURE_NOT_REDESIGN"
+  },
+  "formal_baseline_sequence": [
+    "A_ProjectA_Settlement_to_FormalBaseline",
+    "B_W0_RuntimeAlignment",
+    "C_W1_AuthHardening",
+    "D_W2_CmsGov",
+    "E_W3_SecUserAdmin",
+    "F_W4_DataOpsOnb",
+    "G_W5_EscPayUx",
+    "H_W6_Hygiene",
+    "I_W7_DeltaRecertify"
+  ],
+  "wait_eta_remaining_value": [
+    "Maintain_Integrity",
+    "Catalog",
+    "Freshness",
+    "ETA_Gate"
+  ],
+  "forbid": {
+    "modify_candidate": true,
+    "redeploy": true,
+    "affect_eta_final_closure": true,
+    "touch_l5_s7_now": true
+  },
+  "pcr_waves": [
+    "W0_STAGING_RUNTIME_ALIGNMENT",
+    "W1_AUTH_PROD_HARDENING",
+    "W2_CMS_GOV_CLEANUP",
+    "W3_SEC_USER_ADMIN",
+    "W4_DATA_OPS_ONB",
+    "W5_ESC_PAY_ACQ_PHASE2",
+    "W6_HYGIENE",
+    "W7_DELTA_RECERTIFY"
+  ],
+  "human_ssot": "docs/runbook/TT-PSG-PRODUCTION-REALITY-CONSISTENCY-AUDIT-DRY-RUN-LATEST.md",
+  "backlog_ssot": "docs/runbook/TT-POST-BASELINE-INDEPENDENT-BACKLOG-LATEST.md"
+}

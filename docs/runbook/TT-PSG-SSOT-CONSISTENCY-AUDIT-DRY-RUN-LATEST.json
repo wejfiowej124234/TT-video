@@ -1,0 +1,43 @@
+{
+  "_superseded_banner": "SUPERSEDED_SNAPSHOT · tip 652bbab5 ≠ current Active tip 97289a71 · pin PSG-REL-20260720-WEB3-CAND-V2 · FG-15-B ELAPSED · not release mainline",
+  "schema": "traveltrust.psg_ssot_consistency_audit_dry_run.v1",
+  "machine_key": "TT_PSG_SSOT_CONSISTENCY_AUDIT_DRY_RUN",
+  "status": "DRY_RUN_COMPLETE",
+  "mode": "REPORT_ONLY",
+  "recorded_utc": "2026-07-20T07:06:44Z",
+  "psg_ssot": {
+    "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+    "git_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+    "contract_bytecode_pin": "v311_fund_safety_candidate_v2",
+    "registry_status": "WEB3_CANDIDATE_BASELINE_ACTIVE",
+    "psg_trustworthy_as_incomplete_candidacy_ssot": true,
+    "psg_complete": false,
+    "layers_pass": false,
+    "false_cert_on_wrong_version": false
+  },
+  "equation": {
+    "cert_version": true,
+    "local_code_version": true,
+    "deploy_version": false,
+    "data_version": "partial_fail",
+    "doc_version": "partial_fail",
+    "user_experience_production_grade": false
+  },
+  "staging_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+  "classes": [
+    "PSG_VALID",
+    "OLD_RUNTIME",
+    "OLD_DATA",
+    "CODE_DRIFT",
+    "SCHEMA_DRIFT",
+    "TRUE_FEATURE_GAP",
+    "EVIDENCE_DRIFT",
+    "NEEDS_OWNER"
+  ],
+  "master_checklist_human": "docs/runbook/TT-PSG-SSOT-CONSISTENCY-AUDIT-DRY-RUN-LATEST.md",
+  "backlog": "docs/runbook/TT-POST-BASELINE-INDEPENDENT-BACKLOG-LATEST.md",
+  "touched_candidate_final_closure": false,
+  "auto_modified_code": false,
+  "redeployed": false,
+  "touched_l5_s7": false
+}

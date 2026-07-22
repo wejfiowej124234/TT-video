@@ -1,0 +1,32 @@
+# PCR · Pollution cleanup + FINAL RELEASE FREEZE (no cert execution)
+schema: traveltrust.psg_change_record.v1
+id: PCR-20260722-POLLUTION-CLEANUP-FREEZE
+recorded_utc: "2026-07-22T04:45:00Z"
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+git_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+change_class: POLLUTION_CLEANUP_AND_FREEZE
+equals_production_go: false
+cert_suite_executed: false
+
+summary: >
+  Full living-surface pollution demotion under PSG + FINAL RELEASE + Engineering
+  SSOT Anchor. Historical evidence retained as Archive. Flip freeze_status=FROZEN.
+  Cert suite ARMED_NOT_EXECUTED — Owner must explicitly start later.
+
+artifacts:
+  - docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md
+  - docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md
+  - docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md
+  - registry/engineering-ssot-anchor.v1.yaml
+  - registry/final-release-baseline.v1.yaml
+  - scripts/gates/check-engineering-ssot-anchor-gate.sh
+  - scripts/dev/run-fg15-*.py (historical refuse)
+  - docs/runbook/* demotion banners (42+)
+
+forbidden_this_pcr:
+  - PSG_Recalculate_execute
+  - Inventory_READY_flip
+  - Reality_Closure_PASS
+  - Delta_Recertify_formal
+  - Staging_grade_GO
+  - Production_GO

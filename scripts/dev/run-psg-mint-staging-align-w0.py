@@ -9,6 +9,7 @@ Writes evidence receipt with concrete HEAD for W0 Runtime Certification.
 from __future__ import annotations
 
 import json
+import os
 import re
 import subprocess
 import sys
@@ -26,6 +27,14 @@ def git(*args: str) -> str:
 
 
 def main() -> int:
+    if os.environ.get("ALLOW_HISTORICAL_STAGING_ALIGN_MINT") != "1":
+        print(
+            "mint-staging-align-w0: REFUSED — pin PSG-REL-20260722-STAGING-ALIGN-W0 is SUPERSEDED.\n"
+            "Active pin = PSG-REL-20260720-WEB3-CAND-V2 @ tip 97289a71…\n"
+            "Forensic only: ALLOW_HISTORICAL_STAGING_ALIGN_MINT=1",
+            file=sys.stderr,
+        )
+        return 2
     sha = git("rev-parse", "HEAD")
     short = sha[:12]
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")

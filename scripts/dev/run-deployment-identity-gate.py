@@ -33,8 +33,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 # Active Certification pin — SSOT registry/psg-release-version-LATEST.yaml
 # TRACK_HEAD = clean HEAD must equal deploy tip (mint after FG-15-B ELAPSED)
-FREEZE_SHA = "TRACK_HEAD"
-PSG_RELEASE = "PSG-REL-20260722-STAGING-ALIGN-W0"
+FREEZE_SHA = "97289a7185610ef0ad8822f0af04bfa533e42986"
+PSG_RELEASE = "PSG-REL-20260720-WEB3-CAND-V2"
 HISTORICAL_FG15_A_SHA = "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
 VALID_TARGETS = ("CERTIFICATION_FREEZE", "STAGING_PATCH", "EXPERIMENT")
 PATCH_RE = re.compile(r"^PATCH-STG-\d{3}$")

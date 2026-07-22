@@ -7,7 +7,9 @@ use serde_json::json;
 
 use super::meta_contract_keys::{format_meta_build_top_keys_contract_730, META_BUILD_TOP_KEYS};
 
-const DEFAULT_PSG_RELEASE_VERSION: &str = "PSG-REL-20260722-STAGING-ALIGN-W0";
+/// Fallback only when env unset — MUST match Active PSG pin (Candidate v2).
+/// Forbidden: PSG-REL-20260722-STAGING-ALIGN-W0 (SUPERSEDED).
+const DEFAULT_PSG_RELEASE_VERSION: &str = "PSG-REL-20260720-WEB3-CAND-V2";
 const DEFAULT_CONTRACT_PROFILE: &str = "v311_fund_safety_candidate_v2";
 
 fn env_nonempty(keys: &[&str]) -> Option<String> {

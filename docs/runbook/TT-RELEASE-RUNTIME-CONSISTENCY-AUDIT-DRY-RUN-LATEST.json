@@ -1,0 +1,104 @@
+{
+  "_superseded_banner": "SUPERSEDED_SNAPSHOT · tip 652bbab5 ≠ current Active tip 97289a71 · pin PSG-REL-20260720-WEB3-CAND-V2 · FG-15-B ELAPSED · not release mainline",
+  "schema": "traveltrust.release_runtime_consistency_audit_dry_run.v1",
+  "machine_key": "TT_RELEASE_RUNTIME_CONSISTENCY_AUDIT_DRY_RUN",
+  "status": "DRY_RUN_COMPLETE",
+  "mode": "REPORT_ONLY",
+  "recorded_utc": "2026-07-20T06:58:53Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "candidate_tip_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "staging_api_git_sha": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+  "local_eq_candidate_pin": true,
+  "staging_eq_candidate_pin": false,
+  "commits_not_on_staging": 4,
+  "auto_modified_code": false,
+  "redeployed": false,
+  "touched_candidate_final_closure": false,
+  "touched_l5_s7": false,
+  "framework_note": "dry-run_validates_delta_recertify_alignment_need_not_implement_router_now",
+  "classes_present": [
+    "OLD_RUNTIME",
+    "CODE_NOT_DEPLOYED",
+    "DATA_DRIFT",
+    "DOC_DRIFT",
+    "SCRIPT_DRIFT",
+    "TRUE_FEATURE_GAP"
+  ],
+  "production_readiness_gap_checklist": [
+    {
+      "id": "PRC-01",
+      "class": [
+        "OLD_RUNTIME",
+        "CODE_NOT_DEPLOYED"
+      ],
+      "stream": "STAGING-RUNTIME-ALIGNMENT"
+    },
+    {
+      "id": "PRC-02",
+      "class": [
+        "OLD_RUNTIME"
+      ],
+      "stream": "STAGING-RUNTIME-ALIGNMENT",
+      "web3": {
+        "escrow_factory_v2": null,
+        "fee_router_staging": "0x81A8009210c5215100564c6E4123F672c4459306",
+        "indexer_checkpoint_block": 0
+      }
+    },
+    {
+      "id": "PRC-03",
+      "class": [
+        "TRUE_FEATURE_GAP"
+      ],
+      "stream": "AUTH-PROD-HARDENING",
+      "not_caused_by_old_staging_auth_rs": true
+    },
+    {
+      "id": "PRC-04",
+      "class": [
+        "TRUE_FEATURE_GAP"
+      ],
+      "stream": "CMS-GOV-CLEANUP"
+    },
+    {
+      "id": "PRC-05",
+      "class": [
+        "DATA_DRIFT"
+      ],
+      "stream": "CMS-GOV-CLEANUP"
+    },
+    {
+      "id": "PRC-06",
+      "class": [
+        "DOC_DRIFT"
+      ],
+      "stream": "HYGIENE"
+    },
+    {
+      "id": "PRC-07",
+      "class": [
+        "SCRIPT_DRIFT"
+      ],
+      "stream": "HYGIENE"
+    },
+    {
+      "id": "PRC-08",
+      "class": [
+        "UNKNOWN"
+      ],
+      "stream": "STAGING-RUNTIME-ALIGNMENT",
+      "note": "worker_version_secrets_seed"
+    }
+  ],
+  "future_flow": [
+    "WAIT_ETA",
+    "Audit_Dry-run",
+    "Formal_Baseline",
+    "Independent_PCR",
+    "Fix",
+    "PSG_Delta_Recertify",
+    "Production_Readiness"
+  ],
+  "human_ssot": "docs/runbook/TT-RELEASE-RUNTIME-CONSISTENCY-AUDIT-DRY-RUN-LATEST.md",
+  "backlog_ssot": "docs/runbook/TT-POST-BASELINE-INDEPENDENT-BACKLOG-LATEST.md"
+}

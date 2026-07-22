@@ -1,0 +1,101 @@
+# Patch Promotion Gate · SSOT (machine)
+# Human: docs/runbook/TT-PSG-PATCH-PROMOTION-GATE-LATEST.md
+# Script: scripts/dev/run-patch-promotion-gate.py
+# Dual-track: docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md
+# Ledger: docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md
+
+schema: traveltrust.patch_promotion_gate.v1
+version: 1
+effective_utc: "2026-07-19"
+
+machine_keys:
+  TT_PATCH_PROMOTION_GATE: ENFORCED
+  TT_STAGING_PATCH_QUEUE: ACTIVE_TEMPORARY
+  TT_PRODUCTION_GO: NO_GO
+
+rule: >
+  Track B is a TEMPORARY change queue, not a permanent fork.
+  Every PATCH-STG must eventually promote through: verify → update PSG living
+  layer → Release Candidate → regenerate Release Identity → next Certification.
+  Staging newer than Production Certification without promotion = DRIFT (BLOCK claim).
+
+anti_permanent_fork:
+  track_b_may_not: replace_certification_freeze
+  track_b_may_not: claim_production_go
+  track_b_may_not: mutate_freeze_sha_candidate_v2
+  max_open_without_promotion_plan: 12
+  fg15_window:
+    track: FG-15-B
+    psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+    freeze_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+    historical_fg15_a_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
+    promote_execute: FORBIDDEN
+    promote_plan_record: ALLOWED
+    staging_patch_deploy: FORBIDDEN
+    production_patch_deploy: FORBIDDEN
+    bypass_psg_into_staging_or_production: FORBIDDEN
+    continue: [fg15b_sample, maintain]
+    forbid:
+      - redeploy_as_cert_with_patches
+      - merge_into_freeze_tip
+      - change_candidate_freeze_tip
+      - cite_09c72b93_as_active
+      - execute_promotion
+      - deploy_STAGING_PATCH
+      - deploy_EXPERIMENT
+    after_elapsed_required_path:
+      - Patch_Promotion_Gate
+      - UPDATE_PSG_LIVING
+      - REGENERATE_RELEASE_IDENTITY
+      - ENTER_NEXT_CERTIFICATION
+
+# Required ledger fields per PATCH-STG (promotion record)
+required_fields:
+  - PATCH_ID
+  - scope
+  - code_sha_or_worktree
+  - impacts_psg
+  - impacts_fg_or_web3
+  - verification_result
+  - merge_into_release
+  - promotion_class
+  - promotion_status
+
+promotion_classes:
+  cms_display:
+    handle: fast_merge_after_verify
+  bug_fix:
+    handle: retest_then_rc
+  api_behavior_change:
+    handle: release_candidate
+  financial_logic:
+    handle: reenter_fg_web3
+  contract_or_permissions:
+    handle: new_certification_cycle
+  ops_gate_docs:
+    handle: promote_with_living_psg_then_rc
+
+# Canonical promotion pipeline (post FG-15 / next release)
+pipeline:
+  - STAGING_PATCH
+  - VERIFY_PASS
+  - UPDATE_PSG_LIVING  # Registry · Runbook · AGENTS/Cockpit · Evidence Index
+  - UPDATE_RELEASE_CANDIDATE
+  - REGENERATE_RELEASE_IDENTITY
+  - ENTER_NEXT_CERTIFICATION
+
+modes:
+  check: validate ledger completeness + open-queue policy (safe during FG-15)
+  plan: same as check; writes promotion plan evidence
+  execute: FORBIDDEN while FG-15 RUNNING unless TRAVELTRUST_PATCH_PROMOTE_EXECUTE_OK=1 AND FG15_ELAPSED=1
+
+override:
+  owner_only_execute: TRAVELTRUST_PATCH_PROMOTE_EXECUTE_OK=1
+  skip: SKIP_PATCH_PROMOTION_GATE=1
+
+related:
+  - registry/staging-patch-queue.v1.yaml
+  - registry/deployment-identity-gate.v1.yaml
+  - docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md
+  - docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md
+  - docs/runbook/TT-FG15-OBSERVATION-WINDOW-RUNNING-LATEST.md

@@ -37,7 +37,7 @@ required_prod_meta_contract_keys:
   - guide_staking_address
   - staking_provider_address
 
-prod_meta_target: "10/10 non-null · match gov_freeze_v2_clean_baseline SSOT"
+prod_meta_target: "10/10 non-null · match v311_fund_safety_candidate_v2 SSOT (Candidate v2 · gov_freeze_v2_clean_baseline = LEGACY_SUPERSEDED)"
 prod_meta_probe: scripts/dev/check-web3-system-production-meta-contracts.cjs
 runtime_wiring_runbook: docs/runbook/WEB3-SYSTEM-PRODUCTION-RUNTIME-WIRING.md
 

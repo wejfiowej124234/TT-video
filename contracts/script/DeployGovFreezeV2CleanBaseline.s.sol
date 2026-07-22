@@ -38,9 +38,10 @@ import "../src/upgrade/TimelockUpgradeableProxy.sol";
 
  * @dev 禁止复用 V1 未 bootstrap 的 Stake Pool · Safe 批次 allow ×5 Shell + TTG
 
- *      SSOT 经济参数不变 · TTG-TOKENOMICS-FREEZE-V1
-
+ *      Allocation SSOT = TTG-TOKENOMICS-GENESIS-V2 · GOV gates = TTG-TOKENOMICS-FREEZE-V1
+ *      ACTIVE baseline = gov_freeze_v2_clean_baseline
  */
+
 
 contract DeployGovFreezeV2CleanBaseline is Phase2ControlPlane, Phase2SafeExec {
 
@@ -234,7 +235,8 @@ contract DeployGovFreezeV2CleanBaseline is Phase2ControlPlane, Phase2SafeExec {
             ttgToken.approve(stakePoolProxyAddr, 1);
             require(ttgToken.allowance(deployer, stakePoolProxyAddr) == 1, "V2: TTG approve/allowance broken");
             ttgToken.approve(stakePoolProxyAddr, 0);
-            uint256 pmFund = vm.envOr("GOV_FREEZE_V2_PRIMARY_MARKET_TTG_FUND", uint256(2_000_000 ether));
+            // L3-03 Seq5 · fund full Public Sale bucket (5M) to match Genesis V2 / Registry rounds sum
+            uint256 pmFund = vm.envOr("GOV_FREEZE_V2_PRIMARY_MARKET_TTG_FUND", uint256(5_000_000 ether));
             ttgToken.transfer(address(d.primaryMarketProxy), pmFund);
             console.log("GOV_FREEZE_V2_PRIMARY_MARKET_TTG_FUNDED", pmFund);
         }
@@ -283,7 +285,10 @@ contract DeployGovFreezeV2CleanBaseline is Phase2ControlPlane, Phase2SafeExec {
 
         console.log("baseline_id", "GOV-FREEZE-V2-CLEAN-BASELINE");
 
-        console.log("freeze_doc", TtgGovFreezeConstants.freezeDocumentId());
+        console.log("allocation_doc", TtgGovFreezeConstants.freezeDocumentId());
+        console.log("gov_gates_doc", TtgGovFreezeConstants.govGatesDocumentId());
+        console.log("active_baseline", TtgGovFreezeConstants.activeDeployBaselineId());
+        console.log("legacy_gov_freeze_baseline", TtgGovFreezeConstants.legacyGovFreezeCleanBaselineId());
 
         console.log("GOV_FREEZE_V2_TIMELOCK", address(d.timelock));
 
