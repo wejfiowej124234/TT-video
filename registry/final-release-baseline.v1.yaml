@@ -51,7 +51,11 @@ unique_system:
     git_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
     git_sha_short: "97289a718561"
     selection_reason: current_committed_tip_unsplash_inventory_display_hygiene
-    worktree_policy: FREEZE_REQUIRES_CLEAN_OR_COMMITTED_BASELINE_TREE
+    worktree_policy: CLEAN_AT_FREEZE_COMMIT
+    freeze_commit_sha: "2c376086f63c9b651b15a421905b8da3e48d4178"
+    runtime_tip_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
+    runtime_redeploy_required_before_cert: true
+    note: "Freeze SSOT commit may be ahead of Staging bake tip; cert requires eight-way after optional tip redeploy or Owner CONFIRM_EXPECTED_DIFFERENCE."
 
 psg_surfaces_in_unique_system:
   - code

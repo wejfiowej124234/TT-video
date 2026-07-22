@@ -34,5 +34,9 @@
     "Explicitly start one-shot cert suite when ready",
     "Do not treat FROZEN as Staging-grade or Production GO"
   ],
-  "equals_production_go": false
+  "equals_production_go": false,
+  "freeze_commit_sha": "2c376086f63c9b651b15a421905b8da3e48d4178",
+  "runtime_tip_sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
+  "runtime_redeploy_required_before_cert": true,
+  "worktree": "CLEAN"
 }
