@@ -1,70 +1,45 @@
 /**
- * 自由市场列表媒体回退：API 无封面时按目的地提供行业标准的示意图（Unsplash · 与 mock 同源）。
+ * 自由市场列表媒体回退：API 无封面时按目的地提供行业标准的示意图（站内占位 · 禁止 Unsplash）。
  * 仅 UI 展示层；不写入 discover API 响应。
  */
 
 import type { GuideCardItem, OrderCardItem } from "@/lib/marketTypes";
-import { AVATARS, TRAVEL_IMAGES_POOL } from "@/lib/communityMockData/constants";
-import { guideCardAvatarUrl } from "@/lib/marketMockData/helpers";
 
 const COVER_W = 640;
 
-function unsplash(id: string): string {
-  return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${COVER_W}&q=82`;
+function stockPlaceholder(seed: string): string {
+  return `/images/market-cover-placeholder.svg?v=${encodeURIComponent(seed || "x")}`;
 }
 
-/** 24+ 唯一肖像 · 按 guide.id 分池，降低占位碰撞 */
-const GUIDE_PORTRAIT_POOL: readonly string[] = [
-  ...AVATARS.map((u) => u.replace("w=120", `w=${COVER_W}`).replace("q=80", "q=82")),
-  unsplash("photo-1519345182560-3f2917c472ef"),
-  unsplash("photo-1544005313-94ddf0286df2"),
-  unsplash("photo-1438761681033-6461ffad8d80"),
-  unsplash("photo-1506794778202-cad84cf45f1d"),
-  unsplash("photo-1552374196-c4e7ff6e292a"),
-  unsplash("photo-1547425260-76bcadfb4f2c"),
-  unsplash("photo-1524504388940-b1c1722653e1"),
-  unsplash("photo-1487412720507-e7ab37603c6f"),
-  unsplash("photo-1580489944761-15a19d654956"),
-  unsplash("photo-1607746882042-94463dfeaf51"),
-  unsplash("photo-1614283233556-f35d0a816c6a"),
-  unsplash("photo-1624561172888-ac93c6966454"),
-  unsplash("photo-1633332755192-727a05c4013b"),
-  unsplash("photo-1649970604341-9424162c72ea"),
-  unsplash("photo-1655077046704-b67a7a8b7a2b"),
-];
+/** 肖像池：站内占位（按 seed 区分 URL · 禁止 Unsplash） */
+const GUIDE_PORTRAIT_POOL: readonly string[] = Array.from({ length: 24 }, (_, i) =>
+  stockPlaceholder(`guide-portrait-${i}`),
+);
 
-/** 城市 / 目的地关键词 → 封面池（同城市多卡按 `id` 稳定分图，避免列表三张完全相同） */
+/** 城市 / 目的地关键词 → 封面池（同城市多卡按 `id` 稳定分图） */
 const CITY_ORDER_COVER_LISTS: Record<string, readonly string[]> = {
-  北京: [
-    unsplash("photo-1508804185872-d7badad00f7d"),
-    unsplash("photo-1545569341-9eb8b30979d9"),
-    unsplash("photo-1526481280693-3bfa7568e0f3"),
-  ],
-  beijing: [
-    unsplash("photo-1508804185872-d7badad00f7d"),
-    unsplash("photo-1545569341-9eb8b30979d9"),
-    unsplash("photo-1526481280693-3bfa7568e0f3"),
-  ],
-  上海: [unsplash("photo-1547970814-9c2b36b2a8e2"), unsplash("photo-1488646953014-85cb44e25828")],
-  shanghai: [unsplash("photo-1547970814-9c2b36b2a8e2"), unsplash("photo-1488646953014-85cb44e25828")],
-  杭州: [unsplash("photo-1558618666-fcd25c85cd64"), unsplash("photo-1476514525535-07fb3b4ae5f1")],
-  hangzhou: [unsplash("photo-1558618666-fcd25c85cd64"), unsplash("photo-1476514525535-07fb3b4ae5f1")],
-  成都: [unsplash("photo-1582510003544-4d00b7f74220"), unsplash("photo-1493976040374-85c8e12f0c0e")],
-  chengdu: [unsplash("photo-1582510003544-4d00b7f74220"), unsplash("photo-1493976040374-85c8e12f0c0e")],
-  西安: [unsplash("photo-1590856029826-c7a73142bbf1"), unsplash("photo-1506905925346-21bda4d32df4")],
-  xian: [unsplash("photo-1590856029826-c7a73142bbf1"), unsplash("photo-1506905925346-21bda4d32df4")],
-  厦门: [unsplash("photo-1565967511849-76a60a516170"), unsplash("photo-1469854523086-cc02fe5d8800")],
-  xiamen: [unsplash("photo-1565967511849-76a60a516170"), unsplash("photo-1469854523086-cc02fe5d8800")],
-  大理: [unsplash("photo-1547981609-4b6bfe67ca0b"), unsplash("photo-1506905925346-21bda4d32df4")],
-  dali: [unsplash("photo-1547981609-4b6bfe67ca0b"), unsplash("photo-1506905925346-21bda4d32df4")],
-  丽江: [unsplash("photo-1547981609-4b6bfe67ca0b"), unsplash("photo-1528360983277-13d401cdc186")],
-  青岛: [unsplash("photo-1609137144813-7d9921338f24"), unsplash("photo-1476514525535-07fb3b4ae5f1")],
-  qingdao: [unsplash("photo-1609137144813-7d9921338f24"), unsplash("photo-1476514525535-07fb3b4ae5f1")],
-  东京: [unsplash("photo-1540959733332-eab4deabeeaf"), unsplash("photo-1528360983277-13d401cdc186")],
-  tokyo: [unsplash("photo-1540959733332-eab4deabeeaf"), unsplash("photo-1528360983277-13d401cdc186")],
-  大阪: [unsplash("photo-1590559899732-a81843c2c4d4"), unsplash("photo-1540959733332-eab4deabeeaf")],
-  首尔: [unsplash("photo-1517154421773-4d38c83d0fbf"), unsplash("photo-1526481280693-3bfa7568e0f3")],
-  seoul: [unsplash("photo-1517154421773-4d38c83d0fbf"), unsplash("photo-1526481280693-3bfa7568e0f3")],
+  北京: [stockPlaceholder("bj-0"), stockPlaceholder("bj-1"), stockPlaceholder("bj-2")],
+  beijing: [stockPlaceholder("bj-0"), stockPlaceholder("bj-1"), stockPlaceholder("bj-2")],
+  上海: [stockPlaceholder("sh-0"), stockPlaceholder("sh-1")],
+  shanghai: [stockPlaceholder("sh-0"), stockPlaceholder("sh-1")],
+  杭州: [stockPlaceholder("hz-0"), stockPlaceholder("hz-1")],
+  hangzhou: [stockPlaceholder("hz-0"), stockPlaceholder("hz-1")],
+  成都: [stockPlaceholder("cd-0"), stockPlaceholder("cd-1")],
+  chengdu: [stockPlaceholder("cd-0"), stockPlaceholder("cd-1")],
+  西安: [stockPlaceholder("xa-0"), stockPlaceholder("xa-1")],
+  xian: [stockPlaceholder("xa-0"), stockPlaceholder("xa-1")],
+  厦门: [stockPlaceholder("xm-0"), stockPlaceholder("xm-1")],
+  xiamen: [stockPlaceholder("xm-0"), stockPlaceholder("xm-1")],
+  大理: [stockPlaceholder("dl-0"), stockPlaceholder("dl-1")],
+  dali: [stockPlaceholder("dl-0"), stockPlaceholder("dl-1")],
+  丽江: [stockPlaceholder("lj-0"), stockPlaceholder("lj-1")],
+  青岛: [stockPlaceholder("qd-0"), stockPlaceholder("qd-1")],
+  qingdao: [stockPlaceholder("qd-0"), stockPlaceholder("qd-1")],
+  东京: [stockPlaceholder("tyo-0"), stockPlaceholder("tyo-1")],
+  tokyo: [stockPlaceholder("tyo-0"), stockPlaceholder("tyo-1")],
+  大阪: [stockPlaceholder("osa-0"), stockPlaceholder("osa-1")],
+  首尔: [stockPlaceholder("sel-0"), stockPlaceholder("sel-1")],
+  seoul: [stockPlaceholder("sel-0"), stockPlaceholder("sel-1")],
 };
 
 const COVER_GRADIENTS = [
@@ -113,7 +88,7 @@ export function resolveMarketOrderCoverUrl(item: Pick<OrderCardItem, "id" | "ima
     return cityList[stablePoolIndex(item.id || item.destination || item.city || "order", cityList.length)];
   }
   const seed = item.id || item.destination || item.city || "order";
-  return TRAVEL_IMAGES_POOL[stablePoolIndex(seed, TRAVEL_IMAGES_POOL.length)] ?? TRAVEL_IMAGES_POOL[0];
+  return stockPlaceholder(`order-fallback-${seed}`);
 }
 
 /** 无图时的渐变 class（按 id 稳定） */
@@ -128,7 +103,7 @@ export function resolveGuideAvatarUrl(guide: Pick<GuideCardItem, "id" | "avatar_
     return explicit.replace("w=120", `w=${COVER_W}`).replace("q=80", "q=82");
   }
   const idx = stablePoolIndex(guide.id || guide.user_id || guide.city || "guide", GUIDE_PORTRAIT_POOL.length);
-  return GUIDE_PORTRAIT_POOL[idx] ?? guideCardAvatarUrl(idx % 8);
+  return GUIDE_PORTRAIT_POOL[idx] ?? stockPlaceholder(`guide-${idx}`);
 }
 
 /** 抽屉/详情标题：避免 country · city · destination 重复（如「中国 · 北京 · 中国」） */

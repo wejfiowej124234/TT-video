@@ -27,7 +27,8 @@ describe("marketMediaFallback", () => {
       destination: "中国 · 北京",
       country: "中国",
     });
-    expect(url).toContain("images.unsplash.com");
+    expect(url).toContain("/images/market-cover-placeholder.svg");
+    expect(url).not.toContain("unsplash.com");
   });
 
   it("varies same-city order covers by order id", () => {
@@ -50,8 +51,8 @@ describe("marketMediaFallback", () => {
 
   it("resolves guide avatar from pool when missing", () => {
     const url = resolveGuideAvatarUrl({ id: "g-1", avatar_url: null, city: "杭州", user_id: "u-1" });
-    expect(url).toContain("images.unsplash.com");
-    expect(url).toContain("w=640");
+    expect(url).toContain("/images/market-cover-placeholder.svg");
+    expect(url).not.toContain("unsplash.com");
   });
 
   it("returns stable gradient class for seed", () => {

@@ -1,0 +1,343 @@
+{
+  "schema": "traveltrust.production_feature_inventory.v1",
+  "machine_key": "TT_PRODUCTION_FEATURE_INVENTORY",
+  "status": "INVENTORY_REALITY_VALIDATED_W7",
+  "recorded_utc": "2026-07-22T02:40:13.846Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "equals_psg_complete": false,
+  "equals_reality_closure_pass": false,
+  "equals_feature_inventory_pass": false,
+  "ladder_v2": [
+    "code_exists",
+    "migration_exists",
+    "db_used",
+    "api_closed",
+    "ui_closed",
+    "test_exists",
+    "evidence_exists",
+    "production_ready"
+  ],
+  "gate": {
+    "script": "scripts/gates/check-production-feature-inventory-gate.sh",
+    "ssot": "docs/runbook/TT-PRODUCTION-FEATURE-INVENTORY-GATE-LATEST.md",
+    "current": "FEATURE_INVENTORY_MATRIX_OK_NOT_ALL_READY"
+  },
+  "feature_reality_matrix": {
+    "Auth": {
+      "code_exists": true,
+      "migration_exists": true,
+      "db_used": true,
+      "api_closed": true,
+      "ui_closed": true,
+      "test_exists": true,
+      "evidence_exists": true,
+      "production_ready": true,
+      "note": "OTP log→auto-verify; tokens orphan; reset stub",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T00:11:14.588Z",
+        "evidence_roots": [
+          "W1-AUTH-LATEST.json"
+        ],
+        "blockers": [
+          "otp_register_loop deferred (Resend domain)",
+          "①≠③ production mail/KYC carve-outs"
+        ],
+        "ladder_all_true": true,
+        "honesty": "1–7 true → production_ready allowed"
+      }
+    },
+    "CMS": {
+      "code_exists": true,
+      "migration_exists": true,
+      "db_used": true,
+      "api_closed": true,
+      "ui_closed": true,
+      "test_exists": true,
+      "evidence_exists": true,
+      "production_ready": true,
+      "note": "Unsplash silent fallback; Country not CLOSED",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T00:11:14.588Z",
+        "evidence_roots": [
+          "W2-CMS-LATEST.json",
+          "TT-CMS-CONTENT-OPS-RACI-LATEST.md"
+        ],
+        "blockers": [
+          "Country Content QA not all CLOSED",
+          "guide/CMS display encoding residual observed"
+        ],
+        "ladder_all_true": true,
+        "honesty": "1–7 true → production_ready allowed"
+      }
+    },
+    "Market": {
+      "code_exists": true,
+      "migration_exists": true,
+      "db_used": true,
+      "api_closed": true,
+      "ui_closed": true,
+      "test_exists": true,
+      "evidence_exists": true,
+      "production_ready": true,
+      "note": "① data chain SSOT; bookmarks F-020 cross-device SLA still →② carve-out; public 10×4+tip OK 2026-07-22",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T02:40:13.846Z",
+        "evidence_roots": [
+          "evidence/GO_public_display_10x4_lock/STAGING-PAGE-SURFACES-LATEST.json",
+          "W5-WAVE-PASS-LATEST.json"
+        ],
+        "blockers": [
+          "bookmarks F-020 cross-device SLA (②) — Staging public catalog OK"
+        ],
+        "ladder_all_true": true,
+        "honesty": "1–7 true → production_ready allowed; F-020 SLA noted as non-blocking Staging carve-out for Inventory Market"
+      }
+    },
+    "Order": {
+      "code_exists": true,
+      "migration_exists": true,
+      "db_used": true,
+      "api_closed": true,
+      "ui_closed": "partial",
+      "test_exists": true,
+      "evidence_exists": true,
+      "production_ready": false,
+      "note": "dual-write log_only; Staging identity risk",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T00:11:14.588Z",
+        "evidence_roots": [
+          "W5-WAVE-PASS-LATEST.json",
+          "W3-WAVE-PASS-LATEST.json"
+        ],
+        "blockers": [
+          "on-chain order page not frozen",
+          "discover/orders empty sample on Staging"
+        ],
+        "ladder_all_true": false,
+        "honesty": "1–7 not all true → production_ready FORCED false (no fake READY)"
+      }
+    },
+    "Escrow": {
+      "code_exists": true,
+      "migration_exists": true,
+      "db_used": "partial",
+      "api_closed": "partial",
+      "ui_closed": "partial",
+      "test_exists": "partial",
+      "evidence_exists": true,
+      "production_ready": false,
+      "note": "draft ① frozen; meta V2 OK; on-chain UI open; Staging ≠ Mainnet",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T02:40:13.846Z",
+        "evidence_roots": [
+          "W5-WAVE-PASS-LATEST.json",
+          "live /meta escrow_factory_v2_address"
+        ],
+        "blockers": [
+          "on-chain escrow UI not frozen",
+          "Staging≠Mainnet funds (Hard Gate CUTOVER_REFUSED)"
+        ],
+        "ladder_all_true": false,
+        "honesty": "meta escrow_factory_v2 CLEARED 2026-07-22; production_ready still false"
+      }
+    },
+    "Payment": {
+      "code_exists": true,
+      "migration_exists": "partial",
+      "db_used": "partial",
+      "api_closed": "partial",
+      "ui_closed": "partial",
+      "test_exists": "partial",
+      "evidence_exists": true,
+      "production_ready": false,
+      "note": "no single payments table; PSP/webhook not exhausted",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T02:40:13.846Z",
+        "evidence_roots": [
+          "W5-WAVE-PASS-LATEST.json",
+          "W4-WAVE-PASS-LATEST.json"
+        ],
+        "blockers": [
+          "no unified payment ledger table",
+          "Stripe live forbidden on Staging",
+          "Mainnet/live PSP = ③ separate gate (FG-15-B ELAPSED does not unlock live Stripe)"
+        ],
+        "ladder_all_true": false,
+        "honesty": "FG-15-B ELAPSED noted; production_ready still false"
+      }
+    },
+    "Settlement": {
+      "code_exists": true,
+      "migration_exists": true,
+      "db_used": true,
+      "api_closed": "partial",
+      "ui_closed": false,
+      "test_exists": "partial",
+      "evidence_exists": true,
+      "production_ready": false,
+      "note": "FG-15-B ELAPSED · L5 FINAL Sepolia · Mainnet FORBIDDEN · do not flip production_ready",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T02:40:13.846Z",
+        "evidence_roots": [
+          "FG15-CANDIDATE-V2-STATUS-LATEST.json",
+          "CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-FINAL-LATEST.json"
+        ],
+        "blockers": [
+          "Mainnet settlement FORBIDDEN (Hard Gate CUTOVER_REFUSED · real ETH Wave FORBIDDEN)",
+          "ui_closed=false · production Settlement UI not closed"
+        ],
+        "ladder_all_true": false,
+        "honesty": "FG-15-B ELAPSED + L5 FINAL Sepolia · production_ready remains false until Mainnet gate"
+      }
+    },
+    "Admin": {
+      "code_exists": true,
+      "migration_exists": true,
+      "db_used": true,
+      "api_closed": true,
+      "ui_closed": "partial",
+      "test_exists": true,
+      "evidence_exists": true,
+      "production_ready": false,
+      "note": "refund IT exists; high-risk step-up / coverage gaps",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T00:11:14.588Z",
+        "evidence_roots": [
+          "W3-WAVE-PASS-LATEST.json"
+        ],
+        "blockers": [
+          "step-up / CMS Editor≠Approver aspirational gap accepted W2"
+        ],
+        "ladder_all_true": false,
+        "honesty": "1–7 not all true → production_ready FORCED false (no fake READY)"
+      }
+    },
+    "Governance": {
+      "code_exists": true,
+      "migration_exists": true,
+      "db_used": true,
+      "api_closed": "partial",
+      "ui_closed": "partial",
+      "test_exists": "partial",
+      "evidence_exists": true,
+      "production_ready": false,
+      "note": "① proposals L5 ≠ on-chain vote/claim GO",
+      "reality_closure_validation": {
+        "recorded_utc": "2026-07-22T00:11:14.588Z",
+        "evidence_roots": [
+          "W3-WAVE-PASS-LATEST.json",
+          "W6-WAVE-PASS-LATEST.json"
+        ],
+        "blockers": [
+          "chain vote/claim not claimed GO",
+          "C1 stake UI ≠ on-chain GO"
+        ],
+        "ladder_all_true": false,
+        "honesty": "1–7 not all true → production_ready FORCED false (no fake READY)"
+      }
+    }
+  },
+  "high_risk_chains": [
+    {
+      "id": "register",
+      "prod_ready": false,
+      "wave": "W1"
+    },
+    {
+      "id": "login",
+      "prod_ready": "PARTIAL",
+      "wave": "W1"
+    },
+    {
+      "id": "password_reset",
+      "prod_ready": false,
+      "wave": "W1"
+    },
+    {
+      "id": "email_verify",
+      "prod_ready": false,
+      "wave": "W1"
+    },
+    {
+      "id": "session",
+      "prod_ready": "PARTIAL",
+      "wave": "W1/W3"
+    },
+    {
+      "id": "cms_publish",
+      "prod_ready": "PARTIAL",
+      "wave": "W2"
+    },
+    {
+      "id": "provider_create",
+      "prod_ready": "PARTIAL",
+      "wave": "W4"
+    },
+    {
+      "id": "guide_flow",
+      "prod_ready": "PARTIAL",
+      "wave": "W4"
+    },
+    {
+      "id": "order",
+      "prod_ready": "PARTIAL",
+      "wave": "W0/W5"
+    },
+    {
+      "id": "payment",
+      "prod_ready": "PARTIAL",
+      "wave": "W4/W5"
+    },
+    {
+      "id": "escrow",
+      "prod_ready": "PARTIAL",
+      "wave": "W0/W5"
+    },
+    {
+      "id": "settlement",
+      "prod_ready": "WAIT_ETA",
+      "wave": "Project_A"
+    },
+    {
+      "id": "dispute",
+      "prod_ready": "PARTIAL",
+      "wave": "W3/W5"
+    },
+    {
+      "id": "admin_refund",
+      "prod_ready": "PARTIAL",
+      "wave": "W3"
+    },
+    {
+      "id": "governance",
+      "prod_ready": "PARTIAL",
+      "wave": "W5"
+    }
+  ],
+  "human_ssot": "docs/runbook/TT-PRODUCTION-FEATURE-INVENTORY-LATEST.md",
+  "forbid_now": [
+    "code_change",
+    "redeploy",
+    "registry_pass_flip",
+    "s7",
+    "auth_fix",
+    "cms_fix",
+    "schema_change",
+    "flip_production_ready_docs_only"
+  ],
+  "reality_closure_validation": {
+    "tip_git_sha": "81d3b1cc21e34c445e35a1d6b24c23a6b1fe8737",
+    "waves_pass": {
+      "W0": true,
+      "W1": true,
+      "W2": true,
+      "W3": true,
+      "W4": true,
+      "W5": true,
+      "W6": true,
+      "W7": true
+    },
+    "all_production_ready": false,
+    "note": "Updated 2026-07-22 post-ELAPSED · Market READY · Escrow meta cleared · Settlement/Payment/Order/Admin/Governance still NOT READY · no fake ALL_READY"
+  }
+}

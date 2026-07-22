@@ -1,8 +1,8 @@
 /**
- * POI 配图语义池 SSOT：语义匹配的 Unsplash 图（90 keys · 85+ 唯一 URL）。
- * 禁止复用 photo-1548013146（泰姬陵）、photo-1533473359331（皮卡）、photo-1508807525871（404）。
+ * POI 配图语义池 SSOT：空串占位 · 真图走 Catalog/COS · 禁止 Unsplash。
+ * keys 保留作语义锚；URL 一律空，由 resolveCatalogAttractionImage 解析。
  */
-const Q = (id: string) => `https://images.unsplash.com/photo-${id}?w=800&q=80`;
+const Q = (_id: string) => "";
 
 export const POI_STOCK = {
   // 中国古建与园林

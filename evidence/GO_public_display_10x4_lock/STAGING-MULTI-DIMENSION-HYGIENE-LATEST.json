@@ -1,0 +1,136 @@
+{
+  "schema": "traveltrust.staging_multi_dimension_hygiene.v1",
+  "recorded_utc": "2026-07-22T02:17:47.567Z",
+  "local_tip": "81d3b1cc21e34c445e35a1d6b24c23a6b1fe8737",
+  "web_sha": "2868bbf72243292b678257a274e99b7a249963e8",
+  "api_sha": "a9730cdaadb33e71059079a93e6a25a8e434b5be",
+  "inventory_evidence_hits": [
+    "evidence\\PSG-REALITY-CLOSURE\\CLOSURE-BLOCKER-CLEAR-20260722T001114Z\\feature-inventory-validation.json",
+    "evidence\\PSG-REALITY-CLOSURE\\CLOSURE-BLOCKER-CLEAR-20260722T001114Z\\REALITY-CLOSURE-JUDGMENT.json",
+    "evidence\\PSG-REALITY-CLOSURE\\REALITY-CLOSURE-JUDGMENT-LATEST.json",
+    "evidence\\PSG-REALITY-CLOSURE\\W7-DELTA-RECERTIFY-20260722T000456Z\\REALITY-CLOSURE-JUDGMENT.json"
+  ],
+  "clean_count": 17,
+  "dirty_count": 3,
+  "dirty": [
+    {
+      "id": "web_tip_matches_local_head",
+      "clean": false,
+      "detail": "web=2868bbf72243 local=81d3b1cc21e3"
+    },
+    {
+      "id": "web_api_tip_same",
+      "clean": false,
+      "detail": "web=2868bbf72243 api=a9730cdaadb3 (FE-only lag OK if expected)"
+    },
+    {
+      "id": "meta_escrow_factory_v2_present",
+      "clean": false,
+      "detail": "MISSING"
+    }
+  ],
+  "all": [
+    {
+      "id": "web_tip_matches_local_head",
+      "clean": false,
+      "detail": "web=2868bbf72243 local=81d3b1cc21e3"
+    },
+    {
+      "id": "web_identity_docker_bake",
+      "clean": true,
+      "detail": "docker-bake"
+    },
+    {
+      "id": "web_api_tip_same",
+      "clean": false,
+      "detail": "web=2868bbf72243 api=a9730cdaadb3 (FE-only lag OK if expected)"
+    },
+    {
+      "id": "catalog_bake_hint",
+      "clean": true,
+      "detail": "public_display_10x4 + catalog_bake=1"
+    },
+    {
+      "id": "meta_chain_sepolia",
+      "clean": true,
+      "detail": "11155111"
+    },
+    {
+      "id": "meta_escrow_factory_v2_present",
+      "clean": false,
+      "detail": "MISSING"
+    },
+    {
+      "id": "meta_fee_router_present",
+      "clean": true,
+      "detail": "0xf406e6f1277b990544d4f0556421c3c14df0ab28"
+    },
+    {
+      "id": "home_html_no_unsplash",
+      "clean": true,
+      "detail": "unsplash in home HTML"
+    },
+    {
+      "id": "home_html_has_cos_or_catalog",
+      "clean": true,
+      "detail": "cos/catalog markers"
+    },
+    {
+      "id": "home_no_old_sha_7c84ca23",
+      "clean": true,
+      "detail": "stale sha label in HTML"
+    },
+    {
+      "id": "destinations_api_aggregate",
+      "clean": true,
+      "detail": "api-aggregate-v1"
+    },
+    {
+      "id": "guides_no_mojibake",
+      "clean": true,
+      "detail": "mojibake_rows=0"
+    },
+    {
+      "id": "ocs_active_pin_exists",
+      "clean": true,
+      "detail": "evidence/GO_official_cold_start_dataset/ACTIVE.json"
+    },
+    {
+      "id": "ocs_active_points_20260708",
+      "clean": true,
+      "detail": "evidence/GO_official_cold_start_dataset/20260708T121151Z/state.json"
+    },
+    {
+      "id": "rc_baseline_active_exists",
+      "clean": true,
+      "detail": "evidence/GO_staging_rc_baseline/ACTIVE.json"
+    },
+    {
+      "id": "loader_not_expansion_pack",
+      "clean": true,
+      "detail": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\20260708T121151Z\\state.json"
+    },
+    {
+      "id": "fly_web_has_git_sha_secret",
+      "clean": true,
+      "detail": "TRAVELTRUST_GIT_SHA present (synced each deploy)"
+    },
+    {
+      "id": "candidate_v2_doc_not_promoting_fg15a",
+      "clean": true,
+      "detail": "scan Candidate v2 doc"
+    },
+    {
+      "id": "build_env_no_hard_old_git_sha",
+      "clean": true,
+      "detail": "none"
+    },
+    {
+      "id": "build_env_catalog_enabled_1",
+      "clean": true,
+      "detail": "1"
+    }
+  ],
+  "verdict": "OTHER_DIMENSIONS_HAVE_RESIDUAL",
+  "honest_boundary": "Scoped hygiene ≠ Reality Closure PASS ≠ Production GO"
+}
