@@ -76,8 +76,10 @@ describe("WalletStatusMini", () => {
     useChainIdMock.mockReturnValue(137);
     renderWithLocale(<WalletStatusMini />);
     fireEvent.click(screen.getByRole("button", { name: "连接钱包" }));
-    expect(screen.getByRole("dialog")).toBeTruthy();
     expect(screen.getByRole("menu")).toBeTruthy();
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(document.querySelector('[data-tt-wallet-dropdown="1"]')).toBeTruthy();
+    expect(document.querySelector('[data-tt-wallet-sheet-layer="wallet-header-dropdown"]')).toBeTruthy();
     expect(screen.getByText("选择你已经拥有的钱包")).toBeTruthy();
     expect(screen.getByText(/不保存私钥或助记词/)).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: "MockWallet" })).toBeTruthy();
@@ -100,7 +102,7 @@ describe("WalletStatusMini", () => {
       });
     });
     await waitFor(() => {
-      expect(screen.queryByRole("dialog")).toBeNull();
+      expect(screen.queryByRole("menu")).toBeNull();
     });
   });
 
@@ -189,8 +191,8 @@ describe("WalletStatusMini", () => {
     useChainIdMock.mockReturnValue(137);
     renderWithLocale(<WalletStatusMini />);
     fireEvent.click(screen.getByRole("button", { name: "连接钱包" }));
-    expect(screen.getByRole("dialog")).toBeTruthy();
+    expect(screen.getByRole("menu")).toBeTruthy();
     fireEvent.keyDown(document, { key: "Escape", bubbles: true });
-    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(screen.queryByRole("menu")).toBeNull();
   });
 });

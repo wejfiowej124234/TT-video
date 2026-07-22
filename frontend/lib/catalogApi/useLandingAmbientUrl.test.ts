@@ -40,7 +40,7 @@ describe("useLandingAmbientUrl", () => {
     expect(result.current).toBe(CN_TS);
   });
 
-  it("flag=1: initial TS then upgrades to API url after resolve", async () => {
+  it("flag=1: same COS URL as TS stays on TS (no second paint)", async () => {
     vi.mocked(isCatalogApiEnabled).mockReturnValue(true);
     vi.mocked(resolveLandingAmbientUrl).mockResolvedValue({
       data: CN_API,
@@ -49,9 +49,24 @@ describe("useLandingAmbientUrl", () => {
     const { result } = renderHook(() => useLandingAmbientUrl("中国"));
     expect(result.current).toBe(CN_TS);
     await waitFor(() => {
-      expect(result.current).toBe(CN_API);
+      expect(resolveLandingAmbientUrl).toHaveBeenCalledWith("中国");
     });
-    expect(resolveLandingAmbientUrl).toHaveBeenCalledWith("中国");
+    // CN_API === CN_TS in current SSOT — must not flip catalogUrl
+    expect(result.current).toBe(CN_TS);
+  });
+
+  it("flag=1: upgrades only when catalog URL differs from TS", async () => {
+    vi.mocked(isCatalogApiEnabled).mockReturnValue(true);
+    const other = "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/other-cn.webp";
+    vi.mocked(resolveLandingAmbientUrl).mockResolvedValue({
+      data: other,
+      source: "catalog-api",
+    });
+    const { result } = renderHook(() => useLandingAmbientUrl("中国"));
+    expect(result.current).toBe(CN_TS);
+    await waitFor(() => {
+      expect(result.current).toBe(other);
+    });
   });
 
   it("flag=1 API fallback: stays on TS when resolve returns ts", async () => {
@@ -65,10 +80,11 @@ describe("useLandingAmbientUrl", () => {
     expect(result.current).toBe(CN_TS);
   });
 
-  it("country switch from empty uses TS immediately before catalog upgrade", async () => {
+  it("country switch from empty uses TS immediately; upgrades only if catalog differs", async () => {
     vi.mocked(isCatalogApiEnabled).mockReturnValue(true);
+    const other = "https://api.example/ocs-kyoto-culture-community-media.jpg";
     vi.mocked(resolveLandingAmbientUrl).mockResolvedValue({
-      data: "https://api.example/ocs-kyoto-culture-community-media.jpg",
+      data: other,
       source: "catalog-api",
     });
     const { result, rerender } = renderHook(({ c }) => useLandingAmbientUrl(c), {
@@ -78,7 +94,7 @@ describe("useLandingAmbientUrl", () => {
     rerender({ c: "中国" });
     expect(result.current).toBe(CN_TS);
     await waitFor(() => {
-      expect(result.current).toBe("https://api.example/ocs-kyoto-culture-community-media.jpg");
+      expect(result.current).toBe(other);
     });
   });
 

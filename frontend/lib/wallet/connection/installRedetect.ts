@@ -11,6 +11,11 @@ export function markWalletInstallPending(brandKey?: string): void {
   sessionStorage.setItem(TT_WALLET_AWAIT_INSTALL_KEY, brandKey?.trim() || "1");
 }
 
+export function peekWalletInstallPending(): string | null {
+  if (typeof sessionStorage === "undefined") return null;
+  return sessionStorage.getItem(TT_WALLET_AWAIT_INSTALL_KEY);
+}
+
 export function consumeWalletInstallPending(): string | null {
   if (typeof sessionStorage === "undefined") return null;
   const v = sessionStorage.getItem(TT_WALLET_AWAIT_INSTALL_KEY);

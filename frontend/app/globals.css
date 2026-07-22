@@ -697,6 +697,23 @@ header[data-tt-header-utility-l5="1"] button.rounded-full:hover {
 [data-tt-market-l5="1"] [data-testid="market-flow-context-banner"] .tt-market-l5-banner-count {
   color: var(--ref-sun) !important;
 }
+/** 收购角标：压过 `a { color: inherit }` / `:visited`（卡片整卡 Link 内否则金字变深底不可见） */
+.tt-market-acquisition-badge,
+[data-tt-acq-badge="1"],
+[data-tt-market-l5="1"] a .tt-market-acquisition-badge,
+[data-tt-market-l5="1"] a [data-tt-acq-badge="1"],
+[data-tt-market-l5="1"] a:visited .tt-market-acquisition-badge,
+[data-tt-market-l5="1"] a:visited [data-tt-acq-badge="1"],
+[data-tt-market-l5="1"] a:hover .tt-market-acquisition-badge,
+[data-tt-market-l5="1"] a:hover [data-tt-acq-badge="1"] {
+  color: #f9d779 !important;
+  -webkit-text-fill-color: #f9d779 !important;
+}
+/** 收购/商家卡价签：深底用近白字，避免暖金贴暗底「靠色」 */
+.tt-market-token-pill {
+  color: #f8fafc !important;
+  -webkit-text-fill-color: #f8fafc !important;
+}
 [data-tt-market-l5="1"] .tt-market-guide-tag,
 [data-tt-market-l5="1"] .tt-market-guide-hourly-note {
   color: var(--ref-sun) !important;

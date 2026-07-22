@@ -9,7 +9,7 @@ import {
 import { useLandingAmbientResolution } from "@/lib/catalogApi/useLandingAmbientUrl";
 
 type Props = {
-  /** 产品期国家中文名；空则 `AMBIENT_BG_HOME` 默认图 */
+  /** 产品期国家中文名；空则 Catalog/COS 默认（CN Destination Ambient） */
   country: string;
 };
 
@@ -52,10 +52,10 @@ function AmbientPhotoLayer({
   imgRef?: RefObject<HTMLImageElement | null>;
   onImgLoad?: (el: HTMLImageElement) => void;
 }) {
+  // No key={src}: remounting Ken Burns on every URL change looks like a second full refresh.
   return (
     <div className="absolute inset-0 overflow-hidden">
       <div
-        key={src}
         className={
           kenBurns
             ? `tt-home-ambient-ken-burns${kenBurnsPaused ? " tt-home-ambient-ken-burns-paused" : ""} absolute left-[-12%] top-[-12%] h-[124%] w-[124%]`

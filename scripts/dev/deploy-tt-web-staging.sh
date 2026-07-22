@@ -93,15 +93,36 @@ export NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL="${NEXT_PUBLIC_COMMUNITY_M
 export NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES="${NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES:-$NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL}"
 
 # Runtime Attestation · Web /api/release-identity (bake into Next standalone)
+# ALWAYS overwrite GIT/ARTIFACT/DIGEST/BUILD_TIME from tip — build.env.local must NOT pin stale SHAs
+# (stale pins + Docker layer cache → release-identity stays old while API is new → 「一部署又旧」).
 _WEB_GIT_SHA="$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo local)"
 export NEXT_PUBLIC_PSG_RELEASE_VERSION="${NEXT_PUBLIC_PSG_RELEASE_VERSION:-${TRAVELTRUST_PSG_RELEASE_VERSION:-PSG-REL-20260722-STAGING-ALIGN-W0}}"
-export NEXT_PUBLIC_GIT_SHA="${NEXT_PUBLIC_GIT_SHA:-${TRAVELTRUST_GIT_SHA:-$_WEB_GIT_SHA}}"
-export NEXT_PUBLIC_ARTIFACT_SHA="${NEXT_PUBLIC_ARTIFACT_SHA:-${TRAVELTRUST_ARTIFACT_SHA:-$_WEB_GIT_SHA}}"
-export NEXT_PUBLIC_IMAGE_DIGEST="${NEXT_PUBLIC_IMAGE_DIGEST:-${TRAVELTRUST_IMAGE_DIGEST:-gitsha:$_WEB_GIT_SHA}}"
-export NEXT_PUBLIC_BUILD_TIME="${NEXT_PUBLIC_BUILD_TIME:-${TRAVELTRUST_BUILD_TIME:-$(date -u +%Y-%m-%dT%H:%M:%SZ)}}"
+if [[ -n "${TRAVELTRUST_GIT_SHA:-}" ]]; then
+  export NEXT_PUBLIC_GIT_SHA="$TRAVELTRUST_GIT_SHA"
+else
+  export NEXT_PUBLIC_GIT_SHA="$_WEB_GIT_SHA"
+fi
+export NEXT_PUBLIC_ARTIFACT_SHA="${TRAVELTRUST_ARTIFACT_SHA:-$NEXT_PUBLIC_GIT_SHA}"
+export NEXT_PUBLIC_IMAGE_DIGEST="${TRAVELTRUST_IMAGE_DIGEST:-gitsha:$NEXT_PUBLIC_GIT_SHA}"
+export NEXT_PUBLIC_BUILD_TIME="${TRAVELTRUST_BUILD_TIME:-$(date -u +%Y-%m-%dT%H:%M:%SZ)}"
 export NEXT_PUBLIC_CONTRACT_PROFILE="${NEXT_PUBLIC_CONTRACT_PROFILE:-${TRAVELTRUST_CONTRACT_PROFILE:-v311_fund_safety_candidate_v2}}"
 export NEXT_PUBLIC_DATABASE_BASELINE="${NEXT_PUBLIC_DATABASE_BASELINE:-${TRAVELTRUST_DATABASE_BASELINE:-staging_rc_ssot_alignment.v1#expected_staging_surface}}"
 export NEXT_PUBLIC_CMS_BASELINE="${NEXT_PUBLIC_CMS_BASELINE:-${TRAVELTRUST_CMS_BASELINE:-public_display_10x4 + catalog_bake=1}}"
+# Default bust cache so NEXT_PUBLIC_* attestation cannot stick on a previous image layer
+export FLY_WEB_NO_CACHE="${FLY_WEB_NO_CACHE:-1}"
+info "attestation bake git_sha=$NEXT_PUBLIC_GIT_SHA catalog=$NEXT_PUBLIC_CATALOG_API_ENABLED no_cache=$FLY_WEB_NO_CACHE"
+
+# Stale Fly secrets TRAVELTRUST_GIT_SHA* override empty bake → old tip forever. Sync to tip each deploy.
+info "syncing runtime attestation secrets to tip (clears stale TRAVELTRUST_GIT_SHA pins) …"
+fly secrets set -a "$APP" \
+  "TRAVELTRUST_GIT_SHA=${NEXT_PUBLIC_GIT_SHA}" \
+  "TRAVELTRUST_ARTIFACT_SHA=${NEXT_PUBLIC_ARTIFACT_SHA}" \
+  "TRAVELTRUST_IMAGE_DIGEST=${NEXT_PUBLIC_IMAGE_DIGEST}" \
+  "TRAVELTRUST_BUILD_TIME=${NEXT_PUBLIC_BUILD_TIME}" \
+  "TRAVELTRUST_PSG_RELEASE_VERSION=${NEXT_PUBLIC_PSG_RELEASE_VERSION}" \
+  "TRAVELTRUST_CONTRACT_PROFILE=${NEXT_PUBLIC_CONTRACT_PROFILE}" \
+  >/dev/null \
+  || fail "fly secrets set attestation failed — stale TRAVELTRUST_GIT_SHA would keep old tip in /api/release-identity"
 
 [[ -n "${NEXT_PUBLIC_API_BASE_URL:-}" ]] || fail "NEXT_PUBLIC_API_BASE_URL empty"
 [[ -n "${NEXT_PUBLIC_SITE_URL:-}" ]] || fail "NEXT_PUBLIC_SITE_URL empty"
@@ -214,6 +235,28 @@ fi
 
 hc="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 60 "${WEB_BASE}/" 2>/dev/null || echo 000)"
 [[ "$hc" == "200" ]] || fail "${WEB_BASE}/ not 200 (got $hc) — DNS 传播或首次冷启动可能需重试"
+
+# Post-deploy: release-identity must match baked tip (blocks silent old-package ship)
+ri_json="$(curl -sS --max-time 30 "${WEB_BASE}/api/release-identity?t=$(date +%s)" 2>/dev/null || echo '{}')"
+ri_sha="$(node -e "try{const j=JSON.parse(process.argv[1]);process.stdout.write(String(j.git_sha||''))}catch(e){}" "$ri_json")"
+expect_sha="$NEXT_PUBLIC_GIT_SHA"
+if [[ -n "$expect_sha" && -n "$ri_sha" && "$ri_sha" != "$expect_sha" ]]; then
+  fail "release-identity git_sha=$ri_sha ≠ baked $expect_sha — stale image/cache; FLY_WEB_NO_CACHE=1 and redeploy"
+fi
+info "release-identity ok git_sha=${ri_sha:-unknown}"
+
+# Post-deploy: public display 10×4 must still hold (deploy must not scramble OCS)
+if command -v python >/dev/null 2>&1; then
+  API_BASE="${NEXT_PUBLIC_API_BASE_URL:-$API_BASE}" python "$ROOT/scripts/dev/check-public-display-10x4-counts.py" \
+    || fail "post-deploy 10×4 DRIFT — run STAGING_RC_BASELINE_ALIGNING=1 bash scripts/dev/run-lock-public-display-10x4-staging.sh (do NOT redeploy to 'fix' counts)"
+fi
+
+# Post-deploy: full page surfaces (announcements · ambient · market · community · did-rank · wallet dropdown)
+if command -v node >/dev/null 2>&1; then
+  EXPECT_GIT_SHA="$NEXT_PUBLIC_GIT_SHA" API_BASE="${NEXT_PUBLIC_API_BASE_URL:-$API_BASE}" WEB_BASE="$WEB_BASE" \
+    node "$ROOT/scripts/dev/check-staging-public-page-surfaces.cjs" \
+    || fail "post-deploy page surfaces DRIFT — see evidence/GO_public_display_10x4_lock/STAGING-PAGE-SURFACES-LATEST.json"
+fi
 
 ok "$APP deployed · ${WEB_BASE} · staging UI only · ≠ Production GO"
 

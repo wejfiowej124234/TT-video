@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState, type CSSProperties } from "react";
-import { createPortal } from "react-dom";
+/**
+ * Connected-wallet L5 dropdown — absolute under header chip (not portaled modal).
+ */
+
+import { useEffect } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import type { WalletConnectionController } from "@/lib/wallet/useWalletConnectionController";
 
@@ -13,38 +16,8 @@ type Props = {
 const ITEM =
   "flex w-full min-h-9 items-center rounded-md px-2.5 text-left text-small text-slate-100 transition-colors hover:bg-ref-sun/12 hover:text-[#fde9a8] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/40";
 
-/**
- * Connected-wallet L5 menu — dense, portaled under #tt-header-wallet.
- */
 export function WalletAccountMenu({ ctrl, authL5 }: Props) {
   const { t } = useTranslation();
-  const [pos, setPos] = useState<{ top: number; right: number } | null>(null);
-
-  useLayoutEffect(() => {
-    if (!ctrl.accountMenuOpen) {
-      setPos(null);
-      return;
-    }
-    const sync = () => {
-      const el = document.getElementById("tt-header-wallet");
-      if (!el) {
-        setPos({ top: 76, right: 16 });
-        return;
-      }
-      const r = el.getBoundingClientRect();
-      setPos({
-        top: r.bottom + 8,
-        right: Math.max(12, window.innerWidth - r.right),
-      });
-    };
-    sync();
-    window.addEventListener("resize", sync);
-    window.addEventListener("scroll", sync, true);
-    return () => {
-      window.removeEventListener("resize", sync);
-      window.removeEventListener("scroll", sync, true);
-    };
-  }, [ctrl.accountMenuOpen]);
 
   useEffect(() => {
     if (!ctrl.accountMenuOpen) return;
@@ -55,21 +28,17 @@ export function WalletAccountMenu({ ctrl, authL5 }: Props) {
     return () => document.removeEventListener("keydown", onKey);
   }, [ctrl]);
 
-  if (!ctrl.accountMenuOpen || !ctrl.address || !pos) return null;
+  if (!ctrl.accountMenuOpen || !ctrl.address) return null;
 
-  const style: CSSProperties = { top: pos.top, right: pos.right };
-
-  const panel = (
+  return (
     <div
       role="menu"
       aria-label={t("wallet_account_menu")}
       data-tt-header-wallet-menu-l5={authL5 ? "1" : undefined}
       data-tt-wallet-account-menu-l5="1"
-      className="fixed z-[330] w-[min(16.5rem,calc(100vw-1.5rem))] overflow-hidden rounded-xl border border-ref-sun/40 bg-[#0c0a09]/98 py-2 shadow-[0_0_0_1px_rgba(252,164,124,0.2),0_18px_44px_-14px_rgba(0,0,0,0.85)] backdrop-blur-2xl"
-      style={style}
+      data-tt-wallet-dropdown="1"
+      className="relative z-[1] w-full overflow-hidden py-2"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ref-sun/55 to-transparent" />
-
       <div className="space-y-0.5 px-3 pb-2 pt-0.5">
         <p className="truncate font-mono text-small text-[#fde9a8]" title={ctrl.address}>
           {ctrl.shortAddress}
@@ -159,7 +128,4 @@ export function WalletAccountMenu({ ctrl, authL5 }: Props) {
       </div>
     </div>
   );
-
-  if (typeof document === "undefined") return panel;
-  return createPortal(panel, document.body);
 }

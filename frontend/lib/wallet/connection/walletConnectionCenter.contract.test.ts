@@ -29,8 +29,12 @@ describe("Wallet Connection Center L5 contract (①)", () => {
       "utf8"
     );
     expect(sheet).toContain("data-tt-wallet-sheet-l5");
+    expect(sheet).toContain("wallet-header-dropdown");
+    expect(sheet).not.toContain("createPortal");
     expect(sheet).toContain("wallet_wc_mobile_deeplink");
     expect(mini).toContain("useWalletConnectionController");
+    expect(mini).toContain("className={menuClass}");
+    expect(mini).toContain("HeaderUtilityMenuL5Chrome");
     expect(types).toContain("TT_WALLET_CONNECTION_CAPABILITY");
     expect(types).toContain("custodiesKeys: false");
     expect(evidence).toContain("Manual UAT");
