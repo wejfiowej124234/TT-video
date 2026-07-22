@@ -68,10 +68,15 @@ function countList(json, keys) {
     api_sha: apiSha,
     identity_source: ri.json.identity_source || null,
     cms_baseline: ri.json.cms_baseline || null,
-    match: Boolean(webSha && apiSha && webSha === apiSha),
+    web_api_match: Boolean(webSha && apiSha && webSha === apiSha),
+    expect: EXPECT || null,
   };
-  if (!report.surfaces.identity.match) fails.push('web_api_tip_mismatch');
-  if (EXPECT && webSha !== EXPECT) fails.push(`web_sha_ne_expect:${EXPECT.slice(0, 12)}`);
+  if (EXPECT) {
+    if (webSha !== EXPECT) fails.push(`web_sha_ne_expect:${EXPECT.slice(0, 12)}`);
+  } else if (!report.surfaces.identity.web_api_match) {
+    // FE-only tip bump may leave API behind — warn but do not fail without EXPECT
+    report.surfaces.identity.note = 'web_api_tip_mismatch_without_EXPECT (allowed for FE-only); set EXPECT_GIT_SHA to enforce';
+  }
   if (ri.json.identity_source !== 'docker-bake' && !webSha) fails.push('identity_source_weak');
 
   const checks = [
