@@ -1,0 +1,113 @@
+{
+  "recorded_utc": "2026-07-22T02:12:00.448Z",
+  "ocs_state": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\20260708T121151Z\\state.json",
+  "issues": [],
+  "surfaces": {
+    "campaigns": {
+      "home_hero": {
+        "http": 200,
+        "id": "16bfc79c-3056-48c4-94ff-a33af8270b5b",
+        "name": "城市专题 · 东京"
+      },
+      "home_feed": {
+        "http": 200,
+        "id": "836595ed-c1de-41c5-9377-27ce3a813acc",
+        "name": "新人推荐 · 首页"
+      },
+      "market_feed": {
+        "http": 200,
+        "id": "a51ff8e4-df14-4a1c-b54f-f450a2da3214",
+        "name": "本周精选 · Market Feed"
+      },
+      "community_feed": {
+        "http": 200,
+        "id": "b20ae98a-35b2-489d-aaf5-03c3e038ee66",
+        "name": "Official Cold Start Campaign · Community Feed"
+      },
+      "landing_promo": {
+        "http": 200,
+        "id": "29391276-d0c6-4629-aac6-ecfb93356498",
+        "name": "节日专题"
+      },
+      "campaign_banner": {
+        "http": 200,
+        "id": null,
+        "name": null,
+        "status": null
+      },
+      "community_featured": {
+        "http": 200,
+        "id": "b20ae98a-35b2-489d-aaf5-03c3e038ee66",
+        "name": "Official Cold Start Campaign · Community Feed"
+      }
+    },
+    "campaign_unique_on_public_surfaces": 5,
+    "guides": {
+      "count": 10,
+      "non_ocs": 0,
+      "mojibake": 0,
+      "unsplash": 0,
+      "samples": []
+    },
+    "provider": {
+      "count": 10,
+      "non_ocs": 0,
+      "mojibake": 0,
+      "unsplash": 0,
+      "samples": []
+    },
+    "acquisition": {
+      "count": 10,
+      "non_ocs": 0,
+      "mojibake": 0,
+      "unsplash": 0,
+      "samples": []
+    },
+    "community": {
+      "count": 10,
+      "non_ocs": 0,
+      "mojibake": 0,
+      "unsplash": 0,
+      "samples": []
+    },
+    "announcements": {
+      "count": 10,
+      "non_ocs": 0,
+      "mojibake": 0,
+      "unsplash": 0,
+      "samples": []
+    },
+    "ambient": {
+      "count": 10,
+      "non_ocs": 0,
+      "mojibake": 0,
+      "unsplash": 0,
+      "samples": []
+    },
+    "did_rank": {
+      "count": 10,
+      "non_ocs": 0,
+      "mojibake": 0,
+      "unsplash": 0,
+      "samples": []
+    },
+    "pulse": {
+      "http": 200,
+      "keys": [
+        "status",
+        "items",
+        "source"
+      ],
+      "sample": "{\"status\":\"ok\",\"items\":[{\"id\":\"afe45392-f3c2-4a57-bccb-d2b75674f860\",\"slug\":\"product-planned-launch\",\"lane\":\"product\",\"kind\":\"product\",\"content_tier\":\"upcoming\",\"pinned\":true,\"sort_order\":100,\"title_z"
+    },
+    "discover_orders": {
+      "count": 0
+    }
+  },
+  "identity": {
+    "web": "2868bbf72243292b678257a274e99b7a249963e8",
+    "api": "a9730cdaadb33e71059079a93e6a25a8e434b5be",
+    "source": "docker-bake"
+  },
+  "verdict": "CLEAN_VS_PSG_OCS"
+}

@@ -49,6 +49,9 @@
 7. **Attestation tip 强制（防「一部署又旧」）：** Web bake **始终用当前 `git rev-parse HEAD`**；**禁止** `build.env.local` 钉死旧 SHA；默认 `FLY_WEB_NO_CACHE=1`；Docker bake 写 `public/tt-release-identity.bake.json`（优先于 Fly secrets）；每次部署 **同步/覆盖** `TRAVELTRUST_GIT_SHA*` secrets（曾因 secrets 钉死 `7c84ca23` 导致 release-identity 永远旧）。
 8. **部署后 10×4 硬验：** `check-public-display-10x4-counts.py` 必须 `LOCKED_10X4`；漂移则 **先跑 lock 脚本**，**禁止**靠再部署碰运气。
 9. **向导脏数据：** `archive-and-repair-staging-ocs-guides.cjs`（SQL · OCS 10 + 文案修复）+ API restart 纳入 lock 路径。
+10. **OCS 运行时包钉死：** `evidence/GO_official_cold_start_dataset/ACTIVE.json` → **`20260708T121151Z/state.json`**；`findLatestOcsStatePath` **禁止**嵌套 `ocs-surface-expansion-*` 旧包赢 SSOT（曾导致 gate 假报 non-OCS）。
+11. **Campaigns：** `lock-staging-campaigns-10-by-dataset.cjs`（按 dataset 名保留 10 · rollback 重复污染）挂入 10×4 lock。
+12. **Page Surfaces 深闸：** post-deploy 验 OCS ID 归属 · mojibake · 公告 `title_zh` · campaign 面 · 钱包下拉（见 [Page Surfaces](./TT-PSG-STAGING-PUBLIC-PAGE-SURFACES-LATEST.md)）。
 
 ---
 
