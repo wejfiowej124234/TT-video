@@ -23,9 +23,10 @@ except ImportError:
     yaml = None  # type: ignore
 
 ROOT = Path(__file__).resolve().parents[2]
-TIP = "97289a7185610ef0ad8822f0af04bfa533e42986"
+TIP = "4050f50a7d0c94939c0e471e197806f766d4391f"
 PIN = "PSG-REL-20260720-WEB3-CAND-V2"
 PROFILE = "v311_fund_safety_candidate_v2"
+RUNTIME_TIP_STAGING = "97289a7185610ef0ad8822f0af04bfa533e42986"
 OUT_JSON = ROOT / "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.json"
 OUT_MD = ROOT / "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.md"
 
@@ -112,35 +113,48 @@ def main() -> int:
         "ok": eng.get("machine_key") == "TT_ENGINEERING_SSOT_ANCHOR",
     }
 
-    # Git / worktree
+    # Git / worktree — Freeze tip may be ahead of Staging bake (Expected Difference)
     axes["git"] = {
         "head": head,
         "dirty": dirty,
-        "runtime_tip": TIP,
-        "head_eq_runtime_tip": head == TIP,
+        "freeze_tip": TIP,
+        "staging_runtime_tip": RUNTIME_TIP_STAGING,
+        "head_eq_freeze_tip": head == TIP,
         "worktree_clean": dirty == 0,
-        "note": "Freeze overlay HEAD may differ from Staging runtime tip (Expected Difference until redeploy)",
+        "note": "Freeze UI tip may differ from Staging bake tip (Expected Difference until redeploy)",
     }
 
-    # Staging runtime
+    # Staging runtime — match Freeze tip OR documented Staging lag tip
     try:
         api = get_json("https://tt-api-staging.fly.dev/meta")
         b = api.get("build") or {}
+        api_sha = b.get("git_sha")
+        api_at_freeze = api_sha == TIP
+        api_at_staging_lag = api_sha == RUNTIME_TIP_STAGING
         api_ok = (
-            b.get("git_sha") == TIP
+            (api_at_freeze or api_at_staging_lag)
             and b.get("psg_release_version") == PIN
             and b.get("contract_profile") == PROFILE
             and b.get("attestation_status") == "ok"
         )
         axes["staging_api"] = {
-            "sha": b.get("git_sha"),
+            "sha": api_sha,
             "pin": b.get("psg_release_version"),
             "profile": b.get("contract_profile"),
             "attestation": b.get("attestation_status"),
             "ok": api_ok,
+            "expected_difference": api_at_staging_lag and not api_at_freeze,
         }
         if not api_ok:
             findings.append({"sev": "P0", "id": "STAGING_API_DRIFT", "detail": axes["staging_api"]})
+        elif api_at_staging_lag and not api_at_freeze:
+            findings.append(
+                {
+                    "sev": "EXPECTED",
+                    "id": "STAGING_API_TIP_LAG",
+                    "detail": f"api={api_sha} freeze_tip={TIP}",
+                }
+            )
     except Exception as e:  # noqa: BLE001
         axes["staging_api"] = {"ok": False, "error": str(e)}
         findings.append({"sev": "P0", "id": "STAGING_API_UNREACHABLE", "detail": str(e)})
@@ -156,34 +170,60 @@ def main() -> int:
         except Exception as e:  # noqa: BLE001
             web_err = e
     if bake is not None and ident is not None:
+        bake_sha = bake.get("git_sha")
+        web_at_freeze = bake_sha == TIP
+        web_at_staging_lag = bake_sha == RUNTIME_TIP_STAGING
         web_ok = (
-            bake.get("git_sha") == TIP
+            (web_at_freeze or web_at_staging_lag)
             and bake.get("psg_release_version") == PIN
             and ident.get("psg_release_version") == PIN
             and ident.get("attestation_status") == "ok"
         )
         axes["staging_web"] = {
-            "bake_sha": bake.get("git_sha"),
+            "bake_sha": bake_sha,
             "bake_pin": bake.get("psg_release_version"),
             "db": bake.get("database_baseline"),
             "cms": bake.get("cms_baseline"),
             "id_attestation": ident.get("attestation_status"),
             "ok": web_ok,
+            "expected_difference": web_at_staging_lag and not web_at_freeze,
         }
         if not web_ok:
-            findings.append({"sev": "P1", "id": "STAGING_WEB_DRIFT", "detail": axes["staging_web"]})
+            findings.append({"sev": "P0", "id": "STAGING_WEB_DRIFT", "detail": axes["staging_web"]})
+        elif web_at_staging_lag and not web_at_freeze:
+            findings.append(
+                {
+                    "sev": "EXPECTED",
+                    "id": "STAGING_WEB_TIP_LAG",
+                    "detail": f"web={bake_sha} freeze_tip={TIP}",
+                }
+            )
     else:
         axes["staging_web"] = {"ok": False, "error": str(web_err)}
         # Transient SSL/network → P1 (not baseline pollution)
         findings.append({"sev": "P1", "id": "STAGING_WEB_UNREACHABLE", "detail": str(web_err)})
 
-    # Evidence
+    # Evidence — Freeze tip or Staging lag tip
     ev = ROOT / "evidence/GO_web3_candidate_v2/WEB3-CANDIDATE-V2-RELEASE-IDENTITY-LATEST.json"
     ej = json.loads(ev.read_text(encoding="utf-8")) if ev.exists() else {}
-    ev_ok = ej.get("git_sha") == TIP and ej.get("psg_release_version") == PIN
-    axes["evidence"] = {"sha": ej.get("git_sha"), "pin": ej.get("psg_release_version"), "ok": ev_ok}
+    ev_sha = ej.get("git_sha")
+    ev_ok = ej.get("psg_release_version") == PIN and ev_sha in (TIP, RUNTIME_TIP_STAGING)
+    axes["evidence"] = {
+        "sha": ev_sha,
+        "pin": ej.get("psg_release_version"),
+        "ok": ev_ok,
+        "expected_difference": ev_sha == RUNTIME_TIP_STAGING and ev_sha != TIP,
+    }
     if not ev_ok:
         findings.append({"sev": "P1", "id": "EVIDENCE_IDENTITY_DRIFT", "detail": axes["evidence"]})
+    elif ev_sha == RUNTIME_TIP_STAGING and ev_sha != TIP:
+        findings.append(
+            {
+                "sev": "EXPECTED",
+                "id": "EVIDENCE_TIP_LAG",
+                "detail": f"evidence={ev_sha} freeze_tip={TIP}",
+            }
+        )
 
     # Pollution defaults
     bad = "PSG-REL-20260722-STAGING-ALIGN-W0"
@@ -206,13 +246,12 @@ def main() -> int:
         findings.append({"sev": "P0", "id": "DEPLOY_DEFAULT_STAGING_ALIGN", "detail": polluted})
 
     p0 = [f for f in findings if f["sev"] == "P0"]
-    # Expected Difference: local HEAD != runtime tip while freeze overlay commits exist
-    expected = []
+    expected = [f for f in findings if f["sev"] == "EXPECTED"]
     if head != TIP:
         expected.append(
             {
-                "id": "FREEZE_OVERLAY_HEAD_VS_RUNTIME_TIP",
-                "detail": f"HEAD={head[:12]} runtime_tip={TIP[:12]} — CONFIRM_DESIGN until Owner redeploy or tip mint",
+                "id": "FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP",
+                "detail": f"HEAD={head[:12]} freeze_tip={TIP[:12]} — commit freeze artifacts or clean worktree",
             }
         )
 
@@ -230,7 +269,8 @@ def main() -> int:
         "formal_cert_started": False,
         "core_version_modified": False,
         "pin": PIN,
-        "runtime_tip": TIP,
+        "freeze_tip": TIP,
+        "staging_runtime_tip": RUNTIME_TIP_STAGING,
         "head": head,
         "baselines": ["Candidate_v2", "V3.1.1_Final", "PSG_EGM_Final"],
         "axes": axes,

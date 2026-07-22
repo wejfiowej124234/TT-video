@@ -4,9 +4,11 @@
   "status": "BASELINE_FROZEN",
   "freeze_status": "FROZEN",
   "cert_suite": "DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO",
-  "recorded_utc": "2026-07-22T04:45:00Z",
-  "frozen_utc": "2026-07-22T04:45:00Z",
-  "freeze_pcr": "PCR-20260722-POLLUTION-CLEANUP-FREEZE",
+  "ui_delta_status": "PENDING_STAGING_REDEPLOY",
+  "recorded_utc": "2026-07-22T05:05:00Z",
+  "frozen_utc": "2026-07-22T05:05:00Z",
+  "freeze_pcr": "PCR-20260722-UI-DELTA-HOME-SOCIAL-FREEZE",
+  "prior_freeze_pcr": "PCR-20260722-POLLUTION-CLEANUP-FREEZE",
   "engineering_ssot_anchor": "registry/engineering-ssot-anchor.v1.yaml",
   "system_architecture": "docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md",
   "pollution_cleanup": "docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md",
@@ -16,11 +18,12 @@
     "deploy_baseline": "v311_fund_safety_candidate_v2",
     "constitution": "V3.1.1_Final",
     "egm": "PSG_EGM_Final",
-    "git_sha": "97289a7185610ef0ad8822f0af04bfa533e42986"
+    "git_sha": "4050f50a7d0c94939c0e471e197806f766d4391f"
   },
-  "alignment_status": "FROZEN_POLLUTION_CLEANED_EIGHT_WAY_PASS",
+  "alignment_status": "FROZEN_UI_DELTA_PENDING_STAGING_REDEPLOY",
   "alignment_blockers": [],
-  "cert_executed_this_session": true,
+  "expected_differences": ["STAGING_RUNTIME_TIP_LAG"],
+  "cert_executed_this_session": false,
   "forbid_auto_start": [
     "PSG_Recalculate",
     "Inventory_READY_flip",
@@ -31,15 +34,14 @@
     "Production_GO"
   ],
   "next_owner": [
-    "Explicitly start one-shot cert suite when ready",
+    "Redeploy Staging Web at UI tip 4050f50a (or CONFIRM_EXPECTED_DIFFERENCE)",
+    "Then Feature Inventory / Reality Closure under FROZEN",
     "Do not treat FROZEN as Staging-grade or Production GO"
   ],
   "equals_production_go": false,
-  "freeze_commit_sha": "2c376086f63c9b651b15a421905b8da3e48d4178",
+  "equals_staging_grade_go": false,
+  "freeze_commit_sha": "4050f50a7d0c94939c0e471e197806f766d4391f",
   "runtime_tip_sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
   "runtime_redeploy_required_before_cert": true,
-  "worktree": "CLEAN",
-  "delta_formal_verdict": "FORMAL_DELTA_PASS_WITH_EXPECTED_DIFFERENCE",
-  "delta_formal_recorded_utc": "2026-07-22T04:42:42Z",
-  "equals_staging_grade_go": false
+  "delta_dry_run_verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE"
 }

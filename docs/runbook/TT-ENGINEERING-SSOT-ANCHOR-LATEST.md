@@ -30,7 +30,7 @@ Architecture Constitution / L0 / PGC
 | 键 | 值 |
 |----|-----|
 | Pin | `PSG-REL-20260720-WEB3-CAND-V2` |
-| Tip SHA | `97289a7185610ef0ad8822f0af04bfa533e42986` |
+| Tip SHA | `4050f50a7d0c94939c0e471e197806f766d4391f` |
 | Contract profile | `v311_fund_safety_candidate_v2` |
 | Economic | **V3.1.1 Final** |
 | EGM | **PSG-EGM Final** · `CLOSED_AS_FRAMEWORK_DESIGN` |

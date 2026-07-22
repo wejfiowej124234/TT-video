@@ -1,0 +1,47 @@
+# PCR-20260722-UI-DELTA-HOME-SOCIAL-FREEZE
+#
+# Delta Change under Candidate pin (no new PSG Release Version mint).
+# UI: home scroll-to-top · AI itinerary frost lock · official social six.
+# Then re-Freeze FINAL RELEASE BASELINE at UI tip.
+
+schema: traveltrust.psg_change_record.v1
+pcr_id: PCR-20260722-UI-DELTA-HOME-SOCIAL-FREEZE
+recorded_utc: "2026-07-22T05:05:00Z"
+class: DELTA_CHANGE_UI
+equals_production_go: false
+equals_staging_grade_go: false
+new_psg_release_version_minted: false
+
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+prior_runtime_tip: "97289a7185610ef0ad8822f0af04bfa533e42986"
+ui_delta_git_sha: "4050f50a7d0c94939c0e471e197806f766d4391f"
+freeze_status: FROZEN
+
+delta_scope:
+  - frontend/components/landing/useLandingPage.ts
+  - frontend/components/landing/ItineraryResultsSection.tsx
+  - frontend/components/landing/LandingFooter.tsx
+  - frontend/lib/traveltrustOfficialSocialLinks.ts
+  - frontend/components/traveltrust/cinematic/TravelTrustFooterSocialGlyph.tsx
+  - frontend/lib/marketingUi.ts  # trustEscrowBadge color lock
+
+gates:
+  engineering_ssot_anchor: PASS
+  delta_recertify_dry_run: DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE
+
+expected_difference:
+  - id: STAGING_RUNTIME_TIP_LAG
+    disposition: CONFIRM_DESIGN_UNTIL_WEB_REDEPLOY
+    detail: >
+      Staging Web/API bake still 97289a71 until Owner Web redeploy of UI tip.
+      Inventory / Reality Closure eight-way PASS waits on redeploy or written accept.
+
+forbidden:
+  - Reality_W0_W7_as_mainline
+  - Hard_Gate_flip
+  - Production_GO
+  - new_pin_mint
+
+next:
+  - Staging Web redeploy @ 4050f50a (or Owner CONFIRM_EXPECTED_DIFFERENCE)
+  - then Feature Inventory / Reality Closure under FROZEN

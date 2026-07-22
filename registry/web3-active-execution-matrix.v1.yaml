@@ -4,7 +4,8 @@
 # Gate:  bash scripts/gates/check-web3-active-execution-matrix-gate.sh
 #
 # NOT a new governance framework. Restores broken PSG/AGENTS pointers.
-# Address authority: protocol-convergence-deployments → v311_sepolia_clean_baseline.
+# Address authority: protocol-convergence-deployments → v311_fund_safety_candidate_v2
+# (Candidate v2 · PSG-REL-20260720-WEB3-CAND-V2). FG-15-A v311_sepolia_clean_baseline = HISTORICAL.
 # Module readiness / Waves / closure narrative: WEB3-SYSTEM-MASTER-MAP (map + yaml).
 # Daily release cadence: TT-CURRENT-FOCUS-DASHBOARD / Owner Final Queue (OA-01→OA-02).
 
@@ -28,8 +29,21 @@ web3_system_closure_note: >
 
 address_authority:
   registry: registry/protocol-convergence-deployments.v1.yaml
-  baseline: v311_sepolia_clean_baseline
+  # NEW Web3 mainline (tests / Promotion / Release alignment)
+  web3_mainline_baseline: v311_fund_safety_candidate_v2
+  web3_mainline_ssot: registry/web3-mainline.v1.yaml
+  # Historical FG-15-A Sepolia address snapshot — NOT FOR PROMOTION
+  historical_fg15_a_baseline: v311_sepolia_clean_baseline
+  baseline: v311_fund_safety_candidate_v2
   chain_id: "11155111"
+  candidate_v2:
+    registry: registry/web3-candidate-v2.v1.yaml
+    deploy_key: v311_fund_safety_candidate_v2
+    status: ACTIVE_WEB3_CANDIDATE_BASELINE
+    psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+    runtime_tip_sha: "4050f50a7d0c94939c0e471e197806f766d4391f"
+    fg15_track: FG-15-B_ELAPSED
+    does_not_mutate_fg15_a: true
 
 companion_ssot:
   human_execution_matrix: docs/runbook/TT-WEB3-ACTIVE-EXECUTION-MATRIX.md
@@ -38,9 +52,13 @@ companion_ssot:
   primary_market_defer: docs/runbook/WEB3-PRIMARY-MARKET-DEFER-V1.md
   reality: docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md
   daily_release_entry: docs/runbook/TT-CURRENT-FOCUS-DASHBOARD-LATEST.md
+  web3_candidate_v2: docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md
+  web3_mainline: registry/web3-mainline.v1.yaml
+  fg15_a_archive: docs/runbook/TT-FG15-A-HISTORICAL-ARCHIVE-LATEST.md
 
 # Alias keys expected by older PSG-09 audit refs (content lives in companions)
-active_addresses: registry/protocol-convergence-deployments.v1.yaml#v311_sepolia_clean_baseline
+active_addresses: registry/protocol-convergence-deployments.v1.yaml#v311_fund_safety_candidate_v2
+historical_fg15_a_addresses: registry/protocol-convergence-deployments.v1.yaml#v311_sepolia_clean_baseline
 phase_boundary: registry/web3-system-master-map.v1.yaml#deployment_waves
 H_indexer: docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md
 A_governance_token: registry/web3-system-master-map.v1.yaml#modules

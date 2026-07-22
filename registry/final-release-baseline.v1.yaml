@@ -1,10 +1,10 @@
-# TravelTrust · FINAL RELEASE BASELINE (unique system · pre-cert freeze)
+# TravelTrust · FINAL RELEASE BASELINE (unique system · re-frozen after UI Delta)
 # Human: docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.md
 # JSON: docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.json
 # Gate: bash scripts/gates/check-final-release-baseline-freeze-gate.sh
 #
-# STOP mid-cert therapy. Align eight-way → demote old ACTIVE → FREEZE → one-shot cert.
-# ≠ Staging-grade GO ≠ Production GO ≠ Hard Gate.
+# Prior freeze (pollution cleanup) superseded as living tip by UI Delta re-freeze.
+# Pin unchanged. ≠ Staging-grade GO ≠ Production GO ≠ Hard Gate.
 
 schema: traveltrust.final_release_baseline.v1
 version: 1
@@ -12,17 +12,19 @@ machine_key: TT_FINAL_RELEASE_BASELINE
 status: BASELINE_FROZEN
 freeze_status: FROZEN
 cert_suite: DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO
-recorded_utc: "2026-07-22T04:45:00Z"
-frozen_utc: "2026-07-22T04:45:00Z"
-freeze_pcr: PCR-20260722-POLLUTION-CLEANUP-FREEZE
+ui_delta_status: PENDING_STAGING_REDEPLOY
+recorded_utc: "2026-07-22T05:05:00Z"
+frozen_utc: "2026-07-22T05:05:00Z"
+freeze_pcr: PCR-20260722-UI-DELTA-HOME-SOCIAL-FREEZE
+prior_freeze_pcr: PCR-20260722-POLLUTION-CLEANUP-FREEZE
 pollution_cleanup: docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md
 equals_production_go: false
 equals_staging_grade_go: false
 equals_psg_complete: false
 equals_reality_closure_pass: false
-cert_executed_this_session: true
-delta_formal_verdict: FORMAL_DELTA_PASS_WITH_EXPECTED_DIFFERENCE
-delta_formal_recorded_utc: "2026-07-22T04:42:42Z"
+cert_executed_this_session: false
+delta_dry_run_verdict: DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE
+delta_dry_run_recorded_utc: "2026-07-22T05:00:00Z"
 
 engineering_ssot_anchor: registry/engineering-ssot-anchor.v1.yaml
 system_architecture_human: docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md
@@ -50,14 +52,16 @@ unique_system:
     machine: registry/economic-governance/egm-baseline.yaml
     evidence_status: NOT_STARTED
   code_release_tip:
-    git_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
-    git_sha_short: "97289a718561"
-    selection_reason: current_committed_tip_unsplash_inventory_display_hygiene
-    worktree_policy: CLEAN_AT_FREEZE_COMMIT
-    freeze_commit_sha: "2c376086f63c9b651b15a421905b8da3e48d4178"
+    git_sha: "4050f50a7d0c94939c0e471e197806f766d4391f"
+    git_sha_short: "4050f50a7d0c"
+    selection_reason: ui_delta_home_scroll_ai_frost_official_social_six
+    worktree_policy: UI_DELTA_COMMITTED_TRACK_B_DIRT_ISOLATED
+    freeze_commit_sha: "4050f50a7d0c94939c0e471e197806f766d4391f"
     runtime_tip_sha: "97289a7185610ef0ad8822f0af04bfa533e42986"
     runtime_redeploy_required_before_cert: true
-    note: "Freeze SSOT commit may be ahead of Staging bake tip; cert requires eight-way after optional tip redeploy or Owner CONFIRM_EXPECTED_DIFFERENCE."
+    note: >
+      UI Delta tip is Freeze SSOT. Staging bake still 97289a71 until Web redeploy.
+      CONFIRM_DESIGN Expected Difference until redeploy or Owner written accept.
 
 psg_surfaces_in_unique_system:
   - code
@@ -83,29 +87,24 @@ eight_way_equality_target:
   - evidence
 
 alignment:
-  status: FROZEN_POLLUTION_CLEANED_EIGHT_WAY_PASS
-  recorded_utc: "2026-07-22T04:45:00Z"
+  status: FROZEN_UI_DELTA_PENDING_STAGING_REDEPLOY
+  recorded_utc: "2026-07-22T05:05:00Z"
   eight_way:
     local_git: PASS
-    web_image: PASS
-    api_image: PASS
-    runtime_meta: PASS
-    release_identity: PASS
+    web_image: EXPECTED_DIFFERENCE_STAGING_LAG
+    api_image: EXPECTED_DIFFERENCE_STAGING_LAG
+    runtime_meta: EXPECTED_DIFFERENCE_STAGING_LAG
+    release_identity: EXPECTED_DIFFERENCE_STAGING_LAG
     registry_active: PASS
     psg_pin: PASS
-    evidence: PASS
-  pollution_cleanup:
-    status: DONE
-    human: docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md
-    pcr: PCR-20260722-POLLUTION-CLEANUP-FREEZE
-  cleared:
-    - API_MIGRATION_CHECKSUM_DRIFT
-    - WEB_PIN_STALE
-    - STAGING_ALIGN_DEFAULT_POLLUTION
-    - FG15_B_REGISTRY_RUNNING_DRIFT
-    - WORKTREE_DIRTY
-    - P1_DOC_RESIDUALS_LIVING_ACTIVE
+    evidence: EXPECTED_DIFFERENCE_STAGING_LAG
+  ui_delta:
+    status: COMMITTED
+    pcr: PCR-20260722-UI-DELTA-HOME-SOCIAL-FREEZE
+    commit: "4050f50a7d0c94939c0e471e197806f766d4391f"
   blockers: []
+  expected_differences:
+    - STAGING_RUNTIME_TIP_LAG
 
 forbidden_as_active:
   - PSG-REL-20260722-STAGING-ALIGN-W0
@@ -115,13 +114,14 @@ forbidden_as_active:
   - Reality_W0_W7_as_release_mainline
 
 cert_suite_after_freeze_order:
-  - PSG_Recalculate
+  - Staging_Web_redeploy_UI_tip
   - Feature_Inventory
   - Reality_Closure
-  - PSG_Delta_Recertify
+  - PSG_Delta_Recertify_formal_if_needed
   - Readiness
   - Staging_grade_GO_judgment
 
 honesty: >
-  FROZEN ≠ cert executed ≠ cert PASS ≠ Staging-grade GO ≠ Production GO.
-  cert_suite=ARMED_NOT_EXECUTED — Owner must explicitly start; this freeze does not run cert.
+  FROZEN ≠ cert executed ≠ Staging-grade GO ≠ Production GO.
+  UI Delta tip ≠ Staging bake tip until redeploy (Expected Difference).
+  No new pin mint. No Reality W0–W7 mainline. No Hard Gate.
