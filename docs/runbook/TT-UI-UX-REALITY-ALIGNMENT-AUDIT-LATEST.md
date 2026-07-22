@@ -1,7 +1,7 @@
 # TT · UI/UX Reality Alignment Audit（用户真实路径一致性扫描）
 
 **Machine key:** `TT_UI_UX_REALITY_ALIGNMENT_AUDIT`  
-**Status:** `P0_PRODUCT_TIP_LANDED_PENDING_WEB_BAKE` · **≠** GO · **≠** Inventory/Reality 恢复  
+**Status:** `P0_CLOSED_P1_IN_PROGRESS` · **≠** GO · **≠** Inventory/Reality 恢复  
 **Recorded UTC:** `2026-07-22T07:28:47Z` · **Remediation UTC:** `2026-07-22T07:45:00Z`  
 **JSON:** [`TT-UI-UX-REALITY-ALIGNMENT-AUDIT-LATEST.json`](./TT-UI-UX-REALITY-ALIGNMENT-AUDIT-LATEST.json)  
 **Policy:** [`TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY`](./TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md)
@@ -130,10 +130,10 @@
 
 | ID | 廊道 | 问题 | UI→API→SSOT 差异 |
 |----|------|------|------------------|
-| P1-01 | Home | Unlock 文案像「支付」，实为 `getOrder` 预览解锁（无 USDC） | UI 承诺 ≠ API；诚实标 `phase1-preview-no-usdc` 存在但用户难见 |
-| P1-02 | Escrow | `login_required` **不**跳登录（Pay 会跳） | 同 API 401，UX 分叉 |
-| P1-03 | Market→Pay | 非参与方也可看到 Pay 链（Pay 页有 forbidden 面板，Escrow 更糟） | 半处理 |
-| P1-04 | Governance | 链下投票按钮未用 `votingPower.can_cast_vote`；链上路径有 | RBAC 分叉 |
+| P1-01 | Home | Unlock 诚实徽章 + 非支付文案 | ✅ tip（待下一轮 Web bake） |
+| P1-02 | Escrow | 401→login | ✅ 已随 P0 tip `6b85bde9` |
+| P1-03 | Market→Pay | 非参与方 Pay CTA | ✅ 已随 P0 tip `6b85bde9` |
+| P1-04 | Governance | 链下投票闸 `can_cast_vote` | ✅ tip（待下一轮 Web bake） |
 | P1-05 | Admin | UI RBAC advisory：按钮可见 → 写操作 API 403 | 设计已知 · 仍是用户阻断感 |
 | P1-06 | Community | Dev showcase 空库注入「真」社交图；写失败 | ① 诚实风险 |
 | P1-07 | Acquisition/Provider | Bond/Studio/Publish 可先点后 API 失败，预检不全 | 状态机后置 |
