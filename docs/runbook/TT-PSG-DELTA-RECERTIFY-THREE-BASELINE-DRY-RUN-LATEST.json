@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.psg_delta_recertify_three_baseline_dry_run.v1",
   "machine_key": "TT_PSG_DELTA_RECERTIFY_THREE_BASELINE_DRY_RUN",
-  "recorded_utc": "2026-07-22T04:36:57Z",
+  "recorded_utc": "2026-07-22T04:42:42Z",
   "mode": "DRY_RUN_REPORT_ONLY",
   "equals_production_go": false,
   "equals_staging_grade_go": false,
@@ -9,7 +9,7 @@
   "core_version_modified": false,
   "pin": "PSG-REL-20260720-WEB3-CAND-V2",
   "runtime_tip": "97289a7185610ef0ad8822f0af04bfa533e42986",
-  "head": "1d62a9e8035b03aedcbcb97a5814aa0b48f025a5",
+  "head": "74e3541c92d13aa0b3d90fbf31ddfd6d307713d9",
   "baselines": [
     "Candidate_v2",
     "V3.1.1_Final",
@@ -44,8 +44,8 @@
       "ok": true
     },
     "git": {
-      "head": "1d62a9e8035b03aedcbcb97a5814aa0b48f025a5",
-      "dirty": 6,
+      "head": "74e3541c92d13aa0b3d90fbf31ddfd6d307713d9",
+      "dirty": 2,
       "runtime_tip": "97289a7185610ef0ad8822f0af04bfa533e42986",
       "head_eq_runtime_tip": false,
       "worktree_clean": false,
@@ -80,7 +80,7 @@
   "expected_differences": [
     {
       "id": "FREEZE_OVERLAY_HEAD_VS_RUNTIME_TIP",
-      "detail": "HEAD=1d62a9e8035b runtime_tip=97289a718561 — CONFIRM_DESIGN until Owner redeploy or tip mint"
+      "detail": "HEAD=74e3541c92d1 runtime_tip=97289a718561 — CONFIRM_DESIGN until Owner redeploy or tip mint"
     }
   ],
   "verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",

@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.final_release_deep_consistency_audit_v2.v1",
   "machine_key": "TT_FINAL_RELEASE_DEEP_CONSISTENCY_AUDIT_V2",
-  "recorded_utc": "2026-07-22T04:41:58Z",
+  "recorded_utc": "2026-07-22T04:42:27Z",
   "mode": "AUDIT_ONLY_NO_FEATURE",
   "equals_production_go": false,
   "pin": "PSG-REL-20260720-WEB3-CAND-V2",
@@ -21,9 +21,9 @@
       "id_att": "ok",
       "eng_anchor": "TT_ENGINEERING_SSOT_ANCHOR",
       "psg_ssot": "ENFORCED",
-      "head": "0fdd53e0e428f87cd4bba83720a39bee3b54d6bf",
-      "dirty": 1,
-      "ok": false
+      "head": "74e3541c92d13aa0b3d90fbf31ddfd6d307713d9",
+      "dirty": 0,
+      "ok": true
     },
     "data": {
       "database_baseline": "staging_rc_ssot_alignment.v1#expected_staging_surface",
@@ -64,30 +64,7 @@
       "ok": true
     }
   },
-  "findings": [
-    {
-      "chain": "release",
-      "sev": "P0",
-      "id": "RELEASE_CHAIN_FAIL",
-      "detail": {
-        "freeze": "FROZEN",
-        "cert_suite": "ARMED_NOT_EXECUTED",
-        "registry_pin": "PSG-REL-20260720-WEB3-CAND-V2",
-        "registry_sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
-        "api_pin": "PSG-REL-20260720-WEB3-CAND-V2",
-        "api_sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
-        "api_att": "ok",
-        "web_pin": "PSG-REL-20260720-WEB3-CAND-V2",
-        "web_sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
-        "id_att": "ok",
-        "eng_anchor": "TT_ENGINEERING_SSOT_ANCHOR",
-        "psg_ssot": "ENFORCED",
-        "head": "0fdd53e0e428f87cd4bba83720a39bee3b54d6bf",
-        "dirty": 1,
-        "ok": false
-      }
-    }
-  ],
+  "findings": [],
   "anchor_hidden_drift": [],
   "expected_differences": [
     {
@@ -96,10 +73,10 @@
       "disposition": "CONFIRM_DESIGN"
     }
   ],
-  "verdict": "AUDIT_V2_BLOCKED",
-  "p0_count": 1,
+  "verdict": "AUDIT_V2_PASS_WITH_EXPECTED_DIFFERENCE",
+  "p0_count": 0,
   "chains_ok": {
-    "release": false,
+    "release": true,
     "data": true,
     "code": true,
     "docs": true,

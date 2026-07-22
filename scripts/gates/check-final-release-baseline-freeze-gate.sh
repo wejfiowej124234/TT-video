@@ -17,7 +17,7 @@ grep -q 'machine_key: TT_FINAL_RELEASE_BASELINE' "$REG" || { echo "FAIL machine_
 grep -q 'PSG-REL-20260720-WEB3-CAND-V2' "$REG" || { echo "FAIL Candidate pin"; exit 1; }
 grep -q 'V3.1.1' "$REG" || { echo "FAIL V3.1.1"; exit 1; }
 grep -q 'PSG_EGM_Final\|PSG-EGM' "$REG" || { echo "FAIL EGM"; exit 1; }
-if ! grep -qE 'FORBIDDEN_UNTIL_FREEZE|ARMED_NOT_EXECUTED' "$REG"; then
+if ! grep -qE 'FORBIDDEN_UNTIL_FREEZE|ARMED_NOT_EXECUTED|DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO' "$REG"; then
   echo "FAIL cert_suite lock missing"
   exit 1
 fi

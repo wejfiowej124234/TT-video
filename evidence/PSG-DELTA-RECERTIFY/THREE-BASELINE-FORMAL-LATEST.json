@@ -1,0 +1,47 @@
+{
+  "schema": "traveltrust.psg_delta_recertify_three_baseline_formal.v1",
+  "machine_key": "TT_PSG_DELTA_RECERTIFY_THREE_BASELINE_FORMAL",
+  "recorded_utc": "2026-07-22T04:42:42Z",
+  "mode": "FORMAL_DELTA_RECERTIFY",
+  "equals_production_go": false,
+  "equals_staging_grade_go": false,
+  "hard_gate_flipped": false,
+  "core_version_minted": false,
+  "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "runtime_tip": "97289a7185610ef0ad8822f0af04bfa533e42986",
+  "head": "74e3541c92d13aa0b3d90fbf31ddfd6d307713d9",
+  "baselines": [
+    "Candidate_v2",
+    "V3.1.1_Final",
+    "PSG_EGM_Final"
+  ],
+  "prereq": {
+    "freeze": "FROZEN",
+    "audit_v2": "AUDIT_V2_PASS_WITH_EXPECTED_DIFFERENCE",
+    "dry_run": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",
+    "engineering_ssot_anchor": "PASS"
+  },
+  "chains_ok": {
+    "release": true,
+    "data": true,
+    "code": true,
+    "docs": true,
+    "security": true,
+    "evidence": true
+  },
+  "anchor_hidden_drift": [],
+  "expected_differences": [
+    {
+      "id": "FREEZE_OVERLAY_HEAD_VS_RUNTIME_TIP",
+      "detail": "HEAD=# TT · FG-15 tip=97289a718561",
+      "disposition": "CONFIRM_DESIGN"
+    }
+  ],
+  "verdict": "FORMAL_DELTA_PASS_WITH_EXPECTED_DIFFERENCE",
+  "next_forbidden_without_owner": [
+    "Staging_grade_GO",
+    "Hard_Gate",
+    "Production_GO",
+    "new_psg_release_version_mint"
+  ]
+}

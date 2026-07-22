@@ -3,7 +3,7 @@
   "machine_key": "TT_FINAL_RELEASE_BASELINE",
   "status": "BASELINE_FROZEN",
   "freeze_status": "FROZEN",
-  "cert_suite": "ARMED_NOT_EXECUTED",
+  "cert_suite": "DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO",
   "recorded_utc": "2026-07-22T04:45:00Z",
   "frozen_utc": "2026-07-22T04:45:00Z",
   "freeze_pcr": "PCR-20260722-POLLUTION-CLEANUP-FREEZE",
@@ -20,7 +20,7 @@
   },
   "alignment_status": "FROZEN_POLLUTION_CLEANED_EIGHT_WAY_PASS",
   "alignment_blockers": [],
-  "cert_executed_this_session": false,
+  "cert_executed_this_session": true,
   "forbid_auto_start": [
     "PSG_Recalculate",
     "Inventory_READY_flip",
@@ -38,5 +38,8 @@
   "freeze_commit_sha": "2c376086f63c9b651b15a421905b8da3e48d4178",
   "runtime_tip_sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
   "runtime_redeploy_required_before_cert": true,
-  "worktree": "CLEAN"
+  "worktree": "CLEAN",
+  "delta_formal_verdict": "FORMAL_DELTA_PASS_WITH_EXPECTED_DIFFERENCE",
+  "delta_formal_recorded_utc": "2026-07-22T04:42:42Z",
+  "equals_staging_grade_go": false
 }
