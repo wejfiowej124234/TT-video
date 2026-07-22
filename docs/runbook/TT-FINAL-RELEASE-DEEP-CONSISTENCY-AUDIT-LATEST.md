@@ -41,10 +41,10 @@
 
 ## Delta dry-run
 
-**Verdict:** `DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE` · P0=0  
+**Verdict:** `DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE` · P0=0 · HEAD `38d0d002` · worktree clean  
 
 **Expected Difference：** Freeze overlay HEAD ≠ Staging runtime tip `97289a71`（CONFIRM_DESIGN · 认证前可选重钉或书面接受）
 
 ## 诚实边界
 
-深度审计 ≠ 正式 Delta PASS 宣称 ≠ Staging-grade GO ≠ Production GO · 核心 pin **未**新铸。
+深度审计 ≠ 正式 Delta PASS 宣称 ≠ Staging-grade GO ≠ Production GO · 核心 pin **未**新铸 · **未**启动 GO。
