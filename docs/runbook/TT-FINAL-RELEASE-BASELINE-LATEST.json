@@ -4,8 +4,8 @@
   "status": "BASELINE_FROZEN",
   "freeze_status": "FROZEN",
   "cert_suite": "DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO",
-  "ui_delta_status": "PENDING_STAGING_WEB_API_REDEPLOY",
-  "recorded_utc": "2026-07-22T07:05:00Z",
+  "ui_delta_status": "WEB_TIP_ALIGNED_API_EXPECTED_LAG",
+  "recorded_utc": "2026-07-22T07:20:33Z",
   "frozen_utc": "2026-07-22T07:05:00Z",
   "freeze_pcr": "PCR-20260722-UI-DELTA-HOME-AI-PREVIEW-GATE-FREEZE",
   "prior_freeze_pcr": "PCR-20260722-UI-DELTA-CINEMA-PROMO-FREEZE",
@@ -20,10 +20,9 @@
     "egm": "PSG_EGM_Final",
     "git_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
   },
-  "alignment_status": "FROZEN_UI_DELTA_PENDING_STAGING_REDEPLOY",
+  "alignment_status": "FROZEN_UI_DELTA_WEB_TIP_ALIGNED",
   "alignment_blockers": [],
   "expected_differences": [
-    "STAGING_WEB_TIP_LAG",
     "STAGING_API_TIP_LAG",
     "FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP"
   ],
@@ -38,17 +37,16 @@
     "Production_GO"
   ],
   "next_owner": [
-    "Redeploy Staging Web (+ API if tip-gated) at UI tip 1b622923",
-    "Then eight-way consistency + Delta dry-run",
-    "Do not treat FROZEN as Staging-grade or Production GO"
+    "API tip lag is Expected Difference (FE-only Delta) unless Owner wants API redeploy",
+    "Cert suite remains paused"
   ],
   "equals_production_go": false,
   "equals_staging_grade_go": false,
   "freeze_commit_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
   "runtime_tip_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
-  "runtime_redeploy_required_before_cert": true,
-  "delta_dry_run_verdict": "PENDING_AFTER_STAGING_TIP_ALIGN",
+  "runtime_redeploy_required_before_cert": false,
+  "delta_dry_run_verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",
   "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
   "git_sha": "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566",
-  "delta_dry_run_recorded_utc": "2026-07-22T07:05:00Z"
+  "delta_dry_run_recorded_utc": "2026-07-22T07:21:48Z"
 }

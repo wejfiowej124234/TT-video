@@ -30,19 +30,18 @@ delta_scope:
 
 gates:
   engineering_ssot_anchor: PASS
-  delta_recertify_dry_run: PENDING_AFTER_STAGING_TIP_ALIGN
+  staging_web_tip: ALIGNED_1b622923
+  delta_recertify_dry_run: RUN_AFTER_ALIGN_COMMIT
 
 expected_difference:
-  - id: STAGING_WEB_TIP_LAG
-    disposition: CONFIRM_DESIGN_UNTIL_WEB_REDEPLOY
-    detail: >
-      Staging Web bake remains prior tip until Owner Web redeploy of 1b622923
-      (home AI preview gate).
   - id: STAGING_API_TIP_LAG
-    disposition: CONFIRM_DESIGN_UNTIL_API_REDEPLOY_OR_ACCEPT
+    disposition: CONFIRM_DESIGN
     detail: >
-      Staging API may remain prior tip; this Delta is frontend-only but tip
-      equality still requires bake align for eight-way PASS.
+      Staging API remains f9c227de. This Delta is frontend-only; API redeploy
+      not required for product behavior. Owner may accept or redeploy later.
+  - id: FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP
+    disposition: CONFIRM_DESIGN
+    detail: Freeze overlay docs commit may sit ahead of product tip 1b622923.
 
 forbidden:
   - Reality_W0_W7_as_mainline

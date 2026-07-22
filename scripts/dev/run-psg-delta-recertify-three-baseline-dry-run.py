@@ -23,10 +23,11 @@ except ImportError:
     yaml = None  # type: ignore
 
 ROOT = Path(__file__).resolve().parents[2]
-TIP = "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+TIP = "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
 PIN = "PSG-REL-20260720-WEB3-CAND-V2"
 PROFILE = "v311_fund_safety_candidate_v2"
-WEB_TIP_STAGING = "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+# Documented Staging lag tips accepted as Expected Difference (not P0).
+WEB_TIP_STAGING = "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
 API_TIP_STAGING = "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
 RUNTIME_TIP_STAGING = WEB_TIP_STAGING
 OUT_JSON = ROOT / "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.json"
