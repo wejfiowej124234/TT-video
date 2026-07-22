@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.fg15b_case_slot.v1",
+  "id": "FG-03",
+  "name": "SettlementRouter",
+  "fgcase": "FGCASE-FG-03",
+  "status": "WAIT",
+  "pass_claim": "FORBIDDEN_UNTIL_WINDOW_AND_FINAL",
+  "equals_case_pass": false,
+  "equals_l5_pass": false,
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "slice": {
+    "schedule": "DONE",
+    "execute": "WAIT",
+    "eta": "2026-07-21T18:10:48Z"
+  },
+  "evidence_map": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-LATEST.json",
+    "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json"
+  ],
+  "residuals": [
+    "RES-FG03-TIMELOCK-EXECUTE-WAIT"
+  ],
+  "ready_for_final_after": "settlement_finalize",
+  "forbid": {
+    "finalize_before_elapsed": true,
+    "claim_l5_pass": true,
+    "claim_fg15_pass": true,
+    "hard_gate_flip": true,
+    "mainnet_wave": true,
+    "production_go": true
+  },
+  "final_evidence": null
+}

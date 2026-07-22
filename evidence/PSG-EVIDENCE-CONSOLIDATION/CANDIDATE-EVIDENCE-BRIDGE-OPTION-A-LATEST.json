@@ -1,0 +1,78 @@
+{
+  "schema": "traveltrust.psg_candidate_evidence_bridge_option_a.v1",
+  "recorded_utc": "2026-07-22T04:55:55Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "option": "OPTION_A",
+  "executed_bridge": true,
+  "sidecar": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z",
+  "pcr": "registry/psg-change-records/PCR-20260722-005.yaml",
+  "written": [
+    {
+      "file": "L1-PRODUCT-VALIDATION-LATEST.json",
+      "sha256": "sha256:46a838c57b6dce442e2d0da132dc5a905e4c13518f44d3da8ce3a09d1d43450c",
+      "l_pass": {
+        "l1": false,
+        "l2": null,
+        "l3": null,
+        "l4": null,
+        "l5": null
+      }
+    },
+    {
+      "file": "L2-DATA-VALIDATION-HARDENED-LATEST.json",
+      "sha256": "sha256:2f8fc92a7ebcdd123aaca820e67be3922fcdf98f634869b2911eedcec764f6c7",
+      "l_pass": {
+        "l1": null,
+        "l2": false,
+        "l3": null,
+        "l4": null,
+        "l5": null
+      }
+    },
+    {
+      "file": "L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+      "sha256": "sha256:5dcd7ccf64992f597bb1b5917e65c351b753d116d2ce3e09aa4875863adfd019",
+      "l_pass": {
+        "l1": null,
+        "l2": null,
+        "l3": false,
+        "l4": null,
+        "l5": null
+      }
+    },
+    {
+      "file": "L4-OPERATIONS-VALIDATION-LATEST.json",
+      "sha256": "sha256:39bd7cbc89e5336200d021071e4a60f841a3655ce258cdfef33cd397b4d2ad37",
+      "l_pass": {
+        "l1": null,
+        "l2": null,
+        "l3": null,
+        "l4": false,
+        "l5": null
+      }
+    },
+    {
+      "file": "L5-FG-WEB3-EMPIRICAL-LATEST.json",
+      "sha256": "sha256:28c4cac9184cc1f96bae3aa09645f5929451f1488bca88371a4610d4b11514d7",
+      "l_pass": {
+        "l1": null,
+        "l2": null,
+        "l3": null,
+        "l4": null,
+        "l5": false
+      }
+    }
+  ],
+  "s7_input_source_check": "READY",
+  "baseline_gate_rc": 0,
+  "manifest_lock_rc": 0,
+  "manifest_verify_rc": 0,
+  "baseline_stdout": "{\n  \"status\": \"READY\",\n  \"block_code\": null,\n  \"classes_seen\": [\n    \"CANDIDATE_V2\"\n  ],\n  \"current_candidate_version\": \"PSG-REL-20260720-WEB3-CAND-V2\"\n}\nTT_PSG_S7_CANDIDATE_BASELINE_GATE: READY\n",
+  "lock_stdout": "{\n  \"mode\": \"lock-after-bridge\",\n  \"locked\": true,\n  \"all_pending_match_candidate_pin\": true\n}\nTT_PSG_S7_INPUT_MANIFEST: AFTER_LOCKED\n",
+  "verify_stdout": "{\n  \"mode\": \"verify-pre-s7\",\n  \"status\": \"READY\",\n  \"mismatches\": []\n}\nTT_PSG_S7_INPUT_MANIFEST_GATE: READY\n",
+  "s7_reader_modified": false,
+  "hard_gate": "CUTOVER_REFUSED",
+  "equals_psg_complete": false,
+  "honesty": "Bridge A complete — not L5 PASS, not PSG Complete, not Production GO"
+}

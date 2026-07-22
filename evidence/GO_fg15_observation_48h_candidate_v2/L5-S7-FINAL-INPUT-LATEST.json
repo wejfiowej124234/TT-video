@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.psg_l5_s7_final_input.v1",
+  "recorded_utc": "2026-07-20T04:22:42Z",
+  "status": "POINTER_PACK_READY_WAIT_FINALIZE",
+  "equals_l5_pass": false,
+  "sources": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+    "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-LATEST.json",
+    "evidence/PSG-EVIDENCE-CONSOLIDATION/FG-01-15-FINAL-VERIFICATION-MAP-LATEST.json"
+  ],
+  "s7_pending_target_names": [
+    "L5-FG-WEB3-EMPIRICAL-LATEST.json",
+    "OBSERVATION-48H-ELAPSED-PASS-LATEST.json"
+  ],
+  "bridge_required_before_s7": true,
+  "after_eta_also_need": [
+    "money-path/finalize-*/",
+    "filled FG capture templates",
+    "L5-FINAL-EVIDENCE-LATEST.json (to create)"
+  ]
+}

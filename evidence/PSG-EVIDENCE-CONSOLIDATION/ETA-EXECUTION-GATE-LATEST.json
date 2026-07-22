@@ -1,0 +1,87 @@
+{
+  "schema": "traveltrust.psg_eta_execution_gate.v1",
+  "id": "ETA_EXECUTION_GATE",
+  "recorded_utc": "2026-07-22T04:49:40Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "status": "READY_TO_EXECUTE",
+  "READY_TO_EXECUTE": true,
+  "WAITING_WINDOW": false,
+  "BLOCKED_REASON": [],
+  "checks": [
+    {
+      "id": "FG15_ELAPSED",
+      "ok": true,
+      "actual": {
+        "elapsed_pass": true,
+        "status": "OBSERVATION_ELAPSED",
+        "wall_clock_past": true,
+        "eta": "2026-07-21T18:06:48Z"
+      }
+    },
+    {
+      "id": "SETTLEMENT_ETA_REACHED",
+      "ok": true,
+      "actual": {
+        "eta": "2026-07-21T18:10:48Z",
+        "eta_unix": 1784657448,
+        "wall_clock_past": true,
+        "remaining_s": -343
+      }
+    },
+    {
+      "id": "DEPLOY_IDENTITY",
+      "ok": true,
+      "actual": {
+        "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+        "expected": "v311_fund_safety_candidate_v2",
+        "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+        "workspace_HEAD": "0db5b3d8277d2aa0d984c813c451f9f21ac74e5c"
+      }
+    },
+    {
+      "id": "BRIDGE_PREREQUISITE",
+      "ok": true,
+      "actual": {
+        "prefer": "OPTION_A",
+        "option_a": "SAFE",
+        "note": "Prefer OPTION_A analyzed; execute only after finalize"
+      }
+    },
+    {
+      "id": "S7_BASELINE_FOR_EXECUTE_LADDER",
+      "ok": true,
+      "actual": {
+        "baseline_gate": "READY",
+        "source_check": "READY",
+        "expect_pre_bridge": "BLOCKED_WRONG_BASELINE",
+        "expect_pre_s7": "READY",
+        "baseline_ready_now": true,
+        "source_ready_now": true
+      },
+      "note": "Does not block WAITING→READY_TO_EXECUTE for ladder start; blocks S7 step"
+    }
+  ],
+  "s7_step_requires": {
+    "baseline_gate": "READY",
+    "source_check": "READY",
+    "current_baseline_gate": "READY",
+    "current_source_check": "READY",
+    "s7_allowed_now": true
+  },
+  "correct_order": [
+    "settlement_finalize",
+    "candidate_evidence_bridge_OPTION_A",
+    "s7_baseline_gate_READY",
+    "l5_final",
+    "s7_recalculate",
+    "formal_baseline"
+  ],
+  "forbid": [
+    "finalize_then_direct_s7"
+  ],
+  "executed_finalize": false,
+  "executed_bridge": false,
+  "executed_s7": false,
+  "equals_psg_complete": false
+}

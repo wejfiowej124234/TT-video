@@ -1,0 +1,7 @@
+{
+  "status": "BRIDGE_OPTION_A_EXECUTED",
+  "fix_now": false,
+  "executed_bridge": true,
+  "executed_bridge_utc": "2026-07-22T04:55:55Z",
+  "prefer_option": "OPTION_A"
+}

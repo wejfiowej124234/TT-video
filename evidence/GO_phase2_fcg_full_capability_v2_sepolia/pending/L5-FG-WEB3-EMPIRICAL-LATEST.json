@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust.l5_fg_web3_empirical.v1",
+  "recorded_utc": "2026-07-22T04:56:12Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "layer": "L5",
+  "status": "L5_FINAL_RUNTIME_GO_EMPIRICAL_PARTIAL",
+  "l5_pass": false,
+  "l5_status": "PARTIAL",
+  "l5_runtime_final_pass": true,
+  "empirical_pass_count": 8,
+  "empirical_denom": 15,
+  "verdict": "L5_FINAL_RUNTIME_GO_EMPIRICAL_PARTIAL",
+  "bridge": {
+    "option": "OPTION_A",
+    "refreshed_after": "l5_final"
+  },
+  "sources": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-FINAL-LATEST.json",
+    "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/",
+    "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json"
+  ],
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "hard_gate": "CUTOVER_REFUSED",
+  "psg_complete": false,
+  "equals_psg_complete": false,
+  "honesty": "L5 Final Evidence recorded. Runtime money-path closed ≠ full 15/15 empirical PASS ≠ PSG Complete ≠ Production GO"
+}

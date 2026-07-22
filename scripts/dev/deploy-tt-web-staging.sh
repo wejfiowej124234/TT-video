@@ -77,6 +77,10 @@ export STAGING_DATABASE_URL="${STAGING_DATABASE_URL:-${DATABASE_URL:-}}"
 source "$ROOT/scripts/dev/lib/staging-rc-baseline-gate.sh"
 [[ "$CHECK_ONLY" -eq 1 ]] || staging_rc_baseline_gate_pre_deploy pre-deploy || fail "TT_STAGING_RC_BASELINE gate"
 
+# Role promo Media Asset SSOT — fail-closed before bake (no ignored drop-zone dependency)
+bash "$ROOT/scripts/gates/check-traveltrust-role-promo-media-ssot-gate.sh" \
+  || fail "TT_ROLE_PROMO_MEDIA_ASSETS gate — git lfs pull / ingest required"
+
 # registry JSON 须在 Docker build context（frontend/）内
 node "$ROOT/frontend/scripts/sync-registry-for-build.mjs"
 

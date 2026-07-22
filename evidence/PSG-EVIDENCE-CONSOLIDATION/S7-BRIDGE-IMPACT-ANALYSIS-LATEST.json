@@ -1,0 +1,243 @@
+{
+  "schema": "traveltrust.psg_s7_bridge_impact_analysis.v1",
+  "recorded_utc": "2026-07-22T04:49:39Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "mode": "EXECUTED_OPTION_A",
+  "executed_bridge": true,
+  "reader_modified": false,
+  "pending_overwritten": false,
+  "equals_psg_complete": false,
+  "finding_context": "S7-READER-PATH-GAP / OLD_FCG pending",
+  "s7_reader_script": "scripts/dev/run-psg-completion-matrix-recalculate.py",
+  "s7_reader_exists": true,
+  "s7_reader_sha256": "sha256:2f6b3ec2918ee3f6ea2441d6011069e51ca0a9890e96acd86922215afc34376c",
+  "pending_overwrite_inventory": [
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L1-PRODUCT-VALIDATION-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:b3443b1a97b7291a79d29a35930617b14a67c802823d3655851ebbe7d97ce0de",
+      "active_deploy_baseline": "v311_sepolia_clean_baseline",
+      "psg_release_version": null,
+      "s7_pass_key": "l1_pass",
+      "has_s7_pass_key": true,
+      "would_be_overwritten_by_option_a": true
+    },
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L2-DATA-VALIDATION-HARDENED-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:7a13dedc3160846e6eec3e77cb5008a89e7ee940d4bf314c25da4bb91b3193a9",
+      "active_deploy_baseline": "v311_sepolia_clean_baseline",
+      "psg_release_version": null,
+      "s7_pass_key": "l2_pass",
+      "has_s7_pass_key": true,
+      "would_be_overwritten_by_option_a": true
+    },
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:43aee77f42a05aea67aa2629e74dd3c3cd8363c0ba73639f4d0ae8acf87773b3",
+      "active_deploy_baseline": "v311_sepolia_clean_baseline",
+      "psg_release_version": null,
+      "s7_pass_key": "l3_pass",
+      "has_s7_pass_key": true,
+      "would_be_overwritten_by_option_a": true
+    },
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L4-OPERATIONS-VALIDATION-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:781f1423e9be7eda1400a4f92679c6fde8e7315f9c9bf62396dd6c6b6d81cb0b",
+      "active_deploy_baseline": "v311_sepolia_clean_baseline",
+      "psg_release_version": null,
+      "s7_pass_key": "l4_pass",
+      "has_s7_pass_key": true,
+      "would_be_overwritten_by_option_a": true
+    },
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L5-FG-WEB3-EMPIRICAL-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:7a7838b5a2e96ba3ed6fcd6cb3111ae59658c7491965f419372ac6d08925c4a3",
+      "active_deploy_baseline": null,
+      "psg_release_version": null,
+      "s7_pass_key": "l5_pass",
+      "has_s7_pass_key": true,
+      "would_be_overwritten_by_option_a": true
+    }
+  ],
+  "candidate_pointer_inventory": [
+    {
+      "layer": "L1",
+      "path": "evidence/PSG-L1-product/L1-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:311aadb5d537fe8b8e447b1c857c3f953e8497fdc802a816f033d1e7adc7225d",
+      "status": "POINTER_PACK_READY",
+      "bridge_required_before_s7": true,
+      "s7_pending_target_names": "L1-PRODUCT-VALIDATION-LATEST.json",
+      "has_l_pass_fields": false,
+      "schema_compatible_with_s7_pillar": false,
+      "note": "POINTER_PACK — must materialize; naive copy into PENDING breaks S7"
+    },
+    {
+      "layer": "L2",
+      "path": "evidence/PSG-L2-data/L2-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:d6f97361ff59711d0bce9be433b74a7fb0fd3cb78f3ef5244c6aa9eb418afaa7",
+      "status": "POINTER_PACK_READY",
+      "bridge_required_before_s7": true,
+      "s7_pending_target_names": "L2-DATA-VALIDATION-HARDENED-LATEST.json",
+      "has_l_pass_fields": false,
+      "schema_compatible_with_s7_pillar": false,
+      "note": "POINTER_PACK — must materialize; naive copy into PENDING breaks S7"
+    },
+    {
+      "layer": "L3",
+      "path": "evidence/PSG-L3-security/L3-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:534f07f69168752a1dc1ee20c63d08eb6479853a9664b88b983e599b60793a47",
+      "status": "POINTER_PACK_READY",
+      "bridge_required_before_s7": true,
+      "s7_pending_target_names": "L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+      "has_l_pass_fields": false,
+      "schema_compatible_with_s7_pillar": false,
+      "note": "POINTER_PACK — must materialize; naive copy into PENDING breaks S7"
+    },
+    {
+      "layer": "L4",
+      "path": "evidence/PSG-L4-operations/L4-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:e2de7d50a2c657996a86c849bf851141bb9d8d1e98ecacbe5466cd749591c546",
+      "status": "POINTER_PACK_READY",
+      "bridge_required_before_s7": true,
+      "s7_pending_target_names": "L4-OPERATIONS-VALIDATION-LATEST.json",
+      "has_l_pass_fields": false,
+      "schema_compatible_with_s7_pillar": false,
+      "note": "POINTER_PACK — must materialize; naive copy into PENDING breaks S7"
+    },
+    {
+      "layer": "L5",
+      "path": "evidence/GO_fg15_observation_48h_candidate_v2/L5-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:ead9f3c15a2d9a129a2a2adac090ddef3bddb1bf6c840b30e7f584f6f5c08ca1",
+      "status": "POINTER_PACK_READY_WAIT_FINALIZE",
+      "bridge_required_before_s7": true,
+      "s7_pending_target_names": [
+        "L5-FG-WEB3-EMPIRICAL-LATEST.json",
+        "OBSERVATION-48H-ELAPSED-PASS-LATEST.json"
+      ],
+      "has_l_pass_fields": false,
+      "schema_compatible_with_s7_pillar": false,
+      "note": "POINTER_PACK — must materialize; naive copy into PENDING breaks S7"
+    }
+  ],
+  "archive_surfaces": {
+    "fcg_audit_trail": {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/audit_trail",
+      "exists": true,
+      "file_count": 181,
+      "touched_by_option_a": false,
+      "touched_by_option_b": false
+    },
+    "psg_frozen_release_archive": {
+      "path": "evidence/GO_psg_foundation/release_archive/v1.1.0-psg-go.20260717",
+      "exists": true,
+      "immutable": true,
+      "touched_by_option_a": false,
+      "touched_by_option_b": false,
+      "note": "MUST remain immutable — neither option may write here"
+    },
+    "archive_destroyed": false
+  },
+  "OPTION_A": {
+    "verdict": "SAFE",
+    "recommended": true,
+    "summary": {
+      "id": "OPTION_A",
+      "name": "Candidate Final Input → Bridge → PENDING expected path",
+      "verdict": "SAFE",
+      "risk_level": "CONTROLLED",
+      "recommended": true,
+      "files_overwritten": [
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L1-PRODUCT-VALIDATION-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L2-DATA-VALIDATION-HARDENED-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L4-OPERATIONS-VALIDATION-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L5-FG-WEB3-EMPIRICAL-LATEST.json"
+      ],
+      "affects_historical_fcg_pending_live_tree": true,
+      "affects_fcg_audit_trail": false,
+      "destroys_psg_frozen_archive": false,
+      "requires_new_pcr": true,
+      "pcr_class": "governance_gate_docs",
+      "controls_required": [
+        "snapshot_current_pending_to_sidecar_before_overwrite",
+        "materialize_Candidate_S7_shaped_JSON_not_pointer_pack_copy",
+        "stamp_psg_release_version_and_deploy_baseline_Candidate_v2",
+        "re_run_S7_INPUT_SOURCE_CHECK_expect_READY",
+        "re_run_S7_CANDIDATE_BASELINE_GATE_expect_READY",
+        "record_PCR_for_bridge_execute"
+      ],
+      "naive_pointer_copy_verdict": "RISK",
+      "naive_pointer_copy_reason": "L*-S7-FINAL-INPUT-LATEST.json are POINTER packs without l*_pass; copying them into PENDING would make S7 score false OPEN / wrong schema",
+      "why_safe": "Keeps S7 Reader frozen; isolates cert-entry change to pending living tree; FCG audit_trail + PSG release_archive remain untouched when controls applied",
+      "residual_risks": [
+        "Live PENDING OLD_FCG bytes replaced — mitigate by pre-bridge snapshot sidecar",
+        "Bridge must emit pillar-compatible fields (l1_pass…l5_pass)"
+      ]
+    }
+  },
+  "OPTION_B": {
+    "verdict": "RISK",
+    "recommended": false,
+    "summary": {
+      "id": "OPTION_B",
+      "name": "Rewrite S7 Reader to read Candidate path",
+      "verdict": "RISK",
+      "risk_level": "HIGH",
+      "recommended": false,
+      "files_modified": [
+        "scripts/dev/run-psg-completion-matrix-recalculate.py",
+        "possibly scripts/dev/run-psg-completion-matrix-recalculate.sh",
+        "possibly scripts/dev/run-post-fg15-gate-sequence.py"
+      ],
+      "files_overwritten": [],
+      "affects_historical_fcg_pending_live_tree": false,
+      "affects_fcg_audit_trail": false,
+      "destroys_psg_frozen_archive": false,
+      "requires_new_pcr": true,
+      "pcr_class": "cert_toolchain_change",
+      "why_risk": [
+        "Mutates certification tooling mid/near final window",
+        "Candidate FINAL-INPUT packs are not pillar-shaped — reader rewrite alone insufficient",
+        "Dual-path / historical FCG forensic recalculate semantics become ambiguous",
+        "Larger blast radius than pending materialization bridge"
+      ],
+      "still_needs_materialization_or_adapter": true,
+      "residual_risks": [
+        "Schema adapter debt inside recalculate.py",
+        "Harder Owner Self Review of cert-entry change"
+      ]
+    }
+  },
+  "recommendation": {
+    "prefer": "OPTION_A",
+    "avoid_until_explicit_owner": "OPTION_B",
+    "execute_only_after": [
+      "FG15_B_ELAPSED",
+      "settlement_finalize",
+      "OWNER_OK_for_bridge"
+    ],
+    "pre_bridge_gates": [
+      "snapshot_pending",
+      "materialize_not_pointer_copy",
+      "S7_INPUT_SOURCE_CHECK=READY",
+      "S7_CANDIDATE_BASELINE_GATE=READY",
+      "new_PCR"
+    ],
+    "final_release_rearm_utc": "2026-07-22T04:49:39Z",
+    "final_release_note": "Re-armed under FINAL RELEASE FROZEN for Project A ladder. Prior EXECUTED_OPTION_A historical; do not treat as current bridge complete. Execute OPTION_A only after Settlement Finalize + Owner OK. ≠ Production GO."
+  },
+  "honesty": "OPTION_A executed — S7 Reader untouched; PENDING living tree materialized from Candidate",
+  "executed_bridge_utc": "2026-07-22T04:55:55Z",
+  "executed_option": "OPTION_A",
+  "pending_sidecar": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z"
+}

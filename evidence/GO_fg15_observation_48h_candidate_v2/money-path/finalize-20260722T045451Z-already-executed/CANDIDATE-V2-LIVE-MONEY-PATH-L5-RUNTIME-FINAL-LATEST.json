@@ -1,0 +1,27 @@
+{
+  "schema": "traveltrust.web3_candidate_v2_live_money_path_l5_runtime_final.v1",
+  "recorded_utc": "2026-07-22T04:54:55Z",
+  "track_id": "FG-15-B",
+  "candidate_id": "WEB3-CANDIDATE-V2-FUND-SAFETY-P0",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "runtime_tip": "97289a7185610ef0ad8822f0af04bfa533e42986",
+  "chain_id": "11155111",
+  "hard_gate": "CUTOVER_REFUSED",
+  "real_eth_wave": "FORBIDDEN",
+  "psg_recalculate": "ALLOWED_AFTER_FG15_B_ELAPSED_PROJECT_A",
+  "settlement_finalize": {
+    "status": "PASS",
+    "mode": "ALREADY_EXECUTED_ON_CHAIN",
+    "flow": "Timelock.execute(markReady\u2192markDistributable\u2192distribute)",
+    "settlement_router": "0x5A6df184e9C6B1285F8BEB50a438d82D5f094d6A",
+    "escrow_factory_v2": "0x6e9a4c4032d2d0c91e643faa5dea45ba7f86bdef",
+    "order_happy_uint": 1784484648,
+    "settlement_state_uint": 4,
+    "note": "Forge re-run refused CandV2-Fin: already executed; ops done=true; state Distributed-class. \u2260 Production GO."
+  },
+  "verdict": "L5_RUNTIME_FINAL_GO",
+  "equals_production_go": false,
+  "equals_staging_grade_go": false,
+  "freeze_status": "FROZEN"
+}

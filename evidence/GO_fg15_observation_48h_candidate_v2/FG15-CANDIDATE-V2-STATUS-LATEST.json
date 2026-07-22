@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.fg15_b_candidate_v2_status.v1",
+  "track_id": "FG-15-B",
+  "status": "OBSERVATION_ELAPSED",
+  "promotion": "PROMOTION_CANDIDATE",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "candidate_id": "WEB3-CANDIDATE-V2-FUND-SAFETY-P0",
+  "deploy_baseline_key": "v311_fund_safety_candidate_v2",
+  "started_utc": "2026-07-19T18:06:48Z",
+  "earliest_elapsed_utc": "2026-07-21T18:06:48Z",
+  "window_hours": 48,
+  "elapsed_pass": true,
+  "ACTIVE_FLIP": "FORBIDDEN_UNTIL_OWNER",
+  "hard_gate": "CUTOVER_REFUSED",
+  "real_eth_wave": "FORBIDDEN",
+  "fg15_a": {
+    "status": "ARCHIVED_HISTORICAL",
+    "NOT_FOR_PROMOTION": true,
+    "evidence_root": "evidence/GO_fg15_observation_48h",
+    "immutable": true
+  },
+  "prereq": {
+    "C2-02_owner_sepolia_auth": "DONE",
+    "C2-03_sepolia_deploy": "DONE",
+    "C2-04_money_path_forge": "PASS",
+    "C2-04_money_path_live_sepolia": "PASS_HAPPY_DISPUTE_SETTLEMENT_SCHEDULED",
+    "onchain_consistency": "PASS",
+    "fee_router_owner_timelock": "DONE"
+  },
+  "addresses": {
+    "escrow_factory_v2": "0x6e9a4c4032d2d0c91e643faa5dea45ba7f86bdef",
+    "settlement_router": "0x5A6df184e9C6B1285F8BEB50a438d82D5f094d6A",
+    "chain_id": "11155111"
+  },
+  "evidence_root": "evidence/GO_fg15_observation_48h_candidate_v2",
+  "forbid_write_to_fg15_a": true,
+  "live_money_path": {
+    "happy_escrow": "0x91C9688fA3d3164e551cFf22193286C35303A71c",
+    "dispute_escrow": "0x7cd33340096B1abAae2c29AA91db6d9e880e908b",
+    "settlement": "SCHEDULED_PENDING_EXECUTE",
+    "eta_unix": 1784657448,
+    "l5_evidence": "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-LATEST.json"
+  },
+  "last_maintain_utc": "20260721T181631Z",
+  "settlement_finalize": {
+    "status": "READY_TO_FINALIZE",
+    "eta_unix": 1784657448,
+    "remaining_s": -343,
+    "finalize_script": "scripts/dev/run-web3-candidate-v2-settlement-finalize.sh"
+  },
+  "psg_recalculate": "ELAPSED_GATE_OPEN_L5_FINAL_REQUIRED",
+  "elapsed_pass_utc": "2026-07-21T18:16:31Z"
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "traveltrust.role_promo_video_manifest.v1",
+  "recorded_utc": "2026-07-22T10:00:00.000Z",
+  "ssot_registry": "registry/traveltrust-role-promo-media-assets.v1.yaml",
+  "machine_key": "TT_ROLE_PROMO_MEDIA_ASSETS",
+  "storage": "git_lfs",
+  "dest_dir": "frontend/public/media/traveltrust/roles/",
+  "optional_ingest_drop_zone": "首页角色宣传片/",
+  "replace_howto": "Replace LFS-tracked MP4s (or ingest via drop zone + sync), then re-run: node scripts/dev/sync-traveltrust-role-promo-videos.cjs --write-ssot && update registry checksums",
+  "equals_staging_bake": true,
+  "note": "Canonical bake SSOT via Git LFS + registry. Drop zone is optional ingest only. region_steward not in this batch.",
+  "entries": [
+    {
+      "role": "traveler",
+      "source": "git_lfs",
+      "dest": "frontend/public/media/traveltrust/roles/traveler.mp4",
+      "bytes": 56087583,
+      "sha256": "c29da31fb17c0b1dfd2f8fe17bbcb1de6b086e3b74fa8c955adab8be3ded2b5b",
+      "status": "SSOT",
+      "aliases": []
+    },
+    {
+      "role": "guide",
+      "source": "git_lfs",
+      "dest": "frontend/public/media/traveltrust/roles/guide.mp4",
+      "bytes": 74871255,
+      "sha256": "94999e1ffdf99e4e8b90cb1a7fc15b1fcfea84c67a9c07b2de3e5c4773d92b62",
+      "status": "SSOT",
+      "aliases": []
+    },
+    {
+      "role": "merchant",
+      "source": "git_lfs",
+      "dest": "frontend/public/media/traveltrust/roles/merchant.mp4",
+      "bytes": 69580404,
+      "sha256": "3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040",
+      "status": "SSOT",
+      "aliases": [
+        "provider.mp4"
+      ]
+    },
+    {
+      "role": "acquisition",
+      "source": "git_lfs",
+      "dest": "frontend/public/media/traveltrust/roles/acquisition.mp4",
+      "bytes": 57135510,
+      "sha256": "b7cfa0af9d34094bb58c973378b1666ac65d2769695053d019c7cf3db3ae3770",
+      "status": "SSOT",
+      "aliases": []
+    },
+    {
+      "role": "provider",
+      "source": "git_lfs",
+      "dest": "frontend/public/media/traveltrust/roles/provider.mp4",
+      "bytes": 69580404,
+      "sha256": "3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040",
+      "status": "SSOT",
+      "aliases": []
+    }
+  ]
+}

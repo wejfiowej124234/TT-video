@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.psg_l5_final_evidence.v1",
+  "recorded_utc": "2026-07-22T04:56:12Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "track_id": "FG-15-B",
+  "status": "L5_FINAL_EVIDENCE_RECORDED",
+  "l5_pass": false,
+  "l5_runtime_final_pass": true,
+  "empirical_pass_count": 8,
+  "empirical_denom": 15,
+  "core_money_path_closed": true,
+  "settlement_finalize": {
+    "status": "PASS",
+    "mode": "ALREADY_EXECUTED_ON_CHAIN",
+    "flow": "Timelock.execute(markReady→markDistributable→distribute)",
+    "settlement_router": "0x5A6df184e9C6B1285F8BEB50a438d82D5f094d6A",
+    "escrow_factory_v2": "0x6e9a4c4032d2d0c91e643faa5dea45ba7f86bdef",
+    "order_happy_uint": 1784484648,
+    "settlement_state_uint": 4,
+    "note": "Forge re-run refused CandV2-Fin: already executed; ops done=true; state Distributed-class. ≠ Production GO."
+  },
+  "finalize_dir": "evidence/GO_fg15_observation_48h_candidate_v2/money-path/finalize-20260722T045451Z-already-executed",
+  "tx_hashes": [
+    "0x323a293252469b9dcda22f8f38087e458f075b9eff0eb7e0aeb7687065bbee44",
+    "0x93ca071a4ee901d6e26c343b67a09cbfc1b8c24324445e3d88720b3441265bd2",
+    "0x4c8c04e39b5e72ae9a666c3df4261f1a3c49e19212f6ac0a68b44ab15decd681"
+  ],
+  "fg_captures": [
+    {
+      "id": "FG-01",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-02",
+      "status": "PARTIAL",
+      "equals_case_pass": false,
+      "residual": null
+    },
+    {
+      "id": "FG-03",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-04",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-05",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-06",
+      "status": "RESIDUAL_OPEN",
+      "equals_case_pass": false,
+      "residual": "RES-FG-06-POST-RECALC-EMPIRICAL"
+    },
+    {
+      "id": "FG-07",
+      "status": "RESIDUAL_OPEN",
+      "equals_case_pass": false,
+      "residual": "RES-FG-07-POST-RECALC-EMPIRICAL"
+    },
+    {
+      "id": "FG-08",
+      "status": "RESIDUAL_OPEN",
+      "equals_case_pass": false,
+      "residual": "RES-FG08-GOVERNANCE-CYCLE"
+    },
+    {
+      "id": "FG-09",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-10",
+      "status": "ACCEPTED_GAP",
+      "equals_case_pass": false,
+      "residual": "RES-FG10-OA01-WC-ACCEPTED-GAP"
+    },
+    {
+      "id": "FG-11",
+      "status": "READY_FOR_RECALCULATE_INPUT",
+      "equals_case_pass": false,
+      "residual": null
+    },
+    {
+      "id": "FG-12",
+      "status": "RESIDUAL_OPEN",
+      "equals_case_pass": false,
+      "residual": "RES-FG12-INDEXER-POST-FINALIZE"
+    },
+    {
+      "id": "FG-13",
+      "status": "EMPIRICAL_PARTIAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-14",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-15",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    }
+  ],
+  "hard_gate": "CUTOVER_REFUSED",
+  "real_eth_wave": "FORBIDDEN",
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "equals_psg_complete": false,
+  "verdict": "L5_FINAL_RUNTIME_GO_EMPIRICAL_PARTIAL",
+  "honesty": "L5 Final Evidence recorded. Runtime money-path closed ≠ full 15/15 empirical PASS ≠ PSG Complete ≠ Production GO",
+  "sources": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-FINAL-LATEST.json",
+    "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/",
+    "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json"
+  ]
+}

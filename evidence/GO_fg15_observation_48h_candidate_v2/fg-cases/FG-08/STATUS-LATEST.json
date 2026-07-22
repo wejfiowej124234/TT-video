@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.fg15b_case_slot.v1",
+  "id": "FG-08",
+  "name": "TTG_Governance",
+  "fgcase": "FGCASE-FG-08",
+  "status": "COLLECTING",
+  "pass_claim": "FORBIDDEN_UNTIL_WINDOW_AND_FINAL",
+  "equals_case_pass": false,
+  "equals_l5_pass": false,
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "slice": {
+    "local_smoke_pointer": "scripts/dev/smoke-governance-proposals-l5-local.sh"
+  },
+  "evidence_map": [
+    "scripts/dev/smoke-governance-proposals-l5-local.sh",
+    "docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md"
+  ],
+  "residuals": [
+    "RES-FG08-ONCHAIN-GOVERNANCE-CYCLE-WAIT"
+  ],
+  "ready_for_final_after": "post_recalculate_empirical",
+  "forbid": {
+    "finalize_before_elapsed": true,
+    "claim_l5_pass": true,
+    "claim_fg15_pass": true,
+    "hard_gate_flip": true,
+    "mainnet_wave": true,
+    "production_go": true
+  },
+  "final_evidence": null
+}

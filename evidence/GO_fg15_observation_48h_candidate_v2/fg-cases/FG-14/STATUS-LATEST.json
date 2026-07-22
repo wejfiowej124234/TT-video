@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.fg15b_case_slot.v1",
+  "id": "FG-14",
+  "name": "Audit_Evidence",
+  "fgcase": "FGCASE-FG-14",
+  "status": "COLLECTING",
+  "pass_claim": "FORBIDDEN_UNTIL_WINDOW_AND_FINAL",
+  "equals_case_pass": false,
+  "equals_l5_pass": false,
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "slice": {
+    "fg15b_samples": true,
+    "append_only": true
+  },
+  "evidence_map": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/samples/",
+    "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+    "evidence/GO_fg15_observation_48h_candidate_v2/samples/FG15B-SAMPLES-LEDGER.jsonl"
+  ],
+  "residuals": [
+    "RES-FG14-FINAL-AUDIT-PACK-POST-ELAPSED"
+  ],
+  "ready_for_final_after": "fg15b_elapsed",
+  "forbid": {
+    "finalize_before_elapsed": true,
+    "claim_l5_pass": true,
+    "claim_fg15_pass": true,
+    "hard_gate_flip": true,
+    "mainnet_wave": true,
+    "production_go": true
+  },
+  "final_evidence": null
+}

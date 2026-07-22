@@ -1,0 +1,38 @@
+{
+  "schema": "traveltrust.l5_fg_web3_empirical.v1",
+  "status": "BRIDGED_PARTIAL",
+  "layer": "L5",
+  "l5_pass": false,
+  "l5_status": "PARTIAL",
+  "verdict": "L5_EMPIRICAL_BRIDGED_AWAIT_FG_CAPTURE_AND_L5_FINAL",
+  "fg15_track": "FG-15-B",
+  "elapsed_pass": true,
+  "settlement_finalize_status": "PASS",
+  "l5_runtime_final_verdict": "L5_RUNTIME_FINAL_GO",
+  "finalize_dir": "evidence/GO_fg15_observation_48h_candidate_v2/money-path/finalize-20260722T045451Z-already-executed",
+  "sources": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+    "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-FINAL-LATEST.json"
+  ],
+  "honesty": "Bridge ≠ L5 PASS; FG Capture 01–15 + L5 Final required before empirical PASS claim",
+  "forbid": [
+    "claim_l5_pass_from_bridge_alone",
+    "hard_gate_flip",
+    "production_go"
+  ],
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-22T04:55:31Z",
+  "bridge": {
+    "option": "OPTION_A",
+    "mode": "MATERIALIZE_NOT_POINTER_COPY",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "baseline": "v311_fund_safety_candidate_v2"
+  },
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "hard_gate": "CUTOVER_REFUSED",
+  "real_eth_wave": "FORBIDDEN",
+  "psg_complete": false,
+  "equals_psg_complete": false
+}

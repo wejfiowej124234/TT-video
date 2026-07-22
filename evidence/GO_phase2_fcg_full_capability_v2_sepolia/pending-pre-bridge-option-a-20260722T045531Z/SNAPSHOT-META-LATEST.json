@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.psg_pending_pre_bridge_snapshot.v1",
+  "recorded_utc": "2026-07-22T04:55:31Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "option": "OPTION_A",
+  "sidecar": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045531Z",
+  "files": [],
+  "note": "OLD_FCG pending preserved before Candidate materialization overwrite"
+}

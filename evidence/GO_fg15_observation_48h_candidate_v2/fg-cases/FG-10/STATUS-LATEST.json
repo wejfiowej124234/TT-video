@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.fg15b_case_slot.v1",
+  "id": "FG-10",
+  "name": "Wallet_Security",
+  "fgcase": "FGCASE-FG-10",
+  "status": "READY_SLICE_PARTIAL",
+  "pass_claim": "FORBIDDEN_UNTIL_WINDOW_AND_FINAL",
+  "equals_case_pass": false,
+  "equals_l5_pass": false,
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "slice": {
+    "arbitrator_safe": "0x7c018293396325077bb4D039930dcEe11B7Fb1Cf",
+    "timelock": "0x462402082B395F218FFB3634ec0611e39BdD504C"
+  },
+  "evidence_map": [
+    "evidence/GO_web3_candidate_v2/sepolia-deploy/CANDIDATE-V2-SEPOLIA-ADDRESS-IDENTITY-LATEST.json",
+    "docs/runbook/TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md",
+    "evidence/PSG-L3-security/faces/WALLET-ATTESTATION-LATEST.json"
+  ],
+  "residuals": [
+    "RES-FG10-OA01-WC",
+    "RES-FG10-MAINNET-WAVE-FORBIDDEN"
+  ],
+  "ready_for_final_after": "never_mainnet_until_hard_gate",
+  "forbid": {
+    "finalize_before_elapsed": true,
+    "claim_l5_pass": true,
+    "claim_fg15_pass": true,
+    "hard_gate_flip": true,
+    "mainnet_wave": true,
+    "production_go": true
+  },
+  "final_evidence": null
+}

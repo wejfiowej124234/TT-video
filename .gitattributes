@@ -1,3 +1,7 @@
-
 # sqlx checksums require LF in Docker build context
 crates/api/migrations/*.sql text eol=lf
+frontend/public/media/traveltrust/roles/traveler.mp4 filter=lfs diff=lfs merge=lfs -text
+frontend/public/media/traveltrust/roles/guide.mp4 filter=lfs diff=lfs merge=lfs -text
+frontend/public/media/traveltrust/roles/merchant.mp4 filter=lfs diff=lfs merge=lfs -text
+frontend/public/media/traveltrust/roles/acquisition.mp4 filter=lfs diff=lfs merge=lfs -text
+frontend/public/media/traveltrust/roles/provider.mp4 filter=lfs diff=lfs merge=lfs -text

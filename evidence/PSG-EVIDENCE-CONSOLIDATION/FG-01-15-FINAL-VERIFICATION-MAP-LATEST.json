@@ -1,0 +1,272 @@
+{
+  "schema": "traveltrust.psg_fg_final_verification_map.v1",
+  "recorded_utc": "2026-07-22T04:56:12Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "phase": "EVIDENCE_CONSOLIDATION",
+  "equals_l5_pass": false,
+  "equals_psg_complete": false,
+  "empirical_pass_count": 8,
+  "empirical_denom": 15,
+  "settlement_eta_utc": "2026-07-21T18:10:48Z",
+  "fg15b_elapsed_utc": "2026-07-21T18:06:48Z",
+  "note": "Skeleton + verification commands only; 0/15 empirical PASS until post-ETA final",
+  "cases": [
+    {
+      "id": "FG-01",
+      "name": "Money-Path",
+      "current_status": "EMPIRICAL_PASS",
+      "residuals": [
+        "RES-FG01-SETTLEMENT-EXECUTE-WAIT"
+      ],
+      "dependency": "Settlement execute (finalize script)",
+      "final_verification_command": "TRAVELTRUST_WEB3_CANDIDATE_V2_SEPOLIA_DEPLOY_OK=1 bash scripts/dev/run-web3-candidate-v2-settlement-finalize.sh",
+      "expected_output": "Happy+Dispute retained PASS; Settlement EXECUTED; L5 Runtime Final evidence written",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/money-path/finalize-*/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-01/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": true
+    },
+    {
+      "id": "FG-02",
+      "name": "Escrow_State_Machine",
+      "current_status": "PARTIAL",
+      "residuals": [
+        "RES-FG02-FULL-STATE-MATRIX-POST-FINALIZE"
+      ],
+      "dependency": "L5 Final Evidence after Settlement",
+      "final_verification_command": "python scripts/dev/gen-fg15b-case-index.py  # refresh after finalize",
+      "expected_output": "Escrow state transitions documented for Happy+Dispute instances",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-02/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-02/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": false
+    },
+    {
+      "id": "FG-03",
+      "name": "SettlementRouter",
+      "current_status": "EMPIRICAL_PASS",
+      "residuals": [
+        "RES-FG03-TIMELOCK-EXECUTE-WAIT"
+      ],
+      "dependency": "Settlement execute",
+      "final_verification_command": "TRAVELTRUST_WEB3_CANDIDATE_V2_SEPOLIA_DEPLOY_OK=1 bash scripts/dev/run-web3-candidate-v2-settlement-finalize.sh",
+      "expected_output": "SettlementRouter markReady|markDistributable|distribute executed via Timelock",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-03/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-03/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": true
+    },
+    {
+      "id": "FG-04",
+      "name": "FeeRouter",
+      "current_status": "EMPIRICAL_PASS",
+      "residuals": [
+        "RES-FG04-LIVE-DISTRIBUTE-LEG-WAIT"
+      ],
+      "dependency": "Settlement distribute leg",
+      "final_verification_command": "cast logs / FeeRouter receipt check post-distribute (see finalize evidence)",
+      "expected_output": "FeeRouter receive / fee leg observed on distribute",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-04/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-04/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": true
+    },
+    {
+      "id": "FG-05",
+      "name": "Distributable",
+      "current_status": "EMPIRICAL_PASS",
+      "residuals": [
+        "RES-FG05-LIVE-DISTRIBUTABLE-CYCLE-WAIT"
+      ],
+      "dependency": "Settlement execute markDistributable+distribute",
+      "final_verification_command": "bash scripts/dev/run-web3-candidate-v2-settlement-finalize.sh",
+      "expected_output": "Distributable cycle completed for Happy order",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-05/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-05/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": true
+    },
+    {
+      "id": "FG-06",
+      "name": "Steward_Revenue",
+      "current_status": "RESIDUAL_OPEN",
+      "residuals": [
+        "RES-FG06-LIVE-STEWARD-FLOW-ABSENT"
+      ],
+      "dependency": "Post-recalculate empirical (may remain residual)",
+      "final_verification_command": "document steward flow or ACCEPTED_RESIDUAL at S7",
+      "expected_output": "Steward revenue cite OR residual registered for S7",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-06/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-06/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": false
+    },
+    {
+      "id": "FG-07",
+      "name": "Treasury",
+      "current_status": "RESIDUAL_OPEN",
+      "residuals": [
+        "RES-FG07-LIVE-TREASURY-FLOW-ABSENT"
+      ],
+      "dependency": "Post-recalculate empirical (may remain residual)",
+      "final_verification_command": "treasury_p4_cap flow cite OR residual at S7",
+      "expected_output": "Treasury flow cite OR residual registered",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-07/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-07/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": false
+    },
+    {
+      "id": "FG-08",
+      "name": "TTG_Governance",
+      "current_status": "RESIDUAL_OPEN",
+      "residuals": [
+        "RES-FG08-ONCHAIN-GOVERNANCE-CYCLE-WAIT"
+      ],
+      "dependency": "On-chain governance cycle (post-window empirical)",
+      "final_verification_command": "Governor cycle evidence OR residual",
+      "expected_output": "Governance cycle documented OR residual",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-08/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-08/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": false
+    },
+    {
+      "id": "FG-09",
+      "name": "Timelock_Execute",
+      "current_status": "EMPIRICAL_PASS",
+      "residuals": [
+        "RES-FG09-EXECUTE-AFTER-ETA"
+      ],
+      "dependency": "ETA elapsed + Settlement finalize",
+      "final_verification_command": "bash scripts/dev/run-web3-candidate-v2-settlement-finalize.sh",
+      "expected_output": "Timelock.execute success for scheduled ops",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-09/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-09/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": true
+    },
+    {
+      "id": "FG-10",
+      "name": "Wallet_Security",
+      "current_status": "ACCEPTED_GAP",
+      "residuals": [
+        "RES-FG10-OA01-WC",
+        "RES-FG10-MAINNET-WAVE-FORBIDDEN"
+      ],
+      "dependency": "Owner WC prep; mainnet wave forbidden until Hard Gate",
+      "final_verification_command": "Owner Sign-off Prep — OA01/WC checklist (no mainnet)",
+      "expected_output": "Wallet controls documented; mainnet wave still FORBIDDEN",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-10/",
+      "owner": "Owner",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-10/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": false
+    },
+    {
+      "id": "FG-11",
+      "name": "RBAC",
+      "current_status": "READY_FOR_RECALCULATE_INPUT",
+      "residuals": [
+        "RES-FG11-RBAC-DEFER-DENOM"
+      ],
+      "dependency": "S7 Recalculate with ACCEPTED residual (60/96)",
+      "final_verification_command": "cite evidence/PSG-L3-security/RBAC-COVERAGE-DECISION-RECORD-LATEST.json",
+      "expected_output": "RBAC Decision Record visible; no chase-96",
+      "evidence_path": "evidence/PSG-L3-security/RBAC-COVERAGE-DECISION-RECORD-LATEST.json",
+      "owner": "Security",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-11/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": false
+    },
+    {
+      "id": "FG-12",
+      "name": "Indexer",
+      "current_status": "RESIDUAL_OPEN",
+      "residuals": [
+        "RES-FG12-FULL-INDEXER-PROOF-POST-FINALIZE"
+      ],
+      "dependency": "L5 Final Evidence",
+      "final_verification_command": "indexer parity check vs Settlement finalize receipts",
+      "expected_output": "Indexer observed finalize txs OR residual",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-12/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-12/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": false
+    },
+    {
+      "id": "FG-13",
+      "name": "OnChain_DB_UI_Consistency",
+      "current_status": "EMPIRICAL_PARTIAL_PASS",
+      "residuals": [
+        "RES-FG13-FULL-EQUALITY-POST-FINALIZE"
+      ],
+      "dependency": "L5 Final Evidence",
+      "final_verification_command": "cross-check on-chain escrow vs API order vs UI cite",
+      "expected_output": "Equality slice documented post-finalize",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-13/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-13/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": true
+    },
+    {
+      "id": "FG-14",
+      "name": "Audit_Evidence",
+      "current_status": "EMPIRICAL_PASS",
+      "residuals": [
+        "RES-FG14-FINAL-AUDIT-PACK-POST-ELAPSED"
+      ],
+      "dependency": "FG15_B_ELAPSED",
+      "final_verification_command": "assemble final audit pack from money-path + samples ledger",
+      "expected_output": "Audit pack pointers complete",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-14/",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-14/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": true
+    },
+    {
+      "id": "FG-15",
+      "name": "Observation_48H",
+      "current_status": "EMPIRICAL_PASS",
+      "residuals": [
+        "RES-FG15-NOT_ELAPSED"
+      ],
+      "dependency": "FG15_B_ELAPSED (>= 2026-07-21T18:06:48Z)",
+      "final_verification_command": "bash scripts/dev/run-web3-candidate-v2-fg15b-maintain.sh  # final sample + status flip when elapsed",
+      "expected_output": "elapsed_pass=true; observation window closed",
+      "evidence_path": "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+      "owner": "Web3",
+      "capture_template": "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-15/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+      "execution_gate": "see_dependency",
+      "forbid_pass_now": true,
+      "empirical_pass": true
+    }
+  ]
+}

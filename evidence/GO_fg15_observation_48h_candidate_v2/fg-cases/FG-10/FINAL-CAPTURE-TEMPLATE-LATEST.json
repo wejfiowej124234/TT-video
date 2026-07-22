@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-07-22T04:56:12Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "current_status": "ACCEPTED_GAP",
+  "equals_case_pass": false,
+  "forbid_pass_claim_until_final": false,
+  "capture": {
+    "oa01_status": "ACCEPTED_GAP",
+    "wc_status": "DEFERRED_SCOPE_A",
+    "evidence": "docs/runbook/TT-POST-BASELINE-REALITY-CLOSURE-EXECUTION-PREP-LATEST.md",
+    "residual_id": "RES-FG10-OA01-WC-ACCEPTED-GAP"
+  },
+  "capture_filled_utc": "2026-07-22T04:56:12Z",
+  "hard_gate": "CUTOVER_REFUSED",
+  "equals_psg_complete": false
+}

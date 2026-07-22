@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.fg15b_case_slot.v1",
+  "id": "FG-02",
+  "name": "Escrow_State_Machine",
+  "fgcase": "FGCASE-FG-02",
+  "status": "READY_SLICE_PARTIAL",
+  "pass_claim": "FORBIDDEN_UNTIL_WINDOW_AND_FINAL",
+  "equals_case_pass": false,
+  "equals_l5_pass": false,
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "slice": {
+    "happy_escrow": "0x91C9688fA3d3164e551cFf22193286C35303A71c",
+    "dispute_escrow": "0x7cd33340096B1abAae2c29AA91db6d9e880e908b"
+  },
+  "evidence_map": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-LATEST.json"
+  ],
+  "residuals": [
+    "RES-FG02-FULL-STATE-MATRIX-POST-FINALIZE"
+  ],
+  "ready_for_final_after": "l5_final_evidence",
+  "forbid": {
+    "finalize_before_elapsed": true,
+    "claim_l5_pass": true,
+    "claim_fg15_pass": true,
+    "hard_gate_flip": true,
+    "mainnet_wave": true,
+    "production_go": true
+  },
+  "final_evidence": null
+}

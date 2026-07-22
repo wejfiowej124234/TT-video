@@ -1,0 +1,18 @@
+{
+  "schema": "traveltrust.psg_l2_s7_final_input.v1",
+  "recorded_utc": "2026-07-20T04:22:42Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "layer": "L2",
+  "status": "POINTER_PACK_READY",
+  "equals_layer_pass": false,
+  "equals_psg_complete": false,
+  "sources": [
+    "evidence/PSG-L2-data/STATUS-LATEST.json",
+    "evidence/PSG-L2-data/PSG-L2-DATA-CERTIFICATION-BUNDLE-LATEST.json",
+    "evidence/PSG-L2-data/DB_ALIGNMENT_CERT-LATEST.json"
+  ],
+  "s7_pending_target_names": "L2-DATA-VALIDATION-HARDENED-LATEST.json",
+  "bridge_required_before_s7": true,
+  "note": "Pointer pack for S7 — not layer PASS; bridge into PENDING names before Recalculate"
+}

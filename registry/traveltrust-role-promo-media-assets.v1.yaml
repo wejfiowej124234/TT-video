@@ -1,0 +1,74 @@
+# TravelTrust · Role Promo Media Assets (formal Media Asset SSOT)
+# Human: frontend/public/media/traveltrust/roles/README.md
+# Runtime mirror: frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json
+# Gate: bash scripts/gates/check-traveltrust-role-promo-media-ssot-gate.sh
+# Parent: registry/engineering-ssot-anchor.v1.yaml · registry/final-release-baseline.v1.yaml
+#
+# Doctrine: Git LFS binaries + checksum manifest are bake SSOT.
+# Drop zone 首页角色宣传片/ is optional ingest only — never required for clean bake.
+
+schema: traveltrust.role_promo_media_assets.v1
+version: 1
+machine_key: TT_ROLE_PROMO_MEDIA_ASSETS
+status: ACTIVE_BOUND_TO_FINAL_RELEASE
+recorded_utc: "2026-07-22T10:00:00Z"
+equals_production_go: false
+equals_staging_grade_go: false
+
+governance:
+  psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+  bound_to:
+    - registry/engineering-ssot-anchor.v1.yaml
+    - registry/final-release-baseline.v1.yaml
+  storage: git_lfs
+  dest_dir: frontend/public/media/traveltrust/roles/
+  runtime_manifest: frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json
+  optional_ingest_drop_zone: 首页角色宣传片/
+  forbidden:
+    - bake_depends_on_gitignore_local_only
+    - drop_zone_as_git_ssot
+    - tier1_placeholder_overwrite_of_promo
+
+# sha256 of on-disk MP4 bytes (same as PROMO-MANIFEST.json)
+assets:
+  - role: traveler
+    path: frontend/public/media/traveltrust/roles/traveler.mp4
+    public_url: /media/traveltrust/roles/traveler.mp4
+    bytes: 56087583
+    sha256: c29da31fb17c0b1dfd2f8fe17bbcb1de6b086e3b74fa8c955adab8be3ded2b5b
+    aliases: []
+  - role: guide
+    path: frontend/public/media/traveltrust/roles/guide.mp4
+    public_url: /media/traveltrust/roles/guide.mp4
+    bytes: 74871255
+    sha256: 94999e1ffdf99e4e8b90cb1a7fc15b1fcfea84c67a9c07b2de3e5c4773d92b62
+    aliases: []
+  - role: merchant
+    path: frontend/public/media/traveltrust/roles/merchant.mp4
+    public_url: /media/traveltrust/roles/merchant.mp4
+    bytes: 69580404
+    sha256: 3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040
+    aliases:
+      - provider.mp4
+  - role: acquisition
+    path: frontend/public/media/traveltrust/roles/acquisition.mp4
+    public_url: /media/traveltrust/roles/acquisition.mp4
+    bytes: 57135510
+    sha256: b7cfa0af9d34094bb58c973378b1666ac65d2769695053d019c7cf3db3ae3770
+    aliases: []
+  - role: provider
+    path: frontend/public/media/traveltrust/roles/provider.mp4
+    public_url: /media/traveltrust/roles/provider.mp4
+    bytes: 69580404
+    sha256: 3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040
+    note: merchant alias · must match merchant sha256
+    aliases: []
+
+region_steward:
+  path: frontend/public/media/traveltrust/roles/region_steward.mp4
+  status: TIER1_PLACEHOLDER_UNTIL_OWNER_BATCH
+  note: Not in Owner promo batch · tier-1 placeholder retained
+
+honesty: >
+  Role promo Media Asset SSOT ≠ Staging-grade GO ≠ Production GO.
+  Clean tip worktree bake requires git lfs pull so MP4 pointers are smudged.

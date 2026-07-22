@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.fg15b_case_evidence_map.v1",
+  "id": "FG-11",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "pointers": [
+    "evidence/PSG-L3-security/ATTEST-CANDIDATE-V2-LATEST.json",
+    "evidence/PSG-L3-security/faces/RBAC-ATTESTATION-LATEST.json",
+    "registry/psg-coverage-measurement-final.v1.yaml"
+  ],
+  "status": "READY_FOR_RECALCULATE_INPUT"
+}

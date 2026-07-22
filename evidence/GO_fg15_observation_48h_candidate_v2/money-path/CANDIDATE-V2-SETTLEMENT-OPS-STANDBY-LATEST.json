@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.web3_candidate_v2_settlement_ops_standby.v1",
+  "recorded_utc": "2026-07-19T18:17:29Z",
+  "track_id": "FG-15-B",
+  "candidate_id": "WEB3-CANDIDATE-V2-FUND-SAFETY-P0",
+  "chain_id": "11155111",
+  "hard_gate": "CUTOVER_REFUSED",
+  "psg_recalculate": "FORBIDDEN_UNTIL_FG15_B_ELAPSED",
+  "settlement_eta_unix": 1784657448,
+  "settlement_eta_utc": "2026-07-21T18:10:48Z",
+  "timelock_delay_s": 172800,
+  "order_happy_uint": 1784484648,
+  "happy_escrow": "0x91C9688fA3d3164e551cFf22193286C35303A71c",
+  "ops": {
+    "op_ready_decimal": "87388811635189190464272042705579460471626675718387402523255760041834173638998",
+    "op_distable_decimal": "14785577609726510744423052553871004768756572063124196158322640638416908563741",
+    "op_distribute_decimal": "17926542508802964533933080164712643233430238127260017154977424106352711466241"
+  },
+  "finalize_script": "scripts/dev/run-web3-candidate-v2-settlement-finalize.sh",
+  "maintain_script": "scripts/dev/run-web3-candidate-v2-fg15b-maintain.sh",
+  "note": "Do not execute until ETA. Do not flip Hard Gate. Do not PSG Recalculate until FG-15-B ELAPSED."
+}

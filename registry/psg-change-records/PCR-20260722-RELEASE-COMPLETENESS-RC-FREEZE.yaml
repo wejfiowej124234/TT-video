@@ -1,0 +1,68 @@
+# PCR-20260722-RELEASE-COMPLETENESS-RC-FREEZE
+#
+# Release Completeness Audit (Code/Data/Asset/Config/Runtime/Evidence) →
+# ingest untracked SSOT + role promo Git LFS Media Asset SSOT →
+# archive non-SSOT snapshot → unique Release Candidate tip.
+# No new PSG pin mint. Inventory/Reality/GO remain paused.
+
+schema: traveltrust.psg_change_record.v1
+pcr_id: PCR-20260722-RELEASE-COMPLETENESS-RC-FREEZE
+recorded_utc: "2026-07-22T10:15:00Z"
+class: DELTA_CHANGE_RELEASE_COMPLETENESS
+equals_production_go: false
+equals_staging_grade_go: false
+new_psg_release_version_minted: false
+
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+prior_runtime_tip: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+# filled after product commit
+ui_delta_git_sha: "PENDING_PRODUCT_COMMIT"
+freeze_status: FROZEN
+release_candidate_tip: "PENDING_PRODUCT_COMMIT"
+
+must_retain_ancestry:
+  - "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
+  - "f9c227de"
+  - "6b85bde9773788638c4d8cf031dfe48ef56d1706"
+  - "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+  - "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+
+delta_scope:
+  - registry/traveltrust-role-promo-media-assets.v1.yaml
+  - frontend/public/media/traveltrust/roles/
+  - scripts/gates/check-traveltrust-role-promo-media-ssot-gate.sh
+  - scripts/dev/run-release-completeness-audit.py
+  - scripts/dev/sync-traveltrust-role-promo-videos.cjs
+  - evidence/GO_fg15_observation_48h_candidate_v2/
+  - evidence/PSG-EVIDENCE-CONSOLIDATION/
+  - evidence/GO_release_completeness_cleanup/
+  - docs/runbook/TT-RELEASE-COMPLETENESS-AUDIT-LATEST.md
+
+gates:
+  release_completeness_audit: RUN_THEN_INGEST
+  role_promo_media_ssot: PASS
+  engineering_ssot_anchor: PENDING_TIP_REPIN
+  staging_web_tip: PENDING_CLEAN_BAKE_WITH_LFS
+
+expected_difference:
+  - id: STAGING_WEB_TIP_PENDING_RC_BAKE
+    disposition: CONFIRM_DESIGN
+    detail: Unique RC tip includes Git LFS promo; Staging Web needs clean tip bake with git lfs pull.
+  - id: STAGING_API_TIP_LAG
+    disposition: CONFIRM_DESIGN
+    detail: FE/media/evidence Delta · API tip lag Expected.
+
+forbidden:
+  - Reality_W0_W7_as_mainline
+  - Hard_Gate_flip
+  - Production_GO
+  - new_pin_mint
+  - mutate_FG15_A_archive
+  - drop_prior_ui_delta_commits
+  - bake_depends_on_gitignore_drop_zone
+  - dirty_staging_web_bake
+
+next:
+  - Staging Web redeploy @ unique RC tip (clean worktree + git lfs pull)
+  - Engineering SSOT Anchor gate + Delta dry-run
+  - Inventory/Reality/GO stay paused

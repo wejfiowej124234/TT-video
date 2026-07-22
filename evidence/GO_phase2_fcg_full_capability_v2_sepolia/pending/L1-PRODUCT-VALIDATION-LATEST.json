@@ -1,0 +1,29 @@
+{
+  "schema": "traveltrust.l1_product_validation.v1",
+  "status": "READY_FOR_RECALCULATE",
+  "layer": "L1",
+  "l1_pass": false,
+  "verdict": "L1_CANDIDATE_BRIDGED_NOT_LAYER_PASS",
+  "sources": [
+    "evidence/PSG-L1-product/STATUS-LATEST.json",
+    "evidence/PSG-L1-product/L1-CANDIDATE-V2-FINAL-MATRIX-LATEST.json",
+    "evidence/PSG-L1-product/journey/INDEX-LATEST.json"
+  ],
+  "candidate_status": null,
+  "honesty": "Bridge materializes Candidate evidence; equals_l1_pass gates l1_pass",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-22T04:55:55Z",
+  "bridge": {
+    "option": "OPTION_A",
+    "mode": "MATERIALIZE_NOT_POINTER_COPY",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "baseline": "v311_fund_safety_candidate_v2"
+  },
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "hard_gate": "CUTOVER_REFUSED",
+  "real_eth_wave": "FORBIDDEN",
+  "psg_complete": false,
+  "equals_psg_complete": false
+}

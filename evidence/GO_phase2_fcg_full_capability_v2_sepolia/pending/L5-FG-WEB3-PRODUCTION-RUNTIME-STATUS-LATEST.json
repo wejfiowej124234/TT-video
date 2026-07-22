@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.l5_fg_web3_production_runtime_status.v1",
+  "recorded_utc": "2026-07-22T04:56:12Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+  "production_runtime_pass": true,
+  "status": "PASS",
+  "chain_id": "11155111",
+  "note": "Sepolia Candidate v2 runtime — not mainnet production"
+}

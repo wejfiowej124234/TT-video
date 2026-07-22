@@ -1,0 +1,72 @@
+{
+  "schema": "traveltrust.psg_s7_candidate_baseline_gate.v1",
+  "recorded_utc": "2026-07-22T04:55:55Z",
+  "gate_id": "S7-CANDIDATE-BASELINE-ANTI-MISREAD",
+  "current_candidate_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "current_candidate_baseline": "v311_fund_safety_candidate_v2",
+  "expected": {
+    "S7_INPUT_VERSION": "PSG-REL-20260720-WEB3-CAND-V2",
+    "deploy_baseline": "v311_fund_safety_candidate_v2"
+  },
+  "status": "READY",
+  "block_code": null,
+  "message": "S7_INPUT_VERSION == CURRENT_CANDIDATE_VERSION for all pending pillars",
+  "classes_seen": [
+    "CANDIDATE_V2"
+  ],
+  "prior_s7_input_source_check": "READY",
+  "pending_rows": [
+    {
+      "pending_file": "L1-PRODUCT-VALIDATION-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:46a838c57b6dce442e2d0da132dc5a905e4c13518f44d3da8ce3a09d1d43450c",
+      "s7_input_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "match_current_candidate": true,
+      "class": "CANDIDATE_V2"
+    },
+    {
+      "pending_file": "L2-DATA-VALIDATION-HARDENED-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:2f8fc92a7ebcdd123aaca820e67be3922fcdf98f634869b2911eedcec764f6c7",
+      "s7_input_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "match_current_candidate": true,
+      "class": "CANDIDATE_V2"
+    },
+    {
+      "pending_file": "L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:5dcd7ccf64992f597bb1b5917e65c351b753d116d2ce3e09aa4875863adfd019",
+      "s7_input_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "match_current_candidate": true,
+      "class": "CANDIDATE_V2"
+    },
+    {
+      "pending_file": "L4-OPERATIONS-VALIDATION-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:39bd7cbc89e5336200d021071e4a60f841a3655ce258cdfef33cd397b4d2ad37",
+      "s7_input_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "match_current_candidate": true,
+      "class": "CANDIDATE_V2"
+    },
+    {
+      "pending_file": "L5-FG-WEB3-EMPIRICAL-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:28c4cac9184cc1f96bae3aa09645f5929451f1488bca88371a4610d4b11514d7",
+      "s7_input_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "match_current_candidate": true,
+      "class": "CANDIDATE_V2"
+    }
+  ],
+  "s7_reader_path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/",
+  "executed_s7": false,
+  "reader_modified": false,
+  "bridge_executed": false,
+  "equals_psg_complete": false,
+  "pre_s7_required": true,
+  "honesty": "Quality protection only — does not change flow; call before run-psg-completion-matrix-recalculate.sh"
+}

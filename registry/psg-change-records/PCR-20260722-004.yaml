@@ -1,0 +1,33 @@
+schema: traveltrust.psg_change_record.v1
+id: PCR-20260722-004
+title: Candidate Evidence Bridge OPTION_A — materialize PENDING (post-ETA)
+recorded_utc: "2026-07-22T04:55:31Z"
+owner: Sebastian Ward
+status: RECORDED
+class: governance_gate_docs
+mode: PROJECT_A_BRIDGE_OPTION_A
+
+summary: >
+  Owner-authorized OPTION_A Bridge. Snapshot OLD_FCG PENDING to sidecar;
+  materialize Candidate S7-shaped pillar JSON (not pointer-pack copy);
+  stamp pin/baseline. S7 Reader untouched. Hard Gate / Wave / Production GO
+  not triggered.
+
+active_ssot: PSG-REL-20260720-WEB3-CAND-V2
+deploy_baseline: v311_fund_safety_candidate_v2
+
+bridge:
+  option: OPTION_A
+  sidecar: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045531Z
+  pending: evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/
+
+gates_not_triggered:
+  - s7_reader_rewrite
+  - hard_gate_flip
+  - mainnet_wave
+  - production_go
+  - economic_model_unfreeze
+
+executed:
+  - candidate_evidence_bridge_execute
+  - pending_overwrite_materialize

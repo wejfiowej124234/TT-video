@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.psg_s7_input_manifest_gate.v1",
+  "recorded_utc": "2026-07-22T04:55:56Z",
+  "status": "READY",
+  "message": "manifest == current AND Candidate pin OK — S7 input hash gate PASS",
+  "mismatches": [],
+  "after_manifest": "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-INPUT-MANIFEST-AFTER-LATEST.json",
+  "before_manifest": null,
+  "current_pending_match_candidate": true,
+  "executed_s7": false,
+  "equals_psg_complete": false
+}

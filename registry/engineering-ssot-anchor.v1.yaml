@@ -64,6 +64,13 @@ bound_entities:
   docs:
     axis: runbook_cites
     ssot: FINAL RELEASE + Candidate v2 + V3.1.1 + EGM Final
+  media_assets:
+    axis: role_promo_media
+    ssot: registry/traveltrust-role-promo-media-assets.v1.yaml
+    runtime_manifest: frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json
+    storage: git_lfs
+    gate: scripts/gates/check-traveltrust-role-promo-media-ssot-gate.sh
+    forbidden: bake_depends_on_gitignore_drop_zone
 
 forbidden_as_active_defaults:
   - PSG-REL-20260722-STAGING-ALIGN-W0

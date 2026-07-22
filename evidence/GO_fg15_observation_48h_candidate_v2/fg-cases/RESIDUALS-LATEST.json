@@ -1,0 +1,88 @@
+{
+  "schema": "traveltrust.fg15b_case_residuals.v1",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "count": 16,
+  "residuals": [
+    {
+      "id": "RES-FG01-SETTLEMENT-EXECUTE-WAIT",
+      "case": "FG-01",
+      "case_status": "READY_SLICE_PARTIAL"
+    },
+    {
+      "id": "RES-FG02-FULL-STATE-MATRIX-POST-FINALIZE",
+      "case": "FG-02",
+      "case_status": "READY_SLICE_PARTIAL"
+    },
+    {
+      "id": "RES-FG03-TIMELOCK-EXECUTE-WAIT",
+      "case": "FG-03",
+      "case_status": "WAIT"
+    },
+    {
+      "id": "RES-FG04-LIVE-DISTRIBUTE-LEG-WAIT",
+      "case": "FG-04",
+      "case_status": "READY_SLICE_STRUCTURAL"
+    },
+    {
+      "id": "RES-FG05-LIVE-DISTRIBUTABLE-CYCLE-WAIT",
+      "case": "FG-05",
+      "case_status": "WAIT"
+    },
+    {
+      "id": "RES-FG06-LIVE-STEWARD-FLOW-ABSENT",
+      "case": "FG-06",
+      "case_status": "COLLECTING"
+    },
+    {
+      "id": "RES-FG07-LIVE-TREASURY-FLOW-ABSENT",
+      "case": "FG-07",
+      "case_status": "COLLECTING"
+    },
+    {
+      "id": "RES-FG08-ONCHAIN-GOVERNANCE-CYCLE-WAIT",
+      "case": "FG-08",
+      "case_status": "COLLECTING"
+    },
+    {
+      "id": "RES-FG09-EXECUTE-AFTER-ETA",
+      "case": "FG-09",
+      "case_status": "READY_SLICE_PARTIAL"
+    },
+    {
+      "id": "RES-FG10-OA01-WC",
+      "case": "FG-10",
+      "case_status": "READY_SLICE_PARTIAL"
+    },
+    {
+      "id": "RES-FG10-MAINNET-WAVE-FORBIDDEN",
+      "case": "FG-10",
+      "case_status": "READY_SLICE_PARTIAL"
+    },
+    {
+      "id": "RES-FG11-RBAC-DEFER-DENOM",
+      "case": "FG-11",
+      "case_status": "READY_FOR_RECALCULATE_INPUT"
+    },
+    {
+      "id": "RES-FG12-FULL-INDEXER-PROOF-POST-FINALIZE",
+      "case": "FG-12",
+      "case_status": "WAIT"
+    },
+    {
+      "id": "RES-FG13-FULL-EQUALITY-POST-FINALIZE",
+      "case": "FG-13",
+      "case_status": "READY_SLICE_PARTIAL"
+    },
+    {
+      "id": "RES-FG14-FINAL-AUDIT-PACK-POST-ELAPSED",
+      "case": "FG-14",
+      "case_status": "COLLECTING"
+    },
+    {
+      "id": "RES-FG15-NOT_ELAPSED",
+      "case": "FG-15",
+      "case_status": "WAIT"
+    }
+  ]
+}

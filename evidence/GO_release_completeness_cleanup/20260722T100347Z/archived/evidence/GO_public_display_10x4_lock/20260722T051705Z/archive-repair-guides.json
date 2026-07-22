@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.archive_and_repair_staging_ocs_guides.v1",
+  "hidden_non_ocs": 0,
+  "ocs_repaired": 10,
+  "production_active": 10,
+  "production_cities": [
+    "东京",
+    "京都",
+    "巴塞罗那",
+    "巴黎",
+    "悉尼",
+    "新加坡",
+    "曼谷",
+    "纽约",
+    "迪拜",
+    "首尔"
+  ],
+  "note": "Restart tt-api-staging so chain_off hydrate picks up SQL changes"
+}

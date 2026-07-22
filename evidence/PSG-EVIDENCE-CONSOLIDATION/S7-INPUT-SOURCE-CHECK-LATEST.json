@@ -1,0 +1,114 @@
+{
+  "schema": "traveltrust.psg_s7_input_source_check.v1",
+  "recorded_utc": "2026-07-22T04:55:55Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "mode": "POST_BRIDGE_OPTION_A",
+  "fix_reader": false,
+  "executed_bridge": true,
+  "executed_s7": false,
+  "equals_psg_complete": false,
+  "expected": "CANDIDATE_V2",
+  "actual_sources_seen": [
+    "CANDIDATE_V2"
+  ],
+  "status": "READY",
+  "blocked_reason": null,
+  "pending_rows": [
+    {
+      "pending_file": "L1-PRODUCT-VALIDATION-LATEST.json",
+      "exists": true,
+      "parse_ok": true,
+      "sha256": "sha256:46a838c57b6dce442e2d0da132dc5a905e4c13518f44d3da8ce3a09d1d43450c",
+      "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+      "recorded_utc": "2026-07-22T04:55:55Z",
+      "verdict": "L1_CANDIDATE_BRIDGED_NOT_LAYER_PASS",
+      "actual_source": "CANDIDATE_V2",
+      "expected_source": "CANDIDATE_V2",
+      "match": true
+    },
+    {
+      "pending_file": "L2-DATA-VALIDATION-HARDENED-LATEST.json",
+      "exists": true,
+      "parse_ok": true,
+      "sha256": "sha256:2f8fc92a7ebcdd123aaca820e67be3922fcdf98f634869b2911eedcec764f6c7",
+      "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+      "recorded_utc": "2026-07-22T04:55:55Z",
+      "verdict": "L2_CANDIDATE_BRIDGED_NOT_LAYER_PASS",
+      "actual_source": "CANDIDATE_V2",
+      "expected_source": "CANDIDATE_V2",
+      "match": true
+    },
+    {
+      "pending_file": "L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+      "exists": true,
+      "parse_ok": true,
+      "sha256": "sha256:5dcd7ccf64992f597bb1b5917e65c351b753d116d2ce3e09aa4875863adfd019",
+      "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+      "recorded_utc": "2026-07-22T04:55:55Z",
+      "verdict": "L3_CANDIDATE_BRIDGED_NOT_LAYER_PASS",
+      "actual_source": "CANDIDATE_V2",
+      "expected_source": "CANDIDATE_V2",
+      "match": true
+    },
+    {
+      "pending_file": "L4-OPERATIONS-VALIDATION-LATEST.json",
+      "exists": true,
+      "parse_ok": true,
+      "sha256": "sha256:39bd7cbc89e5336200d021071e4a60f841a3655ce258cdfef33cd397b4d2ad37",
+      "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+      "recorded_utc": "2026-07-22T04:55:55Z",
+      "verdict": "L4_CANDIDATE_BRIDGED_NOT_LAYER_PASS",
+      "actual_source": "CANDIDATE_V2",
+      "expected_source": "CANDIDATE_V2",
+      "match": true
+    },
+    {
+      "pending_file": "L5-FG-WEB3-EMPIRICAL-LATEST.json",
+      "exists": true,
+      "parse_ok": true,
+      "sha256": "sha256:28c4cac9184cc1f96bae3aa09645f5929451f1488bca88371a4610d4b11514d7",
+      "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+      "recorded_utc": "2026-07-22T04:55:55Z",
+      "verdict": "L5_EMPIRICAL_BRIDGED_AWAIT_FG_CAPTURE_AND_L5_FINAL",
+      "actual_source": "CANDIDATE_V2",
+      "expected_source": "CANDIDATE_V2",
+      "match": true
+    }
+  ],
+  "candidate_pointers": [
+    {
+      "layer": "L1",
+      "pointer": "evidence/PSG-L1-product/L1-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:311aadb5d537fe8b8e447b1c857c3f953e8497fdc802a816f033d1e7adc7225d"
+    },
+    {
+      "layer": "L2",
+      "pointer": "evidence/PSG-L2-data/L2-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:d6f97361ff59711d0bce9be433b74a7fb0fd3cb78f3ef5244c6aa9eb418afaa7"
+    },
+    {
+      "layer": "L3",
+      "pointer": "evidence/PSG-L3-security/L3-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:534f07f69168752a1dc1ee20c63d08eb6479853a9664b88b983e599b60793a47"
+    },
+    {
+      "layer": "L4",
+      "pointer": "evidence/PSG-L4-operations/L4-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:e2de7d50a2c657996a86c849bf851141bb9d8d1e98ecacbe5466cd749591c546"
+    },
+    {
+      "layer": "L5",
+      "pointer": "evidence/GO_fg15_observation_48h_candidate_v2/L5-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:ead9f3c15a2d9a129a2a2adac090ddef3bddb1bf6c840b30e7f584f6f5c08ca1"
+    }
+  ],
+  "s7_reader_path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/",
+  "deferred_bridge": "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-READER-BRIDGE-DEFERRED-LATEST.json",
+  "note": "Checker only — WAIT_FOR_FINAL_WINDOW to bridge; do not rewrite S7 now"
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "traveltrust.psg_pending_pre_bridge_snapshot.v1",
+  "recorded_utc": "2026-07-22T04:55:55Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "option": "OPTION_A",
+  "sidecar": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z",
+  "files": [
+    {
+      "file": "L1-PRODUCT-VALIDATION-LATEST.json",
+      "sha256": "sha256:b5be138a077a1a19d88924cb814e4c3303e639f47aa55eb5dc88b600190be1bc",
+      "from": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L1-PRODUCT-VALIDATION-LATEST.json"
+    },
+    {
+      "file": "L2-DATA-VALIDATION-HARDENED-LATEST.json",
+      "sha256": "sha256:23cc2bf3b8405cc268d8e3a3b124193f8d3c9fee2494d38f2aa00144eab2c59e",
+      "from": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L2-DATA-VALIDATION-HARDENED-LATEST.json"
+    },
+    {
+      "file": "L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+      "sha256": "sha256:1f6f2e33410317ee87f76605f232e728e5bb376772393396c93ecf717d3e20f6",
+      "from": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L3-SECURITY-VALIDATION-HARDENED-LATEST.json"
+    },
+    {
+      "file": "L4-OPERATIONS-VALIDATION-LATEST.json",
+      "sha256": "sha256:db16dd9181b8bd9c9e6c6ebb88a33f884d8202f2e3b069c7503c514d6c9ddacf",
+      "from": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L4-OPERATIONS-VALIDATION-LATEST.json"
+    },
+    {
+      "file": "L5-FG-WEB3-EMPIRICAL-LATEST.json",
+      "sha256": "sha256:6e628f581c7e5a24adc1fb8ab94ed70d3521e47b567ce95cb3f38cef5b3114fc",
+      "from": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L5-FG-WEB3-EMPIRICAL-LATEST.json"
+    }
+  ],
+  "note": "OLD_FCG pending preserved before Candidate materialization overwrite"
+}

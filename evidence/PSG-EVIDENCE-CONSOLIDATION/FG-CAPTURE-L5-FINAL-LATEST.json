@@ -1,0 +1,107 @@
+{
+  "schema": "traveltrust.psg_project_a_fg_capture_l5_final.v1",
+  "recorded_utc": "2026-07-22T04:56:12Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "fg_captures": [
+    {
+      "id": "FG-01",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-02",
+      "status": "PARTIAL",
+      "equals_case_pass": false,
+      "residual": null
+    },
+    {
+      "id": "FG-03",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-04",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-05",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-06",
+      "status": "RESIDUAL_OPEN",
+      "equals_case_pass": false,
+      "residual": "RES-FG-06-POST-RECALC-EMPIRICAL"
+    },
+    {
+      "id": "FG-07",
+      "status": "RESIDUAL_OPEN",
+      "equals_case_pass": false,
+      "residual": "RES-FG-07-POST-RECALC-EMPIRICAL"
+    },
+    {
+      "id": "FG-08",
+      "status": "RESIDUAL_OPEN",
+      "equals_case_pass": false,
+      "residual": "RES-FG08-GOVERNANCE-CYCLE"
+    },
+    {
+      "id": "FG-09",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-10",
+      "status": "ACCEPTED_GAP",
+      "equals_case_pass": false,
+      "residual": "RES-FG10-OA01-WC-ACCEPTED-GAP"
+    },
+    {
+      "id": "FG-11",
+      "status": "READY_FOR_RECALCULATE_INPUT",
+      "equals_case_pass": false,
+      "residual": null
+    },
+    {
+      "id": "FG-12",
+      "status": "RESIDUAL_OPEN",
+      "equals_case_pass": false,
+      "residual": "RES-FG12-INDEXER-POST-FINALIZE"
+    },
+    {
+      "id": "FG-13",
+      "status": "EMPIRICAL_PARTIAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-14",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    },
+    {
+      "id": "FG-15",
+      "status": "EMPIRICAL_PASS",
+      "equals_case_pass": true,
+      "residual": null
+    }
+  ],
+  "empirical_pass_count": 8,
+  "l5_final": {
+    "path": "evidence/GO_fg15_observation_48h_candidate_v2/L5-FINAL-EVIDENCE-LATEST.json",
+    "verdict": "L5_FINAL_RUNTIME_GO_EMPIRICAL_PARTIAL",
+    "l5_pass": false,
+    "l5_runtime_final_pass": true
+  },
+  "hard_gate": "CUTOVER_REFUSED",
+  "equals_psg_complete": false
+}

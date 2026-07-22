@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.fg15b_case_evidence_map.v1",
+  "id": "FG-07",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "pointers": [
+    "registry/v311-treasury-rails.v1.yaml",
+    "docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md"
+  ],
+  "status": "COLLECTING"
+}

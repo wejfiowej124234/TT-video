@@ -1,0 +1,18 @@
+{
+  "recorded_utc": "2026-07-22T04:56:12Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "current_status": "RESIDUAL_OPEN",
+  "equals_case_pass": false,
+  "forbid_pass_claim_until_final": false,
+  "capture": {
+    "tx_hash": "0x4c8c04e39b5e72ae9a666c3df4261f1a3c49e19212f6ac0a68b44ab15decd681",
+    "block": 11321386,
+    "event": "distribute_leg_observed",
+    "evidence": "evidence/GO_fg15_observation_48h_candidate_v2/money-path/finalize-20260722T045451Z-already-executed",
+    "residual_id": "RES-FG-06-POST-RECALC-EMPIRICAL"
+  },
+  "capture_filled_utc": "2026-07-22T04:56:12Z",
+  "hard_gate": "CUTOVER_REFUSED",
+  "equals_psg_complete": false
+}

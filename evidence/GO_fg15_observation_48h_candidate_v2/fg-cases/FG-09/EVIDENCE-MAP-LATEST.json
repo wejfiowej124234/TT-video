@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.fg15b_case_evidence_map.v1",
+  "id": "FG-09",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "pointers": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-LATEST.json",
+    "evidence/GO_web3_candidate_v2/sepolia-deploy/CANDIDATE-V2-SEPOLIA-ADDRESS-IDENTITY-LATEST.json"
+  ],
+  "status": "READY_SLICE_PARTIAL"
+}

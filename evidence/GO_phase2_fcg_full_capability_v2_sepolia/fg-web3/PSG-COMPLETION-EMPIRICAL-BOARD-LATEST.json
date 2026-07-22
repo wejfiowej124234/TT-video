@@ -1,0 +1,46 @@
+{
+  "schema": "traveltrust.psg_completion_empirical_board.v1",
+  "recorded_utc": "2026-07-22T04:56:34Z",
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "layers": {
+    "L5": {
+      "status": "PARTIAL",
+      "pass": false,
+      "note": "FG-15 required for completion equation"
+    },
+    "L3_Security": {
+      "status": "OPEN",
+      "pass": false
+    },
+    "L2_Data": {
+      "status": "OPEN",
+      "pass": false
+    },
+    "L1_Product": {
+      "status": "OPEN",
+      "pass": false
+    },
+    "L4_Operations": {
+      "status": "OPEN",
+      "pass": false
+    }
+  },
+  "recalculate": {
+    "psg_complete": false,
+    "verdict": "PSG_COMPLETION_RECALC_NOT_COMPLETE",
+    "blockers": [
+      "L1_Product_OPEN",
+      "L2_Data_OPEN",
+      "L3_Security_OPEN",
+      "L4_Operations_OPEN",
+      "L5_FG_Web3_NOT_PASS_FG15_OR_EMPIRICAL",
+      "RELEASE_IDENTITY_CURRENT_NOT_OK",
+      "OWNER_SIGNOFF_MISSING"
+    ]
+  },
+  "observation_48h": "ELAPSED_PASS",
+  "psg_complete": false,
+  "production_go": false,
+  "verdict": "PSG_COMPLETION_RECALC_NOT_COMPLETE",
+  "next": "Close_L5_empirical_remaining_gaps"
+}

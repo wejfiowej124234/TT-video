@@ -1,0 +1,101 @@
+{
+  "schema": "traveltrust.psg_s7_input_manifest.v1",
+  "kind": "AFTER",
+  "recorded_utc": "2026-07-22T04:55:56Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "candidate_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "timestamp": "2026-07-22T04:55:56Z",
+  "files": [
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L1-PRODUCT-VALIDATION-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:46a838c57b6dce442e2d0da132dc5a905e4c13518f44d3da8ce3a09d1d43450c",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "s7_pending_input",
+      "pending_file": "L1-PRODUCT-VALIDATION-LATEST.json"
+    },
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L2-DATA-VALIDATION-HARDENED-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:2f8fc92a7ebcdd123aaca820e67be3922fcdf98f634869b2911eedcec764f6c7",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "s7_pending_input",
+      "pending_file": "L2-DATA-VALIDATION-HARDENED-LATEST.json"
+    },
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:5dcd7ccf64992f597bb1b5917e65c351b753d116d2ce3e09aa4875863adfd019",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "s7_pending_input",
+      "pending_file": "L3-SECURITY-VALIDATION-HARDENED-LATEST.json"
+    },
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L4-OPERATIONS-VALIDATION-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:39bd7cbc89e5336200d021071e4a60f841a3655ce258cdfef33cd397b4d2ad37",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "s7_pending_input",
+      "pending_file": "L4-OPERATIONS-VALIDATION-LATEST.json"
+    },
+    {
+      "path": "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L5-FG-WEB3-EMPIRICAL-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:28c4cac9184cc1f96bae3aa09645f5929451f1488bca88371a4610d4b11514d7",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "s7_pending_input",
+      "pending_file": "L5-FG-WEB3-EMPIRICAL-LATEST.json"
+    }
+  ],
+  "candidate_pointers": [
+    {
+      "path": "evidence/PSG-L1-product/L1-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:311aadb5d537fe8b8e447b1c857c3f953e8497fdc802a816f033d1e7adc7225d",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "candidate_pointer_pack"
+    },
+    {
+      "path": "evidence/PSG-L2-data/L2-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:d6f97361ff59711d0bce9be433b74a7fb0fd3cb78f3ef5244c6aa9eb418afaa7",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "candidate_pointer_pack"
+    },
+    {
+      "path": "evidence/PSG-L3-security/L3-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:534f07f69168752a1dc1ee20c63d08eb6479853a9664b88b983e599b60793a47",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "candidate_pointer_pack"
+    },
+    {
+      "path": "evidence/PSG-L4-operations/L4-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:e2de7d50a2c657996a86c849bf851141bb9d8d1e98ecacbe5466cd749591c546",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "deploy_baseline": "v311_fund_safety_candidate_v2",
+      "role": "candidate_pointer_pack"
+    },
+    {
+      "path": "evidence/GO_fg15_observation_48h_candidate_v2/L5-S7-FINAL-INPUT-LATEST.json",
+      "exists": true,
+      "sha256": "sha256:ead9f3c15a2d9a129a2a2adac090ddef3bddb1bf6c840b30e7f584f6f5c08ca1",
+      "psg_release_version": null,
+      "deploy_baseline": null,
+      "role": "candidate_pointer_pack"
+    }
+  ],
+  "all_pending_match_candidate_pin": true,
+  "honesty": "BEFORE may be OLD_FCG forensic snapshot. AFTER must be locked only after Bridge A materialization. verify-pre-s7 compares current PENDING to AFTER.",
+  "equals_psg_complete": false
+}

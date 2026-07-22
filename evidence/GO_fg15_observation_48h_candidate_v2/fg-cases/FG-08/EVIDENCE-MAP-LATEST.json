@@ -1,0 +1,10 @@
+{
+  "schema": "traveltrust.fg15b_case_evidence_map.v1",
+  "id": "FG-08",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "pointers": [
+    "scripts/dev/smoke-governance-proposals-l5-local.sh",
+    "docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md"
+  ],
+  "status": "COLLECTING"
+}

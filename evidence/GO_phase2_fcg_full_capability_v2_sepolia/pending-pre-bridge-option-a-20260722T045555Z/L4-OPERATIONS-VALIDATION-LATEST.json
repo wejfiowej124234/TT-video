@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.l4_operations_validation.v1",
+  "status": "READY_FOR_RECALCULATE",
+  "layer": "L4",
+  "l4_pass": false,
+  "verdict": "L4_CANDIDATE_BRIDGED_NOT_LAYER_PASS",
+  "sources": [
+    "evidence/PSG-L4-operations/STATUS-LATEST.json",
+    "evidence/PSG-L4-operations/MONITORING-EVIDENCE-LATEST.json",
+    "evidence/PSG-L4-operations/OPERATIONS-OWNER-INPUT-TEMPLATE-LATEST.json"
+  ],
+  "open_residual_ids": [],
+  "candidate_status": null,
+  "honesty": "Operational control evidence bridged; equals_l4_pass gates l4_pass",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-22T04:55:31Z",
+  "bridge": {
+    "option": "OPTION_A",
+    "mode": "MATERIALIZE_NOT_POINTER_COPY",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "baseline": "v311_fund_safety_candidate_v2"
+  },
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "hard_gate": "CUTOVER_REFUSED",
+  "real_eth_wave": "FORBIDDEN",
+  "psg_complete": false,
+  "equals_psg_complete": false
+}

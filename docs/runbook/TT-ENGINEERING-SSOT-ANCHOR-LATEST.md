@@ -51,6 +51,7 @@ Architecture Constitution / L0 / PGC
 | Registry | ACTIVE | Candidate pin | 平行 ACTIVE |
 | Evidence | bundle | `GO_web3_candidate_v2` | 写 FG-15-A 根 |
 | Docs | cites | FINAL + Cand + V3.1.1 + EGM | 活体称 FG15-A ACTIVE |
+| Media | role_promo | Git LFS + registry checksum | ignored drop-zone bake |
 
 ---
 

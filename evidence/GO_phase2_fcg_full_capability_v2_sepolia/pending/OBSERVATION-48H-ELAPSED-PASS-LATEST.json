@@ -1,0 +1,24 @@
+{
+  "schema": "traveltrust.observation_48h_elapsed_pass.v1",
+  "track": "FG-15-B",
+  "elapsed_pass": true,
+  "status": "ELAPSED_PASS",
+  "earliest_elapsed_utc": "2026-07-21T18:06:48Z",
+  "source": "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+  "verdict": "FG15_B_OBSERVATION_ELAPSED_PASS",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "active_deploy_baseline": "v311_fund_safety_candidate_v2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-22T04:55:55Z",
+  "bridge": {
+    "option": "OPTION_A",
+    "mode": "MATERIALIZE_NOT_POINTER_COPY",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "baseline": "v311_fund_safety_candidate_v2"
+  },
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "hard_gate": "CUTOVER_REFUSED",
+  "real_eth_wave": "FORBIDDEN",
+  "psg_complete": false,
+  "equals_psg_complete": false
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.fg15b_case_evidence_map.v1",
+  "id": "FG-10",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "pointers": [
+    "evidence/GO_web3_candidate_v2/sepolia-deploy/CANDIDATE-V2-SEPOLIA-ADDRESS-IDENTITY-LATEST.json",
+    "docs/runbook/TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md",
+    "evidence/PSG-L3-security/faces/WALLET-ATTESTATION-LATEST.json"
+  ],
+  "status": "READY_SLICE_PARTIAL"
+}

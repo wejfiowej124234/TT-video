@@ -1,0 +1,16 @@
+{
+  "recorded_utc": "2026-07-22T04:56:12Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "current_status": "EMPIRICAL_PASS",
+  "equals_case_pass": true,
+  "forbid_pass_claim_until_final": false,
+  "capture": {
+    "pack_path": "evidence/GO_fg15_observation_48h_candidate_v2/",
+    "sample_ledger": "evidence/GO_fg15_observation_48h_candidate_v2/samples/FG15B-SAMPLES-LEDGER.jsonl",
+    "evidence": null
+  },
+  "capture_filled_utc": "2026-07-22T04:56:12Z",
+  "hard_gate": "CUTOVER_REFUSED",
+  "equals_psg_complete": false
+}

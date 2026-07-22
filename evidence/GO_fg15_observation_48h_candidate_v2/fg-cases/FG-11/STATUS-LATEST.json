@@ -1,0 +1,35 @@
+{
+  "schema": "traveltrust.fg15b_case_slot.v1",
+  "id": "FG-11",
+  "name": "RBAC",
+  "fgcase": "FGCASE-FG-11",
+  "status": "READY_FOR_RECALCULATE_INPUT",
+  "pass_claim": "FORBIDDEN_UNTIL_WINDOW_AND_FINAL",
+  "equals_case_pass": false,
+  "equals_l5_pass": false,
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "slice": {
+    "l3_pack": "READY_FOR_RECALCULATE",
+    "rbac_metric": "60/96 DEFER_DENOM"
+  },
+  "evidence_map": [
+    "evidence/PSG-L3-security/ATTEST-CANDIDATE-V2-LATEST.json",
+    "evidence/PSG-L3-security/faces/RBAC-ATTESTATION-LATEST.json",
+    "registry/psg-coverage-measurement-final.v1.yaml"
+  ],
+  "residuals": [
+    "RES-FG11-RBAC-DEFER-DENOM"
+  ],
+  "ready_for_final_after": "s7_recalculate",
+  "forbid": {
+    "finalize_before_elapsed": true,
+    "claim_l5_pass": true,
+    "claim_fg15_pass": true,
+    "hard_gate_flip": true,
+    "mainnet_wave": true,
+    "production_go": true
+  },
+  "final_evidence": null
+}

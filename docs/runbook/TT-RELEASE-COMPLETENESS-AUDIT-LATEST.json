@@ -1,0 +1,591 @@
+{
+  "schema": "traveltrust.release_completeness_audit.v1",
+  "machine_key": "TT_RELEASE_COMPLETENESS_AUDIT",
+  "recorded_utc": "2026-07-22T10:03:47Z",
+  "equals_production_go": false,
+  "equals_staging_grade_go": false,
+  "verdict": "BLOCKED_UNTIL_INGEST",
+  "p0_count": 1,
+  "git": {
+    "head": "cb9ac2cea17ab77e27e6faf9bab570611bdb063b",
+    "branch": "feature/g23-04-abi-event-freeze",
+    "freeze_tip": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
+    "eng_tip": "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+  },
+  "dimensions": {
+    "Code": {
+      "modified": [
+        {
+          "status": "M",
+          "path": "gitattributes"
+        },
+        {
+          "status": "M",
+          "path": ".gitignore"
+        }
+      ],
+      "untracked_tops": [
+        "contracts/script/ExecuteCandidateV2SettlementTimelock.s.sol",
+        "docs/runbook/TT-PROJECT-A-FINAL-RELEASE-CHAIN-ALIGNMENT-LATEST.md",
+        "docs/runbook/TT-PSG-CANDIDATE-V2-FORMAL-BASELINE-SIGNOFF-PREP-LATEST.md",
+        "docs/runbook/TT-PSG-POST-ETA-COMMAND-SHEET-LATEST.md",
+        "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/FG15B-CASE-INDEX-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/L5-FINAL-EVIDENCE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/L5-S7-FINAL-INPUT-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-01/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-01/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-01/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-02/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-02/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-02/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-03/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-03/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-03/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-04/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-04/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-04/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-05/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-05/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-05/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-06/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-06/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-06/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-07/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-07/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-07/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-08/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-08/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-08/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-09/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-09/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-09/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-10/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-10/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-10/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-11/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-11/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-11/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-12/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-12/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-12/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-13/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-13/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-13/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-14/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-14/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-14/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-15/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-15/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-15/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/INDEX-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/README.md",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/RESIDUALS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-FINAL-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-SETTLEMENT-OPS-STANDBY-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/money-path/finalize-20260722T045451Z-already-executed/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-FINAL-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/audit_trail/completion_recalculate/PSG-COMPLETION-MATRIX-RECALCULATE-2026-07-22T045634Z.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/audit_trail/completion_recalculate/PSG-COMPLETION-MATRIX-RECALCULATE-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/audit_trail/completion_recalculate/PSG-COMPLETION-VERDICT-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/fg-web3/PSG-COMPLETION-EMPIRICAL-BOARD-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/fg-web3/PSG-COMPLETION-MATRIX-RECALCULATE-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/fg-web3/PSG-COMPLETION-VERDICT-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045531Z/SNAPSHOT-META-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z/L1-PRODUCT-VALIDATION-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z/L2-DATA-VALIDATION-HARDENED-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z/L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z/L4-OPERATIONS-VALIDATION-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z/L5-FG-WEB3-EMPIRICAL-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending-pre-bridge-option-a-20260722T045555Z/SNAPSHOT-META-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L1-PRODUCT-VALIDATION-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L2-DATA-VALIDATION-HARDENED-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L3-SECURITY-VALIDATION-HARDENED-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L4-OPERATIONS-VALIDATION-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L5-FG-WEB3-EMPIRICAL-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L5-FG-WEB3-PRODUCTION-RUNTIME-STATUS-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L5-FG-WEB3-VALIDATION-STATUS-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/OBSERVATION-48H-ELAPSED-PASS-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/PSG-COMPLETION-EMPIRICAL-BOARD-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/PSG-COMPLETION-MATRIX-RECALCULATE-LATEST.json",
+        "evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/PSG-COMPLETION-VERDICT-LATEST.json",
+        "evidence/GO_public_display_10x4_lock/20260722T051705Z/align-guides.json",
+        "evidence/GO_public_display_10x4_lock/20260722T051705Z/align-market.json",
+        "evidence/GO_public_display_10x4_lock/20260722T051705Z/archive-repair-guides.json",
+        "evidence/GO_public_display_10x4_lock/20260722T051705Z/meta.txt",
+        "evidence/GO_public_display_10x4_lock/20260722T051705Z/ocs-state.json",
+        "evidence/GO_public_display_10x4_lock/20260722T051705Z/purge.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/CANDIDATE-EVIDENCE-BRIDGE-OPTION-A-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/ETA-EXECUTION-GATE-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/FG-01-15-FINAL-VERIFICATION-MAP-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/FG-CAPTURE-L5-FINAL-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/L5-FINAL-EVIDENCE-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/PENDING-PRE-BRIDGE-OPTION-A-SNAPSHOT-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-BRIDGE-IMPACT-ANALYSIS-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-CANDIDATE-BASELINE-GATE-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-INPUT-MANIFEST-AFTER-20260722T045556Z.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-INPUT-MANIFEST-AFTER-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-INPUT-MANIFEST-GATE-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-INPUT-SOURCE-CHECK-LATEST.json",
+        "evidence/PSG-EVIDENCE-CONSOLIDATION/S7-READER-BRIDGE-DEFERRED-LATEST.json",
+        "evidence/PSG-L1-product/L1-S7-FINAL-INPUT-LATEST.json",
+        "evidence/PSG-L2-data/L2-S7-FINAL-INPUT-LATEST.json",
+        "evidence/PSG-L3-security/L3-S7-FINAL-INPUT-LATEST.json",
+        "evidence/PSG-L4-operations/L4-S7-FINAL-INPUT-LATEST.json",
+        "frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json",
+        "frontend/public/media/traveltrust/roles/acquisition.mp4",
+        "frontend/public/media/traveltrust/roles/guide.mp4",
+        "frontend/public/media/traveltrust/roles/merchant.mp4",
+        "frontend/public/media/traveltrust/roles/provider.mp4",
+        "frontend/public/media/traveltrust/roles/traveler.mp4",
+        "registry/psg-change-records/PCR-20260722-004.yaml",
+        "registry/psg-change-records/PCR-20260722-005.yaml",
+        "registry/traveltrust-role-promo-media-assets.v1.yaml",
+        "scripts/dev/archive-staging-non-ocs-market-listings.cjs",
+        "scripts/dev/check-psg-eta-execution-gate.py",
+        "scripts/dev/check-psg-s7-candidate-baseline-gate.py",
+        "scripts/dev/check-psg-s7-input-manifest-gate.py",
+        "scripts/dev/check-psg-settlement-final-capture.py",
+        "scripts/dev/check-public-display-10x4-counts.py",
+        "scripts/dev/gen-fg15b-case-index.py",
+        "scripts/dev/lib/tt_refuse_historical_baseline.py",
+        "scripts/dev/lib/web3-candidate-v2-mainline.sh",
+        "scripts/dev/run-psg-candidate-evidence-bridge-option-a.py",
+        "scripts/dev/run-psg-completion-matrix-recalculate.py",
+        "scripts/dev/run-psg-completion-matrix-recalculate.sh",
+        "scripts/dev/run-psg-project-a-closure-preflight-pack2.py",
+        "scripts/dev/run-psg-project-a-closure-preflight.py",
+        "scripts/dev/run-psg-project-a-fg-capture-and-l5-final.py",
+        "scripts/dev/run-psg-project-a-wait-eta-final-prep-pack.py",
+        "scripts/dev/run-psg-project-a-wait-eta-readonly-tick.py",
+        "scripts/dev/run-release-completeness-audit.py",
+        "scripts/dev/run-web3-candidate-v2-settlement-finalize.sh",
+        "scripts/gates/check-production-feature-inventory-gate.sh",
+        "scripts/gates/check-reality-closure-gate.sh"
+      ],
+      "untracked_file_count": 136,
+      "by_class_counts": {
+        "ARCHIVE_SNAPSHOT": 6,
+        "INGEST_TO_RC": 129,
+        "SCRIPT_REVIEW": 1
+      },
+      "ingest_sample": [
+        "contracts/script/ExecuteCandidateV2SettlementTimelock.s.sol",
+        "docs/runbook/TT-PROJECT-A-FINAL-RELEASE-CHAIN-ALIGNMENT-LATEST.md",
+        "docs/runbook/TT-PSG-CANDIDATE-V2-FORMAL-BASELINE-SIGNOFF-PREP-LATEST.md",
+        "docs/runbook/TT-PSG-POST-ETA-COMMAND-SHEET-LATEST.md",
+        "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/FG15B-CASE-INDEX-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/L5-FINAL-EVIDENCE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/L5-S7-FINAL-INPUT-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-01/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-01/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-01/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-02/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-02/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-02/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-03/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-03/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-03/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-04/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-04/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-04/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-05/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-05/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-05/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-06/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-06/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-06/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-07/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-07/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-07/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-08/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-08/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-08/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-09/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-09/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-09/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-10/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-10/FINAL-CAPTURE-TEMPLATE-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-10/STATUS-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-11/EVIDENCE-MAP-LATEST.json",
+        "evidence/GO_fg15_observation_48h_candidate_v2/fg-cases/FG-11/FINAL-CAPTURE-TEMPLATE-LATEST.json"
+      ],
+      "historical_script_hits": 42,
+      "historical_script_sample": [
+        {
+          "path": "scripts/dev/apply-v311-full-runtime-cutover.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/apply-v311-sepolia-clean-cutover.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/apply-v311-sepolia-clean-cutover.sh",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/bind-fcg-v2-wired-redeploy-after-broadcast.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/check-fcg-v2-clean-deploy-preconditions.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/check-psg-s7-candidate-baseline-gate.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/check-web3-baseline-migration-v2-phase2-residual.sh",
+          "markers": [
+            "652bbab5"
+          ]
+        },
+        {
+          "path": "scripts/dev/gen-fg-web3-clean-deploy-prep-pack.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/phase2-sepolia-broadcast-v311-clean-baseline.sh",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/prepare-fcg-v2-clean-deploy-pending-pack.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-deploy-freshness-gate.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-fg15-observation-running.sh",
+          "markers": [
+            "run-fg15-observation-running"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-fg15-observation-sample.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-fg15-parallel-launch-prep.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-fg15-priority-prep-deepen.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-fg15-running-integrity-check.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-fg15-six-parallel-prep-packs.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-final-release-deep-consistency-audit-v2.py",
+          "markers": [
+            "PSG-REL-20260722-STAGING-ALIGN-W0"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-l5-fg-web3-empirical-priority.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-mainnet-release-freeze-evidence.sh",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-pfa-02-chain-deployment-manifest.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-psg-delta-recertify-three-baseline-dry-run.py",
+          "markers": [
+            "PSG-REL-20260722-STAGING-ALIGN-W0"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-psg-delta-recertify-three-baseline-formal.py",
+          "markers": [
+            "PSG-REL-20260722-STAGING-ALIGN-W0"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-psg-eight-axis-check.py",
+          "markers": [
+            "v311_sepolia_clean_baseline"
+          ]
+        },
+        {
+          "path": "scripts/dev/run-psg-mint-staging-align-w0.py",
+          "markers": [
+            "PSG-REL-20260722-STAGING-ALIGN-W0"
+          ]
+        }
+      ]
+    },
+    "Data": {
+      "migration_sql_count": 149,
+      "database_baseline": "staging_rc_ssot_alignment.v1#expected_staging_surface",
+      "ok": true
+    },
+    "Asset": {
+      "role_promo_registry": true,
+      "role_promo_manifest_exists": true,
+      "checks": [
+        {
+          "role": "traveler",
+          "path": "frontend/public/media/traveltrust/roles/traveler.mp4",
+          "expected_sha256": "c29da31fb17c0b1dfd2f8fe17bbcb1de6b086e3b74fa8c955adab8be3ded2b5b",
+          "expected_bytes": 56087583,
+          "exists": true,
+          "gitignored": false,
+          "lfs_tracked": true,
+          "actual_bytes": 56087583,
+          "actual_sha256": "c29da31fb17c0b1dfd2f8fe17bbcb1de6b086e3b74fa8c955adab8be3ded2b5b",
+          "sha_match": true
+        },
+        {
+          "role": "guide",
+          "path": "frontend/public/media/traveltrust/roles/guide.mp4",
+          "expected_sha256": "94999e1ffdf99e4e8b90cb1a7fc15b1fcfea84c67a9c07b2de3e5c4773d92b62",
+          "expected_bytes": 74871255,
+          "exists": true,
+          "gitignored": false,
+          "lfs_tracked": true,
+          "actual_bytes": 74871255,
+          "actual_sha256": "94999e1ffdf99e4e8b90cb1a7fc15b1fcfea84c67a9c07b2de3e5c4773d92b62",
+          "sha_match": true
+        },
+        {
+          "role": "merchant",
+          "path": "frontend/public/media/traveltrust/roles/merchant.mp4",
+          "expected_sha256": "3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040",
+          "expected_bytes": 69580404,
+          "exists": true,
+          "gitignored": false,
+          "lfs_tracked": true,
+          "actual_bytes": 69580404,
+          "actual_sha256": "3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040",
+          "sha_match": true
+        },
+        {
+          "role": "acquisition",
+          "path": "frontend/public/media/traveltrust/roles/acquisition.mp4",
+          "expected_sha256": "b7cfa0af9d34094bb58c973378b1666ac65d2769695053d019c7cf3db3ae3770",
+          "expected_bytes": 57135510,
+          "exists": true,
+          "gitignored": false,
+          "lfs_tracked": true,
+          "actual_bytes": 57135510,
+          "actual_sha256": "b7cfa0af9d34094bb58c973378b1666ac65d2769695053d019c7cf3db3ae3770",
+          "sha_match": true
+        },
+        {
+          "role": "provider",
+          "path": "frontend/public/media/traveltrust/roles/provider.mp4",
+          "expected_sha256": "3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040",
+          "expected_bytes": 69580404,
+          "exists": true,
+          "gitignored": false,
+          "lfs_tracked": true,
+          "actual_bytes": 69580404,
+          "actual_sha256": "3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040",
+          "sha_match": true
+        }
+      ],
+      "promo_ssot_ok": true,
+      "drop_zone_ignored": true,
+      "drop_zone_note": "首页角色宣传片/ remains optional ingest only"
+    },
+    "Config": {
+      "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+      "registry_sha": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
+      "freeze_status": "FROZEN",
+      "engineering_anchor": "TT_ENGINEERING_SSOT_ANCHOR",
+      "contract_profile": "v311_fund_safety_candidate_v2"
+    },
+    "Runtime": {
+      "api": {
+        "git_sha": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
+        "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+        "profile": "v311_fund_safety_candidate_v2",
+        "attestation": "ok"
+      },
+      "web_bake": {
+        "git_sha": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
+        "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+        "profile": "v311_fund_safety_candidate_v2"
+      },
+      "ok": true
+    },
+    "Evidence": {
+      "candidate_v2_root": "evidence/GO_web3_candidate_v2",
+      "fg15b_append_root": "evidence/GO_fg15_observation_48h_candidate_v2",
+      "fg15b_untracked": true,
+      "consolidation_untracked": true
+    }
+  },
+  "ignored": {
+    "top_count": 202662,
+    "expected_sample": [
+      ".env",
+      ".playwright-browsers/.links/e5b62d0016b87dad1a6d28ea3449fadae5ea7995",
+      ".playwright-browsers/chromium-1208/DEPENDENCIES_VALIDATED",
+      ".playwright-browsers/chromium-1208/INSTALLATION_COMPLETE",
+      ".playwright-browsers/chromium-1208/chrome-win64/145.0.7632.6.manifest",
+      ".playwright-browsers/chromium-1208/chrome-win64/ABOUT",
+      ".playwright-browsers/chromium-1208/chrome-win64/D3DCompiler_47.dll",
+      ".playwright-browsers/chromium-1208/chrome-win64/IwaKeyDistribution/iwa-key-distribution.pb",
+      ".playwright-browsers/chromium-1208/chrome-win64/IwaKeyDistribution/manifest.json",
+      ".playwright-browsers/chromium-1208/chrome-win64/MEIPreload/manifest.json",
+      ".playwright-browsers/chromium-1208/chrome-win64/MEIPreload/preloaded_data.pb",
+      ".playwright-browsers/chromium-1208/chrome-win64/PrivacySandboxAttestationsPreloaded/manifest.json",
+      ".playwright-browsers/chromium-1208/chrome-win64/PrivacySandboxAttestationsPreloaded/privacy-sandbox-attestations.dat",
+      ".playwright-browsers/chromium-1208/chrome-win64/chrome.dll",
+      ".playwright-browsers/chromium-1208/chrome-win64/chrome.exe",
+      ".playwright-browsers/chromium-1208/chrome-win64/chrome_100_percent.pak",
+      ".playwright-browsers/chromium-1208/chrome-win64/chrome_200_percent.pak",
+      ".playwright-browsers/chromium-1208/chrome-win64/chrome_elf.dll",
+      ".playwright-browsers/chromium-1208/chrome-win64/chrome_proxy.exe",
+      ".playwright-browsers/chromium-1208/chrome-win64/chrome_pwa_launcher.exe",
+      ".playwright-browsers/chromium-1208/chrome-win64/chrome_wer.dll",
+      ".playwright-browsers/chromium-1208/chrome-win64/dxcompiler.dll",
+      ".playwright-browsers/chromium-1208/chrome-win64/dxil.dll",
+      ".playwright-browsers/chromium-1208/chrome-win64/elevated_tracing_service.exe",
+      ".playwright-browsers/chromium-1208/chrome-win64/elevation_service.exe",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-af.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-as.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-be.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-bg.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-bn.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-cs.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-cu.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-cy.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-da.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-de-1901.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-de-1996.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-de-ch-1901.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-el.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-en-gb.hyb",
+      ".playwright-browsers/chromium-1208/chrome-win64/hyphen-data/hyph-en-us.hyb"
+    ],
+    "unexpected_sample": [
+      ".cargo-home-mig-evidence/.global-cache",
+      ".cargo-home-mig-evidence/.package-cache",
+      ".cargo-home-mig-evidence/.package-cache-mutate",
+      ".cargo-home-mig-evidence/registry/CACHEDIR.TAG",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/allocator-api2-0.2.21.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/async-trait-0.1.89.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/atoi-2.0.0.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/atomic-waker-1.1.2.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/autocfg-1.5.0.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/axum-0.7.9.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/axum-core-0.4.5.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/axum-macros-0.4.2.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/base64-0.21.7.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/base64-0.22.1.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/base64ct-1.8.3.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/bcrypt-0.16.0.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/bitflags-2.11.0.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/block-buffer-0.10.4.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/blowfish-0.9.1.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/byteorder-1.5.0.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/bytes-1.11.1.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/cc-1.2.56.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/cfg-if-1.0.4.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/chrono-0.4.43.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/cipher-0.4.4.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/concurrent-queue-2.5.0.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/const-oid-0.9.6.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/cpufeatures-0.2.17.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/crc-3.4.0.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/crc-catalog-2.4.0.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/crossbeam-queue-0.3.12.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/crossbeam-utils-0.8.21.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/crypto-common-0.1.7.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/curve25519-dalek-4.1.3.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/curve25519-dalek-derive-0.1.1.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/der-0.7.10.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/digest-0.10.7.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/displaydoc-0.2.5.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/dotenvy-0.15.7.crate",
+      ".cargo-home-mig-evidence/registry/cache/index.crates.io-1949cf8c6b5b557f/ed25519-2.2.3.crate"
+    ]
+  },
+  "findings": [
+    {
+      "sev": "P0",
+      "dim": "Code/Evidence",
+      "id": "UNTRACKED_MUST_INGEST",
+      "detail": "129 files classified INGEST_TO_RC not yet in unique RC tip"
+    },
+    {
+      "sev": "P1",
+      "dim": "Code",
+      "id": "MODIFIED_NOT_COMMITTED",
+      "detail": "2 modified tracked paths (e.g. .gitattributes/.gitignore)"
+    }
+  ],
+  "disposition_matrix": {
+    "INGEST_TO_RC": "Commit into unique Release Candidate (Git/LFS + registry)",
+    "ARCHIVE_SNAPSHOT": "Copy under evidence/GO_release_completeness_cleanup · keep or demote",
+    "DELETE_SAFE": "Archive then remove from worktree",
+    "EXPECTED_IGNORED": "Leave ignored (secrets/build/cache)",
+    "HISTORICAL_TRACKED_SCRIPTS": "Keep refuse stubs · do not delete Archive evidence"
+  },
+  "archive": {
+    "stamp": "20260722T100347Z",
+    "out": "evidence/GO_release_completeness_cleanup/20260722T100347Z",
+    "archived_count": 6,
+    "removed_delete_safe": [],
+    "note": "INGEST_TO_RC and Candidate evidence NOT deleted — must commit into unique RC"
+  },
+  "next": [
+    "Commit all INGEST_TO_RC + .gitattributes/.gitignore media SSOT",
+    "git lfs push as needed",
+    "Re-pin FINAL RELEASE / Engineering tip to unique RC SHA",
+    "Clean tip worktree Staging Web bake",
+    "Delta dry-run · Inventory/Reality/GO stay paused"
+  ]
+}

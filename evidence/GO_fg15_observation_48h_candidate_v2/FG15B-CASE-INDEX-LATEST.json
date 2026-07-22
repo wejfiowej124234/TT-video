@@ -1,0 +1,196 @@
+{
+  "schema": "traveltrust.fg15b_case_index.v1",
+  "recorded_utc": "2026-07-20T02:55:00Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "deploy_baseline": "v311_fund_safety_candidate_v2",
+  "fg15_b": {
+    "status": "OBSERVATION_RUNNING",
+    "elapsed_pass": false,
+    "earliest_elapsed_utc": "2026-07-21T18:06:48Z",
+    "settlement_eta_utc": "2026-07-21T18:10:48Z"
+  },
+  "discipline": {
+    "finalize": "FORBIDDEN_UNTIL_ELAPSED_AND_ETA",
+    "l5_pass_claim": "FORBIDDEN",
+    "hard_gate": "UNTOUCHED_CUTOVER_REFUSED",
+    "wave": "FORBIDDEN",
+    "production_go": "UNTOUCHED",
+    "post_window_ladder": [
+      "settlement_finalize",
+      "l5_final_evidence",
+      "psg_recalculate",
+      "formal_release_baseline"
+    ]
+  },
+  "status_counts": {
+    "READY_SLICE_PARTIAL": 5,
+    "WAIT": 4,
+    "READY_SLICE_STRUCTURAL": 1,
+    "COLLECTING": 4,
+    "READY_FOR_RECALCULATE_INPUT": 1
+  },
+  "cases": [
+    {
+      "id": "FG-01",
+      "name": "Money-Path",
+      "status": "READY_SLICE_PARTIAL",
+      "residuals": [
+        "RES-FG01-SETTLEMENT-EXECUTE-WAIT"
+      ],
+      "status_file": "fg-cases/FG-01/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-01/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-02",
+      "name": "Escrow_State_Machine",
+      "status": "READY_SLICE_PARTIAL",
+      "residuals": [
+        "RES-FG02-FULL-STATE-MATRIX-POST-FINALIZE"
+      ],
+      "status_file": "fg-cases/FG-02/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-02/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-03",
+      "name": "SettlementRouter",
+      "status": "WAIT",
+      "residuals": [
+        "RES-FG03-TIMELOCK-EXECUTE-WAIT"
+      ],
+      "status_file": "fg-cases/FG-03/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-03/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-04",
+      "name": "FeeRouter",
+      "status": "READY_SLICE_STRUCTURAL",
+      "residuals": [
+        "RES-FG04-LIVE-DISTRIBUTE-LEG-WAIT"
+      ],
+      "status_file": "fg-cases/FG-04/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-04/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-05",
+      "name": "Distributable",
+      "status": "WAIT",
+      "residuals": [
+        "RES-FG05-LIVE-DISTRIBUTABLE-CYCLE-WAIT"
+      ],
+      "status_file": "fg-cases/FG-05/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-05/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-06",
+      "name": "Steward_Revenue",
+      "status": "COLLECTING",
+      "residuals": [
+        "RES-FG06-LIVE-STEWARD-FLOW-ABSENT"
+      ],
+      "status_file": "fg-cases/FG-06/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-06/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-07",
+      "name": "Treasury",
+      "status": "COLLECTING",
+      "residuals": [
+        "RES-FG07-LIVE-TREASURY-FLOW-ABSENT"
+      ],
+      "status_file": "fg-cases/FG-07/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-07/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-08",
+      "name": "TTG_Governance",
+      "status": "COLLECTING",
+      "residuals": [
+        "RES-FG08-ONCHAIN-GOVERNANCE-CYCLE-WAIT"
+      ],
+      "status_file": "fg-cases/FG-08/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-08/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-09",
+      "name": "Timelock_Execute",
+      "status": "READY_SLICE_PARTIAL",
+      "residuals": [
+        "RES-FG09-EXECUTE-AFTER-ETA"
+      ],
+      "status_file": "fg-cases/FG-09/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-09/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-10",
+      "name": "Wallet_Security",
+      "status": "READY_SLICE_PARTIAL",
+      "residuals": [
+        "RES-FG10-OA01-WC",
+        "RES-FG10-MAINNET-WAVE-FORBIDDEN"
+      ],
+      "status_file": "fg-cases/FG-10/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-10/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-11",
+      "name": "RBAC",
+      "status": "READY_FOR_RECALCULATE_INPUT",
+      "residuals": [
+        "RES-FG11-RBAC-DEFER-DENOM"
+      ],
+      "status_file": "fg-cases/FG-11/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-11/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-12",
+      "name": "Indexer",
+      "status": "WAIT",
+      "residuals": [
+        "RES-FG12-FULL-INDEXER-PROOF-POST-FINALIZE"
+      ],
+      "status_file": "fg-cases/FG-12/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-12/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-13",
+      "name": "OnChain_DB_UI_Consistency",
+      "status": "READY_SLICE_PARTIAL",
+      "residuals": [
+        "RES-FG13-FULL-EQUALITY-POST-FINALIZE"
+      ],
+      "status_file": "fg-cases/FG-13/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-13/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-14",
+      "name": "Audit_Evidence",
+      "status": "COLLECTING",
+      "residuals": [
+        "RES-FG14-FINAL-AUDIT-PACK-POST-ELAPSED"
+      ],
+      "status_file": "fg-cases/FG-14/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-14/EVIDENCE-MAP-LATEST.json"
+    },
+    {
+      "id": "FG-15",
+      "name": "Observation_48H",
+      "status": "WAIT",
+      "residuals": [
+        "RES-FG15-NOT_ELAPSED"
+      ],
+      "status_file": "fg-cases/FG-15/STATUS-LATEST.json",
+      "evidence_map": "fg-cases/FG-15/EVIDENCE-MAP-LATEST.json"
+    }
+  ],
+  "auditable_roots": [
+    "evidence/GO_fg15_observation_48h_candidate_v2/FG15-CANDIDATE-V2-STATUS-LATEST.json",
+    "evidence/GO_fg15_observation_48h_candidate_v2/money-path/CANDIDATE-V2-LIVE-MONEY-PATH-L5-RUNTIME-LATEST.json",
+    "evidence/GO_web3_candidate_v2/sepolia-deploy/CANDIDATE-V2-SEPOLIA-ADDRESS-IDENTITY-LATEST.json",
+    "evidence/GO_fg15_observation_48h_candidate_v2/samples/",
+    "evidence/PSG-L3-security/",
+    "evidence/PSG-L2-data/"
+  ],
+  "equals_l5_pass": false,
+  "equals_psg_complete": false,
+  "verdict": "STRUCTURE_INDEXED_COLLECTING_WAIT"
+}
