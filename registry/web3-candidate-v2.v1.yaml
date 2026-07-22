@@ -1,0 +1,176 @@
+# Web3 Candidate v2 · ACTIVE Web3 candidate baseline (machine SSOT)
+#
+# Human: docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md
+# Mainline: registry/web3-mainline.v1.yaml
+# Gate:  bash scripts/gates/check-web3-mainline-candidate-v2-gate.sh
+# Evidence: evidence/GO_web3_candidate_v2/
+#
+# Doctrine (2026-07-20):
+#   This is the ACTIVE Web3 candidate baseline for NEW tests / verification /
+#   Release alignment. FG-15-A is ARCHIVED_HISTORICAL (immutable; not deleted).
+#   Sepolia deploy → Money Path → FG-15-B → PSG Recalculate.
+#   Real ETH Wave FORBIDDEN until Mainnet Hard Gate AUTHORIZED.
+
+schema: traveltrust.web3_candidate_v2.v1
+version: 2
+candidate_id: WEB3-CANDIDATE-V2-FUND-SAFETY-P0
+status: ACTIVE_WEB3_CANDIDATE_BASELINE
+effective_utc: "2026-07-20"
+recorded_utc: "2026-07-20T01:30:00Z"
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+
+# Economic Constitution binding (Owner North Star · Delta dry-run cite)
+economic_constitution:
+  human: docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+  version: V3.1.1_FINAL
+  economic_model_freeze: ACTIVE
+  appendix_f_binding: LOCKED
+  north_star: registry/owner-north-star-candidate-v2-v311.v1.yaml
+
+# Chain production address matrix of FG-15-A remains historical snapshot;
+# this candidate is the Web3 *mainline* for new work (addresses fill on Sepolia deploy).
+role: ACTIVE_WEB3_CANDIDATE
+NOT_FOR_MAINNET_WAVE: true
+mainnet_hard_gate: FAIL_CLOSED
+real_eth_wave: FORBIDDEN
+chain_id_deploy_allowed: "11155111"
+chain_id_deploy_forbidden:
+  - "1"
+
+fg15_b:
+  track_id: FG-15-B
+  registry: registry/fg15-b-candidate-v2.v1.yaml
+  promotion: PROMOTION_CANDIDATE
+  evidence_root: evidence/GO_fg15_observation_48h_candidate_v2
+
+# FG-15-A — archived only
+legacy_fg15_a:
+  track_id: FG-15-A
+  status: ARCHIVED_HISTORICAL
+  promotion: FORBIDDEN
+  NOT_FOR_PROMOTION: true
+  pin: PSG-REL-20260719-FG15-09c72b93
+  release_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
+  deploy_baseline: v311_sepolia_clean_baseline
+  evidence_root_hint: evidence/GO_fg15_observation_48h
+  archive_registry: registry/fg15-a-historical-archive.v1.yaml
+  evidence_policy: IMMUTABLE_NO_DELETE_NO_OVERWRITE
+  note: Do not delete, overwrite, or cite for new Promotion / tests / packages.
+
+fund_safety_p0:
+  ids: [B-04, B-05, B-06, B-08]
+  forge_suite_pass: "29_passed_0_failed"
+  code_freeze_evidence: evidence/GO_web3_candidate_v2/WEB3-CANDIDATE-V2-CODE-FREEZE-LATEST.json
+  release_identity: evidence/GO_web3_candidate_v2/WEB3-CANDIDATE-V2-RELEASE-IDENTITY-LATEST.json
+  contract_digest_bundle_sha256: "20e6d564046bf984e1a02a6feaf5f052dbd2abf2cc18ecd34d38ca7b118740ab"
+  contracts:
+    - contracts/src/Escrow.sol
+    - contracts/src/EscrowFactory.sol
+    - contracts/src/EscrowFactoryV2.sol
+    - contracts/src/SettlementRouter.sol
+    - contracts/src/ISettlementRouter.sol
+    - contracts/src/FeeRouter.sol
+  abis:
+    - contracts/abi/Escrow.json
+    - contracts/abi/EscrowFactory.json
+    - contracts/abi/EscrowFactoryV2.json
+    - contracts/abi/SettlementRouter.json
+  tests:
+    - contracts/test/FundSafetyP0.t.sol
+    - contracts/test/EscrowFactoryV2Wired.t.sol
+
+# Production closure remediations (Candidate v2)
+aud_closure:
+  W3-AUD-02:
+    status: CODE_CLOSED
+    note: EscrowFactoryV2 forces protocolArbitrator + protocolFeeRecipient
+  W3-AUD-05:
+    status: CODE_CLOSED
+    note: FactoryV2 Wired-only + SettlementRouter.registerEscrowFromFactory
+  W3-AUD-06:
+    status: CODE_CLOSED
+    note: FE active factory = V2 only; ALLOW_V1_FALLBACK removed
+  W3-AUD-08:
+    status: CODE_CLOSED
+    note: API indexer active_escrow_factory_address = V2 only; no V1 OR-fallback
+  W3-AUD-04_partial:
+    status: CODE_CLOSED
+    note: stewardAllowlistEnforced optional on SettlementRouter.distribute
+  W3-AUD-11:
+    status: CODE_CLOSED
+    note: FeeRouter.transferOwnership rejects address(0)
+  MN-SCRIPT-01:
+    status: CODE_CLOSED
+    note: DeployEscrowFactoryV2 requires chainid==11155111 + TRAVELTRUST_WEB3_CANDIDATE_V2_SEPOLIA_DEPLOY_OK=1; refuses mainnet
+  MN-CFG-137:
+    status: CODE_CLOSED
+    note: ChainConfig requires CHAIN_ID when RPC set; staging/prod startup refuses missing CHAIN_ID; FE throws in production if NEXT_PUBLIC_CHAIN_ID unset
+  MN-IAS-01:
+    status: CODE_CLOSED
+    note: staging/prod startup requires INTERNAL_API_SECRET; unset secret denies /internal/* under fail-closed profile
+
+deploy_baseline_key: v311_fund_safety_candidate_v2
+deploy_baseline_registry: registry/protocol-convergence-deployments.v1.yaml
+deploy_baseline_status_required: ACTIVE_WEB3_CANDIDATE_BASELINE
+
+ladder:
+  - id: C2-01
+    name: Code freeze Candidate v2
+    status: DONE
+  - id: C2-01b
+    name: Web3 mainline switch (FG-15-A archive → Candidate v2 active)
+    status: DONE
+  - id: C2-01c
+    name: Prod blockers MN-SCRIPT-01 / MN-CFG-137 / MN-IAS-01
+    status: DONE
+  - id: C2-02
+    name: Owner Sepolia deploy authorization
+    status: DONE
+    require_env: TRAVELTRUST_WEB3_CANDIDATE_V2_SEPOLIA_DEPLOY_OK=1
+    forbid: mainnet_broadcast
+  - id: C2-03
+    name: Sepolia deploy Candidate v2 addresses
+    status: DONE
+    chain_id: "11155111"
+    harness: scripts/dev/run-web3-candidate-v2-sepolia-deploy.sh
+    require_safe_arbitrator: true
+  - id: C2-04
+    name: Sepolia Money Path regression PASS
+    status: PASS_LIVE_PARTIAL_SETTLEMENT_SCHEDULED
+    harness: scripts/dev/run-web3-candidate-v2-money-path-entry.sh
+  - id: C2-05
+    name: FG-15-B observation (Candidate v2 only)
+    status: RUNNING
+    evidence_root: evidence/GO_fg15_observation_48h_candidate_v2
+    forbid_write_to_fg15_a: true
+    then: PSG_Recalculate_after_ELAPSED
+  - id: C2-06
+    name: Resume Mainnet Hard Gate axes (still fail-closed until PASS)
+    status: BLOCKED
+    until: C2-05_ELAPSED_and_Money_Path_PASS
+  - id: C2-07
+    name: Mainnet preparation package (no Wave)
+    status: BLOCKED
+    hard_gate: still_fail_closed_until_AUTHORIZED
+  - id: C2-08
+    name: Real ETH Wave
+    status: FORBIDDEN
+    until: Hard_Gate_AUTHORIZED_FOR_WAVE
+
+owner_auth:
+  sepolia_deploy_template: docs/runbook/templates/web3-candidate-v2/OWNER-SEPOLIA-DEPLOY-AUTH.md
+  evidence_path: evidence/GO_web3_candidate_v2/OWNER-SEPOLIA-DEPLOY-AUTH-LATEST.json
+
+forbidden_for_new_flows:
+  - new_tests_read_fg15_a_addresses_as_ssot
+  - new_evidence_write_fg15_a_root
+  - new_promotion_cite_fg15_a_sha
+  - new_mainnet_package_cite_fg15_a_baseline
+
+companion:
+  mainline: registry/web3-mainline.v1.yaml
+  human: docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md
+  matrix: registry/web3-active-execution-matrix.v1.yaml
+  hard_gate: registry/mainnet-cutover-hard-gate.v1.yaml
+  dashboard: docs/runbook/TT-CURRENT-FOCUS-DASHBOARD-LATEST.md
+  pcr: registry/psg-change-records/PCR-20260720-002.yaml

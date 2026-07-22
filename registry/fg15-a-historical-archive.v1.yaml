@@ -1,0 +1,53 @@
+# FG-15-A · Historical Archive (immutable)
+#
+# Human: docs/runbook/TT-FG15-A-HISTORICAL-ARCHIVE-LATEST.md
+# Doctrine: ARCHIVED / HISTORICAL · NOT FOR PROMOTION
+#   Do NOT delete · Do NOT overwrite · Do NOT cite for new Web3 tests /
+#   Promotion / Release alignment / Mainnet Package.
+#
+# Web3 mainline is Candidate v2 (FG-15-B): registry/web3-mainline.v1.yaml
+
+schema: traveltrust.fg15_a_historical_archive.v1
+version: 1
+track_id: FG-15-A
+status: ARCHIVED_HISTORICAL
+promotion: FORBIDDEN
+NOT_FOR_PROMOTION: true
+effective_utc: "2026-07-20"
+archived_utc: "2026-07-20T01:30:00Z"
+
+pin:
+  psg_release_version: PSG-REL-20260719-FG15-09c72b93
+  git_sha: "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
+  git_sha_short: "09c72b93"
+  contract_bytecode_pin: v311_sepolia_clean_baseline
+
+evidence:
+  root_hint: evidence/GO_fg15_observation_48h
+  policy: IMMUTABLE_NO_DELETE_NO_OVERWRITE
+  note: >
+    Preserve for production audit trail ("why did older observation records
+    exist?"). New samples/elapsed/promotion MUST NOT write here.
+
+deploy_baseline:
+  key: v311_sepolia_clean_baseline
+  role: HISTORICAL_SEPOLIA_STACK_SNAPSHOT
+  registry: registry/protocol-convergence-deployments.v1.yaml
+
+superseded_by:
+  track_id: FG-15-B
+  web3_mainline: registry/web3-mainline.v1.yaml
+  candidate: registry/web3-candidate-v2.v1.yaml
+  psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+
+forbidden_for_new_flows:
+  - new_tests_read_fg15_a_contract_addresses_as_ssot
+  - new_evidence_write_to_fg15_a_root
+  - new_promotion_cite_fg15_a_release_sha
+  - new_mainnet_package_cite_fg15_a_baseline
+  - new_runtime_attestation_pin_to_fg15_a
+
+allowed:
+  - read_only_audit
+  - forensic_compare
+  - historical_timeline_cite_as_ARCHIVED

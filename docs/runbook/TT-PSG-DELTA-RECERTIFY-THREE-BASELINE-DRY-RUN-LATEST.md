@@ -1,9 +1,9 @@
 # PSG Delta Recertify · Three Baseline · DRY-RUN
 
 **Status:** `DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE` · **REPORT ONLY** · **≠ GO**
-**Recorded:** `2026-07-22T04:35:29Z`
+**Recorded:** `2026-07-22T04:36:57Z`
 **Pin / Runtime tip:** `PSG-REL-20260720-WEB3-CAND-V2` @ `97289a718561…`
-**HEAD:** `fbb9dc0e6442…` · dirty=8
+**HEAD:** `1d62a9e8035b…` · dirty=6
 
 ## Verdict
 
@@ -18,23 +18,23 @@
 |------|----|--------|
 | `final_release` | ✅ | `{"freeze_status": "FROZEN", "cert_suite": "ARMED_NOT_EXECUTED", "ok": true}` |
 | `registry_active` | ✅ | `{"pin": "PSG-REL-20260720-WEB3-CAND-V2", "sha": "97289a7185610ef0ad8822f0af04bfa533e42986", "ok": true}` |
-| `baseline_candidate` | ❌ | `{"status": null, "ok": false}` |
+| `baseline_candidate` | ✅ | `{"status": "ACTIVE_WEB3_CANDIDATE_BASELINE", "pin": "PSG-REL-20260720-WEB3-CAND-V2", "ok": true}` |
 | `baseline_v311` | ✅ | `{"path_exists": true, "ok": true}` |
 | `baseline_egm` | ✅ | `{"adjudication": "CLOSED_AS_FRAMEWORK_DESIGN", "ok": true}` |
 | `engineering_ssot` | ✅ | `{"status": "ACTIVE_UNDER_PSG", "ok": true}` |
-| `git` | ❌ | `{"head": "fbb9dc0e6442229997559d5308c8acfe3e0f5a50", "dirty": 8, "runtime_tip": "97289a7185610ef0ad8822f0af04bfa533e4298` |
+| `git` | ❌ | `{"head": "1d62a9e8035b03aedcbcb97a5814aa0b48f025a5", "dirty": 6, "runtime_tip": "97289a7185610ef0ad8822f0af04bfa533e4298` |
 | `staging_api` | ✅ | `{"sha": "97289a7185610ef0ad8822f0af04bfa533e42986", "pin": "PSG-REL-20260720-WEB3-CAND-V2", "profile": "v311_fund_safety` |
 | `staging_web` | ✅ | `{"bake_sha": "97289a7185610ef0ad8822f0af04bfa533e42986", "bake_pin": "PSG-REL-20260720-WEB3-CAND-V2", "db": "staging_rc_` |
-| `evidence` | ❌ | `{"sha": null, "pin": null, "ok": false}` |
+| `evidence` | ✅ | `{"sha": "97289a7185610ef0ad8822f0af04bfa533e42986", "pin": "PSG-REL-20260720-WEB3-CAND-V2", "ok": true}` |
 | `deploy_defaults` | ✅ | `{"polluted_lines": [], "ok": true}` |
 
 ## Findings
 
-- **P1** `EVIDENCE_IDENTITY_DRIFT` — {'sha': None, 'pin': None, 'ok': False}
+_none_
 
 ## Expected Differences
 
-- `FREEZE_OVERLAY_HEAD_VS_RUNTIME_TIP` — HEAD=fbb9dc0e6442 runtime_tip=97289a718561 — CONFIRM_DESIGN until Owner redeploy or tip mint
+- `FREEZE_OVERLAY_HEAD_VS_RUNTIME_TIP` — HEAD=1d62a9e8035b runtime_tip=97289a718561 — CONFIRM_DESIGN until Owner redeploy or tip mint
 
 ## Honesty
 

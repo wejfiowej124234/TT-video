@@ -1,0 +1,75 @@
+{
+  "schema": "traveltrust.web3_candidate_v2_release_identity.v1",
+  "recorded_utc": "2026-07-22T03:02:05Z",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "role": "ACTIVE_WEB3_CANDIDATE_BASELINE",
+  "fg15_track": "FG-15-B",
+  "promotion": "PROMOTION_CANDIDATE",
+  "git_sha": "97289a7185610ef0ad8822f0af04bfa533e42986",
+  "git_sha_short": "97289a718561",
+  "contract_bytecode_pin": "v311_fund_safety_candidate_v2",
+  "contract_digest_bundle_sha256": "20e6d564046bf984e1a02a6feaf5f052dbd2abf2cc18ecd34d38ca7b118740ab",
+  "abi_digest_paths": [
+    "contracts/abi/Escrow.json",
+    "contracts/abi/EscrowFactory.json",
+    "contracts/abi/SettlementRouter.json"
+  ],
+  "files": [
+    {
+      "path": "contracts/src/Escrow.sol",
+      "sha256": "c60b95c8a9cb28702bc0c70d617ee8ef8af011b4236794b4b902457cc40aec2e",
+      "bytes": 14492
+    },
+    {
+      "path": "contracts/src/EscrowFactory.sol",
+      "sha256": "fc5daa1a98b52b1289bb21fc828502d668251a1a9a669898b9e4a801bed93012",
+      "bytes": 3136
+    },
+    {
+      "path": "contracts/src/SettlementRouter.sol",
+      "sha256": "b3a099e73341dcd906ad2d75d378389b6eb6e896519849462674bbc664046bd8",
+      "bytes": 8172
+    },
+    {
+      "path": "contracts/src/ISettlementRouter.sol",
+      "sha256": "c8c7a77cb9e8f89b5eede23a88298d66799e9e55d8582cde6814d6c69ebf0970",
+      "bytes": 1916
+    },
+    {
+      "path": "contracts/abi/Escrow.json",
+      "sha256": "19c1c464804f997326e2c457b11fdb1e174e51fed7f5d0b92e7b14a7bd8d77db",
+      "bytes": 88801
+    },
+    {
+      "path": "contracts/abi/EscrowFactory.json",
+      "sha256": "f1ef8c37c9fc2b3fd704f371bad468e98a7d0d6298bf5737412da655f145ad00",
+      "bytes": 74018
+    },
+    {
+      "path": "contracts/abi/SettlementRouter.json",
+      "sha256": "01bab96a8e68f969d94dc1146c8086ff01c648deca77f513702e0c8ecc9b9e6d",
+      "bytes": 59623
+    }
+  ],
+  "historical_fg15_a": {
+    "pin": "PSG-REL-20260719-FG15-09c72b93",
+    "status": "ARCHIVED_HISTORICAL",
+    "promotion": "FORBIDDEN",
+    "evidence_immutable": true
+  },
+  "forbids": [
+    "new_tests_read_fg15_a_addresses",
+    "new_evidence_write_fg15_a_root",
+    "new_promotion_cite_fg15_a_sha",
+    "new_mainnet_package_cite_fg15_a_baseline"
+  ],
+  "reality_closure_runtime_align": {
+    "prior_git_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+    "runtime_tip": "a9730cdaadb33e71059079a93e6a25a8e434b5be",
+    "staging_api": "https://tt-api-staging.fly.dev",
+    "note": "git_sha re-pinned to Staging Reality tip; contract_bytecode_pin + digests unchanged; Candidate Archive contracts not mutated"
+  },
+  "historical_prior_identity_sha": "652bbab51a1eb0652ea31f18ae4146fbe325a1ea",
+  "pin_policy": "FROZEN_FOR_PROJECT_A",
+  "honesty": "Identity tip-aligned · ≠ Production GO · ≠ Hard Gate"
+}
