@@ -30,7 +30,7 @@ Architecture Constitution / L0 / PGC
 | 键 | 值 |
 |----|-----|
 | Pin | `PSG-REL-20260720-WEB3-CAND-V2` |
-| Tip SHA | `f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a` |
+| Tip SHA | `1b6229234ab6cdc5fdd01b20af60a7c2f7de1566` |
 | Contract profile | `v311_fund_safety_candidate_v2` |
 | Economic | **V3.1.1 Final** |
 | EGM | **PSG-EGM Final** · `CLOSED_AS_FRAMEWORK_DESIGN` |
@@ -65,7 +65,7 @@ FG-15-B 48h ELAPSED（证据已 ELAPSED · Registry 须对齐）
   →（另闸）Production GO
 ```
 
-**当前：** FINAL RELEASE `freeze_status=NOT_FROZEN` → 认证套件 **FORBIDDEN**。
+**当前：** FINAL RELEASE `freeze_status=FROZEN` · UI Delta tip `1b622923` · 认证套件 **暂停**（须 Owner 明确再开）。
 
 ---
 

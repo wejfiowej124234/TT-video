@@ -1,0 +1,58 @@
+# PCR-20260722-UI-DELTA-HOME-AI-PREVIEW-GATE-FREEZE
+#
+# Delta Change under Candidate pin (no new PSG Release Version mint).
+# UI: home `/` AI itinerary card state machine — frost until form ready;
+# live cards + order CTAs only after explicit「AI 生成行程」.
+# Prior UI Delta tip f9c227de (cinema/promo) remains in lineage.
+# Re-Freeze FINAL RELEASE BASELINE at product tip 1b622923.
+
+schema: traveltrust.psg_change_record.v1
+pcr_id: PCR-20260722-UI-DELTA-HOME-AI-PREVIEW-GATE-FREEZE
+recorded_utc: "2026-07-22T07:05:00Z"
+class: DELTA_CHANGE_UI
+equals_production_go: false
+equals_staging_grade_go: false
+new_psg_release_version_minted: false
+
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+prior_runtime_tip: "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+ui_delta_git_sha: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
+freeze_status: FROZEN
+
+delta_scope:
+  - frontend/lib/landingAiItineraryFormReady.ts
+  - frontend/components/landing/useLandingPage.ts
+  - frontend/components/landing/ItineraryResultsSection.tsx
+  - frontend/app/(home)/page.tsx
+  - frontend/locales/zh.ts
+  - frontend/locales/en.ts
+  - frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+
+gates:
+  engineering_ssot_anchor: PASS
+  delta_recertify_dry_run: PENDING_AFTER_STAGING_TIP_ALIGN
+
+expected_difference:
+  - id: STAGING_WEB_TIP_LAG
+    disposition: CONFIRM_DESIGN_UNTIL_WEB_REDEPLOY
+    detail: >
+      Staging Web bake remains prior tip until Owner Web redeploy of 1b622923
+      (home AI preview gate).
+  - id: STAGING_API_TIP_LAG
+    disposition: CONFIRM_DESIGN_UNTIL_API_REDEPLOY_OR_ACCEPT
+    detail: >
+      Staging API may remain prior tip; this Delta is frontend-only but tip
+      equality still requires bake align for eight-way PASS.
+
+forbidden:
+  - Reality_W0_W7_as_mainline
+  - Hard_Gate_flip
+  - Production_GO
+  - new_pin_mint
+  - mutate_FG15_A_archive
+  - mutate_psg_go_archive_v1_1_0_20260717
+
+next:
+  - Staging Web (+ API if tip-gated) redeploy @ 1b622923
+  - eight-way consistency + Delta dry-run
+  - cert suite remains paused unless Owner restarts Inventory/Reality

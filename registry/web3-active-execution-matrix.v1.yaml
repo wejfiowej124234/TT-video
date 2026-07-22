@@ -41,7 +41,7 @@ address_authority:
     deploy_key: v311_fund_safety_candidate_v2
     status: ACTIVE_WEB3_CANDIDATE_BASELINE
     psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
-    runtime_tip_sha: "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+    runtime_tip_sha: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
     fg15_track: FG-15-B_ELAPSED
     does_not_mutate_fg15_a: true
 

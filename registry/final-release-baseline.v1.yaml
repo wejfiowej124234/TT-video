@@ -12,11 +12,11 @@ machine_key: TT_FINAL_RELEASE_BASELINE
 status: BASELINE_FROZEN
 freeze_status: FROZEN
 cert_suite: DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO
-ui_delta_status: WEB_API_TIP_ALIGNED
-recorded_utc: "2026-07-22T06:45:29Z"
-frozen_utc: "2026-07-22T06:45:29Z"
-freeze_pcr: PCR-20260722-UI-DELTA-CINEMA-PROMO-FREEZE
-prior_freeze_pcr: PCR-20260722-UI-DELTA-HOME-SOCIAL-FREEZE
+ui_delta_status: PENDING_STAGING_WEB_API_REDEPLOY
+recorded_utc: "2026-07-22T07:05:00Z"
+frozen_utc: "2026-07-22T07:05:00Z"
+freeze_pcr: PCR-20260722-UI-DELTA-HOME-AI-PREVIEW-GATE-FREEZE
+prior_freeze_pcr: PCR-20260722-UI-DELTA-CINEMA-PROMO-FREEZE
 pollution_cleanup: docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md
 equals_production_go: false
 equals_staging_grade_go: false
@@ -24,7 +24,7 @@ equals_psg_complete: false
 equals_reality_closure_pass: false
 cert_executed_this_session: false
 delta_dry_run_verdict: DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE
-delta_dry_run_recorded_utc: "2026-07-22T06:45:29Z"
+delta_dry_run_recorded_utc: "2026-07-22T07:05:00Z"
 
 engineering_ssot_anchor: registry/engineering-ssot-anchor.v1.yaml
 system_architecture_human: docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md
@@ -52,12 +52,12 @@ unique_system:
     machine: registry/economic-governance/egm-baseline.yaml
     evidence_status: NOT_STARTED
   code_release_tip:
-    git_sha: "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
-    git_sha_short: "f9c227de14ab"
-    selection_reason: ui_delta_l5_cinema_role_promo_sync
+    git_sha: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
+    git_sha_short: "1b6229234ab6"
+    selection_reason: ui_delta_home_ai_itinerary_preview_gate
     worktree_policy: UI_DELTA_COMMITTED_TRACK_B_DIRT_ISOLATED
-    freeze_commit_sha: "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
-    runtime_tip_sha: "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+    freeze_commit_sha: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
+    runtime_tip_sha: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
     runtime_redeploy_required_before_cert: false
     note: >
       UI Delta tip is Freeze SSOT. Staging bake still 97289a71 until Web redeploy.
@@ -87,7 +87,7 @@ eight_way_equality_target:
   - evidence
 
 alignment:
-  status: FROZEN_UI_DELTA_WEB_API_TIP_ALIGNED
+  status: FROZEN_UI_DELTA_PENDING_STAGING_REDEPLOY
   recorded_utc: "2026-07-22T05:05:00Z"
   eight_way:
     local_git: PASS
@@ -100,10 +100,12 @@ alignment:
     evidence: PASS
   ui_delta:
     status: COMMITTED
-    pcr: PCR-20260722-UI-DELTA-CINEMA-PROMO-FREEZE
-    commit: "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+    pcr: PCR-20260722-UI-DELTA-HOME-AI-PREVIEW-GATE-FREEZE
+    commit: "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
   blockers: []
   expected_differences:
+    - STAGING_WEB_TIP_LAG
+    - STAGING_API_TIP_LAG
     - FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP
 
 forbidden_as_active:

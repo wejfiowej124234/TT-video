@@ -35,7 +35,7 @@ FROZEN_GIT_SHA_ARCHIVED = "09c72b934b62f848e60b38bcc7ff0e6cac44f923"
 # Fallback only — Active pin SSOT = registry/psg-release-version-LATEST.yaml
 # Forbidden fallback: PSG-REL-20260722-STAGING-ALIGN-W0 (SUPERSEDED)
 FROZEN_PSG_RELEASE_VERSION = "PSG-REL-20260720-WEB3-CAND-V2"
-FROZEN_GIT_SHA = "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+FROZEN_GIT_SHA = "1b6229234ab6cdc5fdd01b20af60a7c2f7de1566"
 
 
 def git(*args: str) -> str:
