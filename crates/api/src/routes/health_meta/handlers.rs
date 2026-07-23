@@ -1,6 +1,12 @@
 //! GET `/meta`、`/meta/build`、`/metrics` 处理器。
 
-use axum::{extract::State, response::IntoResponse, Json};
+use axum::{
+    extract::{Query, State},
+    http::{header, HeaderValue, StatusCode},
+    response::IntoResponse,
+    Json,
+};
+use serde::Deserialize;
 use serde_json::json;
 use std::env;
 use std::fmt::Write as _;
@@ -10,7 +16,72 @@ use crate::middleware;
 use crate::state::{any_traveltrust_strict_db_write, dual_write_failure_policy, ApiMetaState};
 use traveltrust_core::FEE_ROUTE_COUNTRY_SSOT_FIELD;
 
+use super::meta_response_cache::{self, MetaCacheKey};
 use super::*;
+
+#[derive(Debug, Default, Deserialize)]
+pub(super) struct MetaQuery {
+    /// `1` / `true` — strip verbose `rule` / `*_top_keys` / `*_contract_*` (FE hot path).
+    #[serde(default)]
+    compact: Option<String>,
+    /// `view=runtime` — same as compact (alias).
+    #[serde(default)]
+    view: Option<String>,
+}
+
+impl MetaQuery {
+    fn is_compact(&self) -> bool {
+        let compact_flag = self
+            .compact
+            .as_deref()
+            .map(|s| {
+                let t = s.trim();
+                t == "1" || t.eq_ignore_ascii_case("true") || t.eq_ignore_ascii_case("yes")
+            })
+            .unwrap_or(false);
+        let view_runtime = self
+            .view
+            .as_deref()
+            .map(|s| s.trim().eq_ignore_ascii_case("runtime"))
+            .unwrap_or(false);
+        compact_flag || view_runtime
+    }
+}
+
+fn meta_http_response(body: serde_json::Value, cache_hit: bool, compact: bool) -> impl IntoResponse {
+    let cache_control = if compact {
+        "private, max-age=5, stale-while-revalidate=15"
+    } else {
+        // Full SSOT corpus: short private cache; identity probes use /meta/build instead.
+        "private, max-age=5"
+    };
+    (
+        StatusCode::OK,
+        [
+            (header::CACHE_CONTROL, HeaderValue::from_static(cache_control)),
+            (
+                header::HeaderName::from_static("x-traveltrust-meta-cache"),
+                HeaderValue::from_static(if cache_hit { "hit" } else { "miss" }),
+            ),
+            (
+                header::HeaderName::from_static("x-traveltrust-meta-view"),
+                HeaderValue::from_static(if compact { "compact" } else { "full" }),
+            ),
+        ],
+        Json(body),
+    )
+}
+
+fn meta_build_http_response(body: serde_json::Value) -> impl IntoResponse {
+    (
+        StatusCode::OK,
+        [(
+            header::CACHE_CONTROL,
+            HeaderValue::from_static("public, max-age=60, stale-while-revalidate=300"),
+        )],
+        Json(body),
+    )
+}
 
 /// GET /health/ready — readiness with PostgreSQL ping when pool is mounted.
 pub(super) async fn health_ready(State(state): State<ApiMetaState>) -> impl IntoResponse {
@@ -49,17 +120,33 @@ pub(super) async fn health_ready(State(state): State<ApiMetaState>) -> impl Into
     }
 }
 
-pub(super) async fn meta_build_only() -> Json<serde_json::Value> {
-    Json(meta_build_value())
+pub(super) async fn meta_build_only() -> impl IntoResponse {
+    meta_build_http_response(meta_build_value())
 }
 
 /// GET /meta/release-identity — flat Runtime Attestation for Version Gate STRICT.
-pub(super) async fn meta_release_identity() -> Json<serde_json::Value> {
-    Json(release_identity_value())
+pub(super) async fn meta_release_identity() -> impl IntoResponse {
+    meta_build_http_response(release_identity_value())
 }
 
 /// GET /meta: 版本与运行时默认配置快照（用于 08 drift/evidence 与 FE 版本绑定）；§8.2 暴露 database_connected（55 优化）
-pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse {
+///
+/// PERF-001/002：进程内 TTL 缓存 + 构建 singleflight；`?compact=1` / `?view=runtime` 裁剪 rule/top_keys 语料。
+/// 身份探针请优先 **`GET /meta/build`** / **`GET /meta/release-identity`**。
+pub(super) async fn meta(
+    State(state): State<ApiMetaState>,
+    Query(query): Query<MetaQuery>,
+) -> impl IntoResponse {
+    let compact = query.is_compact();
+    let cache_key = MetaCacheKey::from_compact(compact);
+    if let Some(cached) = meta_response_cache::get(cache_key) {
+        return meta_http_response(cached, true, compact).into_response();
+    }
+    let _build_guard = meta_response_cache::lock_build(cache_key).await;
+    if let Some(cached) = meta_response_cache::get(cache_key) {
+        return meta_http_response(cached, true, compact).into_response();
+    }
+
     let database_connected = state
         .chain_off
         .as_ref()
@@ -1062,7 +1149,11 @@ pub(super) async fn meta(State(state): State<ApiMetaState>) -> impl IntoResponse
             serde_json::Value::String(format_meta_root_top_keys_contract_728()),
         );
     }
-    Json(meta_response)
+    if compact {
+        meta_response_cache::strip_meta_verbose_keys(&mut meta_response);
+    }
+    meta_response_cache::put(cache_key, meta_response.clone());
+    meta_http_response(meta_response, false, compact).into_response()
 }
 
 /// GET /metrics：P31 可观测；Prometheus 文本格式。

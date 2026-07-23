@@ -1,0 +1,255 @@
+{
+  "recorded_utc": "2026-07-23T09:21:27Z",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "runtime_git_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "endpoints": {
+    "api_health": {
+      "url": "https://tt-api-staging.fly.dev/health",
+      "n": 12,
+      "ok": 12,
+      "fail": 0,
+      "p50_ms": 1772.56,
+      "p95_ms": 4904.45,
+      "p99_ms": 6927.25,
+      "max_ms": 7432.95,
+      "mean_ms": 2325.2,
+      "bytes_mean": 2.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 1500,
+      "pass_p95": false
+    },
+    "api_meta_build": {
+      "url": "https://tt-api-staging.fly.dev/meta/build",
+      "n": 12,
+      "ok": 12,
+      "fail": 0,
+      "p50_ms": 1640.53,
+      "p95_ms": 4861.16,
+      "p99_ms": 6989.7,
+      "max_ms": 7521.84,
+      "mean_ms": 2303.82,
+      "bytes_mean": 1302.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 3000,
+      "pass_p95": false
+    },
+    "api_meta_compact": {
+      "url": "https://tt-api-staging.fly.dev/meta?compact=1",
+      "n": 12,
+      "ok": 11,
+      "fail": 1,
+      "p50_ms": 7099.35,
+      "p95_ms": 8076.46,
+      "p99_ms": 8357.4,
+      "max_ms": 8427.64,
+      "mean_ms": 7218.6,
+      "bytes_mean": 74718.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 8000,
+      "pass_p95": false
+    },
+    "api_meta_full": {
+      "url": "https://tt-api-staging.fly.dev/meta",
+      "n": 12,
+      "ok": 12,
+      "fail": 0,
+      "p50_ms": 7500.6,
+      "p95_ms": 11919.05,
+      "p99_ms": 12017.02,
+      "max_ms": 12041.52,
+      "mean_ms": 8099.46,
+      "bytes_mean": 74718.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 8000,
+      "pass_p95": false
+    },
+    "api_discover": {
+      "url": "https://tt-api-staging.fly.dev/api/v1/discover/orders?limit=5",
+      "n": 12,
+      "ok": 12,
+      "fail": 0,
+      "p50_ms": 1617.23,
+      "p95_ms": 6610.42,
+      "p99_ms": 6690.75,
+      "max_ms": 6710.84,
+      "mean_ms": 2474.41,
+      "bytes_mean": 1359.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 3000,
+      "pass_p95": false
+    },
+    "api_guides": {
+      "url": "https://tt-api-staging.fly.dev/api/v1/guides?limit=5",
+      "n": 12,
+      "ok": 11,
+      "fail": 1,
+      "p50_ms": 1610.22,
+      "p95_ms": 4286.16,
+      "p99_ms": 6254.18,
+      "max_ms": 6746.19,
+      "mean_ms": 2079.02,
+      "bytes_mean": 3218.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 3000,
+      "pass_p95": false
+    },
+    "api_announcements": {
+      "url": "https://tt-api-staging.fly.dev/api/v1/public/announcements?limit=5",
+      "n": 12,
+      "ok": 11,
+      "fail": 1,
+      "p50_ms": 1590.01,
+      "p95_ms": 4362.47,
+      "p99_ms": 6096.97,
+      "max_ms": 6530.6,
+      "mean_ms": 2068.28,
+      "bytes_mean": 4456.0,
+      "sample_headers": {
+        "cache-control": "public, max-age=60, stale-while-revalidate=120",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 3000,
+      "pass_p95": false
+    },
+    "web_home": {
+      "url": "https://tt-web-staging.fly.dev/",
+      "n": 8,
+      "ok": 7,
+      "fail": 1,
+      "p50_ms": 2375.36,
+      "p95_ms": 3338.24,
+      "p99_ms": 3406.25,
+      "max_ms": 3423.25,
+      "mean_ms": 2643.14,
+      "bytes_mean": 78847.0,
+      "sample_headers": {
+        "cache-control": "s-maxage=31536000",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 3000,
+      "pass_p95": false
+    },
+    "web_market": {
+      "url": "https://tt-web-staging.fly.dev/market",
+      "n": 8,
+      "ok": 7,
+      "fail": 1,
+      "p50_ms": 2741.64,
+      "p95_ms": 3151.76,
+      "p99_ms": 3195.38,
+      "max_ms": 3206.28,
+      "mean_ms": 2827.84,
+      "bytes_mean": 141567.0,
+      "sample_headers": {
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 3000,
+      "pass_p95": false
+    },
+    "web_login": {
+      "url": "https://tt-web-staging.fly.dev/auth/login",
+      "n": 8,
+      "ok": 8,
+      "fail": 0,
+      "p50_ms": 2112.22,
+      "p95_ms": 2793.1,
+      "p99_ms": 2960.62,
+      "max_ms": 3002.5,
+      "mean_ms": 2187.98,
+      "bytes_mean": 38515.0,
+      "sample_headers": {
+        "cache-control": "s-maxage=31536000",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      },
+      "budget_p95_ms": 3000,
+      "pass_p95": true
+    }
+  },
+  "concurrency": {
+    "meta_build_5x2": {
+      "n": 10,
+      "ok": 10,
+      "fail": 0,
+      "p50_ms": 1771.4,
+      "p95_ms": 6819.29,
+      "p99_ms": 6955.07,
+      "max_ms": 6989.01,
+      "mean_ms": 3246.31,
+      "bytes_mean": 1302.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      }
+    },
+    "meta_compact_5x2": {
+      "n": 10,
+      "ok": 9,
+      "fail": 1,
+      "p50_ms": 9747.12,
+      "p95_ms": 10429.44,
+      "p99_ms": 10710.26,
+      "max_ms": 10780.47,
+      "mean_ms": 9392.45,
+      "bytes_mean": 74718.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      }
+    },
+    "health_10": {
+      "n": 10,
+      "ok": 10,
+      "fail": 0,
+      "p50_ms": 1590.43,
+      "p95_ms": 2008.94,
+      "p99_ms": 2147.45,
+      "max_ms": 2182.07,
+      "mean_ms": 1646.44,
+      "bytes_mean": 2.0,
+      "sample_headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      }
+    }
+  },
+  "optimization_live_signals": {
+    "compact_bytes_reduced": false,
+    "meta_cache_header_present": false,
+    "meta_view_compact": false,
+    "cache_control_not_only_nostore": false,
+    "optimization_runtime_live": false
+  }
+}

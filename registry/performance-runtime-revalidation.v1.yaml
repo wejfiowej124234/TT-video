@@ -1,0 +1,22 @@
+# Performance Runtime Revalidation — living machine SSOT
+# Human: docs/runbook/TT-PERFORMANCE-RUNTIME-REVALIDATION-LATEST.md
+# Runner: python scripts/dev/run-performance-runtime-revalidation.py
+
+schema: traveltrust.performance_runtime_revalidation.v1
+machine_key: TT_PERFORMANCE_RUNTIME_REVALIDATION
+recorded_utc: "2026-07-23T09:23:34Z"
+unique_rc_tip: "ea71c577ce6f99696df33f9394cf96746edc843b"
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+verdict: PERFORMANCE_RUNTIME_REVALIDATION_WAITING_DEPLOY
+equals_production_go: false
+baseline_mutated: false
+new_rc_created: false
+psg_egm_mutated: false
+candidate_v2_mutated: false
+product_baseline_mutated: false
+mainnet_hard_gate_touched: false
+cutover_entered: false
+optimization_runtime_live: false
+rebind_ok: true
+evidence: evidence/PSG-PRODUCTION-READINESS/performance-runtime-revalidation/PERFORMANCE-RUNTIME-REVALIDATION-LATEST.json
+probes: evidence/PSG-PRODUCTION-READINESS/performance-runtime-revalidation/LIVE-RUNTIME-PROBES.json

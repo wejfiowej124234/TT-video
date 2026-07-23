@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.tt_performance_certification.v1",
+  "machine_key": "TT_PERFORMANCE_CERTIFICATION",
+  "recorded_utc": "2026-07-23T02:13:36Z",
+  "pcr_id": "PCR-20260723-PERFORMANCE-CERTIFICATION-DELTA-REVALIDATION",
+  "unique_rc_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "contract_profile": "v311_fund_safety_candidate_v2",
+  "verdict": "PERFORMANCE_CERTIFICATION_PASS_WITH_ED",
+  "p0_open_count": 0,
+  "p0_open": [],
+  "expected_differences": [
+    {
+      "id": "PERF_TIP_FRESH_LOAD_NOT_RE_RUN",
+      "class": "EXPECTED_DIFFERENCE",
+      "detail": "Historical perf-summary capacity cites revalidated; tip-fresh load test not re-executed in delta"
+    }
+  ],
+  "dimensions": {
+    "load": {
+      "status": "PASS_WITH_ED",
+      "priority": "P0",
+      "p0_open": false,
+      "detail": {
+        "checks": [
+          "api_qps",
+          "db_load",
+          "concurrent_orders",
+          "web3_rpc"
+        ],
+        "packs_sample": [
+          "evidence/GO_production_readiness/wave-2-g2/20260704T062229Z/performance-b001/perf-summary.json",
+          "evidence/GO_production_readiness/g2-reality-verification/20260704T054535Z/performance-b001/perf-summary.json",
+          "evidence/GO_production_readiness/g2-reality-verification/20260704T021232Z/performance-b001/perf-summary.json",
+          "evidence/GO_production_readiness/g2-reality-fix/20260704T015722Z/performance-b001/perf-summary.json"
+        ],
+        "capacity_known": true
+      },
+      "expected_differences": [
+        {
+          "id": "PERF_TIP_FRESH_LOAD_NOT_RE_RUN",
+          "class": "EXPECTED_DIFFERENCE",
+          "detail": "Historical perf-summary capacity cites revalidated; tip-fresh load test not re-executed in delta"
+        }
+      ]
+    }
+  },
+  "axis05": {
+    "untouched": true,
+    "hold_continues": true,
+    "safe_status": "WAITING_FOR_MAINNET_SAFE",
+    "safe_address": "TBD"
+  },
+  "forbidden_observed": {
+    "new_rc_minted": false,
+    "mainnet_cutover": false,
+    "production_go": false,
+    "axis05_forged": false
+  },
+  "equals_production_go": false,
+  "equals_mainnet_cutover": false,
+  "honesty": "Production Certification deep audit. AXIS-05 HOLD orthogonal. PASS ≠ Cutover ≠ Production GO ≠ Shadow GO without deep certs.",
+  "stamp": "D:\\TravelTrust-V1.1\\evidence\\PSG-PRODUCTION-READINESS\\performance-certification\\PERFORMANCE-CERTIFICATION-20260723T021336Z",
+  "delta_revalidation": true
+}

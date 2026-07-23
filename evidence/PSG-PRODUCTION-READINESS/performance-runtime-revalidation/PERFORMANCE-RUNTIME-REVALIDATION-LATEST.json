@@ -1,0 +1,355 @@
+{
+  "schema": "traveltrust.performance_runtime_revalidation.v1",
+  "machine_key": "TT_PERFORMANCE_RUNTIME_REVALIDATION",
+  "pcr_id": "PCR-20260723-PERFORMANCE-RUNTIME-REVALIDATION",
+  "recorded_utc": "2026-07-23T09:23:34Z",
+  "stamp": "20260723T092334Z",
+  "unique_rc_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "verdict": "PERFORMANCE_RUNTIME_REVALIDATION_WAITING_DEPLOY",
+  "equals_production_go": false,
+  "baseline_mutated": false,
+  "new_rc_created": false,
+  "psg_egm_mutated": false,
+  "candidate_v2_mutated": false,
+  "product_baseline_mutated": false,
+  "economic_model_mutated": false,
+  "mainnet_hard_gate_touched": false,
+  "cutover_entered": false,
+  "preconditions": {
+    "optimization_closure": "PERFORMANCE_OPTIMIZATION_CLOSURE_PASS",
+    "head": "ea71c577ce6f99696df33f9394cf96746edc843b",
+    "runtime_git_sha": "ea71c577ce6f99696df33f9394cf96746edc843b"
+  },
+  "dimensions": {
+    "tip_alignment": {
+      "status": "PASS",
+      "expected": "ea71c577ce6f99696df33f9394cf96746edc843b",
+      "runtime_git_sha": "ea71c577ce6f99696df33f9394cf96746edc843b"
+    },
+    "optimization_runtime_live": {
+      "status": "WAITING_DEPLOY",
+      "signals": {
+        "compact_bytes_reduced": false,
+        "meta_cache_header_present": false,
+        "meta_view_compact": false,
+        "cache_control_not_only_nostore": false,
+        "optimization_runtime_live": false
+      },
+      "note": "Require compact body << full (~75KB) AND x-traveltrust-meta-cache|view headers. Local Optimization Closure code is NOT on Staging tip binary until deploy."
+    },
+    "meta_identity_hot_path": {
+      "status": "PASS",
+      "endpoint": "/meta/build",
+      "p50_ms": 1640.53,
+      "p95_ms": 4861.16,
+      "p99_ms": 6989.7,
+      "bytes_mean": 1302.0,
+      "note": "Identity probe exists on tip; latency subject to Fly cold-start variance"
+    },
+    "meta_compact_path": {
+      "status": "WAITING_DEPLOY",
+      "p50_ms": 7099.35,
+      "p95_ms": 8076.46,
+      "p99_ms": 8357.4,
+      "bytes_mean": 74718.0,
+      "full_bytes_mean": 74718.0,
+      "headers": {
+        "cache-control": "no-store",
+        "x-traveltrust-meta-cache": null,
+        "x-traveltrust-meta-view": null
+      }
+    },
+    "api_hot_paths": {
+      "status": "PASS_WITH_ED",
+      "endpoints": {
+        "api_health": {
+          "url": "https://tt-api-staging.fly.dev/health",
+          "n": 12,
+          "ok": 12,
+          "fail": 0,
+          "p50_ms": 1772.56,
+          "p95_ms": 4904.45,
+          "p99_ms": 6927.25,
+          "max_ms": 7432.95,
+          "mean_ms": 2325.2,
+          "bytes_mean": 2.0,
+          "sample_headers": {
+            "cache-control": "no-store",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          },
+          "budget_p95_ms": 1500,
+          "pass_p95": false
+        },
+        "api_discover": {
+          "url": "https://tt-api-staging.fly.dev/api/v1/discover/orders?limit=5",
+          "n": 12,
+          "ok": 12,
+          "fail": 0,
+          "p50_ms": 1617.23,
+          "p95_ms": 6610.42,
+          "p99_ms": 6690.75,
+          "max_ms": 6710.84,
+          "mean_ms": 2474.41,
+          "bytes_mean": 1359.0,
+          "sample_headers": {
+            "cache-control": "no-store",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          },
+          "budget_p95_ms": 3000,
+          "pass_p95": false
+        },
+        "api_guides": {
+          "url": "https://tt-api-staging.fly.dev/api/v1/guides?limit=5",
+          "n": 12,
+          "ok": 11,
+          "fail": 1,
+          "p50_ms": 1610.22,
+          "p95_ms": 4286.16,
+          "p99_ms": 6254.18,
+          "max_ms": 6746.19,
+          "mean_ms": 2079.02,
+          "bytes_mean": 3218.0,
+          "sample_headers": {
+            "cache-control": "no-store",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          },
+          "budget_p95_ms": 3000,
+          "pass_p95": false
+        },
+        "api_announcements": {
+          "url": "https://tt-api-staging.fly.dev/api/v1/public/announcements?limit=5",
+          "n": 12,
+          "ok": 11,
+          "fail": 1,
+          "p50_ms": 1590.01,
+          "p95_ms": 4362.47,
+          "p99_ms": 6096.97,
+          "max_ms": 6530.6,
+          "mean_ms": 2068.28,
+          "bytes_mean": 4456.0,
+          "sample_headers": {
+            "cache-control": "public, max-age=60, stale-while-revalidate=120",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          },
+          "budget_p95_ms": 3000,
+          "pass_p95": false
+        }
+      },
+      "note": "This run saw Fly cold-start spikes vs prior morning probes — ED variance, not EGM"
+    },
+    "concurrency": {
+      "status": "PASS_WITH_ED",
+      "probes": {
+        "meta_build_5x2": {
+          "n": 10,
+          "ok": 10,
+          "fail": 0,
+          "p50_ms": 1771.4,
+          "p95_ms": 6819.29,
+          "p99_ms": 6955.07,
+          "max_ms": 6989.01,
+          "mean_ms": 3246.31,
+          "bytes_mean": 1302.0,
+          "sample_headers": {
+            "cache-control": "no-store",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          }
+        },
+        "meta_compact_5x2": {
+          "n": 10,
+          "ok": 9,
+          "fail": 1,
+          "p50_ms": 9747.12,
+          "p95_ms": 10429.44,
+          "p99_ms": 10710.26,
+          "max_ms": 10780.47,
+          "mean_ms": 9392.45,
+          "bytes_mean": 74718.0,
+          "sample_headers": {
+            "cache-control": "no-store",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          }
+        },
+        "health_10": {
+          "n": 10,
+          "ok": 10,
+          "fail": 0,
+          "p50_ms": 1590.43,
+          "p95_ms": 2008.94,
+          "p99_ms": 2147.45,
+          "max_ms": 2182.07,
+          "mean_ms": 1646.44,
+          "bytes_mean": 2.0,
+          "sample_headers": {
+            "cache-control": "no-store",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          }
+        }
+      },
+      "note": "health×10 availability used; compact concurrent path WAITING_DEPLOY until opt live"
+    },
+    "frontend_ttfb": {
+      "status": "PASS_WITH_ED",
+      "endpoints": {
+        "web_home": {
+          "url": "https://tt-web-staging.fly.dev/",
+          "n": 8,
+          "ok": 7,
+          "fail": 1,
+          "p50_ms": 2375.36,
+          "p95_ms": 3338.24,
+          "p99_ms": 3406.25,
+          "max_ms": 3423.25,
+          "mean_ms": 2643.14,
+          "bytes_mean": 78847.0,
+          "sample_headers": {
+            "cache-control": "s-maxage=31536000",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          },
+          "budget_p95_ms": 3000,
+          "pass_p95": false
+        },
+        "web_market": {
+          "url": "https://tt-web-staging.fly.dev/market",
+          "n": 8,
+          "ok": 7,
+          "fail": 1,
+          "p50_ms": 2741.64,
+          "p95_ms": 3151.76,
+          "p99_ms": 3195.38,
+          "max_ms": 3206.28,
+          "mean_ms": 2827.84,
+          "bytes_mean": 141567.0,
+          "sample_headers": {
+            "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          },
+          "budget_p95_ms": 3000,
+          "pass_p95": false
+        },
+        "web_login": {
+          "url": "https://tt-web-staging.fly.dev/auth/login",
+          "n": 8,
+          "ok": 8,
+          "fail": 0,
+          "p50_ms": 2112.22,
+          "p95_ms": 2793.1,
+          "p99_ms": 2960.62,
+          "max_ms": 3002.5,
+          "mean_ms": 2187.98,
+          "bytes_mean": 38515.0,
+          "sample_headers": {
+            "cache-control": "s-maxage=31536000",
+            "x-traveltrust-meta-cache": null,
+            "x-traveltrust-meta-view": null
+          },
+          "budget_p95_ms": 3000,
+          "pass_p95": true
+        }
+      },
+      "note": "curl HTML shell latency — not lab CWV"
+    },
+    "core_web_vitals_lab": {
+      "status": "WAITING_ENV",
+      "note": "Lighthouse/CWV lab + field RUM not executed this pack — no fake green"
+    },
+    "postgres_slow_query": {
+      "status": "WAITING_ENV",
+      "note": "No direct Staging PG / pg_stat_statements this session"
+    },
+    "user_interaction_inp": {
+      "status": "WAITING_ENV",
+      "note": "No physical device / INP lab; cite UAT Reality Closure browser walks only"
+    }
+  },
+  "holds": [
+    {
+      "id": "PERF-RT-OPT-NOT-DEPLOYED",
+      "severity": "P1",
+      "disposition": "WAITING_DEPLOY",
+      "title": "Staging runtime lacks compact/cache/singleflight headers",
+      "detail": "compact_bytes=74718.0 full_bytes=74718.0 headers={'cache-control': 'no-store', 'x-traveltrust-meta-cache': None, 'x-traveltrust-meta-view': None} — Optimization Closure code local-only"
+    },
+    {
+      "id": "PERF-RT-CWV-LAB",
+      "severity": "ED",
+      "disposition": "WAITING_ENV",
+      "title": "Core Web Vitals lab/field not re-run"
+    },
+    {
+      "id": "PERF-RT-PG-SLOWQUERY",
+      "severity": "ED",
+      "disposition": "WAITING_ENV",
+      "title": "Postgres slow-query dump not collected"
+    },
+    {
+      "id": "PERF-RT-INP",
+      "severity": "ED",
+      "disposition": "WAITING_ENV",
+      "title": "User interaction INP lab not executed"
+    }
+  ],
+  "live_probes": "evidence/PSG-PRODUCTION-READINESS/performance-runtime-revalidation/LIVE-RUNTIME-PROBES.json",
+  "rebind": [
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "verdict=PRODUCTION_EVIDENCE_AUTHENTICITY_AUDIT_PASS_WITH_ED p0=[] findings=[]\nproduction-evidence-authenticity-audit-gate: OK Authenticity PASS; AXIS-05 untouched; no Cutover/GO; Baseline not mutated\n",
+      "id": "evidence_authenticity"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "{\n  \"verdict\": \"DRY_RUN_PASS\",\n  \"p0\": 0,\n  \"expected\": 0,\n  \"out\": \"D:\\\\TravelTrust-V1.1\\\\docs\\\\runbook\\\\TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.json\"\n}\n",
+      "id": "delta_recertify_dry_run"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_REALITY_CLOSURE_GATE: start\nTT_REALITY_CLOSURE_GATE: REALITY_CLOSURE_PASS\n  next: Production Readiness Review (separate gate �� �� automatic Production GO)\n",
+      "id": "reality_closure"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_PSG_REALITY_CLOSURE_PRR_VERIFICATION_GATE: start\nTT_PSG_REALITY_CLOSURE_PRR_VERIFICATION_GATE: PASS\n  verdict=PSG_REALITY_CLOSURE_PRR_VERIFICATION_PASS_WITH_ED\n  tip=ea71c577ce6f99696df33f9394cf96746edc843b pin=PSG-REL-20260720-WEB3-CAND-V2\n  honesty: �� Production GO �� Hard Gate untouched\n",
+      "id": "reality_closure_prr"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_FINAL_TRUTH_REGRESSION_FREEZE_GATE: start\nTT_FINAL_TRUTH_REGRESSION_FREEZE_GATE: PASS\n  freeze_status=FINAL_TRUTH_REGRESSION_FROZEN\n  architecture_changes=FORBIDDEN\n  tip=ea71c577ce6f99696df33f9394cf96746edc843b pin=PSG-REL-20260720-WEB3-CAND-V2\n  next: wait Owner Mainnet Safe �� AXIS-05 �� no architecture changes\n",
+      "id": "regression_freeze"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_ENGINEERING_SSOT_ANCHOR_GATE: start\nversion-gate defaults: OK\ndockerfile ARG: OK\napi default: OK\nmint refuse: OK\nTT_ENGINEERING_SSOT_ANCHOR_GATE: PASS\n",
+      "id": "engineering_ssot"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_WEB3_MAINLINE_CANDIDATE_V2_GATE: PASS\nNOTE: FG-15-A ARCHIVED_HISTORICAL · Candidate v2 ACTIVE Web3 mainline · Wave FORBIDDEN\n",
+      "id": "candidate_v2"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_GATE: start\nTT_PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_GATE: PASS\n  verdict=PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_PASS_WITH_ED\n  tip=ea71c577ce6f99696df33f9394cf96746edc843b pin=PSG-REL-20260720-WEB3-CAND-V2 p0=0\n  Safari/CWV WAITING_ENV �� �� Production GO\n",
+      "id": "performance_audit_gate"
+    }
+  ],
+  "rebind_ok": true,
+  "honesty": "Staging tip ea71c577 aligned. Optimization Closure code (compact/cache/singleflight) is local working tree — NOT present on Staging runtime (compact still ~75KB, no x-traveltrust-meta-* headers). Hot identity /meta/build exists; Fly cold-start variance inflated this-run p95 vs prior morning. CWV/PG/INP WAITING_ENV. ≠ Production GO · no EGM/Candidate/Product Baseline/Hard Gate/Cutover/new RC."
+}

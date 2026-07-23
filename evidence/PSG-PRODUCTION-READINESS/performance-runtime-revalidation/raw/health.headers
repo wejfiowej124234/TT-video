@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+content-type: text/plain; charset=utf-8
+vary: origin, access-control-request-method, access-control-request-headers
+access-control-allow-credentials: true
+x-authority-source: db_projection
+x-request-id: 923f06e4-49a8-4938-a018-a35e8a3acd97
+x-message-id: 408c1e16-8592-4187-811e-b799b2c7b8f7
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+cache-control: no-store
+permissions-policy: geolocation=(), microphone=(), camera=()
+strict-transport-security: max-age=31536000; includeSubDomains
+content-length: 2
+date: Thu, 23 Jul 2026 09:13:45 GMT
+server: Fly/cf18d7803 (2026-07-21)
+via: 1.1 fly.io, 1.1 fly.io
+fly-request-id: 01KY7415FMCZ15MHR4DKV6RE2F-sjc
+

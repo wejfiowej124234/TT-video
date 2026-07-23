@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-import { metaObjectFromGetMetaRoot } from "@/components/admin/AdminMetaBuildPanel";
 import {
   type AdminFetchErrorKind,
   adminFetchErrorKind,
@@ -12,7 +11,7 @@ import {
 import { apiUrl, routes } from "@/lib/api";
 
 /**
- * 从公开 `GET /meta` 取 `build`，与 Admin 列表响应 `meta.build` 同源（health_meta）。
+ * 从公开 `GET /meta/build` 取 build 快照，与 Admin 列表响应 `meta.build` 同源（PERF-001：身份探针不打全量 /meta）。
  * 用于无对应列表接口的静态/写操作 Admin 页。
  */
 export function useAdminMetaBuildFromPublicMeta(logLabel: string) {
@@ -23,12 +22,14 @@ export function useAdminMetaBuildFromPublicMeta(logLabel: string) {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    adminFetchJson<unknown>(logLabel, apiUrl(routes.meta), {})
+    adminFetchJson<unknown>(logLabel, apiUrl(routes.metaBuild), {})
       .then(({ res, body }) => {
         if (!res.ok) {
           throw new Error(`request_failed_${res.status}`);
         }
-        return metaObjectFromGetMetaRoot(body);
+        // /meta/build is already the build object root (git_sha / deployed_at / …).
+        if (!isAdminMetaRecord(body)) return null;
+        return { build: body };
       })
       .then(setMeta)
       .catch((e: unknown) => {
@@ -39,4 +40,8 @@ export function useAdminMetaBuildFromPublicMeta(logLabel: string) {
   }, [logLabel]);
 
   return { meta, loading, error };
+}
+
+function isAdminMetaRecord(v: unknown): v is Record<string, unknown> {
+  return typeof v === "object" && v !== null && !Array.isArray(v);
 }

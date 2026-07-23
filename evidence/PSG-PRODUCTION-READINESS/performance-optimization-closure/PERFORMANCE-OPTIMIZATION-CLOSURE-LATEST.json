@@ -1,0 +1,68 @@
+{
+  "schema": "traveltrust.performance_optimization_closure.v1",
+  "machine_key": "TT_PERFORMANCE_OPTIMIZATION_CLOSURE",
+  "pcr_id": "PCR-20260723-PERFORMANCE-OPTIMIZATION-CLOSURE",
+  "recorded_utc": "2026-07-23T09:03:16Z",
+  "stamp": "20260723T090316Z",
+  "unique_rc_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+  "verdict": "PERFORMANCE_OPTIMIZATION_CLOSURE_PASS",
+  "equals_production_go": false,
+  "baseline_mutated": false,
+  "new_rc_created": false,
+  "psg_egm_mutated": false,
+  "economic_model_mutated": false,
+  "mainnet_hard_gate_touched": false,
+  "p0_open_count": 0,
+  "p1_open_count": 0,
+  "p2_open_count": 0,
+  "code_landed": {
+    "meta_response_cache": true,
+    "fe_compact_coalesce": true
+  },
+  "steps": [
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "{\n  \"verdict\": \"PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_PASS_WITH_ED\",\n  \"p0\": 0,\n  \"p1_optimize\": 0,\n  \"rebind_ok\": true,\n  \"stamp\": \"20260723T090316Z\",\n  \"run\": \"D:\\\\TravelTrust-V1.1\\\\evidence\\\\PSG-PRODUCTION-READINESS\\\\production-performance-certification-deep-audit\\\\RUN-20260723T061750Z\"\n}\n",
+      "id": "performance_audit"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_GATE: start\nTT_PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_GATE: PASS\n  verdict=PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_PASS_WITH_ED\n  tip=ea71c577ce6f99696df33f9394cf96746edc843b pin=PSG-REL-20260720-WEB3-CAND-V2 p0=0\n  Safari/CWV WAITING_ENV �� �� Production GO\n",
+      "id": "performance_audit_gate"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "verdict=PRODUCTION_EVIDENCE_AUTHENTICITY_AUDIT_PASS_WITH_ED p0=[] findings=[]\nproduction-evidence-authenticity-audit-gate: OK Authenticity PASS; AXIS-05 untouched; no Cutover/GO; Baseline not mutated\n",
+      "id": "evidence_authenticity"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "{\n  \"verdict\": \"DRY_RUN_PASS\",\n  \"p0\": 0,\n  \"expected\": 0,\n  \"out\": \"D:\\\\TravelTrust-V1.1\\\\docs\\\\runbook\\\\TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.json\"\n}\n",
+      "id": "delta_recertify_dry_run"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_REALITY_CLOSURE_GATE: start\nTT_REALITY_CLOSURE_GATE: REALITY_CLOSURE_PASS\n  next: Production Readiness Review (separate gate �� �� automatic Production GO)\n",
+      "id": "reality_closure"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_PSG_REALITY_CLOSURE_PRR_VERIFICATION_GATE: start\nTT_PSG_REALITY_CLOSURE_PRR_VERIFICATION_GATE: PASS\n  verdict=PSG_REALITY_CLOSURE_PRR_VERIFICATION_PASS_WITH_ED\n  tip=ea71c577ce6f99696df33f9394cf96746edc843b pin=PSG-REL-20260720-WEB3-CAND-V2\n  honesty: �� Production GO �� Hard Gate untouched\n",
+      "id": "reality_closure_prr"
+    },
+    {
+      "ok": true,
+      "exit": 0,
+      "tail": "TT_FINAL_TRUTH_REGRESSION_FREEZE_GATE: start\nTT_FINAL_TRUTH_REGRESSION_FREEZE_GATE: PASS\n  freeze_status=FINAL_TRUTH_REGRESSION_FROZEN\n  architecture_changes=FORBIDDEN\n  tip=ea71c577ce6f99696df33f9394cf96746edc843b pin=PSG-REL-20260720-WEB3-CAND-V2\n  next: wait Owner Mainnet Safe �� AXIS-05 �� no architecture changes\n",
+      "id": "regression_freeze"
+    }
+  ],
+  "honesty": "Hot-path identity probe GET /meta/build already p95~0.8s under strict 3s. Landed server TTL/singleflight + ?compact=1 + FE coalesce/MetaProvider. Full /meta SSOT corpus latency = CONFIRM_DESIGN ED (not first-screen). ≠ Production GO; no EGM/Candidate/RC/Hard Gate change."
+}

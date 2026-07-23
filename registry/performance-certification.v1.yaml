@@ -1,0 +1,16 @@
+# TT_PERFORMANCE_CERTIFICATION
+version: 1
+machine_key: TT_PERFORMANCE_CERTIFICATION
+status: ACTIVE
+unique_rc_tip: ea71c577ce6f99696df33f9394cf96746edc843b
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+pipeline_slot: "13_Performance_Certification"
+orthogonal_to: AXIS-05
+dimensions:
+  load: {priority: P0, checks: [api_qps, db_load, concurrent_orders, web3_rpc]}
+pass_verdicts: [PERFORMANCE_CERTIFICATION_PASS, PERFORMANCE_CERTIFICATION_PASS_WITH_ED]
+fail_verdicts: [PERFORMANCE_CERTIFICATION_OPEN, PERFORMANCE_CERTIFICATION_INCOMPLETE]
+evidence_root: evidence/PSG-PRODUCTION-READINESS/performance-certification
+evidence_latest: evidence/PSG-PRODUCTION-READINESS/performance-certification/PERFORMANCE-CERTIFICATION-LATEST.json
+runner: scripts/dev/run-production-certification-suite.py
+note: Requires load evidence; scaffolding ≠ capacity know

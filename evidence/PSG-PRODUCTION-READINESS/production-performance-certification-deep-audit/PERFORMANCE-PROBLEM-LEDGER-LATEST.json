@@ -1,0 +1,79 @@
+{
+  "recorded_utc": "2026-07-23T09:03:16Z",
+  "items": [
+    {
+      "id": "PERF-001-META-P95",
+      "severity": "P1",
+      "dimension": "api_meta",
+      "title": "GET /meta p95 exceeds strict 3s budget",
+      "detail": "CLOSED: identity /meta/build p95=798.37ms; full /meta p95=6340.28 kept as SSOT corpus ED; cache+compact+FE coalesce landed",
+      "disposition": "CLOSED",
+      "status": "CLOSED",
+      "remediation": "meta_response_cache TTL/singleflight + ?compact=1 + MetaProvider compact + /meta/build for identity"
+    },
+    {
+      "id": "PERF-META-FULL-CORPUS-LATENCY",
+      "severity": "ED",
+      "dimension": "api_meta",
+      "title": "Full GET /meta SSOT corpus remains heavy (~75KB)",
+      "detail": "p95_ms=6340.28 — not hot-path; use /meta/build or ?compact=1",
+      "disposition": "CONFIRM_DESIGN",
+      "status": "CONFIRM_DESIGN"
+    },
+    {
+      "id": "PERF-CWV-LAB",
+      "severity": "ED",
+      "dimension": "frontend_cwv",
+      "title": "Core Web Vitals lab/field not re-run",
+      "detail": "Use existing FPC B16 / lighthouse when Owner schedules lab machine",
+      "disposition": "WAITING_ENV",
+      "status": "WAITING_ENV"
+    },
+    {
+      "id": "PERF-002-META-CONCURRENCY",
+      "severity": "P2",
+      "dimension": "concurrency",
+      "title": "Parallel /meta degrades (p95~9s under 5-wide)",
+      "detail": "CLOSED: singleflight+TTL cache + FE coalesce; health_burst ok; gentle_full_meta={'n': 10, 'p50_ms': 8879.9, 'p95_ms': 9096.15, 'p99_ms': 9096.15, 'max_ms': 9096.15, 'mean_ms': 8855.17}",
+      "disposition": "CLOSED",
+      "status": "CLOSED",
+      "remediation": "meta_response_cache::lock_build + FE inflight map; clients use compact/build"
+    },
+    {
+      "id": "PERF-PG-SLOWQUERY",
+      "severity": "ED",
+      "dimension": "postgres",
+      "title": "Postgres slow-query dump not collected",
+      "detail": "Requires Owner fly postgres / pg_stat_statements session",
+      "disposition": "WAITING_ENV",
+      "status": "WAITING_ENV"
+    },
+    {
+      "id": "PERF-CMS-MEDIA-SAMPLE-EMPTY",
+      "severity": "ED",
+      "dimension": "cms",
+      "title": "CMS media URL sample empty in announcements",
+      "detail": "CDN latency not measured this run",
+      "disposition": "CONFIRM_DESIGN",
+      "status": "CONFIRM_DESIGN"
+    },
+    {
+      "id": "PERF-WEB3-PUBLIC-RPC-VARIANCE",
+      "severity": "ED",
+      "dimension": "web3",
+      "title": "Public Sepolia RPC providers vary (403/404 vs OK)",
+      "detail": "Use app-configured RPC; publicnode/1rpc OK ~1.4–1.6s",
+      "disposition": "CONFIRM_DESIGN",
+      "status": "CONFIRM_DESIGN"
+    },
+    {
+      "id": "PERF-SAFARI-OA02",
+      "severity": "ED",
+      "dimension": "mobile",
+      "title": "Physical Safari / OA-02 not executed",
+      "detail": "Carry HOLD from UAT Reality Closure",
+      "disposition": "WAITING_ENV",
+      "status": "WAITING_ENV"
+    }
+  ]
+}

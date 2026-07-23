@@ -1,0 +1,146 @@
+{
+  "recorded_utc": "2026-07-23T06:26:51Z",
+  "samples_per_endpoint": 21,
+  "endpoints": {
+    "api_health": {
+      "n": 20,
+      "p50_ms": 1570.78,
+      "p95_ms": 6772.91,
+      "p99_ms": 6873.84,
+      "max_ms": 6873.84,
+      "min_ms": 1260.66,
+      "mean_ms": 2360.09,
+      "url": "https://tt-api-staging.fly.dev/health",
+      "budget_p95_ms": 500,
+      "fail_count": 1,
+      "pass_p95": false,
+      "pass_availability": false
+    },
+    "api_meta": {
+      "n": 19,
+      "p50_ms": 7191.76,
+      "p95_ms": 9065.68,
+      "p99_ms": 9641.82,
+      "max_ms": 9641.82,
+      "min_ms": 6365.32,
+      "mean_ms": 7492.61,
+      "url": "https://tt-api-staging.fly.dev/meta",
+      "budget_p95_ms": 3000,
+      "fail_count": 2,
+      "pass_p95": false,
+      "pass_availability": false
+    },
+    "api_discover": {
+      "n": 18,
+      "p50_ms": 1942.6,
+      "p95_ms": 6662.0,
+      "p99_ms": 13100.91,
+      "max_ms": 13100.91,
+      "min_ms": 1323.07,
+      "mean_ms": 3052.35,
+      "url": "https://tt-api-staging.fly.dev/api/v1/discover/orders?limit=5",
+      "budget_p95_ms": 2000,
+      "fail_count": 3,
+      "pass_p95": false,
+      "pass_availability": false
+    },
+    "api_guides": {
+      "n": 21,
+      "p50_ms": 1975.51,
+      "p95_ms": 4750.74,
+      "p99_ms": 6753.47,
+      "max_ms": 6753.47,
+      "min_ms": 1353.17,
+      "mean_ms": 2617.59,
+      "url": "https://tt-api-staging.fly.dev/api/v1/guides?limit=5",
+      "budget_p95_ms": 2000,
+      "fail_count": 0,
+      "pass_p95": false,
+      "pass_availability": true
+    },
+    "api_announcements": {
+      "n": 20,
+      "p50_ms": 2620.17,
+      "p95_ms": 6599.98,
+      "p99_ms": 12486.31,
+      "max_ms": 12486.31,
+      "min_ms": 1508.15,
+      "mean_ms": 3150.42,
+      "url": "https://tt-api-staging.fly.dev/api/v1/public/announcements?limit=3",
+      "budget_p95_ms": 2000,
+      "fail_count": 1,
+      "pass_p95": false,
+      "pass_availability": false
+    },
+    "web_home": {
+      "n": 20,
+      "p50_ms": 4933.38,
+      "p95_ms": 9632.48,
+      "p99_ms": 13586.35,
+      "max_ms": 13586.35,
+      "min_ms": 3479.37,
+      "mean_ms": 5839.22,
+      "url": "https://tt-web-staging.fly.dev/",
+      "budget_p95_ms": 3000,
+      "fail_count": 1,
+      "pass_p95": false,
+      "pass_availability": false
+    },
+    "web_market": {
+      "n": 19,
+      "p50_ms": 8427.63,
+      "p95_ms": 12756.25,
+      "p99_ms": 16148.8,
+      "max_ms": 16148.8,
+      "min_ms": 3870.94,
+      "mean_ms": 8021.13,
+      "url": "https://tt-web-staging.fly.dev/market",
+      "budget_p95_ms": 3500,
+      "fail_count": 2,
+      "pass_p95": false,
+      "pass_availability": false
+    },
+    "web_login": {
+      "n": 19,
+      "p50_ms": 4701.17,
+      "p95_ms": 13897.81,
+      "p99_ms": 14630.96,
+      "max_ms": 14630.96,
+      "min_ms": 2764.39,
+      "mean_ms": 6101.94,
+      "url": "https://tt-web-staging.fly.dev/auth/login",
+      "budget_p95_ms": 3000,
+      "fail_count": 2,
+      "pass_p95": false,
+      "pass_availability": false
+    }
+  },
+  "concurrency_burst_meta": {
+    "n": 20,
+    "wall_ms": 37707.09,
+    "ok": 19,
+    "fail": 1,
+    "latency": {
+      "n": 19,
+      "p50_ms": 29159.57,
+      "p95_ms": 33064.24,
+      "p99_ms": 37702.23,
+      "max_ms": 37702.23,
+      "min_ms": 16864.39,
+      "mean_ms": 27590.18
+    },
+    "pass": false
+  },
+  "web3_rpc_sepolia": {
+    "ok": false,
+    "error": "HTTP Error 403: Forbidden",
+    "ms": 16711.19
+  },
+  "observability": {
+    "database_connected": true,
+    "attestation": "ok",
+    "git_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "profile": "v311_fund_safety_candidate_v2"
+  }
+}

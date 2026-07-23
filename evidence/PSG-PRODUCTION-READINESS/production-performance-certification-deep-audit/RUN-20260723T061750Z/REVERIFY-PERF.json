@@ -1,0 +1,72 @@
+{
+  "meta_after_warmup": {
+    "warmup": true,
+    "latency_total": {
+      "n": 15,
+      "p50_ms": 5737.28,
+      "p95_ms": 6340.28,
+      "p99_ms": 6374.08,
+      "max_ms": 6374.08,
+      "mean_ms": 5787.62
+    },
+    "latency_ttfb": {
+      "n": 15,
+      "p50_ms": 5347.25,
+      "p95_ms": 5781.41,
+      "p99_ms": 5827.46,
+      "max_ms": 5827.46,
+      "mean_ms": 5322.99
+    },
+    "bytes_mean": 74718.0,
+    "budget_p95_ms_strict": 3000,
+    "budget_p95_ms_g2": 6000,
+    "pass_strict": false,
+    "pass_g2": false
+  },
+  "concurrency_gentle_meta": {
+    "n": 10,
+    "ok": 10,
+    "fail": 0,
+    "latency": {
+      "n": 10,
+      "p50_ms": 8879.9,
+      "p95_ms": 9096.15,
+      "p99_ms": 9096.15,
+      "max_ms": 9096.15,
+      "mean_ms": 8855.17
+    },
+    "pass": false
+  },
+  "web3_rpc_alts": [
+    {
+      "rpc": "https://rpc.sepolia.org",
+      "ok": false,
+      "error": "HTTP Error 404: Not Found",
+      "ms": 6205.99
+    },
+    {
+      "rpc": "https://1rpc.io/sepolia",
+      "ok": true,
+      "ms": 1599.3,
+      "result": "0xaa36a7"
+    },
+    {
+      "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+      "ok": true,
+      "ms": 1425.89,
+      "result": "0xaa36a7"
+    }
+  ],
+  "health_burst": {
+    "n": 10,
+    "ok": 10,
+    "latency": {
+      "n": 10,
+      "p50_ms": 786.88,
+      "p95_ms": 1409.98,
+      "p99_ms": 1409.98,
+      "max_ms": 1409.98,
+      "mean_ms": 875.97
+    }
+  }
+}

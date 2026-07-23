@@ -729,30 +729,59 @@ export function readMetaBuildRoot(root: Record<string, unknown>): MetaBuildInfo 
   return parseMetaBuildFields(root);
 }
 
-export async function getMeta(): Promise<Record<string, unknown>> {
-  const url = apiUrl(routes.meta);
+const META_FE_TTL_MS = 30_000;
+let metaFeCache: { key: string; at: number; body: Record<string, unknown> } | null = null;
+const metaFeInflight = new Map<string, Promise<Record<string, unknown>>>();
+
+export async function getMeta(options?: {
+  compact?: boolean;
+  force?: boolean;
+}): Promise<Record<string, unknown>> {
+  const compact = options?.compact !== false;
+  const force = options?.force === true;
+  const key = compact ? "compact" : "full";
+  const now = Date.now();
+  if (!force && metaFeCache && metaFeCache.key === key && now - metaFeCache.at < META_FE_TTL_MS) {
+    return metaFeCache.body;
+  }
+  const existing = metaFeInflight.get(key);
+  if (!force && existing) return existing;
+
+  const base = apiUrl(routes.meta);
+  const url =
+    compact ? `${base}${base.includes("?") ? "&" : "?"}compact=1` : base;
   const init = { headers: { "x-request-id": requestId() } };
-  let last: unknown;
-  for (let attempt = 0; attempt < 4; attempt++) {
-    try {
-      const res = await fetch(url, init);
-      if (!res.ok && [408, 429, 502, 503].includes(res.status) && attempt < 3) {
-        await new Promise((r) => setTimeout(r, 600 * (attempt + 1)));
-        continue;
-      }
-      const parsed = await parseResponse(res);
-      logApiJsonStatusNotOk("getMeta", parsed);
-      throwUnlessApiOk(parsed);
-      return parsed as Record<string, unknown>;
-    } catch (e) {
-      last = e;
-      if (attempt < 3) {
-        await new Promise((r) => setTimeout(r, 600 * (attempt + 1)));
-        continue;
+
+  const run = (async (): Promise<Record<string, unknown>> => {
+    let last: unknown;
+    for (let attempt = 0; attempt < 4; attempt++) {
+      try {
+        const res = await fetch(url, init);
+        if (!res.ok && [408, 429, 502, 503].includes(res.status) && attempt < 3) {
+          await new Promise((r) => setTimeout(r, 600 * (attempt + 1)));
+          continue;
+        }
+        const parsed = await parseResponse(res);
+        logApiJsonStatusNotOk("getMeta", parsed);
+        throwUnlessApiOk(parsed);
+        const body = parsed as Record<string, unknown>;
+        metaFeCache = { key, at: Date.now(), body };
+        return body;
+      } catch (e) {
+        last = e;
+        if (attempt < 3) {
+          await new Promise((r) => setTimeout(r, 600 * (attempt + 1)));
+          continue;
+        }
       }
     }
-  }
-  throw last;
+    throw last;
+  })().finally(() => {
+    metaFeInflight.delete(key);
+  });
+
+  metaFeInflight.set(key, run);
+  return run;
 }
 
 /** **GET /meta/build**：仅取 **`git_sha`** / **`deployed_at`**（与 **`getMeta`+`readMetaBuild`** 同源，688/689）。 */

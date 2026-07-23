@@ -1,0 +1,18 @@
+{
+  "pcr_id": "PCR-20260723-PERFORMANCE-RUNTIME-REVALIDATION",
+  "recorded_utc": "2026-07-23T09:23:34Z",
+  "tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "kind": "PERFORMANCE_RUNTIME_REVALIDATION",
+  "verdict": "PERFORMANCE_RUNTIME_REVALIDATION_WAITING_DEPLOY",
+  "mutates": {
+    "psg_egm": false,
+    "candidate_v2": false,
+    "product_baseline": false,
+    "economic_model": false,
+    "new_rc": false,
+    "mainnet_hard_gate": false,
+    "cutover": false
+  },
+  "optimization_runtime_live": false,
+  "evidence": "D:/TravelTrust-V1.1/evidence/PSG-PRODUCTION-READINESS/performance-runtime-revalidation/PERFORMANCE-RUNTIME-REVALIDATION-LATEST.json"
+}

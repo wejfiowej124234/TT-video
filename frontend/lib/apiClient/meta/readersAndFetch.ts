@@ -118,30 +118,75 @@ function getMetaDevFallback(reason: string): Record<string, unknown> {
   return { ...META_DEV_FALLBACK };
 }
 
-export async function getMeta(): Promise<Record<string, unknown>> {
-  const url = apiUrl(routes.meta);
-  try {
-    const res = await fetch(url, {
-      headers: { "x-request-id": requestId() },
-    });
-    if (!res.ok) {
-      if (process.env.NODE_ENV === "development") {
-        return getMetaDevFallback(`HTTP ${res.status}`);
+export type GetMetaOptions = {
+  /** Prefer `?compact=1` (default true) — strips SSOT rule/top_keys corpus on the API. */
+  compact?: boolean;
+  /** Bypass FE coalesce/TTL cache. */
+  force?: boolean;
+};
+
+const META_FE_TTL_MS = 30_000;
+let metaFeCache: {
+  key: string;
+  at: number;
+  body: Record<string, unknown>;
+} | null = null;
+const metaFeInflight: Map<string, Promise<Record<string, unknown>>> = new Map();
+
+function metaUrl(compact: boolean): string {
+  const base = apiUrl(routes.meta);
+  if (!compact) return base;
+  const sep = base.includes("?") ? "&" : "?";
+  return `${base}${sep}compact=1`;
+}
+
+/**
+ * **GET /meta** — FE hot path defaults to **`compact=1`** + in-flight coalesce + 30s TTL
+ * (PERF-001 / PERF-002). Pass `{ compact: false }` for full SSOT corpus (E2E / contracts).
+ */
+export async function getMeta(options?: GetMetaOptions): Promise<Record<string, unknown>> {
+  const compact = options?.compact !== false;
+  const force = options?.force === true;
+  const key = compact ? "compact" : "full";
+  const now = Date.now();
+  if (!force && metaFeCache && metaFeCache.key === key && now - metaFeCache.at < META_FE_TTL_MS) {
+    return metaFeCache.body;
+  }
+  const existing = metaFeInflight.get(key);
+  if (!force && existing) return existing;
+
+  const run = (async (): Promise<Record<string, unknown>> => {
+    const url = metaUrl(compact);
+    try {
+      const res = await fetch(url, {
+        headers: { "x-request-id": requestId() },
+      });
+      if (!res.ok) {
+        if (process.env.NODE_ENV === "development") {
+          return getMetaDevFallback(`HTTP ${res.status}`);
+        }
+        const parsed = await parseResponse(res);
+        logApiJsonStatusNotOk("getMeta", parsed);
+        throwUnlessApiOk(parsed);
       }
       const parsed = await parseResponse(res);
       logApiJsonStatusNotOk("getMeta", parsed);
       throwUnlessApiOk(parsed);
+      const body = parsed as Record<string, unknown>;
+      metaFeCache = { key, at: Date.now(), body };
+      return body;
+    } catch (err) {
+      if (process.env.NODE_ENV === "development") {
+        return getMetaDevFallback(err instanceof Error ? err.message : String(err));
+      }
+      throw err;
+    } finally {
+      metaFeInflight.delete(key);
     }
-    const parsed = await parseResponse(res);
-    logApiJsonStatusNotOk("getMeta", parsed);
-    throwUnlessApiOk(parsed);
-    return parsed as Record<string, unknown>;
-  } catch (err) {
-    if (process.env.NODE_ENV === "development") {
-      return getMetaDevFallback(err instanceof Error ? err.message : String(err));
-    }
-    throw err;
-  }
+  })();
+
+  metaFeInflight.set(key, run);
+  return run;
 }
 
 /** **GET /meta/build**：仅取 **`git_sha`** / **`deployed_at`**（与 **`getMeta`+`readMetaBuild`** 同源，688/689）。 */

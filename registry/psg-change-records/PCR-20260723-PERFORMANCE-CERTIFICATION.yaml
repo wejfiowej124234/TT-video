@@ -1,0 +1,14 @@
+id: PCR-20260723-PERFORMANCE-CERTIFICATION
+class: EVIDENCE_ONLY
+recorded_utc: 2026-07-23T01:36:52Z
+unique_rc_tip: ea71c577ce6f99696df33f9394cf96746edc843b
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+summary: TT_PERFORMANCE_CERTIFICATION
+mutations:
+  new_rc: false
+  axis05_safe: untouched
+  mainnet_cutover_authorized: false
+  production_go: false
+verdict: PERFORMANCE_CERTIFICATION_PASS_WITH_ED
+p0_open: 0
+stamp: D:\TravelTrust-V1.1\evidence\PSG-PRODUCTION-READINESS\performance-certification\PERFORMANCE-CERTIFICATION-20260723T013652Z

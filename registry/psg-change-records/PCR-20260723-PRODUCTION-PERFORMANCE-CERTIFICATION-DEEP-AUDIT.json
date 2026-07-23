@@ -1,0 +1,16 @@
+{
+  "pcr_id": "PCR-20260723-PRODUCTION-PERFORMANCE-CERTIFICATION-DEEP-AUDIT",
+  "class": "docs_registry_evidence_alignment",
+  "recorded_utc": "2026-07-23T09:03:16Z",
+  "tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "verdict": "PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_PASS_WITH_ED",
+  "mutates_baseline": false,
+  "mutates_psg_egm": false,
+  "mutates_economic_model": false,
+  "touches_hard_gate": false,
+  "architecture_changes": false,
+  "new_rc_created": false,
+  "evidence": "evidence/PSG-PRODUCTION-READINESS/production-performance-certification-deep-audit/PRODUCTION-PERFORMANCE-CERTIFICATION-DEEP-AUDIT-LATEST.json",
+  "ledger": "evidence/PSG-PRODUCTION-READINESS/production-performance-certification-deep-audit/PERFORMANCE-PROBLEM-LEDGER-LATEST.json"
+}

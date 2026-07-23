@@ -3568,7 +3568,6 @@ async fn comp_b091_meta_pause_chain_eth_call_matches_mock_fixture() {
         chain_id: 31337,
         escrow_factory_address: Some("0x0000000000000000000000000000000000000AbC".into()),
         fee_router_address: Some("0x0000000000000000000000000000000000000dEf".into()),
-        settlement_router_address: None,
         ..Default::default()
     };
     let snap = meta_pause_chain_snapshot(Some(&cfg)).await;
@@ -3589,7 +3588,6 @@ async fn b091_get_meta_pause_matches_mock_chain_eth_call() {
         chain_id: 31337,
         escrow_factory_address: Some("0x0000000000000000000000000000000000000AbC".into()),
         fee_router_address: Some("0x0000000000000000000000000000000000000dEf".into()),
-        settlement_router_address: None,
         ..Default::default()
     };
     let mut state = api_meta_state(None);

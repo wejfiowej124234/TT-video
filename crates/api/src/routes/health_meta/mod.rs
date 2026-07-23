@@ -6,6 +6,7 @@ mod handlers;
 mod meta_build;
 mod meta_contract_keys;
 mod meta_helpers;
+mod meta_response_cache;
 mod pause_chain;
 mod router;
 

@@ -1,0 +1,19 @@
+{
+  "pcr_id": "PCR-20260723-PERFORMANCE-OPTIMIZATION-CLOSURE",
+  "recorded_utc": "2026-07-23T09:03:16Z",
+  "tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "kind": "PERFORMANCE_OPTIMIZATION_CLOSURE",
+  "verdict": "PERFORMANCE_OPTIMIZATION_CLOSURE_PASS",
+  "mutates": {
+    "psg_egm": false,
+    "candidate_v2": false,
+    "economic_model": false,
+    "new_rc": false,
+    "mainnet_hard_gate": false
+  },
+  "targets": [
+    "PERF-001-META-P95",
+    "PERF-002-META-CONCURRENCY"
+  ],
+  "evidence": "D:/TravelTrust-V1.1/evidence/PSG-PRODUCTION-READINESS/performance-optimization-closure/PERFORMANCE-OPTIMIZATION-CLOSURE-LATEST.json"
+}

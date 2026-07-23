@@ -1,0 +1,23 @@
+# Production Performance Certification Deep Audit — living machine SSOT
+# Human: docs/runbook/TT-PRODUCTION-PERFORMANCE-CERTIFICATION-DEEP-AUDIT-LATEST.md
+# Gate: bash scripts/gates/check-production-performance-certification-deep-audit-gate.sh
+
+schema: traveltrust.production_performance_certification_deep_audit.v1
+machine_key: TT_PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT
+recorded_utc: "2026-07-23T09:03:16Z"
+unique_rc_tip: "ea71c577ce6f99696df33f9394cf96746edc843b"
+psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+contract_profile: v311_fund_safety_candidate_v2
+verdict: PRODUCTION_PERFORMANCE_CERTIFICATION_DEEP_AUDIT_PASS_WITH_ED
+equals_production_go: false
+baseline_mutated: false
+new_rc_created: false
+psg_egm_mutated: false
+economic_model_mutated: false
+mainnet_hard_gate_touched: false
+p0_open_count: 0
+physical_safari_oa02_pass: false
+cwv_lab_pass: false
+rebind_ok: true
+evidence: evidence/PSG-PRODUCTION-READINESS/production-performance-certification-deep-audit/PRODUCTION-PERFORMANCE-CERTIFICATION-DEEP-AUDIT-LATEST.json
+ledger: evidence/PSG-PRODUCTION-READINESS/production-performance-certification-deep-audit/PERFORMANCE-PROBLEM-LEDGER-LATEST.json
