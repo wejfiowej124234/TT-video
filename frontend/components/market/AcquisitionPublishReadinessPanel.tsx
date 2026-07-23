@@ -49,10 +49,11 @@ function ReadinessRow({
   );
 }
 
-/** `/market/acquisition` 发布就绪度（PD-009 · L0 浏览 / L1 发布门闸可视化）。 */
+/** `/market/acquisition` 发布就绪度（PD-009 · 浏览页默认折叠 · 发布门闸可视化）。 */
 export default function AcquisitionPublishReadinessPanel({ t }: { t: TFunc }) {
   const [gate, setGate] = useState<AcquisitionPublishEligibility | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const reload = useCallback(() => {
     void fetchAcquisitionPublishEligibility().then((next) => {
@@ -82,50 +83,73 @@ export default function AcquisitionPublishReadinessPanel({ t }: { t: TFunc }) {
       className="mx-auto max-w-4xl px-4 mb-4"
       aria-label={t("market_acquisition_readiness_aria")}
       data-tt-acquisition-publish-readiness="1"
+      data-tt-acquisition-readiness-collapsed={expanded ? "0" : "1"}
     >
       <div className={`${TT_MARKETING_MARKET_DARK_PATH.subsiteHighlightPanel} text-left`}>
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <div>
+          <div className="min-w-0 flex-1">
             <h2 className="text-small font-semibold text-slate-100">{t("market_acquisition_readiness_title")}</h2>
-            <p className="mt-1 text-meta text-slate-400/95 leading-snug">{t("market_acquisition_readiness_caption")}</p>
+            <p className="mt-1 text-meta text-slate-300/95 leading-snug">{t("market_acquisition_readiness_caption")}</p>
           </div>
-          {publishReady ? (
-            <span className="inline-flex min-h-[32px] items-center rounded-full border border-success/40 bg-success/10 px-3 py-1 text-meta font-semibold text-success">
-              {t("market_acquisition_readiness_ready_badge")}
-            </span>
-          ) : null}
+          <div className="flex flex-wrap items-center gap-2">
+            {publishReady ? (
+              <span className="inline-flex min-h-[32px] items-center rounded-full border border-success/40 bg-success/10 px-3 py-1 text-meta font-semibold text-success">
+                {t("market_acquisition_readiness_ready_badge")}
+              </span>
+            ) : null}
+            <button
+              type="button"
+              className={`${touchTargetLink44Classes} ${TT_MARKETING_MARKET_DARK_PATH.subsiteGhostCta} px-3 py-1.5 text-meta ${travelFocusRingOffset2Classes}`}
+              aria-expanded={expanded}
+              onClick={() => setExpanded((v) => !v)}
+              data-tt-acquisition-readiness-toggle="1"
+            >
+              {expanded
+                ? t("market_acquisition_readiness_collapse")
+                : t("market_acquisition_readiness_expand")}
+            </button>
+            <Link
+              href={ME_IDENTITIES_ACQUISITION_SETTINGS_HREF}
+              className={`${touchTargetLink44Classes} text-meta font-semibold text-ref-sun underline underline-offset-2 ${travelFocusRingOffset2Classes}`}
+            >
+              {t("market_acquisition_readiness_goto_identities")}
+            </Link>
+          </div>
         </div>
 
-        <ul className="mt-4 space-y-2" aria-label={t("market_acquisition_readiness_list_aria")}>
-          <ReadinessRow ok={true} label={t("market_acquisition_readiness_browse")} />
-          <ReadinessRow
-            ok={gate.sessionOk}
-            label={t("market_acquisition_readiness_login")}
-            actionHref="/auth/login?returnUrl=%2Fmarket%2Facquisition"
-            actionLabel={t("market_acquisition_readiness_action_login")}
-          />
-          <ReadinessRow
-            ok={gate.walletOk}
-            label={t("market_acquisition_readiness_wallet")}
-            actionHref={meSecurityHref("wallet")}
-            actionLabel={t("market_acquisition_readiness_action_wallet")}
-          />
-          <ReadinessRow
-            ok={publishReady && bondOk}
-            label={
-              gate.bondWaived
-                ? t("market_acquisition_readiness_bond_waived")
-                : t("market_acquisition_readiness_bond")
-            }
-            actionHref={ME_IDENTITIES_ACQUISITION_SETTINGS_HREF}
-            actionLabel={t("market_acquisition_readiness_action_bond")}
-          />
-        </ul>
-
-        {gate.trustScore != null ? (
-          <p className="mt-3 text-meta text-slate-400/95">
-            {t("market_acquisition_readiness_trust_score", { score: String(gate.trustScore) })}
-          </p>
+        {expanded ? (
+          <>
+            <ul className="mt-4 space-y-2" aria-label={t("market_acquisition_readiness_list_aria")}>
+              <ReadinessRow ok={true} label={t("market_acquisition_readiness_browse")} />
+              <ReadinessRow
+                ok={gate.sessionOk}
+                label={t("market_acquisition_readiness_login")}
+                actionHref="/auth/login?returnUrl=%2Fmarket%2Facquisition"
+                actionLabel={t("market_acquisition_readiness_action_login")}
+              />
+              <ReadinessRow
+                ok={gate.walletOk}
+                label={t("market_acquisition_readiness_wallet")}
+                actionHref={meSecurityHref("wallet")}
+                actionLabel={t("market_acquisition_readiness_action_wallet")}
+              />
+              <ReadinessRow
+                ok={publishReady && bondOk}
+                label={
+                  gate.bondWaived
+                    ? t("market_acquisition_readiness_bond_waived")
+                    : t("market_acquisition_readiness_bond")
+                }
+                actionHref={ME_IDENTITIES_ACQUISITION_SETTINGS_HREF}
+                actionLabel={t("market_acquisition_readiness_action_bond")}
+              />
+            </ul>
+            {gate.trustScore != null ? (
+              <p className="mt-3 text-meta text-slate-400/95">
+                {t("market_acquisition_readiness_trust_score", { score: String(gate.trustScore) })}
+              </p>
+            ) : null}
+          </>
         ) : null}
       </div>
     </section>

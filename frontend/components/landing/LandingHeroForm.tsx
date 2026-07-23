@@ -326,7 +326,6 @@ function LandingHeroForm({
       draftCapBannerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [bottomAlertText, draftCapActive, draftQuota.blocked]);
-  const loginReturnUrl = encodeURIComponent("/");
   const budgetNum = budget ? parseFloat(budget) : NaN;
   const budgetQuoteHint =
     budget && !Number.isNaN(budgetNum) && budgetNum > 0
@@ -619,21 +618,6 @@ function LandingHeroForm({
               >
                 {t("landing_hero_itinerary_disclaimer")}
               </p>
-              {loginRequired ? (
-                <div
-                  className="rounded-[var(--radius-lg)] border border-danger/40 bg-danger/10 px-4 py-3"
-                  role="alert"
-                  data-testid="landing-login-cta"
-                >
-                  <p className="text-small text-white font-medium">{t("landing_error_login")}</p>
-                  <Link
-                    href={`/auth/login?returnUrl=${loginReturnUrl}`}
-                    className="mt-2 inline-flex min-h-[44px] items-center rounded-[var(--radius-md)] bg-white/20 px-4 text-small font-semibold text-white hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
-                  >
-                    {t("landing_error_login_cta")}
-                  </Link>
-                </div>
-              ) : null}
             </div>
             <details
               className={TT_MARKETING_HOME_PREFERENCES_DETAILS}

@@ -20,7 +20,7 @@ const U = (photoRest: string) =>
  * @see `landingAmbientByCountry.test.ts`
  */
 export const LANDING_AMBIENT_BY_COUNTRY_ZH: Record<string, string> = {
-  /** 中国 · 长城秋色（Unsplash 高下载；山脊蜿蜒、暖色 foliage） */
+  /** 中国 · 长城秋色（Unsplash 高下载；山脊蜿蜒、暖色 foliage）· 仅选中「中国」时 */
   中国: U("1547150492-da7ff1742941"),
   /** 日本 · 富士山 · 河口湖镜面倒影（Gaku Suyama · 渐变天色） */
   日本: U("1741935505561-d5a83195f08e"),

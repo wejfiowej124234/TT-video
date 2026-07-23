@@ -1,61 +1,66 @@
 {
   "schema": "traveltrust.role_promo_video_manifest.v1",
-  "recorded_utc": "2026-07-22T10:00:00.000Z",
+  "recorded_utc": "2026-07-23T23:32:33.035Z",
   "ssot_registry": "registry/traveltrust-role-promo-media-assets.v1.yaml",
   "machine_key": "TT_ROLE_PROMO_MEDIA_ASSETS",
   "storage": "git_lfs",
   "dest_dir": "frontend/public/media/traveltrust/roles/",
   "optional_ingest_drop_zone": "首页角色宣传片/",
-  "replace_howto": "Replace LFS-tracked MP4s (or ingest via drop zone + sync), then re-run: node scripts/dev/sync-traveltrust-role-promo-videos.cjs --write-ssot && update registry checksums",
+  "replace_howto": "git lfs track + replace MP4s, or --ingest from drop zone, then refresh registry sha256 and re-verify",
   "equals_staging_bake": true,
-  "note": "Canonical bake SSOT via Git LFS + registry. Drop zone is optional ingest only. region_steward not in this batch.",
+  "note": "Canonical bake SSOT via Git LFS + registry. Drop zone optional. region_steward not in batch.",
   "entries": [
     {
       "role": "traveler",
-      "source": "git_lfs",
+      "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/traveler.mp4",
-      "bytes": 56087583,
-      "sha256": "c29da31fb17c0b1dfd2f8fe17bbcb1de6b086e3b74fa8c955adab8be3ded2b5b",
-      "status": "SSOT",
-      "aliases": []
+      "bytes": 52372947,
+      "sha256": "17fbb964e6bfdea792c3e5a3666433fe1c0d2ce448a7ed54cc2c3b77f7306226",
+      "status": "INGESTED",
+      "aliases": [],
+      "poster": "frontend/public/media/traveltrust/roles/traveler.poster.jpg"
     },
     {
       "role": "guide",
-      "source": "git_lfs",
+      "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/guide.mp4",
-      "bytes": 74871255,
-      "sha256": "94999e1ffdf99e4e8b90cb1a7fc15b1fcfea84c67a9c07b2de3e5c4773d92b62",
-      "status": "SSOT",
-      "aliases": []
+      "bytes": 57239266,
+      "sha256": "70a32f076e3551c606d2d6fca016a8f40d3e50e2cdd5f3463f55d388609215ac",
+      "status": "INGESTED",
+      "aliases": [],
+      "poster": "frontend/public/media/traveltrust/roles/guide.poster.jpg"
     },
     {
       "role": "merchant",
-      "source": "git_lfs",
+      "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/merchant.mp4",
-      "bytes": 69580404,
-      "sha256": "3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040",
-      "status": "SSOT",
+      "bytes": 69728477,
+      "sha256": "e60a5d52797e95c2158f7adb3c9ee3ab08ca2050b4e4745b710c0a60122f1546",
+      "status": "INGESTED",
       "aliases": [
         "provider.mp4"
-      ]
-    },
-    {
-      "role": "acquisition",
-      "source": "git_lfs",
-      "dest": "frontend/public/media/traveltrust/roles/acquisition.mp4",
-      "bytes": 57135510,
-      "sha256": "b7cfa0af9d34094bb58c973378b1666ac65d2769695053d019c7cf3db3ae3770",
-      "status": "SSOT",
-      "aliases": []
+      ],
+      "poster": "frontend/public/media/traveltrust/roles/merchant.poster.jpg"
     },
     {
       "role": "provider",
-      "source": "git_lfs",
+      "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/provider.mp4",
-      "bytes": 69580404,
-      "sha256": "3e03eff64e0827a6ae6f8ab948ff399e671e5c9efc426915ba85cd10f8d02040",
-      "status": "SSOT",
-      "aliases": []
+      "bytes": 69728477,
+      "sha256": "e60a5d52797e95c2158f7adb3c9ee3ab08ca2050b4e4745b710c0a60122f1546",
+      "status": "INGESTED",
+      "aliases": [],
+      "poster": "frontend/public/media/traveltrust/roles/provider.poster.jpg"
+    },
+    {
+      "role": "acquisition",
+      "source": "drop_zone_ingest",
+      "dest": "frontend/public/media/traveltrust/roles/acquisition.mp4",
+      "bytes": 51002616,
+      "sha256": "e3155395c85b87e61ae7ee7d86b41e104675c4a20694a765c142db3c991f5706",
+      "status": "INGESTED",
+      "aliases": [],
+      "poster": "frontend/public/media/traveltrust/roles/acquisition.poster.jpg"
     }
   ]
 }

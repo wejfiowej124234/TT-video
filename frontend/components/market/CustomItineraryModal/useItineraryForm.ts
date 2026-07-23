@@ -51,6 +51,7 @@ export function useItineraryForm({
   const [accountAvatarUrl, setAccountAvatarUrl] = useState<string>("");
   const [submitting, setSubmitting] = useState(false);
   const [coverFileTooBig, setCoverFileTooBig] = useState(false);
+  const [discardConfirmOpen, setDiscardConfirmOpen] = useState(false);
 
   const submitErrorRef = useRef<HTMLParagraphElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -163,18 +164,31 @@ export function useItineraryForm({
   );
 
   const confirmDiscard = useCallback(() => {
-    if (typeof window === "undefined" || !isDirty) return true;
-    return window.confirm(t("market_studio_unsaved_confirm"));
-  }, [isDirty, t]);
+    if (!isDirty) return true;
+    setDiscardConfirmOpen(true);
+    return false;
+  }, [isDirty]);
+
+  const cancelDiscardConfirm = useCallback(() => {
+    setDiscardConfirmOpen(false);
+  }, []);
+
+  const acceptDiscardConfirm = useCallback(() => {
+    setDiscardConfirmOpen(false);
+    onClose();
+  }, [onClose]);
 
   const requestClose = useCallback(() => {
     if (viewingAttractionRef.current) {
       setViewingAttraction(null);
       return;
     }
-    if (!confirmDiscard()) return;
-    onClose();
-  }, [confirmDiscard, onClose]);
+    if (!isDirty) {
+      onClose();
+      return;
+    }
+    setDiscardConfirmOpen(true);
+  }, [isDirty, onClose]);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -280,6 +294,9 @@ export function useItineraryForm({
     handleSubmit,
     requestClose,
     confirmDiscard,
+    discardConfirmOpen,
+    cancelDiscardConfirm,
+    acceptDiscardConfirm,
     isDirty,
     cities,
     quote,

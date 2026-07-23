@@ -9,12 +9,25 @@ export const TYPE_OPTIONS: CommunityPostType[] = ["photo", "video", "food", "tra
 
 /** 目的地按地区分类（筛选用）；区域标签已走 community_region_* i18n */
 export const DESTINATION_BY_REGION: Record<string, string[]> = {
+  cn: ["中国", "厦门", "丽江", "北京", "上海", "成都", "杭州"],
+  jp: ["日本", "富士山", "大阪", "东京", "京都"],
+  th: ["泰国", "清迈", "曼谷", "普吉"],
+  id: ["印尼", "印度尼西亚", "巴厘岛", "雅加达"],
+  sg: ["新加坡"],
+};
+
+/** City chips only (exclude country aliases) for hot-destination rows */
+export const DESTINATION_CITY_BY_REGION: Record<string, string[]> = {
   cn: ["厦门", "丽江", "北京", "上海", "成都", "杭州"],
   jp: ["富士山", "大阪", "东京", "京都"],
   th: ["清迈", "曼谷", "普吉"],
   id: ["巴厘岛", "雅加达"],
   sg: ["新加坡"],
 };
+
+export const KNOWN_DESTINATION_CITIES: ReadonlySet<string> = new Set(
+  Object.values(DESTINATION_CITY_BY_REGION).flat(),
+);
 
 /** PublishDrawer 目的地选项（与 Feed 筛选 `DESTINATION_BY_REGION` 同源） */
 export const PUBLISH_DESTINATION_OPTIONS: string[] = [
@@ -23,6 +36,12 @@ export const PUBLISH_DESTINATION_OPTIONS: string[] = [
 
 /** 目的地展示 i18n：中文名 -> locale key（用于筛选栏与卡片展示） */
 export const DESTINATION_LABEL_KEYS: Record<string, string> = {
+  中国: "community_region_cn",
+  日本: "community_region_jp",
+  泰国: "community_region_th",
+  印尼: "community_region_id",
+  印度尼西亚: "community_region_id",
+  新加坡: "community_dest_singapore",
   厦门: "community_dest_xiamen",
   丽江: "community_dest_lijiang",
   北京: "community_dest_beijing",

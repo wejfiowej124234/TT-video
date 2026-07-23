@@ -11,6 +11,7 @@ describe("exploreRegionBlocksFromApiAggregate", () => {
     const jp = blocks.find((b) => b.regionKey === "jp");
     expect(jp?.destinations[0]).toBe("东京");
     const cn = blocks.find((b) => b.regionKey === "cn");
-    expect(cn?.destinations).toContain("未知城");
+    // Unmapped destinations must not pollute the China region chip list (HU-008).
+    expect(cn?.destinations ?? []).not.toContain("未知城");
   });
 });

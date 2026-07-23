@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useEffect, useMemo, useRef, useState, type RefObject } from "react";
-import { landingAmbientImageUrl } from "@/lib/landingAmbientByCountry";
+import { landingAmbientImageUrl, LANDING_AMBIENT_BY_COUNTRY_ZH } from "@/lib/landingAmbientByCountry";
 import {
   landingAmbientCnRuntimeDataAttrs,
   logLandingAmbientCnRuntimeProbe,
@@ -115,6 +115,25 @@ function LandingHomeAmbientBackdropInner({ country }: Props) {
     const t = window.setTimeout(() => setOutgoingSrc(null), 700);
     return () => window.clearTimeout(t);
   }, [displaySrc]);
+
+  /** HU-005：空闲预取十国 ambient，降低切换体感延迟 */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let cancelled = false;
+    const run = () => {
+      if (cancelled) return;
+      for (const url of Object.values(LANDING_AMBIENT_BY_COUNTRY_ZH)) {
+        void preloadAmbientImage(url);
+      }
+    };
+    const ric = window.requestIdleCallback?.(run, { timeout: 2500 });
+    const t = ric == null ? window.setTimeout(run, 400) : null;
+    return () => {
+      cancelled = true;
+      if (ric != null && window.cancelIdleCallback) window.cancelIdleCallback(ric);
+      if (t != null) window.clearTimeout(t);
+    };
+  }, []);
 
   useEffect(() => {
     const probe = {

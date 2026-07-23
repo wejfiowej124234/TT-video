@@ -4,6 +4,8 @@ import { useMemo, useState, useCallback } from "react";
 import type { CommunityPostType, CommunityPost } from "@/lib/communityMockData";
 import {
   DESTINATION_BY_REGION,
+  DESTINATION_CITY_BY_REGION,
+  KNOWN_DESTINATION_CITIES,
   FEED_PAGE_SIZE,
   type FeedTab,
   type SortBy,
@@ -87,11 +89,15 @@ export function useCommunityFeedFilters({
     const count: Record<string, number> = {};
     enrichedPosts.forEach((p) => {
       if (!p.destination) return;
+      const dest = p.destination.trim();
+      if (!dest) return;
+      // Prefer known cities; skip country-level aliases in the hot chip row.
+      if (!KNOWN_DESTINATION_CITIES.has(dest)) return;
       if (regionFilter !== "all") {
-        const list = DESTINATION_BY_REGION[regionFilter];
-        if (!list?.includes(p.destination)) return;
+        const list = DESTINATION_CITY_BY_REGION[regionFilter] ?? DESTINATION_BY_REGION[regionFilter];
+        if (!list?.includes(dest)) return;
       }
-      count[p.destination] = (count[p.destination] ?? 0) + 1;
+      count[dest] = (count[dest] ?? 0) + 1;
     });
     return Object.entries(count)
       .sort((a, b) => b[1] - a[1])

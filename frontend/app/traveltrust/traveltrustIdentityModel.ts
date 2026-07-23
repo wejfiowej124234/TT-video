@@ -73,7 +73,7 @@ export const TRAVELTRUST_ROLES: readonly TravelTrustRoleConfig[] = [
     enterKey: "traveltrust_role_enter",
     href: "#start",
     defaultMp4: ROLE_DEFAULT_MP4.traveler,
-    defaultPoster: "/media/traveltrust/roles/traveler.poster.svg",
+    defaultPoster: "/media/traveltrust/roles/traveler.poster.jpg",
     envMp4: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_TRAVELER?.trim(),
     envPoster: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_POSTER_TRAVELER?.trim(),
     accent: {
@@ -92,7 +92,7 @@ export const TRAVELTRUST_ROLES: readonly TravelTrustRoleConfig[] = [
     enterKey: "traveltrust_role_enter",
     href: "/guide",
     defaultMp4: ROLE_DEFAULT_MP4.guide,
-    defaultPoster: "/media/traveltrust/roles/guide.poster.svg",
+    defaultPoster: "/media/traveltrust/roles/guide.poster.jpg",
     envMp4: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_GUIDE?.trim(),
     envPoster: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_POSTER_GUIDE?.trim(),
     accent: {
@@ -111,7 +111,7 @@ export const TRAVELTRUST_ROLES: readonly TravelTrustRoleConfig[] = [
     enterKey: "traveltrust_role_enter",
     href: "/market/provider",
     defaultMp4: ROLE_DEFAULT_MP4.merchant,
-    defaultPoster: "/media/traveltrust/roles/provider.poster.svg",
+    defaultPoster: "/media/traveltrust/roles/merchant.poster.jpg",
     envMp4:
       e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_MERCHANT?.trim() ??
       e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_PROVIDER?.trim(),
@@ -134,7 +134,7 @@ export const TRAVELTRUST_ROLES: readonly TravelTrustRoleConfig[] = [
     enterKey: "traveltrust_role_enter",
     href: "/market/acquisition",
     defaultMp4: ROLE_DEFAULT_MP4.acquisition,
-    defaultPoster: "/media/traveltrust/roles/provider.poster.svg",
+    defaultPoster: "/media/traveltrust/roles/acquisition.poster.jpg",
     envMp4: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_ACQUISITION?.trim(),
     envPoster: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_POSTER_ACQUISITION?.trim(),
     accent: {

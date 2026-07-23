@@ -20,7 +20,6 @@ const TravelTrustHorizonArc = dynamic(
   () => import("./TravelTrustHorizonArc").then((m) => ({ default: m.TravelTrustHorizonArc })),
   { ssr: false },
 );
-import { TravelTrustHeroWalletConnect } from "./TravelTrustHeroWalletConnect";
 import { resolveTraveltrustPlanTripHref } from "@/lib/traveltrustPlanTripHref";
 import { useTravelTrustHeroScrollProgress } from "./TravelTrustHeroScrollContext";
 import { TRAVELTRUST_HERO_TRUST_CHIPS } from "@/lib/traveltrustHeroTrustChips";
@@ -34,8 +33,6 @@ import {
   TT_HERO_COPY_DISCLAIMER_L5,
   TT_HERO_COPY_UI_L5,
   TT_HERO_PRIMARY_CTA_L5,
-  TT_HERO_WALLET_GHOST_BTN_L5,
-  TT_HERO_WALLET_HINT_L5,
   TT_HERO_CTA_L5,
   TT_SCROLL_HINT_ARROW_L5,
   TT_SCROLL_HINT_L5,
@@ -421,7 +418,6 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
                     {t("traveltrust_hero_cta_plan")}
                   </Link>
                 </motion.div>
-                <TravelTrustHeroWalletConnect buttonClassName={TT_HERO_WALLET_GHOST_BTN_L5} />
               </motion.div>
             </motion.div>
 

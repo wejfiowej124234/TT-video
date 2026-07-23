@@ -11,6 +11,7 @@ import { CITY_TRANSPORT_OPTIONS, CITY_TRANSPORT_DETAILS, getGuideLevelsWithPrici
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH, TT_MARKETING_MARKET_GLASS_CHOICE_CONTROL } from "@/lib/marketingUi";
 import MarketGlassModalFrame from "@/components/market/MarketGlassModalFrame";
+import DiscardConfirmModal from "@/components/shared/DiscardConfirmModal";
 import DetailOverlay from "./DetailOverlay";
 import TouristForm from "./sections/TouristForm";
 import GuideForm from "./sections/GuideForm";
@@ -62,6 +63,9 @@ export default function CustomItineraryModal({
     setGuideDayPlan,
     handleSubmit,
     confirmDiscard,
+    discardConfirmOpen,
+    cancelDiscardConfirm,
+    acceptDiscardConfirm,
     cities,
     quote,
   } = bag;
@@ -205,6 +209,7 @@ export default function CustomItineraryModal({
   };
 
   return createPortal(
+    <>
     <MarketGlassModalFrame
       onRequestClose={bag.requestClose}
       panelRef={setDialogRef}
@@ -352,7 +357,13 @@ export default function CustomItineraryModal({
           </button>
         </div>
       </div>
-    </MarketGlassModalFrame>,
+    </MarketGlassModalFrame>
+    <DiscardConfirmModal
+      open={discardConfirmOpen}
+      onCancel={cancelDiscardConfirm}
+      onConfirm={acceptDiscardConfirm}
+    />
+    </>,
     document.body,
   );
 }

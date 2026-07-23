@@ -107,7 +107,6 @@ function readTravelTrustNetworkPageModuleSources(): string {
     "TravelTrustNetworkFooter.tsx",
     "TravelTrustFooterCrossNav.tsx",
     "TravelTrustFooterSocial.tsx",
-    "TravelTrustHeroWalletConnect.tsx",
     "useTraveltrustSectionNav.ts",
     "traveltrustHeroUi.ts",
   ];
@@ -202,8 +201,9 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain("TRAVELTRUST_V6_ANALYTICS_EVENTS");
     expect(src).toContain("traveltrust_secondary_cta_click");
     expect(src).toMatch(/TRAVELTRUST_ANALYTICS_BEACON|trackTravelTrustEvent/);
-    expect(src).toContain("TravelTrustHeroWalletConnect");
-    expect(src).toContain('data-tt-traveltrust-hero-wallet-menu="1"');
+    // HU-001 / Hero UX Delta 2026-07-22: header `#tt-header-wallet` is the sole wallet entry.
+    expect(src).not.toContain("TravelTrustHeroWalletConnect");
+    expect(src).not.toContain('data-tt-traveltrust-hero-wallet-menu="1"');
     expect(src).toContain("traveltrust-landing-nav-mobile");
     expect(src).toContain("TravelTrustRouteArc");
   });
@@ -298,7 +298,7 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain("TRAVELTRUST_HERO_TRUST_CHIPS");
     expect(src).toContain("data-tt-traveltrust-hero-trust-chip");
     expect(src).toContain("TRAVELTRUST_HEADER_WALLET_ID");
-    expect(src).toContain("data-tt-traveltrust-hero-wallet-connected");
+    expect(src).not.toContain("data-tt-traveltrust-hero-wallet-connected");
     expect(src).toContain("traveltrust_hero_guidance_brief_loading");
     expect(src).toContain("traveltrust_hero_guidance_chain_wrong");
     expect(src).toContain("TT_HERO_CONTENT_SHELL_CLASS");
@@ -595,7 +595,7 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain("traveltrustCinematicChapters");
     expect(src).toContain("resolveTravelTrustBlendedChapterPreset");
     expect(src).toContain("useTraveltrustHeroGlobeOpticalAlign");
-    expect(readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8")).toContain(
+    expect(readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8")).not.toContain(
       "TravelTrustHeroWalletConnect",
     );
     expect(src).toContain("TravelTrustHeroReduceMotionStars");

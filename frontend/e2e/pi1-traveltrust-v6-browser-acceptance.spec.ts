@@ -79,7 +79,9 @@ test.describe("PI-1 · /traveltrust v6 (PH1-FE-08～13)", () => {
     await expect(shell.locator("#settlement")).toBeAttached();
     await expect(shell.locator("#faq")).toBeAttached();
     await expect(shell.locator('[data-tt-traveltrust-network-footer="1"]')).toBeAttached();
-    await expect(shell.locator('[data-tt-traveltrust-hero-wallet-menu="1"]')).toBeVisible();
+    // HU-001: wallet lives in header only (`#tt-header-wallet`), not Hero secondary CTA.
+    await expect(shell.locator('[data-tt-traveltrust-hero-wallet-menu="1"]')).toHaveCount(0);
+    await expect(page.locator("#tt-header-wallet")).toBeAttached();
 
     await expect(shell.locator("#live-network")).toHaveCount(0);
     await expect(shell.locator("#live-stats")).toHaveCount(0);

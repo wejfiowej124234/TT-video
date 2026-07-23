@@ -496,6 +496,7 @@ export function useLandingPage(t: (key: string) => string) {
     validationErrorKey,
     submitError,
     loginRequired,
+    clearLoginRequired: () => setLoginRequired(false),
     draftQuota,
     refreshDraftQuota,
     resultOrderIds,

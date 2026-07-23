@@ -1021,7 +1021,8 @@ export const TT_MARKETING_DARK_ROUTE_CARD_MEDIA_DIVIDER =
 
 /** 全站主题 V1 · `/market*` 子站/列表主路径（筛选带、内链、玻璃卡描边） */
 export const TT_MARKETING_MARKET_DARK_PATH = {
-  filterBandLabel: "text-small font-semibold uppercase tracking-wide text-ref-sun/90",
+  filterBandLabel:
+    "text-small font-semibold uppercase tracking-wide text-slate-100 [color:rgb(241_245_249)]",
   inlineLinkUnderline:
     "font-medium text-ref-sun/90 underline decoration-ref-sun/40 underline-offset-4 transition-colors motion-reduce:transition-none hover:text-ref-sun",
   glassPanelRing: "ring-1 ring-ref-sun/15",
@@ -1194,7 +1195,8 @@ export const TT_MARKETING_MARKET_DARK_PATH = {
     "inline-flex min-h-[44px] items-center justify-center rounded-full px-3 py-1.5 text-meta font-medium border transition-colors border-ref-sun/45 bg-ref-sun/14 text-ref-sun",
   customItineraryPillIdle:
     "inline-flex min-h-[44px] items-center justify-center rounded-full px-3 py-1.5 text-meta font-medium border transition-colors border-ref-sun/22 bg-ink-900/55 text-slate-200 hover:bg-ref-sun/10 hover:border-ref-sun/32 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]",
-  subsiteTagPill: "rounded-full border border-ref-sun/22 bg-ref-sun/10 px-3 py-1 text-meta text-slate-100/95",
+  subsiteTagPill:
+    "rounded-full border border-ref-sun/30 bg-ink-900/75 px-3 py-1 text-meta font-medium text-slate-100 [color:rgb(241_245_249)] shadow-[inset_0_0_0_1px_rgba(249,215,121,0.08)]",
   subsiteHeroMedia:
     "relative mt-6 aspect-[16/10] w-full overflow-hidden rounded-[var(--radius-lg)] border border-ref-sun/18 ring-1 ring-ref-sun/14",
   subsiteHeroMediaWarning:

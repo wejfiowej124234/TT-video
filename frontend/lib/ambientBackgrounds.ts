@@ -8,10 +8,13 @@
 const q = "auto=format&fit=max&w=3840&q=90";
 
 /**
- * 体验层首页默认：Catalog/COS · 中国 Destination Ambient（与 `landingAmbientByCountry` CN 同源）
- * @see data/catalog/destination-ambient-matrix.v1.yaml · DA-CN-HOME
+ * 体验层首页默认：品牌旅行氛围底（非十国地标 · HU-005）
+ * 十国 Destination Ambient 仅在选中国家后切换。
  */
-export const AMBIENT_BG_HOME =
+export const AMBIENT_BG_HOME = "/media/landing/brand-ambient-default.jpg";
+
+/** Catalog/COS · 中国 Destination Ambient（选「中国」时 · 非空国家默认） */
+export const AMBIENT_BG_CN_HOME =
   "https://traveltrust-community-media.fly.storage.tigris.dev/official-cold-start/v1/da-hero-cn-home-v1.runtime.webp";
 
 /**

@@ -19,33 +19,24 @@ function regionKeyForDestination(destination: string): Exclude<RegionKey, "all">
   return null;
 }
 
-/** API 聚合目的地 → 按既有地区分组；未映射项并入 **`cn`** 区末尾（不增 UI 区块类型）。 */
+/** API 聚合目的地 → 按既有地区分组；未映射项不并入任何国（HU-008 · 避免污染「中国」）。 */
 export function exploreRegionBlocksFromApiAggregate(
   apiRows: ExploreDestinationCountRow[],
 ): ExploreRegionBlock[] {
   const countMap = new Map(apiRows.map((r) => [r.destination, r.post_count]));
   const byRegion = new Map<Exclude<RegionKey, "all">, Set<string>>();
-  const unmapped: string[] = [];
 
   for (const row of apiRows) {
     const d = row.destination?.trim();
     if (!d) continue;
     const rk = regionKeyForDestination(d);
-    if (rk) {
-      if (!byRegion.has(rk)) byRegion.set(rk, new Set());
-      byRegion.get(rk)!.add(d);
-    } else {
-      unmapped.push(d);
-    }
+    if (!rk) continue;
+    if (!byRegion.has(rk)) byRegion.set(rk, new Set());
+    byRegion.get(rk)!.add(d);
   }
-
-  unmapped.sort((a, b) => (countMap.get(b) ?? 0) - (countMap.get(a) ?? 0));
 
   return (REGION_KEYS.filter((k) => k !== "all") as Exclude<RegionKey, "all">[]).map((regionKey) => {
     const set = byRegion.get(regionKey) ?? new Set<string>();
-    if (regionKey === "cn") {
-      for (const d of unmapped) set.add(d);
-    }
     const sorted = [...set].sort((a, b) => (countMap.get(b) ?? 0) - (countMap.get(a) ?? 0));
     return { regionKey, destinations: sorted };
   }).filter((b) => b.destinations.length > 0);

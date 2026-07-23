@@ -17,7 +17,7 @@ import {
   ownPublishedOpenListingIds,
   invalidateOwnPublishedMarketCardsCache,
 } from "@/lib/marketDiscoverOrdersMerge";
-import { AUTH_USER_ID_KEY } from "@/lib/apiClient/core";
+import { AUTH_USER_ID_KEY, AUTH_SESSION_TOKEN_KEY } from "@/lib/apiClient/core";
 import { useTranslation } from "@/components/LocaleProvider";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { trackMarketEvent } from "@/lib/analytics";
@@ -150,6 +150,7 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
   const [bookGuideName, setBookGuideName] = useState<string | null>(null);
   const [customItineraryOpen, setCustomItineraryOpen] = useState(false);
   const [customItineraryInitialDays, setCustomItineraryInitialDays] = useState(5);
+  const [authRequiredOpen, setAuthRequiredOpen] = useState(false);
   const [customCreatedToast, setCustomCreatedToast] = useState(false);
   const [customCreatedOrderId, setCustomCreatedOrderId] = useState<string | null>(null);
   const [acceptSuccessToast, setAcceptSuccessToast] = useState(false);
@@ -822,25 +823,47 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
     router.replace(qs ? `${base}?${qs}` : base, { scroll: false });
   }, [searchParams, router, pathname]);
 
-  useEffect(() => {
-    if (!isMarketCreateItineraryDeepLink(searchParams.get(MARKET_CREATE_ITINERARY_QUERY))) return;
-    setCustomItineraryOpen(true);
-  }, [searchParams]);
-
   const closeCustomItinerary = useCallback(() => {
     setCustomItineraryOpen(false);
     clearCreateItineraryDeepLink();
   }, [clearCreateItineraryDeepLink]);
 
-  const openCustomItinerary = useCallback(() => {
-    setCustomItineraryInitialDays(5);
-    setCustomItineraryOpen(true);
+  const hasClientAuthSession = useCallback(() => {
+    if (typeof window === "undefined") return false;
+    return Boolean(localStorage.getItem(AUTH_SESSION_TOKEN_KEY)?.trim());
   }, []);
 
-  const openCustomItineraryWithDays = useCallback((days: number) => {
-    setCustomItineraryInitialDays(days);
+  useEffect(() => {
+    if (!isMarketCreateItineraryDeepLink(searchParams.get(MARKET_CREATE_ITINERARY_QUERY))) return;
+    if (!hasClientAuthSession()) {
+      setAuthRequiredOpen(true);
+      return;
+    }
     setCustomItineraryOpen(true);
-  }, []);
+  }, [searchParams, hasClientAuthSession]);
+
+  const openCustomItinerary = useCallback(() => {
+    if (!hasClientAuthSession()) {
+      setAuthRequiredOpen(true);
+      return;
+    }
+    setCustomItineraryInitialDays(5);
+    setCustomItineraryOpen(true);
+  }, [hasClientAuthSession]);
+
+  const openCustomItineraryWithDays = useCallback(
+    (days: number) => {
+      if (!hasClientAuthSession()) {
+        setAuthRequiredOpen(true);
+        return;
+      }
+      setCustomItineraryInitialDays(days);
+      setCustomItineraryOpen(true);
+    },
+    [hasClientAuthSession],
+  );
+
+  const clearAuthRequired = useCallback(() => setAuthRequiredOpen(false), []);
 
   /** 英雄区 1/3/5/7 天：切换行程天数筛选；再次点击同一天数则清除筛选 */
   const applyTripDaysFilter = useCallback((days: number) => {
@@ -956,6 +979,8 @@ export function useMarketPage(options?: { initialSnapshot?: MarketPageInitialSna
     customItineraryInitialDays,
     openCustomItinerary,
     openCustomItineraryWithDays,
+    authRequiredOpen,
+    clearAuthRequired,
     tripDaysFilter,
     applyTripDaysFilter,
     clearTripDaysFilter,

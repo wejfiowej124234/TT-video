@@ -19,6 +19,10 @@ const UnlockModal = dynamic(
   () => import("@/components/landing/UnlockModal"),
   { ssr: false, loading: () => null },
 );
+const AuthRequiredModal = dynamic(
+  () => import("@/components/shared/AuthRequiredModal"),
+  { ssr: false, loading: () => null },
+);
 
 /** 25 §3.1 + 28：Hero + 规划表单 + 行程预览卡 */
 export default function Home() {
@@ -92,6 +96,12 @@ export default function Home() {
             unlockError={data.unlockError}
           />
         ) : null}
+        <AuthRequiredModal
+          open={data.loginRequired}
+          onClose={() => data.clearLoginRequired()}
+          returnUrl="/"
+          testId="landing-login-cta"
+        />
         <div className="relative">
           <div className={TT_MARKETING_HOME_FOOTER_TOP_FADE} aria-hidden />
           <LandingFooter />

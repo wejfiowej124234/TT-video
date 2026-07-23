@@ -18,7 +18,6 @@ import {
 import MarketFlowContextBanner from "@/components/market/MarketFlowContextBanner";
 import MarketContent from "@/components/market/MarketContent";
 import { ConversionFunnelRail } from "@/components/product-enhancement/ConversionFunnelRail";
-import { EscrowTrustMicro } from "@/components/product-enhancement/EscrowTrustMicro";
 import { MarketOrderClosureStrip } from "@/components/product-enhancement/MarketOrderClosureStrip";
 import MarketPageFooter from "@/components/market/MarketPageFooter";
 import { stashEscrowOrderPrefetchForOrderIdNav } from "@/lib/orderEscrowPrefetch";
@@ -48,6 +47,10 @@ import {
 const CustomItineraryModal = dynamic(
   () => import("@/components/market/CustomItineraryModal").then((m) => m.default),
   { ssr: false, loading: () => null }
+);
+const AuthRequiredModal = dynamic(
+  () => import("@/components/shared/AuthRequiredModal"),
+  { ssr: false, loading: () => null },
 );
 
 const OrderDetailDrawer = dynamic(
@@ -150,11 +153,14 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
             <MarketHubSubNav />
           </div>
         </div>
-        <div className={`${TT_MARKETING_MARKET_HUB_GAP} relative z-10`}>
-          <div className={`${TT_MARKETING_MARKET_L5_PAGE_MAX} space-y-3`}>
-            <ConversionFunnelRail touchpoint="market" t={t} />
+        <div
+          className={`${TT_MARKETING_MARKET_HUB_GAP} relative z-10`}
+          data-tt-market-pes-chrome="quiet"
+        >
+          <div className={`${TT_MARKETING_MARKET_L5_PAGE_MAX} space-y-2`}>
+            {/* Quiet PES: next-CTA only + order-closure strip (trust micro off default viewport) */}
+            <ConversionFunnelRail touchpoint="market" t={t} density="quiet" />
             <MarketOrderClosureStrip t={t} />
-            <EscrowTrustMicro t={t} touchpoint="market" variant="inline" />
           </div>
         </div>
         {!data.bindGuideToOrderId ? (
@@ -345,6 +351,13 @@ function MarketPageInner({ initialSnapshot }: { initialSnapshot?: MarketPageInit
         onSuccess={data.handleCustomItinerarySubmit}
         preselectedGuideId={data.customItineraryPreselectedGuideId || undefined}
         initialTotalDays={data.customItineraryInitialDays}
+      />
+      <AuthRequiredModal
+        open={data.authRequiredOpen}
+        onClose={data.clearAuthRequired}
+        returnUrl={orderDrawerLoginReturnPath}
+        messageKey="landing_error_login"
+        testId="market-auth-required-modal"
       />
 
       <div

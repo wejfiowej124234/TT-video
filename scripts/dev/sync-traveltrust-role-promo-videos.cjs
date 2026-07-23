@@ -33,11 +33,39 @@ const verifyOnly = process.argv.includes("--verify");
 const ingest = process.argv.includes("--ingest") || (!verifyOnly && process.argv.includes("--write-ssot"));
 
 const MAP = [
-  { zh: "旅行者.mp4", role: "traveler", aliases: [] },
-  { zh: "向导.mp4", role: "guide", aliases: [] },
-  { zh: "商家.mp4", role: "merchant", aliases: ["provider.mp4"] },
-  { zh: "旅行收购.mp4", role: "acquisition", aliases: [] },
+  {
+    role: "traveler",
+    zhCandidates: ["游客.mp4", "旅行者.mp4"],
+    posterCandidates: ["游客-封面.jpg", "旅行者-封面.jpg"],
+    aliases: [],
+  },
+  {
+    role: "guide",
+    zhCandidates: ["向导.mp4"],
+    posterCandidates: ["向导-封面.jpg"],
+    aliases: [],
+  },
+  {
+    role: "merchant",
+    zhCandidates: ["商家.mp4"],
+    posterCandidates: ["商家-封面.jpg"],
+    aliases: ["provider.mp4"],
+  },
+  {
+    role: "acquisition",
+    zhCandidates: ["旅行收购.mp4"],
+    posterCandidates: ["旅行收购-封面.jpg"],
+    aliases: [],
+  },
 ];
+
+function firstExisting(dir, names) {
+  for (const name of names) {
+    const p = path.join(dir, name);
+    if (fs.existsSync(p)) return { name, abs: p };
+  }
+  return null;
+}
 
 const ROLES = ["traveler", "guide", "merchant", "acquisition", "provider"];
 
@@ -175,25 +203,38 @@ function doIngest() {
   const entries = [];
   let missing = 0;
   for (const row of MAP) {
-    const src = path.join(DROP, row.zh);
+    const srcHit = firstExisting(DROP, row.zhCandidates);
     const destName = `${row.role}.mp4`;
     const dest = path.join(DEST, destName);
-    if (!fs.existsSync(src)) {
-      console.error(`TT_ROLE_PROMO_SYNC: MISSING ${row.zh}`);
+    if (!srcHit) {
+      console.error(`TT_ROLE_PROMO_SYNC: MISSING ${row.zhCandidates.join(" | ")}`);
       missing += 1;
       continue;
     }
-    const st = fs.statSync(src);
-    const digest = sha256File(src);
+    const st = fs.statSync(srcHit.abs);
+    const digest = sha256File(srcHit.abs);
     console.log(
-      `TT_ROLE_PROMO_SYNC: ingest ${row.zh} → ${destName} (${(st.size / (1024 * 1024)).toFixed(1)} MiB · sha256=${digest.slice(0, 12)}…)`,
+      `TT_ROLE_PROMO_SYNC: ingest ${srcHit.name} → ${destName} (${(st.size / (1024 * 1024)).toFixed(1)} MiB · sha256=${digest.slice(0, 12)}…)`,
     );
     if (!dryRun) {
-      fs.copyFileSync(src, dest);
+      fs.copyFileSync(srcHit.abs, dest);
       for (const alias of row.aliases) {
-        fs.copyFileSync(src, path.join(DEST, alias));
+        fs.copyFileSync(srcHit.abs, path.join(DEST, alias));
         console.log(`TT_ROLE_PROMO_SYNC: alias ${alias}`);
       }
+    }
+    const posterHit = firstExisting(DROP, row.posterCandidates || []);
+    if (posterHit) {
+      const posterDest = path.join(DEST, `${row.role}.poster.jpg`);
+      console.log(`TT_ROLE_PROMO_SYNC: poster ${posterHit.name} → ${row.role}.poster.jpg`);
+      if (!dryRun) {
+        fs.copyFileSync(posterHit.abs, posterDest);
+        if (row.role === "merchant") {
+          fs.copyFileSync(posterHit.abs, path.join(DEST, "provider.poster.jpg"));
+        }
+      }
+    } else {
+      console.warn(`TT_ROLE_PROMO_SYNC: WARN no poster for ${row.role}`);
     }
     entries.push({
       role: row.role,
@@ -203,6 +244,7 @@ function doIngest() {
       sha256: digest,
       status: dryRun ? "DRY_RUN" : "INGESTED",
       aliases: row.aliases,
+      poster: posterHit ? `frontend/public/media/traveltrust/roles/${row.role}.poster.jpg` : null,
     });
     if (row.aliases.includes("provider.mp4")) {
       entries.push({
@@ -213,6 +255,7 @@ function doIngest() {
         sha256: digest,
         status: dryRun ? "DRY_RUN" : "INGESTED",
         aliases: [],
+        poster: posterHit ? "frontend/public/media/traveltrust/roles/provider.poster.jpg" : null,
       });
     }
   }
