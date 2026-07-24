@@ -6,8 +6,9 @@
 **Round-2 = 第二批（Batch-2）:** HU-011～017 · **CLOSING**（HU-014 PARTIAL · Resend 域名 Owner 残留）  
 **Round-3 = 第三批（Batch-3）:** HU-018～021 **FIXED** · HU-014↻ **PARTIAL（Owner Resend 域名）**（2026-07-24 ~09:26 集体改）  
 **Round-4 = 第四批（Batch-4）:** HU-022～025 **FIXED**（2026-07-24 · 集体改 · Staging bake `3d85df4f`）· HU-014↻ 仍 **PARTIAL（Owner Resend）**  
-**Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`  
-**Staging deploy HEAD:** `3d85df4f`（Batch-4 · ED vs tip · page-surface Unsplash DRIFT 旁证同前）  
+**Round-5 = PATCH-STG-008:** Auth L5 出站邮件 + brand/BIMI · Staging bake `3b06b54a`（Web+API）· Logo **HTTP 200** · Owner 残留 **DMARC(+VMC)**  
+**Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
+**Staging deploy HEAD:** `3b06b54a`（PATCH-STG-008 · Auth L5 mail/brand · page-surface Unsplash DRIFT 旁证同前）  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
@@ -196,11 +197,11 @@
 
 | 层 | 状态 | 说明 |
 |----|------|------|
-| **邮件正文 L5** | 代码已对齐 | `auth_email_templates`：暖金暗玻璃（`#0c0a09` / `#f9d779`），**禁止**蓝白默认壳；注册 OTP + 重置/验证链同源 |
-| **正文内品牌标（头像位）** | 代码已对齐 | HTML 头图 `…/brand/traveltrust-email-mark.png`（或 `TRAVELTRUST_EMAIL_BRAND_MARK_URL`）；须 **Staging Web + API 同批部署** 后入箱可见 |
-| **Gmail 列表左侧圆头像** | **Owner · BIMI** | 应用内无法直接设置。资产：`frontend/public/brand/bimi-logo.svg`。Owner：域 DMARC ≥ quarantine + BIMI DNS +（Gmail 常需）VMC。**未做 BIMI ≠ 邮件 L5 失败** |
+| **邮件正文 L5** | **Staging 已 bake** `3b06b54a` | `auth_email_templates`：暖金暗玻璃；注册 OTP + 重置/验证链；**≠** Hard Gate |
+| **正文内品牌标（头像位）** | **Logo HTTP 200** | `https://tt-web-staging.fly.dev/brand/traveltrust-email-mark.png` · BIMI `l=` → `…/brand/bimi-logo.svg` **200** |
+| **Gmail 列表左侧圆头像** | **Owner · DMARC(+VMC)** | BIMI TXT 已有；**`_dmarc.web3-ttg.com` 仍不存在**（阻断）。Cloudflare 加 TXT `_dmarc` = `v=DMARC1; p=quarantine;`；Gmail 稳定显示常需 VMC |
 
-**诚实边界：** 出站 Delivered + L5 正文 = ② Product Reality；Gmail BIMI 头像与 Mainnet Hard Gate / Cutover **正交**，本批 ≠ Production GO。
+**诚实边界：** 出站 Delivered + L5 正文 + Logo 200 = ② Product Reality（PATCH-STG-008）；Final Truth / Candidate v2 / EGM / Hard Gate / Cutover = **cite-only** · **≠** Production GO。
 
 **禁止：** 为消 Console 503 改回假成功。`chext_driver` unload = 扩展噪声，忽略。
 

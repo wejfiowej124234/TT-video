@@ -47,7 +47,7 @@
 | **005** | 收购角标对比度（UI Presentation） | FE | WORKTREE | N | N | 本地 vitest PASS | DEFERRED | bug_fix | BLOCKED_FG15 |
 | **006** | Dual-track + Identity | Gate/Docs | WORKTREE | Y | N | ENFORCED | DEFERRED | ops_gate_docs | BLOCKED_FG15 |
 | **007** | Patch Promotion Gate | Gate/Docs | WORKTREE | Y | N | ENFORCED | DEFERRED | ops_gate_docs | BLOCKED_FG15 |
-| **008** | Auth L5 出站邮件 + brand/BIMI 资产（HU-014 体验） | Web/API/Docs | *post-commit* | N | N | PENDING_DEPLOY | DEFERRED | bug_fix | OPEN（FG-15-B ELAPSED · Staging ops） |
+| **008** | Auth L5 出站邮件 + brand/BIMI 资产（HU-014 体验） | Web/API/Docs | `3b06b54a` | N | N | Web+API bake · Logo **200** · DMARC Owner | DEFERRED | bug_fix | OPEN（FG-15-B ELAPSED · Staging ops） |
 
 ### 备注
 

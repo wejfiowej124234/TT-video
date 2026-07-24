@@ -189,21 +189,22 @@ patches:
     scope: >
       auth_email_templates (Auth L5 HTML) + email_transport_resend html +
       frontend/public/brand/* + HU register living cite
-    code_sha_or_worktree: PENDING_COMMIT
+    code_sha_or_worktree: "3b06b54a161cda7665e388c5799f0b59cf590365"
     impacts_psg: false
     impacts_fg_or_web3: false
-    verification_result: PENDING_STAGING_DEPLOY
+    verification_result: STAGING_BAKE_LOGO_HTTP_200_DMARC_OWNER
     merge_into_release: DEFERRED_TO_NEXT_RC
     promotion_class: bug_fix
     promotion_status: OPEN
     production_impact: false
     fg15_impact: false
     enters_release: false
-    status: CODE_IN_WORKTREE_PENDING_STAGING_DEPLOY
+    status: LIVING_PARTIAL_IMAGE_STALE
     note: >
+      Web+API Staging bake 3b06b54a (2026-07-24). Logo/BIMI SVG HTTP 200.
       Final Truth Baseline cite-only. Product/Release + Engineering SSOT living track.
       Does not mutate Candidate v2 / PSG-EGM / Hard Gate / Cutover.
-      BIMI inbox avatar still Owner DMARC(+VMC); this patch ships brand asset URL + L5 body.
+      Owner residual: Cloudflare TXT _dmarc = v=DMARC1; p=quarantine; (+ optional VMC for Gmail list avatar).
     runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
 
 related:
