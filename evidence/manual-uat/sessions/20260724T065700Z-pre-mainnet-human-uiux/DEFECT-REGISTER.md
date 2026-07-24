@@ -13,7 +13,7 @@
 **Round-8 Owner 签收（~13:05）：** 验证码邮件版式 **「感觉可以了」** · 产品 L5 抛光闭合；进垃圾箱仍属信誉闸（Postmaster / Inbox 3/3 · OPEN）  
 **当前批次口径：** **第 5 批 Batch-5 集体改 FIXED**（HU-026/029/030/031 · HU-027 不修 · HU-028 待证）  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
-**Staging deploy HEAD:** Batch-5 Web **已 bake**（PATCH-STG-009 · tip cite `817b0d07` · fly `tt-web-staging` · favicon TT **HTTP 200 已验**）· Round-8 API 仍在 · DNS 未改  
+**Staging deploy HEAD:** Batch-5 Web **已 bake**（PATCH-STG-009 · fly 构建 cite `817b0d07` · 本批 Git `ce1bd9a9` · favicon TT **HTTP 200 已验**）· Round-8 API 仍在 · DNS 未改  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
