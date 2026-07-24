@@ -36,7 +36,7 @@ export interface CommunityFeedDestinationPickerProps {
 }
 
 function destinationPickerCityBtn(active: boolean): string {
-  return `flex min-h-[44px] items-center justify-center rounded-xl border px-3 py-2 text-meta font-medium motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/40 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 ${
+  return `inline-flex min-h-[36px] items-center justify-center rounded-lg border px-2.5 py-1.5 text-[0.7rem] font-medium leading-none motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/40 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 sm:min-h-[40px] sm:px-3 sm:text-meta ${
     active
       ? "border-ref-sun/45 bg-ref-sun/12 text-ref-sun"
       : "border-ref-sun/18 bg-ink-900/55 text-slate-300 hover:border-ref-sun/28 hover:bg-ref-sun/8"
@@ -75,7 +75,8 @@ export function CommunityFeedDestinationPicker({
       return;
     }
     const rect = el.getBoundingClientRect();
-    const minWidth = Math.max(rect.width, 280);
+    // HU-024: wider panel so ten-country compact rows fit without vertical scroll
+    const minWidth = Math.max(rect.width, Math.min(420, window.innerWidth - 16));
     const left = Math.max(8, Math.min(rect.left, window.innerWidth - minWidth - 8));
     setPanelAnchor({ top: rect.bottom + 6, left, minWidth });
   }, [panelLayout]);
@@ -140,40 +141,45 @@ export function CommunityFeedDestinationPicker({
     value === "all" ? t("community_destination_all") : communityFeedDestinationLabel(t, value);
 
   const panelBody = (
-    <div className="max-h-[min(70vh,28rem)] overflow-y-auto overscroll-contain px-3 pb-3 pt-1">
+    <div
+      className="overflow-visible px-3 pb-3 pt-1"
+      data-tt-community-dest-picker-compact="1"
+    >
       <button
         type="button"
         role="option"
         aria-selected={value === "all"}
-        className={`${destinationPickerCityBtn(value === "all")} mb-3 w-full`}
+        className={`${destinationPickerCityBtn(value === "all")} mb-2.5 w-full`}
         onClick={() => selectValue("all")}
       >
         {t("community_destination_all")}
       </button>
-      {FEED_DESTINATION_GROUPS.map(({ regionKey, cities }) => (
-        <div key={regionKey} className="mb-3 last:mb-0">
-          <p
-            className="mb-2 px-1 text-[0.62rem] font-semibold uppercase tracking-wide text-slate-500"
-            aria-hidden
+      <div className="space-y-1.5">
+        {FEED_DESTINATION_GROUPS.map(({ regionKey, cities }) => (
+          <div
+            key={regionKey}
+            className="flex items-start gap-2 border-t border-ref-sun/10 pt-1.5 first:border-t-0 first:pt-0"
           >
-            {t(`community_region_${regionKey}`)}
-          </p>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-            {cities.map((city) => (
-              <button
-                key={city}
-                type="button"
-                role="option"
-                aria-selected={value === city}
-                className={destinationPickerCityBtn(value === city)}
-                onClick={() => selectValue(city)}
-              >
-                {communityFeedDestinationLabel(t, city)}
-              </button>
-            ))}
+            <p className="w-[3.25rem] shrink-0 pt-1.5 text-[0.62rem] font-semibold leading-tight text-slate-500 sm:w-14">
+              {t(`community_region_${regionKey}`)}
+            </p>
+            <div className="flex min-w-0 flex-1 flex-wrap gap-1.5">
+              {cities.map((city) => (
+                <button
+                  key={city}
+                  type="button"
+                  role="option"
+                  aria-selected={value === city}
+                  className={destinationPickerCityBtn(value === city)}
+                  onClick={() => selectValue(city)}
+                >
+                  {communityFeedDestinationLabel(t, city)}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 

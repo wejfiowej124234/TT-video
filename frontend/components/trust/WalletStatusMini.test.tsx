@@ -116,10 +116,12 @@ describe("WalletStatusMini", () => {
     });
     useChainIdMock.mockReturnValue(137);
     renderWithLocale(<WalletStatusMini />);
-    expect(screen.getByText(/已连接/)).toBeTruthy();
+    expect(screen.getByText(/钱包已连接/)).toBeTruthy();
     expect(screen.queryByRole("button", { name: "断开连接" })).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: /已连接钱包/ }));
+    fireEvent.click(screen.getByRole("button", { name: /钱包已连接/ }));
     expect(screen.getByRole("menu", { name: "钱包账户" })).toBeTruthy();
+    expect(screen.getByText(/不等于网站账号登录/)).toBeTruthy();
+    expect(screen.queryByText("已登录")).toBeNull();
     fireEvent.click(screen.getByRole("menuitem", { name: "断开连接" }));
     await waitFor(() => {
       expect(mockDisconnectAsync).toHaveBeenCalled();

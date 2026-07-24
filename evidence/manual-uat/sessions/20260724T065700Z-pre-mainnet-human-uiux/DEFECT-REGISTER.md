@@ -5,12 +5,27 @@
 **Round-1:** HU-001～010 **FIXED**（2026-07-24 · Staging bake `2db694ae`）  
 **Round-2 = 第二批（Batch-2）:** HU-011～017 · **CLOSING**（HU-014 PARTIAL · Resend 域名 Owner 残留）  
 **Round-3 = 第三批（Batch-3）:** HU-018～021 **FIXED** · HU-014↻ **PARTIAL（Owner Resend 域名）**（2026-07-24 ~09:26 集体改）  
+**Round-4 = 第四批（Batch-4）:** HU-022～025 **FIXED**（2026-07-24 · 集体改 · Staging bake 待本批 deploy）· HU-014↻ 仍 **PARTIAL（Owner Resend）**  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`  
-**Staging deploy HEAD:** `902262d3`（Batch-3 · ED vs tip · page-surface DRIFT 旁证同前）  
+**Staging deploy HEAD:** （Batch-4 部署后回填）  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
 **Rule（写死）：** Owner 口述 → 立刻追加；「结束 / 出清单」→ 清单+意见；**「开始第 N 批集体改」** → 按 Batch-2 同级标准改 → 本地 → Staging → Git → **Final Truth cite 对齐**（不新开平行真源）。
+
+---
+
+## 第四批（Batch-4）· 实施状态（生产级 · L5 · 2026-07-24）
+
+| # | 主题 | 严重度 | 状态 | 落地摘要 |
+|---|------|--------|------|----------|
+| **HU-022** | 兑换网关单主钮「兑换」 | P1 | **FIXED** | 底栏仅一主 CTA「兑换」；未连钱包 → 弹窗「请连接钱包」→ 顶栏同源；治理/托管降为文字链；短文案无挤行 |
+| **HU-023** | 信任「可核对的事实」 | P1 | **FIXED** | Escrow 点名 USDC；去「第一阶段」工程词 → 开放十国网络；合规卡保留 |
+| **HU-024** | 社区十国目的地面板 | P1 | **FIXED** | `productCountries` 十国；无印尼；每国≤4 城；紧凑行布局无竖滚 |
+| **HU-025** | 顶栏钱包已连接态 | P1 | **FIXED** | 芯片短址+状态点；账户菜单「钱包会话 ≠ 网站登录」；禁「已登录」冒充 |
+| **HU-014↻** | 注册验证码真发信 | **P0** | **PARTIAL** | 同 Batch-3 · Owner Resend 域名 |
+
+**诚实边界：** Batch-4 ≠ Production GO / Hard Gate / Cutover。
 
 ---
 
@@ -113,21 +128,71 @@
 | HU-021 | 2026-07-24 ~09:20 | 未登录（Staging） | Console | Geo policy · me/* 401 · 扩展噪声 | 运行时 | P1 | Geo+auth 闸；扩展忽略 | **FIXED · Batch-3** |
 | HU-014↻ | 2026-07-24 ~09:21 | 未登录（Staging） | `/auth/register` 发码 | 503 · 未收码 · 要生产级 | 出站邮件 | **P0** | fail-closed 保持；**Owner 验 Resend 域** | **PARTIAL · Owner ops** |
 
-## HU-014 · 注册邮箱验证码 · 生产级闭环（Batch-2 PARTIAL · Batch-3 复确认）
+### Round-4 = 第四批 Batch-4（FIXED · 2026-07-24）
 
-**Staging 复现（2026-07-24 ~09:21）：** 游客注册 · `yinhang744@gmail.com` · 点「发送验证码」→  
-`POST https://tt-api-staging.fly.dev/auth/register/send-verification-code` → **503** · 邮箱无码。
+| # | 时间 | 账号 | 路径/页面 | 问题描述（原话） | 类型 | 严重度 | 修改意见 | 状态 |
+|---|------|------|-----------|------------------|------|--------|----------|------|
+| HU-022 | 2026-07-24 ~09:50 | 未登录（Staging） | `/traveltrust` · 兑换网关 | ① 内容须对齐最新真源 ② Escrow 换行挤行 ③ 只留「兑换」 ④ 未连钱包弹「请连接钱包」 | UX · 内容 · L5 | P1 | 单主 CTA + wallet prompt modal + 次级文字链；locale 生产口径 | **FIXED** |
+| HU-023 | 2026-07-24 ~09:50 | 未登录（Staging） | `/traveltrust` · 信任事实 | 对齐最新真源 · 商业标准 | 内容 · 商业 · L5 | P1 | USDC Escrow 点名；去「第一阶段」；合规保留 | **FIXED** |
+| HU-024 | 2026-07-24 ~09:52 | 未登录（Staging） | `/community` · 全部目的地 | 十国无印尼 · 简约无滚动条 | UX · IA · 数据 | P1 | `productCountries` + 紧凑行；无 `id` | **FIXED** |
+| HU-025 | 2026-07-24 ~09:55 | 连钱包后（Staging） | 顶栏钱包 | 已连接应显示什么 · L5 | UX · L5 · 钱包 | P1 | 短址芯片 + 账户菜单；明确 ≠ 网站登录 | **FIXED** |
+
+## HU-025 · 顶栏钱包已连接态 · L5（2026-07-24 · **FIXED · Batch-4**）
+
+**落地：** `WalletStatusMini` 芯片 = 状态点 + `whitespace-nowrap` 短址；`WalletAccountMenu` 首行 `wallet_account_session_hint`（钱包会话 ≠ 网站登录）；文案禁「已登录」冒充。
+
+**诚实边界：** ①/② 顶栏 UX · ≠ 主网签名/资金 GO。
+
+## HU-024 · 社区「全部目的地」· 十国简约面板（2026-07-24 · **FIXED · Batch-4**）
+
+**落地：** `communityFeedConstants` ← `PRODUCT_COUNTRIES`；无 `id`/印尼；每国 ≤4 城；`CommunityFeedDestinationPicker` 紧凑国+城行、`overflow-visible`（无竖滚）。
+
+**诚实边界：** ①/② UX · ≠ 全站 POI CMS 十国内容已齐。
+
+## HU-023 · 信任「可核对的事实」（2026-07-24 · **FIXED · Batch-4**）
+
+**落地：** `traveltrust_trust_fact_*` zh/en — USDC Escrow 点名；「开放十国目的地网络」替换「第一阶段十国」；合规/免责保留。
+
+**诚实边界：** 文案对齐 ≠ Production GO / Hard Gate PASS。
+
+## HU-022 · 兑换网关 CTA / 真源（2026-07-24 · **FIXED · Batch-4**）
+
+**落地：** 单主钮「兑换」；未连接 → `data-tt-traveltrust-liquidity-wallet-prompt` 弹窗 → 顶栏 `#tt-header-wallet`；治理/托管次级文字链；短 `escrow_link`；去「v1 草案」口吻。
+
+**诚实边界：** ①/② Staging UX · ≠ 主网真兑换 GO · ≠ Production GO。
+
+## HU-014 · 注册邮箱验证码 · 生产级闭环（Batch-2 PARTIAL · Batch-3/4 复确认）
+
+**Staging 复现（2026-07-24 ~09:54）：** 游客注册 · `yinhang744@gmail.com` ·「发送验证码」→ **503**；Resend Emails 控制台**无新发送记录**（仅见 2 日前 `plantartist778@gmail.com` 的 password reset / probe · Delivered）。
+
+### 与「改密曾通」对拍（纠正误解 · 非 API 配错）
+
+| 现象 | 含义 |
+|------|------|
+| Resend 里改密/探针 **Delivered** → `plantartist778@gmail.com` | 证明 **Resend API Key + 出站链路畅通**（Feature Inventory / Reality Closure 对「账号邮箱」已通） |
+| 注册发到 `yinhang744@gmail.com` → API **503** · Resend **无新行** | 请求**已到达** Resend，被 **403 test-mode** 拒绝后 API fail-closed；**不会**写入 Sending 成功表 |
+| Staging 日志（~01:52Z） | `You can only send testing emails to your own email address (plantartist778@gmail.com). … verify a domain at resend.com/domains, and change the from address…` |
+
+**结论：** 功能未「匹配错」——改密与注册走**同一** `send_via_resend`；差异只在**收件人是否 = Resend 账号邮箱**。任意 Gmail 生产级 = **验证域名 + 改 FROM**，不是再改注册代码假成功。
+
+### Final Truth Baseline cite-only（本项落点）
+
+| 锚点 | 本项关系 |
+|------|----------|
+| **Final Truth / Product·Release Baseline** | 注册 OTP 属用户产品真实能力 |
+| **Engineering SSOT** | `email_transport_resend` + Fly secrets；代码 fail-closed 已对齐 |
+| **Feature Inventory** | 「能发信」对 plantartist **已证**；对任意用户邮箱 **未证** |
+| **Reality Closure** | Staging 真跑与 Baseline 对拍：**test-mode 限制 = OPEN gap** |
+| **PRR / Mainnet Hard Gate / Cutover** | 本项闭 ≠ Hard Gate PASS；域名验证是 ②→③ 出站前置 |
 
 | 层 | 状态 | 说明 |
 |----|------|------|
-| **产品代码（①）** | 已按生产纪律 | fail-closed：投递失败 → **503 `email_delivery_failed`** + 回滚 OTP + FE 无假倒计时（Batch-2） |
-| **出站投递（② Staging 真发信）** | **未闭 · Owner** | Staging 日志（2026-07-24）：Resend **403** — *You can only send testing emails to your own email address (plantartist778@gmail.com). To send … verify a domain at resend.com/domains, and change the `from` address…* |
-| **Owner 生产级步骤（写死）** | 待办 | ① https://resend.com/domains 验证业务域名 ② `fly secrets set TRAVELTRUST_RESEND_FROM=noreply@已验证域 -a tt-api-staging` ③ 确认 `TRAVELTRUST_EMAIL_TRANSPORT=resend` ④ 对 `yinhang744@gmail.com` 复测 → **200 + 入箱** |
-| **验收（生产级）** | 未过 | 任意非白名单邮箱 → **HTTP 200** + `email_sent:true` + **真实入箱**（非仅 UI 绿） |
+| **产品代码（①）** | 已按生产纪律 | 投递失败 → **503 `email_delivery_failed`** + 回滚 OTP + 无假倒计时 |
+| **出站投递（②）** | **未闭 · Owner** | Resend 仍 test-mode / 未用已验证域 `from` |
+| **Owner 步骤（写死）** | 待办 | ① [resend.com/domains](https://resend.com/domains) 验证业务域 ② `fly secrets set TRAVELTRUST_RESEND_FROM='TravelTrust <noreply@已验证域>' -a tt-api-staging` ③ 复测 `yinhang744@gmail.com` → Resend 出现新 Delivered + 入箱 |
+| **临时自测** | 可选 | 用 `plantartist778@gmail.com` 注册发码应能通（与改密同白名单）— **不能**冒充任意邮箱已 GO |
 
-**禁止：** 为消 Console 503 而改回「假成功 / 假倒计时」。  
-**Agent 可代跑（须 Owner 授权）：** 核对 Fly secrets 是否已设（不回显密钥）· 配置完成后 Staging 复测。  
-**诚实边界：** 本项闭 ≠ Production GO；仅 ② 注册邮件真实链路。
+**禁止：** 为消 Console 503 改回假成功。`chext_driver` unload = 扩展噪声，忽略。
 
 ## HU-021 · Staging Console 分流（2026-07-24 · 先记未改）
 

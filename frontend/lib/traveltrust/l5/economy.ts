@@ -1,5 +1,8 @@
 /** L5 · auto-split from traveltrustCinematicNonGlobeL5 facade */
-import { TT_MARKETING_BTN_GHOST_WARM_DARK } from "@/lib/marketingUi";
+import {
+  TT_MARKETING_BTN_GHOST_WARM_DARK,
+  TT_MARKETING_BTN_PRIMARY_WARM_HERO,
+} from "@/lib/marketingUi";
 import { TT_PAGE_VERTICAL_RHYTHM_L5 } from "./rhythm";
 import { TT_SECTION_SURFACE_L5 } from "./sections-layout";
 
@@ -57,8 +60,14 @@ export const TT_STABLECOIN_GATEWAY_L5 = {
   amountLockedHintClass: "relative mt-2 text-meta leading-relaxed text-slate-400/90",
   cardBodyStackClass: "relative space-y-4 px-4 pb-5 pt-4 sm:space-y-5 sm:px-6 sm:pb-6 sm:pt-5",
   ctaStackShellClass: "relative mt-5 border-t border-ref-sun/14 pt-5 sm:mt-6",
-  ctaStackClass: "grid w-full grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3",
-  ctaItemWrapClass: "flex min-w-0 items-stretch",
+  /** HU-022: single primary「兑换」+ secondary text links (no 3-button grid) */
+  ctaStackClass: "flex w-full flex-col items-stretch gap-3",
+  ctaItemWrapClass: "flex min-w-0 w-full items-stretch",
+  ctaPrimaryClass: `${TT_MARKETING_BTN_PRIMARY_WARM_HERO} w-full sm:min-w-[12rem]`,
+  ctaSecondaryRowClass:
+    "flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-center sm:justify-start",
+  ctaSecondaryLinkClass:
+    "inline-flex max-w-full items-center whitespace-nowrap text-meta font-medium text-slate-400 underline-offset-2 transition hover:text-ref-sun/90 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09]",
   ctaEscrowPrimaryClass: TT_MARKETING_BTN_GHOST_WARM_DARK,
   previewBannerEntranceOnly: true,
   ctaConnectClass: TT_MARKETING_BTN_GHOST_WARM_DARK,

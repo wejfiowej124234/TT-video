@@ -40,6 +40,9 @@ export function WalletAccountMenu({ ctrl, authL5 }: Props) {
       className="relative z-[1] w-full overflow-hidden py-2"
     >
       <div className="space-y-0.5 px-3 pb-2 pt-0.5">
+        <p className="text-meta text-slate-400" data-tt-wallet-session-hint="1">
+          {t("wallet_account_session_hint")}
+        </p>
         <p className="truncate font-mono text-small text-[#fde9a8]" title={ctrl.address}>
           {ctrl.shortAddress}
         </p>

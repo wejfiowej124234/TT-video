@@ -152,7 +152,9 @@ export default function WalletStatusMini({ variant = "dark", className = "" }: P
           }}
         >
           <span className={`inline-block h-2 w-2 shrink-0 rounded-full ${statusDot}`} aria-hidden />
-          <span className="font-mono tabular-nums">{ctrl.shortAddress}</span>
+          <span className="whitespace-nowrap font-mono tabular-nums" data-tt-wallet-chip-address="1">
+            {ctrl.shortAddress}
+          </span>
           <span aria-hidden className="opacity-70">
             ▾
           </span>
