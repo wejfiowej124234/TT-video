@@ -51,11 +51,19 @@ pub async fn send_via_resend(
         .timeout(Duration::from_secs(25))
         .build()
         .map_err(|e| format!("resend_http_client_build_failed: {e}"))?;
+    // List-Unsubscribe + Reply-To 有助于部分客户端降 spam 分；无追踪像素依赖（正文无 tracking）。
     let mut body = json!({
         "from": from,
         "to": [to_email],
         "subject": subject,
         "text": text_body,
+        "headers": {
+            "List-Unsubscribe": "<mailto:noreply@web3-ttg.com?subject=unsubscribe>",
+            "X-Entity-Ref-ID": "traveltrust-auth",
+        },
+        "tags": [
+            { "name": "category", "value": "auth_transactional" }
+        ],
     });
     if let Some(html) = html_body.filter(|s| !s.trim().is_empty()) {
         body.as_object_mut()

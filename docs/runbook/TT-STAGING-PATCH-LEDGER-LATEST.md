@@ -47,12 +47,12 @@
 | **005** | 收购角标对比度（UI Presentation） | FE | WORKTREE | N | N | 本地 vitest PASS | DEFERRED | bug_fix | BLOCKED_FG15 |
 | **006** | Dual-track + Identity | Gate/Docs | WORKTREE | Y | N | ENFORCED | DEFERRED | ops_gate_docs | BLOCKED_FG15 |
 | **007** | Patch Promotion Gate | Gate/Docs | WORKTREE | Y | N | ENFORCED | DEFERRED | ops_gate_docs | BLOCKED_FG15 |
-| **008** | Auth L5 出站邮件 + brand/BIMI（HU-014） | Web/API/Docs | `3b06b54a` | N | N | **FIXED ②**：Logo 200 · DMARC+BIMI DNS · 新邮箱 200；VMC 可选 | DEFERRED | bug_fix | OPEN（Staging ops · 待 Promotion） |
+| **008** | Auth L5 出站邮件 + brand/BIMI（HU-014） | Web/API/Docs | Round-8 bake | N | N | **FIXED ②** Auth+DNS；Round-8 L5 折行抛光；Postmaster/Inbox Owner；BIMI 不挡 HG | DEFERRED | bug_fix | OPEN（Staging ops · 待 Promotion） |
 
 ### 备注
 
-- **008** 落点：**Product / Release Baseline** + **Engineering SSOT** · Final Truth / Candidate v2 / EGM / Hard Gate = **cite-only** · **≠** Production GO。  
-- HU-014 **② Staging 出站闭环 FIXED**（Resend 域 + FROM + L5 bake + DMARC/BIMI DNS）；Gmail 列表头像 **VMC 可选**。  
+- **008** 落点：**Product / Release Baseline** + **Engineering SSOT** · Final Truth / Candidate v2 / V3.1.1 / PSG-EGM / Governance Anchor / Hard Gate / Cutover = **cite-only** · **≠** Production GO。  
+- Round-8：`alt=TT` 修复屏蔽图折行；DNS 仍冻；信誉闸见 [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md)。  
 - 历史 `001～007` 窗内 `BLOCKED_FG15` 行保留为台账；FG-15-B **ELAPSED**。  
 - **两类勿混：** ① Docs/Evidence 对齐 ✅ · ② 非金融 UI/出站体验 Patch ✅ · 金融/合约/Hard Gate ❌。  
 - 合法出口：Promotion → 新 PSG Version → STRICT → Canonical Deploy（本补丁 **不**改 Candidate tip）。

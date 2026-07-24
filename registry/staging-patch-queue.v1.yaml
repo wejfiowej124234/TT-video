@@ -201,10 +201,12 @@ patches:
     enters_release: false
     status: LIVING_ENFORCED
     note: >
-      Web+API Staging bake 3b06b54a. Logo/BIMI SVG HTTP 200.
-      Cloudflare TXT _dmarc + default._bimi publicly resolvable (2026-07-24).
-      Fresh email send-verification-code → 200; registered email → 409 email_already_registered (expected).
-      Optional residual: VMC for Gmail list avatar. ≠ Production GO / Hard Gate.
+      Round-5/6: outbound + L5 mail/brand baked. Round-7 DELIVERABILITY CLOSURE:
+      STOP staging custom-domain bind for mail; FREEZE email template edits.
+      SPF/DKIM/DMARC public AUTH PASS (scripts/dev/check-email-deliverability-dns.sh).
+      Owner: Google Postmaster Tools + Gmail inbox 3/3 gate (OPEN).
+      BIMI/VMC = DEFERRED brand track; does NOT block Mainnet Hard Gate / Production GO.
+      SSOT: docs/runbook/TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md
       Final Truth / Candidate v2 / PSG-EGM cite-only.
     runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
 

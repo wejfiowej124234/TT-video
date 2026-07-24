@@ -7,8 +7,11 @@
 **Round-3 = 第三批（Batch-3）:** HU-018～021 **FIXED** · HU-014↻ **PARTIAL（Owner Resend 域名）**（2026-07-24 ~09:26 集体改）  
 **Round-4 = 第四批（Batch-4）:** HU-022～025 **FIXED**（2026-07-24 · 集体改 · Staging bake `3d85df4f`）· HU-014↻ 仍 **PARTIAL（Owner Resend）**  
 **Round-5 = PATCH-STG-008（2026-07-24）：** HU-014 **FIXED（② Staging 出站 + Auth L5）** · bake `3b06b54a` · Logo/BIMI **HTTP 200** · Cloudflare **DMARC+BIMI TXT 已生效** · Gmail 列表圆头像 **VMC 可选残留**  
+**Round-6 = PATCH-STG-008↻（2026-07-24）：** 垃圾箱根因说明 + **TT 方标 SSOT**（`bimi-logo.svg`）对齐邮件 PNG/HTML · L5 正文升级 · 主题/投递头 · **≠** ③ GO  
+**Round-7 = 投递收口（2026-07-24）：** **停** Staging 挂域 / **冻**邮件模板 · SPF/DKIM/DMARC **AUTH PASS** · Postmaster+Gmail Inbox = Owner · BIMI/VMC **DEFERRED · 不挡 Hard Gate** · SSOT [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md)  
+**Round-8 = Owner 授权 L5 抛光（2026-07-24）：** `alt=TT` 修折行 · 金框头标 · 码 `&nbsp;` 字距 · Final Truth cite-only · 部署 API 后模板再冻  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
-**Staging deploy HEAD:** `3b06b54a`（PATCH-STG-008 · Auth L5 mail/brand · page-surface Unsplash DRIFT 旁证同前）  
+**Staging deploy HEAD:** Round-8 API bake（见 deploy 后 SHA）· DNS 未改  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
@@ -175,10 +178,36 @@
 | Staging FROM | `TRAVELTRUST_RESEND_FROM='TravelTrust <noreply@web3-ttg.com>'`（`tt-api-staging`） |
 | 新邮箱发码 | `POST …/send-verification-code` → **200** `verification_code_sent` + `email_sent:true` |
 | 已注册邮箱 | 同址 → **409** `email_already_registered`（**预期** · 非投递失败；换未注册邮箱或登录） |
-| Auth L5 正文 | bake `3b06b54a` · `auth_email_templates` 暖金暗玻璃 |
-| 品牌标 / BIMI 资产 | `https://tt-web-staging.fly.dev/brand/bimi-logo.svg` · `…/traveltrust-email-mark.png` → **HTTP 200** |
+| Auth L5 正文 | Round-5 bake `3b06b54a`；**Round-6** 升级中英 · preheader · 去不可靠 `background-clip` · 域身份行 |
+| 品牌标 / BIMI 资产 | **SSOT = `frontend/public/brand/bimi-logo.svg`（暗底金框 TT）**；邮件 PNG `traveltrust-email-mark.png` **同构图**；公网 URL **HTTP 200** |
 | Cloudflare DNS | `_dmarc`=`v=DMARC1; p=quarantine;` · `default._bimi`=`v=BIMI1; l=https://tt-web-staging.fly.dev/brand/bimi-logo.svg;`（公网已解析） |
 | Console `chext_driver` unload | **扩展噪声 · 忽略**（HU-021 同口径） |
+
+### Round-6 · 为何进垃圾箱（② · 诚实诊断 · 非缺 SPF）
+
+| 因子 | 说明 | 处置 |
+|------|------|------|
+| **新域信誉** | `web3-ttg.com` 出站量低 · Gmail 对 OTP 默认偏严 | Owner：在 Gmail 点 **「不是垃圾邮件」**；逐步正常发码暖域 |
+| **OTP 内容** | 验证码类正文易触发内容过滤 | 主题改「TravelTrust · 注册验证码…」；纯文本+HTML 双轨；无假营销 CTA |
+| **DMARC `p=quarantine`** | 正确生产策略；对齐失败时更易进垃圾箱 | 保持；Resend `send.` SPF + DKIM 已对齐时不应 soft-fail |
+| **Apex 无 SPF TXT** | **预期差异**：Resend 用 `send.web3-ttg.com` SPF，**不是**缺配置 | **CONFIRM_DESIGN** · 禁止乱加冲突 SPF |
+| 屏蔽图折行 TravelTr/ust | **FIXED Round-8** | `alt="TT"` + 56×56 金框 + 品牌 `nowrap`；部署后复测 |
+| 列表圆头像灰「T」 | 多数客户端需 **BIMI + VMC** | VMC = 可选商业件 · **≠** 出站未闭 · **不挡 Hard Gate** |
+| **工程侧 Round-6/8** | L5 正文 + Round-8 折行修复 | 信誉仍靠 Postmaster / Inbox 3/3 |
+
+**禁止：** 把「进垃圾箱」写成「没配 SPF」；用 VMC 未购冒充 HU-014 未闭。
+
+### Round-7 · 投递收口移交（ACTIVE · 停模板 / 停挂域）
+
+| 项 | 状态 |
+|----|------|
+| Staging 自定义域名（为发信） | **STOPPED** · 非投递根因 |
+| 邮件模板 / 主题 / 品牌标再改 | **FROZEN** |
+| SPF · DKIM · DMARC | **AUTH PASS** · `bash scripts/dev/check-email-deliverability-dns.sh` |
+| Google Postmaster Tools | **OWNER_ACTION** · `TT_POSTMASTER_VERIFIED: PENDING` |
+| Gmail 收件箱 3/3 | **`TT_GMAIL_INBOX_GATE: OPEN`** |
+| BIMI / VMC | **DEFERRED** · **不阻塞** Mainnet Hard Gate / Production GO |
+| 活轨 SSOT | [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md) |
 
 ### 与「改密曾通」对拍（历史纠偏 · 保留）
 
@@ -195,18 +224,19 @@
 | **Candidate v2** · pin `PSG-REL-20260720-WEB3-CAND-V2` | **cite-only** · 不改 tip / 协议基线 |
 | **V3.1.1 Final / PSG-EGM / Governance Anchor** | **cite-only** · 本批无资金/治理规则变更 |
 | **Product / Release Baseline** | **主战场**：注册 OTP · Auth L5 邮件体验 |
-| **Engineering SSOT** | bake `3b06b54a` · Resend secrets · `auth_email_templates` · brand 公网资产 |
-| **Release Integrity / Delta Recertify** | Staging Patch **PATCH-STG-008**；晋升仍 DEFERRED |
-| **Feature Inventory / Reality Closure** | ② Staging 任意新邮箱可发码 + Logo 200 + DMARC/BIMI DNS 已证 |
+| **Engineering SSOT** | Round-5/`3b06b54a` + Round-6 TT 标/HTML；Resend secrets · `auth_email_templates` · brand 公网资产 |
+| **Release Integrity / Delta Recertify** | Staging Patch **PATCH-STG-008↻**；晋升仍 DEFERRED |
+| **Feature Inventory / Reality Closure** | ② 发码路径已证；垃圾箱 = 域暖 + 用户「非垃圾」动作；Logo 200 + DMARC/BIMI DNS 已证 |
 | **PRR / Mainnet Hard Gate / Cutover** | **本项闭 ≠** Hard Gate / Cutover / Production GO；③ 生产 API 须同配 FROM（另闸） |
 
 | 层 | 状态 | 说明 |
 |----|------|------|
 | **产品代码（①）** | ✅ | 投递失败 → **503 `email_delivery_failed`** + 回滚 OTP；已注册 → **409** |
 | **出站投递（②）** | ✅ **FIXED** | 已验证域 + Staging FROM + 新邮箱 **200 Delivered 路径** |
-| **Auth L5 邮件壳（②）** | ✅ | bake `3b06b54a` |
+| **Auth L5 邮件壳（②）** | ✅ Round-6 | TT 方标 SSOT + 中英 L5 壳（部署后生效） |
 | **DNS BIMI/DMARC（②）** | ✅ | Cloudflare 记录公网可解析；Logo URL 200 |
-| **Gmail 列表圆头像** | 可选残留 | 常需 **VMC**；无 VMC ≠ HU-014 出站未闭 |
+| **Gmail 垃圾箱** | 暖域残留 | 见 Round-6 表；**Round-7** 移交 Postmaster + Inbox gate（非再改模板） |
+| **Gmail 列表圆头像** | **DEFERRED** | BIMI/VMC 品牌轨 · **≠** Hard Gate 阻塞 · **≠** HU-014 出站未闭 |
 | **③ 生产** | 未做 | 生产 API 同配 Resend FROM + 域；另闸 |
 
 **禁止：** 为消 Console 503/409 改回假成功；用已注册邮箱 409 冒充「发信坏了」。

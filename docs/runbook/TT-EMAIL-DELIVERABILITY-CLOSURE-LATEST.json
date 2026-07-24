@@ -1,0 +1,83 @@
+{
+  "schema": "tt.email_deliverability_closure.v1",
+  "status": "ACTIVE",
+  "phase": "2_email_reputation_closure",
+  "updated_at": "2026-07-24T04:54:16Z",
+  "domain": "web3-ttg.com",
+  "from": "TravelTrust <noreply@web3-ttg.com>",
+  "transport": "resend",
+  "stops": {
+    "email_system_template_edits": "REFROZEN_AFTER_ROUND8",
+    "dns_auth_bimi_edits": "FROZEN",
+    "dns_exception": "postmaster_verification_TXT_only",
+    "staging_custom_domain_bind_for_mail": "STOPPED"
+  },
+  "l5_mail_body_review": {
+    "round8": "FIXED_ALT_TT_NOWRAP_CODE_NBSP",
+    "header_alt_wrap_traveltr_ust": "FIXED",
+    "template_status_after_round8": "REFROZEN",
+    "dns_status": "FROZEN",
+    "action": "RETEST_AFTER_API_DEPLOY"
+  },
+  "authentication": {
+    "spf_send": "PASS",
+    "dkim_resend": "PASS",
+    "dmarc": "PASS",
+    "apex_spf": "CONFIRM_DESIGN_ABSENT",
+    "overall_auth": "PASS",
+    "dns_check_json": "docs/runbook/TT-EMAIL-DELIVERABILITY-DNS-CHECK-LATEST.json",
+    "recheck": "bash scripts/dev/check-email-deliverability-dns.sh",
+    "further_dns_changes": "FORBIDDEN_EXCEPT_POSTMASTER_TXT"
+  },
+  "google_postmaster_tools": {
+    "url": "https://postmaster.google.com/",
+    "domain": "web3-ttg.com",
+    "TT_POSTMASTER_VERIFIED": "PENDING",
+    "owner_action": true,
+    "close_as": "PASS"
+  },
+  "gmail_inbox_gate": {
+    "TT_GMAIL_INBOX_GATE": "OPEN",
+    "criteria": "3_of_3_inbox_not_spam_min_10m_apart",
+    "owner_acceptance": true,
+    "close_as": "PASS",
+    "screenshot_20260724_1240": "STILL_SPAM_NOT_PASS"
+  },
+  "bimi_vmc": {
+    "track": "DEFERRED_BRAND",
+    "blocks_mainnet_hard_gate": false,
+    "blocks_production_go": false,
+    "note": "Independent brand track; gray T expected without VMC/CMC."
+  },
+  "hard_gate_alignment": {
+    "mainnet_hard_gate_blocked_by_missing_bimi_vmc": false,
+    "mainnet_hard_gate_blocked_by_open_inbox_gate": false,
+    "mainnet_hard_gate_auto_pass_from_auth_dns": false,
+    "cite_only": [
+      "PSG-REL-20260720-WEB3-CAND-V2",
+      "ea71c577"
+    ]
+  },
+  "related": [
+    "docs/runbook/TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md",
+    "docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md",
+    "docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md"
+  ],
+  "round": 8,
+  "final_truth_cite": {
+    "Final Truth Baseline": "align_living",
+    "Candidate v2": "cite_only",
+    "V3.1.1 Final": "cite_only",
+    "PSG-EGM Final": "cite_only",
+    "PSG Governance Anchor": "cite_only",
+    "Product / Release Baseline": "primary",
+    "Engineering SSOT Anchor": "primary",
+    "Release Integrity": "staging_patch_008_round8",
+    "PSG Delta Recertify": "dry_run_non_fund",
+    "Feature Inventory Baseline": "cite",
+    "Reality Closure Framework": "inbox_owner_open",
+    "PRR": "not_closed_by_this",
+    "Mainnet Hard Gate": "not_blocked_by_bimi_or_inbox_warmup",
+    "Mainnet Cutover Hard Gate": "not_blocked_by_this"
+  }
+}

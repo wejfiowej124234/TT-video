@@ -1,0 +1,54 @@
+{
+  "schema": "tt.email_deliverability_dns_check.v1",
+  "checked_at": "2026-07-24T04:45:43Z",
+  "domain": "web3-ttg.com",
+  "from_example": "TravelTrust <noreply@web3-ttg.com>",
+  "dns": {
+    "send.web3-ttg.com|TXT": {
+      "status": 0,
+      "answers": [
+        "v=spf1 include:amazonses.com ~all"
+      ]
+    },
+    "send.web3-ttg.com|MX": {
+      "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+    },
+    "resend._domainkey.web3-ttg.com|TXT": {
+      "status": 0,
+      "answers": [
+        "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCViRpt77t9Ooagj2DHUPCTkfiJx4FzIYxy/uoQchNUeQ73efFxXWr9kkHEaUo+hiJou3MVXEFqkngd58IbnmB2etj5LlOyFBPZgNw21SB55m8TbbE3quH8guRWk97yT5zUKkaqAy8Zm4ahyU7bDbVIfQRMXzfFE0iALbsunLbAEQIDAQAB"
+      ]
+    },
+    "_dmarc.web3-ttg.com|TXT": {
+      "status": 0,
+      "answers": [
+        "v=DMARC1; p=quarantine;"
+      ]
+    },
+    "default._bimi.web3-ttg.com|TXT": {
+      "status": 0,
+      "answers": [
+        "v=BIMI1; l=https://tt-web-staging.fly.dev/brand/bimi-logo.svg;"
+      ]
+    },
+    "web3-ttg.com|TXT": {
+      "status": 0,
+      "answers": []
+    }
+  },
+  "authentication_verdict": {
+    "spf_send": "PASS",
+    "dkim_resend": "PASS",
+    "dmarc": "PASS",
+    "apex_spf": "CONFIRM_DESIGN_ABSENT",
+    "bimi_vmc": "DEFERRED_NON_BLOCKING_HARD_GATE"
+  },
+  "overall_auth": "PASS",
+  "policy": {
+    "staging_domain_bind": "STOPPED_NOT_REQUIRED",
+    "email_template_changes": "FROZEN_STOP",
+    "bimi_vmc": "DEFERRED_NON_BLOCKING_HARD_GATE",
+    "gmail_inbox_gate": "OWNER_ACCEPTANCE",
+    "runbook": "docs/runbook/TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md"
+  }
+}

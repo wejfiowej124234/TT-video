@@ -587,7 +587,8 @@ async fn dispatch_register_verification_code_email(to_email: &str, code: &str) -
         register_verification_code_html, register_verification_code_text,
     };
     use crate::email_transport::{read_email_transport, EmailTransport};
-    let subject = "Your TravelTrust verification code";
+    // 主题：品牌名在前 · 中英短句 · 避免纯 OTP 营销腔（利于投递）。
+    let subject = "TravelTrust · 注册验证码 Registration code";
     let text = register_verification_code_text(code);
     let html = register_verification_code_html(code);
     match read_email_transport() {
