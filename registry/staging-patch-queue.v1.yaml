@@ -192,19 +192,20 @@ patches:
     code_sha_or_worktree: "3b06b54a161cda7665e388c5799f0b59cf590365"
     impacts_psg: false
     impacts_fg_or_web3: false
-    verification_result: STAGING_BAKE_LOGO_HTTP_200_DMARC_OWNER
+    verification_result: HU014_STAGING_FIXED_LOGO200_DMARC_BIMI_DNS
     merge_into_release: DEFERRED_TO_NEXT_RC
     promotion_class: bug_fix
     promotion_status: OPEN
     production_impact: false
     fg15_impact: false
     enters_release: false
-    status: LIVING_PARTIAL_IMAGE_STALE
+    status: LIVING_ENFORCED
     note: >
-      Web+API Staging bake 3b06b54a (2026-07-24). Logo/BIMI SVG HTTP 200.
-      Final Truth Baseline cite-only. Product/Release + Engineering SSOT living track.
-      Does not mutate Candidate v2 / PSG-EGM / Hard Gate / Cutover.
-      Owner residual: Cloudflare TXT _dmarc = v=DMARC1; p=quarantine; (+ optional VMC for Gmail list avatar).
+      Web+API Staging bake 3b06b54a. Logo/BIMI SVG HTTP 200.
+      Cloudflare TXT _dmarc + default._bimi publicly resolvable (2026-07-24).
+      Fresh email send-verification-code → 200; registered email → 409 email_already_registered (expected).
+      Optional residual: VMC for Gmail list avatar. ≠ Production GO / Hard Gate.
+      Final Truth / Candidate v2 / PSG-EGM cite-only.
     runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
 
 related:
