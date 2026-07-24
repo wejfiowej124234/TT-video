@@ -11,7 +11,7 @@
 **Round-7 = 投递收口（2026-07-24）：** **停** Staging 挂域 / **冻**邮件模板 · SPF/DKIM/DMARC **AUTH PASS** · Postmaster+Gmail Inbox = Owner · BIMI/VMC **DEFERRED · 不挡 Hard Gate** · SSOT [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md)  
 **Round-8 = Owner 授权 L5 抛光（2026-07-24）：** `alt=TT` 修折行 · 金框头标 · 码 `&nbsp;` 字距 · Final Truth cite-only · 部署 API 后模板再冻  
 **Round-8 Owner 签收（~13:05）：** 验证码邮件版式 **「感觉可以了」** · 产品 L5 抛光闭合；进垃圾箱仍属信誉闸（Postmaster / Inbox 3/3 · OPEN）  
-**当前批次口径：** **第 6 批 Batch-6 集体改 FIXED**（HU-032/033/035/036 · HU-034 PARTIAL）  
+**当前批次口径：** **第 7 批 Batch-7 登记中**（HU-037 · Admin 管理后台壳/侧栏 · **未开集体改**）  
 **Final Truth Baseline cite（1～6 批十四锚）：** [`TT-PRE-MAINNET-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE-LATEST.md`](./TT-PRE-MAINNET-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE-LATEST.md) · PCR-20260724 · tip **cite-only** `ea71c577`  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
 **Staging deploy HEAD:** Batch-6 Web **已 bake**（PATCH-STG-010 · Git `1e1908a1` · post-deploy Unsplash **PAGE_SURFACE_DRIFT** = 既有旁证）· Round-8 API 仍在 · DNS 未改  
@@ -32,9 +32,101 @@
 | **第 4 批** Batch-4 | HU-022～025 | **FIXED** |
 | Round-5～8 | HU-014 邮件 | 版式已签收 · 信誉闸 OPEN |
 | **第 5 批** Batch-5 | HU-026～031 | **FIXED**（HU-027 不修 · HU-028 待证） |
-| **第 6 批** Batch-6 | HU-032～036 | **FIXED**（HU-034 **PARTIAL** · 见下） |
+| **第 6 批** Batch-6 | HU-032～036 | **FIXED**（HU-034 **PARTIAL**） |
+| **第 7 批** Batch-7 | HU-037 · Admin 壳/侧栏 | **登记中 · OPEN · 未开集体改** |
 
-**流程位：** Batch-6 集体改已执行 · Owner 复测 Staging → 继续口述下一批。
+**流程位：** Batch-7 **已审计+改版方案** · 等 Owner「开始第 7 批集体改」+ **Admin PERMANENT_FREEZE 书面解锁（仅 Shell IA）**。
+
+---
+
+## 第七批（Batch-7）· Admin 管理后台 · 发布级 IA/UX 审计（2026-07-24 · 登记 · 未改代码）
+
+**Owner 原话：** 账号设置 → **后台管理**；自己看左边目录乱不乱；生产级审计；要发布；后台很乱须重做 UI/UX；按 Final Truth 十四锚；找出问题 · 重设计排版/矩阵 · 怎么合并功能 · 记入第七批。
+
+| # | 主题 | 严重度 | 状态 | 摘要 |
+|---|------|--------|------|------|
+| **HU-037** | `/admin*` 管理后台壳 · 左侧目录 IA/UX | **P0 · 发布体验** | **OPEN · 登记** | 侧栏约 **10 组 · ≥80 叶链**；「更多」垃圾抽屉；内容/资金/配置扁平堆叠；**未达发布级 IA** · 见下改版矩阵 |
+
+**诚实边界：** 本批 = **审计 + 改版方案** · ≠ 已改 UI · ≠ Production GO / Hard Gate。  
+**冻结纪律：** [`TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE`](./TT-ADMIN-PLATFORM-GOVERNANCE-DISCIPLINE.md) · `TT_ADMIN_PLATFORM_PERMANENT_FREEZE: true` — 默认禁改后台 IA；**集体改前须 Owner 书面解锁「仅 Shell 侧栏/呈现」**；**禁止**重开四大中心架构（[`TT-ADMIN-THREE-CENTERS-ARCHITECTURE`](./TT-ADMIN-THREE-CENTERS-ARCHITECTURE.md) 骨架 **保持**）。
+
+### Final Truth Baseline · 十四锚（本批关系）
+
+| # | 锚点 | 本批关系 |
+|---|------|----------|
+| 1 | Final Truth Baseline | 本 Register 登记；不平行叙事 |
+| 2 | Candidate v2 | cite-only · tip `ea71c577` |
+| 3 | V3.1.1 Final | cite-only · 无协议变更 |
+| 4 | PSG-EGM Final | cite-only |
+| 5 | PSG Governance Anchor | cite-only · Admin ≠ 另起治理真源 |
+| 6 | **Product / Release Baseline** | **主战场**：Admin 操作台 UI/UX · 业务流程发现性 |
+| 7 | Engineering SSOT | 改时同源：`adminShell*NavLinks` · SidebarModel · 契约测试 |
+| 8 | Release Integrity | 集体改 → PATCH-STG · Delta dry-run · 禁平行 Admin 壳 |
+| 9 | PSG Delta Recertify（dry-run） | 集体改合入后跑 |
+| 10 | Feature Inventory | 能力保留；**合并入口 ≠ 删能力** |
+| 11 | Reality Closure | Staging `/admin` 真壳对拍 |
+| 12 | PRR | 本批不替代 |
+| 13–14 | Hard Gate / Cutover | **≠** 关闭；Admin 壳 ≠ 资金闸 |
+
+### 审计结论（代码真源 · 发布级）
+
+**判定：左侧目录乱 · 未达发布级 IA/L5。**
+
+| 维 | 现状（机读） | 判定 |
+|----|--------------|------|
+| 组数 | `ADMIN_SHELL_SIDEBAR_GROUPS` = **10**（workspace + 9） | ⚠️ 偏多；发布台宜 **≤7** |
+| 叶链 | Onboarding 9 · Ops 5 · **Content 21** · Official 6 · Growth 9 · Community 9 · Finance 10 · Governance 4 · More≈7+**配置展开≈15+** | ❌ 侧栏 **≥80** 可点项 · 认知过载 |
+| 真源文件 | `adminShellSidebarModel.ts` + 各组 `*NavLinks.ts` + `adminConfigHubPageModel` 灌入 More | 工程完整但 **呈现层失败** |
+| 四大中心 | 架构文档已冻 User/Content/Official/Platform | ❌ **侧栏未对齐**：Growth/Community/Finance/Governance/More 平行膨胀 |
+| 「更多」 | Observability+Audit+AuthAudit+Config hub+**全部配置子页**+Compliance+Permissions | ❌ **垃圾抽屉** · 发布级禁止 |
+| 入驻 vs Inbox | 侧栏重复队列 + `/admin/onboarding*` 深链 | ⚠️ 与统一 Inbox **双入口** |
+| 内容 | 21 项全挂侧栏（国/城/POI/价/酒店/交通/媒体/翻译/SEO…） | ❌ 应 **1 枢纽 + 页内二级导航** |
+| 资金 | suite + reconcile + finance + fee-router + vault + indexer×2 + vacancy + alerts | ❌ 运维/资金/告警混组 |
+| 社区 | 「枢纽」链实际是 **举报队列** | ❌ 标签撒谎 |
+| 视觉/密度 | 长滚动侧栏 + 多组全展开 | ❌ 非生产控制台标准（对照 Stripe/Linear：少一级 · 二级进页） |
+
+### 目标 IA（重设计 · 对齐四大中心 · 不改能力）
+
+```text
+侧栏一级（目标 ≤ 18 项 · ≤ 7 组）
+├── 工作区          /admin · /admin/inbox · （指南可降为页脚）
+├── 业务管理        /admin/users · /admin/guides · /admin/orders · /admin/disputes · /admin/reviews
+├── 入驻（瘦）      仅 Inbox 深链或「入驻枢纽」1 项 — 队列进 Inbox
+├── 内容中心        仅 /admin/content（子页 → Content 壳二级 nav）
+├── 官方运营        仅 /admin/official（子页 → Official 壳二级 nav）
+├── 增长与社区      /admin/growth · /admin/community（各 1 枢纽）
+└── 平台中心        /admin/finance-suite · /admin/config · /admin/observability · /admin/audit · /admin/permissions
+                     （合规进 Config/Platform 二级；indexer/alerts 进 Observability 二级）
+```
+
+**禁止删 Feature** — 只 **合并入口**：叶子路由保留，从侧栏降级到 **中心 Hub 卡片 / 二级 Subnav / 折叠「高级」**。
+
+### 功能合并矩阵（怎么改）
+
+| 现状组 | 合并动作 | 落地 |
+|--------|----------|------|
+| **内容 21 叶** | → **1** 侧栏「内容中心」 | 现有 `AdminContentPageShell` 二级 nav 收全部叶子 |
+| **官方 6 叶** | → **1**「官方运营」 | Official hub + 页内 tab/卡片 |
+| **增长 9 叶** | → **1**「增长」 | Growth hub 卡片；`conversion-analytics` 并入 Growth Analytics |
+| **社区 9 叶** | → **1**「社区」 | Community hub；举报表正名为队列，勿冒充枢纽 |
+| **入驻 9 叶** | → Inbox + **1** 入驻枢纽 | 侧栏去掉与 Inbox 重复的 provider/guide/steward/approvals 四队列（Inbox 已有） |
+| **资金 10 叶** | → **1**「资金套件」 | `finance-suite` 为唯一侧栏；reconcile/fee/vault/vacancy = 套件内卡片 |
+| **indexer / alerts** | → **Observability** | 资金组踢出运维项 |
+| **More 垃圾抽屉** | → **平台中心** 5 枢纽 | Config / Observability / Audit / Compliance / Permissions；**禁止**把 CONFIG_HUB_LINKS 全量喷侧栏 |
+| **治理 4 叶** | → 平台或只读工具折叠 | cross-check / drift / execution-uat → Observability「只读工具」；trust-growth → Growth |
+| **operator-guide** | → 工作区页脚或 Inbox 帮助 | 减少一级噪音 |
+
+### 实施步骤（集体改时 · 写死）
+
+1. **Owner 解锁**：书面允许「Admin Shell IA only · 不改四大中心架构 · 不删 API 能力」  
+2. 改 `ADMIN_SHELL_SIDEBAR_GROUPS` + 各组 `*NavLinks`：**侧栏只留枢纽**  
+3. 强化各中心 Hub 页卡片矩阵（已有 Content/Official/Config hub 模式复用）  
+4. 「更多」删除或改名为「平台」且 **不再** `...CONFIG_HUB_LINKS` 展开  
+5. 绿集：`adminShellNavGroupsL5` · `adminShellNavParityL5` · `adminShellSidebarL5` · 相关 contract **exit 0**  
+6. Staging 复验侧栏截图 ≤18 · Git · Final Truth cite-only（tip 不动）  
+7. Delta Recertify dry-run  
+
+**一句话改法：** 侧栏只卖「中心门」；叶子进中心屋；Inbox 唯一待办入口；平台五枢纽收编「更多」。
 
 ---
 
@@ -335,6 +427,12 @@ SSOT：[`ME-IDENTITIES-UI-FREEZE`](../../frontend/evidence/GO_local_auth_l5/ME-I
 | HU-023 | 2026-07-24 ~09:50 | 未登录（Staging） | `/traveltrust` · 信任事实 | 对齐最新真源 · 商业标准 | 内容 · 商业 · L5 | P1 | USDC Escrow 点名；去「第一阶段」；合规保留 | **FIXED** |
 | HU-024 | 2026-07-24 ~09:52 | 未登录（Staging） | `/community` · 全部目的地 | 十国无印尼 · 简约无滚动条 | UX · IA · 数据 | P1 | `productCountries` + 紧凑行；无 `id` | **FIXED** |
 | HU-025 | 2026-07-24 ~09:55 | 连钱包后（Staging） | 顶栏钱包 | 已连接应显示什么 · L5 | UX · L5 · 钱包 | P1 | 短址芯片 + 账户菜单；明确 ≠ 网站登录 | **FIXED** |
+
+### Round-7 = 第七批 Batch-7（登记 · Admin 壳审计 · 2026-07-24 · 未开集体改）
+
+| # | 时间 | 账号 | 路径/页面 | 问题描述（原话） | 类型 | 严重度 | 修改意见 | 状态 |
+|---|------|------|-----------|------------------|------|--------|----------|------|
+| HU-037 | 2026-07-24 ~14:36 | Owner 账号 · 设置→后台管理 | `/admin*` 左侧目录 | 自己审计；目录乱；发布级；重做 UI/UX；合并功能；记第七批 | UX · IA · Admin | **P0** | 侧栏枢纽化对齐四大中心；叶子进二级；清「更多」展开；须解锁 PERMANENT_FREEZE | **OPEN · Batch-7** |
 
 ### Round-6 = 第六批 Batch-6（集体改 FIXED · 2026-07-24 · PATCH-STG-010）
 
