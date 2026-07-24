@@ -31,6 +31,7 @@ Register-only · no new audit suites this freeze window.
 |------------------------|------|-----------|
 | Email deliverability（SPF/DKIM/DMARC · Postmaster · Gmail Inbox） | ACTIVE · [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md) · Auth **PASS** · Inbox Owner | **不阻塞 A**；BIMI/VMC **DEFERRED** |
 | Staging 挂域 / 邮件模板再改 | **STOPPED / FROZEN** | — |
+| Pre-Mainnet Human UI/UX Batches 1–6 | **CITE ALIGNED** · Web bake `1e1908a1` · tip `ea71c577` 不变 · [`BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE`](./TT-PRE-MAINNET-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE-LATEST.md) · PCR-20260724 | **不阻塞 A** · ≠ GO |
 
 ## Doctrine
 

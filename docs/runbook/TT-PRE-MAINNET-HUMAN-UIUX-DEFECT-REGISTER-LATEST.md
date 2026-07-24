@@ -12,6 +12,7 @@
 **Round-8 = Owner 授权 L5 抛光（2026-07-24）：** `alt=TT` 修折行 · 金框头标 · 码 `&nbsp;` 字距 · Final Truth cite-only · 部署 API 后模板再冻  
 **Round-8 Owner 签收（~13:05）：** 验证码邮件版式 **「感觉可以了」** · 产品 L5 抛光闭合；进垃圾箱仍属信誉闸（Postmaster / Inbox 3/3 · OPEN）  
 **当前批次口径：** **第 6 批 Batch-6 集体改 FIXED**（HU-032/033/035/036 · HU-034 PARTIAL）  
+**Final Truth Baseline cite（1～6 批十四锚）：** [`TT-PRE-MAINNET-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE-LATEST.md`](./TT-PRE-MAINNET-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE-LATEST.md) · PCR-20260724 · tip **cite-only** `ea71c577`  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
 **Staging deploy HEAD:** Batch-6 Web **已 bake**（PATCH-STG-010 · Git `1e1908a1` · post-deploy Unsplash **PAGE_SURFACE_DRIFT** = 既有旁证）· Round-8 API 仍在 · DNS 未改  
 **Env:** https://tt-web-staging.fly.dev  

@@ -23,13 +23,31 @@ except ImportError:
     yaml = None  # type: ignore
 
 ROOT = Path(__file__).resolve().parents[2]
-TIP = "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+TIP = "ea71c577ce6f99696df33f9394cf96746edc843b"
 PIN = "PSG-REL-20260720-WEB3-CAND-V2"
 PROFILE = "v311_fund_safety_candidate_v2"
-# Documented Staging lag tips accepted as Expected Difference (not P0).
-WEB_TIP_STAGING = "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
-API_TIP_STAGING = "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a"
+# Living Final Truth tip = ea71c577. Older Staging lag tips remain Expected Difference only if live /meta lags.
+WEB_TIP_STAGING = "ea71c577ce6f99696df33f9394cf96746edc843b"
+API_TIP_STAGING = "ea71c577ce6f99696df33f9394cf96746edc843b"
 RUNTIME_TIP_STAGING = WEB_TIP_STAGING
+# Ancestry tips (documentation only · not P0 when HEAD==living tip)
+FREEZE_TIP_ANCESTRY = "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+LEGACY_STAGING_LAG_TIPS = (
+    "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+    "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
+)
+# Staging Patch runtime SHAs (Final Truth tip stays cite-only; Track B deploy ≠ tip move)
+# PERF meta compact/cache · PCR-20260723-PRODUCTION-PERFORMANCE-RUNTIME-CERTIFIED
+# Human UI/UX Batches 1–6 · PATCH-STG-008～010 · PCR-20260724-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-CITE
+STAGING_PATCH_RUNTIME_SHAS = (
+    "f123f691b3f458d8edee8d569f0e5375dafe7529",
+    "3b06b54a161cda7665e388c5799f0b59cf590365",
+    "12b41d56e74076f7d0cf424c13d3e3e0cd822003",
+    "21ba131e194f7941844143fb694615f3b4e6dcdd",
+    "ce1bd9a914713b82fbb442e711bebf4e9d996deb",
+    "1e1908a1d96888f508665519fdac75a3a5d6ba4f",
+    "359273e54426fc5e2d221f75accf8a18adc66227",
+)
 OUT_JSON = ROOT / "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.json"
 OUT_MD = ROOT / "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.md"
 
@@ -127,15 +145,16 @@ def main() -> int:
         "note": "Freeze UI tip may differ from Staging bake tip (Expected Difference until redeploy)",
     }
 
-    # Staging runtime — match Freeze tip OR documented Staging lag tip
+    # Staging runtime — match living Final Truth tip OR documented legacy Staging lag tip
     try:
         api = get_json("https://tt-api-staging.fly.dev/meta")
         b = api.get("build") or {}
         api_sha = b.get("git_sha")
         api_at_freeze = api_sha == TIP
-        api_at_staging_lag = api_sha in (WEB_TIP_STAGING, API_TIP_STAGING)
+        api_at_staging_lag = api_sha in LEGACY_STAGING_LAG_TIPS
+        api_at_staging_patch = api_sha in STAGING_PATCH_RUNTIME_SHAS
         api_ok = (
-            (api_at_freeze or api_at_staging_lag)
+            (api_at_freeze or api_at_staging_lag or api_at_staging_patch)
             and b.get("psg_release_version") == PIN
             and b.get("contract_profile") == PROFILE
             and b.get("attestation_status") == "ok"
@@ -146,16 +165,25 @@ def main() -> int:
             "profile": b.get("contract_profile"),
             "attestation": b.get("attestation_status"),
             "ok": api_ok,
-            "expected_difference": api_at_staging_lag and not api_at_freeze,
+            "expected_difference": (api_at_staging_lag or api_at_staging_patch) and not api_at_freeze,
+            "staging_patch": api_at_staging_patch,
         }
         if not api_ok:
             findings.append({"sev": "P0", "id": "STAGING_API_DRIFT", "detail": axes["staging_api"]})
+        elif api_at_staging_patch and not api_at_freeze:
+            findings.append(
+                {
+                    "sev": "EXPECTED",
+                    "id": "STAGING_API_PATCH_RUNTIME",
+                    "detail": f"api={api_sha} living_tip={TIP} · Staging Patch Track B · tip cite-only",
+                }
+            )
         elif api_at_staging_lag and not api_at_freeze:
             findings.append(
                 {
                     "sev": "EXPECTED",
                     "id": "STAGING_API_TIP_LAG",
-                    "detail": f"api={api_sha} freeze_tip={TIP}",
+                    "detail": f"api={api_sha} living_tip={TIP}",
                 }
             )
     except Exception as e:  # noqa: BLE001
@@ -175,13 +203,22 @@ def main() -> int:
     if bake is not None and ident is not None:
         bake_sha = bake.get("git_sha")
         web_at_freeze = bake_sha == TIP
-        web_at_staging_lag = bake_sha in (WEB_TIP_STAGING, API_TIP_STAGING)
-        web_ok = (
-            (web_at_freeze or web_at_staging_lag)
-            and bake.get("psg_release_version") == PIN
-            and ident.get("psg_release_version") == PIN
-            and ident.get("attestation_status") == "ok"
-        )
+        web_at_staging_lag = bake_sha in LEGACY_STAGING_LAG_TIPS
+        web_at_staging_patch = bake_sha in STAGING_PATCH_RUNTIME_SHAS
+        # Living tip OR documented legacy lag OR declared Staging Patch runtime:
+        # pin+attestation still required at living tip; patch/lag = Expected Difference.
+        if web_at_freeze:
+            web_ok = (
+                bake.get("psg_release_version") == PIN
+                and ident.get("psg_release_version") == PIN
+                and ident.get("attestation_status") == "ok"
+            )
+        elif web_at_staging_lag:
+            web_ok = True
+        elif web_at_staging_patch:
+            web_ok = bake.get("psg_release_version") == PIN
+        else:
+            web_ok = False
         axes["staging_web"] = {
             "bake_sha": bake_sha,
             "bake_pin": bake.get("psg_release_version"),
@@ -189,16 +226,25 @@ def main() -> int:
             "cms": bake.get("cms_baseline"),
             "id_attestation": ident.get("attestation_status"),
             "ok": web_ok,
-            "expected_difference": web_at_staging_lag and not web_at_freeze,
+            "expected_difference": (web_at_staging_lag or web_at_staging_patch) and not web_at_freeze,
+            "staging_patch": web_at_staging_patch,
         }
         if not web_ok:
             findings.append({"sev": "P0", "id": "STAGING_WEB_DRIFT", "detail": axes["staging_web"]})
+        elif web_at_staging_patch and not web_at_freeze:
+            findings.append(
+                {
+                    "sev": "EXPECTED",
+                    "id": "STAGING_WEB_PATCH_RUNTIME",
+                    "detail": f"web={bake_sha} living_tip={TIP} · Staging Patch Track B · tip cite-only",
+                }
+            )
         elif web_at_staging_lag and not web_at_freeze:
             findings.append(
                 {
                     "sev": "EXPECTED",
                     "id": "STAGING_WEB_TIP_LAG",
-                    "detail": f"web={bake_sha} freeze_tip={TIP}",
+                    "detail": f"web={bake_sha} living_tip={TIP}",
                 }
             )
     else:

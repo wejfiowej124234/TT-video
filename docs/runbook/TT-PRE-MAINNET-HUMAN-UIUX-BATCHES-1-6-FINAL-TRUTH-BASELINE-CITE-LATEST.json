@@ -1,0 +1,68 @@
+{
+  "schema": "traveltrust.pre_mainnet_human_uiux_batches_1_6_final_truth_cite.v1",
+  "machine_key": "TT_PRE_MAINNET_HUMAN_UIUX_BATCHES_1_6_FINAL_TRUTH_CITE",
+  "stamp": "20260724T062500Z",
+  "session": "20260724T065700Z-pre-mainnet-human-uiux",
+  "recorded_utc": "2026-07-24T06:25:00Z",
+  "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "final_truth_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "tip_mutated": false,
+  "product_patch_git_head": "359273e54426fc5e2d221f75accf8a18adc66227",
+  "staging_web_bake_sha": "1e1908a1d96888f508665519fdac75a3a5d6ba4f",
+  "staging_api_sha": "12b41d56e74076f7d0cf424c13d3e3e0cd822003",
+  "staging_patches": ["PATCH-STG-008", "PATCH-STG-009", "PATCH-STG-010"],
+  "equals_production_go": false,
+  "equals_hard_gate_pass": false,
+  "equals_cutover_pass": false,
+  "mutates_candidate_v2": false,
+  "mutates_v311_final": false,
+  "mutates_psg_egm": false,
+  "mutates_governance_anchor": false,
+  "anchors": {
+    "final_truth_baseline": "cite_only_living",
+    "candidate_v2": "cite_only",
+    "v311_final": "cite_only",
+    "psg_egm_final": "cite_only",
+    "psg_governance_anchor": "cite_only",
+    "product_release_baseline": "updated_living_surface",
+    "engineering_ssot_anchor": "track_b_runtime_sha_cite",
+    "release_integrity": "staging_patch_queue_open_promotion_deferred",
+    "psg_delta_recertify_dry_run": "run_with_this_cite",
+    "feature_inventory_baseline": "aligned_no_parallel_domain",
+    "reality_closure_framework": "staging_verified_not_go",
+    "prr": "not_triggered",
+    "mainnet_hard_gate": "unchanged_open",
+    "mainnet_cutover_hard_gate": "unchanged_open"
+  },
+  "batches": {
+    "1": { "ids": "HU-001..010", "status": "FIXED", "git_rep": "2db694ae" },
+    "2": { "ids": "HU-011..017", "status": "FIXED", "git_rep": "1bce380e" },
+    "3": { "ids": "HU-018..021", "status": "FIXED", "git_rep": "902262d3" },
+    "4": { "ids": "HU-022..025", "status": "FIXED", "git_rep": "3d85df4f" },
+    "mail_r5_r8": { "ids": "HU-014", "status": "FIXED_reputation_open", "git_rep": "3b06b54a..21ba131e" },
+    "5": { "ids": "HU-026..031", "status": "FIXED_028_open_027_wontfix", "git_rep": "ce1bd9a9" },
+    "6": { "ids": "HU-032..036", "status": "FIXED_034_partial", "git_rep": "1e1908a1" }
+  },
+  "residuals": [
+    "HU-028_OPEN_pending_http_status",
+    "HU-034_PARTIAL_path_b",
+    "email_inbox_postmaster_owner",
+    "origin_unpushed_ahead_9",
+    "page_surface_unsplash_drift_preexisting"
+  ],
+  "consistency": {
+    "local_git_vs_staging_web": "PASS_batch6_bake",
+    "staging_guides_count": 10,
+    "origin_remote": "LAG_batch4_cite_d99db8ac",
+    "final_truth_tip": "UNCHANGED"
+  },
+  "delta_recertify_dry_run": {
+    "verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",
+    "recorded_utc": "2026-07-24T06:29:25Z",
+    "p0": 0,
+    "expected": 3,
+    "equals_go": false
+  },
+  "runbook": "docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE-LATEST.md",
+  "defect_register": "docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md"
+}

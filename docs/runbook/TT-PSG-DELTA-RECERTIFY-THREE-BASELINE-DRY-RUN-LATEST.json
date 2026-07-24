@@ -1,16 +1,16 @@
 {
   "schema": "traveltrust.psg_delta_recertify_three_baseline_dry_run.v1",
   "machine_key": "TT_PSG_DELTA_RECERTIFY_THREE_BASELINE_DRY_RUN",
-  "recorded_utc": "2026-07-22T08:38:16Z",
+  "recorded_utc": "2026-07-24T06:29:25Z",
   "mode": "DRY_RUN_REPORT_ONLY",
   "equals_production_go": false,
   "equals_staging_grade_go": false,
   "formal_cert_started": false,
   "core_version_modified": false,
   "pin": "PSG-REL-20260720-WEB3-CAND-V2",
-  "freeze_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
-  "staging_runtime_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
-  "head": "4f9fc727b7a0384ee6c30bbbc4876213a8f0cae1",
+  "freeze_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "staging_runtime_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "head": "359273e54426fc5e2d221f75accf8a18adc66227",
   "baselines": [
     "Candidate_v2",
     "V3.1.1_Final",
@@ -24,7 +24,7 @@
     },
     "registry_active": {
       "pin": "PSG-REL-20260720-WEB3-CAND-V2",
-      "sha": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+      "sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
       "ok": true
     },
     "baseline_candidate": {
@@ -45,33 +45,35 @@
       "ok": true
     },
     "git": {
-      "head": "4f9fc727b7a0384ee6c30bbbc4876213a8f0cae1",
-      "dirty": 42,
-      "freeze_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
-      "staging_runtime_tip": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+      "head": "359273e54426fc5e2d221f75accf8a18adc66227",
+      "dirty": 1340,
+      "freeze_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+      "staging_runtime_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
       "head_eq_freeze_tip": false,
       "worktree_clean": false,
       "note": "Freeze UI tip may differ from Staging bake tip (Expected Difference until redeploy)"
     },
     "staging_api": {
-      "sha": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
+      "sha": "12b41d56e74076f7d0cf424c13d3e3e0cd822003",
       "pin": "PSG-REL-20260720-WEB3-CAND-V2",
       "profile": "v311_fund_safety_candidate_v2",
       "attestation": "ok",
       "ok": true,
-      "expected_difference": true
+      "expected_difference": true,
+      "staging_patch": true
     },
     "staging_web": {
-      "bake_sha": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+      "bake_sha": "1e1908a1d96888f508665519fdac75a3a5d6ba4f",
       "bake_pin": "PSG-REL-20260720-WEB3-CAND-V2",
       "db": "staging_rc_ssot_alignment.v1#expected_staging_surface",
       "cms": "public_display_10x4 + catalog_bake=1",
       "id_attestation": "ok",
       "ok": true,
-      "expected_difference": false
+      "expected_difference": true,
+      "staging_patch": true
     },
     "evidence": {
-      "sha": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+      "sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
       "pin": "PSG-REL-20260720-WEB3-CAND-V2",
       "ok": true,
       "expected_difference": false
@@ -84,19 +86,29 @@
   "findings": [
     {
       "sev": "EXPECTED",
-      "id": "STAGING_API_TIP_LAG",
-      "detail": "api=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a freeze_tip=1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+      "id": "STAGING_API_PATCH_RUNTIME",
+      "detail": "api=12b41d56e74076f7d0cf424c13d3e3e0cd822003 living_tip=ea71c577ce6f99696df33f9394cf96746edc843b · Staging Patch Track B · tip cite-only"
+    },
+    {
+      "sev": "EXPECTED",
+      "id": "STAGING_WEB_PATCH_RUNTIME",
+      "detail": "web=1e1908a1d96888f508665519fdac75a3a5d6ba4f living_tip=ea71c577ce6f99696df33f9394cf96746edc843b · Staging Patch Track B · tip cite-only"
     }
   ],
   "expected_differences": [
     {
       "sev": "EXPECTED",
-      "id": "STAGING_API_TIP_LAG",
-      "detail": "api=f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a freeze_tip=1ed03a9a959d2404fd561a72dc724b59ecf1635e"
+      "id": "STAGING_API_PATCH_RUNTIME",
+      "detail": "api=12b41d56e74076f7d0cf424c13d3e3e0cd822003 living_tip=ea71c577ce6f99696df33f9394cf96746edc843b · Staging Patch Track B · tip cite-only"
+    },
+    {
+      "sev": "EXPECTED",
+      "id": "STAGING_WEB_PATCH_RUNTIME",
+      "detail": "web=1e1908a1d96888f508665519fdac75a3a5d6ba4f living_tip=ea71c577ce6f99696df33f9394cf96746edc843b · Staging Patch Track B · tip cite-only"
     },
     {
       "id": "FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP",
-      "detail": "HEAD=4f9fc727b7a0 freeze_tip=1ed03a9a959d — commit freeze artifacts or clean worktree"
+      "detail": "HEAD=359273e54426 freeze_tip=ea71c577ce6f — commit freeze artifacts or clean worktree"
     }
   ],
   "verdict": "DRY_RUN_PASS_WITH_EXPECTED_DIFFERENCE",

@@ -53,6 +53,7 @@
 
 ### 备注
 
+- **010 / 009 / 008** 真源落点：**Product / Release Baseline**（活面）+ **Engineering SSOT**（Track B runtime cite）· Final Truth / Candidate / V3.1.1 / EGM / Governance / Hard Gate / Cutover = **cite-only** · 十四锚总表 [`BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE`](./TT-PRE-MAINNET-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE-LATEST.md) · PCR-20260724 · **≠** Production GO。  
 - **010** 落点：Product/Release Baseline + Engineering SSOT · Final Truth cite-only · **≠** Hard Gate / Production GO。  
 - **009** 落点：Product/Release Baseline + Engineering SSOT · Final Truth cite-only · **≠** Hard Gate / Production GO。  
 - **008** 落点：**Product / Release Baseline** + **Engineering SSOT** · Final Truth / Candidate v2 / V3.1.1 / PSG-EGM / Governance Anchor / Hard Gate / Cutover = **cite-only** · **≠** Production GO。  
