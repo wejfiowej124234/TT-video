@@ -5,9 +5,9 @@
 **Round-1:** HU-001～010 **FIXED**（2026-07-24 · Staging bake `2db694ae`）  
 **Round-2 = 第二批（Batch-2）:** HU-011～017 · **CLOSING**（HU-014 PARTIAL · Resend 域名 Owner 残留）  
 **Round-3 = 第三批（Batch-3）:** HU-018～021 **FIXED** · HU-014↻ **PARTIAL（Owner Resend 域名）**（2026-07-24 ~09:26 集体改）  
-**Round-4 = 第四批（Batch-4）:** HU-022～025 **FIXED**（2026-07-24 · 集体改 · Staging bake 待本批 deploy）· HU-014↻ 仍 **PARTIAL（Owner Resend）**  
+**Round-4 = 第四批（Batch-4）:** HU-022～025 **FIXED**（2026-07-24 · 集体改 · Staging bake `3d85df4f`）· HU-014↻ 仍 **PARTIAL（Owner Resend）**  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`  
-**Staging deploy HEAD:** （Batch-4 部署后回填）  
+**Staging deploy HEAD:** `3d85df4f`（Batch-4 · ED vs tip · page-surface Unsplash DRIFT 旁证同前）  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
