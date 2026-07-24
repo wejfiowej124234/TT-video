@@ -696,7 +696,7 @@ pub async fn auth_register_send_verification_code(
         let mut store = state.store.write().await;
         store
             .register_verification_codes
-            .insert(email_key, entry);
+            .insert(email_key.clone(), entry);
     }
     let email_sent = dispatch_register_verification_code_email(email_trim, &code).await;
     // HU-014 fail-closed: never 200 "sent" when outbound delivery failed (e.g. Resend test-mode 403).
