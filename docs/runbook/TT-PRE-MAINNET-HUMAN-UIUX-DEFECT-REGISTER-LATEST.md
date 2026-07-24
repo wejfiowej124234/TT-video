@@ -11,7 +11,7 @@
 **Round-7 = 投递收口（2026-07-24）：** **停** Staging 挂域 / **冻**邮件模板 · SPF/DKIM/DMARC **AUTH PASS** · Postmaster+Gmail Inbox = Owner · BIMI/VMC **DEFERRED · 不挡 Hard Gate** · SSOT [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md)  
 **Round-8 = Owner 授权 L5 抛光（2026-07-24）：** `alt=TT` 修折行 · 金框头标 · 码 `&nbsp;` 字距 · Final Truth cite-only · 部署 API 后模板再冻  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
-**Staging deploy HEAD:** Round-8 API bake（见 deploy 后 SHA）· DNS 未改  
+**Staging deploy HEAD:** Round-8 API 已部署（Git `21ba131e` · fly `tt-api-staging` OK）· DNS 未改  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
