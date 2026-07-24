@@ -21,6 +21,9 @@ export { isMobileWalletClient, walletConnectUxMode } from "@/lib/wallet/connecti
 export {
   createTravelTrustWagmiConnectors,
   readWalletConnectProjectIdFromEnv,
+  readTravelTrustAppUrlFromEnv,
+  resolveTravelTrustAppIconUrl,
+  TRAVELTRUST_BRAND_MARK_PATH,
   type TravelTrustWagmiConnectorOptions,
 } from "@/lib/wallet/connection/createTravelTrustWagmiConnectors";
 export {

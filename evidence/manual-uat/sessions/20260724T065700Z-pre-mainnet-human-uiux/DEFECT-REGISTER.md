@@ -6,12 +6,48 @@
 **Round-2 = 第二批（Batch-2）:** HU-011～017 · **CLOSING**（HU-014 PARTIAL · Resend 域名 Owner 残留）  
 **Round-3 = 第三批（Batch-3）:** HU-018～021 **FIXED** · HU-014↻ **PARTIAL（Owner Resend 域名）**（2026-07-24 ~09:26 集体改）  
 **Round-4 = 第四批（Batch-4）:** HU-022～025 **FIXED**（2026-07-24 · 集体改 · Staging bake `3d85df4f`）· HU-014↻ 仍 **PARTIAL（Owner Resend）**  
-**Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`  
-**Staging deploy HEAD:** `3d85df4f`（Batch-4 · ED vs tip · page-surface Unsplash DRIFT 旁证同前）  
+**Round-5 = PATCH-STG-008（2026-07-24）：** HU-014 **FIXED（② Staging 出站 + Auth L5）** · bake `3b06b54a` · Logo/BIMI **HTTP 200** · Cloudflare **DMARC+BIMI TXT 已生效** · Gmail 列表圆头像 **VMC 可选残留**  
+**Round-6 = PATCH-STG-008↻（2026-07-24）：** 垃圾箱根因说明 + **TT 方标 SSOT**（`bimi-logo.svg`）对齐邮件 PNG/HTML · L5 正文升级 · 主题/投递头 · **≠** ③ GO  
+**Round-7 = 投递收口（2026-07-24）：** **停** Staging 挂域 / **冻**邮件模板 · SPF/DKIM/DMARC **AUTH PASS** · Postmaster+Gmail Inbox = Owner · BIMI/VMC **DEFERRED · 不挡 Hard Gate** · SSOT [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md)  
+**Round-8 = Owner 授权 L5 抛光（2026-07-24）：** `alt=TT` 修折行 · 金框头标 · 码 `&nbsp;` 字距 · Final Truth cite-only · 部署 API 后模板再冻  
+**Round-8 Owner 签收（~13:05）：** 验证码邮件版式 **「感觉可以了」** · 产品 L5 抛光闭合；进垃圾箱仍属信誉闸（Postmaster / Inbox 3/3 · OPEN）  
+**当前批次口径：** **第 5 批 Batch-5 集体改 FIXED**（HU-026/029/030/031 · HU-027 不修 · HU-028 待证）  
+**Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
+**Staging deploy HEAD:** Batch-5 Web **已 bake**（PATCH-STG-009 · tip cite `817b0d07` · fly `tt-web-staging` · favicon TT **HTTP 200 已验**）· Round-8 API 仍在 · DNS 未改  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
 **Rule（写死）：** Owner 口述 → 立刻追加；「结束 / 出清单」→ 清单+意见；**「开始第 N 批集体改」** → 按 Batch-2 同级标准改 → 本地 → Staging → Git → **Final Truth cite 对齐**（不新开平行真源）。
+
+---
+
+## 进度总览（2026-07-24）
+
+| 批次 | 范围 | 状态 |
+|------|------|------|
+| **第 1 批** Round-1 | HU-001～010 | **FIXED** |
+| **第 2 批** Batch-2 | HU-011～017 | **FIXED** |
+| **第 3 批** Batch-3 | HU-018～021 | **FIXED** |
+| **第 4 批** Batch-4 | HU-022～025 | **FIXED** |
+| Round-5～8 | HU-014 邮件 | 版式已签收 · 信誉闸 OPEN |
+| **第 5 批** Batch-5 | HU-026～031 | **FIXED**（HU-027 不修 · HU-028 待证） |
+
+**流程位：** Batch-5 集体改已落地 · Owner Staging 复验（favicon / Bitget 清缓存 / 登录无 SSOT 板 / 向导=10）。
+
+---
+
+## 第五批（Batch-5）· 实施状态（生产级 · L5 · 2026-07-24）
+
+| # | 主题 | 严重度 | 状态 | 落地摘要 |
+|---|------|--------|------|----------|
+| **HU-026** | 登录页治理币 SSOT 修补进度 | P1 | **FIXED** | `/auth/login` 移除工程看板；Freeze 契约禁回挂 |
+| **HU-027** | Console 扩展噪声 | — | **CLOSED · 不修** | 浏览器扩展 · 非本品 |
+| **HU-028** | Console `GET …/orders/…` | P2 | **OPEN · 待证** | 待 Owner 补 HTTP 状态；未并入必改 |
+| **HU-029** | Bitget 头像「N」 | P1 | **FIXED** | wagmi 元数据 `icons`/`iconUrl`/`appLogoUrl` → TT `bimi-logo.png`；`appName=TravelTrust`；Bitget 壳 = Expected Difference |
+| **HU-030** | 标签栏 favicon「N」 | P1 | **FIXED** | `favicon.svg` = TT 方标（与 BIMI 同源）；`layout` icons 含 PNG |
+| **HU-031** | 向导 9≠10 · C3 未见 | P1 | **FIXED（拆层）** | A：Staging API/Web `GET /guides` = **10** OCS **已验**；B：C3 **CONFIRM_DESIGN** 不上公众目录 |
+
+**诚实边界：** Batch-5 ≠ Production GO / Hard Gate / Cutover。OCS 10 城含 JP×2、无 CN — **国家覆盖≠卡片数**；若要中国杭州官导向导另开产品票。
 
 ---
 
@@ -23,7 +59,7 @@
 | **HU-023** | 信任「可核对的事实」 | P1 | **FIXED** | Escrow 点名 USDC；去「第一阶段」工程词 → 开放十国网络；合规卡保留 |
 | **HU-024** | 社区十国目的地面板 | P1 | **FIXED** | `productCountries` 十国；无印尼；每国≤4 城；紧凑行布局无竖滚 |
 | **HU-025** | 顶栏钱包已连接态 | P1 | **FIXED** | 芯片短址+状态点；账户菜单「钱包会话 ≠ 网站登录」；禁「已登录」冒充 |
-| **HU-014↻** | 注册验证码真发信 | **P0** | **PARTIAL** | 同 Batch-3 · Owner Resend 域名 |
+| **HU-014↻** | 注册验证码真发信 | **P0** | **FIXED · Round-5** | 见 Round-5 / HU-014 节（Resend 域 + L5 邮件 + DMARC/BIMI） |
 
 **诚实边界：** Batch-4 ≠ Production GO / Hard Gate / Cutover。
 
@@ -37,7 +73,7 @@
 | **HU-019** | 角色剧场弹窗 L5 | P1 | **FIXED** | 舞台 ~90vw/`max-w-6xl`；hint `sr-only`；轻顶栏；Space/点画面播停；focus trap；chrome idle 淡出 |
 | **HU-020** | 社区目的地筛选 App IA | P1 | **FIXED** | 仅城市分组 Sheet；去国城混排；热门 chip≤3 |
 | **HU-021** | Console Geo + 未登录 401 | P1 | **FIXED** | `geolocation=(self)`；默认锚 `city_current`；预取 `hasClientAuthSession` 闸；扩展噪声不修 |
-| **HU-014↻** | 注册验证码真发信 | **P0** | **PARTIAL** | 代码/文案生产纪律已到位；Staging 日志仍 Resend **403 test-mode**（仅 `plantartist778@gmail.com`）。**Owner：resend.com/domains 验证域名 → 改 `TRAVELTRUST_RESEND_FROM` → 复验任意 Gmail** |
+| **HU-014↻** | 注册验证码真发信 | **P0** | **FIXED · Round-5 收口** | 历史：test-mode 403；现：`web3-ttg.com` 已验证 + `TRAVELTRUST_RESEND_FROM` + bake `3b06b54a`（见 HU-014 节） |
 
 **诚实边界：** Batch-3 ≠ Production GO / Hard Gate / Cutover。
 
@@ -81,12 +117,12 @@
 | **HU-011** | 角色剧场封面进播放框 | P1 | **FIXED** | `TravelTrustRoleVideoPlayer`：有 `posterSrc` 即铺满框；播中/剧场隐藏封面 |
 | **HU-012** | `/` 默认 Ambient L5 海报 | P1 | **FIXED** | 新图 `frontend/public/media/landing/brand-ambient-default.jpg`（十国分层宣传海报） |
 | **HU-013** | Ambient 闪/双跳 | P1 | **FIXED** | decode-before-commit + 优先稳定 TS URL |
-| **HU-014** | 注册验证码未达邮箱 | **P0** | **PARTIAL · 生产级未闭** | 代码 fail-closed 已落地；**Staging ~09:21 复现** `503` + `yinhang744@gmail.com` 未收信。生产级 = Resend 域名验证 + `TRAVELTRUST_RESEND_FROM` + 入箱复验（见 HU-014 节） |
+| **HU-014** | 注册验证码未达邮箱 | **P0** | **FIXED · Round-5（②）** | Resend 域 `web3-ttg.com` + FROM `noreply@web3-ttg.com` + Auth L5 bake `3b06b54a`；见 HU-014 节 |
 | **HU-015** | 社区「当前定位」 | P1 | **FIXED** | 下拉仅 GPS + 当前城市；默认 GPS；剔丽枫酒店 |
 | **HU-016** | 社区规范 UI | P1 | **FIXED** | CTA 改 sun L5；内容仍诚实草稿（≠法务定稿） |
 | **HU-017** | CMS 运营号仿用户 | P1 | **FIXED（代码+素材）** | dataset 真人昵称 + `/media/ocs/ops-avatars/*`；`sync-ocs-ops-personas-hu017.cjs` 写 Staging users |
 
-**Owner 残留：** HU-014 Resend 域名验证后任意收件人可通。
+**Owner 残留（可选）：** Gmail 列表圆头像 **VMC**（无 VMC 时正文品牌标仍可见；列表可能仍灰人像）。③ 生产 API 须同配 Resend FROM（另闸）。
 
 ---
 
@@ -112,8 +148,9 @@
 | HU-011 | 2026-07-24 ~08:25 | 未登录（Staging） | `/traveltrust` · 角色剧场播放框 | 封面须在播放框内；点击后播视频不再显示封面 | UX · 媒资 | P1 | poster 层绑框；play/cinema 隐藏 | **FIXED · Batch-2** |
 | HU-012 | 2026-07-24 ~08:28 | 未登录（Staging） | `/` 默认 Ambient | 默认背景须 L5 十国宣传海报 | UX · 品牌 | P1 | AI 出图入库 `brand-ambient-default.jpg` | **FIXED · Batch-2** |
 | HU-013 | 2026-07-24 ~08:30 | 未登录（Staging） | `/` 选国家 Ambient | 切换闪一下 / 像刷两次 | UX · 性能 | P1 | decode-before-commit；抑 catalog 双跳 | **FIXED · Batch-2** |
-| HU-014 | 2026-07-24 ~08:33 | 未登录（Staging） | `/auth/register` 验证码 | 倒计时但邮箱未收到 | 出站邮件 | **P0** | fail-closed 已落地；**Resend 域名仍须 Owner** | **PARTIAL · Batch-2** |
-| HU-014↻ | 2026-07-24 ~09:21 | 未登录（Staging） | `/auth/register` ·「发送验证码」 | Console：`POST …/send-verification-code` **503**；未收到码；**要求真实生产级** | 出站邮件 | **P0** | **503 = 预期 fail-closed**（不许假成功）。根因仍 Resend 拒任意 Gmail。生产级清单见 **HU-014 生产级闭环** | **OPEN · Batch-3（Owner 出站配置）** |
+| HU-014 | 2026-07-24 ~08:33 | 未登录（Staging） | `/auth/register` 验证码 | 倒计时但邮箱未收到 | 出站邮件 | **P0** | Resend 域 + FROM + L5 bake | **FIXED · Round-5** |
+| HU-014↻ | 2026-07-24 ~09:21 | 未登录（Staging） | `/auth/register` ·「发送验证码」 | Console：**503**；未收到码 | 出站邮件 | **P0** | fail-closed 正确；根因 test-mode → 域验证后闭合 | **FIXED · Round-5** |
+| HU-014↻ | 2026-07-24 ~12:09 | 未登录（Staging） | `/auth/register` 发码 | Console：**409**；`chext_driver` unload | 出站/UX | **P0→信息** | **409=`email_already_registered`**（非投递失败）；扩展噪声忽略；换未注册邮箱或登录 | **CLOSED · 预期冲突** |
 | HU-015 | 2026-07-24 ~08:35 | 未登录（Staging） | `/community` 当前定位 | 非生产级下拉 | UX · L5 | P1 | 仅 GPS + 当前城市 | **FIXED · Batch-2** |
 | HU-016 | 2026-07-24 ~08:36 | 未登录（Staging） | `/terms/community-guidelines` | UI 不符；真源对齐？ | UX · 内容 | P1 | sun L5 CTA；内容仍草稿诚实 | **FIXED · Batch-2** |
 | HU-017 | 2026-07-24 ~08:37 | 未登录（Staging） | `/community` 推荐关注 | 运营号无头像、名不真实 | CMS · UX | P1 | 人格包 + sync 脚本 | **FIXED · Batch-2**（Staging 须跑 sync） |
@@ -126,7 +163,7 @@
 | HU-019 | 2026-07-24 ~09:15 | 未登录（Staging） | 角色剧场点播弹窗 | L5/生产级？hint？尺寸？ | UX · L5 | P1 | 沉浸舞台 · 去说明书 · 交互补齐 | **FIXED · Batch-3** |
 | HU-020 | 2026-07-24 ~09:18 | 未登录（Staging） | `/community` 全部目的地 | 国城混排太乱 · App 标准整体优化 | UX · IA · L5 | P1 | 城市分组 Sheet | **FIXED · Batch-3** |
 | HU-021 | 2026-07-24 ~09:20 | 未登录（Staging） | Console | Geo policy · me/* 401 · 扩展噪声 | 运行时 | P1 | Geo+auth 闸；扩展忽略 | **FIXED · Batch-3** |
-| HU-014↻ | 2026-07-24 ~09:21 | 未登录（Staging） | `/auth/register` 发码 | 503 · 未收码 · 要生产级 | 出站邮件 | **P0** | fail-closed 保持；**Owner 验 Resend 域** | **PARTIAL · Owner ops** |
+| HU-014↻ | 2026-07-24 ~09:21 | 未登录（Staging） | `/auth/register` 发码 | 503 · 未收码 · 要生产级 | 出站邮件 | **P0** | 域验证 + FROM + Round-5 bake | **FIXED · Round-5** |
 
 ### Round-4 = 第四批 Batch-4（FIXED · 2026-07-24）
 
@@ -136,6 +173,108 @@
 | HU-023 | 2026-07-24 ~09:50 | 未登录（Staging） | `/traveltrust` · 信任事实 | 对齐最新真源 · 商业标准 | 内容 · 商业 · L5 | P1 | USDC Escrow 点名；去「第一阶段」；合规保留 | **FIXED** |
 | HU-024 | 2026-07-24 ~09:52 | 未登录（Staging） | `/community` · 全部目的地 | 十国无印尼 · 简约无滚动条 | UX · IA · 数据 | P1 | `productCountries` + 紧凑行；无 `id` | **FIXED** |
 | HU-025 | 2026-07-24 ~09:55 | 连钱包后（Staging） | 顶栏钱包 | 已连接应显示什么 · L5 | UX · L5 · 钱包 | P1 | 短址芯片 + 账户菜单；明确 ≠ 网站登录 | **FIXED** |
+
+### Round-5 = 第五批 Batch-5（集体改 FIXED · 2026-07-24）
+
+| # | 时间 | 账号 | 路径/页面 | 问题描述（原话） | 类型 | 严重度 | 修改意见 | 状态 |
+|---|------|------|-----------|------------------|------|--------|----------|------|
+| HU-026 | 2026-07-24 ~13:07 | `plantartist778@…`（Staging 登录页） | `/auth/login` | 下面「治理币 SSOT 修补进度（① 本地）」整块（8/12·67% 清单 + params 链）**不应该出现就清除** | UX · IA · L5 | **P1** | 从登录页移除 `AuthLoginGovernanceRemediationProgress`；进度属工程/治理轨，不应挂在账号入口；治理公示保留在 `/governance/params` | **FIXED** |
+| HU-027 | 2026-07-24 ~13:08 | Staging（登录相关） | Console | `chext_driver` unload · Immersive Translate `token invalid` · `content_main.js` `toLowerCase` | 运行时 · 扩展 | — | **浏览器扩展噪声 · 不修**（HU-021 同口径） | **CLOSED · 不修** |
+| HU-028 | 2026-07-24 ~13:08 | Staging | Console · `GET /api/v1/orders/df27a3fc-a149-4a2f-8bc…` | 这些有没有问题 · 需要修复？ | 运行时 · API | **P2 待证** | 见 HU-028 节：先补 HTTP 状态与完整 UUID；Console 常截断 URL | **OPEN · 待证** |
+| HU-029 | 2026-07-24 ~13:10 | Staging · Bitget 连接 | Bitget 授权弹窗 | 连接钱包 UI 不符整体设计；头像「N」不对；要以 **TT 方标**（第三图 / `bimi-logo`）为准 · 需修改优化 | UX · 品牌 · 钱包 | **P1** | 见 HU-029：补齐 dApp `metadata.icons` + 名称 TravelTrust；Bitget 壳按钮区部分不可改 | **FIXED** |
+| HU-030 | 2026-07-24 ~13:11 | Staging（任意页 · 标签栏） | 浏览器标签 favicon | 网址头像也是 **N**，不是已定 TT 方标 · 要更新 | UX · 品牌 · favicon | **P1** | 见 HU-030：替换 `frontend/public/favicon.svg`；与 HU-029 同批 | **FIXED** |
+| HU-031 | 2026-07-24 ~13:13 | Staging · 选向导 | `/market` 认证向导列表 | CMS 应有 **10** 个向导却只显示 **9**；测试账号向导（C3）为何不显示；是不是 CMS 写死 10？要解决 | 数据 · 展示 · OCS/DDG | **P1** | 见 HU-031：10=OCS 目标；C3 **禁止**上公众目录 | **FIXED（拆层）** |
+
+## HU-031 · 市场向导 9≠10 · 测试向导 C3 未见（**FIXED · Batch-5 · 拆层**）
+
+**Owner 原话：** 选向导时 CMS 应有 10 个却只显示 9；测试账号向导为何不在这里；是不是 CMS 写死了 10？怎么解决。
+
+### 这不是「前端写死只渲染 9」
+
+| 层 | 真源 | 含义 |
+|----|------|------|
+| **OCS 目标数** | `registry/official-cold-start-dataset.v1.yaml` · `official_guides` **count: 10** · `expected_guides: 10` | 公众运营展示应 **10** 名官方向导 |
+| **市场列表** | FE `getGuides` ← Staging API/DB 已发布向导 | 显示几个 = 库里 **published 公众可见** 有几个 |
+| **测试向导 C3** | `guide@test.com` · Registry **C3** · [`display-data-governance.v1.yaml`](../../registry/display-data-governance.v1.yaml) | **`must_appear_in_public_catalog: false`** · 泄漏 = **TEST_DATA_LEAKAGE / DDG FAIL** · `TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0` |
+
+### 拆条处置（集体改 · 落地）
+
+| 子项 | 判定 | 动作 |
+|------|------|------|
+| **A. 只显示 9 个** | **VERIFIED · 无需再对齐** | 2026-07-24 复验 Staging `GET /api/v1/guides?limit=50`（API + Web 代理）= **10**（迪拜…东京/京都）；空筛选下市场应显示 **10**。若仍见 9：清市场筛选/硬刷；**勿**把「9 个国家码（JP×2 · 无 CN）」当成缺卡 |
+| **B. C3 测试向导不在列表** | **CONFIRM_DESIGN**（Expected Difference） | **禁止**为「看见测试号」把 C3 推上公众目录；联调用 C3 登录工作台/接单，不走公开市场卡 |
+| **C. 「CMS 写死 10」** | **否** | 10 是 OCS **目标库存**，不是 FE `slice(0,10)` 写死 |
+
+**修改意见一句（已闭）：** 公众目录保持 **10 OCS**；C3 继续隐藏；中国杭州官导若要进 10×1 国覆盖 = **另开产品票**（会改 OCS pin，非本批 bugfix）。
+
+**诚实边界：** ①/② 展示对齐 ≠ Hard Gate；≠ 用测试账号冒充运营向导。
+
+## HU-030 · 浏览器标签 favicon 蓝底「N」→ TT 方标（**FIXED · Batch-5**）
+
+**现象：** 标签栏 favicon = 蓝底白「N」（Owner 截图「自由市场 | T…」旁）；非已定 **暗底金框 TT**。
+
+**落地：**
+
+1. `frontend/public/favicon.svg` = 与 `brand/bimi-logo.svg` 同构图（暗底金框 TT）  
+2. `app/layout.tsx` `icons`: SVG + `/brand/bimi-logo.png`（apple 同 PNG）  
+3. 部署 Staging Web 后 **强刷/清缓存** 复验标签栏  
+
+**诚实边界：** 改 favicon ≠ 改 Bitget 扩展壳皮肤；≠ Hard Gate。
+
+## HU-029 · Bitget 连接弹窗 · 头像「N」→ TT 方标（**FIXED · Batch-5**）
+
+**场景：** `/market` → 连接钱包 → Bitget 授权窗蓝圆「N」；真源 = **暗底金框 TT**。
+
+**落地：**
+
+| 层 | 处置 |
+|----|------|
+| **本品 Sheet** | 维持 Auth/Trust L5 `TravelTrustWalletSheet` |
+| **Bitget 扩展 chrome** | **Expected Difference**（不可改壳） |
+| **dApp 元数据** | `createTravelTrustWagmiConnectors`：`icons`/`iconUrl`/`appLogoUrl` → `${appUrl}/brand/bimi-logo.png`；`appName=TravelTrust`；`readTravelTrustAppUrlFromEnv` ← `NEXT_PUBLIC_SITE_URL` |
+
+**Owner 复验：** 清 Bitget 站点缓存后重连；若元数据已对仍「N」→ 记钱包缓存残留（非再改本品）。
+
+**诚实边界：** 修元数据 ≠ 把 Bitget 弹窗皮肤改成 TravelTrust L5 整页；≠ Hard Gate / Production GO。
+
+## HU-028 · Console `GET /api/v1/orders/…`（**OPEN · 待证 · Batch-5**）
+
+**现象：** DevTools 出现 `GET https://tt-web-staging.fly.dev/api/v1/orders/df27a3fc-a149-4a2f-8bc…`（日志常被截断）。
+
+**要不要修（诚实）：**
+
+| 若 Network 里… | 结论 |
+|----------------|------|
+| 完整 UUID + **200** / 预期 **401**（未登录）/ 预期 **404**（无单） | **不修** · 正常业务请求 |
+| 真短 ID（非完整 UUID）或 **5xx** | **要修** · 记清页面路径后集体改 |
+| 仅 Console 红字但 Network 成功 | **不修** · 展示截断 |
+
+**Owner 请补一句：** 该请求的 **HTTP 状态码** + 当时所在 **路径**（如 `/escrow/…` / `/` 预览）。未补前保持 OPEN·待证，**不**并入必改清单。
+
+## HU-027 · Console 扩展噪声（**CLOSED · 不修 · Batch-5**）
+
+| 日志 | 来源 | 要修？ |
+|------|------|--------|
+| `chext_driver.js` · unload Permissions policy | 浏览器扩展 | **否** |
+| `content_main.js` · Immersive Translate `token invalid` | **沉浸式翻译**扩展 | **否** |
+| `content_main.js` · `toLowerCase` of undefined | 同上扩展 | **否** |
+
+**结论：** 与 HU-021 同口径 · **不进集体改** · 无痕模式/关扩展可验证本品 Console。
+
+## HU-026 · 登录页「治理币 SSOT 修补进度」整块清除（**FIXED · Batch-5**）
+
+**这是什么（说明 · 非保留理由）：** 内部/企业级 **TTG 治理币 SSOT 修补跟踪看板**（文档+UI 完成度 8/12），曾挂在登录页底部做工程可见性。属 **Engineering 审阅进度 UI**，不是用户登录产品能力。
+
+**Owner 原话：** 不应该出现就清除。
+
+**落地：**
+
+1. `frontend/app/auth/login/page.tsx` 已去掉 `<AuthLoginGovernanceRemediationProgress />`  
+2. `authLoginUiFreeze.contract.test.ts`：**禁止**登录页再挂该组件  
+3. 组件文件可保留作工程参考，但 **登录/注册零渲染**  
+4. 治理公示仍在 `/governance/params`  
+
+**诚实边界：** 清除登录页 ≠ Tokenomics/GOV 文档废止；≠ Hard Gate / Production GO。
 
 ## HU-025 · 顶栏钱包已连接态 · L5（2026-07-24 · **FIXED · Batch-4**）
 
@@ -161,40 +300,82 @@
 
 **诚实边界：** ①/② Staging UX · ≠ 主网真兑换 GO · ≠ Production GO。
 
-## HU-014 · 注册邮箱验证码 · 生产级闭环（Batch-2 PARTIAL · Batch-3/4 复确认）
+## HU-014 · 注册邮箱验证码 · 生产级闭环（**FIXED · Round-5 / PATCH-STG-008 · ② Staging**）
 
-**Staging 复现（2026-07-24 ~09:54）：** 游客注册 · `yinhang744@gmail.com` ·「发送验证码」→ **503**；Resend Emails 控制台**无新发送记录**（仅见 2 日前 `plantartist778@gmail.com` 的 password reset / probe · Delivered）。
+**历史复现（已闭）：** ~09:54 `yinhang744@gmail.com` → **503** + Resend test-mode 403（仅允许 `plantartist778@gmail.com`）。
 
-### 与「改密曾通」对拍（纠正误解 · 非 API 配错）
+**Round-5 闭合证据（2026-07-24）：**
+
+| 证据 | 结果 |
+|------|------|
+| Resend 域 | `web3-ttg.com` **已验证** |
+| Staging FROM | `TRAVELTRUST_RESEND_FROM='TravelTrust <noreply@web3-ttg.com>'`（`tt-api-staging`） |
+| 新邮箱发码 | `POST …/send-verification-code` → **200** `verification_code_sent` + `email_sent:true` |
+| 已注册邮箱 | 同址 → **409** `email_already_registered`（**预期** · 非投递失败；换未注册邮箱或登录） |
+| Auth L5 正文 | Round-5 bake `3b06b54a`；**Round-6** 升级中英 · preheader · 去不可靠 `background-clip` · 域身份行 |
+| 品牌标 / BIMI 资产 | **SSOT = `frontend/public/brand/bimi-logo.svg`（暗底金框 TT）**；邮件 PNG `traveltrust-email-mark.png` **同构图**；公网 URL **HTTP 200** |
+| Cloudflare DNS | `_dmarc`=`v=DMARC1; p=quarantine;` · `default._bimi`=`v=BIMI1; l=https://tt-web-staging.fly.dev/brand/bimi-logo.svg;`（公网已解析） |
+| Console `chext_driver` unload | **扩展噪声 · 忽略**（HU-021 同口径） |
+
+### Round-6 · 为何进垃圾箱（② · 诚实诊断 · 非缺 SPF）
+
+| 因子 | 说明 | 处置 |
+|------|------|------|
+| **新域信誉** | `web3-ttg.com` 出站量低 · Gmail 对 OTP 默认偏严 | Owner：在 Gmail 点 **「不是垃圾邮件」**；逐步正常发码暖域 |
+| **OTP 内容** | 验证码类正文易触发内容过滤 | 主题改「TravelTrust · 注册验证码…」；纯文本+HTML 双轨；无假营销 CTA |
+| **DMARC `p=quarantine`** | 正确生产策略；对齐失败时更易进垃圾箱 | 保持；Resend `send.` SPF + DKIM 已对齐时不应 soft-fail |
+| **Apex 无 SPF TXT** | **预期差异**：Resend 用 `send.web3-ttg.com` SPF，**不是**缺配置 | **CONFIRM_DESIGN** · 禁止乱加冲突 SPF |
+| 屏蔽图折行 TravelTr/ust | **FIXED Round-8** | `alt="TT"` + 56×56 金框 + 品牌 `nowrap`；部署后复测 |
+| 列表圆头像灰「T」 | 多数客户端需 **BIMI + VMC** | VMC = 可选商业件 · **≠** 出站未闭 · **不挡 Hard Gate** |
+| **工程侧 Round-6/8** | L5 正文 + Round-8 折行修复 | 信誉仍靠 Postmaster / Inbox 3/3 |
+
+**禁止：** 把「进垃圾箱」写成「没配 SPF」；用 VMC 未购冒充 HU-014 未闭。
+
+### Round-7 · 投递收口移交（ACTIVE · 停模板 / 停挂域）
+
+| 项 | 状态 |
+|----|------|
+| Staging 自定义域名（为发信） | **STOPPED** · 非投递根因 |
+| 邮件模板 / 主题 / 品牌标再改 | **FROZEN** |
+| SPF · DKIM · DMARC | **AUTH PASS** · `bash scripts/dev/check-email-deliverability-dns.sh` |
+| Google Postmaster Tools | **OWNER_ACTION** · `TT_POSTMASTER_VERIFIED: PENDING` |
+| Gmail 收件箱 3/3 | **`TT_GMAIL_INBOX_GATE: OPEN`** |
+| BIMI / VMC | **DEFERRED** · **不阻塞** Mainnet Hard Gate / Production GO |
+| 活轨 SSOT | [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md) |
+
+### 与「改密曾通」对拍（历史纠偏 · 保留）
 
 | 现象 | 含义 |
 |------|------|
-| Resend 里改密/探针 **Delivered** → `plantartist778@gmail.com` | 证明 **Resend API Key + 出站链路畅通**（Feature Inventory / Reality Closure 对「账号邮箱」已通） |
-| 注册发到 `yinhang744@gmail.com` → API **503** · Resend **无新行** | 请求**已到达** Resend，被 **403 test-mode** 拒绝后 API fail-closed；**不会**写入 Sending 成功表 |
-| Staging 日志（~01:52Z） | `You can only send testing emails to your own email address (plantartist778@gmail.com). … verify a domain at resend.com/domains, and change the from address…` |
-
-**结论：** 功能未「匹配错」——改密与注册走**同一** `send_via_resend`；差异只在**收件人是否 = Resend 账号邮箱**。任意 Gmail 生产级 = **验证域名 + 改 FROM**，不是再改注册代码假成功。
+| 改密/探针 Delivered → `plantartist778@…` | 早先证明 Resend Key 通，但 **test-mode** 限白名单 |
+| 任意 Gmail 曾 503 | fail-closed 正确；闭合靠 **域验证 + FROM**，不是假成功 |
 
 ### Final Truth Baseline cite-only（本项落点）
 
 | 锚点 | 本项关系 |
 |------|----------|
-| **Final Truth / Product·Release Baseline** | 注册 OTP 属用户产品真实能力 |
-| **Engineering SSOT** | `email_transport_resend` + Fly secrets；代码 fail-closed 已对齐 |
-| **Feature Inventory** | 「能发信」对 plantartist **已证**；对任意用户邮箱 **未证** |
-| **Reality Closure** | Staging 真跑与 Baseline 对拍：**test-mode 限制 = OPEN gap** |
-| **PRR / Mainnet Hard Gate / Cutover** | 本项闭 ≠ Hard Gate PASS；域名验证是 ②→③ 出站前置 |
+| **Final Truth Baseline** | 本 Register 活轨对齐；**不**新开平行真源 |
+| **Candidate v2** · pin `PSG-REL-20260720-WEB3-CAND-V2` | **cite-only** · 不改 tip / 协议基线 |
+| **V3.1.1 Final / PSG-EGM / Governance Anchor** | **cite-only** · 本批无资金/治理规则变更 |
+| **Product / Release Baseline** | **主战场**：注册 OTP · Auth L5 邮件体验 |
+| **Engineering SSOT** | Round-5/`3b06b54a` + Round-6 TT 标/HTML；Resend secrets · `auth_email_templates` · brand 公网资产 |
+| **Release Integrity / Delta Recertify** | Staging Patch **PATCH-STG-008↻**；晋升仍 DEFERRED |
+| **Feature Inventory / Reality Closure** | ② 发码路径已证；垃圾箱 = 域暖 + 用户「非垃圾」动作；Logo 200 + DMARC/BIMI DNS 已证 |
+| **PRR / Mainnet Hard Gate / Cutover** | **本项闭 ≠** Hard Gate / Cutover / Production GO；③ 生产 API 须同配 FROM（另闸） |
 
 | 层 | 状态 | 说明 |
 |----|------|------|
-| **产品代码（①）** | 已按生产纪律 | 投递失败 → **503 `email_delivery_failed`** + 回滚 OTP + 无假倒计时 |
-| **出站投递（②）** | **未闭 · Owner** | Resend 仍 test-mode / 未用已验证域 `from` |
-| **Owner 步骤（写死）** | 待办 | ① [resend.com/domains](https://resend.com/domains) 验证业务域 ② `fly secrets set TRAVELTRUST_RESEND_FROM='TravelTrust <noreply@已验证域>' -a tt-api-staging` ③ 复测 `yinhang744@gmail.com` → Resend 出现新 Delivered + 入箱 |
-| **临时自测** | 可选 | 用 `plantartist778@gmail.com` 注册发码应能通（与改密同白名单）— **不能**冒充任意邮箱已 GO |
+| **产品代码（①）** | ✅ | 投递失败 → **503 `email_delivery_failed`** + 回滚 OTP；已注册 → **409** |
+| **出站投递（②）** | ✅ **FIXED** | 已验证域 + Staging FROM + 新邮箱 **200 Delivered 路径** |
+| **Auth L5 邮件壳（②）** | ✅ Round-6 | TT 方标 SSOT + 中英 L5 壳（部署后生效） |
+| **DNS BIMI/DMARC（②）** | ✅ | Cloudflare 记录公网可解析；Logo URL 200 |
+| **Gmail 垃圾箱** | 暖域残留 | 见 Round-6 表；**Round-7** 移交 Postmaster + Inbox gate（非再改模板） |
+| **Gmail 列表圆头像** | **DEFERRED** | BIMI/VMC 品牌轨 · **≠** Hard Gate 阻塞 · **≠** HU-014 出站未闭 |
+| **③ 生产** | 未做 | 生产 API 同配 Resend FROM + 域；另闸 |
 
-**禁止：** 为消 Console 503 改回假成功。`chext_driver` unload = 扩展噪声，忽略。
+**禁止：** 为消 Console 503/409 改回假成功；用已注册邮箱 409 冒充「发信坏了」。
 
-## HU-021 · Staging Console 分流（2026-07-24 · 先记未改）
+---
 
 | # | 日志 | 来源判断 | 要修？ | 集体改动作 |
 |---|------|----------|--------|------------|

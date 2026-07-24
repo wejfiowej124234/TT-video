@@ -10,12 +10,44 @@
 **Round-6 = PATCH-STG-008↻（2026-07-24）：** 垃圾箱根因说明 + **TT 方标 SSOT**（`bimi-logo.svg`）对齐邮件 PNG/HTML · L5 正文升级 · 主题/投递头 · **≠** ③ GO  
 **Round-7 = 投递收口（2026-07-24）：** **停** Staging 挂域 / **冻**邮件模板 · SPF/DKIM/DMARC **AUTH PASS** · Postmaster+Gmail Inbox = Owner · BIMI/VMC **DEFERRED · 不挡 Hard Gate** · SSOT [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md)  
 **Round-8 = Owner 授权 L5 抛光（2026-07-24）：** `alt=TT` 修折行 · 金框头标 · 码 `&nbsp;` 字距 · Final Truth cite-only · 部署 API 后模板再冻  
+**Round-8 Owner 签收（~13:05）：** 验证码邮件版式 **「感觉可以了」** · 产品 L5 抛光闭合；进垃圾箱仍属信誉闸（Postmaster / Inbox 3/3 · OPEN）  
+**当前批次口径：** **第 5 批 Batch-5 集体改 FIXED**（HU-026/029/030/031 · HU-027 不修 · HU-028 待证）  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
-**Staging deploy HEAD:** Round-8 API 已部署（Git `21ba131e` · fly `tt-api-staging` OK）· DNS 未改  
+**Staging deploy HEAD:** Batch-5 Web **已 bake**（PATCH-STG-009 · tip cite `817b0d07` · fly `tt-web-staging` · favicon TT **HTTP 200 已验**）· Round-8 API 仍在 · DNS 未改  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
 **Rule（写死）：** Owner 口述 → 立刻追加；「结束 / 出清单」→ 清单+意见；**「开始第 N 批集体改」** → 按 Batch-2 同级标准改 → 本地 → Staging → Git → **Final Truth cite 对齐**（不新开平行真源）。
+
+---
+
+## 进度总览（2026-07-24）
+
+| 批次 | 范围 | 状态 |
+|------|------|------|
+| **第 1 批** Round-1 | HU-001～010 | **FIXED** |
+| **第 2 批** Batch-2 | HU-011～017 | **FIXED** |
+| **第 3 批** Batch-3 | HU-018～021 | **FIXED** |
+| **第 4 批** Batch-4 | HU-022～025 | **FIXED** |
+| Round-5～8 | HU-014 邮件 | 版式已签收 · 信誉闸 OPEN |
+| **第 5 批** Batch-5 | HU-026～031 | **FIXED**（HU-027 不修 · HU-028 待证） |
+
+**流程位：** Batch-5 集体改已落地 · Owner Staging 复验（favicon / Bitget 清缓存 / 登录无 SSOT 板 / 向导=10）。
+
+---
+
+## 第五批（Batch-5）· 实施状态（生产级 · L5 · 2026-07-24）
+
+| # | 主题 | 严重度 | 状态 | 落地摘要 |
+|---|------|--------|------|----------|
+| **HU-026** | 登录页治理币 SSOT 修补进度 | P1 | **FIXED** | `/auth/login` 移除工程看板；Freeze 契约禁回挂 |
+| **HU-027** | Console 扩展噪声 | — | **CLOSED · 不修** | 浏览器扩展 · 非本品 |
+| **HU-028** | Console `GET …/orders/…` | P2 | **OPEN · 待证** | 待 Owner 补 HTTP 状态；未并入必改 |
+| **HU-029** | Bitget 头像「N」 | P1 | **FIXED** | wagmi 元数据 `icons`/`iconUrl`/`appLogoUrl` → TT `bimi-logo.png`；`appName=TravelTrust`；Bitget 壳 = Expected Difference |
+| **HU-030** | 标签栏 favicon「N」 | P1 | **FIXED** | `favicon.svg` = TT 方标（与 BIMI 同源）；`layout` icons 含 PNG |
+| **HU-031** | 向导 9≠10 · C3 未见 | P1 | **FIXED（拆层）** | A：Staging API/Web `GET /guides` = **10** OCS **已验**；B：C3 **CONFIRM_DESIGN** 不上公众目录 |
+
+**诚实边界：** Batch-5 ≠ Production GO / Hard Gate / Cutover。OCS 10 城含 JP×2、无 CN — **国家覆盖≠卡片数**；若要中国杭州官导向导另开产品票。
 
 ---
 
@@ -141,6 +173,108 @@
 | HU-023 | 2026-07-24 ~09:50 | 未登录（Staging） | `/traveltrust` · 信任事实 | 对齐最新真源 · 商业标准 | 内容 · 商业 · L5 | P1 | USDC Escrow 点名；去「第一阶段」；合规保留 | **FIXED** |
 | HU-024 | 2026-07-24 ~09:52 | 未登录（Staging） | `/community` · 全部目的地 | 十国无印尼 · 简约无滚动条 | UX · IA · 数据 | P1 | `productCountries` + 紧凑行；无 `id` | **FIXED** |
 | HU-025 | 2026-07-24 ~09:55 | 连钱包后（Staging） | 顶栏钱包 | 已连接应显示什么 · L5 | UX · L5 · 钱包 | P1 | 短址芯片 + 账户菜单；明确 ≠ 网站登录 | **FIXED** |
+
+### Round-5 = 第五批 Batch-5（集体改 FIXED · 2026-07-24）
+
+| # | 时间 | 账号 | 路径/页面 | 问题描述（原话） | 类型 | 严重度 | 修改意见 | 状态 |
+|---|------|------|-----------|------------------|------|--------|----------|------|
+| HU-026 | 2026-07-24 ~13:07 | `plantartist778@…`（Staging 登录页） | `/auth/login` | 下面「治理币 SSOT 修补进度（① 本地）」整块（8/12·67% 清单 + params 链）**不应该出现就清除** | UX · IA · L5 | **P1** | 从登录页移除 `AuthLoginGovernanceRemediationProgress`；进度属工程/治理轨，不应挂在账号入口；治理公示保留在 `/governance/params` | **FIXED** |
+| HU-027 | 2026-07-24 ~13:08 | Staging（登录相关） | Console | `chext_driver` unload · Immersive Translate `token invalid` · `content_main.js` `toLowerCase` | 运行时 · 扩展 | — | **浏览器扩展噪声 · 不修**（HU-021 同口径） | **CLOSED · 不修** |
+| HU-028 | 2026-07-24 ~13:08 | Staging | Console · `GET /api/v1/orders/df27a3fc-a149-4a2f-8bc…` | 这些有没有问题 · 需要修复？ | 运行时 · API | **P2 待证** | 见 HU-028 节：先补 HTTP 状态与完整 UUID；Console 常截断 URL | **OPEN · 待证** |
+| HU-029 | 2026-07-24 ~13:10 | Staging · Bitget 连接 | Bitget 授权弹窗 | 连接钱包 UI 不符整体设计；头像「N」不对；要以 **TT 方标**（第三图 / `bimi-logo`）为准 · 需修改优化 | UX · 品牌 · 钱包 | **P1** | 见 HU-029：补齐 dApp `metadata.icons` + 名称 TravelTrust；Bitget 壳按钮区部分不可改 | **FIXED** |
+| HU-030 | 2026-07-24 ~13:11 | Staging（任意页 · 标签栏） | 浏览器标签 favicon | 网址头像也是 **N**，不是已定 TT 方标 · 要更新 | UX · 品牌 · favicon | **P1** | 见 HU-030：替换 `frontend/public/favicon.svg`；与 HU-029 同批 | **FIXED** |
+| HU-031 | 2026-07-24 ~13:13 | Staging · 选向导 | `/market` 认证向导列表 | CMS 应有 **10** 个向导却只显示 **9**；测试账号向导（C3）为何不显示；是不是 CMS 写死 10？要解决 | 数据 · 展示 · OCS/DDG | **P1** | 见 HU-031：10=OCS 目标；C3 **禁止**上公众目录 | **FIXED（拆层）** |
+
+## HU-031 · 市场向导 9≠10 · 测试向导 C3 未见（**FIXED · Batch-5 · 拆层**）
+
+**Owner 原话：** 选向导时 CMS 应有 10 个却只显示 9；测试账号向导为何不在这里；是不是 CMS 写死了 10？怎么解决。
+
+### 这不是「前端写死只渲染 9」
+
+| 层 | 真源 | 含义 |
+|----|------|------|
+| **OCS 目标数** | `registry/official-cold-start-dataset.v1.yaml` · `official_guides` **count: 10** · `expected_guides: 10` | 公众运营展示应 **10** 名官方向导 |
+| **市场列表** | FE `getGuides` ← Staging API/DB 已发布向导 | 显示几个 = 库里 **published 公众可见** 有几个 |
+| **测试向导 C3** | `guide@test.com` · Registry **C3** · [`display-data-governance.v1.yaml`](../../registry/display-data-governance.v1.yaml) | **`must_appear_in_public_catalog: false`** · 泄漏 = **TEST_DATA_LEAKAGE / DDG FAIL** · `TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0` |
+
+### 拆条处置（集体改 · 落地）
+
+| 子项 | 判定 | 动作 |
+|------|------|------|
+| **A. 只显示 9 个** | **VERIFIED · 无需再对齐** | 2026-07-24 复验 Staging `GET /api/v1/guides?limit=50`（API + Web 代理）= **10**（迪拜…东京/京都）；空筛选下市场应显示 **10**。若仍见 9：清市场筛选/硬刷；**勿**把「9 个国家码（JP×2 · 无 CN）」当成缺卡 |
+| **B. C3 测试向导不在列表** | **CONFIRM_DESIGN**（Expected Difference） | **禁止**为「看见测试号」把 C3 推上公众目录；联调用 C3 登录工作台/接单，不走公开市场卡 |
+| **C. 「CMS 写死 10」** | **否** | 10 是 OCS **目标库存**，不是 FE `slice(0,10)` 写死 |
+
+**修改意见一句（已闭）：** 公众目录保持 **10 OCS**；C3 继续隐藏；中国杭州官导若要进 10×1 国覆盖 = **另开产品票**（会改 OCS pin，非本批 bugfix）。
+
+**诚实边界：** ①/② 展示对齐 ≠ Hard Gate；≠ 用测试账号冒充运营向导。
+
+## HU-030 · 浏览器标签 favicon 蓝底「N」→ TT 方标（**FIXED · Batch-5**）
+
+**现象：** 标签栏 favicon = 蓝底白「N」（Owner 截图「自由市场 | T…」旁）；非已定 **暗底金框 TT**。
+
+**落地：**
+
+1. `frontend/public/favicon.svg` = 与 `brand/bimi-logo.svg` 同构图（暗底金框 TT）  
+2. `app/layout.tsx` `icons`: SVG + `/brand/bimi-logo.png`（apple 同 PNG）  
+3. 部署 Staging Web 后 **强刷/清缓存** 复验标签栏  
+
+**诚实边界：** 改 favicon ≠ 改 Bitget 扩展壳皮肤；≠ Hard Gate。
+
+## HU-029 · Bitget 连接弹窗 · 头像「N」→ TT 方标（**FIXED · Batch-5**）
+
+**场景：** `/market` → 连接钱包 → Bitget 授权窗蓝圆「N」；真源 = **暗底金框 TT**。
+
+**落地：**
+
+| 层 | 处置 |
+|----|------|
+| **本品 Sheet** | 维持 Auth/Trust L5 `TravelTrustWalletSheet` |
+| **Bitget 扩展 chrome** | **Expected Difference**（不可改壳） |
+| **dApp 元数据** | `createTravelTrustWagmiConnectors`：`icons`/`iconUrl`/`appLogoUrl` → `${appUrl}/brand/bimi-logo.png`；`appName=TravelTrust`；`readTravelTrustAppUrlFromEnv` ← `NEXT_PUBLIC_SITE_URL` |
+
+**Owner 复验：** 清 Bitget 站点缓存后重连；若元数据已对仍「N」→ 记钱包缓存残留（非再改本品）。
+
+**诚实边界：** 修元数据 ≠ 把 Bitget 弹窗皮肤改成 TravelTrust L5 整页；≠ Hard Gate / Production GO。
+
+## HU-028 · Console `GET /api/v1/orders/…`（**OPEN · 待证 · Batch-5**）
+
+**现象：** DevTools 出现 `GET https://tt-web-staging.fly.dev/api/v1/orders/df27a3fc-a149-4a2f-8bc…`（日志常被截断）。
+
+**要不要修（诚实）：**
+
+| 若 Network 里… | 结论 |
+|----------------|------|
+| 完整 UUID + **200** / 预期 **401**（未登录）/ 预期 **404**（无单） | **不修** · 正常业务请求 |
+| 真短 ID（非完整 UUID）或 **5xx** | **要修** · 记清页面路径后集体改 |
+| 仅 Console 红字但 Network 成功 | **不修** · 展示截断 |
+
+**Owner 请补一句：** 该请求的 **HTTP 状态码** + 当时所在 **路径**（如 `/escrow/…` / `/` 预览）。未补前保持 OPEN·待证，**不**并入必改清单。
+
+## HU-027 · Console 扩展噪声（**CLOSED · 不修 · Batch-5**）
+
+| 日志 | 来源 | 要修？ |
+|------|------|--------|
+| `chext_driver.js` · unload Permissions policy | 浏览器扩展 | **否** |
+| `content_main.js` · Immersive Translate `token invalid` | **沉浸式翻译**扩展 | **否** |
+| `content_main.js` · `toLowerCase` of undefined | 同上扩展 | **否** |
+
+**结论：** 与 HU-021 同口径 · **不进集体改** · 无痕模式/关扩展可验证本品 Console。
+
+## HU-026 · 登录页「治理币 SSOT 修补进度」整块清除（**FIXED · Batch-5**）
+
+**这是什么（说明 · 非保留理由）：** 内部/企业级 **TTG 治理币 SSOT 修补跟踪看板**（文档+UI 完成度 8/12），曾挂在登录页底部做工程可见性。属 **Engineering 审阅进度 UI**，不是用户登录产品能力。
+
+**Owner 原话：** 不应该出现就清除。
+
+**落地：**
+
+1. `frontend/app/auth/login/page.tsx` 已去掉 `<AuthLoginGovernanceRemediationProgress />`  
+2. `authLoginUiFreeze.contract.test.ts`：**禁止**登录页再挂该组件  
+3. 组件文件可保留作工程参考，但 **登录/注册零渲染**  
+4. 治理公示仍在 `/governance/params`  
+
+**诚实边界：** 清除登录页 ≠ Tokenomics/GOV 文档废止；≠ Hard Gate / Production GO。
 
 ## HU-025 · 顶栏钱包已连接态 · L5（2026-07-24 · **FIXED · Batch-4**）
 

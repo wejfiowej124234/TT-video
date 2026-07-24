@@ -10,10 +10,12 @@ import { ViewOnlyAddressProvider } from "@/lib/ViewOnlyAddressContext";
 import { getTargetChain } from "@/lib/chainEnv";
 import {
   createTravelTrustWagmiConnectors,
+  readTravelTrustAppUrlFromEnv,
   readWalletConnectProjectIdFromEnv,
 } from "@/lib/wallet/connection";
 
 const targetChain = getTargetChain();
+const appUrl = readTravelTrustAppUrlFromEnv();
 
 /**
  * TravelTrust L5 Wallet Connection Center (enterprise · ①).
@@ -24,6 +26,8 @@ const config = createConfig({
   multiInjectedProviderDiscovery: true,
   connectors: createTravelTrustWagmiConnectors({
     walletConnectProjectId: readWalletConnectProjectIdFromEnv(),
+    appName: "TravelTrust",
+    appUrl,
   }),
   ssr: true,
   transports: {

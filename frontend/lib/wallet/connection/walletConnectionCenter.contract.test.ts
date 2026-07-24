@@ -20,6 +20,21 @@ describe("Wallet Connection Center L5 contract (①)", () => {
     expect(withWc.length).toBe(withoutWc.length + 1);
   });
 
+  it("HU-029: wallet metadata resolves TT brand icon (non-empty)", () => {
+    const src = readFileSync(
+      join(ROOT, "lib/wallet/connection/createTravelTrustWagmiConnectors.ts"),
+      "utf8"
+    );
+    expect(src).toContain("TRAVELTRUST_BRAND_MARK_PATH");
+    expect(src).toContain("bimi-logo.png");
+    expect(src).toContain("icons: [appIconUrl]");
+    expect(src).toContain("iconUrl: appIconUrl");
+    expect(src).not.toMatch(/icons:\s*\[\s*\]/);
+    const providers = readFileSync(join(ROOT, "components/Providers.tsx"), "utf8");
+    expect(providers).toContain('appName: "TravelTrust"');
+    expect(providers).toContain("readTravelTrustAppUrlFromEnv");
+  });
+
   it("sheet + controller + capability SSOT exist", () => {
     const sheet = readFileSync(join(ROOT, "components/trust/TravelTrustWalletSheet.tsx"), "utf8");
     const mini = readFileSync(join(ROOT, "components/trust/WalletStatusMini.tsx"), "utf8");

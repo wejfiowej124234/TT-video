@@ -62,12 +62,8 @@ describe("/auth/login UI freeze (① · AUTH-LOGIN-UI-FREEZE)", () => {
     expect(page).toContain("AuthL5PageBackdrop");
     expect(page).toContain("AuthL5CrossNavFooter");
     expect(page).toContain("resolvePostAuthReturnPath");
-    expect(page).toContain("AuthLoginGovernanceRemediationProgress");
-    const progress = readFileSync(
-      join(ROOT, "components", "auth", "AuthLoginGovernanceRemediationProgress.tsx"),
-      "utf8",
-    );
-    expect(progress).toContain('data-tt-auth-surface="login_governance_remediation"');
+    // HU-026 · Batch-5: engineering remediation board must not render on login (Auth L5).
+    expect(page).not.toContain("AuthLoginGovernanceRemediationProgress");
   });
 
   it("login route tsx sources forbid UI regressions", () => {

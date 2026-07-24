@@ -23,7 +23,10 @@ export const metadata: Metadata = {
   },
   title,
   description,
-  icons: { icon: "/favicon.svg", apple: "/favicon.svg" },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/brand/bimi-logo.png", type: "image/png" }],
+    apple: "/brand/bimi-logo.png",
+  },
   openGraph: { title, description, type: "website", url: "/" },
   twitter: { card: "summary_large_image", title, description },
 };
