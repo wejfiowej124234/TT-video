@@ -276,7 +276,10 @@ describe("community Feed Action SSOT (site theme V1 §1.7 · contract)", () => {
     expect(src).toContain("applyCommunityDiscoveryProximityFilter");
     expect(src).toContain("applyCommunityDiscoveryStreamTab");
     expect(src).toContain("discoveryTypeSortRow");
-    expect(src).toContain("community-feed-destination-mobile");
+    expect(src).toContain("CommunityFeedDestinationPicker");
+    expect(src).toContain("FEED_DESTINATION_CITY_OPTIONS");
+    expect(src).not.toContain("PUBLISH_DESTINATION_OPTIONS");
+    expect(read("CommunityFeedDestinationPicker.tsx")).toContain("community-feed-destination-picker");
   });
 
   it("CommunityFeedMain wires showcase + media capability feed banners", () => {

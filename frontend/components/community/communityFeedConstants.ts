@@ -34,6 +34,27 @@ export const PUBLISH_DESTINATION_OPTIONS: string[] = [
   ...new Set(Object.values(DESTINATION_BY_REGION).flat()),
 ];
 
+/** Feed 筛选用城市 flat 列表（不含国家名 · 无 duplicate 印尼/印度尼西亚） */
+export const FEED_DESTINATION_CITY_OPTIONS: string[] = [
+  ...new Set(Object.values(DESTINATION_CITY_BY_REGION).flat()),
+];
+
+/** Feed 目的地分组（App-style IA · 仅城市） */
+export const FEED_DESTINATION_GROUPS: { regionKey: string; cities: string[] }[] = (
+  ["cn", "jp", "th", "id", "sg"] as const
+).map((regionKey) => ({
+  regionKey,
+  cities: DESTINATION_CITY_BY_REGION[regionKey] ?? [],
+}));
+
+export function communityFeedDestinationLabel(
+  t: (key: string, vars?: Record<string, string | number>) => string,
+  dest: string,
+): string {
+  const key = DESTINATION_LABEL_KEYS[dest];
+  return key ? t(key) : dest;
+}
+
 /** 目的地展示 i18n：中文名 -> locale key（用于筛选栏与卡片展示） */
 export const DESTINATION_LABEL_KEYS: Record<string, string> = {
   中国: "community_region_cn",
@@ -57,7 +78,6 @@ export const DESTINATION_LABEL_KEYS: Record<string, string> = {
   普吉: "community_dest_phuket",
   巴厘岛: "community_dest_bali",
   雅加达: "community_dest_jakarta",
-  新加坡: "community_dest_singapore",
 };
 
 export const REGION_KEYS = ["all", "cn", "jp", "th", "id", "sg"] as const;

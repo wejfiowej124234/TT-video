@@ -36,6 +36,8 @@ describe("traveltrustHeroGlobeP1Link", () => {
   it("buildTraveltrustPlanTripHrefWithRegion appends region + default step on hash", () => {
     expect(buildTraveltrustPlanTripHrefWithRegion("#start", "th")).toBe("#start?region=th&step=plan");
     expect(buildTraveltrustPlanTripHrefWithRegion("#start", null)).toBe("#start");
+    expect(buildTraveltrustPlanTripHrefWithRegion("/", "jp")).toBe("/?region=jp&step=plan");
+    expect(buildTraveltrustPlanTripHrefWithRegion("/", null)).toBe("/");
   });
 
   it("parseStartRegionFromHash reads region from hash query", () => {

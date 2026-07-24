@@ -186,10 +186,10 @@ const nextConfig = {
     const base = [
       { key: "X-Frame-Options", value: "SAMEORIGIN" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-      /** 140 / 07 §5.6A：默认收紧敏感能力；钱包连接不依赖 camera/mic/geolocation */
+      /** 140 / 07 §5.6A：默认收紧敏感能力；社区 Feed GPS 需 geolocation=(self) */
       {
         key: "Permissions-Policy",
-        value: "camera=(), microphone=(), geolocation=()",
+        value: "camera=(), microphone=(), geolocation=(self)",
       },
     ];
     if (process.env.NODE_ENV === "production") {

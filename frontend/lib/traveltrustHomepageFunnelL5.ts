@@ -14,10 +14,10 @@ import { TRAVELTRUST_NETWORK_ANNOUNCEMENTS } from "@/lib/traveltrustNetworkAnnou
 /** 波 0 机读锚（契约 / 落地页 `data-tt-homepage-funnel-l5`） */
 export const TRAVELTRUST_HOMEPAGE_FUNNEL_L5_ID = "TT-HOMEPAGE-FUNNEL-L5-WAVE0-2026-05" as const;
 
-/** ① 当前：页内转化（TT-PH1-170 closed） */
+/** ① 当前：主 CTA → 定制旅行 `/`（HU-018 · 顶栏同源） */
 export const TRAVELTRUST_PLAN_TRIP_HREF_V6 = TRAVELTRUST_V6_IN_PAGE_PLAN_HREF;
 
-/** 波 1 预定：主 CTA 外链至向导市场（波 0 仅登记，不改 Hero 默认 href） */
+/** 波 1 预定：可选外链向导市场（非 Hero 默认） */
 export const TRAVELTRUST_WAVE1_PLAN_TRIP_TARGET = "/guides" as const;
 
 export type HomepageFunnelLandingTier = "product_console" | "experience_dark";

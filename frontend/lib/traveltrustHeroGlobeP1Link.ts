@@ -141,8 +141,15 @@ export function buildTraveltrustPlanTripHrefWithRegion(
 ): string {
   const base = baseHref.trim() || TRAVELTRUST_V6_IN_PAGE_PLAN_HREF;
   if (!regionId) return base;
+  // HU-018 · 外链定制旅行 `/`：带 region query，勿误写成页内 #start
+  if (base === "/" || (base.startsWith("/") && !base.includes("#"))) {
+    const u = new URL(base, "https://traveltrust.invalid");
+    u.searchParams.set("region", regionId);
+    if (stepId) u.searchParams.set("step", stepId);
+    return `${u.pathname}${u.search}`;
+  }
   const hashIdx = base.indexOf("#");
-  const path = hashIdx >= 0 ? base.slice(0, hashIdx) : "";
+  const path = hashIdx >= 0 ? base.slice(0, hashIdx) : base;
   const startHash = buildTraveltrustStartHash({ region: regionId, step: stepId ?? "plan" });
   return `${path}${startHash}`;
 }

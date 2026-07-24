@@ -10638,7 +10638,7 @@ export default {
   auth_register_error_referralCodeRequired: "Referral code is required.",
   auth_register_error_sendCodeFailed: "Could not send verification code. Please try again later.",
   auth_register_error_emailDeliveryFailed:
-    "Verification email could not be delivered (outbound provider rejected or not configured). Try again later, use an allowlisted inbox, or contact support.",
+    "Verification email could not be delivered. Staging/production requires a verified Resend sending domain and matching From address. We never fake a successful send.",
   auth_register_error_authDbUnavailable:
     "Account could not be persisted (strict mode or DB unavailable). Registration was rolled back in memory; retry shortly.",
   auth_register_password_min: "At least 8 characters",

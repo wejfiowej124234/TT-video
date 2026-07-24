@@ -12,8 +12,8 @@ export type CommunityFeedAnchorPoi = {
 
 /** UI 下拉仅生产项 */
 export const COMMUNITY_FEED_ANCHOR_POIS: readonly CommunityFeedAnchorPoi[] = [
-  { id: "gps", labelKey: "community_anchor_gps" },
   { id: "city_current", labelKey: "community_anchor_city_current" },
+  { id: "gps", labelKey: "community_anchor_gps" },
 ] as const;
 
 const LEGACY_ANCHOR_IDS: readonly CommunityFeedAnchorPoiId[] = [
@@ -26,7 +26,7 @@ const LEGACY_ANCHOR_IDS: readonly CommunityFeedAnchorPoiId[] = [
 export const COMMUNITY_FEED_ANCHOR_STORAGE_KEY = "tt_community_feed_anchor_poi_v1";
 
 export function communityFeedDefaultAnchorPoiId(): CommunityFeedAnchorPoiId {
-  return "gps";
+  return "city_current";
 }
 
 export function communityFeedAnchorPoiLabel(
@@ -46,7 +46,7 @@ export function communityFeedAnchorPoiLabel(
 
 export function communityFeedParseAnchorPoiId(raw: string | null | undefined): CommunityFeedAnchorPoiId {
   if (raw && (LEGACY_ANCHOR_IDS as readonly string[]).includes(raw)) {
-    // Migrate debug hotel default → GPS
+    // Migrate debug hotel default → city_current
     if (raw === "hotel_lavande") return communityFeedDefaultAnchorPoiId();
     return raw as CommunityFeedAnchorPoiId;
   }

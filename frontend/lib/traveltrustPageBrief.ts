@@ -75,7 +75,7 @@ export const TRAVELTRUST_PAGE_BRIEF_DEV_FALLBACK: TravelTrustPageBrief = {
       "Consume full 84 numeric / phase1_countries via GET /api/v1/governance/protocol-reference; this endpoint does not embed phase1_countries.",
   },
   cta_contract: {
-    primary_target: "#start",
+    primary_target: "/",
     secondary_target: "/governance",
     in_page_anchors: [...TRAVELTRUST_PAGE_BRIEF_IN_PAGE_ANCHORS],
     analytics_events: [...TRAVELTRUST_V6_ANALYTICS_EVENTS],

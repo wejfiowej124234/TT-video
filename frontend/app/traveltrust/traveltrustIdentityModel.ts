@@ -71,7 +71,7 @@ export const TRAVELTRUST_ROLES: readonly TravelTrustRoleConfig[] = [
     nameKey: "traveltrust_role_traveler_name",
     tagKey: "traveltrust_role_traveler_tag",
     enterKey: "traveltrust_role_enter",
-    href: "#start",
+    href: "/",
     defaultMp4: ROLE_DEFAULT_MP4.traveler,
     defaultPoster: "/media/traveltrust/roles/traveler.poster.jpg",
     envMp4: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_TRAVELER?.trim(),

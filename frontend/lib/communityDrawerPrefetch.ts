@@ -7,6 +7,7 @@ import {
   getMeFollowers,
   getMeFollowing,
 } from "@/lib/apiClient/community";
+import { getAuthHeaders } from "@/lib/apiClient/core/authSession";
 import {
   parseCommunityTopicTagFromHref,
   warmCommunityMainFeed,
@@ -43,6 +44,12 @@ let postDetailWarmed = false;
 let publishDrawerWarmed = false;
 let reportDrawerWarmed = false;
 
+/** Skip authenticated API prefetch when no client session (avoids 401 noise). */
+export function hasClientAuthSession(): boolean {
+  const h = getAuthHeaders();
+  return Boolean(h.Authorization || h["X-User-Id"]);
+}
+
 /** ① · L1 Tab hover 预取子路由 JS（配合 Link prefetch）；可选预热 React Query cache */
 export function warmCommunityTabRoute(
   router: { prefetch: (href: string) => void },
@@ -65,11 +72,13 @@ export function warmCommunityTabRoute(
   if (href === "/community/explore") warmCommunityExploreFeed(queryClient);
   if (href === "/community/friends") warmCommunityFriendsSocial(queryClient);
   if (href === "/community/messages" || href.startsWith("/community/messages")) {
-    void queryClient.prefetchQuery({
-      queryKey: COMMUNITY_CONVERSATIONS_LAYOUT_QUERY_KEY,
-      queryFn: getConversations,
-      staleTime: COMMUNITY_CONVERSATIONS_STALE_MS,
-    });
+    if (hasClientAuthSession()) {
+      void queryClient.prefetchQuery({
+        queryKey: COMMUNITY_CONVERSATIONS_LAYOUT_QUERY_KEY,
+        queryFn: getConversations,
+        staleTime: COMMUNITY_CONVERSATIONS_STALE_MS,
+      });
+    }
   }
 }
 
@@ -97,7 +106,7 @@ export function warmCommunityExploreFeed(queryClient: QueryClient): void {
 
 /** ① · 好友页 hover 预载社交列表（与好友页 React Query cache 同源） */
 export function warmCommunityFriendsSocial(queryClient: QueryClient): void {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !hasClientAuthSession()) return;
   const stale = COMMUNITY_FRIENDS_STALE_MS;
   void queryClient.prefetchQuery({
     queryKey: COMMUNITY_ME_FOLLOWING_QUERY_KEY,
@@ -121,7 +130,7 @@ export function warmCommunityMePosts(
   queryClient: QueryClient,
   visibility: CommunityMePostsVisFilterKey = "all",
 ): void {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !hasClientAuthSession()) return;
   void queryClient.prefetchInfiniteQuery({
     queryKey: communityMePostsQueryKey(visibility),
     staleTime: COMMUNITY_ME_LIST_STALE_MS,
@@ -159,7 +168,7 @@ const warmedConversationThreads = new Set<string>();
 
 /** ① · 个人中心赞过/收藏列表 hover 预载 ID 列表（抽屉与独立页共用 React Query cache） */
 export function warmCommunityMeLikesIds(queryClient: QueryClient): void {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !hasClientAuthSession()) return;
   void queryClient.prefetchQuery({
     queryKey: COMMUNITY_ME_LIKES_IDS_QUERY_KEY,
     queryFn: fetchCommunityMeLikesIds,
@@ -168,7 +177,7 @@ export function warmCommunityMeLikesIds(queryClient: QueryClient): void {
 }
 
 export function warmCommunityMeCollectsIds(queryClient: QueryClient): void {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined" || !hasClientAuthSession()) return;
   void queryClient.prefetchQuery({
     queryKey: COMMUNITY_ME_COLLECTS_IDS_QUERY_KEY,
     queryFn: fetchCommunityMeCollectsIds,
@@ -178,7 +187,12 @@ export function warmCommunityMeCollectsIds(queryClient: QueryClient): void {
 
 /** ① · 会话列表行 hover 预载 thread API（进入详情前） */
 export function warmCommunityConversationThread(conversationId: string): void {
-  if (!conversationId || warmedConversationThreads.has(conversationId) || typeof window === "undefined") {
+  if (
+    !conversationId ||
+    warmedConversationThreads.has(conversationId) ||
+    typeof window === "undefined" ||
+    !hasClientAuthSession()
+  ) {
     return;
   }
   warmedConversationThreads.add(conversationId);

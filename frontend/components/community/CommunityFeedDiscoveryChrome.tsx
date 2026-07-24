@@ -30,9 +30,10 @@ import type { FeedTab, SortBy, RegionKey } from "./communityFeedConstants";
 import {
   TYPE_OPTIONS,
   REGION_KEYS,
-  DESTINATION_LABEL_KEYS,
-  PUBLISH_DESTINATION_OPTIONS,
+  FEED_DESTINATION_CITY_OPTIONS,
+  communityFeedDestinationLabel,
 } from "./communityFeedConstants";
+import { CommunityFeedDestinationPicker } from "@/components/community/CommunityFeedDestinationPicker";
 import {
   FEED_STREAM_TABS,
   feedStreamTabFromState,
@@ -44,6 +45,7 @@ import {
   communitySlatePillFocus,
 } from "@/lib/communityA11yFocus";
 import { warmCommunityFeedMode } from "@/lib/communityFeedInfiniteQuery";
+import { hasClientAuthSession } from "@/lib/communityDrawerPrefetch";
 import { communityMeLikesReceivedQueryKey } from "@/lib/communityMeLikesReceivedContract";
 import { getMeLikesReceived } from "@/lib/apiClient/community";
 
@@ -87,11 +89,6 @@ const STREAM_TAB_I18N: Record<FeedStreamTab, string> = {
   destination: "community_feed_stream_destination",
   hot: "community_feed_stream_hot",
 };
-
-function destinationLabel(t: (key: string, vars?: Record<string, string | number>) => string, dest: string): string {
-  const key = DESTINATION_LABEL_KEYS[dest];
-  return key ? t(key) : dest;
-}
 
 function discoveryFilterChipClass(active: boolean): string {
   return `${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${TT_COMMUNITY_FEED_L5.discoveryChipMotion} ${
@@ -176,6 +173,11 @@ export function CommunityFeedDiscoveryChrome({
         .join(" ") || undefined
     : undefined;
   const streamTab = feedStreamTabFromState(feedTab, sortBy, destinationFilter);
+
+  const feedHotDestinations = useMemo(() => {
+    const citySet = new Set(FEED_DESTINATION_CITY_OPTIONS);
+    return hotDestinations.filter((d) => citySet.has(d)).slice(0, 3);
+  }, [hotDestinations]);
 
   const hasStreamContext = feedTab === "following" || sortBy === "hot";
   const hasActiveFilters =
@@ -307,6 +309,7 @@ export function CommunityFeedDiscoveryChrome({
               href="/community/activity"
               prefetch={true}
               onPointerEnter={() => {
+                if (!hasClientAuthSession()) return;
                 void queryClient.prefetchQuery({
                   queryKey: communityMeLikesReceivedQueryKey,
                   queryFn: getMeLikesReceived,
@@ -391,34 +394,13 @@ export function CommunityFeedDiscoveryChrome({
           </svg>
         </label>
 
-        <label className={`${TT_COMMUNITY_FEED_ACTION.discoveryDestinationPillWrap} hidden md:block`}>
-          <span className="sr-only">{t("community_destination")}</span>
-          <select
-            value={destinationFilter}
-            onChange={(e) => {
-              setDestinationFilter(e.target.value);
-              if (e.target.value !== "all") setFeedTab("recommend");
-            }}
-            className={TT_COMMUNITY_FEED_ACTION.discoveryDestinationSelect}
-            aria-label={t("community_destination")}
-          >
-            <option value="all">{t("community_destination_all")}</option>
-            {PUBLISH_DESTINATION_OPTIONS.map((d) => (
-              <option key={d} value={d}>
-                {destinationLabel(t, d)}
-              </option>
-            ))}
-          </select>
-          <svg
-            className={TT_COMMUNITY_FEED_ACTION.discoveryDestinationChevron}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </label>
+        <CommunityFeedDestinationPicker
+          t={t}
+          value={destinationFilter}
+          onChange={setDestinationFilter}
+          onCitySelect={() => setFeedTab("recommend")}
+          className="hidden md:block"
+        />
 
         <div
           className={`${TT_COMMUNITY_FEED_ACTION.discoveryPillRow} ${filtersExpanded ? "" : "max-md:hidden"}`}
@@ -468,13 +450,13 @@ export function CommunityFeedDiscoveryChrome({
               {t("community_discovery_fun_chip")}
             </button>
           </form>
-          {hotDestinations.slice(0, 4).map((d) => (
+          {feedHotDestinations.map((d) => (
             <Link
               key={`hot-${d}`}
               href={communityFeedPromoDestinationHref(d)}
               className={`hidden md:inline-flex ${discoveryQuickDestChipClass(destinationFilter === d)}`}
             >
-              {destinationLabel(t, d)}
+              {communityFeedDestinationLabel(t, d)}
             </Link>
           ))}
         </div>
@@ -557,26 +539,14 @@ export function CommunityFeedDiscoveryChrome({
         id={chipFiltersRegionId}
         className={`mb-1 space-y-3 px-3 pb-3 max-[390px]:px-2.5 ${filtersExpanded ? "block" : "hidden"}`}
       >
-        <label className={`${TT_COMMUNITY_FEED_ACTION.discoveryDestinationPillWrap} md:hidden block max-w-full`}>
-          <span className="mb-1 block text-[0.62rem] text-slate-500">{t("community_destination")}</span>
-          <select
-            value={destinationFilter}
-            onChange={(e) => {
-              setDestinationFilter(e.target.value);
-              if (e.target.value !== "all") setFeedTab("recommend");
-            }}
-            className={`${TT_COMMUNITY_FEED_ACTION.discoveryDestinationSelect} max-w-full w-full`}
-            aria-label={t("community_destination")}
-            data-testid="community-feed-destination-mobile"
-          >
-            <option value="all">{t("community_destination_all")}</option>
-            {PUBLISH_DESTINATION_OPTIONS.map((d) => (
-              <option key={d} value={d}>
-                {destinationLabel(t, d)}
-              </option>
-            ))}
-          </select>
-        </label>
+        <CommunityFeedDestinationPicker
+          t={t}
+          value={destinationFilter}
+          onChange={setDestinationFilter}
+          onCitySelect={() => setFeedTab("recommend")}
+          className="md:hidden block max-w-full w-full"
+          showLabel
+        />
 
         <div
           className="-mx-1 overflow-x-auto overflow-y-hidden px-1 scrollbar-hide"
@@ -604,13 +574,13 @@ export function CommunityFeedDiscoveryChrome({
           </div>
         </div>
 
-        {hotDestinations.length > 0 && (
+        {feedHotDestinations.length > 0 && (
           <div
             className="-mx-1 overflow-x-auto overflow-y-hidden px-1 scrollbar-hide"
             aria-label={t("community_hot_destinations")}
           >
             <div className="flex min-w-max gap-2 pb-1">
-              {hotDestinations.map((d) => (
+              {feedHotDestinations.map((d) => (
                 <form
                   key={d}
                   className="contents"
@@ -647,7 +617,7 @@ export function CommunityFeedDiscoveryChrome({
                     : t("community_feed_recommend"),
               sortBy === "hot" ? t("community_sort_hot") : t("community_sort_latest"),
               regionFilter !== "all" ? t(`community_region_${regionFilter}`) : null,
-              destinationFilter !== "all" ? destinationLabel(t, destinationFilter) : null,
+              destinationFilter !== "all" ? communityFeedDestinationLabel(t, destinationFilter) : null,
               anchorPoiId ? communityFeedAnchorPoiLabel(anchorPoiId, t) : null,
               proximityFilter !== "none"
                 ? proximityFilter === "nearby_1km"

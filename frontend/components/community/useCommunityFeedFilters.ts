@@ -52,7 +52,7 @@ export function useCommunityFeedFilters({
   preserveApiFeedOrder = false,
   sortBy: controlledSortBy,
   setSortBy: controlledSetSortBy,
-  anchorPoiId = "gps",
+  anchorPoiId = "city_current",
   gpsCoords = null,
   proximityFilter: controlledProximity,
   setProximityFilter: controlledSetProximity,

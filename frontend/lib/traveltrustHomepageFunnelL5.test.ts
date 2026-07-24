@@ -27,12 +27,12 @@ function appPageExists(routePath: string): boolean {
 describe("traveltrustHomepageFunnelL5 · wave 0", () => {
   it("registers funnel L5 id and ① plan href", () => {
     expect(TRAVELTRUST_HOMEPAGE_FUNNEL_L5_ID).toBe("TT-HOMEPAGE-FUNNEL-L5-WAVE0-2026-05");
-    expect(TRAVELTRUST_PLAN_TRIP_HREF_V6).toBe("#start");
+    expect(TRAVELTRUST_PLAN_TRIP_HREF_V6).toBe("/");
     expect(TRAVELTRUST_WAVE1_PLAN_TRIP_TARGET).toBe("/guides");
   });
 
-  it("page-brief defaults align with TT-PH1-170", () => {
-    expect(TRAVELTRUST_PAGE_BRIEF_CTA_DEFAULTS.primary).toBe("#start");
+  it("page-brief defaults align with HU-018 custom-travel home", () => {
+    expect(TRAVELTRUST_PAGE_BRIEF_CTA_DEFAULTS.primary).toBe("/");
     expect(TRAVELTRUST_PAGE_BRIEF_CTA_DEFAULTS.secondary).toBe("/governance");
   });
 
@@ -40,7 +40,7 @@ describe("traveltrustHomepageFunnelL5 · wave 0", () => {
     for (const role of TRAVELTRUST_ROLES) {
       expect(TRAVELTRUST_ROLE_ENTER_ROUTES[role.id]).toBe(role.href);
     }
-    expect(TRAVELTRUST_ROLE_ENTER_ROUTES.traveler).toBe("#start");
+    expect(TRAVELTRUST_ROLE_ENTER_ROUTES.traveler).toBe("/");
     expect(TRAVELTRUST_ROLE_ENTER_ROUTES.guide).toBe("/guide");
   });
 

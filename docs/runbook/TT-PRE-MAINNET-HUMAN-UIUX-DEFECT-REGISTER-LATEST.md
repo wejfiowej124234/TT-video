@@ -3,13 +3,28 @@
 **Session:** `20260724T065700Z-pre-mainnet-human-uiux`  
 **Phase:** ①/② 真人手测（主网真网前）· ≠ Production GO · ≠ Mainnet Cutover  
 **Round-1:** HU-001～010 **FIXED**（2026-07-24 · Staging bake `2db694ae`）  
-**Round-2 = 第二批（Batch-2）:** HU-011～017 · **COLLECTIVE FIX IN PROGRESS / CLOSING**（2026-07-24 ~08:41 Owner 开改）  
+**Round-2 = 第二批（Batch-2）:** HU-011～017 · **CLOSING**（HU-014 PARTIAL · Resend 域名 Owner 残留）  
+**Round-3 = 第三批（Batch-3）:** HU-018～021 **FIXED** · HU-014↻ **PARTIAL（Owner Resend 域名）**（2026-07-24 ~09:26 集体改）  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`  
-**Staging deploy HEAD:** （合入后更新）  
+**Staging deploy HEAD:** （Batch-3 合入后更新）  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
-**Rule（写死）：** Owner 口述 → 立刻追加；「结束 / 出清单」→ 清单+意见；**「开始第二批集体改」** → 按下方标准改 → 本地 → Staging → Git → **Final Truth cite 对齐**（不新开平行真源）。
+**Rule（写死）：** Owner 口述 → 立刻追加；「结束 / 出清单」→ 清单+意见；**「开始第 N 批集体改」** → 按 Batch-2 同级标准改 → 本地 → Staging → Git → **Final Truth cite 对齐**（不新开平行真源）。
+
+---
+
+## 第三批（Batch-3）· 实施状态（生产级 · L5 · 2026-07-24）
+
+| # | 主题 | 严重度 | 状态 | 落地摘要 |
+|---|------|--------|------|----------|
+| **HU-018** | Hero「开始规划行程」→ 定制旅行 | P1 | **FIXED** | 默认 `/`；`build…WithRegion` 外链带 `?region=`；traveler/page-brief 同源 |
+| **HU-019** | 角色剧场弹窗 L5 | P1 | **FIXED** | 舞台 ~90vw/`max-w-6xl`；hint `sr-only`；轻顶栏；Space/点画面播停；focus trap；chrome idle 淡出 |
+| **HU-020** | 社区目的地筛选 App IA | P1 | **FIXED** | 仅城市分组 Sheet；去国城混排；热门 chip≤3 |
+| **HU-021** | Console Geo + 未登录 401 | P1 | **FIXED** | `geolocation=(self)`；默认锚 `city_current`；预取 `hasClientAuthSession` 闸；扩展噪声不修 |
+| **HU-014↻** | 注册验证码真发信 | **P0** | **PARTIAL** | 代码/文案生产纪律已到位；Staging 日志仍 Resend **403 test-mode**（仅 `plantartist778@gmail.com`）。**Owner：resend.com/domains 验证域名 → 改 `TRAVELTRUST_RESEND_FROM` → 复验任意 Gmail** |
+
+**诚实边界：** Batch-3 ≠ Production GO / Hard Gate / Cutover。
 
 ---
 
@@ -51,7 +66,7 @@
 | **HU-011** | 角色剧场封面进播放框 | P1 | **FIXED** | `TravelTrustRoleVideoPlayer`：有 `posterSrc` 即铺满框；播中/剧场隐藏封面 |
 | **HU-012** | `/` 默认 Ambient L5 海报 | P1 | **FIXED** | 新图 `frontend/public/media/landing/brand-ambient-default.jpg`（十国分层宣传海报） |
 | **HU-013** | Ambient 闪/双跳 | P1 | **FIXED** | decode-before-commit + 优先稳定 TS URL |
-| **HU-014** | 注册验证码未达邮箱 | **P0** | **PARTIAL** | 代码 fail-closed（503 + 无假倒计时）已落地；**任意 Gmail 仍须 Owner 验证 Resend 域名** |
+| **HU-014** | 注册验证码未达邮箱 | **P0** | **PARTIAL · 生产级未闭** | 代码 fail-closed 已落地；**Staging ~09:21 复现** `503` + `yinhang744@gmail.com` 未收信。生产级 = Resend 域名验证 + `TRAVELTRUST_RESEND_FROM` + 入箱复验（见 HU-014 节） |
 | **HU-015** | 社区「当前定位」 | P1 | **FIXED** | 下拉仅 GPS + 当前城市；默认 GPS；剔丽枫酒店 |
 | **HU-016** | 社区规范 UI | P1 | **FIXED** | CTA 改 sun L5；内容仍诚实草稿（≠法务定稿） |
 | **HU-017** | CMS 运营号仿用户 | P1 | **FIXED（代码+素材）** | dataset 真人昵称 + `/media/ocs/ops-avatars/*`；`sync-ocs-ops-personas-hu017.cjs` 写 Staging users |
@@ -83,9 +98,104 @@
 | HU-012 | 2026-07-24 ~08:28 | 未登录（Staging） | `/` 默认 Ambient | 默认背景须 L5 十国宣传海报 | UX · 品牌 | P1 | AI 出图入库 `brand-ambient-default.jpg` | **FIXED · Batch-2** |
 | HU-013 | 2026-07-24 ~08:30 | 未登录（Staging） | `/` 选国家 Ambient | 切换闪一下 / 像刷两次 | UX · 性能 | P1 | decode-before-commit；抑 catalog 双跳 | **FIXED · Batch-2** |
 | HU-014 | 2026-07-24 ~08:33 | 未登录（Staging） | `/auth/register` 验证码 | 倒计时但邮箱未收到 | 出站邮件 | **P0** | fail-closed 已落地；**Resend 域名仍须 Owner** | **PARTIAL · Batch-2** |
+| HU-014↻ | 2026-07-24 ~09:21 | 未登录（Staging） | `/auth/register` ·「发送验证码」 | Console：`POST …/send-verification-code` **503**；未收到码；**要求真实生产级** | 出站邮件 | **P0** | **503 = 预期 fail-closed**（不许假成功）。根因仍 Resend 拒任意 Gmail。生产级清单见 **HU-014 生产级闭环** | **OPEN · Batch-3（Owner 出站配置）** |
 | HU-015 | 2026-07-24 ~08:35 | 未登录（Staging） | `/community` 当前定位 | 非生产级下拉 | UX · L5 | P1 | 仅 GPS + 当前城市 | **FIXED · Batch-2** |
 | HU-016 | 2026-07-24 ~08:36 | 未登录（Staging） | `/terms/community-guidelines` | UI 不符；真源对齐？ | UX · 内容 | P1 | sun L5 CTA；内容仍草稿诚实 | **FIXED · Batch-2** |
 | HU-017 | 2026-07-24 ~08:37 | 未登录（Staging） | `/community` 推荐关注 | 运营号无头像、名不真实 | CMS · UX | P1 | 人格包 + sync 脚本 | **FIXED · Batch-2**（Staging 须跑 sync） |
+
+### Round-3 = 第三批 Batch-3（集体改 · 生产级 · L5）
+
+| # | 时间 | 账号 | 路径/页面 | 问题描述（原话） | 类型 | 严重度 | 修改意见 | 状态 |
+|---|------|------|-----------|------------------|------|--------|----------|------|
+| HU-018 | 2026-07-24 ~09:13 | 未登录（Staging） | `/traveltrust` Hero ·「开始规划行程」 | 应跳转**定制旅行**页 | UX · 导航 | P1 | 默认 `/` + region query | **FIXED · Batch-3** |
+| HU-019 | 2026-07-24 ~09:15 | 未登录（Staging） | 角色剧场点播弹窗 | L5/生产级？hint？尺寸？ | UX · L5 | P1 | 沉浸舞台 · 去说明书 · 交互补齐 | **FIXED · Batch-3** |
+| HU-020 | 2026-07-24 ~09:18 | 未登录（Staging） | `/community` 全部目的地 | 国城混排太乱 · App 标准整体优化 | UX · IA · L5 | P1 | 城市分组 Sheet | **FIXED · Batch-3** |
+| HU-021 | 2026-07-24 ~09:20 | 未登录（Staging） | Console | Geo policy · me/* 401 · 扩展噪声 | 运行时 | P1 | Geo+auth 闸；扩展忽略 | **FIXED · Batch-3** |
+| HU-014↻ | 2026-07-24 ~09:21 | 未登录（Staging） | `/auth/register` 发码 | 503 · 未收码 · 要生产级 | 出站邮件 | **P0** | fail-closed 保持；**Owner 验 Resend 域** | **PARTIAL · Owner ops** |
+
+## HU-014 · 注册邮箱验证码 · 生产级闭环（Batch-2 PARTIAL · Batch-3 复确认）
+
+**Staging 复现（2026-07-24 ~09:21）：** 游客注册 · `yinhang744@gmail.com` · 点「发送验证码」→  
+`POST https://tt-api-staging.fly.dev/auth/register/send-verification-code` → **503** · 邮箱无码。
+
+| 层 | 状态 | 说明 |
+|----|------|------|
+| **产品代码（①）** | 已按生产纪律 | fail-closed：投递失败 → **503 `email_delivery_failed`** + 回滚 OTP + FE 无假倒计时（Batch-2） |
+| **出站投递（② Staging 真发信）** | **未闭 · Owner** | Staging 日志（2026-07-24）：Resend **403** — *You can only send testing emails to your own email address (plantartist778@gmail.com). To send … verify a domain at resend.com/domains, and change the `from` address…* |
+| **Owner 生产级步骤（写死）** | 待办 | ① https://resend.com/domains 验证业务域名 ② `fly secrets set TRAVELTRUST_RESEND_FROM=noreply@已验证域 -a tt-api-staging` ③ 确认 `TRAVELTRUST_EMAIL_TRANSPORT=resend` ④ 对 `yinhang744@gmail.com` 复测 → **200 + 入箱** |
+| **验收（生产级）** | 未过 | 任意非白名单邮箱 → **HTTP 200** + `email_sent:true` + **真实入箱**（非仅 UI 绿） |
+
+**禁止：** 为消 Console 503 而改回「假成功 / 假倒计时」。  
+**Agent 可代跑（须 Owner 授权）：** 核对 Fly secrets 是否已设（不回显密钥）· 配置完成后 Staging 复测。  
+**诚实边界：** 本项闭 ≠ Production GO；仅 ② 注册邮件真实链路。
+
+## HU-021 · Staging Console 分流（2026-07-24 · 先记未改）
+
+| # | 日志 | 来源判断 | 要修？ | 集体改动作 |
+|---|------|----------|--------|------------|
+| A | `chext_driver.js` · unload Permissions policy | **浏览器扩展** | **否** | 忽略 |
+| B | `content_main.js` · `toLowerCase` of undefined | **浏览器扩展** | **否** | 忽略 |
+| C | `Geolocation … permissions policy`（多次） | **本品真问题** | **是 · P1** | `next.config.js` 现 `geolocation=()`，但 HU-015 默认锚点 `gps` + `useCommunityFeedAnchorPoi` 仍调 `getCurrentPosition` → **策略自相矛盾**。改法二选一（或组合）：① Policy 改为 `geolocation=(self)`（社区「附近」产品需要）② 默认锚点改 `city_current`，仅用户显式选 GPS 且 `document.featurePolicy?.allowsFeature('geolocation')` 才请求 |
+| D | `GET …/community/me/*` · `friends/list` → **401**（未登录） | **本品真问题** | **是 · P1** | 未登录不应打需鉴权接口。根因候选：`warmCommunityFriendsSocial` / 活动入口 `prefetchQuery(getMeLikesReceived)` **无 `isLoggedIn` 闸**。集体改：预取与 Query `enabled: isLoggedIn`；未登录 hover 只 `router.prefetch` JS，不打 API |
+| E | 401 本身（已登录仍 401） | 若登录后仍现 | **是 · P0** | 另查 token/cookie；Owner 本条为未登录场景 → 先按 D |
+
+**结论一句：** 扩展两条不修；**Geolocation + 未登录 401 要修**（生产级控制台应干净、附近能力应可用或诚实降级）。
+
+## HU-020 · TT 社区 Feed 筛选 · 整体 IA / App 标准（2026-07-24 · 先记未改）
+
+**截图：**「全部目的地」原生长列表 · 中国/厦门/丽江…日本/富士山…泰国…印尼×2/巴厘岛混排  
+**相关：** HU-008（Round-1）修了区域错绑；**本条 = 信息架构 + 排版 + App 级选择器**，非再修错绑 alone。
+
+### 为什么乱（代码真源）
+
+| 点 | 现状 |
+|----|------|
+| 列表来源 | `PUBLISH_DESTINATION_OPTIONS = flat(DESTINATION_BY_REGION)` — **国别名 + 城市同级** |
+| 重复感 | `印尼` + `印度尼西亚` 两 option、同一 i18n → 视觉双「印尼」 |
+| 控件堆叠 | 当前定位 · 全部目的地 · 附近/1km · 好吃好玩 · 热门城 chip · 最新/最热/类型 chip — **双行原生 select + 多 pill，像后台筛选条** |
+| 控件形态 | 桌面原生 `<select>` 白底长表 — **非手机 App 底部表单 / 分组 sheet** |
+
+### 目标信息架构（对齐本项目 · 十国 / 城级 Feed · 手机 App）
+
+参考小红书/Instagram「地点」：一层入口、分组展开、少并行控件。
+
+```
+行 1（地点 · 唯一主入口）
+  [当前定位 ▾]  [目的地：全部 ▾] → 点开 = 底部 Sheet / 面板
+    Sheet 内：
+      · 全部
+      · 按国分组（仅国作分区标题，不可点或点=该国全部城）
+      · 其下仅城市（用 DESTINATION_CITY_BY_REGION；禁止国名进 option）
+      · 热门快捷（新加坡/曼谷/京都/东京）放 Sheet 顶，不与外层再堆一排重复城名（外层最多留 0～3 热门，可滚）
+
+行 2（内容 · 单一横滑）
+  最新 | 最热 | 推荐 | 照片 | 视频 | 美食 | 旅游 | 文字
+  （附近 / 附近1km / 好吃 / 好玩 并入类型或「更多筛选」抽屉，避免与地点抢注意力）
+```
+
+### 集体改验收条
+
+1. 「全部目的地」**不再**国城混排；无印尼双行  
+2. 选择器 = L5 自定义 sheet（非系统白底长 select）· 触摸目标 ≥44px  
+3. 筛选条视觉密度降到 App 级：默认两行清晰，无「工具栏爆炸」  
+4. 与发布目的地 / 热门打卡 / region filter **同源**（`DESTINATION_CITY_BY_REGION` + 国分组）  
+5. COMMUNITY Phase① 冻结边界：只动筛选 IA/数据链 · 不回流社区壳 layout token  
+
+**诚实边界：** ①/② Staging UX · ≠ Production GO。
+
+## HU-019 · 角色剧场播放弹窗 · L5 / 生产级评审（2026-07-24 · 先记未改）
+
+**页面：** `/traveltrust`（Owner 称首页）· `TravelTrustRoleVideoCinemaOverlay`  
+**现状码：** `max-w-5xl` 浮层 · 左上角色名 + `traveltrust_role_video_cinema_dismiss_hint` · 暖色自研底栏 · Esc/遮罩/✕/播完关
+
+| 问项 | 结论 | 说明 |
+|------|------|------|
+| **是否已达 L5 / 生产用户体验** | **未完全达标（骨架可用 · 观感偏「说明型模态」）** | 有 dialog、自研暖控、遮罩、无原生 controls — 工程闭环 OK；但对真实用户仍像带说明书的中号卡片，非影院级沉浸 |
+| **左上「播完自动返回 · Esc / 点遮罩…」有必要吗** | **否 · 生产级应去掉** | 属开发/无障碍口头说明书；Netflix 级产品只留 ✕ + Esc（不写出来）。「游客」角色名可留；自动返回行为可保留，**不必写在画面上** |
+| **弹窗尺寸合理吗** | **偏小 · 未达生产沉浸** | 现 `max-w-5xl`（~64rem）+ 四周大留白 → 截图观感「中间一块」。L5 短片剧场宜 ≈ **90vw / `max-w-6xl`～`7xl`**，竖屏仍 `aspect-video` + 安全边距 |
+| **还要优化什么（集体改清单）** | 见右 | ① 去 hint 文案 ② 加大舞台 ③ 顶 meta 轻量（勿厚玻璃卡片压画面）④ idle 后 chrome 淡隐 ⑤ Space / 点画面播停 ⑥ focus trap + 关后焦点回播放卡 ⑦（可选）播完留「重播」1s 再关，避免突兀 |
+
+**诚实边界：** ①/② Staging 体验补丁 · ≠ Production GO · ≠ 五主 UI 冻结回流（本改属 `/traveltrust` 数据链/交互层允许项，仍须 L5 contract 绿）。
 
 ## HU-012 · 创意剧本草稿（集体改时定稿 · 非已出图）
 
