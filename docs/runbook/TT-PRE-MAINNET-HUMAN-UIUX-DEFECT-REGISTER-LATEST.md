@@ -192,6 +192,16 @@
 | **Owner 步骤（写死）** | 待办 | ① [resend.com/domains](https://resend.com/domains) 验证业务域 ② `fly secrets set TRAVELTRUST_RESEND_FROM='TravelTrust <noreply@已验证域>' -a tt-api-staging` ③ 复测 `yinhang744@gmail.com` → Resend 出现新 Delivered + 入箱 |
 | **临时自测** | 可选 | 用 `plantartist778@gmail.com` 注册发码应能通（与改密同白名单）— **不能**冒充任意邮箱已 GO |
 
+### HU-014 · Auth L5 邮件壳 + 品牌标（Product / Release Baseline）
+
+| 层 | 状态 | 说明 |
+|----|------|------|
+| **邮件正文 L5** | 代码已对齐 | `auth_email_templates`：暖金暗玻璃（`#0c0a09` / `#f9d779`），**禁止**蓝白默认壳；注册 OTP + 重置/验证链同源 |
+| **正文内品牌标（头像位）** | 代码已对齐 | HTML 头图 `…/brand/traveltrust-email-mark.png`（或 `TRAVELTRUST_EMAIL_BRAND_MARK_URL`）；须 **Staging Web + API 同批部署** 后入箱可见 |
+| **Gmail 列表左侧圆头像** | **Owner · BIMI** | 应用内无法直接设置。资产：`frontend/public/brand/bimi-logo.svg`。Owner：域 DMARC ≥ quarantine + BIMI DNS +（Gmail 常需）VMC。**未做 BIMI ≠ 邮件 L5 失败** |
+
+**诚实边界：** 出站 Delivered + L5 正文 = ② Product Reality；Gmail BIMI 头像与 Mainnet Hard Gate / Cutover **正交**，本批 ≠ Production GO。
+
 **禁止：** 为消 Console 503 改回假成功。`chext_driver` unload = 扩展噪声，忽略。
 
 ## HU-021 · Staging Console 分流（2026-07-24 · 先记未改）

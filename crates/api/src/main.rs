@@ -23,6 +23,7 @@ pub use chain::vacancy_ledger_indexer;
 mod chain_id_env;
 mod chain_off;
 mod db;
+mod auth_email_templates;
 mod email_transport;
 mod email_transport_resend;
 mod pcp;

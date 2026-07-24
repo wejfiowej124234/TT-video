@@ -184,6 +184,28 @@ patches:
     status: LIVING_ENFORCED
     runbook: docs/runbook/TT-PSG-PATCH-PROMOTION-GATE-LATEST.md
 
+  - id: PATCH-STG-008
+    title: Auth L5 outbound email + brand/BIMI public assets (HU-014 experience)
+    scope: >
+      auth_email_templates (Auth L5 HTML) + email_transport_resend html +
+      frontend/public/brand/* + HU register living cite
+    code_sha_or_worktree: PENDING_COMMIT
+    impacts_psg: false
+    impacts_fg_or_web3: false
+    verification_result: PENDING_STAGING_DEPLOY
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: bug_fix
+    promotion_status: OPEN
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: CODE_IN_WORKTREE_PENDING_STAGING_DEPLOY
+    note: >
+      Final Truth Baseline cite-only. Product/Release + Engineering SSOT living track.
+      Does not mutate Candidate v2 / PSG-EGM / Hard Gate / Cutover.
+      BIMI inbox avatar still Owner DMARC(+VMC); this patch ships brand asset URL + L5 body.
+    runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
+
 related:
   - docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md
   - docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md

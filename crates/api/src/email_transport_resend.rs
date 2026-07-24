@@ -30,7 +30,13 @@ pub fn read_resend_api_key() -> Option<String> {
 }
 
 /// `POST /emails`；失败返回人读错误串（**不含** API Key）。
-pub async fn send_via_resend(to_email: &str, subject: &str, text_body: &str) -> Result<(), String> {
+/// `html_body` 可选；有则 Resend 同时投递 HTML + 纯文本（客户端择优渲染）。
+pub async fn send_via_resend(
+    to_email: &str,
+    subject: &str,
+    text_body: &str,
+    html_body: Option<&str>,
+) -> Result<(), String> {
     let api_key = read_resend_api_key().ok_or_else(|| {
         "TRAVELTRUST_RESEND_API_KEY missing or empty (required when TRAVELTRUST_EMAIL_TRANSPORT=resend)"
             .to_string()
@@ -45,12 +51,17 @@ pub async fn send_via_resend(to_email: &str, subject: &str, text_body: &str) -> 
         .timeout(Duration::from_secs(25))
         .build()
         .map_err(|e| format!("resend_http_client_build_failed: {e}"))?;
-    let body = json!({
+    let mut body = json!({
         "from": from,
         "to": [to_email],
         "subject": subject,
         "text": text_body,
     });
+    if let Some(html) = html_body.filter(|s| !s.trim().is_empty()) {
+        body.as_object_mut()
+            .expect("resend body object")
+            .insert("html".to_string(), json!(html));
+    }
     let resp = client
         .post(&url)
         .header("Authorization", format!("Bearer {api_key}"))

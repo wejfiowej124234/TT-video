@@ -583,11 +583,13 @@ fn verify_register_verification_code(
 }
 
 async fn dispatch_register_verification_code_email(to_email: &str, code: &str) -> bool {
+    use crate::auth_email_templates::{
+        register_verification_code_html, register_verification_code_text,
+    };
     use crate::email_transport::{read_email_transport, EmailTransport};
-    let subject = "TravelTrust registration verification code";
-    let text = format!(
-        "Your TravelTrust registration code is: {code}\nValid for 10 minutes.\n"
-    );
+    let subject = "Your TravelTrust verification code";
+    let text = register_verification_code_text(code);
+    let html = register_verification_code_html(code);
     match read_email_transport() {
         EmailTransport::Log => {
             eprintln!(
@@ -605,7 +607,14 @@ async fn dispatch_register_verification_code_email(to_email: &str, code: &str) -
         }
         EmailTransport::Resend => {
             let timer = crate::production_metrics::EmailLatencyTimer::start();
-            match crate::email_transport_resend::send_via_resend(to_email, subject, &text).await {
+            match crate::email_transport_resend::send_via_resend(
+                to_email,
+                subject,
+                &text,
+                Some(&html),
+            )
+            .await
+            {
                 Ok(()) => {
                     crate::production_metrics::record_email_sent("resend", timer.elapsed());
                     true
@@ -2081,8 +2090,21 @@ async fn deliver_auth_email_link(
         }
         EmailTransport::Resend => {
             let timer = crate::production_metrics::EmailLatencyTimer::start();
-            let text = format!("{subject}\n\nOpen this link to continue:\n{url}\n");
-            match crate::email_transport_resend::send_via_resend(to_email, subject, &text).await {
+            let (title, cta) = match kind {
+                "password_reset" => ("Reset your password", "Reset password"),
+                "email_verify" => ("Verify your email", "Verify email"),
+                _ => ("Continue", "Continue"),
+            };
+            let text = crate::auth_email_templates::auth_link_text(subject, url);
+            let html = crate::auth_email_templates::auth_link_html(title, url, cta);
+            match crate::email_transport_resend::send_via_resend(
+                to_email,
+                subject,
+                &text,
+                Some(&html),
+            )
+            .await
+            {
                 Ok(()) => {
                     crate::production_metrics::record_email_sent("resend", timer.elapsed());
                     Ok(())

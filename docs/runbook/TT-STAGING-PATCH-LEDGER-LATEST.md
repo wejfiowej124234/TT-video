@@ -47,13 +47,14 @@
 | **005** | 收购角标对比度（UI Presentation） | FE | WORKTREE | N | N | 本地 vitest PASS | DEFERRED | bug_fix | BLOCKED_FG15 |
 | **006** | Dual-track + Identity | Gate/Docs | WORKTREE | Y | N | ENFORCED | DEFERRED | ops_gate_docs | BLOCKED_FG15 |
 | **007** | Patch Promotion Gate | Gate/Docs | WORKTREE | Y | N | ENFORCED | DEFERRED | ops_gate_docs | BLOCKED_FG15 |
+| **008** | Auth L5 出站邮件 + brand/BIMI 资产（HU-014 体验） | Web/API/Docs | *post-commit* | N | N | PENDING_DEPLOY | DEFERRED | bug_fix | OPEN（FG-15-B ELAPSED · Staging ops） |
 
 ### 备注
 
-- 全部 `BLOCKED_FG15`：窗内可 **本地修 + 测 + Ledger**；**不** merge 进冻结 tip；**不**部署进认证 Staging。  
-- **两类勿混：** ① Docs/Evidence 对齐 ✅ · ② 非金融 UI Patch 准备 ✅ · 金融/API/数据/合约/Web3/Redeploy ❌ 等 ELAPSED。  
-- `PATCH-STG-005`：代码可在本地；**Staging 故意未上**（保持 48H 观察对象固定）。  
-- 合法出口：ELAPSED → Promotion → 新 PSG Version → STRICT → Canonical Deploy → 八轴 Evidence。
+- **008** 落点：**Product / Release Baseline** + **Engineering SSOT**（出站邮件体验）· Final Truth / Candidate v2 / EGM / Hard Gate = **cite-only** · **≠** Production GO。  
+- 历史 `001～007` 窗内 `BLOCKED_FG15` 行保留为台账；FG-15-B **ELAPSED** 后 Batch 人工走查已用 Staging bake（见 HU Register）。  
+- **两类勿混：** ① Docs/Evidence 对齐 ✅ · ② 非金融 UI/出站体验 Patch ✅ · 金融/合约/Hard Gate ❌。  
+- 合法出口：Promotion → 新 PSG Version → STRICT → Canonical Deploy（本补丁 **不**改 Candidate tip）。
 
 ---
 
