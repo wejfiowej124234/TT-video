@@ -46,7 +46,11 @@ describe("meIdentities IA closure sprint (① · ACTIVE)", () => {
     expect(HUB_PAGE).toContain("deriveMeIdentitiesCoreCardView");
     expect(HUB_PAGE).toContain("stewardAdmissionWorkbenchHref");
     expect(HUB_PAGE).toContain('href="/me/settings/profile"');
-    expect(HUB_PAGE).toContain("meIdentitiesHubOperatorSectionDefaultOpen");
+    expect(HUB_PAGE).toContain("me_identities_operator_section_hint");
+    expect(HUB_PAGE).toContain("data-tt-me-identities-operator-grid");
+    expect(HUB_PAGE).not.toContain("<details");
+    expect(HUB_PAGE).not.toContain("me_identities_operator_section_expand");
+    expect(HUB_PAGE).not.toContain("meIdentitiesHubOperatorSectionDefaultOpen");
     for (const pattern of ME_IDENTITIES_IA_BANNED_HUB_PATTERNS) {
       expect(HUB_PAGE, pattern.source).not.toMatch(pattern);
     }
@@ -93,9 +97,9 @@ describe("meIdentities IA closure sprint (① · ACTIVE)", () => {
   });
 
   it("operator section default-open helper matches slot states", () => {
-    expect(meIdentitiesHubOperatorSectionDefaultOpen({})).toBe(false);
+    expect(meIdentitiesHubOperatorSectionDefaultOpen({})).toBe(true);
     expect(meIdentitiesHubOperatorSectionDefaultOpen({ guide: "inactive", merchant: "inactive" })).toBe(
-      false,
+      true,
     );
     expect(meIdentitiesHubOperatorSectionDefaultOpen({ guide: "pending" })).toBe(true);
     expect(meIdentitiesHubOperatorSectionDefaultOpen({ region_steward: "active" })).toBe(true);

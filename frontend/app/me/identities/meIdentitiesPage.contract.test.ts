@@ -52,8 +52,10 @@ describe("me identities hub page (PD-009 capability IA)", () => {
     expect(src).toContain('href="/me/publish"');
     expect(src).toContain("me_identities_publish_hub_link");
     expect(src).toContain("me_identities_operator_section_hint");
-    expect(src).toContain("meIdentitiesHubOperatorSectionDefaultOpen");
-    expect(src).toContain("<details");
+    expect(src).toContain("data-tt-me-identities-operator-grid");
+    expect(src).not.toContain("<details");
+    expect(src).not.toContain("me_identities_operator_section_expand");
+    expect(src).not.toContain("meIdentitiesHubOperatorSectionDefaultOpen");
     expect(src).not.toContain("me_identities_link_onboarding_provider");
     expect(src).not.toMatch(/slotState && slotState !== "inactive"/);
     expect(src).toContain("AuthL5CrossNavFooter");

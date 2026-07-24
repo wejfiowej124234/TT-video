@@ -237,6 +237,32 @@ patches:
       Final Truth / Candidate v2 cite-only · ≠ Hard Gate / Production GO.
     runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
 
+  - id: PATCH-STG-010
+    title: Batch-6 UI L5 — wallet chain copy · community geo merge · identities operator cards · C3 UAT Path B
+    scope: >
+      wallet current vs target chain copy + L5 menu (HU-032/033);
+      community sole DestinationPicker geo entry (HU-035);
+      me/identities operator three cards always visible (HU-036);
+      HU-034 PARTIAL Path B (OCS select + C3 workbench; public guides still OCS-10);
+      defect register + staging patch ledger living cite
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: false
+    impacts_fg_or_web3: false
+    verification_result: HU032_033_035_036_FIXED_HU034_PARTIAL_PATH_B
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: bug_fix
+    promotion_status: OPEN
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: CODE_IN_WORKTREE_PENDING_STAGING_DEPLOY
+    note: >
+      Batch-6 collective fix. Staging public GET /guides remains OCS 10 (no Hangzhou/C3 row)
+      even with seed-guide public-market secret present — Path B for traveler UAT.
+      Revert TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0 after any future C3 seed UAT window.
+      Final Truth / Candidate v2 cite-only · ≠ Hard Gate / Production GO.
+    runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
+
 related:
   - docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md
   - docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md

@@ -29,7 +29,6 @@ import {
 import type { FeedTab, SortBy, RegionKey } from "./communityFeedConstants";
 import {
   TYPE_OPTIONS,
-  REGION_KEYS,
   FEED_DESTINATION_CITY_OPTIONS,
   communityFeedDestinationLabel,
 } from "./communityFeedConstants";
@@ -397,8 +396,14 @@ export function CommunityFeedDiscoveryChrome({
         <CommunityFeedDestinationPicker
           t={t}
           value={destinationFilter}
-          onChange={setDestinationFilter}
-          onCitySelect={() => setFeedTab("recommend")}
+          onChange={(next) => {
+            setDestinationFilter(next);
+            if (next === "all") setRegionFilter("all");
+          }}
+          onCitySelect={() => {
+            setFeedTab("recommend");
+            setRegionFilter("all");
+          }}
           className="hidden md:block"
         />
 
@@ -539,68 +544,21 @@ export function CommunityFeedDiscoveryChrome({
         id={chipFiltersRegionId}
         className={`mb-1 space-y-3 px-3 pb-3 max-[390px]:px-2.5 ${filtersExpanded ? "block" : "hidden"}`}
       >
+        {/* HU-035: sole geo entry on mobile expand — no parallel REGION_KEYS / hot-city rows */}
         <CommunityFeedDestinationPicker
           t={t}
           value={destinationFilter}
-          onChange={setDestinationFilter}
-          onCitySelect={() => setFeedTab("recommend")}
+          onChange={(next) => {
+            setDestinationFilter(next);
+            if (next === "all") setRegionFilter("all");
+          }}
+          onCitySelect={() => {
+            setFeedTab("recommend");
+            setRegionFilter("all");
+          }}
           className="md:hidden block max-w-full w-full"
           showLabel
         />
-
-        <div
-          className="-mx-1 overflow-x-auto overflow-y-hidden px-1 scrollbar-hide"
-          aria-label={t("community_region_filter")}
-        >
-          <div className="flex min-w-max gap-2 pb-1">
-            {REGION_KEYS.map((key) => (
-              <form
-                key={key}
-                className="contents"
-                onSubmit={(e: FormEvent<HTMLFormElement>) => {
-                  e.preventDefault();
-                  setRegionFilter(key);
-                  setDestinationFilter("all");
-                }}
-              >
-                <button
-                  type="submit"
-                  className={discoveryFilterChipClass(regionFilter === key)}
-                >
-                  {t(`community_region_${key}`)}
-                </button>
-              </form>
-            ))}
-          </div>
-        </div>
-
-        {feedHotDestinations.length > 0 && (
-          <div
-            className="-mx-1 overflow-x-auto overflow-y-hidden px-1 scrollbar-hide"
-            aria-label={t("community_hot_destinations")}
-          >
-            <div className="flex min-w-max gap-2 pb-1">
-              {feedHotDestinations.map((d) => (
-                <form
-                  key={d}
-                  className="contents"
-                  onSubmit={(e: FormEvent<HTMLFormElement>) => {
-                    e.preventDefault();
-                    setFeedTab("recommend");
-                    setDestinationFilter(d);
-                  }}
-                >
-                  <button
-                    type="submit"
-                    className={discoveryFilterChipClass(destinationFilter === d)}
-                  >
-                    {d}
-                  </button>
-                </form>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       {hasActiveFilters && (

@@ -21,9 +21,8 @@ export function getExpectedChainId(): number {
   return Number.isFinite(n) && n > 0 ? n : 137;
 }
 
-/** Wagmi `createConfig` 使用：单链模式，与 `getExpectedChainId()` 一致 */
-export function getTargetChain(): Chain {
-  const id = getExpectedChainId();
+/** Known chain by id (display + wagmi); unknown → `Chain {id}`. */
+export function getChainById(id: number): Chain {
   switch (id) {
     case 1:
       return mainnet;
@@ -49,4 +48,17 @@ export function getTargetChain(): Chain {
       });
     }
   }
+}
+
+/** Wagmi `createConfig` 使用：单链模式，与 `getExpectedChainId()` 一致 */
+export function getTargetChain(): Chain {
+  return getChainById(getExpectedChainId());
+}
+
+/** Human-readable chain label for wallet chrome (HU-032). */
+export function getChainDisplayName(chainId: number | undefined | null): string {
+  if (typeof chainId !== "number" || !Number.isFinite(chainId) || chainId <= 0) {
+    return "";
+  }
+  return getChainById(chainId).name;
 }

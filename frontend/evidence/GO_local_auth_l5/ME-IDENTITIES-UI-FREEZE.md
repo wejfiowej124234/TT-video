@@ -26,7 +26,7 @@
 2. `AuthL5PageBackdrop`
 3. **Header**：eyebrow · **`titleLogin` 渐变 `h1`** · 副标题
 4. **能力区** `me_identities_capabilities_section_title`：旅行者 callout + 收购能力卡
-5. **经营身份区** `me_identities_operator_section_title` · **`me_identities_operator_section_hint`** · **纯旅行者 `<details>` 折叠**（`meIdentitiesHubOperatorSectionDefaultOpen`）· `gridHalo` + 商家/主理人/向导 `MeIdentitiesL5IdentityCard`（CTA **仅** `deriveMeIdentitiesCoreCardView` · 禁止 slot 覆盖）
+5. **经营身份区** `me_identities_operator_section_title` · **`me_identities_operator_section_hint` 常显** · **三卡（商家/主理人/向导）首屏可见**（HU-036 · **禁止**纯旅行者 `<details>` 折叠藏申请入口）· `gridHalo` + `MeIdentitiesL5IdentityCard`（CTA **仅** `deriveMeIdentitiesCoreCardView` · 禁止 slot 覆盖）
 6. **身份资料区** `MeIdentitiesProfileLinksNav`（**仅** active/role · **L5 横向媒体行** 左通高 cover · 右文案 · 非纵卡小 icon）
 7. **页脚说明** `me_identities_hub_footer_note` + 链 `/me/settings/profile`（社区资料）
 8. **`AuthL5CrossNavFooter`**

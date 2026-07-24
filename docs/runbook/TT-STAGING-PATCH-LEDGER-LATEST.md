@@ -49,9 +49,11 @@
 | **007** | Patch Promotion Gate | Gate/Docs | WORKTREE | Y | N | ENFORCED | DEFERRED | ops_gate_docs | BLOCKED_FG15 |
 | **008** | Auth L5 出站邮件 + brand/BIMI（HU-014） | Web/API/Docs | Round-8 bake | N | N | **FIXED ②** Auth+DNS；Round-8 L5 折行抛光；Postmaster/Inbox Owner；BIMI 不挡 HG | DEFERRED | bug_fix | OPEN（Staging ops · 待 Promotion） |
 | **009** | Batch-5 UI：登录去工程板 · favicon/钱包 TT 标（HU-026/029/030）· 向导 10 验真（HU-031） | Web/Docs | bake `817b0d07` | N | N | **FIXED ②** Web live favicon TT；vitest PASS；页面表面 Unsplash DRIFT = 既有旁证（非本批引入） | DEFERRED | bug_fix | OPEN（Staging ops） |
+| **010** | Batch-6 UI：钱包当前/目标链文案（HU-032/033）· 社区地理单入口（HU-035）· identities 三卡常显（HU-036）· C3 UAT Path B（HU-034 PARTIAL） | Web/Docs | WORKTREE→commit | N | N | **FIXED ②** vitest PASS；HU-034 Path B；Unsplash DRIFT = 既有旁证 | DEFERRED | bug_fix | OPEN（Staging ops） |
 
 ### 备注
 
+- **010** 落点：Product/Release Baseline + Engineering SSOT · Final Truth cite-only · **≠** Hard Gate / Production GO。  
 - **009** 落点：Product/Release Baseline + Engineering SSOT · Final Truth cite-only · **≠** Hard Gate / Production GO。  
 - **008** 落点：**Product / Release Baseline** + **Engineering SSOT** · Final Truth / Candidate v2 / V3.1.1 / PSG-EGM / Governance Anchor / Hard Gate / Cutover = **cite-only** · **≠** Production GO。  
 - Round-8：`alt=TT` 修复屏蔽图折行；DNS 仍冻；信誉闸见 [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md)。  

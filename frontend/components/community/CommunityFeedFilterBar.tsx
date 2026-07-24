@@ -9,7 +9,7 @@ import { useState, useEffect, useId, useMemo, type FormEvent } from "react";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import type { CommunityPostType } from "@/lib/communityMockData";
 import type { FeedTab, SortBy, RegionKey } from "./communityFeedConstants";
-import { TYPE_OPTIONS, REGION_KEYS, DESTINATION_LABEL_KEYS } from "./communityFeedConstants";
+import { TYPE_OPTIONS, DESTINATION_LABEL_KEYS } from "./communityFeedConstants";
 import { TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 import {
   communityCardLinkFocus,
@@ -247,77 +247,7 @@ export default function CommunityFeedFilterBar({
           ))}
         </div>
       </div>
-
-      <div className="-mx-3 px-3 overflow-x-auto overflow-y-hidden scrollbar-hide" aria-label={t("community_region_filter")}>
-        <div className="flex gap-2 pb-1 min-w-max">
-          {REGION_KEYS.map((key) => (
-            <form
-              key={key}
-              className="contents"
-              onSubmit={(e: FormEvent<HTMLFormElement>) => {
-                e.preventDefault();
-                setRegionFilter(key);
-                setDestinationFilter("all");
-              }}
-            >
-              <button
-                type="submit"
-                className={`${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${
-                  regionFilter === key ? TT_COMMUNITY_FEED_ACTION.filterChipActive : TT_COMMUNITY_FEED_ACTION.filterChipIdle
-                }`}
-              >
-                {t(`community_region_${key}`)}
-              </button>
-            </form>
-          ))}
-        </div>
-      </div>
-
-      {hotDestinations.length > 0 && (
-        <div className="-mx-3 px-3 overflow-x-auto overflow-y-hidden scrollbar-hide" aria-label={t("community_hot_destinations")}>
-          <div className="flex gap-2 pb-1 min-w-max">
-            <form
-              className="contents"
-              onSubmit={(e: FormEvent<HTMLFormElement>) => {
-                e.preventDefault();
-                setDestinationFilter("all");
-              }}
-            >
-              <button
-                type="submit"
-                className={`${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${
-                  destinationFilter === "all"
-                    ? TT_COMMUNITY_FEED_ACTION.filterChipActive
-                    : TT_COMMUNITY_FEED_ACTION.filterChipIdle
-                }`}
-              >
-                {t("community_destination_all")}
-              </button>
-            </form>
-            {hotDestinations.map((d) => (
-              <form
-                key={d}
-                className="contents"
-                onSubmit={(e: FormEvent<HTMLFormElement>) => {
-                  e.preventDefault();
-                  setDestinationFilter(d);
-                }}
-              >
-                <button
-                  type="submit"
-                  className={`${TT_COMMUNITY_FEED_ACTION.filterChipBase} ${
-                    destinationFilter === d
-                      ? TT_COMMUNITY_FEED_ACTION.filterChipActive
-                      : TT_COMMUNITY_FEED_ACTION.filterChipIdle
-                  }`}
-                >
-                  {d}
-                </button>
-              </form>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* HU-035: geo only via destination picker elsewhere — no REGION_KEYS / hot-city duplicate rows */}
       </div>
 
       {hasActiveFilters && (

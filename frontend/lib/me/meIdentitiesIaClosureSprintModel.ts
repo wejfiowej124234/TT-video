@@ -49,12 +49,9 @@ export const ME_IDENTITIES_IA_SMOKE_VITEST_FILES: readonly string[] = [
   "accountNavNamingP3",
 ];
 
-/** 纯旅行者默认折叠经营区；任一经营槽位非 inactive 则展开 */
+/** 经营身份区默认展开（HU-036）：申请入口与资料要求首屏可见，禁止纯旅行者折叠藏卡 */
 export function meIdentitiesHubOperatorSectionDefaultOpen(
-  slotStates: Readonly<Record<string, string | null | undefined>>,
+  _slotStates?: Readonly<Record<string, string | null | undefined>>,
 ): boolean {
-  return (["guide", "merchant", "region_steward"] as const).some((id) => {
-    const state = slotStates[id];
-    return state != null && state !== "inactive";
-  });
+  return true;
 }

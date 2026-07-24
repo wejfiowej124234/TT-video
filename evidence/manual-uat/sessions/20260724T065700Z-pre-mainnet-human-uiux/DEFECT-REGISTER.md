@@ -11,9 +11,9 @@
 **Round-7 = 投递收口（2026-07-24）：** **停** Staging 挂域 / **冻**邮件模板 · SPF/DKIM/DMARC **AUTH PASS** · Postmaster+Gmail Inbox = Owner · BIMI/VMC **DEFERRED · 不挡 Hard Gate** · SSOT [`TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md`](./TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md)  
 **Round-8 = Owner 授权 L5 抛光（2026-07-24）：** `alt=TT` 修折行 · 金框头标 · 码 `&nbsp;` 字距 · Final Truth cite-only · 部署 API 后模板再冻  
 **Round-8 Owner 签收（~13:05）：** 验证码邮件版式 **「感觉可以了」** · 产品 L5 抛光闭合；进垃圾箱仍属信誉闸（Postmaster / Inbox 3/3 · OPEN）  
-**当前批次口径：** **第 5 批 Batch-5 集体改 FIXED**（HU-026/029/030/031 · HU-027 不修 · HU-028 待证）  
+**当前批次口径：** **第 6 批 Batch-6 集体改 FIXED**（HU-032/033/035/036 · HU-034 PARTIAL）  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`（cite-only · 本批不改 tip）  
-**Staging deploy HEAD:** Batch-5 Web **已 bake**（PATCH-STG-009 · fly 构建 cite `817b0d07` · 本批 Git `ce1bd9a9` · favicon TT **HTTP 200 已验**）· Round-8 API 仍在 · DNS 未改  
+**Staging deploy HEAD:** Batch-6 Web = **PATCH-STG-010**（见 Ledger；post-deploy Unsplash **PAGE_SURFACE_DRIFT** = 既有旁证）· Round-8 API 仍在 · DNS 未改  
 **Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
 **Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
@@ -31,8 +31,169 @@
 | **第 4 批** Batch-4 | HU-022～025 | **FIXED** |
 | Round-5～8 | HU-014 邮件 | 版式已签收 · 信誉闸 OPEN |
 | **第 5 批** Batch-5 | HU-026～031 | **FIXED**（HU-027 不修 · HU-028 待证） |
+| **第 6 批** Batch-6 | HU-032～036 | **FIXED**（HU-034 **PARTIAL** · 见下） |
 
-**流程位：** Batch-5 集体改已落地 · Owner Staging 复验（favicon / Bitget 清缓存 / 登录无 SSOT 板 / 向导=10）。
+**流程位：** Batch-6 集体改已执行 · Owner 复测 Staging → 继续口述下一批。
+
+---
+
+## 第六批（Batch-6）· 集体改 FIXED（2026-07-24 · PATCH-STG-010）
+
+| # | 主题 | 严重度 | 状态 | 摘要 |
+|---|------|--------|------|------|
+| **HU-032** | 已连接钱包下拉 · 网络不匹配文案/信息架构 | P1 | **FIXED** | `walletChainName` / `targetChainName`；错链文案「当前 X · 需要 Y」；判定仍 `wrongNetwork` |
+| **HU-033** | 已连接钱包菜单整体 L5 抛光 | P2 | **FIXED** | 单条 warning 状态 + 主 CTA 切网；去重复「网络不匹配」；告警用 `text-warning` |
+| **HU-034** | C3 向导测试号 · 上向导页供游客选导真人验 | P1 · Staging UAT | **PARTIAL** | Path A 开闸后 `GET /guides` 仍 **OCS 10**（无杭州/C3 行）→ 库内无 walkthrough 向导；**UAT 用 Path B**（OCS 选导 + C3 工作台）直至 Owner 种子 C3 |
+| **HU-035** | 社区筛选 · 目的地双轨合二为一 | P1 · L5 | **FIXED** | 唯一地理入口 = `CommunityFeedDestinationPicker`；删展开区 `REGION_KEYS`/热门城重复行 |
+| **HU-036** | `/me/identities` 经营身份申请入口缺失感 | P1 · L5 · IA | **FIXED** | 经营三卡常显（取消旅行者折叠藏入口）；资料要求+申请 CTA 首屏可达 |
+
+**诚实边界：** Batch-6 FIXED（② Staging UI）≠ Production GO / Hard Gate。 Staging 目标链 = Sepolia（②）· **≠** ③ 主网。
+
+### L5 / 生产级判定（修后 · 诚实）
+
+| 维度 | 判定 | 说明 |
+|------|------|------|
+| **功能安全** | ✅ 生产向 | 错链拦写 + 切网 CTA 保留 |
+| **文案/信息** | ✅ L5 | 「当前 · 需要」对照；未知链走 `wallet_network_unknown` |
+| **视觉层级** | ✅ | 会话 hint · 地址金 · 告警 warning · 主 CTA 加重 |
+| **② Staging 策略** | ✅ 预期 | 仍须 Sepolia；Bitget 主网 → 仍报不匹配（正确） |
+
+**一句话：** 错链该报就报；**修的是文案冒充当前网**，不是取消 Sepolia 闸。
+
+## HU-032 · 已连接钱包 ·「网络不匹配」为何出现 + 文案缺陷（**FIXED · Batch-6**）
+
+**Owner 原话：** 登录钱包后截图；内容符合 L5 / 生产级吗；优化升级；**为什么显示网络不匹配？？？？**
+
+### 为什么显示「网络不匹配」（真因 · 非假阳性）
+
+| 项 | 值 |
+|----|-----|
+| Staging 站点目标链 | `NEXT_PUBLIC_CHAIN_ID=11155111` → **Sepolia**（② 测试网） |
+| 判定代码 | `wrongNetwork = chainId !== expectedChainId`（`useWalletConnectionController`） |
+| 你的 Bitget | 当前链 **不是** 11155111（常见：以太坊主网 / 其它网） |
+| 结论 | **该报就报** — 否则链上写操作会打到错误网络（资金/签名风险） |
+
+点「切换到 Sepolia」→ 调钱包 `switchChain` 到 11155111；切成功后橙点/告警应消失。
+
+### 文案为何看起来「已经在 Sepolia 却不匹配」（Bug）
+
+代码把菜单里的 `chainName` **写死为目标链名**：
+
+```ts
+chainName: targetChain.name, // 永远是 Sepolia，不是钱包当前网
+```
+
+于是错链时渲染成：「网络不匹配 · **Sepolia** · Bitget Wallet」——读起来像「当前就是 Sepolia」。  
+按钮「切换到 Sepolia」语义对；**状态行语义错**。
+
+### 已落地（Batch-6）
+
+1. `getChainDisplayName` + controller 暴露 `walletChainName` / `targetChainName`  
+2. 错链行：`wallet_network_current_need`（当前 {{current}} · 需要 {{target}}）+ `text-warning`  
+3. 单条状态 + 主 CTA「切换到 {{target}}」；去重复告警行  
+4. locale zh/en + `walletConnectionCenter.contract.test.ts`  
+
+**诚实边界：** 修文案 ≠ 取消 Staging Sepolia 闸；≠ ③ 主网 GO。Bitget 壳皮肤仍 Expected Difference。
+
+## HU-033 · 已连接钱包菜单 L5 抛光（**FIXED · Batch-6 · 与 HU-032 同批**）
+
+**范围：** `WalletAccountMenu` 已连接态。  
+**保留：** 「钱包会话 · 不等于网站账号登录」（HU-025 ✅）。  
+**已升级：** 信息层级、切网主钮 `SWITCH_CTA`、explorer/复制/断开次级密度。
+
+## HU-034 · C3 向导测试账号上向导页 · 游客选导真人验证（**PARTIAL · Batch-6**）
+
+**Owner 原话（2026-07-24 ~13:36）：** 向导测试账号 **上一下** 向导页面，因为要跑 **游客下单选择向导** 真人验证流程 · **记上**。
+
+| 项 | SSOT |
+|----|------|
+| 账号 | **C3** · `guide@test.com` · [`TT-TEST-ACCOUNTS-QUICK-REFERENCE`](./TT-TEST-ACCOUNTS-QUICK-REFERENCE.md) |
+| 既有口径（HU-031-B） | [`display-data-governance.v1.yaml`](../../registry/display-data-governance.v1.yaml) · `must_appear_in_public_catalog: false` · 泄漏 = **DDG FAIL** |
+| 本条意图 | **② Staging 真人 UAT**：游客路径能选导并完成对手方履约 |
+
+### 与 HU-031 的关系（诚实 · 勿混）
+
+| 轨 | 口径 |
+|----|------|
+| **公众运营 Catalog** | 仍仅 **OCS 10** · C3 **默认不上架**（HU-031 CONFIRM_DESIGN 不废） |
+| **本条 · UAT** | Path A 尝试后仍无 C3 列表行 → **改走 Path B** |
+
+### 路径处置（Batch-6 已执行）
+
+| 方案 | 状态 | 说明 |
+|------|------|------|
+| **A. Staging 临时开闸** | **尝试 · 未达列表可见** | `TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET` 已在 `tt-api-staging` secrets；公开 `GET /guides` 仍 **count=10** · 无杭州 → **库内无 C3 walkthrough 向导行**（开闸≠自动造数据） |
+| **B. 推荐 UAT（本批默认）** | **ACTIVE** | 游客在市场选 **任意 OCS 官导**；C3 登录 **向导工作台** 接单/履约 |
+| **C. 深链** | 未做 | 需 guide id；列表仍干净 |
+
+**Owner 若仍要市场点选 C3：** 须单独授权 Staging **种子/对齐 C3 向导行** + UAT 窗结束后 **`TRAVELTRUST_SEED_GUIDE_PUBLIC_MARKET=0`**。
+
+**诚实边界：** PARTIAL ≠ 永久改 DDG · ≠ Production GO · ≠ 公众目录应含测试号。
+
+## HU-035 · 社区 Feed 目的地筛选双轨 · 合二为一（**FIXED · Batch-6**）
+
+**Owner 原话（2026-07-24 ~13:37 · 两张截图）：** 选「照片」后下面又弹出「全部 · 国家」；第二张是上面的「全部目的地」筛选；**这两个要合二为一，不能单独出现**；要修复 · 重新设计 · 优化。
+
+### 为何会出现（根因 · 非「照片」魔法）
+
+| 层 | 控件 | 代码 |
+|----|------|------|
+| **轨 A** | 顶栏「全部目的地」/ 城市下拉 → `CommunityFeedDestinationPicker`（十国·城 Sheet · HU-024） | `CommunityFeedDiscoveryChrome` |
+| **轨 B** | 展开筛选区横向 chip：`全部/中国/日本/…`（`REGION_KEYS`）+ 热门城 | 同文件 · `filtersExpanded` 块内 `REGION_KEYS.map` |
+| **类型行** | 最新/最热 · 全部/照片/视频/… | 与地理 **正交**；选「照片」只改 `typeFilter` |
+
+选「照片」时若筛选已 **展开**（截图有「收起」），会同时看见类型行 + **轨 B 国家行**，易误认为「点照片才弹出国家」。真因是 **展开态下轨 B 一直挂着**，与轨 A **功能重叠**。
+
+### L5 / 生产级判定
+
+| 项 | 判定 |
+|----|------|
+| 双轨并存（Sheet + 横向国 chip） | ❌ 未达 L5 · IA 冗余 |
+| 热门城重复（顶行 chip + 展开区） | ⚠️ 重复触点 |
+| 「英国」下列纽约/洛杉矶/旧金山（截图 2） | ❌ 数据错标 · 集体改同批核对 `DESTINATION_*` / PRODUCT_COUNTRIES |
+
+### 已落地（Batch-6 · 重设计）
+
+1. **唯一地理入口：** `CommunityFeedDestinationPicker`（顶行可保留 ≤3 热门城快捷）  
+2. 展开区 **删除** `REGION_KEYS` 横向国行 + 重复热门城行（DiscoveryChrome / FilterBar / ChipFilters）  
+3. 类型/排序与地理解耦：选「照片」不再带出第二套国家 UI  
+4. 绿集：`communityFeedConstants` + 相关契约  
+
+**诚实边界：** ≠ Production GO。社区壳 L5 冻结下本条属 **缺陷/IA 收口**。
+
+## HU-036 · `/me/identities` 多重身份 · 经营三卡申请入口与标准（**FIXED · Batch-6**）
+
+**Owner 原话（2026-07-24 ~13:42）：** 多重身份申请页感觉很乱；真源上除旅行者外还可申请 **向导、商家、区域主理人**；本页应有这几个身份的 **申请入口 + 提交资料相关要求** · **记上**。
+
+### 真源期望（对）
+
+| 身份 | Hub 预期 |
+|------|----------|
+| 旅行者 | 基础能力 · 注册即有（非「申请」） |
+| 旅行收购 | 附加能力 · 工作台/资料（PD-009） |
+| **向导 / 商家 / 区域主理人** | **经营身份** · 可见卡片 · 申请/工作台 CTA · 资料与准入要求可读 |
+
+SSOT：[`ME-IDENTITIES-UI-FREEZE`](../../frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md) · Hub 经营区应有商家/主理人/向导 `MeIdentitiesL5IdentityCard`；申请链 `/guide/register` · `/provider/register` · `/steward/register`（及 onboarding）。
+
+### 现页为何「乱 / 像没有入口」
+
+| 现象 | 根因 |
+|------|------|
+| 标题/副文说「请选择下方经营身份卡片」 | 有文案 |
+| 「经营身份」下只见灰字「展开向导 / 商家 / 区域主理人申请」 | 纯旅行者默认 **`<details>` 折叠**（`meIdentitiesHubOperatorSectionDefaultOpen` → 三槽皆 `inactive` 则 **false**） |
+| 页脚仍写「请点上方商家/主理人卡片」 | 卡片未展开时 **指空** · IA 自相矛盾 |
+| 三卡与资料要求 | **折叠内存在** · 首屏不可见 → Owner 感知为缺失 |
+
+**判定：** 功能未删光，但 **首屏 IA 未达 L5/生产发现性**；申请入口与「提交资料要求」应对申请者 **默认可见**（或等价一屏可达），不能只靠一行「展开」。
+
+### 已落地（Batch-6）
+
+1. 取消旅行者-only `<details>` 折叠；经营三卡 **常显 grid**  
+2. `meIdentitiesHubOperatorSectionDefaultOpen` → 恒 `true`；冻结文 + IA/page 契约同步  
+3. 每卡：身份名 · desc（资料/标准）· 申请/工作台 CTA；页脚与卡片同指  
+4. 绿集：`meIdentitiesIaClosure` + `meIdentitiesPage` PASS  
+
+**诚实边界：** ≠ Production GO · ≠ 主网准入已通 · ≠ 收购第五 `users.role`。
 
 ---
 
@@ -173,6 +334,16 @@
 | HU-023 | 2026-07-24 ~09:50 | 未登录（Staging） | `/traveltrust` · 信任事实 | 对齐最新真源 · 商业标准 | 内容 · 商业 · L5 | P1 | USDC Escrow 点名；去「第一阶段」；合规保留 | **FIXED** |
 | HU-024 | 2026-07-24 ~09:52 | 未登录（Staging） | `/community` · 全部目的地 | 十国无印尼 · 简约无滚动条 | UX · IA · 数据 | P1 | `productCountries` + 紧凑行；无 `id` | **FIXED** |
 | HU-025 | 2026-07-24 ~09:55 | 连钱包后（Staging） | 顶栏钱包 | 已连接应显示什么 · L5 | UX · L5 · 钱包 | P1 | 短址芯片 + 账户菜单；明确 ≠ 网站登录 | **FIXED** |
+
+### Round-6 = 第六批 Batch-6（集体改 FIXED · 2026-07-24 · PATCH-STG-010）
+
+| # | 时间 | 账号 | 路径/页面 | 问题描述（原话） | 类型 | 严重度 | 修改意见 | 状态 |
+|---|------|------|-----------|------------------|------|--------|----------|------|
+| HU-032 | 2026-07-24 ~13:34 | Staging · Bitget 已连 | 顶栏钱包账户菜单 | 截图内容是否 L5/生产级；**为什么网络不匹配**；要优化升级 | UX · 钱包 · 文案 | **P1** | 当前/目标链对照文案 | **FIXED** |
+| HU-033 | 2026-07-24 ~13:34 | 同上 | 同上菜单整体 | （同截图）L5 抛光 | UX · L5 | **P2** | 单告警 + 主 CTA | **FIXED** |
+| HU-034 | 2026-07-24 ~13:36 | Staging UAT | `/market` 向导 · C3 | 向导测试账号 **上一下** 向导页 · 跑游客下单选导向真人验证 · **记上** | UAT · 数据 · DDG | **P1** | Path B：OCS 选导 + C3 工作台（开闸后仍无 C3 行） | **PARTIAL** |
+| HU-035 | 2026-07-24 ~13:37 | Staging · `/community` | 筛选栏 · 照片 + 全部目的地 | 选照片后弹出全部/国家；与上面全部目的地 **合二为一** · 不能单独出现 · 修复重设计 | UX · IA · L5 | **P1** | 唯一 DestinationPicker | **FIXED** |
+| HU-036 | 2026-07-24 ~13:42 | Staging · `/me/identities` | 多重身份 Hub | 页很乱；除旅行者外应有向导/商家/主理人申请入口+资料要求 · **记上** | UX · IA · L5 | **P1** | 经营三卡常显 | **FIXED** |
 
 ### Round-5 = 第五批 Batch-5（集体改 FIXED · 2026-07-24）
 

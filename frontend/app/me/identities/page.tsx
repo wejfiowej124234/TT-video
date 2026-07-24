@@ -21,7 +21,6 @@ import {
 import { meIdentitiesHubSlotState } from "@/lib/me/meIdentitiesHubSlots";
 import { meIdentitiesL5MainDataAttrs, TT_ME_IDENTITIES_L5 } from "@/lib/me/meIdentitiesL5";
 import { meIdentitiesProfileLinks } from "@/lib/me/meIdentitiesProfileLinksModel";
-import { meIdentitiesHubOperatorSectionDefaultOpen } from "@/lib/me/meIdentitiesIaClosureSprintModel";
 import { useMeIdentitiesProfileLinkThumbs } from "@/lib/me/useMeIdentitiesProfileLinkThumbs";
 import { useMeIdentitiesCoreCardSignals } from "@/lib/me/useMeIdentitiesCoreCardSignals";
 import { useMeIdentityHubBlockedReasons } from "@/lib/me/useMeIdentityHubBlockedReasons";
@@ -79,15 +78,6 @@ function MeIdentitiesHubInner() {
       }),
     [loggedIn, userRole, slotsReady, slotById],
   );
-
-  const operatorSectionDefaultOpen = useMemo(() => {
-    if (!slotsReady) return true;
-    return meIdentitiesHubOperatorSectionDefaultOpen({
-      guide: slotById("guide")?.state ?? null,
-      merchant: slotById("merchant")?.state ?? null,
-      region_steward: slotById("region_steward")?.state ?? null,
-    });
-  }, [slotsReady, slotById]);
 
   const profileLinkIds = useMemo(() => profileLinks.map((link) => link.id), [profileLinks]);
   const profileLinkThumbs = useMeIdentitiesProfileLinkThumbs(profileLinkIds, loggedIn);
@@ -188,23 +178,16 @@ function MeIdentitiesHubInner() {
           <h2 id="me-identities-operator-heading" className={TT_ME_IDENTITIES_L5.applySectionTitle}>
             {t("me_identities_operator_section_title")}
           </h2>
-          <details open={operatorSectionDefaultOpen} className="group">
-            <summary
-              className={`mb-4 max-w-2xl cursor-pointer list-none text-meta leading-relaxed text-slate-400/95 marker:content-none [&::-webkit-details-marker]:hidden ${!operatorSectionDefaultOpen ? "text-ref-sun/90 underline-offset-2 hover:underline" : ""}`}
-            >
-              {operatorSectionDefaultOpen
-                ? t("me_identities_operator_section_hint")
-                : t("me_identities_operator_section_expand")}
-            </summary>
-            {!operatorSectionDefaultOpen ? (
-              <p className="sr-only">{t("me_identities_operator_section_hint")}</p>
-            ) : null}
-            <div className={TT_ME_IDENTITIES_L5.gridHalo} aria-hidden />
-            <ul
-              className={TT_ME_IDENTITIES_L5.grid}
-              aria-label={t("me_identities_operator_grid_aria")}
-              data-tt-me-identities-operator-grid="1"
-            >
+          {/* HU-036: always show operator cards — no traveler-only collapse burying apply CTAs */}
+          <p className="mb-4 max-w-2xl text-meta leading-relaxed text-slate-400/95">
+            {t("me_identities_operator_section_hint")}
+          </p>
+          <div className={TT_ME_IDENTITIES_L5.gridHalo} aria-hidden />
+          <ul
+            className={TT_ME_IDENTITIES_L5.grid}
+            aria-label={t("me_identities_operator_grid_aria")}
+            data-tt-me-identities-operator-grid="1"
+          >
             {operatorCards
               .filter(({ surfaceId }) =>
                 isExpansionIdentitySurfaceVisible(
@@ -267,7 +250,6 @@ function MeIdentitiesHubInner() {
               );
             })()}
             </ul>
-          </details>
         </section>
 
         <MeIdentitiesProfileLinksNav t={t} links={profileLinks} thumbs={profileLinkThumbs} />

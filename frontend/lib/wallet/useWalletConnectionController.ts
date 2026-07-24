@@ -8,7 +8,7 @@ import {
   useSwitchChain,
   type Connector,
 } from "wagmi";
-import { getExpectedChainId, getTargetChain } from "@/lib/chainEnv";
+import { getChainDisplayName, getExpectedChainId, getTargetChain } from "@/lib/chainEnv";
 import { useViewOnlyAddress } from "@/lib/ViewOnlyAddressContext";
 import { getGovernanceExplorerAddressUrl } from "@/lib/governance/governanceBlockExplorer";
 import {
@@ -58,6 +58,11 @@ export function useWalletConnectionController() {
   const targetChain = getTargetChain();
   const wrongNetwork =
     isConnected && typeof chainId === "number" && chainId > 0 && chainId !== expectedChainId;
+  const walletChainName =
+    isConnected && typeof chainId === "number" && chainId > 0
+      ? getChainDisplayName(chainId)
+      : "";
+  const targetChainName = targetChain.name;
 
   const catalog = useMemo(() => catalogueConnectors(connectors), [connectors]);
   const recommendedBrands = useMemo(
@@ -290,7 +295,10 @@ export function useWalletConnectionController() {
     setViewOnlyAddress,
     chainId: chainId ?? expectedChainId,
     expectedChainId,
-    chainName: targetChain.name,
+    /** @deprecated Prefer walletChainName / targetChainName (HU-032). Kept as target for switch CTA. */
+    chainName: targetChainName,
+    walletChainName,
+    targetChainName,
     connectorName: connector?.name ?? null,
     activeBrandKey: isConnected && connector ? connectorBrandKey(connector) : null,
     explorerUrl,

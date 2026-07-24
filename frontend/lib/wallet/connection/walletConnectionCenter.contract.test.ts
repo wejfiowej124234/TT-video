@@ -35,6 +35,18 @@ describe("Wallet Connection Center L5 contract (①)", () => {
     expect(providers).toContain("readTravelTrustAppUrlFromEnv");
   });
 
+  it("HU-032/033: account menu shows current vs target chain (not target-as-current)", () => {
+    const menu = readFileSync(join(ROOT, "components/trust/WalletAccountMenu.tsx"), "utf8");
+    const ctrl = readFileSync(join(ROOT, "lib/wallet/useWalletConnectionController.ts"), "utf8");
+    expect(menu).toContain("wallet_network_current_need");
+    expect(menu).toContain("walletChainName");
+    expect(menu).toContain("targetChainName");
+    expect(menu).not.toContain('t("wallet_network_mismatch"');
+    expect(ctrl).toContain("walletChainName");
+    expect(ctrl).toContain("targetChainName");
+    expect(ctrl).toContain("getChainDisplayName");
+  });
+
   it("sheet + controller + capability SSOT exist", () => {
     const sheet = readFileSync(join(ROOT, "components/trust/TravelTrustWalletSheet.tsx"), "utf8");
     const mini = readFileSync(join(ROOT, "components/trust/WalletStatusMini.tsx"), "utf8");
