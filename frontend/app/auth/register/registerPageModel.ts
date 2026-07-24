@@ -57,6 +57,7 @@ export const REGISTER_ERROR_KEYS: Record<string, string> = {
   verification_code_expired: "auth_register_error_verificationCodeExpired",
   verification_code_rate_limited: "auth_register_error_verificationCodeRateLimited",
   send_code_failed: "auth_register_error_sendCodeFailed",
+  email_delivery_failed: "auth_register_error_emailDeliveryFailed",
   referral_code_invalid: "auth_register_error_referralCodeInvalid",
   referral_code_inactive: "auth_register_error_referralCodeInactive",
   referral_code_exhausted: "auth_register_error_referralCodeExhausted",

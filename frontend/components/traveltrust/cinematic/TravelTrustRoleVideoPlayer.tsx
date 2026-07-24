@@ -159,7 +159,8 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
         </AnimatePresence>
 
         <AnimatePresence mode="wait">
-          {active && posterSrc && !preferWarmPlaceholder ? (
+          {/* HU-011: show role poster JPG inside play frame; hide once video/cinema plays */}
+          {active && posterSrc && !showVideoLayer && !cinemaOpen ? (
             <motion.div
               key={`poster-${role.id}`}
               className="absolute inset-0 z-[1] overflow-hidden"
@@ -167,6 +168,7 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: TT_ROLE_VIDEO_L5.posterFadeDuration, ease: TT_L5_MOTION_EASE }}
+              data-tt-traveltrust-role-video-poster-in-frame-l5="1"
             >
               <motion.div
                 className="h-full w-full"
@@ -222,7 +224,7 @@ export function TravelTrustRoleVideoPlayer({ role, active, flashKey }: Props) {
                 />
               ) : null}
             </motion.div>
-          ) : active ? (
+          ) : active && !posterSrc ? (
             <motion.div
               key={`grad-${role.id}`}
               className={TT_ROLE_VIDEO_L5.placeholderShellClass}

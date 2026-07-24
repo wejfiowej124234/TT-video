@@ -69,11 +69,15 @@ export async function postRegisterSendVerificationCode(body: {
   const data = await parseResponse(res);
   logApiJsonStatusNotOk("postRegisterSendVerificationCode", data);
   throwUnlessApiOk(data);
-  return data as {
+  const payload = data as {
     registration_verification_dev_code?: string;
     email_sent?: boolean;
     message?: string;
   };
+  if (payload.email_sent === false) {
+    throw new Error("email_delivery_failed");
+  }
+  return payload;
 }
 
 export async function postLogout(body?: Record<string, unknown>): Promise<unknown> {

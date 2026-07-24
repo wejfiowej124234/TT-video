@@ -7,7 +7,7 @@ test("community feed discovery geo chrome", async ({ page }) => {
 
   const anchor = page.getByTestId("community-feed-anchor-poi");
   await expect(anchor).toBeVisible();
-  await anchor.selectOption("hotel_lavande");
+  await anchor.selectOption("gps");
 
   const nearby1km = page.getByRole("button", { name: /1\s*km|1km|附近1km/i });
   await nearby1km.click();

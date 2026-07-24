@@ -10348,6 +10348,8 @@ export default {
   auth_register_error_referralRateLimited: "推荐活动过于频繁，请稍后再试。",
   auth_register_error_referralCodeRequired: "请填写推荐码。",
   auth_register_error_sendCodeFailed: "验证码发送失败，请稍后重试。",
+  auth_register_error_emailDeliveryFailed:
+    "验证邮件未能送达（出站服务拒绝或未配置）。请稍后重试，或改用已验证可收件的邮箱；若持续失败请联系平台。",
   auth_register_error_authDbUnavailable:
     "账号未能写入数据库（严格模式或数据库繁忙）。请稍后重试；服务端已撤销本次注册内存状态。",
   auth_register_password_min: "至少 8 位",

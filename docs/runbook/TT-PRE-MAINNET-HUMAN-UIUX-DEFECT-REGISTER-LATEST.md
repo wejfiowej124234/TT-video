@@ -1,27 +1,108 @@
 # Pre-Mainnet Human UI/UX · Defect Register
 
 **Session:** `20260724T065700Z-pre-mainnet-human-uiux`  
-**Phase:** ①/② 真人手测（主网真网前）· ≠ Production GO  
+**Phase:** ①/② 真人手测（主网真网前）· ≠ Production GO · ≠ Mainnet Cutover  
+**Round-1:** HU-001～010 **FIXED**（2026-07-24 · Staging bake `2db694ae`）  
+**Round-2 = 第二批（Batch-2）:** HU-011～017 · **COLLECTIVE FIX IN PROGRESS / CLOSING**（2026-07-24 ~08:41 Owner 开改）  
 **Tip cite:** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2`  
-**Staging deploy HEAD:** `f123f691`（`STAGING_PATCH_HEAD_NE_TIP` = ED · 性能补丁已上 Staging）  
-**Env:** https://tt-web-staging.fly.dev（未登录）  
+**Staging deploy HEAD:** （合入后更新）  
+**Env:** https://tt-web-staging.fly.dev  
 **Accounts SSOT:** `docs/runbook/TT-TEST-ACCOUNTS-QUICK-REFERENCE.md`（密码不写入本表）  
-**Rule:** Owner 口述的每一个问题均追加；结束时「问题清单 + 修改意见」再集体修改。
+**Evidence twin:** `evidence/manual-uat/sessions/20260724T065700Z-pre-mainnet-human-uiux/DEFECT-REGISTER.md`  
+**Rule（写死）：** Owner 口述 → 立刻追加；「结束 / 出清单」→ 清单+意见；**「开始第二批集体改」** → 按下方标准改 → 本地 → Staging → Git → **Final Truth cite 对齐**（不新开平行真源）。
+
+---
+
+## 第二批（Batch-2）· 修复标准与真源对齐（Owner 2026-07-24 ~08:39）
+
+### 验收条（写死）
+
+| 条 | 标准 |
+|----|------|
+| **生产级** | 可上 Staging 真用户路径验收：无假成功、无脏数据占位、无调试残留、权限/出站失败 fail-closed |
+| **UI/UX = L5** | 对齐 Product/Release Baseline 视觉与交互（社区壳 · AuthL5 · 五主冻结边界）；禁止默认蓝白/占位壳冒充 L5 |
+| **修后闭环** | ① 更新本 Register + 相关 runbook/locale/CMS 真源句 ② **本地**绿集/烟测 ③ **Staging** 复验截图 ④ **Git** commit（Owner 授权时）⑤ **Final Truth Baseline cite-only 对齐**（见下表）— **禁止**用本批冒充 Production GO / Hard Gate PASS / Cutover |
+
+### TravelTrust Final Truth Baseline（唯一真源标准 · cite-only）
+
+本批产品/UI 变更落在 **Product / Release Baseline** 与 **Engineering SSOT**；Web3/治理锚**只引用、不重写宪章**。Hard Gate / Cutover **不因本批 UI 缺陷关闭而自动 PASS**。
+
+| # | 锚点 | 本批关系 |
+|---|------|----------|
+| 1 | **Final Truth Baseline**（唯一真源标准） | 本 Register + tip/pin cite；修后不漂移平行叙事 |
+| 2 | **Candidate v2** · 最新 Web3 协议基线 | cite pin `PSG-REL-20260720-WEB3-CAND-V2` · tip `ea71c577` |
+| 3 | **V3.1.1 Final** · 中文 Web3 宪章与规则 | 本批不改正文；公告/规范文案不得与之冲突 |
+| 4 | **PSG-EGM Final** · 经济治理框架 | 本批无资金规则变更 |
+| 5 | **PSG Governance Anchor** | 治理层唯一锚 · 本批不另起治理真源 |
+| 6 | **Product / Release Baseline** | **本批主战场**：用户产品 · UI/UX · 业务流程 |
+| 7 | **Engineering SSOT Anchor** | 代码 · Git · Build · Runtime · Registry · Evidence 同源 |
+| 8 | **Release Integrity** | Delta → Recertify → Freeze 纪律；禁止平行版本 |
+| 9 | **PSG Delta Recertify（dry-run）** | 集体改合入后对 Batch-2 Delta 做 dry-run 对拍 |
+| 10 | **Feature Inventory Baseline** | 注册 OTP / 社区定位 / Ambient 等能力与真实能力一致 |
+| 11 | **Reality Closure Framework** | Staging 真运行与 Baseline 对拍（含邮件投递） |
+| 12 | **PRR** | 本批不替代 PRR 签字 |
+| 13 | **Mainnet Hard Gate** | 本批 **≠** Hard Gate 关闭 |
+| 14 | **Mainnet Cutover Hard Gate** | 本批 **≠** 资金切闸 PASS |
+
+### 第二批清单（实施状态）
+
+| # | 主题 | 严重度 | 状态 | 落地摘要 |
+|---|------|--------|------|----------|
+| **HU-011** | 角色剧场封面进播放框 | P1 | **FIXED** | `TravelTrustRoleVideoPlayer`：有 `posterSrc` 即铺满框；播中/剧场隐藏封面 |
+| **HU-012** | `/` 默认 Ambient L5 海报 | P1 | **FIXED** | 新图 `frontend/public/media/landing/brand-ambient-default.jpg`（十国分层宣传海报） |
+| **HU-013** | Ambient 闪/双跳 | P1 | **FIXED** | decode-before-commit + 优先稳定 TS URL |
+| **HU-014** | 注册验证码未达邮箱 | **P0** | **PARTIAL** | 代码 fail-closed（503 + 无假倒计时）已落地；**任意 Gmail 仍须 Owner 验证 Resend 域名** |
+| **HU-015** | 社区「当前定位」 | P1 | **FIXED** | 下拉仅 GPS + 当前城市；默认 GPS；剔丽枫酒店 |
+| **HU-016** | 社区规范 UI | P1 | **FIXED** | CTA 改 sun L5；内容仍诚实草稿（≠法务定稿） |
+| **HU-017** | CMS 运营号仿用户 | P1 | **FIXED（代码+素材）** | dataset 真人昵称 + `/media/ocs/ops-avatars/*`；`sync-ocs-ops-personas-hu017.cjs` 写 Staging users |
+
+**Owner 残留：** HU-014 Resend 域名验证后任意收件人可通。
+
+---
 
 ## 缺陷表
 
 | # | 时间 | 账号 | 路径/页面 | 问题描述（原话） | 类型 | 严重度 | 修改意见 | 状态 |
 |---|------|------|-----------|------------------|------|--------|----------|------|
 | HU-001 | 2026-07-24 ~07:00 | 未登录 | `/traveltrust` Hero（Owner 称「首页」截图） | Hero 卡内「连接钱包」多余：顶栏已有连接钱包，这里应删除 | UX · UI | P1 | 按已冻 Delta：移除 Hero wallet CTA；顶栏 `#tt-header-wallet` 唯一入口；contract/e2e 已翻 | **FIXED · Round-1** |
-| HU-002 | 2026-07-24 ~07:00 | — | 真源 vs Staging | Owner 怀疑 Staging 不是真源最新；要求核对昨日性能优化是否更新真源 | 部署/真源 | P1（信息） | Staging=`f123f691` ED vs tip `ea71c577`；性能已在 Staging；本轮再部署 Round-1 补丁 | **FIXED · 信息闭合** |
+| HU-002 | 2026-07-24 ~07:00 | — | 真源 vs Staging | Owner 怀疑 Staging 不是真源最新；要求核对昨日性能优化是否更新真源 | 部署/真源 | P1（信息） | Staging Round-1=`2db694ae` ED vs tip `ea71c577`；性能+UI 补丁已上 Staging | **FIXED · 信息闭合** |
 | HU-003 | 2026-07-24 ~07:07 | 未登录 | `/traveltrust` 角色剧场 | 视频不是最新；需永久储存 + 封面 | 媒资 · UX | P1 | drop zone 摄入 → LFS + Registry/Manifest + JPG posters；`region_steward` 仍占位 | **FIXED · Round-1**（主理人待补） |
-| HU-004 | 2026-07-24 ~07:08 | 未登录 | 公告 / Pulse | 对齐 Final Truth Baseline | 内容 · CMS | P1 | migration 归档旧 Phase/7-15 文案 + 新增 Final Truth/Hard Gate 条；locale pulse 键 | **FIXED · Round-1**（Staging migrate 后可见） |
+| HU-004 | 2026-07-24 ~07:08 | 未登录 | 公告 / Pulse | 对齐 Final Truth Baseline | 内容 · CMS | P1 | migration 归档旧 Phase/7-15 文案 + 新增 Final Truth/Hard Gate 条；locale pulse 键 | **FIXED · Round-1** |
 | HU-005 | 2026-07-24 ~07:11 | 未登录 | `/` Ambient | 默认不该长城；品牌图 + 切换慢 | UX · 性能 | P1 | `AMBIENT_BG_HOME`→品牌 JPG；十国 idle prefetch + crossfade | **FIXED · Round-1** |
 | HU-006 | 2026-07-24 ~07:13 | 未登录 | `/` AI 生成 | 登录提示改弹窗 | UX · UI | P1 | `AuthRequiredModal` 替代内嵌条 | **FIXED · Round-1** |
 | HU-007 | 2026-07-24 ~07:16 | 未登录/登录 | `/market` 创建行程 | 自定义制作 · L5 确认 · 未登录弹窗 | UX | P1 | 文案+DiscardConfirmModal+auth gate | **FIXED · Round-1** |
 | HU-008 | 2026-07-24 ~07:19 | 未登录 | `/community` 筛选 | 中国错绑外城 · 全部混排重复 | 功能 | P1 | 停 dump unmapped→cn；热门仅已知城市；国家别名入 map | **FIXED · Round-1** |
 | HU-009 | 2026-07-24 ~07:20 | 未登录 | 收购详情抽屉 | 左侧文字不可见 | UI | P1 | `subsiteTagPill` 强制可读色 | **FIXED · Round-1** |
 | HU-010 | 2026-07-24 ~07:22 | 未登录 | `/market/acquisition` | 就绪度是否应在浏览页；筛选对比度 | UX · IA | P1 | 就绪度默认折叠；`filterBandLabel` 提对比 | **FIXED · Round-1** |
+
+### Round-2 = 第二批 Batch-2
+
+| # | 时间 | 账号 | 路径/页面 | 问题描述（原话） | 类型 | 严重度 | 修改意见 | 状态 |
+|---|------|------|-----------|------------------|------|--------|----------|------|
+| HU-011 | 2026-07-24 ~08:25 | 未登录（Staging） | `/traveltrust` · 角色剧场播放框 | 封面须在播放框内；点击后播视频不再显示封面 | UX · 媒资 | P1 | poster 层绑框；play/cinema 隐藏 | **FIXED · Batch-2** |
+| HU-012 | 2026-07-24 ~08:28 | 未登录（Staging） | `/` 默认 Ambient | 默认背景须 L5 十国宣传海报 | UX · 品牌 | P1 | AI 出图入库 `brand-ambient-default.jpg` | **FIXED · Batch-2** |
+| HU-013 | 2026-07-24 ~08:30 | 未登录（Staging） | `/` 选国家 Ambient | 切换闪一下 / 像刷两次 | UX · 性能 | P1 | decode-before-commit；抑 catalog 双跳 | **FIXED · Batch-2** |
+| HU-014 | 2026-07-24 ~08:33 | 未登录（Staging） | `/auth/register` 验证码 | 倒计时但邮箱未收到 | 出站邮件 | **P0** | fail-closed 已落地；**Resend 域名仍须 Owner** | **PARTIAL · Batch-2** |
+| HU-015 | 2026-07-24 ~08:35 | 未登录（Staging） | `/community` 当前定位 | 非生产级下拉 | UX · L5 | P1 | 仅 GPS + 当前城市 | **FIXED · Batch-2** |
+| HU-016 | 2026-07-24 ~08:36 | 未登录（Staging） | `/terms/community-guidelines` | UI 不符；真源对齐？ | UX · 内容 | P1 | sun L5 CTA；内容仍草稿诚实 | **FIXED · Batch-2** |
+| HU-017 | 2026-07-24 ~08:37 | 未登录（Staging） | `/community` 推荐关注 | 运营号无头像、名不真实 | CMS · UX | P1 | 人格包 + sync 脚本 | **FIXED · Batch-2**（Staging 须跑 sync） |
+
+## HU-012 · 创意剧本草稿（集体改时定稿 · 非已出图）
+
+**用途：** `/` 定制旅行首屏默认 Ambient（未选国家时）· 宣传海报气质 · 16:9 / 高分屏可裁。
+
+**叙事一句：** TravelTrust — 十国定制旅行网络 · AI 生成专属行程 · 认证向导 · USDC 托管。
+
+**分层构图（由远→近 / 由上→下）：**
+1. **天际带：** 阿联酋哈利法塔夜景剪影 + 新加坡滨海湾轮廓（都市科技感）
+2. **中景左：** 日本富士山 / 河口湖；中景右：法国埃菲尔 + 西班牙奎尔马赛克色块
+3. **中景中央焦点：** 柔光路径 / 行程卡剪影暗示「AI 生成行程」→ 导向品牌名区（勿堆字过多；文案可后期 CSS/UI 叠，图内最多短标「10 Countries · AI Itinerary」）
+4. **近景下：** 泰国玛雅湾碧水 + 澳大利亚悉尼港湾弧线；中国长城脊线作地平节奏（勿占满默认整屏「单长城」）
+5. **点缀：** 韩国景福宫暖色门楼一角 · 美国曼哈顿天际细线
+
+**调性：** 中低明度 · 便于叠 landing vignette · 金/琥珀品牌点缀 · **非**紫渐变 / 奶油衬线海报套；真实景区可识别 · 拼贴层次清晰 · 一图读出「全球定制游」。
+
+**交付验收：** Owner 目视 L5 PASS → 替换默认 Ambient → Staging 复验默认态；选国家后仍切各国图。
 
 ## 真源 / 部署对拍（本轮核查）
 

@@ -699,10 +699,24 @@ pub async fn auth_register_send_verification_code(
             .insert(email_key, entry);
     }
     let email_sent = dispatch_register_verification_code_email(email_trim, &code).await;
+    // HU-014 fail-closed: never 200 "sent" when outbound delivery failed (e.g. Resend test-mode 403).
+    if !email_sent {
+        {
+            let mut store = state.store.write().await;
+            store.register_verification_codes.remove(&email_key);
+        }
+        return Err((
+            StatusCode::SERVICE_UNAVAILABLE,
+            Json(crate::api_json::err_key_detail(
+                "email_delivery_failed",
+                "verification email could not be delivered",
+            )),
+        ));
+    }
     let mut resp = json!({
         "status": "ok",
         "message": "verification_code_sent",
-        "email_sent": email_sent,
+        "email_sent": true,
     });
     if register_verification_returns_dev_code() {
         if let Some(obj) = resp.as_object_mut() {

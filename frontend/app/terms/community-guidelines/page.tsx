@@ -37,13 +37,9 @@ export default function CommunityGuidelinesPage() {
     ? footerLinkClass
     : `${footerLinkClass} ${travelFocusRingOffset2Classes}`;
 
-  const ctaPrimary = fromSettings
-    ? `${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-xl border border-ref-sun/40 bg-ref-sun/15 px-4 py-2 text-meta font-medium text-ref-sun hover:bg-ref-sun/22`
-    : `inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] bg-travel-500 px-4 py-2 text-meta font-medium text-white transition-colors hover:bg-travel-400 motion-sub motion-reduce:transition-none focus-visible:ring-offset-bg-console ${travelFocusRingCoreOffset2Classes}`;
+  const ctaPrimary = `${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-xl border border-ref-sun/40 bg-ref-sun/15 px-4 py-2 text-meta font-medium text-ref-sun hover:bg-ref-sun/22 ${fromSettings ? "" : travelFocusRingCoreOffset2Classes}`;
 
-  const ctaSecondary = fromSettings
-    ? `${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-xl border border-ref-sun/28 bg-ref-sun/[0.06] px-4 py-2 text-meta font-medium text-slate-200 hover:border-ref-sun/45`
-    : `inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-md)] border border-ink-200 bg-white px-4 py-2 text-meta font-medium text-ink-800 transition-colors hover:bg-ink-50 motion-sub motion-reduce:transition-none focus-visible:ring-offset-bg-console ${travelFocusRingCoreOffset2Classes}`;
+  const ctaSecondary = `${touchTargetLink44Classes} inline-flex min-h-[44px] items-center justify-center rounded-xl border border-ref-sun/28 bg-ref-sun/[0.06] px-4 py-2 text-meta font-medium text-slate-200 hover:border-ref-sun/45 ${fromSettings ? "" : travelFocusRingCoreOffset2Classes}`;
 
   return (
     <MeSettingsExtensionDocumentShell

@@ -7,31 +7,36 @@
       "slug": "official",
       "display_label": "TravelTrust Official",
       "account_kind": "community_author",
-      "nickname": "TravelTrust"
+      "nickname": "林晓晴·行程编辑",
+      "avatar_url": "/media/ocs/ops-avatars/official.jpg"
     },
     {
       "slug": "asia",
       "display_label": "TravelTrust Asia",
       "account_kind": "community_author",
-      "nickname": "TT Asia"
+      "nickname": "阿月·亚洲旅途",
+      "avatar_url": "/media/ocs/ops-avatars/asia.jpg"
     },
     {
       "slug": "japan",
       "display_label": "TravelTrust Japan",
       "account_kind": "community_author",
-      "nickname": "TT Japan"
+      "nickname": "佐藤美咲·关西漫步",
+      "avatar_url": "/media/ocs/ops-avatars/japan.jpg"
     },
     {
       "slug": "europe",
       "display_label": "TravelTrust Europe",
       "account_kind": "community_author",
-      "nickname": "TT Europe"
+      "nickname": "Marco·欧洲镜头",
+      "avatar_url": "/media/ocs/ops-avatars/europe.jpg"
     },
     {
       "slug": "support",
       "display_label": "TravelTrust Support",
       "account_kind": "traveler",
-      "nickname": "TT Support"
+      "nickname": "小安·旅途助手",
+      "avatar_url": "/media/ocs/ops-avatars/official.jpg"
     }
   ],
   "official_cold_start_campaign": {

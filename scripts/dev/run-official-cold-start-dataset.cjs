@@ -69,6 +69,19 @@ async function ensureOfficialAccount(adminTok, state, key, spec, password) {
   const existing = (list.json.items || []).find((a) => (a.user_email || '').toLowerCase() === em);
   if (existing) {
     state.accounts[key] = { id: existing.id, user_id: existing.user_id, email: em };
+    const accExist = state.accounts[key];
+    if (!DRY_RUN && accExist && (spec.nickname || spec.avatar_url)) {
+      try {
+        const userTok = await client.userLogin(em, password);
+        const body = {};
+        if (spec.nickname) body.nickname = spec.nickname;
+        if (spec.avatar_url) body.avatar_url = spec.avatar_url;
+        const put = await client.req('PUT', '/api/v1/me', body, userTok);
+        if (okStatus(put.status)) console.log(`ocs: persona synced existing ${key}`);
+      } catch (e) {
+        console.warn(`ocs: persona sync failed existing ${em}: ${e && e.message ? e.message : e}`);
+      }
+    }
     return state.accounts[key];
   }
   if (DRY_RUN) {
@@ -94,6 +107,23 @@ async function ensureOfficialAccount(adminTok, state, key, spec, password) {
   }
   state.accounts[key] = { id, user_id: r.json.item.user_id, email: em };
   console.log(`ocs: official account ${key} ${em}`);
+  const accNew = state.accounts[key];
+  if (!DRY_RUN && accNew && (spec.nickname || spec.avatar_url)) {
+    try {
+      const userTok = await client.userLogin(em, password);
+      const body = {};
+      if (spec.nickname) body.nickname = spec.nickname;
+      if (spec.avatar_url) body.avatar_url = spec.avatar_url;
+      const put = await client.req('PUT', '/api/v1/me', body, userTok);
+      if (!okStatus(put.status)) {
+        console.warn(`ocs: persona sync warn ${em} HTTP ${put.status}`);
+      } else {
+        console.log(`ocs: persona synced ${key}`);
+      }
+    } catch (e) {
+      console.warn(`ocs: persona sync failed ${em}: ${e && e.message ? e.message : e}`);
+    }
+  }
   return state.accounts[key];
 }
 

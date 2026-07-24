@@ -52,7 +52,7 @@ export function useCommunityFeedFilters({
   preserveApiFeedOrder = false,
   sortBy: controlledSortBy,
   setSortBy: controlledSetSortBy,
-  anchorPoiId = "hotel_lavande",
+  anchorPoiId = "gps",
   gpsCoords = null,
   proximityFilter: controlledProximity,
   setProximityFilter: controlledSetProximity,

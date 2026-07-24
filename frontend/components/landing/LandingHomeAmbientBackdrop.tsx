@@ -77,15 +77,28 @@ function AmbientPhotoLayer({
   );
 }
 
-/** 预加载 HD 图后再切换 outgoing 层（主层 derived-first，不阻塞 catalog/tsUrl） */
+/** 预加载 HD 图（decode 完成后再 commit 主层 · HU-013） */
 function preloadAmbientImage(url: string): Promise<void> {
   return new Promise((resolve) => {
     const img = new window.Image();
     img.decoding = "async";
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
+    const done = () => resolve();
+    img.onload = () => {
+      if (typeof img.decode === "function") {
+        void img.decode().then(done).catch(done);
+      } else {
+        done();
+      }
+    };
+    img.onerror = done;
     img.src = url;
-    if (img.complete) resolve();
+    if (img.complete) {
+      if (typeof img.decode === "function") {
+        void img.decode().then(done).catch(done);
+      } else {
+        done();
+      }
+    }
   });
 }
 
@@ -96,25 +109,38 @@ function LandingHomeAmbientBackdropInner({ country }: Props) {
   const { selectedCountry, tsUrl, catalogUrl, runtimeUrl } = useLandingAmbientResolution(country);
   const defaultHomeUrl = useMemo(() => landingAmbientImageUrl(""), []);
 
-  /** derived-first：已选国家 → catalog ?? tsUrl；空国家 → 仅 default fallback */
-  const displaySrc = selectedCountry.trim()
-    ? (catalogUrl ?? tsUrl)
+  /**
+   * HU-013：已选国家优先稳定 TS 图，避免 catalog 迟到二次换图闪屏。
+   * Catalog 仅在与 TS 不等价且已解析时才升级（仍经 decode-before-commit）。
+   */
+  const targetSrc = selectedCountry.trim()
+    ? (catalogUrl && catalogUrl !== tsUrl ? catalogUrl : tsUrl)
     : (catalogUrl ?? defaultHomeUrl);
 
   const imgRef = useRef<HTMLImageElement>(null);
   const [imgCurrentSrc, setImgCurrentSrc] = useState("");
-  const prevDisplayRef = useRef(displaySrc);
+  const [committedSrc, setCommittedSrc] = useState(targetSrc);
   const [outgoingSrc, setOutgoingSrc] = useState<string | null>(null);
+  const commitGenRef = useRef(0);
 
   useEffect(() => {
-    if (displaySrc === prevDisplayRef.current) return;
-    const prev = prevDisplayRef.current;
-    prevDisplayRef.current = displaySrc;
-    setOutgoingSrc(prev);
-    void preloadAmbientImage(displaySrc);
-    const t = window.setTimeout(() => setOutgoingSrc(null), 700);
-    return () => window.clearTimeout(t);
-  }, [displaySrc]);
+    if (targetSrc === committedSrc) return;
+    const gen = ++commitGenRef.current;
+    const prev = committedSrc;
+    let fadeTimer: number | undefined;
+    void (async () => {
+      await preloadAmbientImage(targetSrc);
+      if (commitGenRef.current !== gen) return;
+      setOutgoingSrc(prev);
+      setCommittedSrc(targetSrc);
+      fadeTimer = window.setTimeout(() => {
+        if (commitGenRef.current === gen) setOutgoingSrc(null);
+      }, 700);
+    })();
+    return () => {
+      if (fadeTimer != null) window.clearTimeout(fadeTimer);
+    };
+  }, [targetSrc, committedSrc]);
 
   /** HU-005：空闲预取十国 ambient，降低切换体感延迟 */
   useEffect(() => {
@@ -140,17 +166,17 @@ function LandingHomeAmbientBackdropInner({ country }: Props) {
       selectedCountry,
       tsUrl,
       runtimeUrl,
-      shownSrc: displaySrc,
+      shownSrc: committedSrc,
       imgCurrentSrc,
     };
     logLandingAmbientCnRuntimeProbe(probe);
-  }, [selectedCountry, tsUrl, runtimeUrl, displaySrc, imgCurrentSrc]);
+  }, [selectedCountry, tsUrl, runtimeUrl, committedSrc, imgCurrentSrc]);
 
   const cnProbeAttrs = landingAmbientCnRuntimeDataAttrs({
     selectedCountry,
     tsUrl,
     runtimeUrl,
-    shownSrc: displaySrc,
+    shownSrc: committedSrc,
     imgCurrentSrc,
   });
 
@@ -165,14 +191,15 @@ function LandingHomeAmbientBackdropInner({ country }: Props) {
       data-tt-home-ambient-l5="ken-burns"
       data-tt-home-ambient-motion={reducedMotion ? "off" : pageVisible ? "on" : "paused"}
       data-tt-home-ambient-country={selectedCountry.trim() || "default"}
-      data-tt-home-ambient-src={displaySrc}
+      data-tt-home-ambient-src={committedSrc}
       data-tt-home-ambient-ts-url={tsUrl}
       data-tt-home-ambient-runtime-url={runtimeUrl}
+      data-tt-home-ambient-decode-before-commit="1"
       {...cnProbeAttrs}
     >
       <div className="absolute inset-0 z-[1]">
         <AmbientPhotoLayer
-          src={displaySrc}
+          src={committedSrc}
           kenBurns={kenBurns}
           kenBurnsPaused={kenBurnsPaused}
           fetchPriority="high"
@@ -180,7 +207,7 @@ function LandingHomeAmbientBackdropInner({ country }: Props) {
           onImgLoad={(el) => setImgCurrentSrc(el.currentSrc || el.src || "")}
         />
       </div>
-      {outgoingSrc && outgoingSrc !== displaySrc && (
+      {outgoingSrc && outgoingSrc !== committedSrc && (
         <div className="absolute inset-0 z-[2] tt-home-ambient-crossfade-out" aria-hidden>
           <AmbientPhotoLayer src={outgoingSrc} kenBurns={false} />
         </div>

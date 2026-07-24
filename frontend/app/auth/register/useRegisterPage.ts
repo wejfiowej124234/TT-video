@@ -129,6 +129,10 @@ export function useRegisterPage() {
     setSendCodeBusy(true);
     try {
       const res = await postRegisterSendVerificationCode({ email: emailTrim });
+      if (res.email_sent === false) {
+        setError("email_delivery_failed");
+        return;
+      }
       startSendCodeCooldown();
       const dev = res.registration_verification_dev_code?.trim();
       setDevCodeHint(dev || null);
@@ -137,6 +141,7 @@ export function useRegisterPage() {
       if (msg === "invalid_email") setError("invalid_email");
       else if (msg === "email_already_registered") setError("email_already_registered");
       else if (msg === "verification_code_rate_limited") setError("verification_code_rate_limited");
+      else if (msg === "email_delivery_failed") setError("email_delivery_failed");
       else setError("send_code_failed");
     } finally {
       setSendCodeBusy(false);

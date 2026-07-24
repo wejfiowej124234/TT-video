@@ -126,13 +126,13 @@ describe("community API client (51-T4) — feed & my posts", () => {
   it("getFeed passes geo anchor and proximity query params", async () => {
     (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(mockTextResponse(true, { status: "ok", posts: [] }));
     await getFeed({
-      anchor_poi_id: "hotel_lavande",
+      anchor_poi_id: "gps",
       max_distance_m: 1000,
       anchor_lat: 39.9042,
       anchor_lng: 116.4074,
     });
     const url = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][0] as string;
-    expect(url).toContain("anchor_poi_id=hotel_lavande");
+    expect(url).toContain("anchor_poi_id=gps");
     expect(url).toContain("max_distance_m=1000");
     expect(url).toContain("anchor_lat=39.9042");
     expect(url).toContain("anchor_lng=116.4074");

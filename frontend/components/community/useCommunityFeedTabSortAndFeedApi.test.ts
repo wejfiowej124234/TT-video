@@ -23,7 +23,7 @@ vi.mock("@/components/community/useCommunityFeedSortAndUrlTag", () => ({
 
 vi.mock("@/components/community/useCommunityFeedAnchorPoi", () => ({
   useCommunityFeedAnchorPoi: () => ({
-    anchorPoiId: "hotel_lavande" as const,
+    anchorPoiId: "gps" as const,
     setAnchorPoiId: vi.fn(),
     gpsCoords: null,
     anchorRevision: 0,
@@ -50,7 +50,7 @@ describe("useCommunityFeedTabSortAndFeedApi · geo query", () => {
     renderHook(() => useCommunityFeedTabSortAndFeedApi(nav));
     await waitFor(() => expect(getFeed).toHaveBeenCalled());
     expect(getFeed).toHaveBeenCalledWith(
-      expect.objectContaining({ anchor_poi_id: "hotel_lavande", mode: "latest" }),
+      expect.objectContaining({ anchor_poi_id: "gps", mode: "latest" }),
     );
   });
 });
