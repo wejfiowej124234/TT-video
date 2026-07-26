@@ -1,0 +1,14 @@
+{
+  "machine": "TT_ADMIN_BATCH14_HU573_PROBE",
+  "api_sha": "fb904660421e0ea2d75a37e8aa695dc8cfa9c22d",
+  "user_id": "af3b328a-05dd-42e8-8584-708681b24d13",
+  "http": 200,
+  "identity_slots_count": 5,
+  "identity_slots_source": "projection",
+  "role_applications_count": 0,
+  "role_applications_source": "postgres",
+  "tip": "ea71c577",
+  "hard_gate": "LOCKED",
+  "production_go": "NO_GO",
+  "verdict": "PASS"
+}

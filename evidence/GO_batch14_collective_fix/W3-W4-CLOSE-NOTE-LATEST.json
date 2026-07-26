@@ -13,12 +13,21 @@
   "hu491_probe": "evidence/GO_batch14_collective_fix/HU491-GUIDES-PROBE-LATEST.json",
   "contrast_cluster": "VISUAL_RECHECK_CODE_PASS",
   "HU-572": "CLOSED_REVERIFY",
-  "HU-573": "CODE_LANDED_PENDING_REDEPLOY",
+  "HU-573": "CLOSED",
   "HU-574": "BLOCKED_PROVISION",
   "HU-574_note": "verification_code_required on register; no fabricated 6/6 OK",
   "HU-575": "CLOSED",
   "HU-576": "CLOSED_ED_CONFIRM_DESIGN",
-  "HU-577": "CODE_LANDED_PENDING_REDEPLOY",
-  "batch13_still_open": ["HU-495", "HU-487", "HU-490"],
-  "l5_recertify": "DEFERRED"
+  "HU-577": "CODE_IN_WEB_BAKE",
+  "batch13_still_open": [
+    "HU-495",
+    "HU-487",
+    "HU-490"
+  ],
+  "l5_recertify": "DEFERRED",
+  "HU-573_probe": "evidence/GO_batch14_collective_fix/HU573-USER-MULTI-IDENTITY-PROBE-LATEST.json",
+  "web_bake": "892afc49",
+  "api_bake": "fb904660",
+  "web_api_diverge": "docs_only_tip_ED",
+  "web_deploy_exit": "2_PAGE_SURFACE_DRIFT_HU576_ED"
 }
