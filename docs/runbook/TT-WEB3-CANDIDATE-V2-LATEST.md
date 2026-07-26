@@ -1,5 +1,13 @@
 # TT · Web3 Candidate v2 · ACTIVE Web3 Candidate Baseline（LATEST）
 
+> **Repo living tip（ACTIVE · cite-only · 2026-07-23 · Multi-Dim Gap Audit）：** `ea71c577` (`ea71c577ce6f99696df33f9394cf96746edc843b`) under Pin `PSG-REL-20260720-WEB3-CAND-V2` / profile `v311_fund_safety_candidate_v2`. **Does not mutate** Candidate v2 contract profile, digests, or FG-15-B evidence roots.
+
+> **Final Truth · Phase Transition（2026-07-25 · cite-only）：** Batch-9 CLOSED · Web3 mainnet **PLACEHOLDER** · **Batch-10 = MAINLINE** · Post-mainnet Final Align（Refresh→Delta→Inventory→Reality→PRR→Hard Gate→Cutover）**DEFERRED** until real mainnet deploy · Production GO **NO_GO** · cite [`TT-FINAL-TRUTH-PHASE-TRANSITION-BATCH10-MAINLINE-LATEST`](./TT-FINAL-TRUTH-PHASE-TRANSITION-BATCH10-MAINLINE-LATEST.md).
+
+> **Final Truth · Web3 Mainnet PLACEHOLDER（2026-07-25 · cite-only）：** `TT_WEB3_MAINNET_BASELINE: PLACEHOLDER` · Hard Gate **LOCKED** · Cutover **LOCKED** · Production GO **NO_GO** · formal Recertify **DEFERRED_UNTIL_MAINNET_DEPLOY_COMPLETE** · Batch-9 Residual Final **CLOSED** · **≠** Candidate bytes mutate · cite [`TT-FINAL-TRUTH-BASELINE-REFRESH-LATEST`](./TT-FINAL-TRUTH-BASELINE-REFRESH-LATEST.md) · [`TT-BATCH9-RESIDUAL-FINAL-CLOSURE-LATEST`](./TT-BATCH9-RESIDUAL-FINAL-CLOSURE-LATEST.md).
+
+
+> **Registry sync `20260723T223829Z`:** machine `C2-05` = **ELAPSED** (PCR `PCR-20260724-CANDIDATE-LADDER-REGISTRY-SYNC-C2-05` · cite FG-15-B `OBSERVATION_ELAPSED`) · no RC tip move · Final Truth frozen · next = AXIS-11 Owner broadcast.
 **STATUS:** `ACTIVE_WEB3_CANDIDATE_BASELINE`  
 **Release:** `PSG-REL-20260720-WEB3-CAND-V2`  
 **FG-15 track:** **FG-15-B**（`PROMOTION_CANDIDATE`）  

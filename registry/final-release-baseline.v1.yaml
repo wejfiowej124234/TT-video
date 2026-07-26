@@ -1,10 +1,11 @@
-# TravelTrust · FINAL RELEASE BASELINE (unique system · re-frozen after UI Delta)
+# TravelTrust · FINAL RELEASE BASELINE (unique system · re-frozen after Completeness RC)
 # Human: docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.md
 # JSON: docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.json
 # Gate: bash scripts/gates/check-final-release-baseline-freeze-gate.sh
 #
-# P1-05/06/07 tip 3b310ca8 extends FROZEN RC 1ed03a9a without dropping ancestry.
-# Pin unchanged. ≠ Staging-grade GO ≠ Production GO ≠ Hard Gate.
+# Unique RC tip ea71c577ce6f = Completeness ingest + role promo Git LFS Media Asset SSOT
+# on ancestry of 3b310ca8 / 1ed03a9a / 6b85bde9. Pin unchanged.
+# ≠ Staging-grade GO ≠ Production GO ≠ Hard Gate.
 
 schema: traveltrust.final_release_baseline.v1
 version: 1
@@ -12,23 +13,32 @@ machine_key: TT_FINAL_RELEASE_BASELINE
 status: BASELINE_FROZEN
 freeze_status: FROZEN
 cert_suite: DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO
-ui_delta_status: PRODUCT_TIP_FROZEN_PENDING_WEB_BAKE
-recorded_utc: "2026-07-22T08:47:56Z"
-frozen_utc: "2026-07-22T08:47:56Z"
-freeze_pcr: PCR-20260722-UI-DELTA-P1-05-06-07-FREEZE
-prior_freeze_pcr: PCR-20260722-UI-DELTA-RC-CONSOLIDATE-FREEZE
+ui_delta_status: WEB_TIP_ALIGNED_API_TIP_ALIGNED
+recorded_utc: "2026-07-22T11:22:00Z"
+frozen_utc: "2026-07-22T11:22:00Z"
+freeze_pcr: PCR-20260722-RELEASE-CONSISTENCY-ED-CLEAR-REFREEZE
+prior_freeze_pcr: PCR-20260722-RC-PROMOTION-ALIGNMENT-FREEZE
 pollution_cleanup: docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md
 equals_production_go: false
 equals_staging_grade_go: false
 equals_psg_complete: false
 equals_reality_closure_pass: false
-cert_executed_this_session: false
-delta_dry_run_verdict: PENDING_AFTER_WEB_TIP_BAKE
+cert_executed_this_session: true
+delta_formal_verdict: PENDING_REFREEZE_FORMAL
+delta_formal_recorded_utc: null
+delta_dry_run_verdict: PENDING_REFRESH_AFTER_ED_CLEAR
 delta_dry_run_recorded_utc: null
 
 engineering_ssot_anchor: registry/engineering-ssot-anchor.v1.yaml
 media_assets_ssot: registry/traveltrust-role-promo-media-assets.v1.yaml
 release_completeness_audit: docs/runbook/TT-RELEASE-COMPLETENESS-AUDIT-LATEST.md
+release_consistency_final_verify: docs/runbook/TT-RELEASE-CONSISTENCY-FINAL-VERIFY-LATEST.md
+inventory_readiness_audit: docs/runbook/TT-INVENTORY-READINESS-AUDIT-LATEST.md
+feature_inventory_ssot: docs/runbook/TT-PRODUCTION-FEATURE-INVENTORY-LATEST.json
+inventory_delta_pcr: PCR-20260722-PAYMENT-SETTLEMENT-TESTNET-MONEY-PATH-CLOSURE
+prior_inventory_delta_pcr: PCR-20260722-ORDER-ESCROW-BLOCKER-CLOSURE
+order_escrow_blocker_closure: docs/runbook/TT-ORDER-ESCROW-BLOCKER-CLOSURE-LATEST.md
+payment_settlement_testnet_money_path_closure: docs/runbook/TT-PAYMENT-SETTLEMENT-TESTNET-MONEY-PATH-CLOSURE-LATEST.md
 system_architecture_human: docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md
 psg_parent: registry/psg-release-source-of-truth.v1.yaml
 
@@ -54,15 +64,14 @@ unique_system:
     machine: registry/economic-governance/egm-baseline.yaml
     evidence_status: NOT_STARTED
   code_release_tip:
-    git_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
-    git_sha_short: "3b310ca856ce"
-    selection_reason: ui_delta_p1_05_06_07_admin_showcase_studio
-    worktree_policy: UI_DELTA_COMMITTED_TRACK_B_DIRT_ISOLATED
-    freeze_commit_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
-    runtime_tip_sha: "1ed03a9a959d2404fd561a72dc724b59ecf1635e"
-    runtime_redeploy_required_before_cert: true
+    git_sha: "ea71c577ce6f99696df33f9394cf96746edc843b"
+    git_sha_short: "ea71c577ce6f"
+    selection_reason: release_completeness_ingest_role_promo_media_ssot
+    worktree_policy: UNIQUE_RC_COMMITTED_FREEZE_OVERLAY_CLEARED
+    freeze_commit_sha: "ea71c577ce6f99696df33f9394cf96746edc843b"
+    runtime_tip_sha: "ea71c577ce6f99696df33f9394cf96746edc843b"
+    runtime_redeploy_required_before_cert: false
     note: >
-      RC tip 3b310ca8 closes P1-05/06/07; retains 1ed03a9a + 6b85bde9 ancestry.
-      Staging Web bake PENDING (clean tip worktree). API tip lag Expected.
-      Page-surface Unsplash residuals = CMS Expected Difference.
-      Prior product commits retained — do not drop / reset / revert.
+      Unique RC tip ea71c577ce6f. Freeze-overlay HEAD vs tip Expected Difference CLEARED
+      when product tree identical. Staging Web+API tip ALIGNED. Remaining ED:
+      PAGE_SURFACE_UNSPLASH_RESIDUAL (CMS CONFIRM_DESIGN).

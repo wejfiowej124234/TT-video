@@ -41,7 +41,10 @@ address_authority:
     deploy_key: v311_fund_safety_candidate_v2
     status: ACTIVE_WEB3_CANDIDATE_BASELINE
     psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
-    runtime_tip_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+    runtime_tip_sha: "ea71c577ce6f99696df33f9394cf96746edc843b"
+    runtime_tip_sha_superseded_ancestry:
+      - "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+    living_tip_note: "ea71c577 = ACTIVE living tip · 3b310ca8 = SUPERSEDED ancestry (not living)"
     fg15_track: FG-15-B_ELAPSED
     does_not_mutate_fg15_a: true
 

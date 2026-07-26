@@ -4,53 +4,105 @@
   "status": "BASELINE_FROZEN",
   "freeze_status": "FROZEN",
   "cert_suite": "DELTA_RECERTIFY_FORMAL_COMPLETE_NO_GO",
-  "ui_delta_status": "PRODUCT_TIP_FROZEN_PENDING_WEB_BAKE",
-  "recorded_utc": "2026-07-22T08:47:56Z",
-  "frozen_utc": "2026-07-22T08:47:56Z",
-  "freeze_pcr": "PCR-20260722-UI-DELTA-P1-05-06-07-FREEZE",
-  "prior_freeze_pcr": "PCR-20260722-UI-DELTA-RC-CONSOLIDATE-FREEZE",
+  "ui_delta_status": "WEB_TIP_ALIGNED_API_TIP_ALIGNED",
+  "recorded_utc": "2026-07-23T22:29:43Z",
+  "frozen_utc": "2026-07-22T11:22:00Z",
+  "freeze_pcr": "PCR-20260722-RELEASE-CONSISTENCY-ED-CLEAR-REFREEZE",
+  "prior_freeze_pcr": "PCR-20260722-RC-PROMOTION-ALIGNMENT-FREEZE",
+  "drift_cleanup_pcr": "PCR-20260724-FINAL-TRUTH-DRIFT-CLEANUP",
   "engineering_ssot_anchor": "registry/engineering-ssot-anchor.v1.yaml",
   "system_architecture": "docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md",
   "pollution_cleanup": "docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md",
+  "registry_yaml_ssot": "registry/final-release-baseline.v1.yaml",
   "unique_system": {
     "web3_runtime": "Candidate_v2",
     "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
     "deploy_baseline": "v311_fund_safety_candidate_v2",
     "constitution": "V3.1.1_Final",
     "egm": "PSG_EGM_Final",
-    "git_sha": "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+    "git_sha": "ea71c577ce6f99696df33f9394cf96746edc843b"
   },
-  "alignment_status": "FROZEN_UI_DELTA_P1_PENDING_WEB_BAKE",
-  "alignment_blockers": [
-    "STAGING_WEB_TIP_PENDING_BAKE"
-  ],
+  "alignment_status": "FROZEN_WEB_API_TIP_ALIGNED_STAGING_PATCH_ED",
+  "alignment_blockers": [],
   "expected_differences": [
-    "STAGING_WEB_TIP_PENDING_BAKE",
-    "STAGING_API_TIP_LAG",
-    "FREEZE_OVERLAY_HEAD_VS_FREEZE_TIP"
+    {
+      "id": "STAGING_PATCH_HEAD_NE_TIP",
+      "disposition": "CONFIRM_DESIGN",
+      "unique_rc_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+      "head": "f123f691b3f458d8edee8d569f0e5375dafe7529",
+      "note": "HEAD may advance Staging patches; unique RC tip stays ea71c577 until Owner mints new RC"
+    },
+    {
+      "id": "ARCHIVE_PSG_GO_TAG_VS_LIVING_FINAL_TRUTH_TIP",
+      "disposition": "CONFIRM_DESIGN",
+      "archive_tag": "v1.1.0-psg-go.20260717",
+      "archive_sha": "0bbc7adbd3142b111463fc398288ab94be5c0b84",
+      "living_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+      "note": "Archive Tag = Hotfix/Patch branch root · ≠ Final Truth living tip · ≠ this-cycle Production GO claim"
+    },
+    {
+      "id": "PAGE_SURFACE_UNSPLASH_RESIDUAL",
+      "disposition": "CONFIRM_DESIGN",
+      "note": "CMS Expected Difference — not a bake blocker"
+    }
   ],
-  "cert_executed_this_session": false,
+  "cleared_stale_blockers": [
+    "STAGING_WEB_TIP_PENDING_BAKE",
+    "STAGING_API_TIP_LAG"
+  ],
+  "cert_executed_this_session": true,
   "forbid_auto_start": [
-    "PSG_Recalculate",
-    "Inventory_READY_flip",
-    "Reality_Closure_PASS_claim",
-    "formal_Delta_Recertify",
-    "Staging_grade_GO",
-    "Hard_Gate",
+    "new_RC_Identity",
+    "AXIS_09_12_14_paper_close",
+    "Cutover",
     "Production_GO"
   ],
   "next_owner": [
-    "Redeploy Staging Web @ 3b310ca8 from clean tip worktree (retains 1ed03a9a + 6b85bde9)",
-    "Do not drop prior UI Delta commits",
-    "Align + dry-run after bake; Inventory/Reality/GO stay paused"
+    "Web3 mainnet baseline remains PLACEHOLDER until real deploy",
+    "Formal alignment + Recertify only after mainnet deploy complete",
+    "Fund mainline remains stopped at AXIS-11 Owner auth (live broadcast false)",
+    "Do not mint new RC · do not paper-close AXIS-09/12/14 · do not Cutover · Production GO = NO_GO"
   ],
   "equals_production_go": false,
   "equals_staging_grade_go": false,
-  "freeze_commit_sha": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
-  "runtime_tip_sha": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
-  "runtime_redeploy_required_before_cert": true,
-  "delta_dry_run_verdict": "PENDING_AFTER_WEB_TIP_BAKE",
+  "freeze_commit_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "runtime_tip_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "deploy_git_sha": "f123f691b3f458d8edee8d569f0e5375dafe7529",
+  "runtime_redeploy_required_before_cert": false,
+  "delta_dry_run_verdict": "SEE_ENGINEERING_SSOT_COMPATIBILITY_REVALIDATION",
   "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
-  "git_sha": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
-  "delta_dry_run_recorded_utc": null
+  "git_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "honesty": "Drift Cleanup synced JSON to registry/final-release-baseline.v1.yaml living tip. Cleared stale PENDING bake blockers. Preserved dual-tip + Archive GO as ED. Batch-10 FINAL CLOSED FROZEN · Mainnet Deploy Prep PLACEHOLDER · formal Recertify deferred until mainnet deploy. ≠ Production GO ≠ Cutover.",
+  "delta_formal_verdict": "FORMAL_DELTA_PASS_WITH_EXPECTED_DIFFERENCE",
+  "delta_formal_recorded_utc": "2026-07-25T03:34:05Z",
+  "TT_WEB3_MAINNET_BASELINE": "PLACEHOLDER",
+  "TT_BATCH9_RESIDUAL_FINAL": "CLOSED",
+  "TT_FORMAL_ALIGN_RECERTIFY": "DEFERRED_UNTIL_MAINNET_DEPLOY_COMPLETE",
+  "product_living_face": "mainnet_deploy_prep_placeholder",
+  "batch10_archive_face": "FINAL_CLOSED_FROZEN",
+  "batch9_archive_face": "FINAL_CLOSED_RESIDUAL_FINAL_CLOSED",
+  "TT_ADMIN_BATCH10_MAINLINE": false,
+  "TT_ADMIN_BATCH10_SOLE_MAINLINE": false,
+  "TT_ADMIN_BATCH10_STATUS": "FINAL_CLOSED_FROZEN",
+  "TT_ADMIN_BATCH10_FREEZE_STATUS": "FROZEN",
+  "TT_PHASE_NOW": "MAINNET_DEPLOY_PREP_PLACEHOLDER",
+  "TT_BATCH10_W14": "CLOSED_②",
+  "TT_BATCH10_W12": "CLOSED_②",
+  "TT_ADMIN_BATCH10_FINAL_CLOSED": true,
+  "staging_web_build_time_batch10": "2026-07-25T06:16:38Z",
+  "TT_POST_MAINNET_FINAL_ALIGN": "DEFERRED_UNTIL_MAINNET_DEPLOY_COMPLETE",
+  "living_cites": [
+    "docs/runbook/TT-BATCH10-FINAL-CLOSED-LATEST.md",
+    "docs/runbook/TT-FINAL-TRUTH-PHASE-TRANSITION-BATCH10-MAINLINE-LATEST.md",
+    "docs/runbook/TT-FINAL-TRUTH-BASELINE-REFRESH-LATEST.md",
+    "docs/runbook/TT-BATCH9-RESIDUAL-FINAL-CLOSURE-LATEST.md",
+    "docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-BATCH-10-FINAL-TRUTH-BASELINE-CITE-LATEST.md",
+    "docs/runbook/TT-BATCH10-W14-STAGING-VERIFY-LATEST.md",
+    "docs/runbook/TT-BATCH10-W12-STAGING-VERIFY-LATEST.md",
+    "docs/runbook/TT-BATCH10-W11-STAGING-VERIFY-LATEST.md",
+    "docs/runbook/TT-BATCH10-W7-STAGING-VERIFY-LATEST.md",
+    "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md",
+    "docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md",
+    "docs/runbook/TT-FINAL-TRUTH-PRE-MAINNET-EXECUTION-LADDER-LATEST.md"
+  ]
 }
