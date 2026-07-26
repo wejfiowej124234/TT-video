@@ -1,12 +1,12 @@
 {
   "schema": "traveltrust.batch14_collective_fix_in_progress.v1",
   "machine_key": "TT_ADMIN_BATCH14_COLLECTIVE_FIX",
-  "stamp": "20260726T105300Z",
+  "stamp": "20260726T113000Z",
   "status": "FIX_IN_PROGRESS",
   "freeze_unlock": true,
   "freeze_unlock_scope": "batch14_collective_fix_only",
   "patch": "PATCH-STG-019",
-  "working_bake": "a6f481c3fa551e44a0e4e4ae9e950e6723ff6f06",
+  "working_bake": "fb904660",
   "sole_worklist": "docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md",
   "pcr": "PCR-20260726-BATCH14-COLLECTIVE-FIX",
   "l2_probe": "evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json",
@@ -15,13 +15,24 @@
   "l2": "PASS",
   "l3": "CODE_DEPLOYED_PARTIAL_VERIFY",
   "l4": "PARTIAL_122_200_NEED_FIX",
-  "l5": "DEFERRED_UNTIL_REMAINING_HU_CLOSE",
+  "l5": "DEFERRED",
   "hu568": "CLOSED",
   "hu569": "CLOSED",
   "hu570": "PARTIAL_CLOSED_users_orders_disputes",
   "wave_w1": "L2_PASS",
-  "waves": ["W1_P0_DATA", "W2_P0_UI", "W3_P1", "W4_P2", "W5_STAGING_VERIFY", "W6_RECERTIFY"],
-  "must_remain_open": ["HU-495", "HU-487", "HU-490"],
+  "waves": [
+    "W1_P0_DATA",
+    "W2_P0_UI",
+    "W3_P1",
+    "W4_P2",
+    "W5_STAGING_VERIFY",
+    "W6_RECERTIFY"
+  ],
+  "must_remain_open": [
+    "HU-495",
+    "HU-487",
+    "HU-490"
+  ],
   "hu_range_locked": "568-577",
   "tip": "ea71c577",
   "tip_immobile": true,
@@ -40,5 +51,8 @@
     "L5_final_truth_recertify"
   ],
   "alignment_ladder_note": "Batch-14 is Baseline inconsistency alignment along Candidate v2 → API → Runtime → Admin → Evidence → Recertify. Not a Web3 redesign.",
-  "equals_production_go": false
+  "equals_production_go": false,
+  "api_ssot_bake": "2f943f3f",
+  "score": "134/200",
+  "hu491": "CLOSED"
 }
