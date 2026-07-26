@@ -1,9 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { AdminContentPageShell, AdminContentStatusBadge } from "@/components/admin/content/AdminContentPageShell";
+import {
+  adminConfirmAnnouncementPublish,
+  adminConfirmAnnouncementUnpublish,
+} from "@/lib/admin/adminOpsWriteConfirm";
 import {
   AdminContentDataTable,
   AdminContentTableBody,
@@ -14,12 +20,14 @@ import { AdminOpsRiskBanner } from "@/components/admin/ops/AdminOpsRiskBanner";
 import { OfficialOpsFormCard } from "@/components/admin/ops/OfficialOpsFormCard";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { canAdminMutateCmsAnnouncementLane } from "@/lib/admin/cmsAnnouncementLanePermissions";
+import { contentAnnouncementVerifyHref } from "@/lib/admin/contentOpsL5";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import {
   ADMIN_FILTER_FIELD_LABEL_CLASS,
   ADMIN_FILTER_INPUT_MD_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_TABLE_TD_CELL_CLASS,
+  ADMIN_TEXT_FOOTNOTE_CLASS,
   adminTableRowPrimaryActionClass,
 } from "@/lib/adminUi";
 
@@ -28,6 +36,7 @@ import { useAdminContentAnnouncementsPage } from "./useAdminContentAnnouncements
 export function AdminContentAnnouncementsPageMain() {
   const { t, locale } = useTranslation();
   const titleId = useId();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const caps = useAdminCapabilities();
   const hasPerm = (id: Parameters<typeof caps.hasPermission>[0]) => caps.hasPermission(id);
   const canWriteLane = (lane: string) => canAdminMutateCmsAnnouncementLane(hasPerm, lane, false);
@@ -265,17 +274,48 @@ export function AdminContentAnnouncementsPageMain() {
                     type="button"
                     className={ADMIN_PRIMARY_ACTION_BTN_CLASS}
                     disabled={busy}
-                    onClick={() => void workflow(row, "publish")}
+                    onClick={() =>
+                      requestConfirm(
+                        adminConfirmAnnouncementPublish(() => void workflow(row, "publish")),
+                      )
+                    }
                   >
                     {t("admin_content_announcements_publish_btn")}
                   </button>
+                ) : null}
+                {row.publish_status === "published" ? (
+                  (() => {
+                    const verifyHref = contentAnnouncementVerifyHref(row);
+                    return verifyHref ? (
+                      <Link
+                        href={verifyHref}
+                        className={`${adminTableRowPrimaryActionClass()} mr-2 inline-flex`}
+                        data-tt-admin-content-verify-cta="1"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {t("admin_content_action_verify")}
+                      </Link>
+                    ) : (
+                      <span
+                        className={`mr-2 text-meta ${ADMIN_TEXT_FOOTNOTE_CLASS}`}
+                        data-tt-admin-content-verify-unavailable="1"
+                      >
+                        {t("admin_content_action_verify_unavailable")}
+                      </span>
+                    );
+                  })()
                 ) : null}
                 {canWriteLane(row.lane) && row.publish_status === "published" ? (
                   <button
                     type="button"
                     className={adminTableRowPrimaryActionClass()}
                     disabled={busy}
-                    onClick={() => void workflow(row, "unpublish")}
+                    onClick={() =>
+                      requestConfirm(
+                        adminConfirmAnnouncementUnpublish(() => void workflow(row, "unpublish")),
+                      )
+                    }
                   >
                     {t("admin_content_announcements_unpublish_btn")}
                   </button>

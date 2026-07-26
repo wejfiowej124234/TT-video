@@ -24,6 +24,7 @@ import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
   ADMIN_ATTENTION_CALLOUT_CLASS,
   ADMIN_FILTER_CARD_CLASS,
+  ADMIN_FORM_CONTROL_SM_CLASS,
   ADMIN_INLINE_LINK_CLASS,
   ADMIN_LIST_PAGE_BODY_CANVAS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
@@ -32,12 +33,41 @@ import {
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
   TT_ADMIN_PAGE_INNER_DETAIL,
-  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
+  ADMIN_INNER_DIVIDER_CLASS,
+} from "@/lib/adminUi";
 
 function stripeEchoCell(row: Record<string, unknown>): string {
   const echo = extractWebhookStripeEcho(row);
   if (!echo.eventType && !echo.providerEventId) return "—";
   return [echo.eventType, echo.providerEventId].filter(Boolean).join(" · ");
+}
+
+function shortId(raw: string): string {
+  const s = raw.trim();
+  if (s.length <= 12) return s;
+  return `${s.slice(0, 8)}…`;
+}
+
+function humanCell(row: Record<string, unknown>, key: string): string {
+  const v = row[key];
+  if (v == null) return "—";
+  if (typeof v === "string") {
+    if (key === "id" || key.endsWith("_id") || key === "job_id" || key === "user_id") {
+      return shortId(v);
+    }
+    return v;
+  }
+  if (typeof v === "number" || typeof v === "boolean") return String(v);
+  if (typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    const hint =
+      (typeof o.status === "string" && o.status) ||
+      (typeof o.type === "string" && o.type) ||
+      (typeof o.event_type === "string" && o.event_type) ||
+      null;
+    return hint ? String(hint) : "—";
+  }
+  return String(v);
 }
 
 export function AdminOnboardingListPage(props: {
@@ -69,6 +99,8 @@ export function AdminOnboardingListPage(props: {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<AdminFetchErrorKind | null>(null);
   const [items, setItems] = useState<Record<string, unknown>[]>([]);
+  const [statusFilter, setStatusFilter] = useState("");
+  const [query, setQuery] = useState("");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -90,12 +122,20 @@ export function AdminOnboardingListPage(props: {
     void load();
   }, [load]);
 
-  const cell = (row: Record<string, unknown>, key: string): string => {
-    const v = row[key];
-    if (v == null) return "—";
-    if (typeof v === "object") return JSON.stringify(v).slice(0, 80);
-    return String(v);
-  };
+  const statusOptions = Array.from(
+    new Set(
+      items
+        .map((r) => (typeof r.status === "string" ? r.status.trim() : ""))
+        .filter(Boolean),
+    ),
+  ).sort();
+
+  const visibleItems = items.filter((row) => {
+    if (statusFilter && String(row.status ?? "") !== statusFilter) return false;
+    if (!query.trim()) return true;
+    const q = query.trim().toLowerCase();
+    return columns.some((c) => humanCell(row, c.key).toLowerCase().includes(q));
+  });
 
   return (
     <main
@@ -138,7 +178,36 @@ export function AdminOnboardingListPage(props: {
         {webhookStripeEcho ? <AdminOnboardingWebhookStripeEchoStrip /> : null}
         {stripeEchoColumn && !webhookStripeEcho ? <AdminOnboardingPaymentEventsStripeEchoStrip /> : null}
 
-        <div className={ADMIN_FILTER_CARD_CLASS}>
+        <div
+          className={`${ADMIN_FILTER_CARD_CLASS} flex flex-wrap items-end gap-3`}
+          data-tt-admin-onboarding-list-filters="1"
+        >
+          <label className="flex flex-col gap-1 text-small text-ink-700">
+            <span>{t("admin_onb_list_filter_status")}</span>
+            <select
+              className={ADMIN_FORM_CONTROL_SM_CLASS}
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              data-tt-admin-onboarding-list-status-filter="1"
+            >
+              <option value="">{t("admin_onb_list_filter_status_all")}</option>
+              {statusOptions.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-small text-ink-700">
+            <span>{t("admin_onb_list_filter_query")}</span>
+            <input
+              className={ADMIN_FORM_CONTROL_SM_CLASS}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={t("admin_onb_list_filter_query_ph")}
+              data-tt-admin-onboarding-list-query="1"
+            />
+          </label>
           <button
             type="button"
             className={ADMIN_PRIMARY_ACTION_BTN_CLASS}
@@ -160,7 +229,13 @@ export function AdminOnboardingListPage(props: {
           />
         ) : null}
 
-        {!loading && items.length > 0 ? (
+        {!loading && items.length > 0 && visibleItems.length === 0 ? (
+          <p className="mt-4 text-small text-ink-600" data-tt-admin-onboarding-list-filter-empty="1">
+            {t("admin_onb_list_filter_empty")}
+          </p>
+        ) : null}
+
+        {!loading && visibleItems.length > 0 ? (
           <div className={ADMIN_TABLE_SECTION_CLASS}>
             <table className="min-w-full text-left text-small" aria-label={t(titleKey)}>
               <thead className={ADMIN_TABLE_THEAD_CLASS}>
@@ -178,13 +253,18 @@ export function AdminOnboardingListPage(props: {
                 </tr>
               </thead>
               <tbody className={ADMIN_TABLE_ROW_CLASS}>
-                {items.map((row, i) => (
+                {visibleItems.map((row, i) => (
                   <tr key={String(row.id ?? row.job_id ?? i)} className={ADMIN_INNER_DIVIDER_CLASS}>
                     {columns.map((c) => {
-                      const raw = cell(row, c.key);
+                      const raw = humanCell(row, c.key);
                       const href = c.key === "id" && detailHref ? detailHref(row) : null;
+                      const isIdish = c.key === "id" || c.key.endsWith("_id") || c.key === "job_id";
                       return (
-                        <td key={c.key} className="max-w-xs truncate px-3 py-2 font-mono text-meta">
+                        <td
+                          key={c.key}
+                          className={`max-w-xs truncate px-3 py-2 text-meta${isIdish ? " font-mono" : ""}`}
+                          title={typeof row[c.key] === "string" ? String(row[c.key]) : undefined}
+                        >
                           {href ? (
                             <Link href={href} className={ADMIN_INLINE_LINK_CLASS}>
                               {raw}

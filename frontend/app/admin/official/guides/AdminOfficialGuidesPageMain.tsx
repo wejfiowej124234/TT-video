@@ -31,6 +31,7 @@ import {
 } from "@/lib/apiClient";
 
 import { useAdminOfficialGuidesPage } from "./useAdminOfficialGuidesPage";
+import { AdminGuidesTriangleStrip } from "@/components/admin/AdminGuidesTriangleStrip";
 
 export function AdminOfficialGuidesPageMain() {
   const { t } = useTranslation();
@@ -80,6 +81,7 @@ export function AdminOfficialGuidesPageMain() {
       title={t("admin_official_guides_title")}
       subtitle={t("admin_official_guides_subtitle")}
     >
+      <AdminGuidesTriangleStrip current="official" />
       <AdminOpsPlanePermissionBanners read={ADMIN_PERM.OFFICIAL_READ} write={ADMIN_PERM.OFFICIAL_WRITE} publish={ADMIN_PERM.OFFICIAL_PUBLISH} />
 
       <AdminOpsRiskBanner messageKey="admin_ops_risk_banner_official_publish" variant="warning" />

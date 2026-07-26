@@ -7,14 +7,22 @@ import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminAcquisitionPublishSuspendModal } from "@/components/admin/AdminAcquisitionPublishSuspendModal";
 import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { AdminOpsLeafDataSourceStrip } from "@/components/admin/AdminOpsLeafDataSourceStrip";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
+import { AdminUsersCapabilityStrip } from "@/components/admin/AdminUsersCapabilityStrip";
 import type { UseAdminUsersPageResult } from "./useAdminUsersPage";
 import { AdminUsersRoleSuccessBanner } from "./AdminUsersRoleSuccessBanner";
 import { AdminUsersFiltersCard } from "./AdminUsersFiltersCard";
 import { AdminUsersDataSection } from "./AdminUsersDataSection";
 import { AdminUsersRoleChangeModal } from "./AdminUsersRoleChangeModal";
 import { USERS_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminOpsListRelatedFoldLinks";
-import { adminTableRowPrimaryActionClass } from "@/lib/adminUi";
+import {
+  ADMIN_FILTER_RESET_BTN_CLASS,
+  ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_TEXT_META_CLASS,
+  adminTableRowPrimaryActionClass,
+} from "@/lib/adminUi";
 
 export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
   const { t } = useTranslation();
@@ -31,13 +39,14 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
     error,
     items,
     appliedFilters,
-    meta,
     draftLimit,
     setDraftLimit,
     draftRole,
     setDraftRole,
     draftKyc,
     setDraftKyc,
+    draftEmail,
+    setDraftEmail,
     roleUser,
     targetRole,
     setTargetRole,
@@ -50,6 +59,9 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
     setRoleSuccessApprovalId,
     applyFilters,
     resetFilters,
+    goPrevPage,
+    goNextPage,
+    listRange,
     openRoleModal,
     closeRoleModal,
     submitRoleChange,
@@ -62,6 +74,7 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
     closeSuspendModal,
     applySuspendResult,
     quickLiftSuspend,
+    meta,
   } = vm;
 
   return (
@@ -76,6 +89,8 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
         foldSummaryKey="admin_ops_list_related_fold"
         dataTtFold="users-list"
       />
+      <AdminOpsLeafDataSourceStrip leaf="users" meta={meta} emphasizeUsersDrift />
+      <AdminUsersCapabilityStrip />
       <div className="mb-4 flex flex-wrap gap-3" data-tt-admin-users-list-actions="1">
         <Link
           href="/admin/approvals"
@@ -105,6 +120,8 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
         setDraftRole={setDraftRole}
         draftKyc={draftKyc}
         setDraftKyc={setDraftKyc}
+        draftEmail={draftEmail}
+        setDraftEmail={setDraftEmail}
         applyFilters={applyFilters}
         resetFilters={resetFilters}
         t={t}
@@ -117,7 +134,6 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
         error={error}
         appliedFilters={appliedFilters}
         items={items}
-        meta={meta}
         fetchErrorUserText={fetchErrorUserText}
         openRoleModal={openRoleModal}
         openSuspendModal={openSuspendModal}
@@ -127,6 +143,48 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
         suspendInlineErrorKind={suspendInlineErrorKind}
         t={t}
       />
+
+      {!loading && !error ? (
+        <nav
+          className="mt-4 flex flex-wrap items-center justify-between gap-3"
+          aria-label={t("admin_users_pagination_aria")}
+          data-tt-admin-users-pagination="1"
+          data-tt-admin-users-pagination-offset={String(vm.offset)}
+        >
+          <p className={ADMIN_TEXT_META_CLASS} data-tt-admin-users-pagination-range="1">
+            {listRange.total != null
+              ? t("admin_users_pagination_range", {
+                  from: String(listRange.from),
+                  to: String(listRange.to),
+                  total: String(listRange.total),
+                })
+              : t("admin_users_pagination_range_unknown", {
+                  from: String(listRange.from),
+                  to: String(listRange.to),
+                })}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              className={`inline-flex min-h-[44px] items-center justify-center px-3 ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              disabled={!listRange.hasPrev}
+              onClick={goPrevPage}
+              data-tt-admin-users-pagination-prev="1"
+            >
+              {t("admin_users_pagination_prev")}
+            </button>
+            <button
+              type="button"
+              className={`inline-flex min-h-[44px] items-center justify-center px-3 ${ADMIN_PRIMARY_ACTION_BTN_CLASS}`}
+              disabled={!listRange.hasNext}
+              onClick={goNextPage}
+              data-tt-admin-users-pagination-next="1"
+            >
+              {t("admin_users_pagination_next")}
+            </button>
+          </div>
+        </nav>
+      ) : null}
 
       {roleUser ? (
         <AdminUsersRoleChangeModal

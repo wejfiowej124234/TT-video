@@ -15,6 +15,7 @@ import { AdminUnifiedInboxTaskDetail } from "@/components/admin/AdminUnifiedInbo
 import { buildAdminUnifiedInboxTasks } from "@/lib/admin/adminUnifiedInboxTasks";
 import { AdminInboxWorkflowQuickNav } from "@/components/admin/AdminInboxWorkflowQuickNav";
 import { ADMIN_EMPTY_NEXT_UNIFIED_INBOX_CLEAR } from "@/lib/admin/adminListEmptyStateNextLinks";
+import { ADMIN_INBOX_QUEUE_HREFS } from "@/lib/admin/adminInboxQueueHrefs";
 import { useAdminUnifiedInboxDetailPanel } from "@/lib/admin/useAdminUnifiedInboxDetailPanel";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { useAdminHomeInbox } from "@/lib/admin/useAdminHomeInbox";
@@ -28,10 +29,11 @@ import {
   adminPageNavLinkClass,
   ADMIN_INFO_BADGE_CLASS,
   ADMIN_CONSOLE_MUTED_PANEL_CLASS,
+  ADMIN_TEXT_META_CLASS,
 } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
-/** U5 · ① 统一任务收件箱（四队列真实计数 + 权限诚实）。 */
+/** U5 · ① 统一任务收件箱（五通道真实计数 + 权限诚实）。 */
 export function AdminUnifiedInboxPageMain() {
   const { t } = useTranslation();
   const titleId = useId();
@@ -98,6 +100,31 @@ export function AdminUnifiedInboxPageMain() {
         />
       ) : null}
 
+      {/* Batch-12 HU-471 · 双控/举报发现性（≤12 不扩侧栏 · Inbox 一等入口） */}
+      <nav
+        className={`mt-3 flex flex-wrap items-center gap-2 ${ADMIN_CONSOLE_MUTED_PANEL_CLASS} px-3 py-2.5`}
+        aria-label={t("admin_unified_inbox_discover_aria")}
+        data-tt-admin-inbox-discover-queues="1"
+      >
+        <span className={`w-full text-small font-medium sm:w-auto ${ADMIN_TEXT_META_CLASS}`}>
+          {t("admin_unified_inbox_discover_label")}
+        </span>
+        <Link
+          href={ADMIN_INBOX_QUEUE_HREFS.approvals}
+          className={`${touchTargetLink44Classes} font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+          data-tt-admin-inbox-discover-leaf="approvals"
+        >
+          {t("admin_home_inbox_approvals")}
+        </Link>
+        <Link
+          href={ADMIN_INBOX_QUEUE_HREFS.reports}
+          className={`${touchTargetLink44Classes} font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+          data-tt-admin-inbox-discover-leaf="reports"
+        >
+          {t("admin_home_inbox_reports_queue")}
+        </Link>
+      </nav>
+
       {!inbox.loading && !inbox.error && totalPending === 0 ? (
         <div
           className={`mt-3 flex items-start gap-2 ${ADMIN_CONSOLE_MUTED_PANEL_CLASS} px-3 py-2.5`}
@@ -114,7 +141,7 @@ export function AdminUnifiedInboxPageMain() {
         </div>
       ) : null}
 
-      {!inbox.loading && totalPending !== null && totalPending > 0 ? (
+      {!inbox.loading ? (
         <AdminInboxWorkflowQuickNav tasks={tasks} loading={inbox.loading} placement="unified" />
       ) : null}
 

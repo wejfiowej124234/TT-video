@@ -91,6 +91,8 @@ pub async fn get_admin_disputes(
     let mut body = json!({
         "status": "ok",
         "items": items,
+        // Inventory total before page truncate (Admin home KPI fail-closed on missing total).
+        "total": total_after_filter,
         "applied_filters": {
             "limit": limit,
             "status": status_filter,

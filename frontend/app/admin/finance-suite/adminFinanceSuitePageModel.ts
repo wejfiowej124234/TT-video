@@ -9,6 +9,8 @@ export const FINANCE_SUITE_MODULES: {
   openCtaKey: string;
   perm: (typeof ADMIN_PERM)[keyof typeof ADMIN_PERM];
   status: "active" | "partial" | "placeholder";
+  /** Batch-11 HU-401 · Snapshot/Claim 仍为 Target */
+  targetSnapshotClaim?: boolean;
 }[] = [
   {
     id: "reconciliation",
@@ -27,6 +29,7 @@ export const FINANCE_SUITE_MODULES: {
     openCtaKey: "admin_fin_suite_hub_depth_open_fee_router",
     perm: ADMIN_PERM.FINANCE_READ,
     status: "partial",
+    targetSnapshotClaim: true,
   },
   {
     id: "finance-summary",
@@ -44,7 +47,8 @@ export const FINANCE_SUITE_MODULES: {
     descKey: "admin_fin_suite_refunds_desc",
     openCtaKey: "admin_fin_suite_hub_depth_open_refunds",
     perm: ADMIN_PERM.DISPUTES_WRITE,
-    status: "partial",
+    /** Placeholder: disputes ≠ refunds center — hidden from primary suite grid. */
+    status: "placeholder",
   },
   {
     id: "cross-check",
@@ -66,7 +70,7 @@ export const FINANCE_SUITE_MODULES: {
   },
 ];
 
-/** 七件套旁路深度（drift · region-vault）。 */
+/** 七件套旁路深度（仅资金相关 · HU-284 去掉观测/增长/告警污染）。 */
 export const FINANCE_SUITE_SUPPLEMENT_MODULES = [
   {
     id: "drift",
@@ -79,41 +83,24 @@ export const FINANCE_SUITE_SUPPLEMENT_MODULES = [
     href: "/admin/region-vault",
     titleKey: "admin_fin_suite_supplement_vault",
     descKey: "admin_fin_suite_supplement_vault_desc",
+    targetSnapshotClaim: true,
   },
   {
-    id: "indexer",
-    href: "/admin/indexer",
-    titleKey: "admin_fin_suite_supplement_indexer",
-    descKey: "admin_fin_suite_supplement_indexer_desc",
+    id: "net-profit-ledger",
+    href: "/admin/net-profit-ledger",
+    titleKey: "admin_fin_suite_supplement_net_profit",
+    descKey: "admin_fin_suite_supplement_net_profit_desc",
   },
   {
-    id: "reconcile-reports",
-    href: "/admin/indexer/reconcile-reports",
-    titleKey: "admin_fin_suite_supplement_reconcile_reports",
-    descKey: "admin_fin_suite_supplement_reconcile_reports_desc",
+    id: "region-share-reconcile",
+    href: "/admin/region-share/reconcile",
+    titleKey: "admin_fin_suite_supplement_region_share",
+    descKey: "admin_fin_suite_supplement_region_share_desc",
   },
   {
     id: "vacancy-ledger-ops",
     href: "/admin/vacancy-ledger",
     titleKey: "admin_fin_suite_supplement_vacancy_ledger_ops",
     descKey: "admin_fin_suite_supplement_vacancy_ledger_ops_desc",
-  },
-  {
-    id: "observability",
-    href: "/admin/observability",
-    titleKey: "admin_fin_suite_supplement_observability",
-    descKey: "admin_fin_suite_supplement_observability_desc",
-  },
-  {
-    id: "trust-growth",
-    href: "/admin/trust-growth",
-    titleKey: "admin_fin_suite_supplement_trust_growth",
-    descKey: "admin_fin_suite_supplement_trust_growth_desc",
-  },
-  {
-    id: "alert-incidents",
-    href: "/admin/alerts/incidents",
-    titleKey: "admin_fin_suite_supplement_alert_incidents",
-    descKey: "admin_fin_suite_supplement_alert_incidents_desc",
   },
 ] as const;

@@ -10,8 +10,9 @@ import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/t
 /** FIN-02 · ① 七件套 partial 深度诚实边界（真 PSP · ②/③ 另闸 · 默认折叠）。 */
 export function AdminFinancePspPhase2DepthNotice() {
   const { t } = useTranslation();
-  const partialCount = FINANCE_SUITE_MODULES.filter((m) => m.status === "partial").length;
-  const total = FINANCE_SUITE_MODULES.length;
+  const primaryModules = FINANCE_SUITE_MODULES.filter((m) => m.status !== "placeholder");
+  const partialCount = primaryModules.filter((m) => m.status === "partial").length;
+  const total = primaryModules.length;
 
   return (
     <details

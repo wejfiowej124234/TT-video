@@ -16,7 +16,8 @@ import {
 export function useAdminOrdersPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { limit, state, data_origin } = useMemo(
+  // HU-418: ignore data_origin query — client filter removed until server-side filter lands
+  const { limit, state, id, q } = useMemo(
     () => parseOrdersListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
@@ -26,8 +27,10 @@ export function useAdminOrdersPage() {
       routes.admin.orders({
         limit,
         ...(state ? { state } : {}),
+        ...(id ? { id } : {}),
+        ...(q ? { q } : {}),
       }),
-    [limit, state],
+    [limit, state, id, q],
   );
 
   const { items, appliedFilters, meta, loading, refreshing, error } =
@@ -39,42 +42,56 @@ export function useAdminOrdersPage() {
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftState, setDraftState] = useState(state);
+  const [draftIdQuery, setDraftIdQuery] = useState(id || q);
 
   useEffect(() => {
     setDraftLimit(String(limit));
     setDraftState(state);
-  }, [limit, state]);
-
-  const filteredItems = useMemo(() => {
-    if (!data_origin) return items;
-    return items.filter((row) => (row.data_origin ?? "").trim() === data_origin);
-  }, [items, data_origin]);
+    setDraftIdQuery(id || q);
+  }, [limit, state, id, q]);
 
   const apply = (e?: FormEvent) => {
     e?.preventDefault();
     const lim = clampOrderLimit(Number.parseInt(draftLimit.trim(), 10));
     const st = draftState.trim().slice(0, STATE_MAX);
-    router.push(buildOrdersListPath({ limit: lim, state: st, data_origin }));
+    const needle = draftIdQuery.trim();
+    // 完整 UUID → id=；否则 → q= 子串
+    const looksUuid =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(needle);
+    router.push(
+      buildOrdersListPath({
+        limit: lim,
+        state: st,
+        ...(needle
+          ? looksUuid
+            ? { id: needle }
+            : { q: needle }
+          : {}),
+      }),
+    );
   };
 
   const reset = () => {
-    router.push(buildOrdersListPath({ limit: 100, state: "", data_origin: "" }));
+    router.push(buildOrdersListPath({ limit: 100, state: "" }));
   };
 
   return {
     limit,
     state,
-    data_origin,
+    id,
+    q,
     loading,
     refreshing,
     error,
-    items: filteredItems,
+    items,
     appliedFilters,
     meta,
     draftLimit,
     setDraftLimit,
     draftState,
     setDraftState,
+    draftIdQuery,
+    setDraftIdQuery,
     apply,
     reset,
   };

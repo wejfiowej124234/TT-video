@@ -106,6 +106,20 @@ export function AdminHomeMaintainerFold(props: {
 
             <Link
 
+              href="/admin/observability"
+
+              className={`${touchTargetLink44Classes} text-small font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+
+              data-tt-admin-home-maintainer-observability="1"
+
+            >
+
+              {t("admin_home_maintainer_observability_link")}
+
+            </Link>
+
+            <Link
+
               href="/admin/operator-guide"
 
               className={`${touchTargetLink44Classes} text-small font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
@@ -129,6 +143,16 @@ export function AdminHomeMaintainerFold(props: {
             <AdminAuditCompareLinks />
 
             <AdminHomeOperatorGuide />
+
+            <p className="text-small">
+              <Link
+                href="/admin/observability"
+                className={`${touchTargetLink44Classes} font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+                data-tt-admin-home-maintainer-observability="1"
+              >
+                {t("admin_home_maintainer_observability_link")}
+              </Link>
+            </p>
 
           </>
 

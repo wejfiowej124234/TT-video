@@ -44,6 +44,7 @@ export function AdminContentCountriesPageMain() {
     submitReview,
     publish,
     saveRow,
+    reload,
   } = useAdminContentCountriesPage();
   const requestConfirm = useAdminL5ConfirmRequest();
   const [editNames, setEditNames] = useState<Record<string, { zh: string; en: string }>>({});
@@ -55,6 +56,7 @@ export function AdminContentCountriesPageMain() {
       subtitleKey="admin_content_countries_subtitle"
       loading={loading}
       error={error}
+      onRetry={() => void reload()}
     >
       <AdminOpsRiskBanner messageKey="admin_ops_risk_banner_catalog_publish" />
       <AdminContentFormCard

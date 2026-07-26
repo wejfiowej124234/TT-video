@@ -72,26 +72,33 @@ pub struct AdminReviewsQuery {
     pub max_score: Option<i16>,
 }
 
-/// Admin 订单列表：可选 **`limit`**（1～500，缺省 100）、**`state`**（与 **`order_state_to_str`** 同形，如 **`draft`**）。
+/// Admin 订单列表：可选 **`limit`**（1～500，缺省 100）、**`state`**、**`id`**、**`q`**。
 #[derive(Debug, Deserialize)]
 pub struct AdminOrdersListQuery {
     pub limit: Option<i64>,
     pub state: Option<String>,
+    pub id: Option<String>,
+    pub q: Option<String>,
 }
 
-/// Admin 争议列表：可选 **`limit`**（1～500，缺省 100）、**`status`**（与列表行 **`status`** 精确匹配）。
+/// Admin 争议列表：可选 **`limit`** / **`status`** / **`id`** / **`order_id`** / **`q`**。
 #[derive(Debug, Deserialize)]
 pub struct AdminDisputesListQuery {
     pub limit: Option<i64>,
     pub status: Option<String>,
+    pub id: Option<String>,
+    pub order_id: Option<String>,
+    pub q: Option<String>,
 }
 
-/// Admin 用户列表：可选 **`limit`**（1～500，缺省 100）、**`role`** / **`kyc_status`**（与行内字段精确匹配）。
+/// Admin 用户列表：可选 **`limit`**（1～500，缺省 100）、**`offset`**、**`email`**（子串）、**`role`** / **`kyc_status`**（精确匹配）。
 #[derive(Debug, Deserialize)]
 pub struct AdminUsersListQuery {
     pub limit: Option<i64>,
+    pub offset: Option<i64>,
     pub role: Option<String>,
     pub kyc_status: Option<String>,
+    pub email: Option<String>,
 }
 
 /// Admin 向导台账：可选 **`limit`**（1～500，缺省 100）、**`status`**（与向导 **`status`** 精确匹配）。

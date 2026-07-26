@@ -19,10 +19,10 @@ import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { adminErrorUserText, type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import type { NormalizedAdminDriftSummary } from "@/lib/apiClient";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
-import { formatDriftDetected, formatDriftSummaryUnknownJson } from "./adminDriftSummaryPageModel";
+import { adminFinanceDriftDeltaRows } from "@/lib/admin/adminFinanceDriftDeltaTable";
+import { formatDriftDetected } from "./adminDriftSummaryPageModel";
 import { financeGovernanceRelatedFoldLinks } from "@/lib/admin/adminFinanceGovernanceRelatedFoldLinks";
 import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass,
-  ADMIN_CONSOLE_JSON_BLOCK_CLASS,
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 /** Epic C-04：漂移摘要只读页（C-02 归一化）；不提供修复动作。 */
@@ -40,6 +40,7 @@ export default function AdminDriftSummaryPageMain({
   const { t } = useTranslation();
   const pageTitleId = useId();
   const noticeId = useId();
+  const deltaRows = model ? adminFinanceDriftDeltaRows(model.delta) : [];
 
   return (
     <AdminListPageChrome
@@ -108,13 +109,39 @@ export default function AdminDriftSummaryPageMain({
               </span>
             </p>
             <p className="mt-3 text-small font-medium text-ink-600">{t("admin_drift_summary_delta_label")}</p>
-            <pre
-              className={`mt-1 ${ADMIN_CONSOLE_JSON_BLOCK_CLASS}`}
-              data-testid="admin-drift-summary-delta"
-              data-tt-admin-gov-json-block="1"
-            >
-              {formatDriftSummaryUnknownJson(model.delta)}
-            </pre>
+            {deltaRows.length === 0 ? (
+              <p
+                className="mt-2 text-body text-ink-700"
+                data-testid="admin-drift-summary-delta"
+                data-tt-admin-fin-drift-delta-empty="1"
+                data-tt-admin-fin-drift-delta-table="1"
+              >
+                {t("admin_drift_summary_delta_empty")}
+              </p>
+            ) : (
+              <div className="mt-2 overflow-x-auto" data-tt-admin-fin-drift-delta-table="1">
+                <table className="min-w-full text-left text-small text-ink-800" data-testid="admin-drift-summary-delta">
+                  <thead>
+                    <tr className="border-b border-white/10 text-meta text-ink-500">
+                      <th className="px-2 py-1.5 font-medium">{t("admin_drift_summary_delta_col_key")}</th>
+                      <th className="px-2 py-1.5 font-medium">{t("admin_drift_summary_delta_col_count")}</th>
+                      <th className="px-2 py-1.5 font-medium">{t("admin_drift_summary_delta_col_amount")}</th>
+                      <th className="px-2 py-1.5 font-medium">{t("admin_drift_summary_delta_col_note")}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {deltaRows.map((row) => (
+                      <tr key={row.key} className="border-b border-white/5">
+                        <td className="px-2 py-1.5 tabular-nums">{row.key}</td>
+                        <td className="px-2 py-1.5 tabular-nums">{row.count}</td>
+                        <td className="px-2 py-1.5 tabular-nums">{row.amount}</td>
+                        <td className="px-2 py-1.5">{row.note || "—"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </AdminWarmL5Surface>
         ) : null}
       </div>

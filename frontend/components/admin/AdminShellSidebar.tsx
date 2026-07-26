@@ -9,7 +9,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 
 import { admU01ShellGroupVisible } from "@/lib/admin/admU01ShellGroupVisibility";
-import { filterAdminShellLinksForCapabilitiesFailure } from "@/lib/admin/adminShellCapabilitiesFailureNav";
+import {
+  ADMIN_SHELL_CAPABILITIES_FAILURE_EXTRA_LINKS,
+  filterAdminShellLinksForCapabilitiesFailure,
+} from "@/lib/admin/adminShellCapabilitiesFailureNav";
 
 import { adminHomeCardRequiredPermission } from "@/lib/admin/adminHomeCardPermission";
 
@@ -18,6 +21,7 @@ import { adminHomeCardTierForHref } from "@/lib/admin/adminHomeCardCapability";
 import { adminShellContextForPath } from "@/lib/admin/adminShellContextForPath";
 
 import { ADMIN_SHELL_SIDEBAR_GROUPS } from "@/lib/admin/adminShellSidebarModel";
+import { adminShellSidebarGroupMatchesContext } from "@/lib/admin/adminShellSidebarContextMatch";
 
 import { adminShellNavPendingCount } from "@/lib/admin/adminShellInboxNavBadge";
 import {
@@ -30,7 +34,7 @@ import { useAdminHomeInboxFocusMode } from "@/lib/admin/useAdminHomeInboxFocusMo
 import { useAdminShellSidebarVisible } from "@/lib/admin/useAdminShellSidebarVisible";
 
 import { AdminShellPendingBadge } from "@/components/admin/AdminShellPendingBadge";
-import { AdminShellNavIcon, adminShellNavIconIdForGroup, adminShellNavIconIdForHref } from "@/components/admin/AdminShellNavIcon";
+import { AdminShellNavIcon, adminShellNavIconIdForHref } from "@/components/admin/AdminShellNavIcon";
 
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 
@@ -47,8 +51,6 @@ import {
   adminShellNavGroupDefaultOpen,
 } from "@/lib/admin/adminShellUxPolicy";
 
-import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
-
 import {
   ADMIN_HOME_CARD_TIER_PLACEHOLDER_BADGE_CLASS,
   ADMIN_HOME_CARD_TIER_READ_BADGE_CLASS,
@@ -57,13 +59,17 @@ import {
   ADMIN_DOMAIN_HEALTH_ATTENTION_DOT_CLASS,
   ADMIN_PENDING_COUNT_BADGE_CLASS,
   ADMIN_SHELL_NAV_ACTIVE_CLASS,
+  ADMIN_SHELL_SIDEBAR_DOMAIN_GAP_CLASS,
+  ADMIN_SHELL_SIDEBAR_GROUP_GAP_CLASS,
   ADMIN_SHELL_SIDEBAR_GROUP_SUMMARY_CLASS,
   ADMIN_SHELL_SIDEBAR_HINT_CLASS,
+  ADMIN_SHELL_SIDEBAR_LEAF_LIST_CLASS,
   ADMIN_SHELL_SIDEBAR_LINK_CLASS,
   ADMIN_SHELL_SIDEBAR_SURFACE_CLASS,
 } from "@/lib/adminUi";
 
 import { adminShellLinkPrefetchProps } from "@/lib/admin/adminShellPrefetchHref";
+import { ADMIN_SHELL_NAV_L5_GATE_VALUE } from "@/lib/admin/adminShellNavL5ScoreGate";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 
@@ -139,8 +145,11 @@ export function AdminShellSidebar() {
   const workspaceInboxFocus = useAdminHomeInboxFocusMode();
 
   const shellContext = adminShellContextForPath(pathname);
-
-
+  const domainSidebarGroup = shellContext
+    ? ADMIN_SHELL_SIDEBAR_GROUPS.find((g) =>
+        adminShellSidebarGroupMatchesContext(g.id, shellContext),
+      )
+    : undefined;
 
   return (
 
@@ -151,7 +160,12 @@ export function AdminShellSidebar() {
       aria-label={t("admin_shell_sidebar_aria")}
 
       data-tt-admin-shell-sidebar="1"
+      data-tt-admin-shell-nav-l5-gate={ADMIN_SHELL_NAV_L5_GATE_VALUE}
       data-tt-admin-shell-sidebar-capabilities-failure={caps.capabilitiesUnavailable ? "1" : undefined}
+      data-tt-admin-shell-sidebar-caps-loading={
+        !caps.permissionsLoaded && !caps.capabilitiesUnavailable ? "1" : undefined
+      }
+      aria-busy={!caps.permissionsLoaded && !caps.capabilitiesUnavailable ? true : undefined}
 
     >
 
@@ -161,13 +175,17 @@ export function AdminShellSidebar() {
 
           <p
 
-            className={`mb-3 ${ADMIN_SHELL_SIDEBAR_HINT_CLASS}`}
+            className={`${ADMIN_SHELL_SIDEBAR_DOMAIN_GAP_CLASS} sr-only`}
 
             data-tt-admin-shell-sidebar-domain-hint="1"
+            data-tt-admin-shell-sidebar-domain-gap="w14"
+            data-tt-admin-shell-sidebar-domain-group={domainSidebarGroup?.id ?? shellContext.groupId}
 
           >
 
-            {t("admin_shell_sidebar_current_domain", { domain: t(shellContext.groupLabelKey) })}
+            {t("admin_shell_sidebar_current_domain", {
+              domain: t(domainSidebarGroup?.labelKey ?? shellContext.groupLabelKey),
+            })}
 
           </p>
 
@@ -189,13 +207,26 @@ export function AdminShellSidebar() {
 
           }
 
-          if (group.id === "finance" && caps.permissionsLoaded && !caps.hasPermission(ADMIN_PERM.FINANCE_READ)) {
+          const capsBooting = !caps.permissionsLoaded && !caps.capabilitiesUnavailable;
 
-            return null;
-
+          /** Batch-12 HU-467 · 加载中：仅保留 workspace 可达 · 其它组骨架，禁止空闪 */
+          if (capsBooting && group.id !== "workspace") {
+            return (
+              <div
+                key={`skel-${group.id}`}
+                className={`${ADMIN_SHELL_SIDEBAR_GROUP_GAP_CLASS} animate-pulse`}
+                data-tt-admin-shell-sidebar-skel="1"
+                data-tt-admin-shell-sidebar-skel-group={group.id}
+                aria-hidden="true"
+              >
+                <div className="mb-2 h-3 w-20 rounded bg-ink-800/80" />
+                <div className="space-y-2 pl-1">
+                  <div className="h-8 w-full rounded bg-ink-800/60" />
+                  <div className="h-8 w-4/5 rounded bg-ink-800/50" />
+                </div>
+              </div>
+            );
           }
-
-
 
           const visibleLinks = group.links.filter((link) => {
 
@@ -207,7 +238,9 @@ export function AdminShellSidebar() {
 
               (base.startsWith("/admin") ? adminHomeCardRequiredPermission(base) : undefined);
 
-            if (!caps.permissionsLoaded) return false;
+            if (capsBooting) {
+              return group.id === "workspace";
+            }
 
             if (caps.capabilitiesUnavailable) {
 
@@ -235,31 +268,125 @@ export function AdminShellSidebar() {
             caps.hasPermission,
             caps.permissionsLoaded,
           );
-          const defaultOpen = adminShellNavGroupDefaultOpen(group.id, {
-            groupActive,
-            pendingRollup: groupRollup,
-            shellFilterRole: shellFilterRole ?? undefined,
-          });
+          const contextMatch = adminShellSidebarGroupMatchesContext(group.id, shellContext);
+          const defaultOpen =
+            adminShellNavGroupDefaultOpen(group.id, {
+              groupActive,
+              pendingRollup: groupRollup,
+              shellFilterRole: shellFilterRole ?? undefined,
+            }) || contextMatch;
           const collapsedByDefault = ADMIN_SHELL_NAV_GROUPS_COLLAPSED_DEFAULT.has(group.id);
+          /** Batch-11 HU-307/318：一律 section 组模型 · 禁止 flat 单叶夹心（组「入驻域」≠ 叶「入驻中心」）。 */
+
+          const linkItems = visibleLinks.map((link) => {
+            const active = linkActive(pathname, link.href, link.activeExact);
+            const { count: pending, inboxKey } = adminShellNavPendingCount(
+              link.href,
+              inbox.counts,
+              inbox.channels,
+              inbox.loading,
+              inbox.error,
+              caps.hasPermission,
+              caps.permissionsLoaded,
+            );
+            const disputeKpi = sidebarKpiDisputeCount(
+              link.href,
+              kpi.counts.disputes,
+              kpi.loading,
+            );
+            const tier = adminHomeCardTierForHref(link.href);
+            const label = t(link.labelKey);
+
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  {...adminShellLinkPrefetchProps(router, link.href)}
+                  className={`${touchTargetLink44Classes} flex items-center justify-between gap-2 rounded-[var(--radius-md)] px-2 py-2.5 ${travelFocusRingOffset2Classes} ${
+                    active
+                      ? ADMIN_SHELL_NAV_ACTIVE_CLASS
+                      : ADMIN_SHELL_SIDEBAR_LINK_CLASS
+                  }`}
+                  aria-current={active ? "page" : undefined}
+                  data-tt-admin-shell-sidebar-leaf-active={active ? "1" : undefined}
+                >
+                  <span className="flex min-w-0 items-center gap-2 truncate">
+                    <AdminShellNavIcon
+                      id={adminShellNavIconIdForHref(link.href)}
+                      className={active ? "text-[#ffe8d4]" : "text-slate-500"}
+                    />
+                    <span className="truncate">{label}</span>
+                    {adminShellLinkTierBadgeVisible() && tier !== "placeholder" ? (
+                      <span
+                        className={`shrink-0 rounded-full border px-1.5 py-0 text-meta font-medium ${sidebarTierBadgeClass(tier)}`}
+                        title={t("admin_home_card_tier_hint")}
+                      >
+                        {t(adminHomeTierLabelKey(tier))}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="flex shrink-0 items-center gap-1">
+                    {pending !== null && pending > 0 && inboxKey ? (
+                      <AdminShellPendingBadge
+                        count={pending}
+                        label={label}
+                        placement={sidebarBadgePlacement(link.href)}
+                        sidebarLayoutActive={sidebarLayoutActive}
+                        inboxKey={inboxKey}
+                        legacyMarker="sidebar"
+                        suppressSidebarLeafOnWorkspaceInboxFocus={workspaceInboxFocus}
+                      />
+                    ) : disputeKpi !== null ? (
+                      <span
+                        className={ADMIN_PENDING_COUNT_BADGE_CLASS}
+                        data-tt-admin-shell-kpi-badge="disputes"
+                        title={t("admin_home_kpi_disputes_label")}
+                      >
+                        {disputeKpi}
+                      </span>
+                    ) : null}
+                  </span>
+                </Link>
+              </li>
+            );
+          });
 
           return (
-
             <details
               key={group.id}
-              className="mb-3 group/sidebar-fold"
+              className={`${ADMIN_SHELL_SIDEBAR_GROUP_GAP_CLASS} group/sidebar-fold`}
               open={defaultOpen || undefined}
               data-tt-admin-shell-sidebar-group={group.id}
+              data-tt-admin-shell-sidebar-group-gap="w14"
+              data-tt-admin-shell-sidebar-group-kind="section"
+              data-tt-admin-shell-sidebar-group-current={contextMatch ? "1" : undefined}
               data-tt-admin-shell-sidebar-fold={
                 collapsedByDefault ? "collapsed_default" : "open_default"
               }
               data-tt-admin-shell-sidebar-group-open={defaultOpen ? "1" : "0"}
             >
               <summary
-                className={`${touchTargetLink44Classes} ${ADMIN_SHELL_SIDEBAR_GROUP_SUMMARY_CLASS} items-center ${travelFocusRingOffset2Classes}`}
+                className={`${ADMIN_SHELL_SIDEBAR_GROUP_SUMMARY_CLASS} items-center ${travelFocusRingOffset2Classes} ${
+                  contextMatch ? "text-slate-200" : ""
+                }`}
+                data-tt-admin-shell-sidebar-group-summary="1"
               >
-                <span className="flex min-w-0 items-center gap-2">
-                  <AdminShellNavIcon id={adminShellNavIconIdForGroup(group.id)} className="text-slate-400" />
-                  {t(group.labelKey)}
+                <span className="flex min-w-0 items-center gap-1.5 truncate">
+                  <span
+                    className="inline-block w-2.5 shrink-0 text-center text-slate-400 transition group-open/sidebar-fold:hidden"
+                    aria-hidden
+                    data-tt-admin-shell-sidebar-group-chevron="collapsed"
+                  >
+                    ›
+                  </span>
+                  <span
+                    className="hidden w-2.5 shrink-0 text-center text-slate-400 group-open/sidebar-fold:inline-block"
+                    aria-hidden
+                    data-tt-admin-shell-sidebar-group-chevron="open"
+                  >
+                    ∨
+                  </span>
+                  <span className="truncate">{t(group.labelKey)}</span>
                 </span>
                 {adminShellNavGroupSummaryAttentionDotVisible({
                   sidebarLayoutActive,
@@ -291,139 +418,46 @@ export function AdminShellSidebar() {
                   </span>
                 ) : null}
               </summary>
-
-              <ul className="mt-0.5 space-y-1 pb-1">
-
-                {visibleLinks.map((link) => {
-
-                  const active = linkActive(pathname, link.href, link.activeExact);
-
-                  const { count: pending, inboxKey } = adminShellNavPendingCount(
-
-                    link.href,
-
-                    inbox.counts,
-
-                    inbox.channels,
-
-                    inbox.loading,
-
-                    inbox.error,
-
-                    caps.hasPermission,
-
-                    caps.permissionsLoaded,
-
-                  );
-
-                  const disputeKpi = sidebarKpiDisputeCount(
-
-                    link.href,
-
-                    kpi.counts.disputes,
-
-                    kpi.loading,
-
-                  );
-
-                  const tier = adminHomeCardTierForHref(link.href);
-
-                  const label = t(link.labelKey);
-
-                  return (
-
-                    <li key={link.href}>
-
-                      <Link
-
-                        href={link.href}
-                        {...adminShellLinkPrefetchProps(router, link.href)}
-
-                        className={`${touchTargetLink44Classes} flex items-center justify-between gap-2 rounded-[var(--radius-md)] px-2 py-2.5 ${travelFocusRingOffset2Classes} ${
-                          active
-                            ? `bg-ref-sun/10 ${ADMIN_SHELL_NAV_ACTIVE_CLASS}`
-                            : ADMIN_SHELL_SIDEBAR_LINK_CLASS
-                        }`}
-
-                        aria-current={active ? "page" : undefined}
-
-                      >
-
-                        <span className="flex min-w-0 items-center gap-2 truncate">
-                          <AdminShellNavIcon
-                            id={adminShellNavIconIdForHref(link.href)}
-                            className={active ? "text-[#ffe8d4]" : "text-slate-500"}
-                          />
-                          <span className="truncate">{label}</span>
-
-                          {adminShellLinkTierBadgeVisible() && tier !== "placeholder" ? (
-                            <span
-                              className={`shrink-0 rounded-full border px-1.5 py-0 text-meta font-medium ${sidebarTierBadgeClass(tier)}`}
-                              title={t("admin_home_card_tier_hint")}
-                            >
-                              {t(adminHomeTierLabelKey(tier))}
-                            </span>
-                          ) : null}
-
-                        </span>
-
-                        <span className="flex shrink-0 items-center gap-1">
-
-                          {pending !== null && pending > 0 && inboxKey ? (
-
-                            <AdminShellPendingBadge
-
-                              count={pending}
-
-                              label={label}
-
-                              placement={sidebarBadgePlacement(link.href)}
-
-                              sidebarLayoutActive={sidebarLayoutActive}
-
-                              inboxKey={inboxKey}
-
-                              legacyMarker="sidebar"
-
-                              suppressSidebarLeafOnWorkspaceInboxFocus={workspaceInboxFocus}
-
-                            />
-
-                          ) : disputeKpi !== null ? (
-
-                            <span
-
-                              className={ADMIN_PENDING_COUNT_BADGE_CLASS}
-
-                              data-tt-admin-shell-kpi-badge="disputes"
-
-                              title={t("admin_home_kpi_disputes_label")}
-
-                            >
-
-                              {disputeKpi}
-
-                            </span>
-
-                          ) : null}
-
-                        </span>
-
-                      </Link>
-
-                    </li>
-
-                  );
-
-                })}
-
-              </ul>
-
+              <ul className={ADMIN_SHELL_SIDEBAR_LEAF_LIST_CLASS}>{linkItems}</ul>
             </details>
-
           );
-
         })}
+
+        {caps.capabilitiesUnavailable ? (
+          <div
+            className={`${ADMIN_SHELL_SIDEBAR_GROUP_GAP_CLASS} mt-2 border-t border-white/10 pt-3`}
+            data-tt-admin-shell-sidebar-failure-recovery="1"
+          >
+            <p className={`${ADMIN_SHELL_SIDEBAR_HINT_CLASS} mb-2`}>
+              {t("admin_shell_sidebar_caps_failure_recovery")}
+            </p>
+            <ul className={ADMIN_SHELL_SIDEBAR_LEAF_LIST_CLASS}>
+              {ADMIN_SHELL_CAPABILITIES_FAILURE_EXTRA_LINKS.map((link) => {
+                const active = linkActive(pathname, link.href);
+                const label = t(link.labelKey);
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      {...adminShellLinkPrefetchProps(router, link.href)}
+                      className={`${touchTargetLink44Classes} flex items-center gap-2 rounded-[var(--radius-md)] px-2 py-2.5 ${travelFocusRingOffset2Classes} ${
+                        active ? ADMIN_SHELL_NAV_ACTIVE_CLASS : ADMIN_SHELL_SIDEBAR_LINK_CLASS
+                      }`}
+                      aria-current={active ? "page" : undefined}
+                      data-tt-admin-shell-sidebar-failure-leaf={link.href}
+                    >
+                      <AdminShellNavIcon
+                        id={adminShellNavIconIdForHref(link.href)}
+                        className={active ? "text-[#ffe8d4]" : "text-slate-500"}
+                      />
+                      <span className="truncate">{label}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
 
       </nav>
 

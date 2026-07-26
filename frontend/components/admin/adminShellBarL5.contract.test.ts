@@ -29,7 +29,7 @@ describe("admin shell bar L5", () => {
 
 
 
-  it("keeps phase badge, actor role, grouped nav", () => {
+  it("keeps phase badge, actor role, grouped nav (Batch-7 sidebar SSOT)", () => {
 
     expect(src).toContain('data-tt-admin-shell-bar="1"');
 
@@ -39,19 +39,9 @@ describe("admin shell bar L5", () => {
 
     expect(src).toContain("admin_shell_nav_workspace");
 
-    expect(src).toContain("admin_shell_nav_group_onboarding");
-
-    expect(src).toContain("admin_shell_nav_group_operations");
-
-    expect(src).toContain("admin_shell_nav_group_community");
-
-    expect(src).toContain("ADMIN_SHELL_ONBOARDING_NAV_LINKS");
-    expect(src).toContain("adminShellOnboardingNavLinkMatch");
-    expect(src).toContain("ADMIN_SHELL_COMMUNITY_NAV_LINKS");
-    expect(src).toContain("ADMIN_SHELL_MORE_NAV_LINKS");
-    expect(src).toContain("ADMIN_SHELL_FINANCE_NAV_LINKS");
-    expect(src).toContain("ADMIN_SHELL_GOVERNANCE_NAV_LINKS");
-    expect(src).toContain("ADMIN_SHELL_OPERATIONS_NAV_LINKS");
+    expect(src).toContain("ADMIN_SHELL_SIDEBAR_GROUPS");
+    expect(src).toContain('filter((group) => group.id !== "workspace")');
+    expect(src).toContain("adminShellTopNavLinksFromSidebarGroup");
     expect(src).toContain("adminShellNavLinkMatch");
 
     expect(src).toContain("AdminFinanceShellNavGroupGate");

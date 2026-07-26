@@ -1,13 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminFinanceWorkflowCompactNav } from "@/components/admin/AdminFinanceWorkflowCompactNav";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
-import { ADMIN_LINK_FOCUS_CLASS, adminPageNavLinkClass } from "@/lib/adminUi";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 
 const FIN_SUITE_MODULE_TITLE_KEYS: Record<string, string> = {
   "finance-summary": "admin_fin_suite_settlement",
@@ -50,14 +47,9 @@ export function AdminFinanceSuiteDepthNotice() {
       }}
       message={
         <div>
-          <p>
-            {t("admin_fin_suite_depth_notice", { module: moduleLabel })}{" "}
-            <Link
-              href="/admin/finance-suite"
-              className={`${adminPageNavLinkClass()}`}
-            >
-              {t("admin_fin_suite_back_hub")}
-            </Link>
+          {/* HU-279：顶栏 AdminFinanceSuiteBackLinks 为唯一回枢纽；此处仅文案，不再嵌「返回财务中心」链 */}
+          <p data-tt-admin-fin-suite-depth-notice-copy="1">
+            {t("admin_fin_suite_depth_notice", { module: moduleLabel })}
           </p>
           {moduleId === "export" ? (
             <p className="mt-2 text-meta text-ink-600" data-tt-admin-fin-suite-export-hint="1">

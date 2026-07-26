@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { AdminFinanceSuiteBackLinks } from "@/components/admin/AdminFinanceSuiteBackLinks";
+import { AdminFinancePeriodControl } from "@/components/admin/AdminFinancePeriodControl";
 import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminFinanceSuiteDepthNotice } from "@/components/admin/AdminFinanceSuiteDepthNotice";
 import { AdminFinanceModuleDepthWorkspace } from "@/components/admin/AdminFinanceModuleDepthWorkspace";
@@ -78,6 +79,9 @@ export function AdminFinanceReconciliationPageMain(props: Props) {
       }
       headerAside={<AdminFinanceSuiteBackLinks />}
     >
+      <div className="mt-4" data-tt-admin-finance-period-host="1">
+        <AdminFinancePeriodControl />
+      </div>
       <AdminOpsDetailRelatedFold
         relatedLinks={financeGovernanceRelatedFoldLinks("/admin/finance-reconciliation")}
         ariaLabelKey="admin_finance_related_aria"

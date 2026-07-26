@@ -28,6 +28,20 @@ export function shouldShowAdminCapabilityStrip(input: {
     return false;
   }
   if (input.shellPreviewActive) return true;
+  /**
+   * Batch-10 W12 · HU-202/237：深页健康维护者身份已由顶栏视角切换器承担，
+   * 能力条再占一带会叠成「超级管理员×3」+ ≥6 壳层。工作台仍可展示。
+   */
+  if (
+    input.maintainerUi &&
+    input.onWorkspace === false &&
+    input.permissionsLoaded &&
+    !input.capabilitiesUnavailable &&
+    !input.loading &&
+    input.canApprove
+  ) {
+    return false;
+  }
   if (input.maintainerUi) return true;
   if (input.loading || !input.permissionsLoaded) return true;
   if (input.capabilitiesUnavailable) return true;

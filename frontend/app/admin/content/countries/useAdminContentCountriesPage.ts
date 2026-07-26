@@ -112,5 +112,6 @@ export function useAdminContentCountriesPage() {
     submitReview,
     publish,
     saveRow,
+    reload,
   };
 }

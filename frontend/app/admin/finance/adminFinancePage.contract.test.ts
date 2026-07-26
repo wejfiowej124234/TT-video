@@ -15,6 +15,9 @@ describe("admin finance page (① · FIN-02 partial)", () => {
     expect(main).toContain("AdminFinanceSuitePartialChecklist");
     expect(main).toContain("fin_suite_module");
     expect(main).toContain("data-tt-admin-fin-suite-export-focus");
+    expect(main).toContain("AdminFinancePeriodControl");
+    expect(main).toContain("data-tt-admin-finance-treasury-bridge");
+    expect(main).toContain("AdminHomeTreasuryPoolStrip");
     const depthNotice = readFileSync(
       join(__dir, "..", "..", "..", "components", "admin", "AdminFinanceSuiteDepthNotice.tsx"),
       "utf8",

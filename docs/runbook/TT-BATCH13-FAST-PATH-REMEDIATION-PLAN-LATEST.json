@@ -1,0 +1,98 @@
+{
+  "machine": "TT_ADMIN_BATCH13_FAST_PATH_REMEDIATION_PLAN",
+  "stamp": "20260726T082500Z",
+  "exec_stamp": "20260726T081500Z",
+  "status": "FP_E_STAGING_BLOCKED_DEPLOY",
+  "execution_ssot": true,
+  "waves": [
+    "FP-A",
+    "FP-B",
+    "FP-C",
+    "FP-D",
+    "FP-E"
+  ],
+  "wave_status": {
+    "FP-A": "CODE_LANDED",
+    "FP-B": "CODE_LANDED",
+    "FP-C": "CODE_LANDED",
+    "FP-D": "CODE_LANDED",
+    "FP-E": "PENDING"
+  },
+  "wave_summary": {
+    "FP-A": "cross_cutting_contrast_P0",
+    "FP-B": "capability_491_493",
+    "FP-C": "orders_finance_config_priority",
+    "FP-D": "remaining_leaves_chrome",
+    "FP-E": "gates_staging_delta_cite_490"
+  },
+  "fp_a_evidence": "docs/runbook/TT-BATCH13-FP-A-CONTRAST-CROSSCUT-LATEST.md",
+  "fp_b_evidence": "docs/runbook/TT-BATCH13-FP-B-CAPABILITY-BLOCKERS-LATEST.md",
+  "fp_c_evidence": "docs/runbook/TT-BATCH13-FP-C-OWNER-HARD-PAGES-LATEST.md",
+  "fp_d_evidence": "docs/runbook/TT-BATCH13-FP-D-LEAVES-CHROME-LATEST.md",
+  "fp_a_hus_contrast": [
+    496,
+    504,
+    512,
+    520,
+    528,
+    536,
+    544,
+    552,
+    560
+  ],
+  "fp_b_hus_code": [
+    491,
+    493
+  ],
+  "fp_c_gates_open": [
+    510,
+    511,
+    558,
+    559,
+    566,
+    567
+  ],
+  "fp_d_gates_open": [
+    518,
+    519,
+    526,
+    527,
+    534,
+    535,
+    542,
+    543,
+    550,
+    551
+  ],
+  "next_wave": "FP-E",
+  "priority_pages": [
+    "disputes",
+    "onboarding",
+    "content",
+    "official",
+    "growth",
+    "chrome"
+  ],
+  "supersedes_as_execution": "BACKLOG_SECTION_4_1_LINEAR",
+  "backlog_remains": "checklist_and_gates",
+  "final_truth_cite": "docs/runbook/TT-BATCH13-FINAL-TRUTH-BASELINE-CITE-LATEST.md",
+  "tip": "ea71c577_IMMOBILE",
+  "forbidden": [
+    "TIP_MOVE",
+    "HARD_GATE_UNLOCK",
+    "CUTOVER",
+    "FINANCE_WRITE",
+    "PRODUCTION_GO"
+  ],
+  "cite_md": "docs/runbook/TT-BATCH13-FAST-PATH-REMEDIATION-PLAN-LATEST.md",
+  "patch": "PATCH-STG-017",
+  "production_go": "NO_GO",
+  "next": "Owner PCR Staging deploy FP-A-D then re-probe markers",
+  "fp_e": {
+    "verdict": "FP_E_STAGING_DEPLOY_STALE_RESCREEN_BLOCKED",
+    "evidence": "docs/runbook/TT-BATCH13-FP-E-TOTAL-VERIFY-LATEST.md",
+    "tip_immobile": true,
+    "hard_gate": "LOCKED",
+    "production_go": "NO_GO"
+  }
+}

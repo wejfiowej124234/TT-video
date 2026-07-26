@@ -12,17 +12,18 @@ import {
 } from "@/lib/admin/useAdminFinanceWorkflowSnapshots";
 import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
+  ADMIN_FIN_WORKFLOW_SNAPSHOT_BADGE_CLASS,
   ADMIN_FIN_WORKFLOW_STEP_CARD_CLASS,
   ADMIN_INLINE_LINK_CLASS,
   ADMIN_NOTICE_INFO_CLASS,
-  ADMIN_PENDING_COUNT_BADGE_CLASS,
 } from "@/lib/adminUi";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
-/** FIN-02 · ① 财务工作流入口（partial 深度 + API 快照徽标）。 */
+/** 财务工作流入口（列表快照徽标 · ≠ 待办计数）。 */
 export function AdminFinanceWorkflowStrip() {
   const { t } = useTranslation();
   const snapshots = useAdminFinanceWorkflowSnapshots();
+  const stepCount = ADMIN_FINANCE_WORKFLOW_STEPS.length;
 
   return (
     <AdminWarmL5Surface
@@ -30,6 +31,8 @@ export function AdminFinanceWorkflowStrip() {
       className="mt-6"
       aria-labelledby="admin-fin-workflow-heading"
       data-tt-admin-fin-workflow="1"
+      data-tt-admin-fin-suite-primary-nav="workflow"
+      data-tt-admin-fin-workflow-step-count={String(stepCount)}
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h2 id="admin-fin-workflow-heading" className="text-body font-semibold text-ink-900">
@@ -54,11 +57,20 @@ export function AdminFinanceWorkflowStrip() {
         {ADMIN_FINANCE_WORKFLOW_STEPS.map((step, idx) => {
           const snapKey = step.snapshotKey as AdminFinanceWorkflowSnapshotKey | null;
           const snapValue = snapKey ? adminFinanceWorkflowSnapshotValue(snapKey, snapshots) : null;
+          const snapLabel =
+            snapshots.loading
+              ? "…"
+              : snapValue === null
+                ? t("admin_fin_workflow_snapshot_na")
+                : snapValue > 99
+                  ? t("admin_fin_workflow_snapshot_capped", { n: 99 })
+                  : t("admin_fin_workflow_snapshot_in_list", { n: snapValue });
           return (
             <li
               key={step.id}
               className={ADMIN_FIN_WORKFLOW_STEP_CARD_CLASS}
               data-tt-admin-fin-workflow-step={step.id}
+              data-tt-admin-fin-not-refund-center={step.id === "refunds" ? "1" : undefined}
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-meta font-medium text-slate-400">
@@ -66,17 +78,12 @@ export function AdminFinanceWorkflowStrip() {
                 </span>
                 {snapKey ? (
                   <span
-                    className={ADMIN_PENDING_COUNT_BADGE_CLASS}
+                    className={ADMIN_FIN_WORKFLOW_SNAPSHOT_BADGE_CLASS}
                     data-tt-admin-fin-workflow-snapshot={step.id}
+                    data-tt-admin-fin-workflow-snapshot-kind="list-cap"
                     title={t("admin_fin_workflow_snapshot_title")}
                   >
-                    {snapshots.loading
-                      ? "…"
-                      : snapValue === null
-                        ? "—"
-                        : snapValue > 99
-                          ? "99+"
-                          : snapValue}
+                    {snapLabel}
                   </span>
                 ) : null}
               </div>

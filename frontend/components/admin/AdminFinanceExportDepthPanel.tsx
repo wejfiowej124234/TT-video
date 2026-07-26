@@ -30,6 +30,19 @@ export function AdminFinanceExportDepthPanel({ exporting, onExport, meta }: Prop
     >
       <h2 className="text-body font-semibold text-ink-900">{t("admin_fin_export_depth_title")}</h2>
       <p className="mt-1 text-small text-ink-600">{t("admin_fin_export_depth_lead")}</p>
+      <div
+        className="mt-3 rounded-[var(--radius-sm)] border border-dashed border-ink-300 bg-ink-50/40 px-3 py-2"
+        data-tt-admin-fin-export-accounting-placeholder="1"
+        role="status"
+      >
+        <p className="text-meta font-semibold text-ink-800">
+          <span className="mr-2 font-mono text-meta uppercase tracking-wide text-ink-500">
+            {t("admin_fin_export_accounting_placeholder_badge")}
+          </span>
+          {t("admin_fin_export_accounting_placeholder_title")}
+        </p>
+        <p className="mt-1 text-meta text-ink-600">{t("admin_fin_export_accounting_placeholder_body")}</p>
+      </div>
       <ol className="mt-3 list-decimal space-y-1 pl-5 text-small text-ink-700">
         <li>{t("admin_fin_export_depth_step_1")}</li>
         <li>{t("admin_fin_export_depth_step_2")}</li>

@@ -30,5 +30,8 @@ describe("admin finance-reconciliation page (contract)", () => {
     expect(src).toContain("adminFinanceReconciliationBundleFetch");
     expect(src).toContain("Promise.all");
     expect(src).toContain("finance-reconciliation-summary");
+    expect(src).toContain("AdminFinanceDriftDeltaTable");
+    expect(src).toContain("AdminFinancePeriodControl");
+    expect(src).toContain("data-tt-admin-finance-period-host");
   });
 });

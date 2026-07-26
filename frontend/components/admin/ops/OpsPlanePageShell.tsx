@@ -2,6 +2,7 @@
 
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { OpsPlaneFetchStates } from "@/components/admin/ops/OpsPlaneFetchStates";
+import type { AdminPermissionId } from "@/lib/admin/adminPermissionIds";
 
 export type OpsPlanePageShellProps = {
   titleId: string;
@@ -13,6 +14,8 @@ export type OpsPlanePageShellProps = {
   loadingMessageKey?: string;
   empty?: boolean;
   emptyMessageKey?: string;
+  writePermissionId?: AdminPermissionId;
+  mainDataAttrs?: Record<string, string>;
   children: React.ReactNode;
 };
 
@@ -28,11 +31,19 @@ export function OpsPlanePageShell(props: OpsPlanePageShellProps) {
     loadingMessageKey,
     empty,
     emptyMessageKey,
+    writePermissionId,
+    mainDataAttrs,
     children,
   } = props;
 
   return (
-    <AdminDetailPageChrome titleId={titleId} title={title} subtitle={subtitle}>
+    <AdminDetailPageChrome
+      titleId={titleId}
+      title={title}
+      subtitle={subtitle}
+      writePermissionId={writePermissionId}
+      mainDataAttrs={mainDataAttrs}
+    >
       <OpsPlaneFetchStates
         loading={loading}
         error={error}

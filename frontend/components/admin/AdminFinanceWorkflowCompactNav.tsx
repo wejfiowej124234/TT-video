@@ -22,11 +22,11 @@ import {
   ADMIN_INLINE_LINK_CLASS,
   ADMIN_PENDING_COUNT_BADGE_CLASS,
   adminFilterChipClass,
-  adminPageNavLinkClass,
-  ADMIN_INNER_DIVIDER_CLASS,} from "@/lib/adminUi";
+  ADMIN_INNER_DIVIDER_CLASS,
+} from "@/lib/adminUi";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
-/** FIN-02 · ① partial 深度子页横向工作流导航（快照徽标 + 下一步 · 非 ② 页内全深度）。 */
+/** FIN-02 · ① partial 深度：状态摘要（当前步+下一步）· 禁止再铺全七步 pills（HU-279/206）。 */
 export function AdminFinanceWorkflowCompactNav() {
   const { t } = useTranslation();
   const searchParams = useSearchParams();
@@ -36,6 +36,8 @@ export function AdminFinanceWorkflowCompactNav() {
 
   const moduleId = searchParams.get("fin_suite_module") ?? "";
   const activeStepId = ADMIN_FIN_SUITE_MODULE_TO_WORKFLOW_STEP[moduleId] ?? null;
+  const activeStep =
+    ADMIN_FINANCE_WORKFLOW_STEPS.find((s) => s.id === activeStepId) ?? null;
   const nextStep = adminFinanceWorkflowNextStep(activeStepId);
 
   return (
@@ -45,6 +47,7 @@ export function AdminFinanceWorkflowCompactNav() {
       aria-label={t("admin_fin_workflow_compact_nav_aria")}
       data-tt-admin-fin-workflow-compact-nav="1"
       data-tt-admin-fin-workflow-compact-module={moduleId || undefined}
+      data-tt-admin-fin-workflow-compact-mode="status-summary"
     >
       <p
         className="text-meta text-ink-600"
@@ -53,33 +56,24 @@ export function AdminFinanceWorkflowCompactNav() {
       >
         {t("admin_fin_workflow_partial_honesty")} {t("admin_fin_workflow_compact_nav_hint")}
       </p>
-      <div className="mt-2 flex flex-wrap justify-end">
-        <Link
-          href="/admin/finance-suite"
-          className={`text-meta font-medium ${adminPageNavLinkClass()}`}
-          data-tt-admin-fin-workflow-compact-hub="1"
-        >
-          {t("admin_fin_suite_back_hub")}
-        </Link>
-      </div>
-      <ol className="mt-3 flex flex-wrap gap-2">
-        {ADMIN_FINANCE_WORKFLOW_STEPS.map((step) => {
-          const active = activeStepId === step.id;
-          const snapKey = adminFinanceWorkflowStepSnapshotKey(step);
-          const snapValue = snapKey ? adminFinanceWorkflowSnapshotValue(snapKey, snapshots) : null;
-          return (
-            <li key={step.id}>
-              <Link
-                href={step.href}
-                aria-current={active ? "page" : undefined}
-                className={`inline-flex min-h-[36px] items-center gap-1.5 rounded-[var(--radius-sm)] border px-2 py-1 text-meta font-medium ${adminFilterChipClass(active)} ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
-                data-tt-admin-fin-workflow-compact-step={step.id}
-              >
-                <span>{t(step.titleKey)}</span>
-                {snapKey ? (
+      <ol className="mt-3 flex flex-wrap gap-2" data-tt-admin-fin-workflow-compact-status="1">
+        {activeStep ? (
+          <li>
+            <Link
+              href={activeStep.href}
+              aria-current="page"
+              className={`inline-flex min-h-[36px] items-center gap-1.5 rounded-[var(--radius-sm)] border px-2 py-1 text-meta font-medium ${adminFilterChipClass(true)} ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+              data-tt-admin-fin-workflow-compact-step={activeStep.id}
+            >
+              <span>{t(activeStep.titleKey)}</span>
+              {(() => {
+                const snapKey = adminFinanceWorkflowStepSnapshotKey(activeStep);
+                if (!snapKey) return null;
+                const snapValue = adminFinanceWorkflowSnapshotValue(snapKey, snapshots);
+                return (
                   <span
                     className={ADMIN_PENDING_COUNT_BADGE_CLASS}
-                    data-tt-admin-fin-workflow-compact-snapshot={step.id}
+                    data-tt-admin-fin-workflow-compact-snapshot={activeStep.id}
                     title={t("admin_fin_workflow_snapshot_title")}
                   >
                     {snapshots.loading
@@ -90,11 +84,11 @@ export function AdminFinanceWorkflowCompactNav() {
                           ? "99+"
                           : snapValue}
                   </span>
-                ) : null}
-              </Link>
-            </li>
-          );
-        })}
+                );
+              })()}
+            </Link>
+          </li>
+        ) : null}
       </ol>
       {nextStep ? (
         <p className="mt-3 text-small text-ink-700">

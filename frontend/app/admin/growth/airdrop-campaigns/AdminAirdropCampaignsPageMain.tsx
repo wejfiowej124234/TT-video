@@ -3,6 +3,7 @@
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminOpsPlanePermissionBanners } from "@/components/admin/ops/AdminOpsPlanePermissionBanners";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
@@ -17,12 +18,17 @@ import {
 import { OfficialOpsPanelCard } from "@/components/admin/ops/OfficialOpsPanelCard";
 import { AdminOpsRiskBanner } from "@/components/admin/ops/AdminOpsRiskBanner";
 import { OpsPlaneFetchStates } from "@/components/admin/ops/OpsPlaneFetchStates";
+import {
+  adminConfirmAirdropAction,
+  adminConfirmAirdropCreate,
+} from "@/lib/admin/adminOpsWriteConfirm";
 
 import { useAdminAirdropCampaignsPage } from "./useAdminAirdropCampaignsPage";
 
 export function AdminAirdropCampaignsPageMain() {
   const { t } = useTranslation();
   const titleId = useId();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const vm = useAdminAirdropCampaignsPage();
 
   return (
@@ -31,7 +37,11 @@ export function AdminAirdropCampaignsPageMain() {
       title={t("admin_growth_airdrop_title")}
       subtitle={t("admin_growth_airdrop_subtitle")}
     >
-      <AdminOpsPlanePermissionBanners read={ADMIN_PERM.GROWTH_READ} write={ADMIN_PERM.GROWTH_WRITE} publish={ADMIN_PERM.GROWTH_PUBLISH} />
+      <AdminOpsPlanePermissionBanners
+        read={ADMIN_PERM.GROWTH_READ}
+        write={ADMIN_PERM.GROWTH_WRITE}
+        publish={ADMIN_PERM.GROWTH_PUBLISH}
+      />
 
       <AdminOpsRiskBanner messageKey="admin_ops_risk_banner_airdrop" variant="warning" />
       <p className="mb-4 text-meta text-ink-500">{t("admin_growth_airdrop_disclaimer")}</p>
@@ -60,7 +70,9 @@ export function AdminAirdropCampaignsPageMain() {
             type="button"
             disabled={vm.busy}
             className={adminTableRowPrimaryActionClass()}
-            onClick={() => void vm.createCampaign()}
+            onClick={() =>
+              requestConfirm(adminConfirmAirdropCreate(() => void vm.createCampaign()))
+            }
           >
             {t("admin_growth_airdrop_create_btn")}
           </button>
@@ -113,7 +125,7 @@ export function AdminAirdropCampaignsPageMain() {
                 </li>
                 <li>
                   {t("admin_growth_airdrop_col_calc_version")}:{" "}
-                  {vm.selected.calculation_version ?? 0}
+                  {vm.selected.calculation_version ?? "—"}
                 </li>
               </ul>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -121,7 +133,11 @@ export function AdminAirdropCampaignsPageMain() {
                   type="button"
                   disabled={vm.busy || vm.selected.status !== "draft"}
                   className={adminTableRowSecondaryActionClass()}
-                  onClick={() => void vm.runAction("snapshot")}
+                  onClick={() =>
+                    requestConfirm(
+                      adminConfirmAirdropAction("snapshot", () => void vm.runAction("snapshot")),
+                    )
+                  }
                 >
                   {t("admin_growth_airdrop_snapshot_btn")}
                 </button>
@@ -129,18 +145,27 @@ export function AdminAirdropCampaignsPageMain() {
                   type="button"
                   disabled={vm.busy || vm.selected.status !== "snapshot_locked"}
                   className={adminTableRowSecondaryActionClass()}
-                  onClick={() => void vm.runAction("calculate")}
+                  onClick={() =>
+                    requestConfirm(
+                      adminConfirmAirdropAction("calculate", () => void vm.runAction("calculate")),
+                    )
+                  }
                 >
                   {t("admin_growth_airdrop_calculate_btn")}
                 </button>
                 <button
                   type="button"
                   disabled={
-                    vm.busy ||
-                    !["snapshot_locked", "calculated"].includes(vm.selected.status)
+                    vm.busy || !["snapshot_locked", "calculated"].includes(vm.selected.status)
                   }
                   className={adminTableRowSecondaryActionClass()}
-                  onClick={() => void vm.runAction("recalculate")}
+                  onClick={() =>
+                    requestConfirm(
+                      adminConfirmAirdropAction("recalculate", () =>
+                        void vm.runAction("recalculate"),
+                      ),
+                    )
+                  }
                 >
                   {t("admin_growth_airdrop_recalculate_btn")}
                 </button>

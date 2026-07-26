@@ -10,18 +10,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 
 import { AdminShellNavGroup, type AdminShellNavLink } from "@/components/admin/AdminShellNavGroup";
 
-import { ADMIN_SHELL_COMMUNITY_NAV_LINKS } from "@/lib/admin/adminShellCommunityNavLinks";
-import { ADMIN_SHELL_CONTENT_NAV_LINKS } from "@/lib/admin/adminShellContentNavLinks";
-import { ADMIN_SHELL_FINANCE_NAV_LINKS } from "@/lib/admin/adminShellFinanceNavLinks";
-import { ADMIN_SHELL_GOVERNANCE_NAV_LINKS } from "@/lib/admin/adminShellGovernanceNavLinks";
-import { ADMIN_SHELL_GROWTH_NAV_LINKS } from "@/lib/admin/adminShellGrowthNavLinks";
-import { ADMIN_SHELL_MORE_NAV_LINKS } from "@/lib/admin/adminShellMoreNavLinks";
-import {
-  ADMIN_SHELL_ONBOARDING_NAV_LINKS,
-  adminShellOnboardingNavLinkMatch,
-} from "@/lib/admin/adminShellOnboardingNavLinks";
-import { ADMIN_SHELL_OPERATIONS_NAV_LINKS } from "@/lib/admin/adminShellOperationsNavLinks";
-import { ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS } from "@/lib/admin/adminShellOfficialOpsNavLinks";
+import { ADMIN_SHELL_SIDEBAR_GROUPS } from "@/lib/admin/adminShellSidebarModel";
 import { adminShellNavLinkMatch } from "@/lib/admin/adminShellNavLinkTypes";
 import { admU01ShellGroupVisible } from "@/lib/admin/admU01ShellGroupVisibility";
 import { adminHomeCardRequiredPermission } from "@/lib/admin/adminHomeCardPermission";
@@ -31,7 +20,8 @@ import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { useAdminShellActor } from "@/lib/admin/useAdminShellActor";
 import {
   adminDeployEnvBadgeClass,
-  adminDeployEnvLabelKey,
+  adminDeployEnvDisplayLabel,
+  adminDeployEnvBadgeVisible,
   resolveAdminDeployEnv,
 } from "@/lib/admin/adminDeployEnvBadge";
 import { useAdminEffectiveShellRole } from "@/lib/admin/useAdminEffectiveShellRole";
@@ -43,11 +33,22 @@ import { adminShellNavPendingCount } from "@/lib/admin/adminShellInboxNavBadge";
 import { useAdminShellSidebarVisible } from "@/lib/admin/useAdminShellSidebarVisible";
 import { adminHomeInboxPendingTotal } from "@/lib/admin/adminHomeInboxPendingTotal";
 import {
+  ADMIN_SHELL_BRAND_HREF,
+  ADMIN_SHELL_BRAND_WORDMARK_KEY,
+  TT_ADMIN_SHELL_BRAND_WORDMARK_MARK,
+} from "@/lib/admin/adminShellBrandWordmark";
+import {
   adminShellCommandPaletteTriggerVisible,
+  adminShellDbRoleBadgeVisible,
+  adminShellDeployEnvBadgeQuiet,
   adminShellPreviewBadgeVisible,
   adminShellRolePerspectiveSwitcherVisible,
+  adminShellWorkspaceOpsChromeDemoted,
+  TT_ADMIN_SHELL_WORKSPACE_OPS_DEMOTED_MARK,
 } from "@/lib/admin/adminShellUxPolicy";
 import { useAdminHomeInbox } from "@/lib/admin/useAdminHomeInbox";
+import { adminShellTopNavGroupNeedsWholeFinanceGate } from "@/lib/admin/adminShellTopNavFinanceGate";
+import { ADMIN_SHELL_CAPABILITIES_FAILURE_EXTRA_LINKS } from "@/lib/admin/adminShellCapabilitiesFailureNav";
 
 function shellNav(
   href: string,
@@ -65,11 +66,30 @@ function shellNav(
   };
 }
 
+function adminShellTopNavLinksFromSidebarGroup(
+  group: (typeof ADMIN_SHELL_SIDEBAR_GROUPS)[number],
+): AdminShellNavLink[] {
+  return group.links.map((link) =>
+    shellNav(
+      link.href,
+      link.labelKey,
+      adminShellNavLinkMatch({
+        href: link.href,
+        labelKey: link.labelKey,
+        permission: link.permission,
+        activeExact: link.activeExact,
+      }),
+      link.permission,
+    ),
+  );
+}
+
 import {
   adminShellTopNavLinkClass,
   ADMIN_MOTION_NAV_CLASS,
   ADMIN_SHELL_ACCOUNT_ROLE_BADGE_CLASS,
   ADMIN_SHELL_BRAND_ACCENT_CLASS,
+  ADMIN_TEXT_BODY_CLASS,
   ADMIN_SHELL_DB_ROLE_BADGE_CLASS,
   ADMIN_SHELL_META_CHIP_CLASS,
   ADMIN_SHELL_PREVIEW_BADGE_CLASS,
@@ -78,7 +98,10 @@ import {
 import { useAdminShellLinkPrefetch } from "@/lib/admin/useAdminShellLinkPrefetch";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
-/** 资金域整组须 `admin.finance.read`（避免仅 `admin.read` 的 indexer 链误显 CS/Risk 资金组）。 */
+/**
+ * Batch-12 HU-465 · 仅对「纯资金」整组套闸（legacy `finance`）。
+ * `more` 不再整组隐藏 — 财务/设置按叶 permission（AdminShellNavGroup）。
+ */
 function AdminFinanceShellNavGroupGate({ children }: { children: ReactNode }) {
   const caps = useAdminCapabilities();
   const { shellFilterRole } = useAdminEffectiveShellRole();
@@ -152,6 +175,9 @@ export default function AdminShellBar() {
       onWorkspace,
       pendingTotal: inboxPendingTotal,
     });
+  const showDbRoleBadges = adminShellDbRoleBadgeVisible({
+    showRolePerspectiveSwitcher,
+  });
   const showPreviewBadges =
     caps.permissionsLoaded &&
     adminShellPreviewBadgeVisible({
@@ -160,6 +186,9 @@ export default function AdminShellBar() {
       pendingTotal: inboxPendingTotal,
       shellPreviewActive: Boolean(previewRole),
     });
+  /** HU-437 · 工作台运维条降噪（搜索芯片隐藏 · Staging 徽次强 · 禁初始化同层） */
+  const workspaceOpsDemoted = adminShellWorkspaceOpsChromeDemoted(onWorkspace);
+  const deployEnvQuiet = adminShellDeployEnvBadgeQuiet({ onWorkspace });
 
   return (
 
@@ -168,6 +197,10 @@ export default function AdminShellBar() {
       className={`${TT_MARKETING_ADMIN_SHELL_BAR} ${ADMIN_SHELL_BRAND_ACCENT_CLASS}`}
 
       data-tt-admin-shell-bar="1"
+      data-tt-admin-shell-workspace-ops-demoted={workspaceOpsDemoted ? "hu437" : undefined}
+      data-tt-admin-shell-workspace-ops-mark={
+        workspaceOpsDemoted ? TT_ADMIN_SHELL_WORKSPACE_OPS_DEMOTED_MARK : undefined
+      }
 
     >
 
@@ -183,12 +216,29 @@ export default function AdminShellBar() {
 
         >
 
+          {/* HU-443 · TravelTrust 词标（Brand · 首屏可辨） */}
+          <Link
+            href={ADMIN_SHELL_BRAND_HREF}
+            {...workspacePrefetch}
+            className={`${touchTargetLink44Classes} shrink-0 font-semibold tracking-tight ${ADMIN_TEXT_BODY_CLASS} ${ADMIN_MOTION_NAV_CLASS} ${travelFocusRingOffset2Classes}`}
+            data-tt-admin-shell-brand="hu443"
+            data-tt-admin-shell-brand-mark={TT_ADMIN_SHELL_BRAND_WORDMARK_MARK}
+            aria-label={t(ADMIN_SHELL_BRAND_WORDMARK_KEY)}
+          >
+            <span className="sr-only">{TT_ADMIN_SHELL_BRAND_WORDMARK_MARK}</span>
+            {t(ADMIN_SHELL_BRAND_WORDMARK_KEY)}
+          </Link>
+
           <Link
 
             href="/admin"
             {...workspacePrefetch}
 
-            className={`${touchTargetLink44Classes} font-medium ${ADMIN_MOTION_NAV_CLASS} ${adminShellTopNavLinkClass(onWorkspace)} ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} font-medium ${ADMIN_MOTION_NAV_CLASS} ${adminShellTopNavLinkClass(onWorkspace)} ${travelFocusRingOffset2Classes} ${
+              sidebarLayoutActive ? "lg:hidden" : ""
+            }`}
+            data-tt-admin-shell-top-nav-workspace="1"
+            data-tt-admin-shell-top-nav-duplicate={sidebarLayoutActive ? "hidden-lg" : "show"}
 
             aria-current={onWorkspace ? "page" : undefined}
 
@@ -201,7 +251,11 @@ export default function AdminShellBar() {
           <Link
             href="/admin/inbox"
             {...inboxPrefetch}
-            className={`${touchTargetLink44Classes} inline-flex items-center gap-2 font-medium ${ADMIN_MOTION_NAV_CLASS} ${adminShellTopNavLinkClass(onInbox)} ${travelFocusRingOffset2Classes}`}
+            className={`${touchTargetLink44Classes} inline-flex items-center gap-2 font-medium ${ADMIN_MOTION_NAV_CLASS} ${adminShellTopNavLinkClass(onInbox)} ${travelFocusRingOffset2Classes} ${
+              sidebarLayoutActive ? "lg:hidden" : ""
+            }`}
+            data-tt-admin-shell-top-nav-inbox="1"
+            data-tt-admin-shell-top-nav-duplicate={sidebarLayoutActive ? "hidden-lg" : "show"}
             aria-current={onInbox ? "page" : undefined}
           >
             <span>{t("admin_unified_inbox_nav_short")}</span>
@@ -220,6 +274,59 @@ export default function AdminShellBar() {
             ) : null}
           </Link>
 
+          {/* HU-235 · lg+ 侧栏布局时顶栏保留枢纽可达（≠ 工作台/收件箱重复） */}
+          {sidebarLayoutActive ? (
+            <div
+              className="hidden items-center gap-x-3 lg:flex"
+              data-tt-admin-shell-top-hubs="1"
+              aria-label={t("admin_shell_top_hubs_aria")}
+            >
+              {(
+                [
+                  {
+                    href: "/admin/users",
+                    labelKey: "admin_shell_nav_group_operations",
+                    perm: ADMIN_PERM.USERS_READ,
+                    hub: "operations",
+                  },
+                  {
+                    href: "/admin/content",
+                    labelKey: "admin_shell_nav_group_centers",
+                    perm: ADMIN_PERM.CONTENT_READ,
+                    hub: "content",
+                  },
+                  {
+                    href: "/admin/finance-suite",
+                    labelKey: "admin_shell_nav_finance_short",
+                    perm: ADMIN_PERM.FINANCE_READ,
+                    hub: "finance",
+                  },
+                ] as const
+              )
+                .filter(
+                  (h) =>
+                    !caps.permissionsLoaded ||
+                    caps.capabilitiesUnavailable ||
+                    caps.hasPermission(h.perm),
+                )
+                .map((h) => {
+                  const onHub =
+                    pathname === h.href || pathname.startsWith(`${h.href}/`);
+                  return (
+                    <Link
+                      key={h.hub}
+                      href={h.href}
+                      className={`${touchTargetLink44Classes} font-medium ${ADMIN_MOTION_NAV_CLASS} ${adminShellTopNavLinkClass(onHub)} ${travelFocusRingOffset2Classes}`}
+                      data-tt-admin-shell-top-hub={h.hub}
+                      aria-current={onHub ? "page" : undefined}
+                    >
+                      {t(h.labelKey)}
+                    </Link>
+                  );
+                })}
+            </div>
+          ) : null}
+
           <div
             className={`flex w-full flex-col gap-y-2 ${sidebarLayoutActive ? "lg:hidden" : ""}`}
             data-tt-admin-shell-top-nav-groups={sidebarLayoutActive ? "compact-lg" : "full"}
@@ -237,125 +344,45 @@ export default function AdminShellBar() {
               {t("admin_shell_mobile_nav_summary")}
             </summary>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 pt-1 lg:contents">
-          <AdminShellNavGroup
-
-            groupId="onboarding"
-
-            summaryKey="admin_shell_nav_group_onboarding"
-
-            pathname={pathname}
-
-            links={ADMIN_SHELL_ONBOARDING_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellOnboardingNavLinkMatch(link), link.permission),
-            )}
-
-          />
-
-
-
-          <AdminShellNavGroup
-
-            groupId="operations"
-
-            summaryKey="admin_shell_nav_group_operations"
-
-            pathname={pathname}
-
-            links={ADMIN_SHELL_OPERATIONS_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
-            )}
-
-          />
-
-          <AdminShellNavGroup
-            groupId="content"
-            summaryKey="admin_shell_nav_group_content"
-            pathname={pathname}
-            links={ADMIN_SHELL_CONTENT_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
-            )}
-          />
-
-          <AdminShellNavGroup
-            groupId="official_ops"
-            summaryKey="admin_shell_nav_group_official_ops"
-            pathname={pathname}
-            links={ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
-            )}
-          />
-
-          <AdminShellNavGroup
-            groupId="growth"
-            summaryKey="admin_shell_nav_group_growth"
-            pathname={pathname}
-            links={ADMIN_SHELL_GROWTH_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
-            )}
-          />
-
-          <AdminShellNavGroup
-
-            groupId="community"
-
-            summaryKey="admin_shell_nav_group_community"
-
-            pathname={pathname}
-
-            links={ADMIN_SHELL_COMMUNITY_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
-            )}
-
-          />
-
-
-
-          <AdminFinanceShellNavGroupGate>
-            <AdminShellNavGroup
-              groupId="finance"
-              summaryKey="admin_shell_nav_group_finance"
-              pathname={pathname}
-              links={ADMIN_SHELL_FINANCE_NAV_LINKS.map((link) =>
-                shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
-              )}
-            />
-          </AdminFinanceShellNavGroupGate>
-
-
-
-          <AdminShellNavGroup
-
-            groupId="governance"
-
-            summaryKey="admin_shell_nav_group_governance"
-
-            pathname={pathname}
-
-            links={ADMIN_SHELL_GOVERNANCE_NAV_LINKS.map((link) =>
-              shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
-            )}
-
-          />
-
-
-
-          <AdminShellNavGroup
-
-            groupId="more"
-
-            summaryKey="admin_shell_nav_group_more"
-
-            pathname={pathname}
-
-            links={[
-              ...ADMIN_SHELL_MORE_NAV_LINKS.map((link) =>
-                shellNav(link.href, link.labelKey, adminShellNavLinkMatch(link), link.permission),
-              ),
-              shellNav("/", "admin_shell_nav_site"),
-            ]}
-
-          />
-
+          {ADMIN_SHELL_SIDEBAR_GROUPS.filter((group) => group.id !== "workspace").map((group) => {
+            const navGroup = (
+              <AdminShellNavGroup
+                key={group.id}
+                groupId={group.id}
+                summaryKey={group.labelKey}
+                pathname={pathname}
+                links={adminShellTopNavLinksFromSidebarGroup(group)}
+              />
+            );
+            if (
+              adminShellTopNavGroupNeedsWholeFinanceGate({
+                groupId: group.id,
+                links: group.links,
+              })
+            ) {
+              return (
+                <AdminFinanceShellNavGroupGate key={group.id}>{navGroup}</AdminFinanceShellNavGroupGate>
+              );
+            }
+            return navGroup;
+          })}
+          {caps.capabilitiesUnavailable
+            ? ADMIN_SHELL_CAPABILITIES_FAILURE_EXTRA_LINKS.map((link) => {
+                const base = link.href.split("?")[0] ?? link.href;
+                const active = pathname === base || pathname.startsWith(`${base}/`);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`${touchTargetLink44Classes} font-medium ${ADMIN_MOTION_NAV_CLASS} ${adminShellTopNavLinkClass(active)} ${travelFocusRingOffset2Classes}`}
+                    data-tt-admin-shell-top-failure-leaf={link.href}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {t(link.labelKey)}
+                  </Link>
+                );
+              })
+            : null}
           </div>
           </details>
 
@@ -363,7 +390,11 @@ export default function AdminShellBar() {
 
         </nav>
 
-        <div className="flex flex-wrap items-center gap-2 text-meta" data-tt-admin-shell-actor="1">
+        <div
+          className="flex flex-wrap items-center gap-2 text-meta"
+          data-tt-admin-shell-actor="1"
+          data-tt-admin-shell-ops-chrome={workspaceOpsDemoted ? "quiet" : "default"}
+        >
 
           {showCommandPaletteTrigger ? (
             <button
@@ -377,14 +408,24 @@ export default function AdminShellBar() {
             </button>
           ) : null}
 
-          {deployEnv && (maintainerUi || deployEnv !== "local") ? (
+          {adminDeployEnvBadgeVisible(deployEnv, maintainerUi) && deployEnv ? (
             <span
-              className={`rounded-full border px-2 py-0.5 font-medium ${adminDeployEnvBadgeClass(deployEnv)}`}
-              title={t(adminDeployEnvLabelKey(deployEnv))}
+              className={
+                deployEnvQuiet
+                  ? `rounded-full border border-white/12 bg-white/5 px-2 py-0.5 text-meta font-medium text-ink-500`
+                  : `rounded-full border px-2 py-0.5 font-medium ${adminDeployEnvBadgeClass(deployEnv)}`
+              }
+              title={adminDeployEnvDisplayLabel(deployEnv, t)}
               data-tt-admin-shell-phase-badge="1"
               data-tt-admin-deploy-env={deployEnv}
+              data-tt-admin-deploy-env-quiet={deployEnvQuiet ? "1" : undefined}
+              data-tt-admin-deploy-env-chain={
+                deployEnv === "staging" && process.env.NEXT_PUBLIC_CHAIN_ID === "11155111"
+                  ? "sepolia"
+                  : undefined
+              }
             >
-              {t(adminDeployEnvLabelKey(deployEnv))}
+              {adminDeployEnvDisplayLabel(deployEnv, t)}
             </span>
           ) : null}
 
@@ -420,7 +461,11 @@ export default function AdminShellBar() {
                 role: t(CONSOLE_ROLE_70_LABEL_KEYS[previewRole]),
               })}
             </span>
-          ) : !previewRole && dbRole && mode === "db" && showPreviewBadges ? (
+          ) : !previewRole &&
+            dbRole &&
+            mode === "db" &&
+            showPreviewBadges &&
+            showDbRoleBadges ? (
             <span
               className={ADMIN_SHELL_DB_ROLE_BADGE_CLASS}
               title={t("admin_shell_product_role_badge_title")}
@@ -431,7 +476,7 @@ export default function AdminShellBar() {
                 role: t(CONSOLE_ROLE_70_LABEL_KEYS[dbRole]),
               })}
             </span>
-          ) : showPreviewBadges && shellFilterRole ? (
+          ) : showPreviewBadges && shellFilterRole && showDbRoleBadges ? (
             <span
               className={ADMIN_SHELL_DB_ROLE_BADGE_CLASS}
               data-tt-admin-shell-mapped-role="1"
@@ -440,7 +485,10 @@ export default function AdminShellBar() {
                 role: t(CONSOLE_ROLE_70_LABEL_KEYS[shellFilterRole]),
               })}
             </span>
-          ) : showPreviewBadges && !actor.loading && actor.roleLabelKey ? (
+          ) : showPreviewBadges &&
+            !actor.loading &&
+            actor.roleLabelKey &&
+            showDbRoleBadges ? (
             <span className={ADMIN_SHELL_ACCOUNT_ROLE_BADGE_CLASS}>
               {t(actor.roleLabelKey)}
             </span>
@@ -450,6 +498,7 @@ export default function AdminShellBar() {
             <div
               className="flex items-center gap-1"
               data-tt-admin-shell-role-perspective-operator={maintainerUi ? undefined : "1"}
+              data-tt-admin-shell-db-role-suppressed="1"
             >
               <AdminShellBarRolePerspectiveSwitcher />
               <Link

@@ -25,8 +25,9 @@ import {
   logAdminFetch,
 } from "@/lib/adminFetchDisplay";
 import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
+import { usersListRange } from "@/lib/admin/usersSearchSuspendL5";
 import { apiUrl, routes } from "@/lib/api";
-import { getAuthHeaders, writeRequestHeaders } from "@/lib/apiClient";
+import { writeRequestHeaders } from "@/lib/apiClient";
 import {
   patchAdminUserAcquisitionPublishSuspend,
   type AdminAcquisitionPublishSuspendResult,
@@ -34,6 +35,7 @@ import {
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import type { AdminUser, RoleChangeRes } from "./adminUsersPageTypes";
 import {
+  EMAIL_FILTER_MAX,
   buildUsersListPath,
   clampUserLimit,
   defaultTargetRole,
@@ -51,12 +53,18 @@ export type UseAdminUsersPageResult = {
   items: AdminUser[];
   appliedFilters: Record<string, unknown> | null;
   meta: Record<string, unknown> | null;
+  total: number | null;
+  limit: number;
+  offset: number;
+  listRange: ReturnType<typeof usersListRange>;
   draftLimit: string;
   setDraftLimit: Dispatch<SetStateAction<string>>;
   draftRole: string;
   setDraftRole: Dispatch<SetStateAction<string>>;
   draftKyc: string;
   setDraftKyc: Dispatch<SetStateAction<string>>;
+  draftEmail: string;
+  setDraftEmail: Dispatch<SetStateAction<string>>;
   roleUser: AdminUser | null;
   targetRole: string;
   setTargetRole: Dispatch<SetStateAction<string>>;
@@ -69,6 +77,8 @@ export type UseAdminUsersPageResult = {
   setRoleSuccessApprovalId: Dispatch<SetStateAction<string | null>>;
   applyFilters: (e?: FormEvent) => void;
   resetFilters: () => void;
+  goPrevPage: () => void;
+  goNextPage: () => void;
   openRoleModal: (u: AdminUser) => void;
   closeRoleModal: () => void;
   submitRoleChange: () => void;
@@ -91,7 +101,7 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
   const requestConfirm = useAdminL5ConfirmRequest();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { limit, role, kyc_status } = useMemo(
+  const { limit, offset, role, kyc_status, email } = useMemo(
     () => parseUsersListQuery(new URLSearchParams(searchParams.toString())),
     [searchParams],
   );
@@ -102,16 +112,19 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
     () =>
       routes.admin.users({
         limit,
+        offset,
+        ...(email ? { email } : {}),
         ...(role ? { role } : {}),
         ...(kyc_status ? { kyc_status } : {}),
       }),
-    [limit, role, kyc_status],
+    [limit, offset, email, role, kyc_status],
   );
 
   const {
     items,
     appliedFilters,
     meta,
+    total,
     loading,
     refreshing,
     error,
@@ -123,15 +136,22 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
     refreshToken: reloadTick,
   });
 
+  const listRange = useMemo(
+    () => usersListRange({ offset, loaded: items.length, total, limit }),
+    [offset, items.length, total, limit],
+  );
+
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftRole, setDraftRole] = useState(role);
   const [draftKyc, setDraftKyc] = useState(kyc_status);
+  const [draftEmail, setDraftEmail] = useState(email);
 
   useEffect(() => {
     setDraftLimit(String(limit));
     setDraftRole(role);
     setDraftKyc(kyc_status);
-  }, [limit, role, kyc_status]);
+    setDraftEmail(email);
+  }, [limit, role, kyc_status, email]);
 
   const [roleUser, setRoleUser] = useState<AdminUser | null>(null);
   const [targetRole, setTargetRole] = useState<string>(TARGET_ROLES[0]);
@@ -153,14 +173,44 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
     router.push(
       buildUsersListPath({
         limit: lim,
+        offset: 0,
         role: draftRole.trim().slice(0, ROLE_FILTER_MAX),
         kyc_status: draftKyc.trim().slice(0, KYC_FILTER_MAX),
+        email: draftEmail.trim().slice(0, EMAIL_FILTER_MAX),
       }),
     );
   };
 
   const resetFilters = () => {
-    router.push(buildUsersListPath({ limit: 100, role: "", kyc_status: "" }));
+    router.push(
+      buildUsersListPath({ limit: 100, offset: 0, role: "", kyc_status: "", email: "" }),
+    );
+  };
+
+  const goPrevPage = () => {
+    if (!listRange.hasPrev) return;
+    router.push(
+      buildUsersListPath({
+        limit,
+        offset: Math.max(0, offset - limit),
+        role,
+        kyc_status,
+        email,
+      }),
+    );
+  };
+
+  const goNextPage = () => {
+    if (!listRange.hasNext) return;
+    router.push(
+      buildUsersListPath({
+        limit,
+        offset: offset + limit,
+        role,
+        kyc_status,
+        email,
+      }),
+    );
   };
 
   const openRoleModal = (u: AdminUser) => {
@@ -303,12 +353,18 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
     items,
     appliedFilters,
     meta,
+    total,
+    limit,
+    offset,
+    listRange,
     draftLimit,
     setDraftLimit,
     draftRole,
     setDraftRole,
     draftKyc,
     setDraftKyc,
+    draftEmail,
+    setDraftEmail,
     roleUser,
     targetRole,
     setTargetRole,
@@ -321,6 +377,8 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
     setRoleSuccessApprovalId,
     applyFilters,
     resetFilters,
+    goPrevPage,
+    goNextPage,
     openRoleModal,
     closeRoleModal,
     submitRoleChange,

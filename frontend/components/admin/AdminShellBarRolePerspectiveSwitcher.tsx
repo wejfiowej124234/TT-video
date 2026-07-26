@@ -36,10 +36,13 @@ export function AdminShellBarRolePerspectiveSwitcher() {
       className="flex items-center gap-1.5"
       data-tt-admin-shell-role-perspective-switcher="1"
     >
-      <span className="hidden text-meta text-ink-600 sm:inline">
+      <span
+        className="shrink-0 text-meta font-medium text-amber-800"
+        data-tt-admin-shell-preview-label="1"
+      >
         {t("admin_shell_role_perspective_switcher_visible")}
       </span>
-      <span className="sr-only sm:hidden">{t("admin_shell_role_perspective_switcher_label")}</span>
+      <span className="sr-only">{t("admin_shell_role_perspective_switcher_label")}</span>
       <select
         id={selectId}
         className={`${ADMIN_SHELL_FORM_SELECT_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
@@ -47,6 +50,7 @@ export function AdminShellBarRolePerspectiveSwitcher() {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         data-tt-admin-shell-role-perspective-select={previewRole ?? "db"}
+        aria-description={t("admin_shell_role_perspective_switcher_title")}
         title={`${t("admin_shell_role_perspective_switcher_title")} ${t("admin_shell_role_perspective_refresh_hint")}`}
       >
         <option value="">
@@ -58,7 +62,9 @@ export function AdminShellBarRolePerspectiveSwitcher() {
         </option>
         {CONSOLE_ROLES_70.filter((roleId) => roleId !== dbRole).map((roleId) => (
           <option key={roleId} value={roleId}>
-            {t(CONSOLE_ROLE_70_LABEL_KEYS[roleId])}
+            {t("admin_shell_role_perspective_option_preview", {
+              role: t(CONSOLE_ROLE_70_LABEL_KEYS[roleId]),
+            })}
           </option>
         ))}
       </select>

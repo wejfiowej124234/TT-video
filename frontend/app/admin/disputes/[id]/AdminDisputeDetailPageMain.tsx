@@ -15,10 +15,11 @@ import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { disputeStatusLabelKey } from "@/lib/admin/adminDisputesLabels";
 import { AdminDisputeDetailTimeline } from "../AdminDisputeDetailTimeline";
+import { AdminDisputeReadonlyAdjudicationDesk } from "@/components/admin/AdminDisputeReadonlyAdjudicationDesk";
+import { AdminDisputeEvidenceAuditTrail } from "@/components/admin/AdminDisputeEvidenceAuditTrail";
 import { ADMIN_DISPUTE_DETAIL_FIELD_DEFS, adminDisputeDetailFmt, DISPUTE_DETAIL_RELATED_FOLD_LINKS } from "./adminDisputeDetailPageModel";
 import { useAdminDisputeDetailPage } from "./useAdminDisputeDetailPage";
 import {
-  ADMIN_CONSOLE_MUTED_BLOCK_CLASS,
   ADMIN_DETAIL_FIELD_ROW_CLASS,
   adminPageNavLinkClass,
   adminTableRowPrimaryActionClass,
@@ -57,6 +58,12 @@ export function AdminDisputeDetailPageMain() {
         ariaLabelKey="admin_dispute_detail_related_aria"
         foldSummaryKey="admin_dispute_detail_related_fold"
         dataTtFold="dispute-detail"
+      />
+      <AdminDisputeReadonlyAdjudicationDesk
+        disputeId={disputeId}
+        orderId={orderId}
+        status={typeof dispute?.status === "string" ? dispute.status : undefined}
+        variant="detail"
       />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
@@ -99,12 +106,10 @@ export function AdminDisputeDetailPageMain() {
                 );
               })}
             </dl>
-            <div className="mt-3">
-              <h3 className="text-meta font-medium text-ink-600">{t("admin_dispute_detail_evidenceHashes")}</h3>
-              <pre className={`mt-1 max-h-40 overflow-auto whitespace-pre-wrap break-all ${ADMIN_CONSOLE_MUTED_BLOCK_CLASS} p-3 text-meta text-ink-700`}>
-                {adminDisputeDetailFmt(dispute.evidence_hashes) || t("admin_em_dash")}
-              </pre>
-            </div>
+            <AdminDisputeEvidenceAuditTrail
+              evidenceHashes={dispute.evidence_hashes}
+              disputeId={disputeId}
+            />
             <div className="mt-4 flex flex-wrap gap-3" data-tt-admin-dispute-detail-actions="1">
               {orderId ? (
                 <Link
@@ -120,7 +125,7 @@ export function AdminDisputeDetailPageMain() {
                 className={adminTableRowSecondaryActionClass()}
                 data-tt-admin-dispute-detail-action-secondary="ops"
               >
-                {t("admin_disputes_opsOpen")}
+                {t("admin_dispute_adjudication_open_public")}
               </Link>
             </div>
           </AdminDetailContentPanel>

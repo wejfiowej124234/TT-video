@@ -17,11 +17,12 @@ import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminMetaBuildSection, AdminMetaNoteLink } from "@/components/admin/AdminMetaBuildPanel";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { useAdminSchemaPage } from "./useAdminSchemaPage";
 import { observabilityPeerRelatedFoldLinks } from "@/lib/admin/adminObservabilityRelatedFoldLinks";
-import { ADMIN_HUB_DEPTH_LINK_CARD_CLASS, ADMIN_LINK_FOCUS_CLASS, ADMIN_MOTION_CARD_HOVER_CLASS,
+import {
   ADMIN_CONSOLE_JSON_BLOCK_CLASS,
+  ADMIN_CONSOLE_MUTED_BLOCK_CLASS,
+  ADMIN_INLINE_LINK_CLASS,
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
 } from "@/lib/adminUi";
 function JsonBlock({ value }: { value: unknown }) {
@@ -102,19 +103,29 @@ export function AdminSchemaPageMain() {
             {buckets.map(([key, value], i) => {
               const bucketHeadingId = `${schemaBucketHeadingId}-b${i}`;
               return (
-                <Link
+                <article
                   key={key}
-                  href="/admin/observability"
-                  className={`${touchTargetLink44Classes} !flex !w-full !flex-col !items-stretch !justify-start ${ADMIN_HUB_DEPTH_LINK_CARD_CLASS} ${ADMIN_MOTION_CARD_HOVER_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`}
+                  className={`p-4 ${ADMIN_CONSOLE_MUTED_BLOCK_CLASS}`}
                   aria-labelledby={bucketHeadingId}
+                  data-tt-admin-schema-bucket="1"
                 >
                   <h2 id={bucketHeadingId} className="text-small font-semibold uppercase tracking-wide text-ink-500 font-mono">
                     {key}
                   </h2>
-                  <JsonBlock value={value} />
-                </Link>
+                  <details className="mt-2">
+                    <summary className="cursor-pointer text-small text-ink-700">
+                      {t("admin_schema_bucket_raw_fold")}
+                    </summary>
+                    <JsonBlock value={value} />
+                  </details>
+                </article>
               );
             })}
+            <p className="mt-4 text-small text-ink-600">
+              <Link href="/admin/observability" className={ADMIN_INLINE_LINK_CLASS}>
+                {t("admin_observability_title")}
+              </Link>
+            </p>
           </div>
         )}
       </AdminWarmL5Surface>

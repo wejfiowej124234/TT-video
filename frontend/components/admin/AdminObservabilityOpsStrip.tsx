@@ -75,7 +75,11 @@ export function AdminObservabilityOpsStrip() {
         ))}
       </ol>
       <p className="mt-4 text-small">
-        <Link href="/admin/finance-suite" className={`font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}>
+        <Link
+          href="/admin/finance-suite"
+          className={`font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+          data-tt-admin-obs-finance-hub-link="1"
+        >
           {t("admin_fin_suite_back_hub")}
         </Link>
       </p>

@@ -16,7 +16,7 @@ import {
 export function useAdminDisputesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { limit, status } = useMemo(
+  const { limit, status, orderId, disputeId, q } = useMemo(
     () => parseDisputesListQuery(new URLSearchParams(searchParams?.toString() ?? "")),
     [searchParams],
   );
@@ -26,8 +26,11 @@ export function useAdminDisputesPage() {
       routes.admin.disputes({
         limit,
         ...(status ? { status } : {}),
+        ...(disputeId ? { id: disputeId } : {}),
+        ...(orderId ? { order_id: orderId } : {}),
+        ...(q ? { q } : {}),
       }),
-    [limit, status],
+    [limit, status, disputeId, orderId, q],
   );
 
   const { items, appliedFilters, meta, loading, refreshing, error } =
@@ -39,17 +42,31 @@ export function useAdminDisputesPage() {
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftStatus, setDraftStatus] = useState(status);
+  const [draftDisputeId, setDraftDisputeId] = useState(disputeId);
+  const [draftOrderId, setDraftOrderId] = useState(orderId);
+  const [draftQ, setDraftQ] = useState(q);
 
   useEffect(() => {
     setDraftLimit(String(limit));
     setDraftStatus(status);
-  }, [limit, status]);
+    setDraftDisputeId(disputeId);
+    setDraftOrderId(orderId);
+    setDraftQ(q);
+  }, [limit, status, disputeId, orderId, q]);
 
   const apply = (e?: FormEvent) => {
     e?.preventDefault();
     const lim = clampDisputeLimit(Number.parseInt(draftLimit.trim(), 10));
     const st = draftStatus.trim().slice(0, STATUS_MAX);
-    router.push(buildDisputesListPath({ limit: lim, status: st }));
+    router.push(
+      buildDisputesListPath({
+        limit: lim,
+        status: st,
+        orderId: draftOrderId.trim(),
+        disputeId: draftDisputeId.trim(),
+        q: draftQ.trim(),
+      }),
+    );
   };
 
   const reset = () => {
@@ -61,12 +78,21 @@ export function useAdminDisputesPage() {
     refreshing,
     error,
     items,
+    orderId,
+    disputeId,
+    q,
     appliedFilters,
     meta,
     draftLimit,
     setDraftLimit,
     draftStatus,
     setDraftStatus,
+    draftDisputeId,
+    setDraftDisputeId,
+    draftOrderId,
+    setDraftOrderId,
+    draftQ,
+    setDraftQ,
     apply,
     reset,
   };

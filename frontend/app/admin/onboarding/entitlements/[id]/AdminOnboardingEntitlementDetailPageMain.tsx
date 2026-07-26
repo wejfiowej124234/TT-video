@@ -13,13 +13,23 @@ import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatu
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { ADMIN_PRIMARY_ACTION_BTN_CLASS, adminPageNavLinkClass,
-  ADMIN_CONSOLE_MUTED_BLOCK_CLASS,
+import {
+  ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  adminPageNavLinkClass,
   ADMIN_FORM_CONTROL_SM_CLASS,
   ADMIN_DESTRUCTIVE_SOFT_BTN_CLASS,
-  ADMIN_LIST_REFRESHING_SURFACE_CLASS,} from "@/lib/adminUi";
+  ADMIN_LIST_REFRESHING_SURFACE_CLASS,
+  ADMIN_DETAIL_FIELD_LABEL_CLASS,
+  ADMIN_DETAIL_FIELD_ROW_CLASS,
+  ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS,
+  ADMIN_DETAIL_SECTION_TITLE_CLASS,
+} from "@/lib/adminUi";
 import { useAdminOnboardingEntitlementDetailPage } from "./useAdminOnboardingEntitlementDetailPage";
 import { ONBOARDING_ENTITLEMENT_DETAIL_RELATED_FOLD_LINKS } from "@/lib/admin/adminOnboardingEntitlementDetailRelatedFoldLinks";
+import {
+  adminOnboardingEntitlementDetailFmt,
+  buildAdminOnboardingEntitlementDetailRowDefs,
+} from "./adminOnboardingEntitlementDetailPageModel";
 
 export function AdminOnboardingEntitlementDetailPageMain() {
   const { t } = useTranslation();
@@ -40,6 +50,8 @@ export function AdminOnboardingEntitlementDetailPageMain() {
     patchMetadata,
     revoke,
   } = useAdminOnboardingEntitlementDetailPage();
+
+  const rows = ent ? buildAdminOnboardingEntitlementDetailRowDefs(ent) : [];
 
   return (
     <AdminDetailPageChrome
@@ -74,12 +86,36 @@ export function AdminOnboardingEntitlementDetailPageMain() {
       ) : null}
 
       {ent ? (
-        <pre
-          className={`mt-6 overflow-x-auto p-3 text-meta ${ADMIN_CONSOLE_MUTED_BLOCK_CLASS}${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+        <AdminDetailContentPanel
+          className={`mt-6${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}
+          data-tt-admin-onboarding-entitlement-human="1"
           data-tt-admin-detail-refreshing={refreshing ? "1" : undefined}
         >
-          {JSON.stringify(ent, null, 2)}
-        </pre>
+          <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>{t("admin_onb_ent_detail_section")}</h2>
+          <dl className="mt-3 grid gap-2 text-body sm:grid-cols-2">
+            {rows.map(({ key, labelKey, display: preset }) => {
+              const raw = ent[key];
+              const display =
+                (preset !== undefined ? preset : adminOnboardingEntitlementDetailFmt(raw)) ||
+                t("admin_em_dash");
+              const label = key.startsWith("stripe_") ? key : t(labelKey);
+              return (
+                <div key={key} className={ADMIN_DETAIL_FIELD_ROW_CLASS}>
+                  <dt className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{label}</dt>
+                  <dd className={ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS}>{display}</dd>
+                </div>
+              );
+            })}
+          </dl>
+          <details className="mt-4" data-tt-admin-onboarding-entitlement-raw="1">
+            <summary className="cursor-pointer text-small font-medium text-ink-700">
+              {t("admin_onb_ent_detail_raw_fold")}
+            </summary>
+            <pre className="mt-2 overflow-x-auto p-3 text-meta font-mono text-ink-700">
+              {JSON.stringify(ent, null, 2)}
+            </pre>
+          </details>
+        </AdminDetailContentPanel>
       ) : null}
 
       {canWrite && ent ? (

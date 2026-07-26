@@ -32,7 +32,7 @@ export function AdminFinanceSuiteHubDepthSection() {
       </summary>
       <p className="mt-2 text-small text-ink-600">{t("admin_fin_suite_hub_depth_lead")}</p>
       <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-        {FINANCE_SUITE_MODULES.map((m) => {
+        {FINANCE_SUITE_MODULES.filter((m) => m.status !== "placeholder").map((m) => {
           const hasPerm =
             caps.permissionsLoaded &&
             !caps.capabilitiesUnavailable &&

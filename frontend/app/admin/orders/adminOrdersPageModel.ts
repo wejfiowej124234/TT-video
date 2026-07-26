@@ -21,7 +21,7 @@ export type AdminOrdersRes = {
 };
 
 export const STATE_MAX = 64;
-export const ORDER_DATA_ORIGIN_MAX = 64;
+export const ORDER_ID_QUERY_MAX = 64;
 
 export function clampOrderLimit(n: number): number {
   if (!Number.isFinite(n)) return 100;
@@ -31,20 +31,30 @@ export function clampOrderLimit(n: number): number {
 export function parseOrdersListQuery(sp: URLSearchParams): {
   limit: number;
   state: string;
-  data_origin: string;
+  id: string;
+  q: string;
 } {
   const limit = clampOrderLimit(Number.parseInt(sp.get("limit") ?? "100", 10));
   const state = (sp.get("state") ?? "").trim().slice(0, STATE_MAX);
-  const data_origin = (sp.get("data_origin") ?? "").trim().slice(0, ORDER_DATA_ORIGIN_MAX);
-  return { limit, state, data_origin };
+  // Batch-13 HU-509 · FO6 · ?id= 精确 · ?q= 子串（兼容仅 id）
+  const id = (sp.get("id") ?? "").trim().slice(0, ORDER_ID_QUERY_MAX);
+  const q = (sp.get("q") ?? "").trim().slice(0, ORDER_ID_QUERY_MAX);
+  return { limit, state, id, q };
 }
 
-export function buildOrdersListPath(q: { limit: number; state: string; data_origin?: string }): string {
+export function buildOrdersListPath(query: {
+  limit: number;
+  state: string;
+  id?: string;
+  q?: string;
+}): string {
   const sp = new URLSearchParams();
-  sp.set("limit", String(clampOrderLimit(q.limit)));
-  const st = q.state.trim().slice(0, STATE_MAX);
+  sp.set("limit", String(clampOrderLimit(query.limit)));
+  const st = query.state.trim().slice(0, STATE_MAX);
   if (st) sp.set("state", st);
-  const origin = (q.data_origin ?? "").trim().slice(0, ORDER_DATA_ORIGIN_MAX);
-  if (origin) sp.set("data_origin", origin);
+  const id = (query.id ?? "").trim().slice(0, ORDER_ID_QUERY_MAX);
+  if (id) sp.set("id", id);
+  const q = (query.q ?? "").trim().slice(0, ORDER_ID_QUERY_MAX);
+  if (q) sp.set("q", q);
   return `/admin/orders?${sp.toString()}`;
 }

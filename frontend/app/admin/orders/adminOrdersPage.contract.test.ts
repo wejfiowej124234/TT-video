@@ -38,5 +38,15 @@ describe("admin orders page", () => {
     expect(src).toContain("formatAdminMoney");
     expect(src).toContain("created");
     expect(src).toContain("admin_orders_readonly_escrow_footnote");
+    expect(src).toContain("AdminOrdersOpsJumpPack");
+    // Batch-13 FP-C · FO6/FO7/FO8/FO10
+    expect(src).toContain("data-tt-admin-orders-id-input");
+    expect(src).toContain("data-tt-admin-orders-q");
+    expect(src).toContain("data-tt-admin-orders-state-select");
+    expect(src).toContain("data-tt-admin-orders-ops-jump-default-closed");
+    expect(src).toContain("data-tt-admin-orders-party-user");
+    expect(src).toContain("/admin/disputes?orderId=");
+    expect(src).toContain("data-tt-admin-orders-op-more");
+    expect(src).toContain("admin_orders_op_view");
   });
 });

@@ -1,16 +1,14 @@
 "use client";
 
-
-
-import Link from "next/link";
-
 import { useRouter, useSearchParams } from "next/navigation";
-
 import { useId, useMemo } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-
+import { AdminOnboardingQueueRowCard } from "@/components/admin/AdminOnboardingQueueRowCard";
 import { AdminQueueListPageChrome } from "@/components/admin/AdminQueueListPageChrome";
+import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
+import { AdminStandardListSection } from "@/components/admin/AdminStandardListSection";
+import { AdminOnboardingQueueSortToolbar } from "@/components/admin/AdminOnboardingQueueSortToolbar";
 
 import {
   buildAdminQueueListPath,
@@ -18,21 +16,13 @@ import {
 } from "@/lib/admin/adminQueueListPageModel";
 import { ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { formatRelativeAge } from "@/lib/admin/formatRelativeAge";
 import { sortOnboardingQueueItems, type OnboardingQueueSortKey } from "@/lib/admin/sortOnboardingQueueItems";
 import { useAdminTableSort } from "@/lib/admin/useAdminTableSort";
-
-import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
-import { AdminStandardListSection } from "@/components/admin/AdminStandardListSection";
-import { AdminOnboardingQueueSortToolbar } from "@/components/admin/AdminOnboardingQueueSortToolbar";
-
 import {
   ADMIN_FILTER_CARD_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
-  ADMIN_QUEUE_LIST_ROW_CARD_CLASS,
-  adminTableRowPrimaryActionClass,
   ADMIN_FILTER_INPUT_SM_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
 } from "@/lib/adminUi";
@@ -79,7 +69,11 @@ export function AdminProviderApplicationsPageMain() {
 
     >
 
-      <div className={`${ADMIN_FILTER_CARD_CLASS} flex flex-wrap items-end gap-3`} data-tt-admin-queue-list-filter="provider">
+      <div
+        className={`${ADMIN_FILTER_CARD_CLASS} flex flex-wrap items-end gap-3`}
+        data-tt-admin-queue-list-filter="provider"
+        data-tt-admin-batch9-l5-sample="provider-queue"
+      >
 
         <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
 
@@ -155,91 +149,17 @@ export function AdminProviderApplicationsPageMain() {
           />
 
           <ul className="space-y-3">
-
-            {sortedItems.map((row) => {
-
-              const uid = row.user_id ?? "";
-
-              const app = row.application;
-
-              return (
-
-                <li key={uid} className={ADMIN_QUEUE_LIST_ROW_CARD_CLASS}>
-
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-
-                    <div>
-
-                      <p className="font-mono text-small text-ink-800 text-ink-800 break-all">{row.email ?? uid}</p>
-
-                      <p className="mt-1 text-small text-ink-600">
-
-                        {t("admin_provider_app_status")}:{" "}
-
-                        <span className="font-mono">{app?.status ?? "—"}</span>
-
-                        {app?.shop_name ? (
-
-                          <>
-
-                            {" · "}
-
-                            {String(app.shop_name)}
-
-                          </>
-
-                        ) : null}
-
-                        {app?.submitted_at ? (
-
-                          <>
-
-                            {" · "}
-
-                            {t("admin_queue_wait_age", {
-
-                              age: formatRelativeAge(app.submitted_at),
-
-                            })}
-
-                          </>
-
-                        ) : null}
-
-                      </p>
-
-                      {app?.submitted_at ? (
-
-                        <p className="text-meta text-ink-500">{app.submitted_at}</p>
-
-                      ) : null}
-
-                    </div>
-
-                    <Link
-
-                      href={`/admin/users/${encodeURIComponent(uid)}`}
-
-                      className={adminTableRowPrimaryActionClass()}
-
-                      aria-label={t("admin_provider_list_review_row_aria", { id: uid })}
-
-                    >
-
-                      {t("admin_provider_list_reviewLink")}
-
-                    </Link>
-
-                  </div>
-
-                </li>
-
-              );
-
-            })}
-
-          </ul>
-          </>
+            {sortedItems.map((row) => (
+              <AdminOnboardingQueueRowCard
+                key={row.user_id ?? ""}
+                kind="provider"
+                row={row}
+                statusLabelKey="admin_provider_app_status"
+                reviewLinkKey="admin_provider_list_reviewLink"
+                reviewAriaKey="admin_provider_list_review_row_aria"
+              />
+            ))}
+          </ul>          </>
       </AdminStandardListSection>
 
     </AdminQueueListPageChrome>

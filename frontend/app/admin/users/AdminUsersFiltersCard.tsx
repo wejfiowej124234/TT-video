@@ -2,14 +2,19 @@
 
 import type { Dispatch, FormEvent, SetStateAction } from "react";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
-import {ADMIN_FILTER_CARD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+import {
+  ADMIN_FILTER_CARD_CLASS,
+  ADMIN_FORM_FIELD_FOCUS_CLASS,
+  ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_FILTER_RESET_BTN_CLASS,
   ADMIN_FILTER_INPUT_MD_CLASS,
   ADMIN_FILTER_ACTIONS_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
-  ADMIN_FILTER_GRID_3_CLASS,
+  ADMIN_FILTER_GRID_4_CLASS,
   ADMIN_FILTER_HINT_CLASS,
-  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
+  ADMIN_FILTER_TITLE_CLASS,
+} from "@/lib/adminUi";
+
 export function AdminUsersFiltersCard({
   adminListApplyResetHintId,
   adminAppliedFiltersDescId,
@@ -22,6 +27,8 @@ export function AdminUsersFiltersCard({
   setDraftRole,
   draftKyc,
   setDraftKyc,
+  draftEmail,
+  setDraftEmail,
   applyFilters,
   resetFilters,
   t,
@@ -37,6 +44,8 @@ export function AdminUsersFiltersCard({
   setDraftRole: Dispatch<SetStateAction<string>>;
   draftKyc: string;
   setDraftKyc: Dispatch<SetStateAction<string>>;
+  draftEmail: string;
+  setDraftEmail: Dispatch<SetStateAction<string>>;
   applyFilters: (e?: FormEvent) => void;
   resetFilters: () => void;
   t: (key: string) => string;
@@ -57,7 +66,20 @@ export function AdminUsersFiltersCard({
         <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
           {t("admin_list_filters_apply_reset_hint")}
         </p>
-        <div className={ADMIN_FILTER_GRID_3_CLASS}>
+        <div className={ADMIN_FILTER_GRID_4_CLASS} data-tt-admin-users-filters-grid="1">
+          <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
+            {t("admin_users_email_filter_label")}
+            <input
+              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
+              type="search"
+              value={draftEmail}
+              onChange={(e) => setDraftEmail(e.target.value)}
+              placeholder={t("admin_users_email_filter_ph")}
+              autoComplete="off"
+              data-tt-admin-users-email-filter="1"
+              aria-label={t("admin_users_email_filter_label")}
+            />
+          </label>
           <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_users_limit_label")}
             <input

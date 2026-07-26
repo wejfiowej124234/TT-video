@@ -8,6 +8,7 @@ import {
   postAdminReferralCode,
   type AdminReferralCodeRow,
 } from "@/lib/apiClient";
+import { mapAdminGrowthLoadError } from "@/lib/admin/mapAdminGrowthLoadError";
 
 const CODE_TYPES = ["kol", "guide", "merchant", "region_operator", "user"] as const;
 
@@ -15,6 +16,7 @@ export function useAdminReferralCodesPage() {
   const [items, setItems] = useState<AdminReferralCodeRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [listFailed, setListFailed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [ownerUserId, setOwnerUserId] = useState("");
   const [codeType, setCodeType] = useState<(typeof CODE_TYPES)[number]>("kol");
@@ -28,8 +30,11 @@ export function useAdminReferralCodesPage() {
     try {
       const res = await getAdminReferralCodes();
       setItems(res.items ?? []);
-    } catch {
-      setError("admin_growth_referral_codes_load_failed");
+      setListFailed(false);
+    } catch (e) {
+      setItems([]);
+      setListFailed(true);
+      setError(mapAdminGrowthLoadError(e, "admin_growth_referral_codes_load_failed"));
     } finally {
       setLoading(false);
     }
@@ -39,10 +44,9 @@ export function useAdminReferralCodesPage() {
     void reload();
   }, [reload]);
 
-  async function handleCreate(e: React.FormEvent) {
-    e.preventDefault();
+  async function createReferralCode() {
     const owner = ownerUserId.trim();
-    if (!owner) return;
+    if (!owner || listFailed) return;
     setBusy(true);
     setError(null);
     try {
@@ -57,21 +61,22 @@ export function useAdminReferralCodesPage() {
       setLabel("");
       setMaxUses("");
       await reload();
-    } catch {
-      setError("admin_growth_referral_codes_create_failed");
+    } catch (e) {
+      setError(mapAdminGrowthLoadError(e, "admin_growth_referral_codes_create_failed"));
     } finally {
       setBusy(false);
     }
   }
 
   async function toggleActive(row: AdminReferralCodeRow) {
+    if (listFailed) return;
     setBusy(true);
     setError(null);
     try {
       await patchAdminReferralCode(row.id, { is_active: !row.is_active });
       await reload();
-    } catch {
-      setError("admin_growth_referral_codes_patch_failed");
+    } catch (e) {
+      setError(mapAdminGrowthLoadError(e, "admin_growth_referral_codes_patch_failed"));
     } finally {
       setBusy(false);
     }
@@ -81,6 +86,8 @@ export function useAdminReferralCodesPage() {
     items,
     loading,
     error,
+    listFailed,
+    writesDisabled: listFailed || loading,
     busy,
     ownerUserId,
     setOwnerUserId,
@@ -92,7 +99,7 @@ export function useAdminReferralCodesPage() {
     setLabel,
     maxUses,
     setMaxUses,
-    handleCreate,
+    createReferralCode,
     toggleActive,
     reload,
     codeTypes: CODE_TYPES,

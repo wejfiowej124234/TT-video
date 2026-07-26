@@ -61,7 +61,7 @@ fn validate_hourly_rate(raw: &str) -> Result<Option<String>, (StatusCode, Json<V
             Json(crate::api_json::err_key("hourly_rate_invalid")),
         ));
     };
-    if !v.is_finite() || v < 0.0 || v > 999_999.0 {
+    if !v.is_finite() || !(0.0..=999_999.0).contains(&v) {
         return Err((
             StatusCode::BAD_REQUEST,
             Json(crate::api_json::err_key("hourly_rate_out_of_range")),
@@ -446,7 +446,48 @@ fn guide_application_list_item(store: &super::ChainOffStore, g: &GuideRow) -> Va
 pub async fn list_guide_applications_admin_impl(
     state: ChainOffState,
     status_filter: Option<String>,
-) -> Json<Value> {
+) -> Result<Json<Value>, (StatusCode, Json<Value>)> {
+    if let Some(pool) = state.db_pool.as_ref() {
+        match crate::db::list_role_applications_admin(pool, "guide", status_filter.as_deref())
+            .await
+        {
+            Ok((rows, total, pending_count)) => {
+                let items: Vec<Value> = rows
+                    .into_iter()
+                    .map(|r| {
+                        json!({
+                            "user_id": r.user_id,
+                            "email": r.email,
+                            "user_role": r.user_role,
+                            "application": r.application,
+                        })
+                    })
+                    .collect();
+                return Ok(Json(json!({
+                    "status": "ok",
+                    "items": items,
+                    "total": total,
+                    "pending_count": pending_count,
+                    "meta": {
+                        "implementation_status": "guide_applications_admin_list",
+                        "source": "postgres",
+                        "total": total,
+                        "pending_count": pending_count,
+                    }
+                })));
+            }
+            Err(_) => {
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "guide_applications_pg_unavailable",
+                        "message": "guide_applications_pg_unavailable",
+                    })),
+                ));
+            }
+        }
+    }
+
     let store = state.store.read().await;
     let filter = status_filter
         .as_deref()
@@ -455,7 +496,7 @@ pub async fn list_guide_applications_admin_impl(
     let mut items: Vec<Value> = store
         .guides
         .values()
-        .filter(|g| filter.as_ref().map_or(true, |f| g.status.to_ascii_lowercase() == *f))
+        .filter(|g| filter.as_ref().is_none_or(|f| g.status.to_ascii_lowercase() == *f))
         .map(|g| guide_application_list_item(&store, g))
         .collect();
     items.sort_by(|a, b| {
@@ -463,19 +504,159 @@ pub async fn list_guide_applications_admin_impl(
         let tb = b["application"]["submitted_at"].as_str().unwrap_or("");
         tb.cmp(ta)
     });
-    Json(json!({
+    let total = items.len();
+    Ok(Json(json!({
         "status": "ok",
         "items": items,
-        "meta": { "implementation_status": "guide_applications_admin_list" }
-    }))
+        "total": total,
+        "pending_count": total,
+        "meta": {
+            "implementation_status": "guide_applications_admin_list",
+            "source": "memory",
+            "total": total,
+            "pending_count": total,
+        }
+    })))
 }
 
+fn guide_application_admin_detail_json(
+    g_id: Uuid,
+    status: &str,
+    city: &str,
+    country_code: &str,
+    languages: &Value,
+    service_types: &Value,
+    bio: &Option<String>,
+    wallet_address: &Option<String>,
+    real_name: &Option<String>,
+    id_photo_url: &Option<String>,
+    language_cert_url: &Option<String>,
+    guide_license_url: &Option<String>,
+    hourly_rate: &Option<String>,
+    avatar_url: &Option<String>,
+    submitted_at: &str,
+    updated_at: &str,
+    rejection_codes: &Value,
+    rejection_message: &Option<String>,
+    passport_hash_present: bool,
+    source: &str,
+) -> Value {
+    json!({
+        "status": "ok",
+        "application": {
+            "id": g_id,
+            "status": status,
+            "city": city,
+            "country_code": country_code,
+            "languages": languages,
+            "service_types": service_types,
+            "bio": bio,
+            "wallet_address": wallet_address,
+            "real_name": real_name,
+            "id_photo_url": id_photo_url,
+            "language_cert_url": language_cert_url,
+            "guide_license_url": guide_license_url,
+            "hourly_rate": hourly_rate,
+            "avatar_url": avatar_url,
+            "submitted_at": submitted_at,
+            "updated_at": updated_at,
+            "rejection_codes": rejection_codes,
+            "rejection_message": rejection_message,
+            // HU-491 / Q2-C · 合规不回传明文 · 仅诚实布尔
+            "passport_hash_present": passport_hash_present,
+        },
+        "meta": {
+            "implementation_status": "guide_application_admin_detail",
+            "source": source,
+        }
+    })
+}
+
+/// Batch-13 HU-491 · 有 `db_pool` 时详情读 Postgres（`guides`）· 失败 fail-closed（禁 silent memory 冒充 PG 列表）。
 pub async fn get_guide_application_for_user_admin_impl(
     state: ChainOffState,
     target_user_id: Uuid,
 ) -> Result<Json<Value>, (StatusCode, Json<Value>)> {
+    if let Some(pool) = state.db_pool.as_ref() {
+        let user_exists = sqlx::query_scalar::<_, bool>(
+            "SELECT EXISTS(SELECT 1 FROM users WHERE id = $1)",
+        )
+        .bind(target_user_id)
+        .fetch_one(pool)
+        .await;
+        match user_exists {
+            Ok(false) => {
+                return Err((
+                    StatusCode::NOT_FOUND,
+                    Json(crate::api_json::err_key("user_not_found")),
+                ));
+            }
+            Err(_) => {
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "guide_application_pg_unavailable",
+                        "message": "guide_application_pg_unavailable",
+                    })),
+                ));
+            }
+            Ok(true) => {}
+        }
+
+        match crate::db::select_latest_guide_for_user(pool, target_user_id).await {
+            Ok(Some(g)) => {
+                let passport_hash_present = g
+                    .passport_number_hash
+                    .as_ref()
+                    .map(|s| !s.trim().is_empty())
+                    .unwrap_or(false);
+                return Ok(Json(guide_application_admin_detail_json(
+                    g.id,
+                    &g.status,
+                    &g.city,
+                    &g.country_code,
+                    &json!(g.languages),
+                    &json!(g.service_types),
+                    &g.bio,
+                    &g.wallet_address,
+                    &g.real_name,
+                    &g.id_photo_url,
+                    &g.language_cert_url,
+                    &g.guide_license_url,
+                    &g.hourly_rate,
+                    &g.avatar_url,
+                    &g.created_at.to_rfc3339(),
+                    &g.updated_at.to_rfc3339(),
+                    &json!(g.rejection_codes),
+                    &g.rejection_message,
+                    passport_hash_present,
+                    "postgres",
+                )));
+            }
+            Ok(None) => {
+                return Ok(Json(json!({
+                    "status": "ok",
+                    "application": null,
+                    "meta": {
+                        "implementation_status": "guide_application_none",
+                        "source": "postgres",
+                    }
+                })));
+            }
+            Err(_) => {
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "guide_application_pg_unavailable",
+                        "message": "guide_application_pg_unavailable",
+                    })),
+                ));
+            }
+        }
+    }
+
     let store = state.store.read().await;
-    if store.users.get(&target_user_id).is_none() {
+    if !store.users.contains_key(&target_user_id) {
         return Err((
             StatusCode::NOT_FOUND,
             Json(crate::api_json::err_key("user_not_found")),
@@ -486,40 +667,49 @@ pub async fn get_guide_application_for_user_admin_impl(
         return Ok(Json(json!({
             "status": "ok",
             "application": null,
-            "meta": { "implementation_status": "guide_application_none" }
+            "meta": {
+                "implementation_status": "guide_application_none",
+                "source": "memory",
+            }
         })));
     };
     let Some(g) = store.guides.get(&gid) else {
         return Ok(Json(json!({
             "status": "ok",
             "application": null,
-            "meta": { "implementation_status": "guide_application_none" }
+            "meta": {
+                "implementation_status": "guide_application_none",
+                "source": "memory",
+            }
         })));
     };
-    Ok(Json(json!({
-        "status": "ok",
-        "application": {
-            "id": g.id,
-            "status": g.status,
-            "city": g.city,
-            "country_code": g.country_code,
-            "languages": g.languages,
-            "service_types": g.service_types,
-            "bio": g.bio,
-            "wallet_address": g.wallet_address,
-            "real_name": g.real_name,
-            "id_photo_url": g.id_photo_url,
-            "language_cert_url": g.language_cert_url,
-            "guide_license_url": g.guide_license_url,
-            "hourly_rate": g.hourly_rate,
-            "avatar_url": g.avatar_url,
-            "submitted_at": g.created_at.to_rfc3339(),
-            "updated_at": g.updated_at.to_rfc3339(),
-            "rejection_codes": g.rejection_codes,
-            "rejection_message": g.rejection_message,
-        },
-        "meta": { "implementation_status": "guide_application_admin_detail" }
-    })))
+    let passport_hash_present = g
+        .passport_number_hash
+        .as_ref()
+        .map(|s| !s.trim().is_empty())
+        .unwrap_or(false);
+    Ok(Json(guide_application_admin_detail_json(
+        g.id,
+        &g.status,
+        &g.city,
+        &g.country_code,
+        &json!(g.languages),
+        &json!(g.service_types),
+        &g.bio,
+        &g.wallet_address,
+        &g.real_name,
+        &g.id_photo_url,
+        &g.language_cert_url,
+        &g.guide_license_url,
+        &g.hourly_rate,
+        &g.avatar_url,
+        &g.created_at.to_rfc3339(),
+        &g.updated_at.to_rfc3339(),
+        &json!(g.rejection_codes),
+        &g.rejection_message,
+        passport_hash_present,
+        "memory",
+    )))
 }
 
 #[derive(Debug, Deserialize)]
@@ -536,6 +726,8 @@ fn map_review_status_to_guide_status(review: &str) -> Option<&'static str> {
         "reviewing" => Some("pending_review"),
         "approved" => Some("active"),
         "rejected" => Some("rejected"),
+        // Batch-11 HU-361 · 补件
+        "needs_more_info" => Some("needs_more_info"),
         _ => None,
     }
 }
@@ -589,6 +781,133 @@ pub async fn admin_review_guide_application_impl(
             )),
         ));
     }
+    if guide_status == "needs_more_info" && codes.is_empty() && rejection_message.is_none() {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(crate::api_json::err_key_detail(
+                "needs_more_info_detail_required",
+                "needs_more_info requires non-empty rejection_codes and/or rejection_message",
+            )),
+        ));
+    }
+
+    let now = Utc::now();
+    let keep_notes = guide_status == "rejected" || guide_status == "needs_more_info";
+    let next_codes = if keep_notes {
+        codes.clone()
+    } else {
+        vec![]
+    };
+    let next_message = if keep_notes {
+        rejection_message.clone()
+    } else {
+        None
+    };
+
+    // Batch-13 HU-491 · Q1-B：有 PG 时先写 SSOT（fail-closed）再同步 memory。
+    if let Some(ref pool) = state.db_pool {
+        let pg_guide = match crate::db::select_latest_guide_for_user(pool, target_user_id).await {
+            Ok(g) => g,
+            Err(e) => {
+                eprintln!(
+                    "[audit] select_latest_guide_for_user failed user_id={} error={}",
+                    target_user_id, e
+                );
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "guide_application_pg_unavailable",
+                        "message": "guide_application_pg_unavailable",
+                    })),
+                ));
+            }
+        };
+        let Some(pg_g) = pg_guide else {
+            return Err((
+                StatusCode::NOT_FOUND,
+                Json(crate::api_json::err_key("guide_application_not_found")),
+            ));
+        };
+        let guide_id = pg_g.id;
+        match crate::db::update_guide_registration_review(
+            pool,
+            guide_id,
+            guide_status,
+            &next_codes,
+            next_message.as_deref(),
+            now,
+        )
+        .await
+        {
+            Ok(0) => {
+                return Err((
+                    StatusCode::NOT_FOUND,
+                    Json(crate::api_json::err_key("guide_application_not_found")),
+                ));
+            }
+            Ok(_) => {}
+            Err(e) => {
+                eprintln!(
+                    "[audit] db update_guide_registration_review failed guide_id={} error={}",
+                    guide_id, e
+                );
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "guide_application_pg_write_failed",
+                        "message": "guide_application_pg_write_failed",
+                    })),
+                ));
+            }
+        }
+        if guide_status == "active" {
+            if let Err(e) = crate::db::update_user_role_if_safe(pool, target_user_id, "guide").await
+            {
+                eprintln!(
+                    "[audit] update_user_role_if_safe(guide) failed user_id={} error={}",
+                    target_user_id, e
+                );
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "guide_application_pg_role_write_failed",
+                        "message": "guide_application_pg_role_write_failed",
+                    })),
+                ));
+            }
+        }
+
+        // best-effort memory sync（不否决已成功的 PG 写）
+        {
+            let mut store = state.store.write().await;
+            if let Some(gid) = store.guides_by_user.get(&target_user_id).copied() {
+                if let Some(g) = store.guides.get_mut(&gid) {
+                    g.status = guide_status.to_string();
+                    g.rejection_codes = next_codes.clone();
+                    g.rejection_message = next_message.clone();
+                    g.updated_at = now;
+                }
+            }
+            if guide_status == "active" {
+                if let Some(u) = store.users.get_mut(&target_user_id) {
+                    u.role = "guide".to_string();
+                    u.updated_at = now;
+                }
+            }
+        }
+
+        return Ok(Json(json!({
+            "status": "ok",
+            "user_id": target_user_id,
+            "guide_id": guide_id,
+            "application_status": guide_status,
+            "user_role_updated": guide_status == "active",
+            "meta": {
+                "implementation_status": "guide_application_admin_review",
+                "source": "postgres",
+            }
+        })));
+    }
 
     let mut store = state.store.write().await;
     let guide_id = store.guides_by_user.get(&target_user_id).copied();
@@ -605,18 +924,9 @@ pub async fn admin_review_guide_application_impl(
         ));
     };
 
-    let now = Utc::now();
     g.status = guide_status.to_string();
-    g.rejection_codes = if guide_status == "rejected" {
-        codes.clone()
-    } else {
-        vec![]
-    };
-    g.rejection_message = if guide_status == "rejected" {
-        rejection_message.clone()
-    } else {
-        None
-    };
+    g.rejection_codes = next_codes;
+    g.rejection_message = next_message;
     g.updated_at = now;
     let guide_snapshot = g.clone();
 
@@ -629,34 +939,16 @@ pub async fn admin_review_guide_application_impl(
 
     drop(store);
 
-    if let Some(ref pool) = state.db_pool {
-        if let Err(e) = crate::db::update_guide_registration_review(
-            pool,
-            guide_snapshot.id,
-            guide_status,
-            &guide_snapshot.rejection_codes,
-            guide_snapshot.rejection_message.as_deref(),
-            now,
-        )
-        .await
-        {
-            eprintln!(
-                "[audit] db update_guide_registration_review failed guide_id={} error={}",
-                guide_snapshot.id, e
-            );
-        }
-        if guide_status == "active" {
-            let _ = crate::db::update_user_role_if_safe(pool, target_user_id, "guide").await;
-        }
-    }
-
     Ok(Json(json!({
         "status": "ok",
         "user_id": target_user_id,
         "guide_id": guide_snapshot.id,
         "application_status": guide_status,
         "user_role_updated": guide_status == "active",
-        "meta": { "implementation_status": "guide_application_admin_review" }
+        "meta": {
+            "implementation_status": "guide_application_admin_review",
+            "source": "memory",
+        }
     })))
 }
 

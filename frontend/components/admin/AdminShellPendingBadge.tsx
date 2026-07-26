@@ -5,7 +5,10 @@ import {
   adminShellPendingBadgeVisible,
   type AdminShellPendingBadgePlacement,
 } from "@/lib/admin/adminShellPendingBadgePolicy";
-import { ADMIN_PENDING_COUNT_BADGE_CLASS } from "@/lib/adminUi";
+import {
+  ADMIN_PENDING_COUNT_BADGE_CLASS,
+  ADMIN_PENDING_COUNT_BADGE_SECONDARY_CLASS,
+} from "@/lib/adminUi";
 
 export type AdminShellPendingBadgeLegacyMarker = "nav" | "sidebar" | "hub";
 
@@ -64,11 +67,17 @@ export function AdminShellPendingBadge(props: {
       ? t(ariaKey, { count })
       : t(ariaKey, { label, count });
 
+  const badgeClass =
+    placement === "top_inbox_hub"
+      ? ADMIN_PENDING_COUNT_BADGE_SECONDARY_CLASS
+      : ADMIN_PENDING_COUNT_BADGE_CLASS;
+
   return (
     <span
-      className={ADMIN_PENDING_COUNT_BADGE_CLASS}
+      className={badgeClass}
       data-tt-admin-shell-pending-badge="1"
       data-tt-admin-shell-pending-placement={placement}
+      data-tt-admin-shell-pending-weight={placement === "top_inbox_hub" ? "secondary" : "primary"}
       {...legacyAttrs}
       aria-label={ariaLabel}
     >

@@ -7,7 +7,6 @@ import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
-import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { APPROVALS_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminOpsListRelatedFoldLinks";
@@ -22,6 +21,7 @@ import { AdminApprovalsQuickFilters } from "./AdminApprovalsQuickFilters";
 import { AdminApprovalsTableSection } from "./AdminApprovalsTableSection";
 import { useAdminApprovalsPage } from "./useAdminApprovalsPage";
 
+/** Batch-10 W13 · HU-214：待办条+快捷筛选+列表优先；说明墙/筛选默认折叠。 */
 export function AdminApprovalsPageMain() {
   const { t } = useTranslation();
   const pageTitleId = useId();
@@ -31,7 +31,7 @@ export function AdminApprovalsPageMain() {
   const approvalsListFilterHintId = useId();
 
   const vm = useAdminApprovalsPage();
-  const { loading, refreshing, error, meta, note, filteredItems } = vm;
+  const { loading, error, filteredItems } = vm;
 
   return (
     <AdminListPageChrome
@@ -49,13 +49,6 @@ export function AdminApprovalsPageMain() {
       <AdminApprovalsPermissionHints />
       <AdminApprovalsInboxStrip vm={vm} />
       <AdminApprovalsQuickFilters vm={vm} />
-      <AdminApprovalsFiltersCard
-        vm={vm}
-        statusFilterId={statusFilterId}
-        approvalsListFilterHintId={approvalsListFilterHintId}
-        adminListApplyResetHintId={adminListApplyResetHintId}
-        adminAppliedFiltersDescId={adminAppliedFiltersDescId}
-      />
       <AdminApprovalsBatchBar vm={vm} />
 
       {loading && filteredItems.length === 0 ? (
@@ -66,13 +59,18 @@ export function AdminApprovalsPageMain() {
         <AdminListFetchError errorKind={error} message={adminErrorUserText(error, t)} />
       ) : null}
 
-      <AdminApprovalsAppliedFiltersSection vm={vm} adminAppliedFiltersDescId={adminAppliedFiltersDescId} />
-
-      <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
-
-      <AdminApprovalsMetaNote loading={loading} error={error} note={note} />
-
       <AdminApprovalsTableSection vm={vm} />
+
+      <AdminApprovalsFiltersCard
+        vm={vm}
+        statusFilterId={statusFilterId}
+        approvalsListFilterHintId={approvalsListFilterHintId}
+        adminListApplyResetHintId={adminListApplyResetHintId}
+        adminAppliedFiltersDescId={adminAppliedFiltersDescId}
+        defaultOpen={false}
+      />
+      <AdminApprovalsAppliedFiltersSection vm={vm} adminAppliedFiltersDescId={adminAppliedFiltersDescId} />
+      <AdminApprovalsMetaNote loading={loading} error={error} note={vm.note} />
     </AdminListPageChrome>
   );
 }

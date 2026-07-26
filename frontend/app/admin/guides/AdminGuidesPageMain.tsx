@@ -9,9 +9,11 @@ import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFilter
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { AdminOpsLeafDataSourceStrip } from "@/components/admin/AdminOpsLeafDataSourceStrip";
+import { AdminGuidesTriangleStrip } from "@/components/admin/AdminGuidesTriangleStrip";
+import { AdminGuidesInventoryStrip } from "@/components/admin/AdminGuidesInventoryStrip";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
-import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { ADMIN_EMPTY_NEXT_GUIDES_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import { GUIDES_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminOpsListRelatedFoldLinks";
 import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
@@ -56,6 +58,7 @@ export function AdminGuidesPageMain() {
     items,
     appliedFilters,
     meta,
+    total,
     draftLimit,
     setDraftLimit,
     draftStatus,
@@ -78,7 +81,7 @@ export function AdminGuidesPageMain() {
   return (
     <AdminListPageChrome
       titleId={pageTitleId}
-      title={t("admin_guides_title")}
+      title={t("admin_guides_directory_title")}
       subtitle={t("admin_guides_subtitle_l5")}
     >
       <AdminOpsDetailRelatedFold
@@ -87,6 +90,13 @@ export function AdminGuidesPageMain() {
         foldSummaryKey="admin_ops_list_related_fold"
         dataTtFold="guides-list"
       />
+      <AdminGuidesTriangleStrip current="directory" />
+      <AdminGuidesInventoryStrip
+        loadedCount={items.length}
+        apiTotal={total}
+        loading={loading && items.length === 0}
+      />
+      <AdminOpsLeafDataSourceStrip leaf="guides" meta={meta} />
       <div className={`mt-6 ${ADMIN_FILTER_CARD_CLASS}`}>
         <form
           id="admin-guides-filter-form"
@@ -159,8 +169,6 @@ export function AdminGuidesPageMain() {
         </AdminAppliedFiltersBanner>
       )}
 
-      <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
-
       {!loading && !error && items.length === 0 ? (
         <AdminListPageEmptyState
           messageKey="admin_guides_empty"
@@ -198,9 +206,6 @@ export function AdminGuidesPageMain() {
                   onToggle={() => toggle("status")}
                 />
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
-                  {t("admin_col_data_origin")}
-                </th>
-                <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
                   {t("admin_guides_colStake")}
                 </th>
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
@@ -234,7 +239,6 @@ export function AdminGuidesPageMain() {
                     <td className="px-4 py-2">{row.city ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2">{row.country_code ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2">{row.status ?? t("admin_em_dash")}</td>
-                    <td className="px-4 py-2 font-mono text-meta text-ink-700">{row.data_origin ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2 tabular-nums">{row.stake_amount ?? t("admin_em_dash")}</td>
                     <td className="px-4 py-2 font-mono text-small text-ink-800">{w ? shortEvmAddress(w) : t("admin_em_dash")}</td>
                     <td className="px-4 py-2 text-meta">

@@ -3,6 +3,7 @@
 import Link from "next/link";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminFinanceDriftDeltaTable } from "@/components/admin/AdminFinanceDriftDeltaTable";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { adminErrorUserText, type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
@@ -106,14 +107,17 @@ export function AdminFinanceReconciliationDriftSection({
               <>
                 <dl className="mt-2 space-y-2 text-body">
                   <div>
-                    <dt className="font-mono text-meta text-ink-500">drift-summary.drift_detected</dt>
+                    <dt className="text-meta text-ink-500">{t("admin_fin_drift_detected_label")}</dt>
                     <dd className="text-ink-800">{formatApiPathDisplayValue(driftNorm?.drift_detected, na)}</dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-meta text-ink-500">drift-summary.delta (summary)</dt>
-                    <dd className="break-words text-ink-800">{driftSummaryDeltaLine}</dd>
+                    <dt className="text-meta text-ink-500">{t("admin_fin_drift_delta_count_label")}</dt>
+                    <dd className="text-ink-800" data-tt-admin-fin-drift-delta-count="1">
+                      {t("admin_fin_drift_delta_count_value", { n: driftSummaryDeltaLine })}
+                    </dd>
                   </div>
                 </dl>
+                <AdminFinanceDriftDeltaTable delta={driftNorm?.delta} surface="drift-summary" />
                 <Link
                   href="/admin/drift-summary"
                   className={`${touchTargetLink44Classes} mt-3 inline-flex ${adminPageNavLinkClass()}`}
@@ -133,16 +137,19 @@ export function AdminFinanceReconciliationDriftSection({
               <>
                 <dl className="mt-2 space-y-2 text-body">
                   <div>
-                    <dt className="font-mono text-meta text-ink-500">cross-check.drift_summary.drift_detected</dt>
+                    <dt className="text-meta text-ink-500">{t("admin_fin_drift_detected_label")}</dt>
                     <dd className="text-ink-800">
                       {formatApiPathDisplayValue(crossNorm?.drift_summary?.drift_detected, na)}
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-meta text-ink-500">cross-check.drift_summary.delta (summary)</dt>
-                    <dd className="break-words text-ink-800">{crossDriftDeltaLine}</dd>
+                    <dt className="text-meta text-ink-500">{t("admin_fin_drift_delta_count_label")}</dt>
+                    <dd className="text-ink-800" data-tt-admin-fin-cross-delta-count="1">
+                      {t("admin_fin_drift_delta_count_value", { n: crossDriftDeltaLine })}
+                    </dd>
                   </div>
                 </dl>
+                <AdminFinanceDriftDeltaTable delta={crossNorm?.drift_summary?.delta} surface="cross-check" />
                 <Link
                   href="/admin/cross-check"
                   className={`${touchTargetLink44Classes} mt-3 inline-flex ${adminPageNavLinkClass()}`}

@@ -11,12 +11,16 @@ import {
 import { providerRejectionCodeLabel } from "@/lib/provider/providerRejectionCodes";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 
+import { AdminAuthDocPreviewLink } from "@/components/admin/AdminAuthDocPreviewLink";
 import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
-import { ADMIN_INLINE_LINK_CLASS, ADMIN_PRIMARY_ACTION_BTN_CLASS,
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
+import {
+  ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_FORM_CONTROL_SM_CLASS,
   ADMIN_INNER_DIVIDER_CLASS,
   ADMIN_SEMANTIC_APPROVE_BTN_CLASS,
-  ADMIN_SEMANTIC_REJECT_BTN_CLASS,} from "@/lib/adminUi";
+  ADMIN_SEMANTIC_REJECT_BTN_CLASS,
+} from "@/lib/adminUi";
 
 type ProviderApplicationPayload = {
   id?: string;
@@ -87,6 +91,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
   const [reviewErr, setReviewErr] = useState<string | null>(null);
   const [rejectionCodes, setRejectionCodes] = useState("DOC_BLUR");
   const [rejectionMessage, setRejectionMessage] = useState("");
+  const requestConfirm = useAdminL5ConfirmRequest();
 
   const load = useCallback(async () => {
     if (!userId) return;
@@ -112,7 +117,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
     setReviewErr(null);
     try {
       const codes =
-        status === "rejected"
+        status === "rejected" || status === "needs_more_info"
           ? rejectionCodes
               .split(/[,;\s]+/)
               .map((c) => c.trim())
@@ -121,7 +126,10 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
       await patchAdminProviderApplicationReview(userId, {
         status,
         rejection_codes: codes,
-        rejection_message: status === "rejected" && rejectionMessage.trim() ? rejectionMessage.trim() : undefined,
+        rejection_message:
+          (status === "rejected" || status === "needs_more_info") && rejectionMessage.trim()
+            ? rejectionMessage.trim()
+            : undefined,
       });
       await load();
     } catch (e) {
@@ -133,6 +141,9 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
 
   if (!userId) return null;
 
+  // HU-364 · 无申请时不占用户详情三卡堆叠
+  if (!loading && !error && !app?.status) return null;
+
   const payload = app?.payload;
   const registeredAddr = formatAddress(payload?.registered_address);
   const operatingAddr =
@@ -140,13 +151,15 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
       ? registeredAddr
       : formatAddress(payload?.operating_address);
   const documents = docLinks(payload);
+  const actionable =
+    app?.status !== "approved" && app?.status !== "rejected" && Boolean(app?.status);
 
   return (
     <AdminDetailContentPanel
       as="section"
-     
       aria-label={t("admin_provider_app_sectionAria")}
       data-testid="admin-provider-application-review"
+      data-tt-admin-onboarding-review-card="provider"
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
         {t("admin_provider_app_title")}
@@ -159,13 +172,15 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
         <p className="mt-3 text-small text-danger" role="alert">
           {error}
         </p>
-      ) : !app?.status ? (
-        <p className="mt-3 text-body text-ink-600">{t("admin_provider_app_none")}</p>
       ) : (
         <div className="mt-3 space-y-3 text-body">
           <p>
             <span className="text-meta text-ink-500">{t("admin_provider_app_status")}: </span>
-            <span className="font-mono text-meta">{app.status}</span>
+            <span className="font-mono text-meta">
+              {app?.status === "needs_more_info"
+                ? t("admin_provider_app_status_needs_more_info")
+                : app?.status}
+            </span>
           </p>
           {app.submitted_at ? (
             <p>
@@ -183,6 +198,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                   ["country_code", "admin_provider_app_country"],
                   ["city", "admin_provider_app_city"],
                   ["registration_number", "admin_provider_app_registrationNumber"],
+                  ["tax_id", "admin_provider_app_taxId"],
                   ["contact_name", "admin_provider_app_contactName"],
                   ["contact_phone", "admin_provider_app_contactPhone"],
                   ["contact_email", "admin_provider_app_contactEmail"],
@@ -192,12 +208,29 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                 const val = payloadField(payload, field);
                 if (!val) return null;
                 return (
-                  <div key={field}>
+                  <div key={field} data-tt-admin-provider-field={field}>
                     <dt className="text-ink-500">{t(labelKey)}</dt>
                     <dd className="mt-0.5 break-all font-mono text-ink-800">{val}</dd>
                   </div>
                 );
               })}
+              {Array.isArray(payload.categories) && payload.categories.length > 0 ? (
+                <div className="sm:col-span-2" data-tt-admin-provider-categories="1">
+                  <dt className="text-ink-500">{t("admin_provider_app_categories")}</dt>
+                  <dd className="mt-0.5 text-ink-800">
+                    {(payload.categories as unknown[])
+                      .map((c) => (typeof c === "string" ? c.trim() : ""))
+                      .filter(Boolean)
+                      .join(" · ")}
+                  </dd>
+                </div>
+              ) : null}
+              {payloadField(payload, "bio") ? (
+                <div className="sm:col-span-2" data-tt-admin-provider-bio="1">
+                  <dt className="text-ink-500">{t("admin_provider_app_bio")}</dt>
+                  <dd className="mt-0.5 whitespace-pre-wrap text-ink-800">{payloadField(payload, "bio")}</dd>
+                </div>
+              ) : null}
               {registeredAddr ? (
                 <div className="sm:col-span-2">
                   <dt className="text-ink-500">{t("admin_provider_app_registeredAddress")}</dt>
@@ -228,27 +261,25 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
           {documents.length > 0 ? (
             <div>
               <p className="text-meta font-medium text-ink-600">{t("admin_provider_app_documents")}</p>
-              <ul className="mt-1 space-y-1 text-meta">
+              <ul className="mt-1 space-y-1 text-meta" data-tt-admin-provider-docs="1">
                 {documents.map(({ labelKey, url }) => {
-                  const href = url.split("#")[0];
+                  const href = url.split("#")[0] ?? url;
+                  const hashLabel = url.includes("#") ? url.split("#")[1] : "";
+                  const label = hashLabel ? `${t(labelKey)} · ${hashLabel}` : t(labelKey);
                   return (
                     <li key={`${labelKey}-${href}`}>
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`${ADMIN_INLINE_LINK_CLASS} break-all`}
-                      >
-                        {t(labelKey)}
-                      </a>
+                      <AdminAuthDocPreviewLink href={href} label={label} data-testid={`admin-provider-doc-${labelKey}`} />
                     </li>
                   );
                 })}
               </ul>
             </div>
           ) : null}
-          {app.rejection_codes && app.rejection_codes.length > 0 ? (
-            <ul className="list-disc pl-5 text-small text-ink-700">
+          {app?.rejection_codes && app.rejection_codes.length > 0 ? (
+            <ul
+              className="list-disc pl-5 text-small text-ink-700"
+              data-tt-admin-provider-needs-more-info={app.status === "needs_more_info" ? "1" : undefined}
+            >
               {app.rejection_codes.map((code) => (
                 <li key={code}>
                   {providerRejectionCodeLabel(t, code)}
@@ -257,11 +288,11 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
               ))}
             </ul>
           ) : null}
-          {app.rejection_message ? (
+          {app?.rejection_message ? (
             <p className="text-small text-ink-700 whitespace-pre-wrap">{app.rejection_message}</p>
           ) : null}
 
-          {app.status !== "approved" && app.status !== "rejected" ? (
+          {actionable ? (
             <div className={`mt-4 space-y-3 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}>
               <div className="flex flex-wrap gap-2">
                 <button
@@ -274,9 +305,34 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                 </button>
                 <button
                   type="button"
+                  className={ADMIN_PRIMARY_ACTION_BTN_CLASS}
+                  disabled={reviewLoading}
+                  data-tt-admin-action-needs-more-info="1"
+                  onClick={() =>
+                    requestConfirm({
+                      titleKey: "admin_l5_confirm_title_reject",
+                      descKey: "admin_provider_app_confirm_needs_more_info",
+                      danger: false,
+                      confirmLabelKey: "admin_provider_app_actionNeedsMoreInfo",
+                      onConfirm: () => submitReview("needs_more_info"),
+                    })
+                  }
+                >
+                  {t("admin_provider_app_actionNeedsMoreInfo")}
+                </button>
+                <button
+                  type="button"
                   className={ADMIN_SEMANTIC_APPROVE_BTN_CLASS}
                   disabled={reviewLoading}
-                  onClick={() => void submitReview("approved")}
+                  onClick={() =>
+                    requestConfirm({
+                      titleKey: "admin_l5_confirm_title_approve",
+                      descKey: "admin_provider_app_confirm_approve",
+                      danger: true,
+                      confirmLabelKey: "admin_provider_app_actionApprove",
+                      onConfirm: () => submitReview("approved"),
+                    })
+                  }
                 >
                   {t("admin_provider_app_actionApprove")}
                 </button>
@@ -284,7 +340,15 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                   type="button"
                   className={ADMIN_SEMANTIC_REJECT_BTN_CLASS}
                   disabled={reviewLoading}
-                  onClick={() => void submitReview("rejected")}
+                  onClick={() =>
+                    requestConfirm({
+                      titleKey: "admin_l5_confirm_title_reject",
+                      descKey: "admin_provider_app_confirm_reject",
+                      danger: true,
+                      confirmLabelKey: "admin_provider_app_actionReject",
+                      onConfirm: () => submitReview("rejected"),
+                    })
+                  }
                 >
                   {t("admin_provider_app_actionReject")}
                 </button>

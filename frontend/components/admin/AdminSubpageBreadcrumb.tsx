@@ -61,15 +61,20 @@ export function AdminSubpageBreadcrumb() {
           </span>
           {leafKey && leafKey !== ctx.groupLabelKey ? (
             <>
-              <span
-                className={ADMIN_BREADCRUMB_GROUP_CLASS}
-                data-tt-admin-subpage-shell-group={ctx.groupId}
-              >
-                {t(ctx.groupLabelKey)}
-              </span>
-              <span className={ADMIN_BREADCRUMB_SEPARATOR_CLASS} aria-hidden>
-                /
-              </span>
+              {/* Batch-10 HU-236：收件箱队列已有 Inbox 段时不再渲染 Shell 组（禁「入驻」错挂）。 */}
+              {!showInboxCrumb ? (
+                <>
+                  <span
+                    className={ADMIN_BREADCRUMB_GROUP_CLASS}
+                    data-tt-admin-subpage-shell-group={ctx.groupId}
+                  >
+                    {t(ctx.groupLabelKey)}
+                  </span>
+                  <span className={ADMIN_BREADCRUMB_SEPARATOR_CLASS} aria-hidden>
+                    /
+                  </span>
+                </>
+              ) : null}
               <span className={ADMIN_BREADCRUMB_LEAF_CLASS} aria-current="page">
                 {t(leafKey)}
               </span>

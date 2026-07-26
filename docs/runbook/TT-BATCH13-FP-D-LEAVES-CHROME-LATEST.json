@@ -1,0 +1,15 @@
+{
+  "machine": "TT_ADMIN_BATCH13_FP_D_LEAVES_CHROME",
+  "stamp": "20260726T081500Z",
+  "status": "FP_D_CODE_LANDED",
+  "patch": "PATCH-STG-017",
+  "tip": "ea71c577_IMMOBILE",
+  "production_go": "NO_GO",
+  "forbidden": ["TIP_MOVE", "HARD_GATE_UNLOCK", "CUTOVER", "FINANCE_WRITE", "PRODUCTION_GO"],
+  "leaves": ["disputes", "onboarding", "content", "official", "growth", "chrome"],
+  "gates_still_open": [518, 519, 526, 527, 534, 535, 542, 543, 550, 551],
+  "chrome_pending_staging": [488, 489],
+  "next_wave": "FP-E",
+  "cite_md": "docs/runbook/TT-BATCH13-FP-D-LEAVES-CHROME-LATEST.md",
+  "honesty": "local_code_ne_staging_go_ne_production_go"
+}

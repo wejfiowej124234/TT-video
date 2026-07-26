@@ -1,9 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { AdminActorCapabilityStrip } from "@/components/admin/AdminActorCapabilityStrip";
-import { AdminBusinessSuperAdminShortcutBanner } from "@/components/admin/AdminBusinessSuperAdminShortcutBanner";
 import { AdminCommandPaletteLazyGate } from "@/components/admin/AdminCommandPaletteLazyGate";
+import { AdminShellPublishChrome } from "@/components/admin/AdminShellPublishChrome";
 import { AdminLayoutSubpageNav } from "@/components/admin/AdminLayoutSubpageNav";
 import { AdminRoutePermissionBanner } from "@/components/admin/AdminRoutePermissionBanner";
 import { AdminListFetchCacheInvalidator } from "@/components/admin/AdminListFetchCacheInvalidator";
@@ -54,10 +53,10 @@ export function AdminCapabilitiesShell({ children }: { children: React.ReactNode
       <AdminRecentVisitsTracker />
       <AdminSessionCookieSync />
       <AdminShellBar />
-      <AdminBusinessSuperAdminShortcutBanner />
+      {/* Batch-8 WP-02：运营发布面不渲染说教横幅/展开说明；维护者诊断走 AdminShellPublishChrome */}
+      <AdminShellPublishChrome />
       <AdminShellPreviewNotice />
       <AdminShellApproveBanner />
-      <AdminActorCapabilityStrip />
       <AdminCommandPaletteLazyGate />
       <div className="flex min-h-0 flex-1">
         <AdminShellSidebar />

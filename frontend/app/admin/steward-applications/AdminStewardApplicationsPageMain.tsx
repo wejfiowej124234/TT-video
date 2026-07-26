@@ -1,16 +1,14 @@
 "use client";
 
-
-
-import Link from "next/link";
-
 import { useRouter, useSearchParams } from "next/navigation";
-
 import { useId, useMemo } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
-
+import { AdminOnboardingQueueRowCard } from "@/components/admin/AdminOnboardingQueueRowCard";
 import { AdminQueueListPageChrome } from "@/components/admin/AdminQueueListPageChrome";
+import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
+import { AdminStandardListSection } from "@/components/admin/AdminStandardListSection";
+import { AdminOnboardingQueueSortToolbar } from "@/components/admin/AdminOnboardingQueueSortToolbar";
 
 import {
   buildAdminQueueListPath,
@@ -18,21 +16,13 @@ import {
 } from "@/lib/admin/adminQueueListPageModel";
 import { ADMIN_EMPTY_NEXT_STEWARD_QUEUE_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { formatRelativeAge } from "@/lib/admin/formatRelativeAge";
 import { sortOnboardingQueueItems, type OnboardingQueueSortKey } from "@/lib/admin/sortOnboardingQueueItems";
 import { useAdminTableSort } from "@/lib/admin/useAdminTableSort";
-
-import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
-import { AdminStandardListSection } from "@/components/admin/AdminStandardListSection";
-import { AdminOnboardingQueueSortToolbar } from "@/components/admin/AdminOnboardingQueueSortToolbar";
-
 import {
   ADMIN_FILTER_CARD_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
-  ADMIN_QUEUE_LIST_ROW_CARD_CLASS,
-  adminTableRowPrimaryActionClass,
   ADMIN_FILTER_INPUT_SM_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
 } from "@/lib/adminUi";
@@ -157,89 +147,16 @@ export function AdminStewardApplicationsPageMain() {
           />
 
           <ul className="space-y-3">
-
-            {sortedItems.map((row) => {
-
-              const uid = row.user_id ?? "";
-
-              const app = row.application;
-
-              return (
-
-                <li key={uid} className={ADMIN_QUEUE_LIST_ROW_CARD_CLASS}>
-
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-
-                    <div>
-
-                      <p className="font-mono text-small text-ink-800 text-ink-800 break-all">{row.email ?? uid}</p>
-
-                      <p className="mt-1 text-small text-ink-600">
-
-                        {t("admin_steward_app_status")}:{" "}
-
-                        <span className="font-mono">{app?.status ?? "—"}</span>
-
-                        {app?.legal_name ? (
-
-                          <>
-
-                            {" · "}
-
-                            {String(app.legal_name)}
-
-                          </>
-
-                        ) : null}
-
-                        {app?.submitted_at ? (
-
-                          <>
-
-                            {" · "}
-
-                            {t("admin_queue_wait_age", {
-
-                              age: formatRelativeAge(app.submitted_at),
-
-                            })}
-
-                          </>
-
-                        ) : null}
-
-                      </p>
-
-                      {app?.submitted_at ? (
-
-                        <p className="text-meta text-ink-500">{app.submitted_at}</p>
-
-                      ) : null}
-
-                    </div>
-
-                    <Link
-
-                      href={`/admin/users/${encodeURIComponent(uid)}`}
-
-                      className={adminTableRowPrimaryActionClass()}
-
-                      aria-label={t("admin_steward_list_review_row_aria", { id: uid })}
-
-                    >
-
-                      {t("admin_steward_list_reviewLink")}
-
-                    </Link>
-
-                  </div>
-
-                </li>
-
-              );
-
-            })}
-
+            {sortedItems.map((row) => (
+              <AdminOnboardingQueueRowCard
+                key={row.user_id ?? ""}
+                kind="steward"
+                row={row}
+                statusLabelKey="admin_steward_app_status"
+                reviewLinkKey="admin_steward_list_reviewLink"
+                reviewAriaKey="admin_steward_list_review_row_aria"
+              />
+            ))}
           </ul>
           </>
       </AdminStandardListSection>

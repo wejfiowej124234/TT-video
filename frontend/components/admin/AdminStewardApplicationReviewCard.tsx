@@ -10,6 +10,7 @@ import {
 } from "@/lib/apiClient/adminStewardApplication";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_FORM_CONTROL_SM_CLASS,
   ADMIN_INNER_DIVIDER_CLASS,
@@ -43,6 +44,7 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
   const [reviewLoading, setReviewLoading] = useState(false);
   const [reviewErr, setReviewErr] = useState<string | null>(null);
   const [rejectionMessage, setRejectionMessage] = useState("");
+  const requestConfirm = useAdminL5ConfirmRequest();
 
   const load = useCallback(async () => {
     if (!userId) return;
@@ -70,7 +72,9 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
       await patchAdminStewardApplicationReview(userId, {
         status,
         rejection_message:
-          status === "rejected" && rejectionMessage.trim() ? rejectionMessage.trim() : undefined,
+          (status === "rejected" || status === "needs_more_info") && rejectionMessage.trim()
+            ? rejectionMessage.trim()
+            : undefined,
       });
       await load();
     } catch (e) {
@@ -82,16 +86,24 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
 
   if (!userId) return null;
 
+  // HU-364 · 无申请时不占用户详情三卡堆叠
+  if (!loading && !error && !app?.status) return null;
+
   const payload = app?.payload;
   const legalName =
     payload && typeof payload.legal_name === "string" ? payload.legal_name : undefined;
+  const actionable =
+    app?.status !== "approved" &&
+    app?.status !== "rejected" &&
+    app?.status !== "stake_release_pending" &&
+    Boolean(app?.status);
 
   return (
     <AdminDetailContentPanel
       as="section"
-     
       aria-label={t("admin_steward_app_sectionAria")}
       data-testid="admin-steward-application-review"
+      data-tt-admin-onboarding-review-card="steward"
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
         {t("admin_steward_app_title")}
@@ -104,21 +116,23 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
         <p className="mt-3 text-small text-danger" role="alert">
           {error}
         </p>
-      ) : !app?.status ? (
-        <p className="mt-3 text-body text-ink-600">{t("admin_steward_app_none")}</p>
       ) : (
         <div className="mt-3 space-y-3 text-body">
           <p>
             <span className="text-meta text-ink-500">{t("admin_steward_app_status")}: </span>
-            <span className="font-mono text-meta">{app.status}</span>
+            <span className="font-mono text-meta">
+              {app?.status === "needs_more_info"
+                ? t("admin_steward_app_status_needs_more_info")
+                : app?.status}
+            </span>
           </p>
-          {app.jurisdictions?.length ? (
+          {app?.jurisdictions?.length ? (
             <p>
               <span className="text-meta text-ink-500">{t("admin_steward_app_jurisdictions")}: </span>
               <span className="font-mono text-meta">{app.jurisdictions.join(", ")}</span>
             </p>
           ) : null}
-          {app.stake_quote?.cumulative_ttg_units_required != null ? (
+          {app?.stake_quote?.cumulative_ttg_units_required != null ? (
             <p>
               <span className="text-meta text-ink-500">{t("admin_steward_app_ttg")}: </span>
               <span className="font-mono text-meta">
@@ -132,11 +146,44 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
               <span className="font-mono text-meta">{legalName}</span>
             </p>
           ) : null}
+          {typeof payload?.motivation === "string" && payload.motivation.trim() ? (
+            <div data-tt-admin-steward-motivation="1">
+              <p className="text-meta text-ink-500">{t("admin_steward_app_motivation")}</p>
+              <p className="mt-0.5 whitespace-pre-wrap text-small text-ink-800">{payload.motivation}</p>
+            </div>
+          ) : null}
+          {typeof payload?.contact_email === "string" && payload.contact_email.trim() ? (
+            <p data-tt-admin-steward-contact-email="1">
+              <span className="text-meta text-ink-500">{t("admin_steward_app_contactEmail")}: </span>
+              <span className="font-mono text-meta">{payload.contact_email}</span>
+            </p>
+          ) : null}
+          {typeof payload?.country_code === "string" && payload.country_code.trim() ? (
+            <p data-tt-admin-steward-country="1">
+              <span className="text-meta text-ink-500">{t("admin_steward_app_country")}: </span>
+              <span className="font-mono text-meta">{payload.country_code}</span>
+            </p>
+          ) : null}
           {app.wallet_address ? (
             <p className="break-all font-mono text-meta text-ink-800">{app.wallet_address}</p>
           ) : null}
+          {app?.status === "rejected" && app.rejection_message ? (
+            <p className="text-small text-ink-700 whitespace-pre-wrap" data-tt-admin-steward-rejection="1">
+              <span className="text-meta text-ink-500">{t("admin_steward_app_rejectionMessage")}: </span>
+              {app.rejection_message}
+            </p>
+          ) : null}
+          {app?.status === "needs_more_info" && app.rejection_message ? (
+            <p
+              className="text-small text-ink-700 whitespace-pre-wrap"
+              data-tt-admin-steward-needs-more-info="1"
+            >
+              <span className="text-meta text-ink-500">{t("admin_steward_app_needsMoreInfoNote")}: </span>
+              {app.rejection_message}
+            </p>
+          ) : null}
 
-          {app.status !== "approved" && app.status !== "rejected" ? (
+          {actionable ? (
             <div className={`mt-4 flex flex-wrap gap-2 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}>
               <button
                 type="button"
@@ -148,9 +195,34 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
               </button>
               <button
                 type="button"
+                className={ADMIN_PRIMARY_ACTION_BTN_CLASS}
+                disabled={reviewLoading}
+                data-tt-admin-action-needs-more-info="1"
+                onClick={() =>
+                  requestConfirm({
+                    titleKey: "admin_l5_confirm_title_reject",
+                    descKey: "admin_steward_app_confirm_needs_more_info",
+                    danger: false,
+                    confirmLabelKey: "admin_steward_app_actionNeedsMoreInfo",
+                    onConfirm: () => submitReview("needs_more_info"),
+                  })
+                }
+              >
+                {t("admin_steward_app_actionNeedsMoreInfo")}
+              </button>
+              <button
+                type="button"
                 className={ADMIN_SEMANTIC_APPROVE_BTN_CLASS}
                 disabled={reviewLoading}
-                onClick={() => void submitReview("approved")}
+                onClick={() =>
+                  requestConfirm({
+                    titleKey: "admin_l5_confirm_title_approve",
+                    descKey: "admin_steward_app_confirm_approve",
+                    danger: true,
+                    confirmLabelKey: "admin_steward_app_actionApprove",
+                    onConfirm: () => submitReview("approved"),
+                  })
+                }
               >
                 {t("admin_steward_app_actionApprove")}
               </button>
@@ -158,7 +230,15 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
                 type="button"
                 className={ADMIN_SEMANTIC_REJECT_BTN_CLASS}
                 disabled={reviewLoading}
-                onClick={() => void submitReview("rejected")}
+                onClick={() =>
+                  requestConfirm({
+                    titleKey: "admin_l5_confirm_title_reject",
+                    descKey: "admin_steward_app_confirm_reject",
+                    danger: true,
+                    confirmLabelKey: "admin_steward_app_actionReject",
+                    onConfirm: () => submitReview("rejected"),
+                  })
+                }
               >
                 {t("admin_steward_app_actionReject")}
               </button>

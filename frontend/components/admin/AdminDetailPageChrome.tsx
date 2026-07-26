@@ -7,15 +7,15 @@ import { AdminPageAccessBadge } from "@/components/admin/AdminPageAccessBadge";
 import { AdminSubpageBreadcrumb } from "@/components/admin/AdminSubpageBreadcrumb";
 import type { AdminPermissionId } from "@/lib/admin/adminPermissionIds";
 import { adminWritePermissionForPathname } from "@/lib/admin/adminListPageWritePermission";
-import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import {
   ADMIN_LIST_PAGE_BODY_CANVAS_CLASS,
   ADMIN_PAGE_CHROME_SUBTITLE_CLASS,
   ADMIN_PAGE_CHROME_TITLE_CLASS,
+  ADMIN_PAGE_HEADER_FLAT_CLASS,
   TT_ADMIN_PAGE_INNER_DETAIL,
 } from "@/lib/adminUi";
 
-/** 详情 / 写表单页 L5 壳：页头卡片 + 子内容（表单 / 时间线 / 只读块）。 */
+/** 详情 / 写表单页 L5 壳：扁平页头（W12 · HU-237）+ 子内容（表单 / 时间线 / 只读块）。 */
 export function AdminDetailPageChrome(props: {
   titleId: string;
   title: ReactNode;
@@ -61,10 +61,10 @@ export function AdminDetailPageChrome(props: {
     >
       {showSubpageBreadcrumb !== false ? <AdminSubpageBreadcrumb /> : null}
       {preHeader}
-      <AdminWarmL5Surface
-        as="header"
-        innerClassName="flex flex-wrap items-start justify-between gap-3"
+      <header
+        className={`${ADMIN_PAGE_HEADER_FLAT_CLASS} flex flex-wrap items-start justify-between gap-3`}
         data-tt-admin-detail-page-header="1"
+        data-tt-admin-page-header-flat="1"
       >
         <div>
           <div className="flex flex-wrap items-center gap-2">
@@ -76,7 +76,7 @@ export function AdminDetailPageChrome(props: {
           {subtitle ? <div className={ADMIN_PAGE_CHROME_SUBTITLE_CLASS}>{subtitle}</div> : null}
         </div>
         {headerAside ? <div className="flex flex-wrap gap-2">{headerAside}</div> : null}
-      </AdminWarmL5Surface>
+      </header>
       <div
         className={ADMIN_LIST_PAGE_BODY_CANVAS_CLASS}
         data-tt-admin-detail-page-body-canvas="1"

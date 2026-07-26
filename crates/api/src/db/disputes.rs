@@ -147,6 +147,23 @@ pub struct DbDisputeRow {
     pub dispute_sequence: i32,
 }
 
+/// Batch-13 HU-493 · Admin 概况争议 KPI · `COUNT(*)`（可选 status）。
+pub async fn count_disputes(
+    pool: &PgPool,
+    status_filter: Option<&str>,
+) -> Result<i64, sqlx::Error> {
+    if let Some(st) = status_filter.map(str::trim).filter(|s| !s.is_empty()) {
+        sqlx::query_scalar::<_, i64>("SELECT COUNT(*)::bigint FROM disputes WHERE status = $1")
+            .bind(st)
+            .fetch_one(pool)
+            .await
+    } else {
+        sqlx::query_scalar::<_, i64>("SELECT COUNT(*)::bigint FROM disputes")
+            .fetch_one(pool)
+            .await
+    }
+}
+
 /// 加载所有争议（启动 hydrate）
 pub async fn list_disputes(pool: &PgPool) -> Result<Vec<DbDisputeRow>, sqlx::Error> {
     #[derive(sqlx::FromRow)]

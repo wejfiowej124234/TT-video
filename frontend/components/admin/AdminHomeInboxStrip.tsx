@@ -11,6 +11,7 @@ import { ADMIN_INBOX_QUEUE_HREFS } from "@/lib/admin/adminInboxQueueHrefs";
 import { buildAdminUnifiedInboxTasks } from "@/lib/admin/adminUnifiedInboxTasks";
 import type { AdminHomeInboxChannels, AdminHomeInboxCounts } from "@/lib/admin/useAdminHomeInbox";
 import { useAdminApprovePermissionHint } from "@/lib/admin/adminApprovePermissionHint";
+import { useAdminShellSidebarVisible } from "@/lib/admin/useAdminShellSidebarVisible";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
 import {
   ADMIN_CONSOLE_SKELETON_BLOCK_CLASS,
@@ -22,16 +23,19 @@ import {
   ADMIN_INBOX_CHANNEL_ERROR_CLASS,
   ADMIN_INBOX_FOCUS_BANNER_CLASS,
   ADMIN_INBOX_FOCUS_SECTION_CLASS,
+  ADMIN_INBOX_OPEN_UNIFIED_SECONDARY_CLASS,
   ADMIN_INBOX_PENDING_COUNT_DISPLAY_CLASS,
   ADMIN_INBOX_PERM_DENIED_ROW_CLASS,
   ADMIN_INBOX_TASK_CTA_ACTIVE_CLASS,
   ADMIN_INBOX_TASK_CTA_FOCUS_CLASS,
   ADMIN_INBOX_TASK_CTA_IDLE_CLASS,
   ADMIN_INBOX_TASK_PENDING_CARD_FOCUS_CLASS,
+  TT_ADMIN_INBOX_FOCUS_BANNER_SECONDARY_MARK,
   ADMIN_KPI_CARD_IDLE_CLASS,
   ADMIN_KPI_CARD_PENDING_CLASS,
   ADMIN_MOTION_CARD_HOVER_CLASS,
   ADMIN_TEXT_META_CLASS,
+  ADMIN_TEXT_SECONDARY_CLASS,
 } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
@@ -46,6 +50,12 @@ const INBOX_LINKS: {
     href: ADMIN_INBOX_QUEUE_HREFS.provider,
     labelKey: "admin_home_inbox_provider",
     descKey: "admin_home_inbox_provider_desc",
+  },
+  {
+    key: "guide",
+    href: ADMIN_INBOX_QUEUE_HREFS.guide,
+    labelKey: "admin_home_inbox_guide",
+    descKey: "admin_home_inbox_guide_desc",
   },
   {
     key: "steward",
@@ -90,6 +100,9 @@ export function AdminHomeInboxStrip(props: {
     focusMode = false,
   } = props;
   const { showInboxFallback } = useAdminApprovePermissionHint();
+  /** Batch-10 W12 · HU-203：lg+ 侧栏已有收件箱入口时隐藏工作台重复 CTA */
+  const sidebarLayoutActive = useAdminShellSidebarVisible();
+  const showUnifiedInboxCta = !sidebarLayoutActive;
 
   const totalPending = adminHomeInboxPendingTotal(
     counts,
@@ -133,7 +146,11 @@ export function AdminHomeInboxStrip(props: {
         : variant === "focus"
           ? "mt-3 sm:grid-cols-2"
           : `mt-4 ${
-              visibleLinks.length === 1 ? "max-w-xl grid-cols-1" : "sm:grid-cols-2 lg:grid-cols-4"
+              visibleLinks.length === 1
+                ? "max-w-xl grid-cols-1"
+                : visibleLinks.length <= 2
+                  ? "sm:grid-cols-2"
+                  : "sm:grid-cols-2 lg:grid-cols-5"
             }`;
 
     return (
@@ -181,7 +198,7 @@ export function AdminHomeInboxStrip(props: {
               >
                 <div>
                   <p className="text-small font-medium text-ink-800">{t(labelKey)}</p>
-                  <p className="mt-1 text-meta text-ink-600 leading-snug">{t(descKey)}</p>
+                  <p className={`mt-1 text-meta ${ADMIN_TEXT_SECONDARY_CLASS} leading-snug`}>{t(descKey)}</p>
                   {errKey && !loading ? (
                     <p
                       className={ADMIN_INBOX_CHANNEL_ERROR_CLASS}
@@ -213,7 +230,7 @@ export function AdminHomeInboxStrip(props: {
         </svg>
       </div>
       <p className="text-body font-semibold text-ink-900">{t("admin_home_inbox_all_clear_title")}</p>
-      <p className="mt-1 text-small text-ink-600">{t("admin_home_inbox_all_clear_lead")}</p>
+      <p className={`mt-1 text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_home_inbox_all_clear_lead")}</p>
       <ul className="mt-3 flex flex-wrap gap-2">
         {visibleLinks.map(({ key, href, labelKey }) => (
           <li key={key}>
@@ -241,7 +258,7 @@ export function AdminHomeInboxStrip(props: {
   const renderApproveFallback = () =>
     showInboxFallback && !loading ? (
       <p
-        className="mt-3 text-small text-ink-600"
+        className={`mt-3 text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}
         data-tt-admin-inbox-approve-denied-cta="1"
         role="status"
       >
@@ -283,11 +300,11 @@ export function AdminHomeInboxStrip(props: {
   const renderWorkflowFold = () =>
     !focusMode ? (
       <details className="mt-4 rounded-[var(--radius-md)] border border-white/10 bg-slate-950/35 px-3 py-2">
-        <summary className="cursor-pointer text-meta font-medium text-ink-600 marker:content-none [&::-webkit-details-marker]:hidden">
+        <summary className={`cursor-pointer text-meta font-medium ${ADMIN_TEXT_SECONDARY_CLASS} marker:content-none [&::-webkit-details-marker]:hidden`}>
           {t("admin_home_inbox_workflow_fold")}
         </summary>
         <ol
-          className="mt-2 list-decimal space-y-1 pl-5 text-meta text-ink-600"
+          className={`mt-2 list-decimal space-y-1 pl-5 text-meta ${ADMIN_TEXT_SECONDARY_CLASS}`}
           data-tt-admin-home-inbox-workflow="1"
           data-tt-admin-inbox-workflow-ops={approvalsDenied ? "1" : undefined}
         >
@@ -305,34 +322,52 @@ export function AdminHomeInboxStrip(props: {
         aria-label={t("admin_home_inbox_aria")}
         data-tt-admin-home-inbox-focus-surface="1"
         data-tt-admin-home-inbox="1"
+        data-tt-admin-inbox-focus-banner-secondary="hu438"
       >
+        {/* HU-438 · Staging needle (literal survives minify) */}
+        <span className="sr-only" data-tt-admin-inbox-focus-banner-mark={TT_ADMIN_INBOX_FOCUS_BANNER_SECONDARY_MARK}>
+          {TT_ADMIN_INBOX_FOCUS_BANNER_SECONDARY_MARK}
+        </span>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0 flex-1 space-y-2">
             <h2 className="text-body-l font-semibold text-ink-900">{t("admin_home_inbox_title")}</h2>
             {hasFocusWork ? (
               singleQueueFocus ? (
-                <p className="text-small text-ink-600">{t("admin_home_inbox_single_queue_lead")}</p>
+                <p className={`text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_home_inbox_single_queue_lead")}</p>
               ) : totalPending !== null ? (
                 <p
                   role="status"
                   className={ADMIN_INBOX_FOCUS_BANNER_CLASS}
+                  data-tt-admin-inbox-focus-banner="hu438"
+                  data-tt-admin-inbox-focus-banner-tone="secondary"
                   aria-label={t("admin_home_inbox_focus_banner_aria", { count: totalPending })}
                 >
                   {t("admin_home_inbox_focus_banner")}
                 </p>
               ) : null
             ) : (
-              <p className="text-small text-ink-600">{t("admin_home_inbox_lead")}</p>
+              <p className={`text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_home_inbox_lead")}</p>
             )}
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-2">
-            <AdminShellPrefetchLink
-              href="/admin/inbox"
-              className={`${touchTargetLink44Classes} text-small font-semibold ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
-              data-tt-admin-inbox-focus-unified-link="1"
-            >
-              {t("admin_home_inbox_open_unified")}
-            </AdminShellPrefetchLink>
+            {showUnifiedInboxCta ? (
+              <AdminShellPrefetchLink
+                href="/admin/inbox"
+                className={`${ADMIN_INBOX_OPEN_UNIFIED_SECONDARY_CLASS} ${travelFocusRingOffset2Classes}`}
+                data-tt-admin-inbox-focus-unified-link="1"
+                data-tt-admin-inbox-open-unified-secondary="hu438"
+              >
+                {t("admin_home_inbox_open_unified")}
+              </AdminShellPrefetchLink>
+            ) : (
+              <span
+                className="sr-only"
+                data-tt-admin-inbox-unified-cta-suppressed="1"
+                data-tt-admin-inbox-unified-cta-reason="sidebar"
+              >
+                {t("admin_home_inbox_open_unified")}
+              </span>
+            )}
             <AdminShellPrefetchLink
               href="/admin/operator-guide"
               className={`${touchTargetLink44Classes} text-small font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
@@ -398,16 +433,26 @@ export function AdminHomeInboxStrip(props: {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <h2 className="text-body-l font-semibold text-ink-900">{t("admin_home_inbox_title")}</h2>
-          <p className="mt-1 text-small text-ink-600">{t("admin_home_inbox_lead")}</p>
+          <p className={`mt-1 text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_home_inbox_lead")}</p>
         </div>
         <div className="flex shrink-0 flex-wrap items-center gap-2">
-          <AdminShellPrefetchLink
-            href="/admin/inbox"
-            className={`${touchTargetLink44Classes} text-small font-semibold ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
-            data-tt-admin-home-inbox-unified-link="1"
-          >
-            {t("admin_unified_inbox_open")}
-          </AdminShellPrefetchLink>
+          {showUnifiedInboxCta ? (
+            <AdminShellPrefetchLink
+              href="/admin/inbox"
+              className={`${touchTargetLink44Classes} text-small font-semibold ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+              data-tt-admin-home-inbox-unified-link="1"
+            >
+              {t("admin_unified_inbox_open")}
+            </AdminShellPrefetchLink>
+          ) : (
+            <span
+              className="sr-only"
+              data-tt-admin-inbox-unified-cta-suppressed="1"
+              data-tt-admin-inbox-unified-cta-reason="sidebar"
+            >
+              {t("admin_unified_inbox_open")}
+            </span>
+          )}
           {error && onRetry ? (
             <button
               type="button"

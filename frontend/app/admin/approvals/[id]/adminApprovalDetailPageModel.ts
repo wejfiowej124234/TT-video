@@ -30,8 +30,7 @@ export function fmtApprovalDetailValue(v: unknown): string {
   }
 }
 
-export const APPROVAL_DETAIL_ROW_DEFS: { key: string; labelKey: string }[] = [
-  { key: "id", labelKey: "admin_approvals_colId" },
+export const APPROVAL_DETAIL_BASIC_ROW_DEFS: { key: string; labelKey: string }[] = [
   { key: "action", labelKey: "admin_approvals_colAction" },
   { key: "resource_type", labelKey: "admin_approval_detail_resourceType" },
   { key: "resource_id", labelKey: "admin_approval_detail_resourceId" },
@@ -42,6 +41,16 @@ export const APPROVAL_DETAIL_ROW_DEFS: { key: string; labelKey: string }[] = [
   { key: "approve_reason", labelKey: "admin_approval_detail_approveReason" },
   { key: "created_at", labelKey: "admin_approval_detail_createdAt" },
   { key: "approved_at", labelKey: "admin_approval_detail_approvedAt" },
+];
+
+export const APPROVAL_DETAIL_ADVANCED_ROW_DEFS: { key: string; labelKey: string }[] = [
+  { key: "id", labelKey: "admin_approvals_colId" },
   { key: "before_payload", labelKey: "admin_approval_detail_beforePayload" },
   { key: "after_payload", labelKey: "admin_approval_detail_afterPayload" },
+];
+
+/** @deprecated use APPROVAL_DETAIL_BASIC_ROW_DEFS + APPROVAL_DETAIL_ADVANCED_ROW_DEFS */
+export const APPROVAL_DETAIL_ROW_DEFS: { key: string; labelKey: string }[] = [
+  ...APPROVAL_DETAIL_BASIC_ROW_DEFS,
+  ...APPROVAL_DETAIL_ADVANCED_ROW_DEFS,
 ];

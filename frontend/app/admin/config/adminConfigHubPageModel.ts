@@ -2,16 +2,30 @@ import { ADMIN_PLATFORM_HUB_HEADER_LINKS } from "@/lib/admin/adminPlatformHubHea
 
 export type AdminConfigHubLink = { href: string; titleKey: string; descKey: string };
 
-export const CONFIG_HUB_LINKS: AdminConfigHubLink[] = [
+/** 运营默认九宫格（发布面 · 无人话禁工程 ID）。 */
+export const CONFIG_HUB_OPS_LINKS: AdminConfigHubLink[] = [
   { href: "/admin/flags", titleKey: "admin_flags_title", descKey: "admin_config_hub_desc_flags" },
   { href: "/admin/policies", titleKey: "admin_policies_title", descKey: "admin_config_hub_desc_policies" },
   { href: "/admin/secrets/metadata", titleKey: "admin_secrets_meta_title", descKey: "admin_config_hub_desc_secrets" },
   { href: "/admin/config/releases", titleKey: "admin_config_releases_title", descKey: "admin_config_hub_desc_releases" },
+  { href: "/admin/jobs", titleKey: "admin_jobs_title", descKey: "admin_config_hub_desc_jobs" },
+  /** Batch-12 HU-471 · 双控审批发现性（≤12 不扩侧栏叶 · hub 一等卡） */
+  { href: "/admin/approvals", titleKey: "admin_approvals_title", descKey: "admin_config_hub_desc_approvals" },
+  /** Batch-12 HU-472 · 审计一等卡（吸 HU-298 · ED：默认侧栏不扩叶） */
+  { href: "/admin/audit", titleKey: "admin_audit_list_title", descKey: "admin_config_hub_desc_audit" },
+];
+
+/** 维护者/工程工具（折叠 · 非首屏）。 */
+export const CONFIG_HUB_MAINTAINER_LINKS: AdminConfigHubLink[] = [
   { href: "/admin/lifecycle", titleKey: "admin_lifecycle_title", descKey: "admin_config_hub_desc_lifecycle" },
   { href: "/admin/api-versions", titleKey: "admin_api_versions_title", descKey: "admin_config_hub_desc_api_versions" },
-  { href: "/admin/jobs", titleKey: "admin_jobs_title", descKey: "admin_config_hub_desc_jobs" },
   { href: "/admin/backup", titleKey: "admin_backup_title", descKey: "admin_config_hub_desc_backup" },
-  { href: "/admin/approvals", titleKey: "admin_approvals_title", descKey: "admin_config_hub_desc_approvals" },
+];
+
+/** 全量枢纽链接（导航/去重用 · = 运营 + 维护者）。 */
+export const CONFIG_HUB_LINKS: AdminConfigHubLink[] = [
+  ...CONFIG_HUB_OPS_LINKS,
+  ...CONFIG_HUB_MAINTAINER_LINKS,
 ];
 
 /** 配置/平台维护子页 · 折叠相关入口（COM-06 同型 · 非顶栏 link wall）。 */

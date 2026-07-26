@@ -40,6 +40,30 @@ describe("admin contrast L5 (①)", () => {
     expect(adminUi).toMatch(/ADMIN_FILTER_CHIP_ACTIVE_CLASS[\s\S]*text-\[#0c0a09\]/);
   });
 
+  /** Batch-13 FP-A · 全站暗底副文 AA（HU-496/504/512/520/528/536/544/552/560） */
+  it("FP-A: dark-shell secondary/muted tokens + zone ink remap are AA-bright", () => {
+    expect(adminUi).toMatch(/export const ADMIN_TEXT_SECONDARY_CLASS =\s*"text-slate-300"/);
+    expect(adminUi).toMatch(/export const ADMIN_TEXT_MUTED_CLASS =\s*"text-slate-300"/);
+    expect(adminUi).not.toMatch(/export const ADMIN_TEXT_MUTED_CLASS =\s*TT_MARKETING_ORDERS_TEXT_MUTED/);
+    expect(adminUi).toMatch(/ADMIN_FILTER_HINT_CLASS[\s\S]*text-slate-300/);
+    const globalsCss = readFileSync(join(__dir, "..", "..", "app", "globals.css"), "utf8");
+    const zoneInk600 = globalsCss.match(
+      /\[data-tt-admin-zone-content-stack\] \.text-ink-600 \{([^}]+)\}/,
+    );
+    expect(zoneInk600?.[1]).toMatch(/203 213 225/);
+    expect(zoneInk600?.[1]).toMatch(/!important/);
+    const zoneInk500 = globalsCss.match(
+      /\[data-tt-admin-zone-content-stack\] \.text-ink-500 \{([^}]+)\}/,
+    );
+    expect(zoneInk500?.[1]).toMatch(/203 213 225/);
+    expect(globalsCss).toMatch(
+      /\[data-tt-admin-zone-content-stack\] \.text-slate-400 \{[\s\S]*?203 213 225/,
+    );
+    expect(globalsCss).toMatch(
+      /\[data-tt-admin-warm-l5-surface\] \.text-ink-600,[\s\S]*?203 213 225/,
+    );
+  });
+
   it("AdminNoticeBanner uses adminUi notice tokens", () => {
     expect(noticeBanner).toContain("ADMIN_NOTICE_WARNING_CLASS");
     expect(noticeBanner).toContain("ADMIN_NOTICE_INFO_CLASS");
@@ -104,7 +128,12 @@ describe("admin contrast L5 (①)", () => {
     expect(adminUi).toMatch(/ADMIN_INBOX_TASK_CTA_IDLE_CLASS[\s\S]*ADMIN_BTN_GHOST_DARK_CLASS/);
     expect(adminUi).toMatch(/ADMIN_INBOX_WORKFLOW_CHIP_ACTIVE_CLASS[\s\S]*#ffe8d4/);
     expect(adminUi).toContain("ADMIN_INBOX_FOCUS_INSET_CLASS");
-    expect(adminUi).toMatch(/export const ADMIN_INBOX_FOCUS_BANNER_CLASS = ADMIN_INBOX_FOCUS_INSET_CLASS/);
+    // Batch-12 HU-438 · banner is secondary outline (not filled INSET)
+    expect(adminUi).toMatch(
+      /export const ADMIN_INBOX_FOCUS_BANNER_CLASS =\s*"inline-flex[\s\S]*border-ref-sun\/40[\s\S]*bg-transparent/,
+    );
+    expect(adminUi).toContain("TT_ADMIN_INBOX_FOCUS_BANNER_SECONDARY_MARK");
+    expect(adminUi).toContain("ADMIN_INBOX_OPEN_UNIFIED_SECONDARY_CLASS");
     expect(adminUi).toMatch(/ADMIN_INBOX_CHANNEL_ERROR_CLASS[\s\S]*text-amber-200/);
     const marketingUi = readFileSync(join(__dir, "..", "marketingUi.ts"), "utf8");
     expect(marketingUi).toMatch(/TT_MARKETING_ADMIN_ZONE_DOT_GRID[\s\S]*opacity-\[0\.06\]/);

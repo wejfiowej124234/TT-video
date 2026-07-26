@@ -5,6 +5,8 @@ import { type FormEvent, useId, useMemo } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import AdminAuditCompareLinks from "@/components/admin/AdminAuditCompareLinks";
+import { AdminFinancePeriodControl } from "@/components/admin/AdminFinancePeriodControl";
+import { AdminHomeTreasuryPoolStrip } from "@/components/admin/AdminHomeTreasuryPoolStrip";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
@@ -23,6 +25,9 @@ import { AdminFinanceMetaLedgerSection } from "./AdminFinanceMetaLedgerSection";
 import { AdminFinanceSummaryGridSection } from "./AdminFinanceSummaryGridSection";
 import { resolveAdminFinanceDerived } from "./adminFinancePageDerived";
 import { useAdminFinancePage } from "./useAdminFinancePage";
+import { AdminFinanceSummaryDataSourceStrip } from "@/components/admin/AdminFinanceSummaryDataSourceStrip";
+import { AdminFinanceEscrowFundSummaryStrip } from "@/components/admin/AdminFinanceEscrowFundSummaryStrip";
+import { AdminFinanceRefundProgressStrip } from "@/components/admin/AdminFinanceRefundProgressStrip";
 import {
   ADMIN_FIN_SUITE_EXPORT_FOCUS_RING_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
@@ -97,6 +102,27 @@ export default function AdminFinancePageMain() {
         permission={ADMIN_PERM.FINANCE_READ}
         messageKey="admin_perm_denied_finance_read"
       />
+
+      <div className="mt-4" data-tt-admin-finance-period-host="1">
+        <AdminFinancePeriodControl />
+      </div>
+
+      {!loading ? (
+        <div className="mt-4">
+          <AdminFinanceSummaryDataSourceStrip meta={meta} summary={summary} />
+        </div>
+      ) : null}
+
+      {!loading && !error ? (
+        <div className="mt-4 space-y-4">
+          <AdminFinanceEscrowFundSummaryStrip summary={summary} />
+          <AdminFinanceRefundProgressStrip summary={summary} />
+        </div>
+      ) : null}
+
+      <div className="mt-4" data-tt-admin-finance-treasury-bridge="1">
+        <AdminHomeTreasuryPoolStrip />
+      </div>
 
       <AdminFinanceSuiteDepthNotice />
       <AdminFinanceSuitePartialChecklist />

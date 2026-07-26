@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
@@ -24,9 +24,18 @@ import {
   ADMIN_FILTER_INPUT_SM_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_TABLE_TD_CELL_CLASS,
+  ADMIN_TEXT_FOOTNOTE_CLASS,
   adminPageNavLinkClass,
+  adminTableRowPrimaryActionClass,
   adminTableRowSecondaryActionClass,
 } from "@/lib/adminUi";
+import {
+  isOfficialAccountProbeRow,
+  officialAccountKindLabelKey,
+  officialAccountPublishShowFlags,
+  officialAccountReviewLabelKey,
+  officialAccountVerifyHref,
+} from "@/lib/admin/officialOpsL5";
 import {
   postAdminOfficialAccount,
   postAdminOfficialAccountBindReferral,
@@ -43,16 +52,30 @@ function reviewStatus(row: AdminOfficialAccountRow) {
   return typeof meta.review_status === "string" ? meta.review_status : "draft";
 }
 
+function truncateEmail(email: string | null | undefined, max = 28): string {
+  if (!email) return "—";
+  if (email.length <= max) return email;
+  return `${email.slice(0, max - 1)}…`;
+}
+
 export function AdminOfficialAccountsPageMain() {
   const { t } = useTranslation();
   const titleId = useId();
   const { items, loading, error, reload } = useAdminOfficialAccountsPage();
+  const listFailed = Boolean(error);
+  const writesDisabled = listFailed || loading;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accountKind, setAccountKind] = useState("traveler");
   const [displayLabel, setDisplayLabel] = useState("");
   const [bindLabel, setBindLabel] = useState("KOL");
   const [busy, setBusy] = useState(false);
+  const [showProbes, setShowProbes] = useState(false);
+
+  const visibleItems = useMemo(
+    () => (showProbes ? items : items.filter((row) => !isOfficialAccountProbeRow(row))),
+    [items, showProbes],
+  );
 
   async function onCreate(e: React.FormEvent) {
     e.preventDefault();
@@ -100,9 +123,21 @@ export function AdminOfficialAccountsPageMain() {
 
       <OfficialOpsFormCard
         title={t("admin_official_accounts_create_title")}
-        onSubmit={(e) => void onCreate(e)}
+        onSubmit={(e) => {
+          if (writesDisabled || busy) {
+            e.preventDefault();
+            return;
+          }
+          void onCreate(e);
+        }}
         dataAttr="accounts-create"
+        data-tt-admin-official-writes-disabled={writesDisabled ? "1" : "0"}
       >
+        {writesDisabled && listFailed ? (
+          <p className="md:col-span-2 text-small text-ink-500" data-tt-admin-official-create-blocked="1" role="note">
+            {t("admin_ops_create_blocked_list_failed")}
+          </p>
+        ) : null}
         <label className={`md:col-span-1 ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
           {t("admin_official_field_email")}
           <input
@@ -110,6 +145,7 @@ export function AdminOfficialAccountsPageMain() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={writesDisabled || busy}
           />
         </label>
         <label className={`md:col-span-1 ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
@@ -120,6 +156,7 @@ export function AdminOfficialAccountsPageMain() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={writesDisabled || busy}
           />
         </label>
         <label className={`md:col-span-1 ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
@@ -128,11 +165,13 @@ export function AdminOfficialAccountsPageMain() {
             className={`mt-1 ${ADMIN_FILTER_INPUT_MD_CLASS}`}
             value={accountKind}
             onChange={(e) => setAccountKind(e.target.value)}
+            disabled={writesDisabled || busy}
+            data-tt-admin-official-kind-select="1"
           >
-            <option value="traveler">traveler</option>
-            <option value="guide">guide</option>
-            <option value="merchant">merchant</option>
-            <option value="community_author">community_author</option>
+            <option value="traveler">{t("admin_official_kind_traveler")}</option>
+            <option value="guide">{t("admin_official_kind_guide")}</option>
+            <option value="merchant">{t("admin_official_kind_merchant")}</option>
+            <option value="community_author">{t("admin_official_kind_community_author")}</option>
           </select>
         </label>
         <label className={`md:col-span-1 ${ADMIN_FILTER_FIELD_LABEL_CLASS}`}>
@@ -142,12 +181,14 @@ export function AdminOfficialAccountsPageMain() {
             value={displayLabel}
             onChange={(e) => setDisplayLabel(e.target.value)}
             required
+            disabled={writesDisabled || busy}
           />
         </label>
         <button
           type="submit"
-          disabled={busy}
+          disabled={writesDisabled || busy}
           className={`md:col-span-2 ${ADMIN_PRIMARY_ACTION_BTN_CLASS}`}
+          data-tt-admin-official-create-submit="1"
         >
           {t("admin_official_action_create")}
         </button>
@@ -167,6 +208,17 @@ export function AdminOfficialAccountsPageMain() {
           <Link href="/admin/growth/referral-codes" className={adminPageNavLinkClass()}>
             {t("admin_ops_crossnav_referral_codes")}
           </Link>
+          <label
+            className={`ml-auto flex items-center gap-2 text-small ${ADMIN_TEXT_FOOTNOTE_CLASS}`}
+            data-tt-admin-official-show-probes="1"
+          >
+            <input
+              type="checkbox"
+              checked={showProbes}
+              onChange={(e) => setShowProbes(e.target.checked)}
+            />
+            {t("admin_official_show_probes")}
+          </label>
         </div>
       </section>
 
@@ -175,7 +227,7 @@ export function AdminOfficialAccountsPageMain() {
         error={error}
         onRetry={() => void reload()}
         loadingMessageKey="admin_official_loading"
-        empty={!loading && !error && items.length === 0}
+        empty={!loading && !error && visibleItems.length === 0}
         emptyMessageKey="ops_plane_empty"
         skeleton
       >
@@ -191,39 +243,84 @@ export function AdminOfficialAccountsPageMain() {
             </tr>
           </OfficialOpsTableHead>
           <OfficialOpsTableBody>
-            {items.map((row) => (
-              <tr key={row.id}>
-                <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.display_label}</td>
-                <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.account_kind}</td>
-                <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.user_email ?? "—"}</td>
-                <td className={ADMIN_TABLE_TD_CELL_CLASS}>{reviewStatus(row)}</td>
-                <td className={ADMIN_TABLE_TD_CELL_CLASS}>
-                  {row.kol_referral_code ? (
-                    row.kol_referral_code
-                  ) : (
-                    <Link href="/admin/growth/referral-codes" className={adminPageNavLinkClass()}>
-                      {t("admin_official_accounts_create_referral_link")}
-                    </Link>
-                  )}
-                </td>
-                <td className={ADMIN_TABLE_TD_CELL_CLASS}>
-                  <OfficialOpsPublishRowActions
-                    busy={busy}
-                    onAction={(action) => void runAction(row.id, action)}
-                  />
-                  {!row.kol_referral_code ? (
-                    <button
-                      type="button"
-                      className={`${adminTableRowSecondaryActionClass()} ml-2`}
-                      disabled={busy}
-                      onClick={() => void runAction(row.id, "bind")}
-                    >
-                      {t("admin_official_action_bind_kol")}
-                    </button>
-                  ) : null}
-                </td>
-              </tr>
-            ))}
+            {visibleItems.map((row) => {
+              const status = reviewStatus(row);
+              const probe = isOfficialAccountProbeRow(row);
+              const verifyHref =
+                status === "published" ? officialAccountVerifyHref(row) : null;
+              const showFlags = officialAccountPublishShowFlags(status);
+              return (
+                <tr key={row.id} data-tt-admin-official-probe={probe ? "1" : "0"}>
+                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                    <span className="font-medium">{row.display_label}</span>
+                    {probe ? (
+                      <span className="ml-2 rounded border border-warning/40 px-1.5 py-0.5 text-meta text-warning">
+                        {t("admin_official_probe_badge")}
+                      </span>
+                    ) : null}
+                  </td>
+                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                    {t(officialAccountKindLabelKey(row.account_kind))}
+                  </td>
+                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                    <span title={row.user_email ?? undefined} className="tabular-nums">
+                      {truncateEmail(row.user_email)}
+                    </span>
+                  </td>
+                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                    <span data-tt-admin-official-review={status}>
+                      {t(officialAccountReviewLabelKey(status))}
+                    </span>
+                  </td>
+                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                    {row.kol_referral_code ? (
+                      row.kol_referral_code
+                    ) : (
+                      <Link href="/admin/growth/referral-codes" className={adminPageNavLinkClass()}>
+                        {t("admin_official_accounts_create_referral_link")}
+                      </Link>
+                    )}
+                  </td>
+                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                    <OfficialOpsPublishRowActions
+                      busy={busy}
+                      show={showFlags}
+                      onAction={(action) => void runAction(row.id, action)}
+                    />
+                    {!row.kol_referral_code && status !== "archived" ? (
+                      <button
+                        type="button"
+                        className={`${adminTableRowSecondaryActionClass()} ml-2`}
+                        disabled={busy}
+                        onClick={() => void runAction(row.id, "bind")}
+                      >
+                        {t("admin_official_action_bind_kol")}
+                      </button>
+                    ) : null}
+                    {status === "published" ? (
+                      verifyHref ? (
+                        <Link
+                          href={verifyHref}
+                          className={`${adminTableRowPrimaryActionClass()} ml-2 inline-flex`}
+                          data-tt-admin-official-verify-cta="1"
+                          target={verifyHref.startsWith("/admin") ? undefined : "_blank"}
+                          rel={verifyHref.startsWith("/admin") ? undefined : "noreferrer"}
+                        >
+                          {t("admin_official_action_verify")}
+                        </Link>
+                      ) : (
+                        <span
+                          className={`ml-2 text-meta ${ADMIN_TEXT_FOOTNOTE_CLASS}`}
+                          data-tt-admin-official-verify-unavailable="1"
+                        >
+                          {t("admin_official_action_verify_unavailable")}
+                        </span>
+                      )
+                    ) : null}
+                  </td>
+                </tr>
+              );
+            })}
           </OfficialOpsTableBody>
         </OfficialOpsDataTable>
       </OpsPlaneFetchStates>

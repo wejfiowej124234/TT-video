@@ -151,6 +151,17 @@ export function AdminPermissionsPageMain() {
 
       <AdminConsoleRoleEffectiveStrip />
 
+      {/* HU-447 · SuperAdmin 周检复核清单（只读 · 不自动削权） */}
+      <section
+        id="admin-superadmin-weekly-review"
+        className="mt-6 rounded-[var(--radius-md)] border border-white/12 bg-bg-console/40 px-4 py-3"
+        data-tt-admin-superadmin-weekly-review="hu447"
+        aria-label={t("admin_home_superadmin_sop_title")}
+      >
+        <h2 className="text-body font-semibold text-ink-900">{t("admin_home_superadmin_sop_title")}</h2>
+        <p className="mt-1 text-small text-ink-600">{t("admin_home_superadmin_sop_body")}</p>
+      </section>
+
       <AdminPermissionsPhase2RunbookStrip />
 
       <AdminAdmU01LocalPrepPanel />

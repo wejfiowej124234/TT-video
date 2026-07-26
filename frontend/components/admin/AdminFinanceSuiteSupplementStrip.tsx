@@ -42,6 +42,14 @@ export function AdminFinanceSuiteSupplementStrip() {
           >
             <h3 className="text-small font-semibold text-slate-100">{t(m.titleKey)}</h3>
             <p className="mt-1 text-meta text-slate-400">{t(m.descKey)}</p>
+            {"targetSnapshotClaim" in m && m.targetSnapshotClaim ? (
+              <p
+                className="mt-1 text-meta text-warning"
+                data-tt-admin-fin-module-target="snapshot-claim"
+              >
+                {t("admin_fin_module_target_snapshot_claim")}
+              </p>
+            ) : null}
             <Link
               href={adminFinancePartialDepthHref(m.href, m.id)}
               className={`mt-2 inline-block text-small font-medium ${ADMIN_CONSOLE_CALLOUT_LINK_CLASS} ${touchTargetLink44Classes}`}

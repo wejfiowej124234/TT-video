@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useId } from "react";
 
 import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
+import { AdminOrdersOpsJumpPack } from "@/components/admin/AdminOrdersOpsJumpPack";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
@@ -33,6 +34,7 @@ export function AdminOrderDetailPageMain() {
   const pageTitleId = useId();
   const { orderId, loading, refreshing, error, body, order, meta, stashAdminDetailEscrowPayPrefetch } =
     useAdminOrderDetailPage();
+  const orderState = typeof order?.state === "string" ? order.state : null;
 
   return (
     <AdminDetailPageChrome
@@ -50,6 +52,11 @@ export function AdminOrderDetailPageMain() {
         ariaLabelKey="admin_order_detail_related_aria"
         foldSummaryKey="admin_order_detail_related_fold"
         dataTtFold="order-detail"
+      />
+      <AdminOrdersOpsJumpPack
+        variant="detail"
+        orderId={orderId}
+        state={orderState}
       />
       <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 

@@ -34,6 +34,8 @@ type KpiTile = {
   count: number | null;
   permissionDenied: boolean;
   emphasize: boolean;
+  /** HU-493 · guides total=0 → 设计空 */
+  zeroLabelKey?: string;
 };
 
 function KpiTileSurface({
@@ -46,7 +48,12 @@ function KpiTileSurface({
   compact?: boolean;
 }) {
   const value = adminHomeKpiMetricDisplay(
-    { loading: tile.loading, count: tile.count, permissionDenied: tile.permissionDenied },
+    {
+      loading: tile.loading,
+      count: tile.count,
+      permissionDenied: tile.permissionDenied,
+      zeroLabelKey: tile.zeroLabelKey,
+    },
     t,
     tile.countKey,
   );
@@ -106,6 +113,11 @@ export function AdminHomeKpiStrip(props: {
   embedded?: boolean;
   /** 收件箱聚焦折叠内 · 不重复标题、订单数不抢待办视觉 */
   inboxFocusContext?: boolean;
+  /**
+   * HU-432 · 明细态：无大数磁贴（概况 `ops-kpi-promoted` 为唯一经营主数字）
+   * 仅限额说明 + 深链，避免「经营快照」双主重复
+   */
+  detailOnly?: boolean;
 }) {
   const { t } = useTranslation();
   const {
@@ -118,10 +130,12 @@ export function AdminHomeKpiStrip(props: {
     onRetry,
     embedded,
     inboxFocusContext,
+    detailOnly,
   } = props;
 
   const ordersDenied = permissionsLoaded && !hasPermission(ADMIN_PERM.ORDERS_READ);
   const disputesDenied = permissionsLoaded && !hasPermission(ADMIN_PERM.ORDERS_READ);
+  const guidesDenied = permissionsLoaded && !hasPermission(ADMIN_PERM.USERS_READ);
 
   const tiles: KpiTile[] = [
     {
@@ -143,11 +157,40 @@ export function AdminHomeKpiStrip(props: {
       permissionDenied: disputesDenied,
       emphasize: !disputesDenied && (counts.disputes ?? 0) > 0,
     },
+    {
+      href: "/admin/guides",
+      labelKey: "admin_home_kpi_guides_label",
+      countKey: "admin_home_kpi_guides",
+      loading: kpiLoading,
+      count: counts.guides,
+      permissionDenied: guidesDenied,
+      emphasize: false,
+      zeroLabelKey: "admin_home_kpi_guides_design_empty",
+    },
   ];
+
+  if (detailOnly) {
+    return (
+      <div
+        data-tt-admin-home-kpi="1"
+        data-tt-admin-home-kpi-detail="1"
+        data-tt-admin-home-kpi-swr-scope="hu460"
+        data-tt-admin-home-kpi-count-only="hu464"
+        data-tt-admin-home-kpi-embedded={embedded ? "1" : undefined}
+      >
+        <KpiDetailBody t={t} tiles={tiles} error={error} onRetry={onRetry} loading={loading} />
+      </div>
+    );
+  }
 
   if (embedded) {
     return (
-      <div data-tt-admin-home-kpi="1" data-tt-admin-home-kpi-embedded="1">
+      <div
+        data-tt-admin-home-kpi="1"
+        data-tt-admin-home-kpi-embedded="1"
+        data-tt-admin-home-kpi-swr-scope="hu460"
+        data-tt-admin-home-kpi-count-only="hu464"
+      >
         <KpiStripBody
           t={t}
           tiles={tiles}
@@ -167,9 +210,76 @@ export function AdminHomeKpiStrip(props: {
       as="section"
       aria-label={t("admin_home_kpi_aria")}
       data-tt-admin-home-kpi="1"
+      data-tt-admin-home-kpi-swr-scope="hu460"
+      data-tt-admin-home-kpi-count-only="hu464"
     >
       <KpiStripBody t={t} tiles={tiles} error={error} onRetry={onRetry} loading={loading} />
     </AdminWarmL5Surface>
+  );
+}
+
+function KpiDetailBody(props: {
+  t: (key: string, vars?: Record<string, string | number>) => string;
+  tiles: KpiTile[];
+  error: boolean;
+  onRetry?: () => void;
+  loading: boolean;
+}) {
+  const { t, tiles, error, onRetry, loading } = props;
+  return (
+    <>
+      {error && onRetry ? (
+        <button
+          type="button"
+          onClick={onRetry}
+          className={`${touchTargetLink44Classes} text-small font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+        >
+          {t("admin_home_inbox_retry")}
+        </button>
+      ) : null}
+      {error ? <p className="mt-2 text-small text-ink-600">{t("admin_home_kpi_error")}</p> : null}
+      <p className={`text-small ${ADMIN_TEXT_META_CLASS}`} data-tt-admin-home-kpi-detail-lead="1">
+        {t("admin_home_kpi_detail_lead")}
+      </p>
+      <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-2" data-tt-admin-home-kpi-detail-links="1">
+        {tiles.map((tile) => {
+          const linkAllowed = adminHomeKpiTileLinkAllowed(tile.permissionDenied);
+          if (!linkAllowed) {
+            return (
+              <li key={tile.href}>
+                <span
+                  className={`text-small ${ADMIN_TEXT_MUTED_CLASS}`}
+                  data-tt-admin-kpi-perm-denied={tile.labelKey}
+                >
+                  {t(tile.labelKey)}
+                </span>
+              </li>
+            );
+          }
+          return (
+            <li key={tile.href}>
+              <AdminShellPrefetchLink
+                href={tile.href}
+                className={`${touchTargetLink44Classes} text-small font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
+              >
+                {t(tile.labelKey)}
+              </AdminShellPrefetchLink>
+            </li>
+          );
+        })}
+      </ul>
+      <div className={ADMIN_KPI_SCOPE_NOTE_CLASS} role="note" data-tt-admin-kpi-scope-honesty="1">
+        <span className={`mt-0.5 ${ADMIN_INFO_BADGE_CLASS}`} aria-hidden>
+          i
+        </span>
+        <p className={`text-small leading-snug ${ADMIN_TEXT_META_CLASS}`}>{t("admin_home_kpi_scope_note")}</p>
+      </div>
+      {loading ? (
+        <p className="sr-only" role="status">
+          {t("admin_home_kpi_loading")}
+        </p>
+      ) : null}
+    </>
   );
 }
 
@@ -210,7 +320,7 @@ function KpiStripBody(props: {
         </button>
       ) : null}
       {error ? <p className="mt-2 text-small text-ink-600">{t("admin_home_kpi_error")}</p> : null}
-      <ul className={`${compactTiles ? "mt-2" : "mt-4"} grid gap-3 sm:grid-cols-2`}>
+      <ul className={`${compactTiles ? "mt-2" : "mt-4"} grid gap-3 sm:grid-cols-2 lg:grid-cols-3`}>
         {tiles.map((tile) => (
           <li key={tile.href}>
             <KpiTileSurface tile={tile} t={t} compact={compactTiles} />

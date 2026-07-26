@@ -8,7 +8,6 @@ import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatu
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
-import { AdminMetaBuildSection } from "@/components/admin/AdminMetaBuildPanel";
 import { ADMIN_EMPTY_NEXT_USERS_FILTERED_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
@@ -40,7 +39,6 @@ export function AdminUsersDataSection({
   error,
   appliedFilters,
   items,
-  meta,
   fetchErrorUserText,
   openRoleModal,
   openSuspendModal,
@@ -56,7 +54,6 @@ export function AdminUsersDataSection({
   error: AdminFetchErrorKind | null;
   appliedFilters: Record<string, unknown> | null;
   items: AdminUser[];
-  meta: Record<string, unknown> | null;
   fetchErrorUserText: (k: AdminFetchErrorKind) => string;
   openRoleModal: (u: AdminUser) => void;
   openSuspendModal: (u: AdminUser) => void;
@@ -104,8 +101,6 @@ export function AdminUsersDataSection({
           {t("admin_users_applied")} {formatAdminAppliedFiltersHuman(appliedFilters, t)}
         </AdminAppliedFiltersBanner>
       )}
-
-      <AdminMetaBuildSection meta={meta} loading={loading} error={error} />
 
       {suspendInlineError && suspendInlineErrorKind ? (
         <AdminAlertError className="mt-6" message={suspendInlineError} errorKind={suspendInlineErrorKind} />

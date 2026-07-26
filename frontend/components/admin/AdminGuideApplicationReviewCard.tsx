@@ -9,10 +9,11 @@ import {
 } from "@/lib/apiClient/adminGuideApplication";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
+import { AdminAuthDocPreviewLink } from "@/components/admin/AdminAuthDocPreviewLink";
 import {
   ADMIN_FORM_CONTROL_SM_CLASS,
   ADMIN_INNER_DIVIDER_CLASS,
-  ADMIN_INLINE_LINK_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_SEMANTIC_APPROVE_BTN_CLASS,
   ADMIN_SEMANTIC_REJECT_BTN_CLASS,
@@ -36,6 +37,8 @@ type GuideApplicationPayload = {
   submitted_at?: string;
   rejection_codes?: string[];
   rejection_message?: string | null;
+  /** Batch-13 HU-491 / Q2-C · 合规不回传明文 · 仅诚实布尔 */
+  passport_hash_present?: boolean;
 };
 
 function applicationFromResponse(body: unknown): GuideApplicationPayload | null {
@@ -54,6 +57,7 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
   const [reviewErr, setReviewErr] = useState<string | null>(null);
   const [rejectionCodes, setRejectionCodes] = useState("DOC_BLUR");
   const [rejectionMessage, setRejectionMessage] = useState("");
+  const requestConfirm = useAdminL5ConfirmRequest();
 
   const load = useCallback(async () => {
     if (!userId) return;
@@ -79,7 +83,7 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
     setReviewErr(null);
     try {
       const codes =
-        status === "rejected"
+        status === "rejected" || status === "needs_more_info"
           ? rejectionCodes
               .split(/[,;\s]+/)
               .map((c) => c.trim())
@@ -89,7 +93,9 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
         status,
         rejection_codes: codes,
         rejection_message:
-          status === "rejected" && rejectionMessage.trim() ? rejectionMessage.trim() : undefined,
+          (status === "rejected" || status === "needs_more_info") && rejectionMessage.trim()
+            ? rejectionMessage.trim()
+            : undefined,
       });
       await load();
     } catch (e) {
@@ -101,6 +107,9 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
 
   if (!userId) return null;
 
+  // HU-364 · 无申请时不占用户详情三卡堆叠
+  if (!loading && !error && !app?.status) return null;
+
   const docLinks = [
     ["admin_guide_app_docIdPhoto", app?.id_photo_url],
     ["admin_guide_app_docLanguageCert", app?.language_cert_url],
@@ -108,13 +117,17 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
   ].filter((pair): pair is [string, string] => typeof pair[1] === "string" && pair[1].trim().length > 0);
 
   const pendingLike =
-    app?.status === "pending" || app?.status === "pending_review" || app?.status === "reviewing";
+    app?.status === "pending" ||
+    app?.status === "pending_review" ||
+    app?.status === "reviewing" ||
+    app?.status === "needs_more_info";
 
   return (
     <AdminDetailContentPanel
       as="section"
       aria-label={t("admin_guide_app_sectionAria")}
       data-testid="admin-guide-application-review"
+      data-tt-admin-onboarding-review-card="guide"
     >
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">{t("admin_guide_app_title")}</h2>
       {loading ? (
@@ -125,13 +138,13 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
         <p className="mt-3 text-small text-danger" role="alert">
           {error}
         </p>
-      ) : !app?.status ? (
-        <p className="mt-3 text-body text-ink-600">{t("admin_guide_app_none")}</p>
       ) : (
         <div className="mt-3 space-y-3 text-body">
           <p>
             <span className="text-meta text-ink-500">{t("admin_guide_app_status")}: </span>
-            <span className="font-mono text-meta">{app.status}</span>
+            <span className="font-mono text-meta">
+              {app?.status === "needs_more_info" ? t("admin_guide_app_status_needs_more_info") : app?.status}
+            </span>
           </p>
           {app.submitted_at ? (
             <p>
@@ -158,6 +171,14 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
                 <dd className="mt-0.5 font-mono text-ink-800">{app.real_name}</dd>
               </div>
             ) : null}
+            {app.passport_hash_present === true ? (
+              <div className="sm:col-span-2" data-tt-admin-guide-passport-hash="1">
+                <dt className="text-ink-500">{t("admin_guide_app_passportHash")}</dt>
+                <dd className="mt-0.5 text-small text-ink-600">
+                  {t("admin_guide_app_passportHashPresent")}
+                </dd>
+              </div>
+            ) : null}
             {app.wallet_address ? (
               <div className="sm:col-span-2">
                 <dt className="text-ink-500">{t("admin_guide_app_wallet")}</dt>
@@ -179,15 +200,38 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
           ) : null}
           {app.bio ? <p className="text-small text-ink-700 whitespace-pre-wrap">{app.bio}</p> : null}
           {docLinks.length > 0 ? (
-            <ul className="space-y-1 text-meta">
+            <ul className="space-y-1 text-meta" data-tt-admin-guide-docs="1">
               {docLinks.map(([labelKey, url]) => (
                 <li key={labelKey}>
-                  <a href={url} target="_blank" rel="noopener noreferrer" className={`${ADMIN_INLINE_LINK_CLASS} break-all`}>
-                    {t(labelKey)}
-                  </a>
+                  <AdminAuthDocPreviewLink href={url} label={t(labelKey)} data-testid={`admin-guide-doc-${labelKey}`} />
                 </li>
               ))}
             </ul>
+          ) : null}
+          {app.status === "rejected" || app.status === "needs_more_info" ? (
+            <div
+              className="space-y-1"
+              data-tt-admin-guide-rejection="1"
+              data-tt-admin-guide-needs-more-info={app.status === "needs_more_info" ? "1" : undefined}
+            >
+              {Array.isArray(app.rejection_codes) && app.rejection_codes.length > 0 ? (
+                <p className="text-small text-ink-700">
+                  <span className="text-meta text-ink-500">{t("admin_guide_app_rejectionCodes")}: </span>
+                  <span className="font-mono text-meta">{app.rejection_codes.join(", ")}</span>
+                </p>
+              ) : null}
+              {app.rejection_message ? (
+                <p className="text-small text-ink-700 whitespace-pre-wrap">
+                  <span className="text-meta text-ink-500">
+                    {app.status === "needs_more_info"
+                      ? t("admin_guide_app_needsMoreInfoNote")
+                      : t("admin_guide_app_rejectionMessage")}
+                    :{" "}
+                  </span>
+                  {app.rejection_message}
+                </p>
+              ) : null}
+            </div>
           ) : null}
           {pendingLike ? (
             <div className={`mt-4 space-y-3 ${ADMIN_INNER_DIVIDER_CLASS} pt-4`}>
@@ -202,9 +246,34 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
                 </button>
                 <button
                   type="button"
+                  className={ADMIN_PRIMARY_ACTION_BTN_CLASS}
+                  disabled={reviewLoading}
+                  data-tt-admin-action-needs-more-info="1"
+                  onClick={() =>
+                    requestConfirm({
+                      titleKey: "admin_l5_confirm_title_reject",
+                      descKey: "admin_guide_app_confirm_needs_more_info",
+                      danger: false,
+                      confirmLabelKey: "admin_guide_app_actionNeedsMoreInfo",
+                      onConfirm: () => submitReview("needs_more_info"),
+                    })
+                  }
+                >
+                  {t("admin_guide_app_actionNeedsMoreInfo")}
+                </button>
+                <button
+                  type="button"
                   className={ADMIN_SEMANTIC_APPROVE_BTN_CLASS}
                   disabled={reviewLoading}
-                  onClick={() => void submitReview("approved")}
+                  onClick={() =>
+                    requestConfirm({
+                      titleKey: "admin_l5_confirm_title_approve",
+                      descKey: "admin_guide_app_confirm_approve",
+                      danger: true,
+                      confirmLabelKey: "admin_guide_app_actionApprove",
+                      onConfirm: () => submitReview("approved"),
+                    })
+                  }
                 >
                   {t("admin_guide_app_actionApprove")}
                 </button>
@@ -212,7 +281,15 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
                   type="button"
                   className={ADMIN_SEMANTIC_REJECT_BTN_CLASS}
                   disabled={reviewLoading}
-                  onClick={() => void submitReview("rejected")}
+                  onClick={() =>
+                    requestConfirm({
+                      titleKey: "admin_l5_confirm_title_reject",
+                      descKey: "admin_guide_app_confirm_reject",
+                      danger: true,
+                      confirmLabelKey: "admin_guide_app_actionReject",
+                      onConfirm: () => submitReview("rejected"),
+                    })
+                  }
                 >
                   {t("admin_guide_app_actionReject")}
                 </button>

@@ -14,7 +14,12 @@ export type OfficialOpsHubStats = {
   templates: number;
   campaigns: number;
   pendingReview: number;
+  /** Page sample limit — not full inventory total (WP-05 / HU-105). */
+  sampleLimit: number;
+  sampleHonest: true;
 };
+
+const OFFICIAL_HUB_SAMPLE_LIMIT = 100;
 
 function countPendingReview(items: { metadata?: Record<string, unknown>; publish_status?: string }[]): number {
   return items.filter((row) => {
@@ -35,10 +40,10 @@ export function useAdminOfficialOpsHubPage() {
     setError(null);
     try {
       const [accounts, guides, templates, campaigns] = await Promise.all([
-        getAdminOfficialAccounts({ limit: 100 }),
-        getAdminOfficialGuides({ limit: 100 }),
-        getAdminOfficialItineraryTemplates({ limit: 100 }),
-        getAdminOfficialColdStartCampaigns({ limit: 100 }),
+        getAdminOfficialAccounts({ limit: OFFICIAL_HUB_SAMPLE_LIMIT }),
+        getAdminOfficialGuides({ limit: OFFICIAL_HUB_SAMPLE_LIMIT }),
+        getAdminOfficialItineraryTemplates({ limit: OFFICIAL_HUB_SAMPLE_LIMIT }),
+        getAdminOfficialColdStartCampaigns({ limit: OFFICIAL_HUB_SAMPLE_LIMIT }),
       ]);
       const accountItems = accounts.items ?? [];
       const guideItems = guides.items ?? [];
@@ -53,6 +58,8 @@ export function useAdminOfficialOpsHubPage() {
           countPendingReview(accountItems) +
           countPendingReview(guideItems) +
           countPendingReview(templateItems),
+        sampleLimit: OFFICIAL_HUB_SAMPLE_LIMIT,
+        sampleHonest: true,
       });
     } catch {
       setError("admin_official_hub_load_failed");

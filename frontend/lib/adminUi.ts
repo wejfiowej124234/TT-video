@@ -43,7 +43,6 @@ import {
   TT_MARKETING_HOME_FORM_INNER_GLOW,
   TT_MARKETING_ORDERS_TEXT_BODY,
   TT_MARKETING_ORDERS_TEXT_META,
-  TT_MARKETING_ORDERS_TEXT_MUTED,
   TT_MARKETING_HOME_HERO_PILL_GHOST,
 } from "@/lib/marketingUi";
 
@@ -74,13 +73,13 @@ export {
 /** 白底筛选卡 input/select focus */
 export const ADMIN_FORM_FIELD_FOCUS_CLASS = TT_MARKETING_FORM_FIELD_FOCUS_CONSOLE;
 
-/** 筛选/表单控件 · sm 圆角（奶油底 · ref-sun 描边 · 配 ADMIN_FORM_FIELD_FOCUS_CLASS） */
+/** 筛选/表单控件 · sm 圆角（Batch-10 HU-167/220 · 深壳暗填 · 禁奶油 `#faf8f6`） */
 export const ADMIN_FORM_CONTROL_SM_CLASS =
-  "rounded-[var(--radius-sm)] border border-ref-sun/18 bg-[#faf8f6]/95 bg-bg-console text-ink-900";
+  "rounded-[var(--radius-sm)] border border-ref-sun/24 bg-[#0c0a09]/75 text-slate-100 placeholder:text-slate-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]";
 
 /** 筛选/表单控件 · md 圆角 */
 export const ADMIN_FORM_CONTROL_MD_CLASS =
-  "rounded-[var(--radius-md)] border border-ref-sun/18 bg-[#faf8f6]/95 bg-bg-console text-ink-900";
+  "rounded-[var(--radius-md)] border border-ref-sun/24 bg-[#0c0a09]/75 text-slate-100 placeholder:text-slate-500 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]";
 
 /** 暖金 L5 模态 · 奶油底 input/select（`text-slate-*` 避 ink remap · native option 可读） */
 export const ADMIN_WARM_L5_MODAL_FORM_CONTROL_CLASS =
@@ -105,13 +104,20 @@ export const ADMIN_WARM_L5_PAD_CLASS = "relative p-4 sm:p-5";
 export const ADMIN_TEXT_BODY_CLASS = TT_MARKETING_ORDERS_TEXT_BODY;
 export const ADMIN_TEXT_META_CLASS = TT_MARKETING_ORDERS_TEXT_META;
 
-/** 深壳 footnote / 诚实句（14px · slate-300 · WCAG ①） */
-export const ADMIN_TEXT_FOOTNOTE_CLASS = "text-small leading-snug text-slate-300";
+/**
+ * 深壳副文 / 磁贴说明（Batch-13 FP-A · AA）
+ * 叶页 `text-ink-600` 仍由 `globals.css` zone remap 抬到 slate-300；新码优先本 token。
+ */
+export const ADMIN_TEXT_SECONDARY_CLASS = "text-slate-300";
+
+/** 深壳 footnote / 诚实句（14px · slate-200 · Batch-11 W14 HU-337） */
+export const ADMIN_TEXT_FOOTNOTE_CLASS = "text-small leading-snug text-slate-200";
 
 /** 侧栏 nav 链（可读性 · 44px 触达） */
 export const ADMIN_SHELL_SIDEBAR_LINK_CLASS =
   "text-[0.8125rem] leading-snug text-slate-200 hover:text-[#ffe8d4]";
-export const ADMIN_TEXT_MUTED_CLASS = TT_MARKETING_ORDERS_TEXT_MUTED;
+/** Batch-13 FP-A：muted 不用 ORDERS slate-400（AA 下限）→ slate-300 */
+export const ADMIN_TEXT_MUTED_CLASS = "text-slate-300";
 
 /** 深壳 · 次 CTA / 幽灵 pill（同源 `/` Hero 暖描边 · 禁止 Console 浅底 ghost） */
 export const ADMIN_BTN_GHOST_DARK_CLASS = `${TT_MARKETING_HOME_HERO_PILL_GHOST} text-[#ffe8d4] hover:text-white`;
@@ -126,11 +132,11 @@ export const ADMIN_DARK_GLASS_PANEL_LG_CLASS =
 export const ADMIN_DARK_GLASS_PANEL_XL_CLASS =
   "rounded-[var(--radius-xl)] border border-white/12 bg-slate-950/50 backdrop-blur-md";
 
-/** 表格 / 密集数据区 · 纯白抬升（暖描边 · 保留 shadow-soft 数据区 SSOT） */
+/** 表格 / 密集数据区 · 深壳抬升（Batch-10 HU-168 · 禁默认白 sheet） */
 export const ADMIN_SURFACE_PLAIN_CLASS =
-  "rounded-[var(--radius-lg)] border border-ref-sun/14 bg-bg-console shadow-soft";
+  "rounded-[var(--radius-lg)] border border-white/12 bg-slate-950/55 shadow-soft backdrop-blur-md";
 
-/** 列表表格外框 · 暖金过渡（深壳 → 白表 · batch56 VIS） */
+/** 列表表格外框 · 暖金过渡（深壳） */
 export const ADMIN_TABLE_WARM_FRAME_CLASS =
   "rounded-[var(--radius-xl)] border border-ref-sun/20 bg-gradient-to-b from-ref-sun/[0.07] to-ref-sun/[0.02] p-px shadow-[0_0_0_1px_rgba(252,164,124,0.06)]";
 
@@ -148,7 +154,7 @@ export const ADMIN_FILTER_INPUT_MD_CLASS = `w-full min-h-[44px] px-3 py-2 ${ADMI
 
 /** P2-5 · 筛选区标题 / 提示 / 字段标签 / 栅格（深暖卡 SSOT · batch57） */
 export const ADMIN_FILTER_TITLE_CLASS = "text-body font-medium text-slate-100";
-export const ADMIN_FILTER_HINT_CLASS = "mt-2 text-small text-slate-400 leading-relaxed";
+export const ADMIN_FILTER_HINT_CLASS = "mt-2 text-small text-slate-300 leading-relaxed";
 export const ADMIN_FILTER_FIELD_LABEL_CLASS = "text-small font-semibold text-slate-200";
 export const ADMIN_FILTER_GRID_CLASS = "mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-2";
 export const ADMIN_FILTER_GRID_3_CLASS = "mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3";
@@ -157,14 +163,21 @@ export const ADMIN_FILTER_ACTIONS_CLASS = "mt-3 flex flex-wrap gap-2";
 
 /** 详情/队列处置主内容 · 实现 `AdminDetailContentPanel`（暖金 L5 · 非 `ADMIN_FILTER_CARD`） */
 
-/** 列表页页头 · 须 `AdminWarmL5Surface` 包裹（VIS-02 · 同源 `/` WARM_L5） */
+/**
+ * 列表页页头卡框 · widget/枢纽仍可复用 Warm L5。
+ * List/Detail Chrome 页头已改 flat（Batch-10 W12 · HU-237）。
+ */
 export const ADMIN_PAGE_HEADER_CARD_CLASS = ADMIN_WARM_L5_FRAME_CLASS;
+/** Batch-10 W12 · HU-237/189：列表/详情页头扁平带（去 Warm L5 套娃边） */
+export const ADMIN_PAGE_HEADER_FLAT_CLASS = "mb-1 border-b border-white/10 pb-3 lg:pb-4";
+/** Batch-10 W12 · Related 默认一行 · 无描边卡 */
+export const ADMIN_OPS_RELATED_FOLD_FLAT_CLASS = "py-1";
 
 /** 列表/详情页头 · 深暖壳 title/subtitle（ADM-UX-VIS-13 · batch59） */
 export const ADMIN_PAGE_CHROME_TITLE_CLASS = "text-h3 font-semibold text-slate-100";
 export const ADMIN_PAGE_CHROME_SUBTITLE_CLASS = "mt-2 max-w-2xl text-body text-slate-300";
-export const ADMIN_PAGE_CHROME_SUBTITLE_ID_CLASS = "font-mono text-small text-slate-400 break-all";
-export const ADMIN_PAGE_CHROME_SUBTITLE_HINT_CLASS = "mt-1 text-small text-slate-400";
+export const ADMIN_PAGE_CHROME_SUBTITLE_ID_CLASS = "font-mono text-small text-slate-300 break-all";
+export const ADMIN_PAGE_CHROME_SUBTITLE_HINT_CLASS = "mt-1 text-small text-slate-300";
 
 /** 工作台 h1 · 可选金渐变字（全站唯一品牌标题） */
 export const ADMIN_WORKSPACE_TITLE_CLASS = `text-h3 font-semibold sm:text-h2 ${TT_MARKETING_ACTION_TITLE_GRADIENT}`;
@@ -230,7 +243,7 @@ export const ADMIN_HUB_KPI_LINK_FRAME_CLASS = ADMIN_HUB_LINK_CARD_FRAME_CLASS;
 
 /** meta.note → observability 深链 */
 export const ADMIN_META_NOTE_LINK_CLASS =
-  "rounded-[var(--radius-md)] border border-ref-sun/14 bg-ref-sun/5 py-2 text-left text-small text-ink-600 hover:border-ref-sun/30 hover:text-ink-800";
+  "rounded-[var(--radius-md)] border border-ref-sun/14 bg-ref-sun/5 py-2 text-left text-small text-slate-300 hover:border-ref-sun/30 hover:text-slate-100";
 
 /** Shell 侧栏 flyout / mobile 子菜单 */
 export const ADMIN_SHELL_NAV_DROPDOWN_CLASS =
@@ -270,7 +283,7 @@ export const ADMIN_SHELL_PREVIEW_BANNER_CLASS =
 
 /** IA-06 · 全站 Shell 预览顶栏（浅底 · ref-sun 底边） */
 export const ADMIN_SHELL_PREVIEW_NOTICE_CLASS =
-  "border-b border-ref-sun/28 bg-gradient-to-r from-ref-sun/10 via-bg-console to-ref-sun/6";
+  "border-b-2 border-dashed border-amber-500/55 bg-gradient-to-r from-amber-400/35 via-ref-sun/20 to-amber-300/25";
 
 /** IA-06 · 登录账号 JWT 角色徽章（暖棕 · 与侧栏激活同族） */
 export const ADMIN_SHELL_ACCOUNT_ROLE_BADGE_CLASS =
@@ -348,12 +361,12 @@ export const ADMIN_DETAIL_FIELD_ROW_CLASS =
 export const ADMIN_DETAIL_FIELD_ROW_SIMPLE_CLASS = "border-b border-ref-sun/12 pb-2 last:border-0";
 
 /** 暖色详情面板 · 字段标签 / 值 / 分区标题（slate on dark · batch60） */
-export const ADMIN_DETAIL_FIELD_LABEL_CLASS = "text-meta text-slate-400";
+export const ADMIN_DETAIL_FIELD_LABEL_CLASS = "text-meta text-slate-300";
 export const ADMIN_DETAIL_FIELD_VALUE_CLASS = "mt-0.5 break-all text-small text-slate-200";
 export const ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS =
   "mt-0.5 break-all font-mono text-small text-slate-200";
 export const ADMIN_DETAIL_SECTION_TITLE_CLASS =
-  "text-small font-semibold uppercase tracking-wide text-slate-400";
+  "text-small font-semibold uppercase tracking-wide text-slate-300";
 
 /** Console 内嵌白底块（modal 子区 / wizard 嵌套 · 替代 border-ink-100） */
 export const ADMIN_CONSOLE_INNER_PANEL_CLASS =
@@ -400,9 +413,18 @@ export const ADMIN_HUB_DEPTH_LINK_CONSOLE_TILE_CLASS =
 
 export const ADMIN_HUB_DEPTH_LINK_CARD_CLASS = ADMIN_HUB_DEPTH_LINK_CONSOLE_TILE_CLASS;
 
-/** 侧栏分组 `<summary>` hover */
+/** 侧栏分组 `<summary>` · Batch-11：与叶同可读阶 · 禁过灰像禁用。 */
 export const ADMIN_SHELL_SIDEBAR_GROUP_SUMMARY_CLASS =
-  "flex cursor-pointer list-none items-center justify-between gap-2 rounded-[var(--radius-md)] px-2 py-1.5 text-small font-semibold uppercase tracking-wide text-slate-400 marker:content-none hover:bg-ref-sun/8 [&::-webkit-details-marker]:hidden";
+  "flex cursor-pointer list-none items-center justify-between gap-2 rounded-[var(--radius-sm)] px-2 py-1.5 text-[0.8125rem] font-medium tracking-normal text-slate-300 marker:content-none hover:text-[#ffe8d4] [&::-webkit-details-marker]:hidden";
+
+/** 侧栏叶链接内缩 · 与组头分层 · Batch-11 W14 HU-313 */
+export const ADMIN_SHELL_SIDEBAR_LEAF_LIST_CLASS = "mt-1 space-y-1.5 pb-1 pl-3";
+
+/** 侧栏分组块间距 · Batch-11 W14 HU-313 */
+export const ADMIN_SHELL_SIDEBAR_GROUP_GAP_CLASS = "mb-4";
+
+/** 侧栏域胶囊 → 首组间距 · Batch-11 W14 HU-319 */
+export const ADMIN_SHELL_SIDEBAR_DOMAIN_GAP_CLASS = "mb-4";
 
 /** Meta build / 技术折叠触达卡 */
 export const ADMIN_META_BUILD_FOLD_CARD_CLASS = `mt-6 rounded-[var(--radius-xl)] border p-4 text-left text-ink-800 ${ADMIN_KPI_CARD_IDLE_CLASS}`;
@@ -427,15 +449,15 @@ export const ADMIN_RECENT_VISIT_CHIP_CLASS =
 export const ADMIN_HEADER_RETURN_SITE_CLASS =
   `${TT_MARKETING_BTN_GHOST_WARM_DARK} !w-auto px-3 text-small font-semibold`;
 
-/** VIS · O10：列表表头 sticky（队列/经营列表共用） */
+/** VIS · O10：列表表头 sticky（队列/经营列表共用 · 深壳） */
 export const ADMIN_TABLE_THEAD_CLASS =
-  "sticky top-0 z-[1] bg-bg-console text-ink-700 shadow-[0_1px_0_0_rgba(0,0,0,0.06)]";
+  "sticky top-0 z-[1] bg-slate-950/90 text-slate-300 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]";
 
 /** 表头单元格 */
 export const ADMIN_TABLE_TH_CELL_CLASS = "px-4 py-3";
 
-/** 列表表体单元格（≥12px · P1-8 · 替代 tbody 内裸 text-meta） */
-export const ADMIN_TABLE_TD_CELL_CLASS = "px-4 py-3 text-small text-ink-700";
+/** 列表表体单元格（≥12px · P1-8 · 深壳） */
+export const ADMIN_TABLE_TD_CELL_CLASS = "px-4 py-3 text-small text-slate-200";
 
 /** 列表表体 ID / 编码列（mono · 12px） */
 export const ADMIN_TABLE_TD_MONO_CLASS = "font-mono text-small text-ink-800";
@@ -456,9 +478,9 @@ export const ADMIN_TABLE_TD_COMPACT_TIMESTAMP_CLASS =
 /** 表体行最小触达高度 */
 export const ADMIN_TABLE_ROW_CLASS = "[&>td]:min-h-[44px] [&>td]:align-middle";
 
-/** U8 · 侧栏/顶栏导航（深壳 · 暖金激活 · 同源 `/` L0） */
+/** U8 · 侧栏/顶栏导航（深壳 · 暖金激活 · Batch-11 W14 HU-315 左轨保留 · Batch-12 HU-468 叶字重 font-medium） */
 export const ADMIN_SHELL_NAV_ACTIVE_CLASS =
-  "font-semibold text-[#ffe8d4] after:pointer-events-none after:absolute after:inset-x-0.5 after:-bottom-px after:block after:h-[2px] after:rounded-full after:bg-ref-sun/75 after:content-[''] relative";
+  "relative font-medium text-[#ffe8d4] border-l-2 border-ref-sun/80 bg-ref-sun/15 pl-[calc(0.5rem-2px)] after:pointer-events-none after:absolute after:inset-x-0.5 after:-bottom-px after:block after:h-[2px] after:rounded-full after:bg-ref-sun/75 after:content-['']";
 export const ADMIN_SHELL_NAV_IDLE_CLASS = "text-slate-200 hover:text-[#ffe8d4] hover:underline";
 
 /** U8 · 列表/详情内联操作链（深壳） */
@@ -525,8 +547,20 @@ export const ADMIN_INBOX_FOCUS_INSET_CLASS =
 /** 首页待办 · 动线快链编组（与聚焦条同族 inset） */
 export const ADMIN_INBOX_WORKFLOW_NAV_PANEL_CLASS = `${ADMIN_INBOX_FOCUS_INSET_CLASS} px-3 py-2.5`;
 
-/** 首页待办聚焦条（深壳 inset · 禁止奶油 `#faf8f6` 与满框 `DARK_GLASS` 叠套） */
-export const ADMIN_INBOX_FOCUS_BANNER_CLASS = ADMIN_INBOX_FOCUS_INSET_CLASS;
+/**
+ * Batch-12 HU-438 · Inbox 聚焦提示条 **次强**（描边金 · 高度≤标题带 · 不压概况）。
+ * 禁止满填橙条 / primary 暖按钮抢戏；奶油 `#faf8f6` 仍禁。
+ */
+export const ADMIN_INBOX_FOCUS_BANNER_CLASS =
+  "inline-flex max-w-full items-center rounded-[var(--radius-sm)] border border-ref-sun/40 bg-transparent px-2.5 py-1 text-small font-medium leading-snug text-ink-700";
+
+/** Batch-12 HU-438 · 「打开统一收件箱」次强描边 CTA（focus 顶行 · 高度贴标题带） */
+export const ADMIN_INBOX_OPEN_UNIFIED_SECONDARY_CLASS =
+  "inline-flex min-h-[2rem] items-center rounded-[var(--radius-sm)] border border-ref-sun/40 bg-transparent px-2.5 py-1 text-small font-medium text-ink-800 hover:border-ref-sun/55 hover:bg-ref-sun/8 hover:text-ink-900";
+
+/** Staging / contract needle · keep literal (names minify). */
+export const TT_ADMIN_INBOX_FOCUS_BANNER_SECONDARY_MARK =
+  "tt_admin_inbox_focus_banner_secondary_hu438";
 
 /** 首页模块搜索 · 命中行（深壳玻璃） */
 export const ADMIN_HOME_SEARCH_HIT_LINK_CLASS =
@@ -571,7 +605,7 @@ export const ADMIN_HOME_FOCUS_COMPANION_CLASS =
 /** 首页系统概览 · KPI 趋势迷你柱图（深壳 slate 轴 · batch58） */
 export const ADMIN_SYSTEM_OVERVIEW_TREND_CHART_CLASS = "mt-3 flex gap-2";
 export const ADMIN_SYSTEM_OVERVIEW_TREND_Y_AXIS_CLASS =
-  "flex h-28 flex-col justify-between py-0.5 text-small tabular-nums text-slate-400";
+  "flex h-28 flex-col justify-between py-0.5 text-small tabular-nums text-slate-300";
 export const ADMIN_SYSTEM_OVERVIEW_TREND_BARS_CLASS = "relative flex h-28 flex-1 items-end gap-1.5";
 export const ADMIN_SYSTEM_OVERVIEW_TREND_BAR_COLUMN_CLASS =
   "relative z-[1] flex min-w-0 flex-1 flex-col items-center gap-1";
@@ -597,10 +631,13 @@ export const ADMIN_FIN_DEPTH_PANEL_CLASS = `${ADMIN_WARM_L5_FRAME_CLASS} mb-4`;
 
 /** 首页 inbox · 无权限通道行 */
 export const ADMIN_INBOX_PERM_DENIED_ROW_CLASS =
-  "flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-md)] border border-ref-sun/15 bg-ref-sun/5 px-3 py-2 text-meta text-ink-600";
+  "flex flex-wrap items-center justify-between gap-2 rounded-[var(--radius-md)] border border-ref-sun/15 bg-ref-sun/5 px-3 py-2 text-meta text-slate-300";
 
-/** 入驻审核队列行卡（密集列表 · 纯白抬升） */
-export const ADMIN_QUEUE_LIST_ROW_CARD_CLASS = `${ADMIN_SURFACE_PLAIN_CLASS} p-4`;
+/** 入驻/审批队列行卡（Batch-9 U2 · Warm L5 暗玻璃 · 禁经营面白表主壳） */
+export const ADMIN_QUEUE_LIST_ROW_CARD_CLASS = `${ADMIN_WARM_L5_FRAME_CLASS} p-4`;
+
+/** 审批工作台行卡锚点（与队列同源） */
+export const ADMIN_APPROVAL_QUEUE_ROW_CARD_CLASS = ADMIN_QUEUE_LIST_ROW_CARD_CLASS;
 
 /** U8 · 队列行 open/pending 高亮 */
 export const ADMIN_TABLE_ROW_PENDING_CLASS = "bg-ref-sun/6";
@@ -608,6 +645,14 @@ export const ADMIN_TABLE_ROW_PENDING_CLASS = "bg-ref-sun/6";
 /** U8 · 待办计数 outline 徽标（侧栏/折叠 · 与 gradient 数字/CTA 区分 · VIS-11） */
 export const ADMIN_PENDING_COUNT_BADGE_CLASS =
   "inline-flex items-center self-center rounded-full border border-ref-sun/45 bg-slate-950/50 px-2.5 py-0.5 text-meta font-semibold tabular-nums text-[#ffe8d4]";
+
+/** Batch-13 HU-485 · 顶栏 Inbox 次级描边徽标（降橙条权重 · 不压品牌） */
+export const ADMIN_PENDING_COUNT_BADGE_SECONDARY_CLASS =
+  "inline-flex items-center self-center rounded-full border border-ref-sun/55 bg-transparent px-2 py-0.5 text-meta font-medium tabular-nums text-ref-sun";
+
+/** HU-275 · 财务工作流列表快照（≠ 待办徽标视觉） */
+export const ADMIN_FIN_WORKFLOW_SNAPSHOT_BADGE_CLASS =
+  "inline-flex items-center self-center rounded-[var(--radius-sm)] border border-slate-600/60 bg-slate-900/40 px-2 py-0.5 text-meta font-medium tabular-nums text-slate-300";
 
 /** U9 · 动效克制（须带 motion-reduce 回退） */
 export const ADMIN_MOTION_NAV_CLASS =
@@ -620,6 +665,15 @@ export const ADMIN_MOTION_SKELETON_CLASS = "animate-pulse motion-reduce:animate-
 
 /** 主操作按钮（批准 / 处置 / 去审核）— VIS-07 · warm 主色与首页 CTA 对齐 */
 export const ADMIN_PRIMARY_ACTION_BTN_CLASS = TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT;
+
+/**
+ * Batch-10 W13 · HU-210/242 · 三档 CTA 锁（深壳运营页）
+ * primary = 暖金实心 · secondary = 暖描边 ghost · danger = 危险语义
+ */
+export const ADMIN_BTN_PRIMARY_CLASS = ADMIN_PRIMARY_ACTION_BTN_CLASS;
+export const ADMIN_BTN_SECONDARY_CLASS = ADMIN_SHELL_SECONDARY_BTN_CLASS;
+export const ADMIN_BTN_DANGER_CLASS =
+  "inline-flex min-h-[44px] items-center justify-center rounded-[var(--radius-sm)] border border-danger/35 bg-danger/15 px-4 py-2 text-small font-semibold text-danger hover:bg-danger/25";
 
 /** 列表 quick filter chip（激活 · 同源 `/` 暖金 Tab） */
 export const ADMIN_FILTER_CHIP_ACTIVE_CLASS = `border border-ref-sun/40 ${TT_MARKETING_ACTION_GRADIENT_FILL} font-semibold text-[#0c0a09] ${TT_MARKETING_ACTION_GRADIENT_SHADOW}`;
@@ -641,9 +695,9 @@ export const ADMIN_TIMELINE_DOT_CLASS =
 /** 时间线左侧导轨 */
 export const ADMIN_TIMELINE_RAIL_CLASS = "border-l-2 border-ref-sun/22 pl-4";
 
-/** 队列收件条 / inbox strip（暖金浅槽） */
+/** 队列收件条 / inbox strip（深壳暖槽 · Batch-10 W13 HU-220 · 禁奶油 `#faf8f6`） */
 export const ADMIN_CONSOLE_INBOX_STRIP_CLASS =
-  "rounded-[var(--radius-xl)] border border-ref-sun/18 bg-[#faf8f6]/90 p-4 shadow-[0_0_20px_-12px_rgba(252,164,124,0.18)]";
+  "rounded-[var(--radius-xl)] border border-ref-sun/18 bg-ref-sun/8 p-4 shadow-[0_0_20px_-12px_rgba(252,164,124,0.18)]";
 
 /** 子路由错误页重试主按钮（暖金 submit · 非 ink-900） */
 export const ADMIN_CONSOLE_ERROR_RETRY_BTN_CLASS = TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT;
@@ -673,9 +727,9 @@ export const ADMIN_CONSOLE_MUTED_PANEL_CLASS =
 /** Console · 浅暖槽面板 + 内边距（财务 drift 等嵌套块） */
 export const ADMIN_CONSOLE_MUTED_PANEL_PAD_CLASS = `${ADMIN_CONSOLE_MUTED_PANEL_CLASS} p-4`;
 
-/** Console · 浅暖槽块（紧凑 pre / 嵌套 · 替代 bg-ink-50） */
+/** Console · 深壳嵌套块（紧凑 pre · Batch-10 W13 HU-220 · 禁奶油） */
 export const ADMIN_CONSOLE_MUTED_BLOCK_CLASS =
-  "rounded-[var(--radius-md)] border border-ref-sun/12 bg-[#faf8f6]/95";
+  "rounded-[var(--radius-md)] border border-ref-sun/12 bg-[#0c0a09]/55 text-slate-200";
 
 /** 收购 publish suspend · 状态条 */
 export const ADMIN_ACQUISITION_SUSPEND_ACTIVE_STATUS_CLASS =
@@ -752,7 +806,7 @@ export const ADMIN_STATUS_NEUTRAL_BADGE_CLASS =
 
 /** 首页 / 折叠区 chevron 圆钮 */
 export const ADMIN_COLLAPSE_CHEVRON_CLASS =
-  "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-ref-sun/14 bg-ref-sun/10 text-ink-600";
+  "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-ref-sun/14 bg-ref-sun/10 text-slate-300";
 
 /** 路由 loading · 线骨架（替代 bg-ink-100） */
 export const ADMIN_CONSOLE_SKELETON_LINE_CLASS = "bg-ref-sun/12";
@@ -851,7 +905,7 @@ export const ADMIN_APPLIED_FILTERS_BANNER_CARD_CLASS =
   "rounded-[var(--radius-md)] border border-ref-sun/15 bg-ref-sun/5 p-3 text-small text-ink-700";
 
 export const ADMIN_APPLIED_FILTERS_BANNER_INLINE_CLASS =
-  "text-meta text-ink-500 font-mono break-all";
+  "text-meta text-slate-300 font-mono break-all";
 
 export const ADMIN_APPLIED_FILTERS_BANNER_PANEL_CLASS =
   "rounded-[var(--radius-md)] border border-ref-sun/15 bg-ref-sun/5 p-3 text-small text-ink-700";
@@ -878,14 +932,14 @@ export const ADMIN_HOME_CARD_TIER_SUPER_WRITE_BADGE_CLASS =
   "border-amber-400/40 bg-amber-400/12 text-amber-200";
 
 export const ADMIN_HOME_CARD_TIER_WRITE_BADGE_CLASS =
-  "border-emerald-400/35 bg-emerald-400/12 text-emerald-200";
+  "border-ref-sun/40 bg-ref-sun/14 text-[#e8c96a]";
 
 export const ADMIN_HOME_CARD_TIER_READ_BADGE_CLASS =
-  "border-white/18 bg-white/6 text-slate-400";
+  "border-white/18 bg-white/6 text-slate-300";
 
 /** 占位模块徽标（深壳 · 实线边框 · 非 dashed · 非奶油底） */
 export const ADMIN_HOME_CARD_TIER_PLACEHOLDER_BADGE_CLASS =
-  "border-white/12 bg-white/5 text-slate-500";
+  "border-white/12 bg-white/5 text-slate-400";
 
 /** FIN-02 · 工作流步骤内卡（WarmL5 深嵌 · 非奶油 `#faf8f6` · batch57） */
 export const ADMIN_FIN_WORKFLOW_STEP_CARD_CLASS =
@@ -964,28 +1018,28 @@ export const ADMIN_APPROVAL_REJECT_OUTLINE_BTN_CLASS =
 export const ADMIN_APPROVAL_REJECT_ACTION_CLASS =
   "rounded-[var(--radius-lg)] border border-danger/30 bg-danger/5 p-4";
 
-/** 域健康 · 正常 */
+/** 域健康 · 正常（深壳可读） */
 export const ADMIN_DOMAIN_HEALTH_OK_CARD_CLASS =
-  "border-success/28 bg-success/8 text-success";
+  "border-success/35 bg-success/12 text-emerald-100";
 
 export const ADMIN_DOMAIN_HEALTH_OK_DOT_CLASS = "bg-success";
 
 export const ADMIN_DOMAIN_HEALTH_ATTENTION_CARD_CLASS =
-  "border-ref-sun/38 bg-ref-sun/10 text-ink-900";
+  "border-ref-sun/40 bg-ref-sun/12 text-[#ffe8d4]";
 
 export const ADMIN_DOMAIN_HEALTH_ATTENTION_DOT_CLASS = "bg-ref-sun";
 
-/** 域健康 · 中性 */
+/** 域健康 · 中性（深壳） */
 export const ADMIN_DOMAIN_HEALTH_NEUTRAL_CARD_CLASS =
-  "border-ref-sun/18 bg-ref-sun/5 text-ink-700";
+  "border-white/14 bg-slate-950/55 text-slate-200";
 
-export const ADMIN_DOMAIN_HEALTH_NEUTRAL_DOT_CLASS = "bg-ref-sun/50";
+export const ADMIN_DOMAIN_HEALTH_NEUTRAL_DOT_CLASS = "bg-slate-400";
 
-/** 域健康 · 未知 / 无数据 */
+/** 域健康 · 未知 / 无数据 · Batch-11 HU-321：禁白底灰字 */
 export const ADMIN_DOMAIN_HEALTH_UNKNOWN_CARD_CLASS =
-  "border-ref-sun/14 bg-[#faf8f6]/90 text-ink-500";
+  "border-white/12 bg-slate-950/60 text-slate-200";
 
-export const ADMIN_DOMAIN_HEALTH_UNKNOWN_DOT_CLASS = "bg-ref-sun/40";
+export const ADMIN_DOMAIN_HEALTH_UNKNOWN_DOT_CLASS = "bg-slate-500";
 
 export const ADMIN_NOTICE_WARNING_LG_CLASS =
   "rounded-[var(--radius-lg)] border border-warning/30 bg-warning/10 p-4 text-body text-ink-800";
@@ -1019,7 +1073,7 @@ export const ADMIN_FIN_SUITE_STATUS_PARTIAL_CLASS =
   "inline-flex rounded-full border border-warning/30 bg-warning/10 px-2 py-0.5 text-meta font-medium text-ink-800";
 
 export const ADMIN_FIN_SUITE_STATUS_PLACEHOLDER_CLASS =
-  "inline-flex rounded-full border border-ref-sun/16 bg-ref-sun/6 px-2 py-0.5 text-meta font-medium text-ink-600";
+  "inline-flex rounded-full border border-ref-sun/16 bg-ref-sun/6 px-2 py-0.5 text-meta font-medium text-slate-300";
 
 /** FIN-02 · 财务套件深链导出区聚焦环 */
 export const ADMIN_FIN_SUITE_EXPORT_FOCUS_RING_CLASS =
@@ -1031,7 +1085,7 @@ export const ADMIN_WIZARD_STEP_ACTIVE_CLASS = "border-ref-sun/40 bg-ref-sun/12 t
 export const ADMIN_WIZARD_STEP_DONE_CLASS =
   "border-success/28 bg-success/8 text-success";
 
-export const ADMIN_WIZARD_STEP_IDLE_CLASS = "border-ref-sun/14 bg-ref-sun/5 text-ink-500";
+export const ADMIN_WIZARD_STEP_IDLE_CLASS = "border-ref-sun/14 bg-ref-sun/5 text-slate-300";
 
 export function adminWizardStepClass(active: boolean, done: boolean): string {
   if (active) return ADMIN_WIZARD_STEP_ACTIVE_CLASS;
@@ -1060,9 +1114,9 @@ export function adminTableInlineLinkClass(): string {
   return `${touchTargetLink44Classes} font-medium whitespace-nowrap ${ADMIN_TABLE_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`;
 }
 
-/** 列表行内主操作（紧凑 warm pill · P2-4 · 非页面级 ADMIN_PRIMARY_ACTION_BTN_CLASS） */
+/** 列表行内主操作（紧凑 warm pill · 与页面级 PRIMARY 同系 · HU-210） */
 export const ADMIN_TABLE_PRIMARY_ACTION_BTN_CLASS =
-  "inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-sm)] border border-ref-sun/40 bg-gradient-to-r from-ref-sun/95 via-ref-coral/90 to-ref-sun/95 px-3 py-1.5 text-small font-semibold text-ink-900 shadow-warm-up transition hover:brightness-110 motion-sub motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-55";
+  "inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-sm)] border border-ref-sun/40 bg-gradient-to-r from-ref-sun/95 via-ref-coral/90 to-ref-sun/95 px-3 py-1.5 text-small font-semibold text-[#0c0a09] shadow-warm-up transition hover:brightness-110 motion-sub motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-55";
 
 /** 列表行内次操作（文本链 · 与白表主 pill 配对 · batch57） */
 export const ADMIN_TABLE_SECONDARY_ACTION_BTN_CLASS =

@@ -5,8 +5,9 @@ import { useId } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminOpsPlanePermissionBanners } from "@/components/admin/ops/AdminOpsPlanePermissionBanners";
-import { AdminOpsPlaneSidebarHint } from "@/components/admin/ops/AdminOpsPlaneSidebarHint";
+import { AdminOpsHubNavTiles } from "@/components/admin/ops/AdminOpsHubNavTiles";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS } from "@/lib/admin/adminShellOfficialOpsNavLinks";
 import { OFFICIAL_OPS_L5_PROBE } from "@/lib/admin/officialOpsL5";
 import { AdminOfficialOpsHubDashboard } from "./AdminOfficialOpsHubDashboard";
 import { useAdminOfficialOpsHubPage } from "./useAdminOfficialOpsHubPage";
@@ -31,7 +32,10 @@ export default function AdminOfficialOpsHubPage() {
         write={ADMIN_PERM.OFFICIAL_WRITE}
         publish={ADMIN_PERM.OFFICIAL_PUBLISH}
       />
-      <AdminOpsPlaneSidebarHint />
+      <AdminOpsHubNavTiles
+        links={ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS}
+        dataTtAttr="data-tt-admin-official-hub-link"
+      />
       <AdminOfficialOpsHubDashboard
         stats={stats}
         loading={loading}

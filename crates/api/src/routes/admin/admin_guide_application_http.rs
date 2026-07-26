@@ -145,7 +145,7 @@ pub async fn patch_admin_guide_application_review(
             write_admin_audit_log_best_effort(
                 &state,
                 actor_id,
-                request_id.as_deref(),
+                request_id,
                 "admin.guide_application.review",
                 Some("guides"),
                 Some(target_user_id.to_string().as_str()),

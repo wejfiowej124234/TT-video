@@ -10,8 +10,10 @@ export function AdminPageAccessBadge(props: { writePermissionId?: AdminPermissio
   const { t } = useTranslation();
   const caps = useAdminCapabilities();
   const writePerm = props.writePermissionId;
-  const canWrite =
-    !writePerm || (caps.permissionsLoaded && caps.hasPermission(writePerm));
+  // Batch-13 FO10 · 无写权限位（只读页）→ 只读徽章；禁「未声明=可写」假徽章
+  const canWrite = Boolean(
+    writePerm && caps.permissionsLoaded && caps.hasPermission(writePerm),
+  );
 
   if (!caps.permissionsLoaded) return null;
 

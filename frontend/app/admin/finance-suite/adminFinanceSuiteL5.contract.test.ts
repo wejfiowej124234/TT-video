@@ -23,22 +23,14 @@ describe("admin finance suite L5 (①)", () => {
     expect(pageMain).toContain("AdminFinanceWorkflowStrip");
     expect(pageMain).toContain("AdminFinanceSuiteSupplementStrip");
     expect(pageMain).toContain("AdminFinancePspPhase2DepthNotice");
-    expect(pageMain).toContain("AdminFinanceSuiteHubDepthSection");
-    const hubIdx = pageMain.indexOf("<AdminFinanceSuiteHubDepthSection");
-    const supplementIdx = pageMain.indexOf("<AdminFinanceSuiteSupplementStrip");
-    expect(hubIdx).toBeGreaterThan(-1);
-    expect(supplementIdx).toBeGreaterThan(hubIdx);
+    /** HU-273 · hub depth removed · module grid folded as secondary catalog */
+    expect(pageMain).not.toContain("AdminFinanceSuiteHubDepthSection");
+    expect(pageMain).toContain('data-tt-admin-fin-suite-module-catalog="1"');
     expect(pageMain.indexOf("AdminFinancePspPhase2DepthNotice")).toBeLessThan(
       pageMain.indexOf("data-tt-admin-fin-suite-module-grid"),
     );
     expect(pageMain).not.toContain("headerAside={<AdminInboxQueueBackLinks />}");
     expect(pageMain).not.toContain("data-tt-admin-fin-suite-footer-nav");
-    expect(
-      readFileSync(
-        join(__dir, "..", "..", "..", "components", "admin", "AdminFinanceSuiteHubDepthSection.tsx"),
-        "utf8",
-      ),
-    ).toContain("data-tt-admin-fin-suite-hub-depth");
     expect(pspNotice).toContain("data-tt-admin-fin-psp-phase2-notice");
     expect(pspNotice).toContain("data-tt-admin-fin-phase-honesty-fold");
     expect(pageMain).toContain("data-tt-admin-fin-suite-module-grid");
@@ -57,6 +49,13 @@ describe("admin finance suite L5 (①)", () => {
     expect(partialHref).toContain('fin_suite_depth: "partial"');
     expect(workflowModel).toContain("admin_fin_workflow_audit");
     expect(workflow).toContain("data-tt-admin-fin-workflow-step");
+    // Batch-13 FP-C · FN2/FN5/FN6
+    expect(pageMain).toContain('data-tt-admin-fin-suite-primary-nav="workflow"');
+    expect(pageMain).toContain('data-tt-admin-fin-suite-nav-tiles-fold="1"');
+    expect(pageMain).toContain('data-tt-admin-fin-suite-treasury-fold="1"');
+    expect(pageMain.indexOf('data-tt-admin-fin-suite-primary-nav="workflow"')).toBeLessThan(
+      pageMain.indexOf('data-tt-admin-fin-suite-nav-tiles-fold="1"'),
+    );
   });
 
   it("uses localized module status badges not raw status strings", () => {
@@ -76,11 +75,17 @@ describe("admin finance suite L5 (①)", () => {
     expect(supplement).toContain("data-tt-admin-fin-suite-supplement-fold");
     expect(supplement).toContain('data-tt-admin-fin-suite-supplement-default-open="0"');
     expect(supplement).toContain("xl:grid-cols-3");
-    expect(model.match(/id: "indexer"/g)?.length).toBe(1);
-    expect(model).toContain('id: "trust-growth"');
-    expect(model).toContain('id: "alert-incidents"');
-    expect(badge).toContain("admin_fin_suite_status_");
+    expect(model).not.toContain('id: "indexer"');
+    expect(model).not.toContain('id: "reconcile-reports"');
+    expect(model).not.toContain('id: "observability"');
+    expect(model).not.toContain('id: "trust-growth"');
+    expect(model).not.toContain('id: "alert-incidents"');
+    expect(model).toContain('id: "drift"');
+    expect(model).toContain('id: "region-vault"');
+    expect(model).toContain('id: "vacancy-ledger-ops"');
+    expect(badge).toContain("adminTruthBadgeLabelKey");
     expect(badge).toContain("data-tt-admin-fin-suite-status-badge");
+    expect(badge).toContain("data-tt-admin-truth-badge");
   });
 
   it("defines finance suite status token classes", () => {

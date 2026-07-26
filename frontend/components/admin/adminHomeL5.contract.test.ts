@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 
 import { describe, expect, it } from "vitest";
 
+import { ADMIN_HOME_CARDS } from "@/lib/admin/adminHomeModel";
+
 
 
 const __dir = dirname(fileURLToPath(import.meta.url));
@@ -50,7 +52,9 @@ function readAdminHomeSources(): string {
 
     readFileSync(join(__dir, "AdminHomeKpiStrip.tsx"), "utf8"),
 
-    readFileSync(join(__dir, "AdminHomeDevApiReference.tsx"), "utf8"),
+    readFileSync(join(__dir, "AdminHomeTreasuryPoolStrip.tsx"), "utf8"),
+
+    readFileSync(join(__dir, "..", "..", "lib", "admin", "adminHomeTreasuryPools.ts"), "utf8"),
 
     readFileSync(join(__dir, "..", "..", "lib", "admin", "adminHomeModel.ts"), "utf8"),
 
@@ -91,7 +95,7 @@ describe("admin home L5", () => {
 
 
 
-  it("keeps onboarding section, inbox, kpi, tiers, and dev API fold", () => {
+  it("keeps onboarding section, inbox, kpi, tiers; Batch-9 overview-first + treasury; no home tech/dev", () => {
 
     expect(src).toContain('data-tt-admin-home="1"');
 
@@ -206,8 +210,11 @@ describe("admin home L5", () => {
     expect(sidebar).toContain("AdminShellNavIcon");
     expect(sidebar).toContain("ADMIN_SHELL_SIDEBAR_LINK_CLASS");
     expect(companion).toContain("ADMIN_TEXT_FOOTNOTE_CLASS");
-    expect(companion).toContain("admin_home_focus_companion_kpi_links_prefix");
-    expect(companion).not.toContain("admin_home_focus_companion_kpi_line");
+    expect(companion).toContain("data-tt-admin-home-focus-companion-todo-only");
+    expect(companion).toContain("data-tt-admin-home-focus-companion-todos");
+    expect(companion).not.toContain("data-tt-admin-home-ops-kpi-promoted");
+    expect(companion).not.toContain("data-tt-admin-home-focus-companion-health");
+    expect(companion).not.toContain("admin_home_focus_companion_kpi_links_prefix");
     expect(maintainer).toContain("admin_home_maintainer_fold_summary_focus");
     expect(inboxStrip).toContain("singleQueueFocus");
     expect(inboxStrip).toContain("hideZeroCounts");
@@ -233,9 +240,45 @@ describe("admin home L5", () => {
     expect(src).toContain("data-tt-admin-home-modules-expand-all");
     expect(src).toContain("admin_home_modules_fold_summary_focus");
     expect(src).toContain("AdminHomeInbox.reports");
-    expect(src).toContain('inboxKey: "reports"');
+    // Batch-7: queue cards live in Inbox strip only (not home module wall inboxKey)
+    expect(inboxStrip).toContain('key: "guide"');
+    expect(inboxStrip).toContain('key: "reports"');
+    expect(src).toContain("data-tt-admin-home-treasury-pools");
+    expect(src).toContain("resolveAdminHomeTreasuryPoolsSnapshot");
+    expect(src).toContain("not_deployed");
 
-    expect(src).toContain("data-tt-admin-home-dev-api");
+    const homeClient = readFileSync(join(__dir, "AdminHomeClient.tsx"), "utf8");
+    // HU-455 · focus column: Inbox before overview; non-focus keeps overview→inbox
+    expect(homeClient).toContain('data-tt-admin-home-focus-inbox-first="1"');
+    const focusMatch = homeClient.match(
+      /data-tt-admin-home-focus-inbox-first="1"[\s\S]*?<\/div>\s*\)\s*:\s*\(/,
+    );
+    expect(focusMatch).toBeTruthy();
+    const focusCol = focusMatch![0];
+    const focusInboxIdx = focusCol.indexOf("<AdminHomeInboxStrip");
+    const focusOverviewIdx = focusCol.indexOf("<AdminHomeSystemOverviewSection");
+    expect(focusInboxIdx).toBeGreaterThan(-1);
+    expect(focusOverviewIdx).toBeGreaterThan(-1);
+    expect(focusInboxIdx).toBeLessThan(focusOverviewIdx);
+    const nonFocusTail = homeClient.slice((focusMatch!.index ?? 0) + focusCol.length);
+    const calmFragment = nonFocusTail.match(
+      /<>[\s\S]*?<AdminHomeSystemOverviewSection[\s\S]*?<AdminHomeInboxStrip[\s\S]*?\/>/,
+    )?.[0];
+    expect(calmFragment).toBeTruthy();
+    expect(calmFragment!.indexOf("<AdminHomeSystemOverviewSection")).toBeLessThan(
+      calmFragment!.indexOf("<AdminHomeInboxStrip"),
+    );
+    expect(homeClient).not.toContain("data-tt-admin-home-tech-fold");
+    expect(homeClient).not.toContain("AdminHomeDevApiReference");
+    expect(homeClient).not.toContain("AdminMetaBuildSection");
+
+    const overviewSection = readFileSync(join(__dir, "AdminHomeSystemOverviewSection.tsx"), "utf8");
+    expect(overviewSection).toContain("AdminHomeTreasuryPoolStrip");
+
+    const overviewBody = readFileSync(join(__dir, "AdminHomeSystemOverview.tsx"), "utf8");
+    expect(overviewBody).not.toContain("admin_home_tech_fold_summary");
+
+    expect(ADMIN_HOME_CARDS.length).toBeLessThanOrEqual(8);
 
     expect(src).toContain("data-tt-admin-card-tier");
 
@@ -277,8 +320,9 @@ describe("admin home L5", () => {
     expect(capStrip).toContain("shouldShowAdminCapabilityStrip");
     expect(capStrip).toContain("useAdminHomeInboxFocusMode");
     expect(capStrip).toContain("homeInboxFocus");
-    expect(previewNotice).toContain("useAdminHomeInboxFocusMode");
-    expect(previewNotice).toContain("data-tt-admin-shell-preview-notice-deferred");
+    expect(previewNotice).toContain("data-tt-admin-shell-preview-isolation");
+    expect(previewNotice).toContain("writeAdminShellPreviewRole");
+    expect(previewNotice).toContain("admin_shell_preview_isolation_banner");
     const inboxFocusHook = readFileSync(
       join(__dir, "..", "..", "lib", "admin", "useAdminHomeInboxFocusMode.ts"),
       "utf8",
@@ -290,9 +334,15 @@ describe("admin home L5", () => {
     expect(src).toContain("data-tt-admin-capability-strip-collapsible");
     expect(src).toContain("data-tt-admin-capability-strip-permissions-link");
 
-    expect(src).toContain("routes.admin.orders");
-
-    expect(src).toContain("routes.admin.disputes");
+    // KPI list URLs live in adminHomeKpiQueueListCache; home surfaces use path hrefs.
+    expect(src).toContain("/admin/orders");
+    expect(src).toContain("/admin/disputes");
+    expect(
+      readFileSync(
+        join(__dir, "..", "..", "lib", "admin", "adminHomeKpiQueueListCache.ts"),
+        "utf8",
+      ),
+    ).toContain("routes.admin.orders");
 
     expect(src).toContain("superAdminOnly");
     expect(src).toContain('"placeholder"');
@@ -303,7 +353,7 @@ describe("admin home L5", () => {
     );
     expect(systemOverviewSection).toContain("AdminHomeCollapsibleSection");
     expect(systemOverviewSection).toContain("adminHomeSystemOverviewDefaultOpen");
-    expect(systemOverviewSection).toContain("persistOpen={!props.focusInbox}");
+    expect(systemOverviewSection).toContain("persistOpen");
 
     const systemOverview = readFileSync(join(__dir, "AdminHomeSystemOverview.tsx"), "utf8");
     expect(systemOverview).toContain("admin_home_system_overview_users_memory");

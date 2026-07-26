@@ -1,0 +1,16 @@
+{
+  "schema": "TT_ADMIN_BATCH13_FP_B_CAPABILITY_BLOCKERS",
+  "stamp": "20260726T080500Z",
+  "status": "FP_B_CODE_LANDED",
+  "patch": "PATCH-STG-017",
+  "hus_code": ["491", "493"],
+  "hus_partial": ["481"],
+  "staging": "PENDING",
+  "next_wave": "FP-C",
+  "tip": "ea71c577_IMMOBILE",
+  "hard_gate_locked": true,
+  "cutover_locked": true,
+  "tt_production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "phase_honesty": "1_code_landed_neq_2_staging_neq_3_production_go"
+}

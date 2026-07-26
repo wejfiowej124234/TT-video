@@ -124,10 +124,11 @@ export function AdminUserDetailPageMain() {
             <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>
               {t("admin_user_detail_onboarding_section")}
             </h2>
-            <AdminProviderApplicationReviewCard userId={userId} />
-            <AdminGuideApplicationReviewCard userId={userId} />
-            <AdminStewardApplicationReviewCard userId={userId} />
-            <div id="admin-acquisition-suspend" data-tt-admin-user-acquisition="1">
+            <div data-tt-admin-user-onboarding-conditional="1" className="space-y-4">
+              <AdminProviderApplicationReviewCard userId={userId} />
+              <AdminGuideApplicationReviewCard userId={userId} />
+              <AdminStewardApplicationReviewCard userId={userId} />
+            </div>            <div id="admin-acquisition-suspend" data-tt-admin-user-acquisition="1">
               <h2 className={`mb-3 ${ADMIN_DETAIL_SECTION_TITLE_CLASS}`}>
                 {t("admin_user_detail_acquisition_section")}
               </h2>

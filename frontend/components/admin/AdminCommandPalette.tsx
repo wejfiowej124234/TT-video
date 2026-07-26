@@ -6,9 +6,11 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 import { ADMIN_COMMAND_PALETTE_OPEN_EVENT } from "@/lib/admin/adminCommandPaletteBus";
 import { adminCommandPaletteEntries } from "@/lib/admin/adminCommandPaletteEntries";
+import { adminChromeOpsInitSystemConfirmRequest } from "@/lib/admin/adminChromeOpsInitSystem";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { useAdminShellActor } from "@/lib/admin/useAdminShellActor";
 import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
+import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { useAdminShellPrefetchHref } from "@/lib/admin/useAdminShellLinkPrefetch";
 import { ADMIN_COMMAND_PALETTE_HEADER_CLASS, ADMIN_COMMAND_PALETTE_HIT_CLASS, ADMIN_FORM_CONTROL_MD_CLASS, ADMIN_FORM_FIELD_FOCUS_CLASS, ADMIN_MODAL_OVERLAY_CLASS } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2WhiteClasses } from "@/lib/travelLinkFocus";
@@ -31,6 +33,7 @@ export function AdminCommandPalette() {
   const actor = useAdminShellActor();
   const caps = useAdminCapabilities();
   const prefetchHref = useAdminShellPrefetchHref();
+  const requestConfirm = useAdminL5ConfirmRequest();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -137,6 +140,15 @@ export function AdminCommandPalette() {
                     e.preventDefault();
                     close();
                     prefetchHref(entry.href);
+                    // HU-448 · 初始化系统等危险项须二次确认
+                    if (entry.requiresConfirm) {
+                      requestConfirm(
+                        adminChromeOpsInitSystemConfirmRequest(() => {
+                          router.push(entry.href);
+                        }),
+                      );
+                      return;
+                    }
                     router.push(entry.href);
                   }}
                 >

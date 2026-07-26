@@ -67,6 +67,32 @@ describe("adminCapabilityStripVisibility", () => {
     ).toBe(false);
   });
 
+  it("Batch-10 W12 · hides strip for healthy maintainer on deep pages", () => {
+    expect(
+      shouldShowAdminCapabilityStrip({
+        permissionsLoaded: true,
+        capabilitiesUnavailable: false,
+        loading: false,
+        canApprove: true,
+        maintainerUi: true,
+        onWorkspace: false,
+      }),
+    ).toBe(false);
+  });
+
+  it("Batch-10 W12 · still shows strip for healthy maintainer on workspace", () => {
+    expect(
+      shouldShowAdminCapabilityStrip({
+        permissionsLoaded: true,
+        capabilitiesUnavailable: false,
+        loading: false,
+        canApprove: true,
+        maintainerUi: true,
+        onWorkspace: true,
+      }),
+    ).toBe(true);
+  });
+
   it("still shows strip on home inbox focus when capabilities unavailable", () => {
     expect(
       shouldShowAdminCapabilityStrip({

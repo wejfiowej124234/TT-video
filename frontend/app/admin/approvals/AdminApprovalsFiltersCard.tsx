@@ -11,13 +11,17 @@ import {
   ADMIN_FILTER_ACTIONS_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
   ADMIN_FILTER_HINT_CLASS,
-  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
+  ADMIN_FILTER_TITLE_CLASS,
+} from "@/lib/adminUi";
+
 type Props = {
   vm: AdminApprovalsPageViewModel;
   statusFilterId: string;
   approvalsListFilterHintId: string;
   adminListApplyResetHintId: string;
   adminAppliedFiltersDescId: string;
+  /** Batch-10 W13 · HU-214：默认折叠，让列表任务先占首屏 */
+  defaultOpen?: boolean;
 };
 
 export function AdminApprovalsFiltersCard({
@@ -26,14 +30,24 @@ export function AdminApprovalsFiltersCard({
   approvalsListFilterHintId,
   adminListApplyResetHintId,
   adminAppliedFiltersDescId,
+  defaultOpen = false,
 }: Props) {
   const { t } = useTranslation();
   const { loading, error, appliedFilters, draftLimit, setDraftLimit, draftStatus, setDraftStatus, apply, reset } = vm;
 
   return (
-    <div className={`mt-5 ${ADMIN_FILTER_CARD_CLASS}`}>
+    <details
+      className={`mt-5 ${ADMIN_FILTER_CARD_CLASS}`}
+      open={defaultOpen ? true : undefined}
+      data-tt-admin-approvals-filters-fold="1"
+      data-tt-admin-filters-default-closed={defaultOpen ? undefined : "1"}
+    >
+      <summary className={`cursor-pointer ${ADMIN_FILTER_TITLE_CLASS}`}>
+        {t("admin_approvals_filters")}
+      </summary>
       <form
         id="admin-approvals-filter-form"
+        className="mt-3"
         aria-label={t("admin_approvals_filters")}
         aria-describedby={
           [
@@ -46,11 +60,10 @@ export function AdminApprovalsFiltersCard({
         }
         onSubmit={apply}
       >
-        <h2 className={ADMIN_FILTER_TITLE_CLASS}>{t("admin_approvals_filters")}</h2>
         <p id={approvalsListFilterHintId} className={ADMIN_FILTER_HINT_CLASS}>
           {t("admin_approvals_list_filter_hint")}
         </p>
-        <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
+        <p id={adminListApplyResetHintId} className="sr-only">
           {t("admin_list_filters_apply_reset_hint")}
         </p>
         <div className="mt-3 flex flex-wrap items-end gap-4">
@@ -100,6 +113,7 @@ export function AdminApprovalsFiltersCard({
           form="admin-approvals-filter-form"
           className={ADMIN_PRIMARY_ACTION_BTN_CLASS}
           type="submit"
+          data-tt-admin-btn-tier="primary"
         >
           {t("admin_approvals_apply")}
         </button>
@@ -114,11 +128,12 @@ export function AdminApprovalsFiltersCard({
           <button
             className={`inline-flex min-h-[44px] items-center justify-center ${ADMIN_FILTER_RESET_BTN_CLASS} ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
             type="submit"
+            data-tt-admin-btn-tier="secondary"
           >
             {t("admin_approvals_reset")}
           </button>
         </form>
       </div>
-    </div>
+    </details>
   );
 }

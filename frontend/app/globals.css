@@ -253,21 +253,26 @@ body:has([data-tt-governance-proposals-warm-canvas="1"]) {
 /**
  * Admin 深壳 · `text-ink-*` 语义映射（白卡 `bg-bg-console` 数据区内恢复深色字）。
  * 与 **86 §6.0.1 `/admin/*`** · **`frontend/app/admin/README.md`** 同源。
+ * Batch-13 FP-A：副文/meta 从 slate-400 → slate-300（AA 可读）；`!important` 压过 utility 级联。
  */
 [data-tt-admin-zone-content-stack] .text-ink-900 {
-  color: rgb(248 250 252);
+  color: rgb(248 250 252) !important;
 }
 [data-tt-admin-zone-content-stack] .text-ink-800 {
-  color: rgb(226 232 240);
+  color: rgb(226 232 240) !important;
 }
 [data-tt-admin-zone-content-stack] .text-ink-700 {
-  color: rgb(203 213 225);
+  color: rgb(203 213 225) !important;
 }
 [data-tt-admin-zone-content-stack] .text-ink-600 {
-  color: rgb(148 163 184);
+  color: rgb(203 213 225) !important; /* slate-300 · FP-A */
 }
 [data-tt-admin-zone-content-stack] .text-ink-500 {
-  color: rgb(148 163 184);
+  color: rgb(203 213 225) !important; /* slate-300 · FP-A */
+}
+/** 深壳直接写 `text-slate-400` 的 muted / hint（同源抬到 slate-300） */
+[data-tt-admin-zone-content-stack] .text-slate-400 {
+  color: rgb(203 213 225) !important;
 }
 
 /** Shell 奶油底 native `<select>`：深壳 ink remap 不作用于 option 白底列表 */
@@ -283,30 +288,36 @@ select[data-tt-admin-warm-l5-modal-control="1"] option {
 }
 
 [data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) :is(.text-ink-900) {
-  color: rgb(17 24 39);
+  color: rgb(17 24 39) !important;
 }
 [data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) :is(.text-ink-800) {
-  color: rgb(31 41 55);
+  color: rgb(31 41 55) !important;
 }
 [data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) :is(.text-ink-700) {
-  color: rgb(55 65 81);
+  color: rgb(55 65 81) !important;
 }
 [data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) :is(.text-ink-600, .text-ink-500) {
-  color: rgb(75 85 99);
+  color: rgb(75 85 99) !important;
+}
+[data-tt-admin-zone-content-stack] :is(.bg-bg-console, .bg-bg-console *) .text-slate-400 {
+  color: rgb(107 114 128) !important; /* gray-500 · 白卡 muted */
 }
 
 [data-tt-admin-warm-l5-surface] .text-ink-900 {
-  color: rgb(248 250 252);
+  color: rgb(248 250 252) !important;
 }
 [data-tt-admin-warm-l5-surface] .text-ink-800 {
-  color: rgb(226 232 240);
+  color: rgb(226 232 240) !important;
 }
 [data-tt-admin-warm-l5-surface] .text-ink-700 {
-  color: rgb(203 213 225);
+  color: rgb(203 213 225) !important;
 }
 [data-tt-admin-warm-l5-surface] .text-ink-600,
 [data-tt-admin-warm-l5-surface] .text-ink-500 {
-  color: rgb(148 163 184);
+  color: rgb(203 213 225) !important; /* slate-300 · FP-A */
+}
+[data-tt-admin-warm-l5-surface] .text-slate-400 {
+  color: rgb(203 213 225) !important;
 }
 
 /* `/` Hero · Phase A Cinematic Still（Ken Burns）：内层放大平移，外层 overflow 裁切 */

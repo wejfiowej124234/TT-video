@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
@@ -14,12 +15,14 @@ import { AdminOpsRiskBanner } from "@/components/admin/ops/AdminOpsRiskBanner";
 import { OfficialOpsFormCard } from "@/components/admin/ops/OfficialOpsFormCard";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { canAdminMutateCmsAnnouncementLane } from "@/lib/admin/cmsAnnouncementLanePermissions";
+import { contentRoadmapVerifyHref } from "@/lib/admin/contentOpsL5";
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import {
   ADMIN_FILTER_FIELD_LABEL_CLASS,
   ADMIN_FILTER_INPUT_MD_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_TABLE_TD_CELL_CLASS,
+  ADMIN_TEXT_FOOTNOTE_CLASS,
   adminTableRowPrimaryActionClass,
 } from "@/lib/adminUi";
 
@@ -125,6 +128,29 @@ export function AdminContentRoadmapPageMain() {
             <button type="button" className={`${ADMIN_PRIMARY_ACTION_BTN_CLASS} mt-2`} disabled={busy} onClick={() => void sectionWorkflow("publish")}>
               {t("admin_content_announcements_publish_btn")}
             </button>
+          ) : null}
+          {section.publish_status === "published" ? (
+            (() => {
+              const verifyHref = contentRoadmapVerifyHref(section);
+              return verifyHref ? (
+                <Link
+                  href={verifyHref}
+                  className={`${adminTableRowPrimaryActionClass()} mt-2 inline-flex`}
+                  data-tt-admin-content-verify-cta="1"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t("admin_content_action_verify")}
+                </Link>
+              ) : (
+                <span
+                  className={`mt-2 inline-block text-meta ${ADMIN_TEXT_FOOTNOTE_CLASS}`}
+                  data-tt-admin-content-verify-unavailable="1"
+                >
+                  {t("admin_content_action_verify_unavailable")}
+                </span>
+              );
+            })()
           ) : null}
         </OfficialOpsFormCard>
       ) : null}

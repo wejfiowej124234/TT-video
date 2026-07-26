@@ -17,6 +17,7 @@ type Props = {
   readPermission?: AdminPermissionId;
   writePermission?: AdminPermissionId;
   publishPermission?: AdminPermissionId;
+  mainDataAttrs?: Record<string, string>;
   children: React.ReactNode;
 };
 
@@ -32,6 +33,7 @@ export function AdminContentPageShell({
   readPermission = ADMIN_PERM.CONTENT_READ,
   writePermission = ADMIN_PERM.CONTENT_WRITE,
   publishPermission = ADMIN_PERM.CONTENT_PUBLISH,
+  mainDataAttrs,
   children,
 }: Props) {
   const { t } = useTranslation();
@@ -46,6 +48,8 @@ export function AdminContentPageShell({
       loadingMessageKey="admin_content_loading"
       empty={empty}
       emptyMessageKey={emptyMessageKey}
+      writePermissionId={writePermission}
+      mainDataAttrs={mainDataAttrs}
     >
       <AdminOpsPlanePermissionBanners
         read={readPermission}

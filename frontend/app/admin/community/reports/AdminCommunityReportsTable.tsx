@@ -100,10 +100,19 @@ export function AdminCommunityReportsTable({
                   </span>
                 </td>
                 <td className="px-3 py-2 text-meta max-w-[12rem]">
-                  <span className="block truncate" title={`${r.target_type ?? ""} ${r.target_id ?? ""}`}>
+                  <span className="block truncate" title={r.target_type ?? undefined}>
                     {r.target_type ?? dash}
                   </span>
-                  <span className="font-mono text-small text-ink-800 text-ink-500 block truncate">{r.target_id ?? dash}</span>
+                  {r.target_id ? (
+                    <details className="mt-0.5">
+                      <summary className="cursor-pointer text-meta text-ink-500">
+                        {t("admin_reports_technical_target_id_fold")}
+                      </summary>
+                      <span className="font-mono text-small text-ink-500 block break-all">{r.target_id}</span>
+                    </details>
+                  ) : (
+                    <span className="text-ink-500">{dash}</span>
+                  )}
                 </td>
                 <td className="px-3 py-2">
                   <span

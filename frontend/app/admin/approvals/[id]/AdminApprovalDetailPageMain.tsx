@@ -24,7 +24,7 @@ import {
 } from "@/lib/adminUi";
 
 import { approvalStatusLabelKey } from "../adminApprovalWorkflowModel";
-import { APPROVAL_DETAIL_RELATED_FOLD_LINKS, APPROVAL_DETAIL_ROW_DEFS, fmtApprovalDetailValue } from "./adminApprovalDetailPageModel";
+import { APPROVAL_DETAIL_ADVANCED_ROW_DEFS, APPROVAL_DETAIL_BASIC_ROW_DEFS, APPROVAL_DETAIL_RELATED_FOLD_LINKS, fmtApprovalDetailValue } from "./adminApprovalDetailPageModel";
 import { AdminApprovalDetailTimeline } from "./AdminApprovalDetailTimeline";
 import { AdminApprovalDetailWorkflowPanel } from "./AdminApprovalDetailWorkflowPanel";
 import { useAdminApprovalDetailPage } from "./useAdminApprovalDetailPage";
@@ -85,12 +85,12 @@ export function AdminApprovalDetailPageMain() {
                 </h2>
                 <AdminApprovalDetailTimeline steps={timeline} />
               </AdminDetailContentPanel>
-              <AdminDetailContentPanel as="details">
-                <summary className="cursor-pointer text-small font-medium text-ink-800">
-                  {t("admin_approval_detail_section")}
-                </summary>
+              <AdminDetailContentPanel>
+                <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>
+                  {t("admin_approval_detail_summary_title")}
+                </h2>
                 <dl className="mt-3 grid gap-2 text-body">
-                  {APPROVAL_DETAIL_ROW_DEFS.map(({ key, labelKey }) => {
+                  {APPROVAL_DETAIL_BASIC_ROW_DEFS.map(({ key, labelKey }) => {
                     const raw = row[key];
                     let display: string;
                     if (key === "created_at" || key === "approved_at") {
@@ -105,6 +105,25 @@ export function AdminApprovalDetailPageMain() {
                       <div key={key} className={`${ADMIN_DETAIL_FIELD_ROW_SIMPLE_CLASS}`}>
                         <dt className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{t(labelKey)}</dt>
                         <dd className={`${ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS} whitespace-pre-wrap`}>
+                          {display}
+                        </dd>
+                      </div>
+                    );
+                  })}
+                </dl>
+              </AdminDetailContentPanel>
+              <AdminDetailContentPanel as="details">
+                <summary className="cursor-pointer text-small font-medium text-ink-800">
+                  {t("admin_approval_detail_advanced_fold")}
+                </summary>
+                <dl className="mt-3 grid gap-2 text-body">
+                  {APPROVAL_DETAIL_ADVANCED_ROW_DEFS.map(({ key, labelKey }) => {
+                    const raw = row[key];
+                    const display = fmtApprovalDetailValue(raw) || t("admin_em_dash");
+                    return (
+                      <div key={key} className={`${ADMIN_DETAIL_FIELD_ROW_SIMPLE_CLASS}`}>
+                        <dt className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{t(labelKey)}</dt>
+                        <dd className={`${ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS} whitespace-pre-wrap break-all text-meta`}>
                           {display}
                         </dd>
                       </div>

@@ -1,0 +1,45 @@
+{
+  "schema": "traveltrust.psg_change_record.v1",
+  "id": "PCR-20260726-BATCH13-FP-A-D-STAGING-DEPLOY",
+  "stamp": "20260726T083000Z",
+  "recorded_utc": "2026-07-26T08:30:00Z",
+  "class": "non_financial_ui_staging_patch",
+  "summary": "Owner PCR: deploy Batch-13 FP-A～D Admin remediation to Staging (PATCH-STG-017). Tip ea71c577 cite-only/immobile. Hard Gate LOCKED · Cutover LOCKED · TT_PRODUCTION_GO=NO_GO · FINANCE_WRITE FORBIDDEN. Does not close HU-495/487/490.",
+  "tip_mutated": false,
+  "final_truth_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "mutates_candidate_v2": false,
+  "mutates_hard_gate": false,
+  "mutates_cutover": false,
+  "patch": "PATCH-STG-017",
+  "equals_production_go": false,
+  "code_touched": true,
+  "deploy_target": "STAGING_PATCH",
+  "deploy_apps": [
+    "tt-web-staging",
+    "tt-api-staging"
+  ],
+  "fp_waves": [
+    "FP-A",
+    "FP-B",
+    "FP-C",
+    "FP-D"
+  ],
+  "fp_e_gates_remain_open": [
+    "HU-495",
+    "HU-487",
+    "HU-490"
+  ],
+  "TT_HARD_GATE_LOCKED": true,
+  "TT_CUTOVER_LOCKED": true,
+  "TT_PRODUCTION_GO": "NO_GO",
+  "FINANCE_WRITE": "FORBIDDEN",
+  "artifacts": [
+    "docs/runbook/TT-BATCH13-FP-E-TOTAL-VERIFY-LATEST.md",
+    "scripts/dev/probe-batch13-fp-e-staging.cjs",
+    "registry/psg-change-records/PCR-20260726-BATCH13-FP-A-D-STAGING-DEPLOY.json"
+  ],
+  "status": "ACTIVE",
+  "follows": "PCR-20260726-HUMAN-UIUX-BATCH-13-CONTENT-PREP",
+  "owner_command": "Owner PCR deploy FP-A～D Staging; tip immobile; markers 8/8; SuperAdmin probe; B13-06′～14′; no early close 495/487/490"
+}

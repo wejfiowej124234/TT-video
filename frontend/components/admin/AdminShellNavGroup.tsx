@@ -115,23 +115,24 @@ export function AdminShellNavGroup(props: {
 
 
 
+  /** Batch-12 HU-467 · 顶栏加载中保留组骨架，禁止整组空白闪烁 */
   if (!caps.permissionsLoaded && !caps.capabilitiesUnavailable) {
-
-    return null;
-
+    return (
+      <span
+        className={`${touchTargetLink44Classes} inline-flex animate-pulse items-center rounded-[var(--radius-md)] bg-ink-800/50 px-3 text-meta text-ink-500`}
+        data-tt-admin-shell-nav-group-skel={groupId}
+        aria-hidden="true"
+      >
+        {t(summaryKey)}
+      </span>
+    );
   }
-
-
 
   const visibleLinks = caps.capabilitiesUnavailable
     ? filterAdminShellLinksForCapabilitiesFailure(links)
-    : caps.permissionsLoaded
-      ? links.filter((l) => !l.permission || caps.hasPermission(l.permission))
-      : [];
+    : links.filter((l) => !l.permission || caps.hasPermission(l.permission));
 
   const groupActive = visibleLinks.some((l) => (l.match ?? defaultMatch(l.href))(pathname));
-
-
 
   if (visibleLinks.length === 0) return null;
 

@@ -1,0 +1,208 @@
+{
+  "schema": "traveltrust.batch13_fp_e_staging_probe.v1",
+  "machine": "TT_ADMIN_BATCH13_FP_E_STAGING_PROBE",
+  "stamp": "20260726T081038Z",
+  "web": "https://tt-web-staging.fly.dev",
+  "api": "https://tt-api-staging.fly.dev",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "bake": {
+    "http": 200,
+    "git_sha": "892c20c830bb7432441f540311277a1a66a1c12d",
+    "build_time": "2026-07-26T05:32:42Z",
+    "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+    "contract_profile": "v311_fund_safety_candidate_v2",
+    "freshness": "STAGING_SHA_DIVERGES_FROM_TIP_CITE_EXPECTED",
+    "tip_equals_staging": false
+  },
+  "meta": {
+    "http": 200,
+    "chain_id": "11155111",
+    "sepolia_expected": true
+  },
+  "routes": [
+    {
+      "path": "/admin",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin"
+    },
+    {
+      "path": "/admin/users",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fusers"
+    },
+    {
+      "path": "/admin/orders",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Forders"
+    },
+    {
+      "path": "/admin/disputes",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fdisputes"
+    },
+    {
+      "path": "/admin/onboarding",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fonboarding"
+    },
+    {
+      "path": "/admin/content",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fcontent"
+    },
+    {
+      "path": "/admin/official",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fofficial"
+    },
+    {
+      "path": "/admin/growth",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fgrowth"
+    },
+    {
+      "path": "/admin/finance",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Ffinance"
+    },
+    {
+      "path": "/admin/config",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fconfig"
+    },
+    {
+      "path": "/admin/guide-applications",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fguide-applications"
+    },
+    {
+      "path": "/admin/provider-applications",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fprovider-applications"
+    },
+    {
+      "path": "/admin/steward-applications",
+      "http": 307,
+      "redirects_to_login": true,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fsteward-applications"
+    }
+  ],
+  "chunks_fetched": 38,
+  "fp_markers": [
+    {
+      "wave": "FP-D",
+      "id": "FD10-finance-fold",
+      "marker": "tt-admin-disputes-finance-obs-fold",
+      "found_in_staging_chunks": false
+    },
+    {
+      "wave": "FP-D",
+      "id": "OH7-review-strip",
+      "marker": "tt-admin-onboarding-review-strip",
+      "found_in_staging_chunks": false
+    },
+    {
+      "wave": "FP-D",
+      "id": "CC4-visual-strip",
+      "marker": "tt-admin-content-hub-visual",
+      "found_in_staging_chunks": false
+    },
+    {
+      "wave": "FP-D",
+      "id": "OO10-quick-create",
+      "marker": "tt-admin-official-hub-quick-create",
+      "found_in_staging_chunks": false
+    },
+    {
+      "wave": "FP-D",
+      "id": "GH9-quick-referral",
+      "marker": "tt-admin-growth-hub-quick-create",
+      "found_in_staging_chunks": false
+    },
+    {
+      "wave": "FP-D",
+      "id": "FD6-disputes-q",
+      "marker": "tt-admin-disputes-q",
+      "found_in_staging_chunks": false
+    },
+    {
+      "wave": "FP-C",
+      "id": "orders-search",
+      "marker": "tt-admin-orders-q",
+      "found_in_staging_chunks": false
+    },
+    {
+      "wave": "FP-B",
+      "id": "guide-passport-hash",
+      "marker": "passport_hash_present",
+      "found_in_staging_chunks": false
+    }
+  ],
+  "fp_markers_found": 0,
+  "fp_markers_total": 8,
+  "capability_api_unauth": [
+    {
+      "path": "/api/v1/admin/guide-applications?limit=5",
+      "http": 401,
+      "auth_gated": true,
+      "reachable": true
+    },
+    {
+      "path": "/api/v1/admin/provider-applications?limit=5",
+      "http": 401,
+      "auth_gated": true,
+      "reachable": true
+    },
+    {
+      "path": "/api/v1/admin/steward-applications?limit=5",
+      "http": 401,
+      "auth_gated": true,
+      "reachable": true
+    },
+    {
+      "path": "/api/v1/admin/disputes?limit=5",
+      "http": 401,
+      "auth_gated": true,
+      "reachable": true
+    },
+    {
+      "path": "/api/v1/admin/orders?limit=5",
+      "http": 401,
+      "auth_gated": true,
+      "reachable": true
+    },
+    {
+      "path": "/api/v1/admin/home/metrics",
+      "http": 401,
+      "auth_gated": true,
+      "reachable": true
+    }
+  ],
+  "capability_api_surfaces_reachable": true,
+  "deploy_has_fp_a_to_d_markers": false,
+  "rescreen_status": "BLOCKED_UNTIL_STAGING_DEPLOY_FP_CODE",
+  "gates": {
+    "HU_495": "OPEN",
+    "HU_487": "OPEN",
+    "HU_490": "OPEN_NEEDS_OWNER_SIGN_OFF_CMD"
+  },
+  "verdict": "FP_E_STAGING_DEPLOY_STALE_RESCREEN_BLOCKED",
+  "next": "Deploy FP-A～D to Staging (PCR) then re-run probe + rescreen; tip stays ea71c577 cite-only"
+}

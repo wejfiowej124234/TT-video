@@ -1,16 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useId, useMemo } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
+import { AdminOnboardingQueueRowCard } from "@/components/admin/AdminOnboardingQueueRowCard";
 import { AdminQueueListPageChrome } from "@/components/admin/AdminQueueListPageChrome";
 import {
   buildAdminQueueListPath,
   parseAdminQueueStatusQuery,
 } from "@/lib/admin/adminQueueListPageModel";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
-import { formatRelativeAge } from "@/lib/admin/formatRelativeAge";
 import { sortOnboardingQueueItems, type OnboardingQueueSortKey } from "@/lib/admin/sortOnboardingQueueItems";
 import { useAdminTableSort } from "@/lib/admin/useAdminTableSort";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
@@ -21,12 +20,11 @@ import {
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
-  ADMIN_QUEUE_LIST_ROW_CARD_CLASS,
-  adminTableRowPrimaryActionClass,
   ADMIN_FILTER_INPUT_SM_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
 } from "@/lib/adminUi";
 import { useAdminGuideApplicationsPage } from "./useAdminGuideApplicationsPage";
+import { AdminGuidesTriangleStrip } from "@/components/admin/AdminGuidesTriangleStrip";
 
 const DEFAULT_STATUS = "pending";
 const BASE_PATH = "/admin/guide-applications";
@@ -60,6 +58,7 @@ export function AdminGuideApplicationsPageMain() {
       titleKey="admin_guide_list_title"
       subtitleKey="admin_guide_list_subtitle_l5"
     >
+      <AdminGuidesTriangleStrip current="applications" />
       <div className={`${ADMIN_FILTER_CARD_CLASS} flex flex-wrap items-end gap-3`} data-tt-admin-queue-list-filter="guide">
         <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
           {t("admin_guide_list_filterStatus")}
@@ -91,7 +90,7 @@ export function AdminGuideApplicationsPageMain() {
         error={error}
         staleWhileError={staleWhileError}
         itemsLength={items.length}
-        loadingMessage={t("admin_users_loading")}
+        loadingMessage={t("admin_guide_list_loading")}
         errorMessage={error ? adminErrorUserText(error, t) : ""}
         className={refreshing ? ADMIN_LIST_REFRESHING_SURFACE_CLASS : undefined}
         data-tt-admin-onboarding-queue-list="guide"
@@ -103,39 +102,17 @@ export function AdminGuideApplicationsPageMain() {
         <>
           <AdminOnboardingQueueSortToolbar sortKey={sort.key} sortDir={sort.dir} onSelect={(key) => toggle(key)} />
           <ul className="space-y-3">
-            {sortedItems.map((row) => {
-              const uid = row.user_id ?? "";
-              const app = row.application;
-              return (
-                <li key={uid} className={ADMIN_QUEUE_LIST_ROW_CARD_CLASS}>
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <div>
-                      <p className="font-mono text-small text-ink-800 break-all">{row.email ?? uid}</p>
-                      <p className="mt-1 text-small text-ink-600">
-                        {t("admin_guide_app_status")}: <span className="font-mono">{app?.status ?? "—"}</span>
-                        {app?.city ? <> · {app.city}</> : null}
-                        {app?.submitted_at ? (
-                          <>
-                            {" · "}
-                            {t("admin_queue_wait_age", { age: formatRelativeAge(app.submitted_at) })}
-                          </>
-                        ) : null}
-                      </p>
-                      {app?.submitted_at ? <p className="text-meta text-ink-500">{app.submitted_at}</p> : null}
-                    </div>
-                    <Link
-                      href={`/admin/users/${encodeURIComponent(uid)}`}
-                      className={adminTableRowPrimaryActionClass()}
-                      aria-label={t("admin_guide_list_review_row_aria", { id: uid })}
-                    >
-                      {t("admin_guide_list_reviewLink")}
-                    </Link>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </>
+            {sortedItems.map((row) => (
+              <AdminOnboardingQueueRowCard
+                key={row.user_id ?? ""}
+                kind="guide"
+                row={row}
+                statusLabelKey="admin_guide_app_status"
+                reviewLinkKey="admin_guide_list_reviewLink"
+                reviewAriaKey="admin_guide_list_review_row_aria"
+              />
+            ))}
+          </ul>        </>
       </AdminStandardListSection>
     </AdminQueueListPageChrome>
   );

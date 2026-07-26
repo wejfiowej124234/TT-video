@@ -1,0 +1,16 @@
+{
+  "schema": "TT_ADMIN_BATCH13_FP_C_OWNER_HARD_PAGES",
+  "stamp": "20260726T081000Z",
+  "status": "FP_C_CODE_LANDED",
+  "patch": "PATCH-STG-017",
+  "order": ["orders", "finance_readonly", "config_hub"],
+  "gates_still_open": [510, 511, 558, 559, 566, 567],
+  "staging": "PENDING",
+  "next_wave": "FP-D",
+  "tip": "ea71c577_IMMOBILE",
+  "hard_gate_locked": true,
+  "cutover_locked": true,
+  "tt_production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "phase_honesty": "1_code_landed_neq_2_staging_neq_3_production_go"
+}

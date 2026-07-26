@@ -6,6 +6,7 @@ import {
   getAdminGrowthAnalyticsOverview,
   type GrowthAnalyticsOverview,
 } from "@/lib/apiClient";
+import { mapAdminGrowthLoadError } from "@/lib/admin/mapAdminGrowthLoadError";
 
 /** Read-only 30d KPI snapshot for Growth hub console (101 S2 · UX-P2-01). */
 export function useAdminGrowthHubPage() {
@@ -19,8 +20,9 @@ export function useAdminGrowthHubPage() {
     try {
       const res = await getAdminGrowthAnalyticsOverview({ days: 30 });
       setOverview(res.summary ?? null);
-    } catch {
-      setError("admin_growth_hub_kpi_load_failed");
+    } catch (e) {
+      setOverview(null);
+      setError(mapAdminGrowthLoadError(e, "admin_growth_hub_kpi_load_failed"));
     } finally {
       setLoading(false);
     }
