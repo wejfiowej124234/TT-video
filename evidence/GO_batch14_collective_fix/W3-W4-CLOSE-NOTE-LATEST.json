@@ -1,6 +1,6 @@
 {
   "machine": "TT_ADMIN_BATCH14_W3_W4_CLOSE_NOTE",
-  "stamp": "2026-07-26T11:30:00Z",
+  "stamp": "2026-07-26T12:14:00Z",
   "patch": "PATCH-STG-019",
   "tip_cite": "ea71c577",
   "tip_immobile": true,
@@ -14,8 +14,8 @@
   "contrast_cluster": "VISUAL_RECHECK_CODE_PASS",
   "HU-572": "CLOSED_REVERIFY",
   "HU-573": "CLOSED",
-  "HU-574": "BLOCKED_PROVISION",
-  "HU-574_note": "verification_code_required on register; no fabricated 6/6 OK",
+  "HU-574": "CLOSED",
+  "HU-574_note": "ADM-U01 102/102 GO; evidence adm_u01_hu574 + HU574-CLOSE-NOTE-LATEST.json",
   "HU-575": "CLOSED",
   "HU-576": "CLOSED_ED_CONFIRM_DESIGN",
   "HU-577": "CODE_IN_WEB_BAKE",
@@ -29,5 +29,7 @@
   "web_bake": "892afc49",
   "api_bake": "fb904660",
   "web_api_diverge": "docs_only_tip_ED",
-  "web_deploy_exit": "2_PAGE_SURFACE_DRIFT_HU576_ED"
+  "web_deploy_exit": "2_PAGE_SURFACE_DRIFT_HU576_ED",
+  "HU-574_evidence": "evidence/GO_batch14_collective_fix/adm_u01_hu574/report.json",
+  "hu574_close_note": "evidence/GO_batch14_collective_fix/HU574-CLOSE-NOTE-LATEST.json"
 }

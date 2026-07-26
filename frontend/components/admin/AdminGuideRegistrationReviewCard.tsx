@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
@@ -15,6 +16,8 @@ import {
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_SEMANTIC_APPROVE_BTN_CLASS,
   ADMIN_SEMANTIC_REJECT_BTN_CLASS,
+  ADMIN_TABLE_INLINE_LINK_CLASS,
+  ADMIN_TEXT_FOOTNOTE_CLASS,
 } from "@/lib/adminUi";
 
 const REVIEWABLE = new Set(["pending", "pending_review", "active"]);
@@ -72,6 +75,20 @@ export function AdminGuideRegistrationReviewCard({
       <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
         {t("admin_guide_reg_title")}
       </h2>
+      <p
+        className={`mt-2 ${ADMIN_TEXT_FOOTNOTE_CLASS}`}
+        data-tt-admin-guide-reg-not-primary-onboarding="1"
+        role="note"
+      >
+        {t("admin_guide_reg_notPrimaryOnboarding")}{" "}
+        <Link
+          href="/admin/guide-applications"
+          className={ADMIN_TABLE_INLINE_LINK_CLASS}
+          data-tt-admin-guide-reg-primary-review-link="1"
+        >
+          {t("admin_guide_reg_gotoApplicationsQueue")}
+        </Link>
+      </p>
       <div className={`mt-3 space-y-3 ${ADMIN_INNER_DIVIDER_CLASS} pt-3`}>
         <div className="flex flex-wrap gap-2">
           <button

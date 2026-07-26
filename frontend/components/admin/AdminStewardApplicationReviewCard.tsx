@@ -164,6 +164,14 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
               <span className="font-mono text-meta">{payload.country_code}</span>
             </p>
           ) : null}
+          {/* HU-495/Q5 · 诚实空：主理人申请无证件/材料 URL 时明示，禁止假材料墙 */}
+          <p
+            className="text-small text-ink-600"
+            data-tt-admin-steward-docs-empty="1"
+            data-tt-admin-steward-materials="honest-empty"
+          >
+            {t("admin_steward_app_docsEmptyHonest")}
+          </p>
           {app.wallet_address ? (
             <p className="break-all font-mono text-meta text-ink-800">{app.wallet_address}</p>
           ) : null}

@@ -150,16 +150,18 @@ Engineering SSOT Anchor
 | 键 | 值 |
 |----|-----|
 | Track | **B** Staging Patch · `PATCH-STG-019` · Admin Release Reality NEED_FIX → Collective Fix |
-| Working bake | `2f943f3f…` API SSOT solidify · HU-573/577 pending next Web/API redeploy（**≠ tip**） |
+| Working bake | **Web+API `5d73c50d…` ALIGNED** · FP-E markers **8/8** · **≠ tip**（cite-only `ea71c577`） |
+| Bake note | Web fresh bake + API align · post-deploy `PAGE_SURFACE_DRIFT` = **HU-576 ED** · deploy shipped |
 | L1 / L2 | Admin users/orders/disputes **PG-first** · `meta.source=postgres` · L2 probe **PASS** |
 | Disputes CAST | `list_disputes_admin` · `CAST(refund_ratio AS double precision)` + tourist_id 补查 · **SSOT 固化** |
 | HU-491 | Staging probe **CLOSED** · guides list/detail + guide-application `postgres` |
-| W3/W4 | 572 CLOSED_REVERIFY · 573/577 code · 574 BLOCKED_PROVISION · 575 CLOSED · 576 ED |
-| Score | **134/200 NEED_FIX**（诚实抬阶 · ≠ 满分 · ≠ RELEASE_GRADE） |
+| W3/W4 | 572 CLOSED · 573 CLOSED · **574 CLOSED**（ADM-U01 102/102） · 575 CLOSED · 576 ED · 577 pending |
+| Score | **144/200 NEED_FIX**（auth 36 · loop 26 · ≠ 满分 · ≠ RELEASE_GRADE） |
 | Tip / Pin | **cite-only** `ea71c577` · `PSG-REL-20260720-WEB3-CAND-V2` — **不**因本批移动 |
 | Forbidden | Hard Gate unlock · Cutover · Production GO · tip move · FINANCE_WRITE |
 | Cite | [`TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST`](./TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST.md) · [`ADMIN-RELEASE-REALITY-AUDIT`](./TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md) · `evidence/GO_batch14_collective_fix/` |
-| L5 Recertify | **DEFERRED** until remaining HU close · **≠** Production GO |
+| HU-495/487/490 | 本会话已授权验收 · **仍 OPEN**（能力/八维 **禁止 4.x 假满分** · 须 §5 勾满 + Owner 复截） |
+| L5 Recertify | **DEFERRED** · prep note `L5-RECERTIFY-PREP-LATEST.json` · **≠** Production GO |
 
 **禁止**用本批 Working bake SHA 冒充 tip · **禁止**宣称 Production GO。
 

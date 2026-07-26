@@ -1,0 +1,28 @@
+{
+  "machine": "TT_ADMIN_BATCH13_SYSTEM_CAPABILITY_RELEASE_AUDIT",
+  "stamp": "20260726T070500Z",
+  "verdict": "B13_SYSTEM_CAPABILITY_RELEASE_GRADE_NO",
+  "release_grade": "NO",
+  "phase": "1_code_truth_with_staging_screenshot_cite",
+  "screenshots": "evidence/manual-uat/sessions/20260726T063000Z-batch13-content-prep/batch13-screenshots/",
+  "capability_score": "21/30",
+  "capability_avg": 3.5,
+  "workbench_eight_dim_cite": "24/40",
+  "questions": {
+    "Q1_guide_approve": { "verdict": "PARTIAL", "score": 3.0 },
+    "Q2_guide_materials": { "verdict": "PARTIAL", "score": 3.5 },
+    "Q3_guide_field_align": { "verdict": "PARTIAL", "score": 3.5 },
+    "Q4_provider_onboard": { "verdict": "YES_PHASE1", "score": 4.5 },
+    "Q5_steward_review": { "verdict": "YES_ACTIONS_PARTIAL_MATERIALS", "score": 4.0 },
+    "Q6_overview_all_real": { "verdict": "NO", "score": 2.5 }
+  },
+  "p0_blockers": [491, 493, 478, 495],
+  "new_hu": [491, 492, 493, 494, 495],
+  "next_hu": 496,
+  "open_count_after": 18,
+  "gate_495": "OPEN",
+  "hard_gate_locked": true,
+  "cutover_locked": true,
+  "production_go": "NO_GO",
+  "honesty": "no_fake_kpi_numbers_found; gray_and_empty_are_honest_not_green_fraud; release_requires_all_real_or_signed_empty"
+}

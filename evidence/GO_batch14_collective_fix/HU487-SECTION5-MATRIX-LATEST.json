@@ -1,0 +1,125 @@
+{
+  "machine": "TT_ADMIN_BATCH14_HU487_SECTION5_MATRIX",
+  "stamp": "20260726T133500Z",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "living_bake": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
+  "bake_ne_tip": true,
+  "expected_difference": "STAGING_PATCH_HEAD_NE_TIP",
+  "gate": "OPEN",
+  "score_now": "24/40",
+  "score_target": "40/40",
+  "rule": "each dim 5.0 only with living-bake evidence; forbid 4.x as 5.0",
+  "dimensions": [
+    {
+      "dim": 1,
+      "name": "Brand",
+      "code": "PARTIAL",
+      "staging_evidence": "STALE_SHOT",
+      "screenshot": "STALE",
+      "score": null,
+      "notes": "Inbox/chrome residual",
+      "blocking_hu": [
+        "485",
+        "479"
+      ]
+    },
+    {
+      "dim": 2,
+      "name": "TypographyColor",
+      "code": "PASS_PARTIAL",
+      "staging_evidence": "STALE_SHOT",
+      "screenshot": "STALE",
+      "score": null,
+      "notes": "neutral domain tones landed",
+      "blocking_hu": [
+        "480",
+        "482"
+      ]
+    },
+    {
+      "dim": 3,
+      "name": "IA",
+      "code": "PARTIAL",
+      "staging_evidence": "STALE_SHOT",
+      "screenshot": "STALE",
+      "score": null,
+      "notes": "triangle sole-primary; chrome unproven",
+      "blocking_hu": [
+        "479",
+        "486"
+      ]
+    },
+    {
+      "dim": 4,
+      "name": "CopyHonesty",
+      "code": "PARTIAL",
+      "staging_evidence": "STALE_SHOT",
+      "screenshot": "STALE",
+      "score": null,
+      "notes": "chain_id annotation residual",
+      "blocking_hu": [
+        "482",
+        "483"
+      ]
+    },
+    {
+      "dim": 5,
+      "name": "Function",
+      "code": "PASS_PARTIAL",
+      "staging_evidence": "PASS_PARTIAL",
+      "screenshot": "STALE",
+      "score": null,
+      "notes": "guides inventory postgres",
+      "blocking_hu": [
+        "481",
+        "480"
+      ]
+    },
+    {
+      "dim": 6,
+      "name": "Performance",
+      "code": "UNKNOWN",
+      "staging_evidence": "MISSING_SLA",
+      "screenshot": "MISSING",
+      "score": null,
+      "notes": "SLA measured evidence required",
+      "blocking_hu": [
+        "488"
+      ]
+    },
+    {
+      "dim": 7,
+      "name": "OfficialParity",
+      "code": "PARTIAL",
+      "staging_evidence": "MISSING_LIVE_MATRIX",
+      "screenshot": "MISSING",
+      "score": null,
+      "notes": "Live matrix not closed",
+      "blocking_hu": [
+        "489"
+      ]
+    },
+    {
+      "dim": 8,
+      "name": "ReleaseFeel",
+      "code": "PARTIAL",
+      "staging_evidence": "STALE_SHOT",
+      "screenshot": "STALE",
+      "score": null,
+      "notes": "privilege/finance empty need Owner",
+      "blocking_hu": [
+        "478",
+        "490"
+      ]
+    }
+  ],
+  "screenshot_pack_status": "STALE_PRE_5d73c50d_OR_MISSING_RESCREEN",
+  "scope": "workbench eight dims only",
+  "verdict": "HU487_SECTION5_BLOCKED_NO_LIVING_BAKE_RESCREEN",
+  "honesty": "no fake 40/40"
+}

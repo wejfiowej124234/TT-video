@@ -1,0 +1,40 @@
+{
+  "machine": "TT_ADMIN_BATCH14_HU574_CLOSE_NOTE",
+  "stamp": "20260726T121400Z",
+  "patch": "PATCH-STG-019",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "new_features": false,
+  "hu": "HU-574",
+  "verdict": "CLOSED",
+  "artifact": "ADM-U01",
+  "phase": "②",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "matrix": {
+    "total": 102,
+    "pass": 102,
+    "fail": 0,
+    "release_gate": "GO",
+    "roles": ["SuperAdmin", "Ops", "CS", "Risk", "Finance", "Auditor"],
+    "provision": "6/6_OK_via_PG_proxy"
+  },
+  "evidence_dir": "evidence/GO_batch14_collective_fix/adm_u01_hu574",
+  "report": "evidence/GO_batch14_collective_fix/adm_u01_hu574/report.json",
+  "log": "evidence/GO_batch14_collective_fix/HU574-RBAC-MATRIX-LATEST.log",
+  "fixes_applied": [
+    "register_user OTP send-verification-code + registration_verification_dev_code",
+    "community.penalties_post body subject_user_id+action",
+    "body :target_user_id substitute with provisioned Auditor (avoid FK 500)",
+    "staging_adm_u01_prepare_dsn fly proxy 127.0.0.1:15432"
+  ],
+  "auth_score_bump": {
+    "from": "28/40",
+    "to": "36/40",
+    "reason": "six-role matrix 102/102 GO; FINANCE_WRITE still FORBIDDEN; residual env OTP/dev-code dependency ≠ 40/40"
+  },
+  "honesty": "② ADM-U01 GO ≠ RELEASE_GRADE YES ≠ Production GO; tip/HG/Cutover remain LOCKED"
+}

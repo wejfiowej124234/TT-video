@@ -171,6 +171,19 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
                 <dd className="mt-0.5 font-mono text-ink-800">{app.real_name}</dd>
               </div>
             ) : null}
+            {typeof app.avatar_url === "string" && app.avatar_url.trim().length > 0 ? (
+              <div className="sm:col-span-2" data-tt-admin-guide-avatar="1">
+                <dt className="text-ink-500">{t("admin_guide_app_avatar")}</dt>
+                <dd className="mt-1">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- Admin review thumb; URL from API */}
+                  <img
+                    src={app.avatar_url.trim()}
+                    alt=""
+                    className="h-16 w-16 rounded-[var(--radius-md)] object-cover border border-ink-200"
+                  />
+                </dd>
+              </div>
+            ) : null}
             {app.passport_hash_present === true ? (
               <div className="sm:col-span-2" data-tt-admin-guide-passport-hash="1">
                 <dt className="text-ink-500">{t("admin_guide_app_passportHash")}</dt>
@@ -186,8 +199,8 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
               </div>
             ) : null}
             {app.hourly_rate ? (
-              <div>
-                <dt className="text-ink-500">{t("admin_guide_app_hourlyRate")}</dt>
+              <div data-tt-admin-guide-field-archive="hourly_rate">
+                <dt className="text-ink-500">{t("admin_guide_app_hourlyRateArchive")}</dt>
                 <dd className="mt-0.5 font-mono text-ink-800">{app.hourly_rate}</dd>
               </div>
             ) : null}

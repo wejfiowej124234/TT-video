@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.batch13_workbench_release_grade_enterprise_audit.v1",
+  "machine_key": "TT_ADMIN_BATCH13_WORKBENCH_RELEASE_GRADE_AUDIT",
+  "stamp": "20260726T064500Z",
+  "recorded_utc": "2026-07-26T06:45:00Z",
+  "verdict": "B13_RELEASE_GRADE_NOT_READY",
+  "TT_ADMIN_BATCH13_RELEASE_GRADE": "NO",
+  "score_now": "24/40",
+  "score_target": "40/40",
+  "dim_target_each": 5.0,
+  "full_score_path": "docs/runbook/TT-BATCH13-L5-RELEASE-GRADE-FULL-SCORE-PATH-LATEST.md",
+  "open_hu_count_with_gates": 13,
+  "gate_hu": 487,
+  "dimensions": {
+    "visual_brand": 3,
+    "typography_color": 3,
+    "layout_ia": 4,
+    "copy_honesty": 4,
+    "function_flow": 3,
+    "performance_est": 3,
+    "public_site_correspondence": 2,
+    "release_readiness_feel": 2
+  },
+  "open_hu_count": 9,
+  "p0_open": 1,
+  "p1_open": 5,
+  "p2_open": 3,
+  "next_hu": 487,
+  "hu_range": "478-486",
+  "screenshots": [
+    "evidence/manual-uat/sessions/20260726T063000Z-batch13-content-prep/batch13-screenshots/B13-01-workbench.png",
+    "evidence/manual-uat/sessions/20260726T063000Z-batch13-content-prep/batch13-screenshots/B13-02-sidebar.png",
+    "evidence/manual-uat/sessions/20260726T063000Z-batch13-content-prep/batch13-screenshots/B13-03-topnav.png",
+    "evidence/manual-uat/sessions/20260726T063000Z-batch13-content-prep/batch13-screenshots/B13-04-system-overview.png",
+    "evidence/manual-uat/sessions/20260726T063000Z-batch13-content-prep/batch13-screenshots/B13-05-ops-detail-maintainers.png"
+  ],
+  "fourteen_anchor": {
+    "final_truth": "PASS_CITE",
+    "candidate_v2": "PASS_CITE",
+    "v311_final": "OBSERVE",
+    "psg_egm": "OBSERVE",
+    "psg_governance": "PARTIAL",
+    "product_release_baseline": "FAIL_RELEASE_GRADE",
+    "engineering_ssot": "PARTIAL",
+    "release_integrity": "PARTIAL",
+    "delta_recertify": "DEFERRED",
+    "feature_inventory": "PARTIAL",
+    "reality_closure": "PARTIAL",
+    "prr": "NOT_READY",
+    "hard_gate": "LOCKED_ALIGNED",
+    "cutover": "LOCKED"
+  },
+  "guards": {
+    "hard_gate": "LOCKED",
+    "cutover": "LOCKED",
+    "tt_production_go": "NO_GO",
+    "code_touched": false,
+    "batch12_frozen": true
+  },
+  "cite_md": "docs/runbook/TT-BATCH13-WORKBENCH-RELEASE-GRADE-ENTERPRISE-AUDIT-LATEST.md",
+  "patch": "PATCH-STG-017"
+}

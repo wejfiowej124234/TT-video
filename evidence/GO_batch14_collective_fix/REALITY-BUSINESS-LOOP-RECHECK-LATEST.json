@@ -1,0 +1,55 @@
+{
+  "machine": "TT_ADMIN_BATCH14_REALITY_BUSINESS_LOOP_RECHECK",
+  "stamp": "20260726T122000Z",
+  "patch": "PATCH-STG-019",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "new_features": false,
+  "mode": "cite_existing_probes_plus_fp_e",
+  "hu574": {
+    "verdict": "CLOSED",
+    "matrix": "102/102 GO",
+    "evidence": "evidence/GO_batch14_collective_fix/adm_u01_hu574/report.json"
+  },
+  "queues": {
+    "provider_applications": "PASS_cite_ADM_U01_SuperAdmin_200",
+    "guides_list_detail": "PASS_cite_HU491_postgres",
+    "guide_applications": "PASS_cite_HU491_postgres",
+    "steward_applications": "PRIOR_LIST_API_REACHABLE_cite_Reality_Audit_section1_not_reprobed_this_stamp"
+  },
+  "multi_identity": {
+    "verdict": "PASS",
+    "cite": "evidence/GO_batch14_collective_fix/HU573-USER-MULTI-IDENTITY-PROBE-LATEST.json"
+  },
+  "finance_readonly_boundary": {
+    "verdict": "PASS",
+    "finance_summary": "ADM_U01 SuperAdmin 200",
+    "finance_write": "FORBIDDEN",
+    "no_write_probe_run": true
+  },
+  "fp_e_ui_rescreen": {
+    "verdict": "BLOCKED_STALE_WEB_BAKE",
+    "web_bake": "892afc49e996",
+    "markers": "0/8",
+    "cite": "evidence/GO_batch14_collective_fix/REALITY-FP-E-RECHECK-LATEST.json"
+  },
+  "score_bump": {
+    "auth_security": "28/40 → 36/40",
+    "business_loop": "24/40 → 26/40",
+    "total": "134/200 → 144/200"
+  },
+  "hu495_487_490": {
+    "owner_acceptance_authorized_this_session": true,
+    "HU-495": "OPEN_STILL_21_30_CHECKLIST_INCOMPLETE",
+    "HU-487": "OPEN_STILL_24_40_CHECKLIST_INCOMPLETE",
+    "HU-490": "OPEN_PREREQ_495_487_NOT_PASS",
+    "honesty": "授权验收 ≠ 证据达满分；禁止假关闸"
+  },
+  "verdict": "PARTIAL_NEED_FIX",
+  "l5_recertify": "DEFERRED",
+  "honesty": "①/② probes ≠ RELEASE_GRADE YES ≠ Production GO; tip/HG/Cutover LOCKED"
+}

@@ -1,0 +1,37 @@
+{
+  "machine": "TT_ADMIN_BATCH14_HU490_RELEASE_SIGN_OFF_DRAFT",
+  "stamp": "20260726T133500Z",
+  "status": "DRAFT_BLOCKED_PENDING_495_487",
+  "gate": "OPEN",
+  "release_grade_②": "NO",
+  "production_go": "NO_GO",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "candidate_v2_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "candidate_v2_mode": "CITE_ONLY",
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "finance_write": "FORBIDDEN",
+  "prerequisites": {
+    "HU-495": "OPEN 21/30 matrix written screenshots missing",
+    "HU-487": "OPEN 24/40 matrix written rescreen missing",
+    "FP-E": "8/8",
+    "Web_API_align": "PASS 5d73c50d"
+  },
+  "owner_sign_off_checklist_②": [
+    "HU-495 capability 30/30 with all Q=5.0 + C-01…C-08 shots",
+    "HU-487 workbench 40/40 with all dims=5.0 + B13 workbench rescreen",
+    "Reality Audit residual NEED_FIX inventory Owner-accepted or PASS",
+    "Explicit YES(② Staging release-grade) — still ≠ Production GO"
+  ],
+  "forbidden_claims": [
+    "Production GO",
+    "Hard Gate unlock",
+    "Cutover",
+    "tip move",
+    "FINANCE_WRITE",
+    "4.x as 5.0"
+  ],
+  "honesty": "Draft materials only · not Owner Sign-off · not L5 Recertify run",
+  "next": "Owner SuperAdmin C-01..C-08 + workbench rescreen on 5d73c50d then YES(2)"
+}

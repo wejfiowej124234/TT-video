@@ -1,0 +1,99 @@
+{
+  "machine": "TT_ADMIN_BATCH14_HU495_SECTION5_MATRIX",
+  "stamp": "20260726T133500Z",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "living_bake": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
+  "bake_ne_tip": true,
+  "expected_difference": "STAGING_PATCH_HEAD_NE_TIP",
+  "gate": "OPEN",
+  "score_now": "21/30",
+  "score_target": "30/30",
+  "rule": "5.0 only if code+api+screenshot PASS; forbid 4.x as 5.0",
+  "questions": [
+    {
+      "id": "Q1",
+      "title": "审批向导",
+      "code": "PASS",
+      "staging_api": "PASS",
+      "screenshot": "MISSING",
+      "score": null,
+      "notes": "HU-491 PG PASS; Q1-D sole primary landed",
+      "blockers": [
+        "C-02",
+        "C-03",
+        "C-04"
+      ]
+    },
+    {
+      "id": "Q2",
+      "title": "查看向导资料",
+      "code": "PASS",
+      "staging_api": "PASS_WITH_ED",
+      "screenshot": "MISSING",
+      "score": null,
+      "notes": "avatar+passport_hash FE/API",
+      "blockers": [
+        "C-03"
+      ]
+    },
+    {
+      "id": "Q3",
+      "title": "申请页对齐",
+      "code": "PASS",
+      "staging_api": "N_A_CODE",
+      "screenshot": "MISSING",
+      "score": null,
+      "notes": "idType removed; hourly archive label",
+      "blockers": [
+        "C-01",
+        "C-03"
+      ]
+    },
+    {
+      "id": "Q4",
+      "title": "商家入驻",
+      "code": "PASS",
+      "staging_api": "PASS_PRIOR",
+      "screenshot": "MISSING",
+      "score": null,
+      "notes": "prior wiring YES; need living-bake shots",
+      "blockers": [
+        "merchant shots"
+      ]
+    },
+    {
+      "id": "Q5",
+      "title": "主理人审核",
+      "code": "PASS",
+      "staging_api": "UNKNOWN",
+      "screenshot": "MISSING",
+      "score": null,
+      "notes": "steward honest empty docs landed",
+      "blockers": [
+        "C-06"
+      ]
+    },
+    {
+      "id": "Q6",
+      "title": "概况全真",
+      "code": "PASS_PARTIAL",
+      "staging_api": "PASS_PARTIAL",
+      "screenshot": "MISSING",
+      "score": null,
+      "notes": "neutral domains; guides postgres; privilege Owner",
+      "blockers": [
+        "C-07",
+        "C-08"
+      ]
+    }
+  ],
+  "screenshot_pack_status": "MISSING_ON_BAKE_5d73c50d",
+  "fp_e": "8/8",
+  "verdict": "HU495_SECTION5_BLOCKED_NO_OWNER_SCREENSHOTS",
+  "honesty": "no fake 30/30"
+}

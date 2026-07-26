@@ -48,15 +48,17 @@ describe("Batch-11 W02 workbench (HU-324/325/332)", () => {
     expect(items.find((i) => i.id === "content")).toMatchObject({
       href: "/admin/content",
       countLabel: "admin_home_domain_health_cta_content",
-      tone: "unknown",
+      tone: "neutral",
     });
     expect(items.find((i) => i.id === "official")).toMatchObject({
       href: "/admin/official",
       countLabel: "admin_home_domain_health_cta_official",
+      tone: "neutral",
     });
     expect(items.find((i) => i.id === "growth")).toMatchObject({
       href: "/admin/growth",
       countLabel: "admin_home_domain_health_cta_growth",
+      tone: "neutral",
     });
     expect(items.find((i) => i.id === "community")?.href).toBe("/admin/community/reports");
   });
@@ -72,7 +74,7 @@ describe("Batch-11 W02 workbench (HU-324/325/332)", () => {
     expect(src).not.toMatch(/text-ink-900/);
     expect(ADMIN_DOMAIN_HEALTH_UNKNOWN_CARD_CLASS).toContain("slate-950");
     expect(ADMIN_TEXT_BODY_CLASS.length).toBeGreaterThan(0);
-    expect(ADMIN_TEXT_FOOTNOTE_CLASS).toContain("slate-300");
+    expect(ADMIN_TEXT_FOOTNOTE_CLASS).toContain("slate-200");
   });
 
   it("HU-324 · SystemOverview wires honest metric helper + roles deep link", () => {

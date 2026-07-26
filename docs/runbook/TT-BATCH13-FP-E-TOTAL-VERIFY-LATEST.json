@@ -1,70 +1,84 @@
 {
   "schema": "traveltrust.batch13_fp_e_total_verify.v1",
   "machine": "TT_ADMIN_BATCH13_FP_E_TOTAL_VERIFY",
-  "stamp": "20260726T082500Z",
-  "status": "FP_E_IN_PROGRESS_STAGING_BLOCKED_DEPLOY",
+  "stamp": "20260726T090354Z",
+  "status": "FP_E_RESCREEN_CAPTURED_GATES_STILL_OPEN",
   "patch": "PATCH-STG-017",
+  "pcr": "PCR-20260726-BATCH13-FP-A-D-STAGING-DEPLOY",
+  "deploy_commit": "67a6ccba716d3829dd2f1d6d4202209018562929",
   "tip_cite": "ea71c577",
   "tip_immobile": true,
   "hard_gate": "LOCKED",
   "cutover": "LOCKED",
   "production_go": "NO_GO",
   "finance_write": "FORBIDDEN",
-  "honesty": "① FP-A～D CODE_LANDED ≠ ② Staging GO ≠ ③ Production GO. Formal B13-06′～14′ / HU-495/487/490 cannot PASS until Staging deploy contains FP markers.",
+  "honesty": "① FP-A～D CODE_LANDED + Staging bake 67a6ccba markers 8/8 ≠ ② Staging GO ≠ ③ Production GO. HU-495/487/490 remain OPEN — formal PASS / Owner Sign-off not claimed this session.",
   "bake": {
     "http": 200,
-    "git_sha": "892c20c830bb7432441f540311277a1a66a1c12d",
-    "build_time": "2026-07-26T05:32:42Z",
+    "git_sha": "67a6ccba716d3829dd2f1d6d4202209018562929",
+    "build_time": "2026-07-26T08:29:47Z",
     "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
     "contract_profile": "v311_fund_safety_candidate_v2",
     "freshness": "STAGING_SHA_DIVERGES_FROM_TIP_CITE_EXPECTED",
     "tip_equals_staging": false
   },
-  "probe_verdict": "FP_E_STAGING_DEPLOY_STALE_RESCREEN_BLOCKED",
-  "fp_markers_found": 0,
+  "probe_verdict": "FP_E_STAGING_MARKERS_8_OF_8_SHA_DIVERGES_TIP_CITE_OK",
+  "fp_markers_found": 8,
   "fp_markers_total": 8,
-  "deploy_has_fp_a_to_d_markers": false,
+  "deploy_has_fp_a_to_d_markers": true,
   "capability_verdict": "FP_E_CAPABILITY_MATRIX_PARTIAL_AUTH_SPLIT",
   "capability_blocks_495_487_490": true,
+  "superadmin_probe": {
+    "account_class": "ephemeral_staging_super_admin",
+    "email_id": "adm-10x4-20260719143519@traveltrust.test",
+    "not_business_go": true,
+    "not_immutable_c2": true,
+    "browser_role_ui": "超级管理员（账号）"
+  },
   "rescreen": {
-    "mode": "PRE_DEPLOY_BASELINE",
+    "mode": "POST_DEPLOY_FORMAL_CAPTURE",
     "session": "evidence/manual-uat/sessions/20260726T081800Z-batch13-fp-e",
-    "screenshots": [
-      "B13-01p-workbench.png",
-      "B13-08p-orders.png",
-      "B13-09p-disputes.png",
-      "B13-10p-onboarding.png",
-      "B13-11p-content.png",
-      "B13-12p-official.png",
-      "B13-13p-growth-no-admin.png"
+    "auth": "SuperAdmin ephemeral (≠ C2 Business)",
+    "screenshots_canonical": [
+      "B13-06p-workbench.png",
+      "B13-06p-users.png",
+      "B13-07p-orders.png",
+      "B13-08p-disputes.png",
+      "B13-09p-onboarding.png",
+      "B13-10p-content.png",
+      "B13-11p-official.png",
+      "B13-12p-growth.png",
+      "B13-13p-finance.png",
+      "B13-14p-config.png"
     ],
     "captured": {
-      "B13-01p-workbench": "PASS_UI — Sepolia badge · provider pending 13 · disputes 0",
-      "B13-08p-orders": "PASS_UI — readonly · meta.source missing fail-closed",
-      "B13-09p-disputes": "PASS_UI — readonly adjudication desk · HG LOCKED banner · empty list",
-      "B13-10p-onboarding": "PASS_UI_PRE_FP — Stripe ledger hub (NOT FP-D review cards)",
-      "B13-11p-content": "PASS_UI_PRE_FP — content hub tiles",
-      "B13-12p-official": "PASS_UI — quick tiles + KPIs",
-      "B13-13p-growth": "BLOCKED_REAUTH — C2 re-login → 无管理后台权限"
+      "B13-06p-workbench": "PASS_UI — SuperAdmin · Sepolia · provider pending 13",
+      "B13-06p-users": "PASS_UI — 可写 · FP users capability honesty markers · meta.source fail-closed",
+      "B13-07p-orders": "PASS_UI — 只读 · data-tt-admin-orders-q present · meta.source fail-closed",
+      "B13-08p-disputes": "PASS_UI — adjudication desk · meta.source fail-closed",
+      "B13-09p-onboarding": "PASS_UI — FP-D review cards (guide/provider/steward) + Stripe ledger shells",
+      "B13-10p-content": "PASS_UI — content hub strip/search tiles · 可写",
+      "B13-11p-official": "PASS_UI — official ops hub tiles + KPIs · 只读",
+      "B13-12p-growth": "PASS_UI — SuperAdmin growth hub (replaces PRE_DEPLOY no-admin shot)",
+      "B13-13p-finance": "PASS_UI — finance-suite 只读 · FINANCE_WRITE disabled banner",
+      "B13-14p-config": "PASS_UI — 平台设置 hub tiles · 只读"
     },
     "gates": {
       "HU-495": "OPEN",
       "HU-487": "OPEN",
       "HU-490": "OPEN"
-    }
+    },
+    "note": "Screenshots captured; score regrade / HU PASS deferred to separate Owner command."
   },
   "auth_findings": [
-    "API tourist@test.com → admin_required on admin list routes",
-    "Earlier browser SuperAdmin (traveltrust.test) allowed leaf UI tour",
-    "C2 re-login → 无管理后台权限",
-    "No TRAVELTRUST_ADMIN_TOKEN_SUPER in shell"
+    "Immutable C2 tourist@test.com cannot be promoted to SuperAdmin",
+    "Ephemeral adm-10x4-…@traveltrust.test → SuperAdmin UI OK for leaf tour",
+    "Session briefly dropped on /admin/config → re-login restored; next= query redirected to /community once"
   ],
   "next_owner_actions": [
-    "PCR deploy FP-A～D to Staging (tip cite-only)",
-    "Re-run probe-batch13-fp-e-staging.cjs until markers full",
-    "Restore Staging SuperAdmin probe account",
-    "Formal B13-06′～14′ rescreen",
-    "HU-490 separate Owner command"
+    "Separate Owner command to regrade HU-495/487 (do not auto-close)",
+    "HU-490 Owner Sign-off only on separate command",
+    "Optional: capability API matrix with TRAVELTRUST_ADMIN_TOKEN_SUPER"
   ],
-  "verdict": "FP_E_STAGING_DEPLOY_STALE_RESCREEN_BLOCKED"
+  "verdict": "FP_E_RESCREEN_CAPTURED_GATES_STILL_OPEN"
 }

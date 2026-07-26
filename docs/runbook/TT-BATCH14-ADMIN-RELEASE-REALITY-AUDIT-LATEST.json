@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.batch14_admin_release_reality_audit.v1",
   "machine_key": "TT_ADMIN_BATCH14_ADMIN_RELEASE_REALITY_AUDIT",
-  "stamp": "20260726T112620Z",
+  "stamp": "20260726T131500Z",
   "patch": "PATCH-STG-019",
   "verdict": "ADMIN_RELEASE_REALITY_AUDIT_NEED_FIX",
   "release_grade": "NO",
@@ -14,13 +14,13 @@
   "cutover": "LOCKED",
   "production_go": "NO_GO",
   "finance_write": "FORBIDDEN",
-  "working_bake": "2f943f3fb14a3546567c3c6fdb989e4091779ac5",
+  "working_bake": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
   "ladder_progress": {
     "L0_candidate_v2": "CITE_ONLY",
     "L1_api_backend": "PASS",
     "L2_runtime": "PASS",
     "L3_admin_display": "PARTIAL_CODE_PLUS_HU491",
-    "L4_evidence": "SCORE_RECALC_NEED_FIX",
+    "L4_evidence": "SCORE_RECALC_144_NEED_FIX",
     "L5_final_truth_recertify": "DEFERRED"
   },
   "baselines_cited": [
@@ -57,19 +57,24 @@
     "l2_probe": "evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json",
     "l2_l3_note": "evidence/GO_batch14_collective_fix/L2-L3-ALIGN-NOTE-LATEST.json",
     "web_deploy_exit": "2_PAGE_SURFACE_DRIFT_HU576_ED",
-    "honesty": "HU-491 CLOSED Staging; W3/W4 partial; HU-574 provision blocked; Web≠API until redeploy; L5 DEFERRED; tip/HG/GO LOCKED; ≠ Production GO",
+    "honesty": "HU-574 CLOSED ADM-U01 102/102; Reality API queues+finance RO+multi-id PASS cite; FP-E UI rescreen BLOCKED stale Web 892afc49; 495/487/490 still OPEN (not full score); L5 DEFERRED; tip/HG/GO LOCKED; ≠ Production GO",
     "hu491": "CLOSED",
     "hu491_probe": "evidence/GO_batch14_collective_fix/HU491-GUIDES-PROBE-LATEST.json",
-    "w3_w4_note": "evidence/GO_batch14_collective_fix/W3-W4-CLOSE-NOTE-LATEST.json"
+    "w3_w4_note": "evidence/GO_batch14_collective_fix/W3-W4-CLOSE-NOTE-LATEST.json",
+    "hu574": "CLOSED",
+    "hu574_probe": "evidence/GO_batch14_collective_fix/adm_u01_hu574/report.json",
+    "hu574_close_note": "evidence/GO_batch14_collective_fix/HU574-CLOSE-NOTE-LATEST.json",
+    "reality_business_loop": "evidence/GO_batch14_collective_fix/REALITY-BUSINESS-LOOP-RECHECK-LATEST.json",
+    "reality_fp_e": "evidence/GO_batch14_collective_fix/REALITY-FP-E-RECHECK-LATEST.json"
   },
   "scores": {
     "ui_ux": "24/40",
     "function_completeness": "28/40",
     "data_consistency": "30/40",
-    "auth_security": "28/40",
-    "business_loop": "24/40",
-    "total": "134/200",
-    "score_note": "Post HU-491 PG guides + CAST SSOT + triangle/i18n/mobile. Auth not bumped (HU-574 BLOCKED). Still NEED_FIX; 495/487/490 open."
+    "auth_security": "36/40",
+    "business_loop": "26/40",
+    "total": "144/200",
+    "score_note": "Post HU-574 ADM-U01 102/102 GO (auth 36). Business loop +2 for API queues/finance RO/multi-id cites; UI FP-E rescreen BLOCKED. Still NEED_FIX; 495/487/490 open (authorized验收 but scores 21/30·24/40)."
   },
   "leaf_scores_cite_b13": {
     "workbench": "24/40",
@@ -99,7 +104,7 @@
     "HU-571": "CODE_DEPLOYED",
     "HU-572": "CLOSED_REVERIFY",
     "HU-573": "CODE_LANDED_PENDING_REDEPLOY",
-    "HU-574": "BLOCKED_PROVISION",
+    "HU-574": "CLOSED",
     "HU-575": "CLOSED",
     "HU-576": "CLOSED_ED_CONFIRM_DESIGN",
     "HU-577": "CODE_LANDED_PENDING_REDEPLOY"
@@ -113,5 +118,17 @@
     "non_memory_ops_source_remaining_leaves",
     "HU-490_separate_owner_command"
   ],
-  "cite_md": "docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md"
+  "cite_md": "docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md",
+  "web_api_align": "PASS",
+  "fp_e_markers": "8/8",
+  "page_surface_drift": "HU-576_ED",
+  "gates_open": [
+    "HU-495",
+    "HU-487",
+    "HU-490"
+  ],
+  "HU-495": "OPEN",
+  "HU-487": "OPEN",
+  "HU-490": "OPEN",
+  "l5_recertify": "DEFERRED_PREP_ONLY"
 }

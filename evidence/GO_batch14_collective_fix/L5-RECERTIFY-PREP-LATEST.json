@@ -1,0 +1,43 @@
+{
+  "machine": "TT_ADMIN_BATCH14_L5_FINAL_TRUTH_RECERTIFY_PREP",
+  "stamp": "20260726T133500Z",
+  "status": "DEFERRED_PREP_ONLY",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "candidate_v2_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "candidate_v2_mode": "CITE_ONLY",
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "staging_bake_aligned": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
+  "fp_e_markers": "8/8",
+  "matrices_written": true,
+  "prerequisites_before_recertify_run": [
+    "HU-495 PASS 30/30",
+    "HU-487 PASS 40/40",
+    "HU-490 Owner YES(2) materials",
+    "FP-E 8/8 on living bake (DONE)",
+    "Admin Release Reality PASS or Owner-accepted residual NEED_FIX",
+    "Sync cite-only do not move tip"
+  ],
+  "closed_this_wave": [
+    "HU-574",
+    "HU-572",
+    "HU-573",
+    "HU-575",
+    "Web_API_ALIGN_5d73c50d",
+    "FP_E_8_OF_8",
+    "SECTION5_MATRICES"
+  ],
+  "score_living": "144/200 NEED_FIX",
+  "forbidden": [
+    "Hard Gate unlock",
+    "Cutover",
+    "Production GO claim",
+    "tip move from ea71c577",
+    "FINANCE_WRITE",
+    "4.x as 5.0"
+  ],
+  "honesty": "Prep != Recertify != Production GO; 495/487 OPEN"
+}

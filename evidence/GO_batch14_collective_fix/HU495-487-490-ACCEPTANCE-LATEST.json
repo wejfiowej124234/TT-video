@@ -1,0 +1,51 @@
+{
+  "machine": "TT_ADMIN_BATCH14_HU495_487_490_ACCEPTANCE",
+  "stamp": "20260726T133500Z",
+  "patch": "PATCH-STG-019",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "living_bake": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
+  "bake_ne_tip": true,
+  "expected_difference": "STAGING_PATCH_HEAD_NE_TIP",
+  "owner_acceptance_authorized": true,
+  "new_features": false,
+  "staging_bake": {
+    "web_sha": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
+    "api_sha": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
+    "web_api_align": "PASS",
+    "fp_e_markers": "8/8",
+    "page_surface_drift": "HU-576_ED",
+    "fp_e_chunk_file": "evidence/GO_batch14_collective_fix/fp-e-admin-chunks-5d73c50d-rebake.txt"
+  },
+  "matrices": {
+    "HU-495": "evidence/GO_batch14_collective_fix/HU495-SECTION5-MATRIX-LATEST.json",
+    "HU-487": "evidence/GO_batch14_collective_fix/HU487-SECTION5-MATRIX-LATEST.json"
+  },
+  "HU-495": {
+    "gate": "OPEN",
+    "score_now": "21/30",
+    "score_target": "30/30",
+    "verdict": "HU495_SECTION5_BLOCKED_NO_OWNER_SCREENSHOTS",
+    "blocker": "Owner C-01..C-08 missing on living bake"
+  },
+  "HU-487": {
+    "gate": "OPEN",
+    "score_now": "24/40",
+    "score_target": "40/40",
+    "verdict": "HU487_SECTION5_BLOCKED_NO_LIVING_BAKE_RESCREEN",
+    "blocker": "Workbench rescreen missing on 5d73c50d"
+  },
+  "HU-490": {
+    "gate": "OPEN",
+    "release_grade": "NO",
+    "materials_status": "DRAFT_BLOCKED_PENDING_495_487",
+    "materials_path": "evidence/GO_batch14_collective_fix/HU490-RELEASE-SIGN-OFF-DRAFT-LATEST.json",
+    "blocker": "prereq HU-495 + HU-487 not PASS"
+  },
+  "verdict": "ACCEPTANCE_MATRICES_WRITTEN_GATES_REMAIN_OPEN",
+  "honesty": "Matrices complete; gates OPEN until true 5.0"
+}

@@ -1,0 +1,39 @@
+{
+  "machine": "TT_ADMIN_BATCH13_NOT_FULL_SCORE_BACKLOG_AND_UPGRADE",
+  "stamp": "20260726T093000Z",
+  "status": "BACKLOG_ACTIVE_FIX_NOT_STARTED",
+  "execution_ssot": "FAST_PATH_FP_A_TO_E",
+  "fast_path": "docs/runbook/TT-BATCH13-FAST-PATH-REMEDIATION-PLAN-LATEST.md",
+  "final_truth_cite": "docs/runbook/TT-BATCH13-FINAL-TRUTH-BASELINE-CITE-LATEST.md",
+  "coverage_complete": true,
+  "coverage_pack": "docs/runbook/TT-BATCH13-FULL-SCORE-COVERAGE-GAP-CLOSURE-LATEST.md",
+  "can_full_score_phase2": true,
+  "must_full_score": true,
+  "config_hub": {
+    "now": "20/40",
+    "target": "40/40",
+    "function_checklist": "CF1-CF12",
+    "gates": [566, 567],
+    "scores": [2, 3, 3, 2, 2, 4, 2, 2],
+    "hard_gate_unlock": "FORBIDDEN",
+    "capability": "NAV_SHELL"
+  },
+  "finance_suite": {
+    "now": "13/40",
+    "target": "40/40",
+    "function_checklist": "FN1-FN12",
+    "gates": [558, 559],
+    "finance_write": "FORBIDDEN"
+  },
+  "growth_hub": { "now": "20/40", "gates": [550, 551] },
+  "orders_page": { "now": "17/40", "gates": [510, 511] },
+  "open_hu_count": 90,
+  "hu_range": "478-567",
+  "next_hu": 568,
+  "p0_open": 33,
+  "config_hub_upgrade": "docs/runbook/TT-BATCH13-CONFIG-HUB-FULL-SCORE-UPGRADE-LATEST.md",
+  "finance_suite_upgrade": "docs/runbook/TT-BATCH13-FINANCE-SUITE-FULL-SCORE-UPGRADE-LATEST.md",
+  "orders_upgrade": "docs/runbook/TT-BATCH13-ORDERS-PAGE-FULL-SCORE-UPGRADE-LATEST.md",
+  "release_grade": "NO",
+  "production_go": "NO_GO"
+}

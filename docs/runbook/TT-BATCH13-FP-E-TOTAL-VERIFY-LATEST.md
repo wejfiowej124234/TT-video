@@ -1,9 +1,10 @@
 # Batch-13 · FP-E 总验（Staging 复截 + 能力矩阵）
 
 **Machine:** `TT_ADMIN_BATCH13_FP_E_TOTAL_VERIFY`  
-**Stamp:** `20260726T082500Z`  
-**Status:** **FP_E_IN_PROGRESS_STAGING_BLOCKED_DEPLOY**  
+**Stamp:** `20260726T090354Z`  
+**Status:** **FP_E_RESCREEN_CAPTURED_GATES_STILL_OPEN**  
 **Patch:** `PATCH-STG-017`  
+**PCR:** `PCR-20260726-BATCH13-FP-A-D-STAGING-DEPLOY`  
 **JSON:** [`TT-BATCH13-FP-E-TOTAL-VERIFY-LATEST.json`](./TT-BATCH13-FP-E-TOTAL-VERIFY-LATEST.json)  
 **Probe:** [`TT-BATCH13-FP-E-STAGING-PROBE-LATEST.json`](./TT-BATCH13-FP-E-STAGING-PROBE-LATEST.json)  
 **Session:** `evidence/manual-uat/sessions/20260726T081800Z-batch13-fp-e`
@@ -20,59 +21,61 @@
 
 ## 诚实边界
 
-① FP-A～D **CODE_LANDED** ≠ ② Staging GO ≠ ③ Production GO  
-当前 Staging bake **不含** FP-A～D UI markers（probe **0/8**）→ 正式 B13-06′～14′ / HU-495·487·490 **不得 PASS**。
+① FP-A～D **已部署 Staging**（bake `67a6ccba` · markers **8/8**）≠ ② Staging GO ≠ ③ Production GO  
+正式复截已采集 · **HU-495 / 487 / 490 仍 OPEN**（本会话**不**关闸、不签收 490）。
 
 ## Bake
 
 - Web `https://tt-web-staging.fly.dev` · API `https://tt-api-staging.fly.dev`
-- `git_sha=892c20c830bb…` · pin `PSG-REL-20260720-WEB3-CAND-V2` · chain_id `11155111`
-- tip≠staging SHA：**EXPECTED**（tip cite-only）
+- `git_sha=67a6ccba716d…` · pin `PSG-REL-20260720-WEB3-CAND-V2` · chain_id `11155111`
+- tip≠staging SHA：**EXPECTED**（tip cite-only · tip 未移动）
 
 ## Probe
 
-- **verdict:** `FP_E_STAGING_DEPLOY_STALE_RESCREEN_BLOCKED`
-- **fp_markers:** 0/8
-- **rescreen_status:** BLOCKED_UNTIL_STAGING_DEPLOY_FP_CODE
+- **verdict:** `FP_E_STAGING_MARKERS_8_OF_8_SHA_DIVERGES_TIP_CITE_OK`
+- **fp_markers:** **8/8**
+- **rescreen_status:** CAPTURED_POST_DEPLOY
 
-## Capability matrix
+## SuperAdmin 探针
 
-- **verdict:** `FP_E_CAPABILITY_MATRIX_PARTIAL_AUTH_SPLIT`
-- C2 API login → **admin_required** on admin list routes
-- Browser SuperAdmin session（`traveltrust.test`）曾可读 UI；同域 fetch 对部分 admin 列表 **login_required**（proxy/auth split）
-- 无 `TRAVELTRUST_ADMIN_TOKEN_SUPER` → Q1～Q6 **未闭**
-- Artifact: `evidence/manual-uat/sessions/20260726T081800Z-batch13-fp-e/capability-api-matrix.json`
+- 账号类：ephemeral Staging SuperAdmin（`adm-10x4-…@traveltrust.test`）
+- **≠** Immutable C2 Business · **≠** Business GO
+- Browser UI：`超级管理员（账号）`
 
-## PRE_DEPLOY 复截（非正式闭闸）
+## POST_DEPLOY 正式复截（B13-06′～14′）
 
 | Shot | 结论 |
 |------|------|
-| workbench | Sepolia badge · provider 13 · disputes 0 |
-| orders | 只读 · meta.source 缺失 fail-closed |
-| disputes | 只读裁决台 · HG LOCKED 文案 · 空列表 |
-| onboarding | **Stripe 台账壳**（非 FP-D 审卡）→ deploy stale |
-| content | Hub 瓷砖（FP-D strip/search 未确认） |
-| official | 快捷瓷砖 + KPI |
-| growth | 复登 C2 → **无管理后台权限** |
+| workbench | SuperAdmin · Sepolia · provider 13 |
+| users (06′) | 可写 · FP users honesty markers · meta.source fail-closed |
+| orders (07′) | 只读 · `data-tt-admin-orders-q` · meta.source fail-closed |
+| disputes (08′) | 裁决台 · meta.source fail-closed |
+| onboarding (09′) | **FP-D** review cards + Stripe 台账壳 |
+| content (10′) | Hub strip/search · 可写 |
+| official (11′) | 快捷瓷砖 + KPI · 只读 |
+| growth (12′) | SuperAdmin 增长中心（替代 PRE_DEPLOY 无权限截） |
+| finance (13′) | finance-suite 只读 · `FINANCE_WRITE` 禁写文案 |
+| config (14′) | 平台设置 hub · 只读 |
 
-Screenshots: `evidence/manual-uat/sessions/20260726T081800Z-batch13-fp-e/batch13-screenshots/`
+Screenshots: `evidence/manual-uat/sessions/20260726T081800Z-batch13-fp-e/batch13-screenshots/`  
+Canonical names: `B13-06p-workbench` · `B13-06p-users` · `B13-07p-orders` · `B13-08p-disputes` · `B13-09p-onboarding` · `B13-10p-content` · `B13-11p-official` · `B13-12p-growth` · `B13-13p-finance` · `B13-14p-config`
 
-## Gates（仍 OPEN）
+## Gates（仍 OPEN · 禁止提前关闭）
 
 | Gate | Status |
 |------|--------|
-| HU-495 | OPEN |
-| HU-487 | OPEN |
-| HU-490 | OPEN · **禁止本会话签收** |
+| HU-495 | **OPEN** |
+| HU-487 | **OPEN** |
+| HU-490 | **OPEN** · **禁止本会话签收** |
 
-## Owner 下一步（唯一解锁复截路径）
+## Owner 下一步
 
-1. PCR 部署 FP-A～D 到 Staging（**不动 tip**）
-2. `node scripts/dev/probe-batch13-fp-e-staging.cjs` → markers 全命中
-3. 恢复 Staging SuperAdmin 探针账号（ephemeral / 6b2 · **≠ Business GO**）
-4. 正式复截 B13-06′～14′
-5. 另口令再评 495/487；490 另口令 Owner Sign-off
+1. ~~PCR 部署 FP-A～D~~ **DONE**（tip 不动）
+2. ~~markers 8/8~~ **DONE**
+3. ~~SuperAdmin 探针 + B13-06′～14′ 复截~~ **DONE（采集）**
+4. **另口令**再评 495/487；**另口令** Owner Sign-off 490
+5. 可选：`TRAVELTRUST_ADMIN_TOKEN_SUPER` 补齐 capability API 矩阵
 
 ## Verdict
 
-**`FP_E_STAGING_DEPLOY_STALE_RESCREEN_BLOCKED`**
+**`FP_E_RESCREEN_CAPTURED_GATES_STILL_OPEN`**

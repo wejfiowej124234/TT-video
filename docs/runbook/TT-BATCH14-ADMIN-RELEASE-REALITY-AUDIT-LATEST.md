@@ -1,14 +1,15 @@
 # Batch-14 · ADMIN_RELEASE_REALITY_AUDIT · LATEST
 
 **Machine:** `TT_ADMIN_BATCH14_ADMIN_RELEASE_REALITY_AUDIT`  
-**Stamp:** `20260726T105300Z`  
-**Verdict:** **`ADMIN_RELEASE_REALITY_AUDIT_NEED_FIX`** · **`RELEASE_GRADE: NO`** · **`Total: NEED_FIX`** · **134/200**（L2 后抬阶 · **≠** 满分）  
-**Patch:** `PATCH-STG-019`（集体改 · L1/L2 PASS · L5 Recertify **DEFERRED**）  
-**Working bake:** Web=`a6f481c3…` · API=`a6f481c3…` · **HU-568 CLOSED**  
+**Stamp:** `20260726T131500Z`  
+**Verdict:** **`ADMIN_RELEASE_REALITY_AUDIT_NEED_FIX`** · **`RELEASE_GRADE: NO`** · **`Total: NEED_FIX`** · **144/200**（HU-574 后抬阶 · **≠** 满分）  
+**Patch:** `PATCH-STG-019`（集体改 · L1/L2 PASS · Web/API **`5d73c50d` ALIGN** · FP-E **8/8** · L5 Recertify **DEFERRED**）  
+**Working bake:** Web=`5d73c50d…` · API=`5d73c50d…` · **ALIGN PASS** · PAGE_SURFACE = **HU-576 ED**  
 **L2 probe:** [`L2-RUNTIME-PROBE-LATEST.json`](../../evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json) · users/orders/disputes **`postgres`**  
+**FP-E:** [`REALITY-FP-E-RECHECK-LATEST.json`](../../evidence/GO_batch14_collective_fix/REALITY-FP-E-RECHECK-LATEST.json) · **8/8**  
 **JSON:** [`TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.json`](./TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.json)  
 **开录：** [`BATCH14-OPEN`](./TT-BATCH14-OPEN-RECORDING-LATEST.md) · Fix [`COLLECTIVE-FIX`](./TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST.md)  
-**证据会话：** `evidence/manual-uat/sessions/20260726T091122Z-batch14/` · 复截 cite `…/20260726T081800Z-batch13-fp-e/batch13-screenshots/`  
+**证据会话：** `evidence/manual-uat/sessions/20260726T091122Z-batch14/` · FP-E `…/20260726T081800Z-batch13-fp-e/`  
 **≠ tip 移动 · ≠ Hard Gate unlock · ≠ Cutover · ≠ Production GO · ≠ 假满分 · ≠ 重新设计 Web3** · tip `ea71c577` **IMMOBILE**
 
 ---
@@ -34,7 +35,7 @@
 | 3 | V3.1.1 Final | profile `v311_fund_safety_candidate_v2` |
 | 4 | PSG-EGM Final | 财务 **只读** · `FINANCE_WRITE` **FORBIDDEN** |
 | 5 | Product / Release Baseline | **ACTIVE 修复面** · 本审计 |
-| 6 | Engineering SSOT | Web bake `67a6ccba…` · API build `892c20c8…` |
+| 6 | Engineering SSOT | Web+API bake `5d73c50d…` **ALIGNED** · FP-E **8/8** · tip cite-only |
 | 7 | Feature Inventory | PASS cite **≠** 本审计发布级 YES |
 | 8 | Reality Closure / PRR | Gate **NOT_ARMED / PREP** · **≠** GO |
 
@@ -199,7 +200,7 @@ B13 叶分 13～24/40 · 能力 21/30 · 本包五维发布分见 §F —— 禁
 | Provider / Guide / Steward | **业务面** · **非**超管台 | 否 Admin 列表 | 否 | C2 tourist **403** 已证 |
 | 资金写 | **全角色 FORBIDDEN（本批）** | — | — | PSG-EGM |
 
-**权限维发布级：** 边界硬闸 **部分 PASS** · **全角色交叉矩阵未闭** → 总分扣分。
+**权限维发布级：** HU-574 **CLOSED**（ADM-U01 102/102）· C2 403 · `FINANCE_WRITE` FORBIDDEN → Living **36/40**（≠40）。
 
 ---
 
@@ -219,6 +220,15 @@ UI/UX         18/40   ← 对比度 P0 全域；财务最差；B12 走廊满分�
 Total: 101/200
 PASS / NEED_FIX / BLOCKED  →  NEED_FIX
 （发布级门闩：任一 P0 未关 → 不得 PASS；本包 P0 仍 OPEN → NEED_FIX）
+
+【Living · 20260726T122000Z · 禁止用上行 101 冒充现分】
+UI/UX         24/40
+功能完整性     28/40
+数据一致性     30/40
+权限安全       36/40   ← HU-574 ADM-U01 **102/102 GO**；FINANCE_WRITE FORBIDDEN；≠40（OTP/dev-code 环境依赖残差）
+业务闭环       26/40   ← API 队列/财务只读/多身份 cite PASS；FP-E UI 复截 **BLOCKED**（Web bake `892afc49` markers 0/8）
+
+Total: 144/200 · NEED_FIX（495/487/490 仍 OPEN）
 ```
 
 | 叶页旁证（/40 · B13） | 分 |
@@ -259,13 +269,13 @@ PASS / NEED_FIX / BLOCKED  →  NEED_FIX
 | **HU-491** | **P0** | 向导详/审 memory 与 PG 列表裂脑 | **CLOSED** Staging PG | B14 |
 | **HU-570** | **P0** | 多叶 `meta.source` 空 + UI fail-closed | 后端补 source 标注 | users/orders UI |
 | **对比度簇** | **P0** | 财务/争议/入驻/用户/订单灰字贴底 | FP-A 对比度修复未满分 | B13 叶 |
-| **HU-495** | **P0** | 能力 21/30 未满分 | 另口令 · **禁止本会话关闭** | B13 |
-| **HU-487** | **P0** | 工作台 24/40 | 另口令 · **禁止本会话关闭** | B13 |
-| **HU-490** | **P0** | 发布级签收闸 | **禁止本会话签收** | B13 |
+| **HU-495** | **P0** | 能力 21/30 未满分 | 本会话已授权验收 · **证据未达 30/30 → 仍 OPEN** | B13 |
+| **HU-487** | **P0** | 工作台 24/40 | 本会话已授权验收 · **证据未达 40/40 → 仍 OPEN** | B13 |
+| **HU-490** | **P0** | 发布级签收闸 | 本会话已授权 · **前置 495/487 未 PASS → 仍 OPEN** | B13 |
 | **HU-571** | **P1** | 财务多套导航重复 | 合并为唯一主导航（既有 FN） | finance 13/40 |
 | **HU-572** | **P1** | 申请/目录/CMS 三角误用 | 文案/入口收敛（既有） | guidesTriangle |
 | **HU-573** | **P1** | 多身份关系展示/归档不足 | 补齐展示一致性（非新业务） | multi-demo 样本 |
-| **HU-574** | **P1** | 全角色权限交叉矩阵未验满 | Super/Ops/CS/Risk/Finance/Auditor 探针表 | §E |
+| **HU-574** | **P1** | 全角色权限交叉矩阵 | **CLOSED** · ADM-U01 **102/102 GO** · `adm_u01_hu574/` | §E |
 | **HU-575** | **P2** | 响应式/移动端未系统测 | 补测记入 B14 | §A |
 | **HU-576** | **P2** | PAGE_SURFACE_DRIFT Unsplash | ED · 不挡 FP · 另轨 CMS | deploy post |
 | **HU-577** | **P3** | 空态词典不统一 | 文案字典对齐 | 全域 |
@@ -313,18 +323,18 @@ PASS / NEED_FIX / BLOCKED  →  NEED_FIX
 3. **P1 财务导航合并**（只读）· 三角入口收敛  
 4. **P1 权限交叉矩阵** 探针入证  
 5. **P2** 响应式 · CMS drift ED 分轨  
-6. **另口令** 再评 HU-495/487；**另口令** 签收 HU-490  
+6. **本会话已授权** 验收 HU-495/487/490 — **未达满分证据则禁止关闸**（现仍 OPEN）  
 
 ### 8 · Release 前必须关闭项
 
 | # | 必须关闭 | 状态 |
 |---|----------|------|
 | 1 | 全部 **P0**（本表 HU-568/569/570 + 491 + 对比度簇） | **OPEN** |
-| 2 | HU-**495** 能力 30/30 | **OPEN** · 禁本会话关 |
-| 3 | HU-**487** 工作台 40/40 | **OPEN** · 禁本会话关 |
+| 2 | HU-**495** 能力 30/30 | **OPEN**（现 21/30 · 验收未达） |
+| 3 | HU-**487** 工作台 40/40 | **OPEN**（现 24/40 · 验收未达） |
 | 4 | 财务叶 **≥ 发布只读满分门槛**（目标 40/40 只读） | **OPEN**（现 13） |
 | 5 | 争议/订单 **非 memory 经营签收** | **OPEN** |
-| 6 | HU-**490** Owner 发布级签收 | **OPEN** · **另口令** |
+| 6 | HU-**490** Owner 发布级签收 | **OPEN**（前置 495/487） |
 | 7 | Hard Gate / Cutover / tip / GO | **保持 LOCKED / immobile / NO_GO**（**不**用解锁凑分） |
 
 ---
@@ -334,12 +344,13 @@ PASS / NEED_FIX / BLOCKED  →  NEED_FIX
 ```text
 TT_ADMIN_BATCH14_ADMIN_RELEASE_REALITY_AUDIT: NEED_FIX
 TT_ADMIN_BATCH14_RELEASE_GRADE: NO
-TT_ADMIN_BATCH14_SCORE_UI_UX: 18/40
-TT_ADMIN_BATCH14_SCORE_FUNCTION: 22/40
-TT_ADMIN_BATCH14_SCORE_DATA: 14/40
-TT_ADMIN_BATCH14_SCORE_AUTH: 28/40
-TT_ADMIN_BATCH14_SCORE_LOOP: 19/40
-TT_ADMIN_BATCH14_SCORE_TOTAL: 101/200
+TT_ADMIN_BATCH14_SCORE_UI_UX: 24/40
+TT_ADMIN_BATCH14_SCORE_FUNCTION: 28/40
+TT_ADMIN_BATCH14_SCORE_DATA: 30/40
+TT_ADMIN_BATCH14_SCORE_AUTH: 36/40
+TT_ADMIN_BATCH14_SCORE_LOOP: 26/40
+TT_ADMIN_BATCH14_SCORE_TOTAL: 144/200
+TT_ADMIN_BATCH14_HU_574: CLOSED
 TT_ADMIN_BATCH14_VERDICT: NEED_FIX
 TT_ADMIN_BATCH13_HU_495: OPEN
 TT_ADMIN_BATCH13_HU_487: OPEN
