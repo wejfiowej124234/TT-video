@@ -34,4 +34,13 @@ describe("admin user detail page", () => {
     expect(src).toContain("AdminStewardApplicationReviewCard");
     expect(src).toContain("AdminListFetchError");
   });
+
+  it("Batch-14 HU-573 · multi-identity slots + PG archive surface", () => {
+    expect(src).toContain("tt_admin_user_multi_identity_hu573");
+    expect(src).toContain("data-tt-admin-user-multi-identity");
+    expect(src).toContain("identity_slots");
+    expect(src).toContain("role_applications");
+    expect(src).toContain("admin_user_detail_multi_identity_section");
+    expect(src).toContain("admin_home_empty_state_empty");
+  });
 });

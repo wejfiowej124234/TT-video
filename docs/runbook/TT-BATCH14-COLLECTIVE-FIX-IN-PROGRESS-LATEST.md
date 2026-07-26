@@ -4,7 +4,7 @@
 **Stamp:** `20260726T103700Z`  
 **Status:** **`FIX_IN_PROGRESS`** · `FREEZE_UNLOCK: true`（**仅**本批集体改 · tip/HG/Cutover/GO **仍 LOCKED**）  
 **Patch:** `PATCH-STG-019`  
-**Working bake:** `a6f481c3…`（tip cite `ea71c577…` **IMMOBILE**）  
+**Working bake:** `2f943f3f…` API · Web still `a6f481c3…` until redeploy（tip cite `ea71c577…` **IMMOBILE**）  
 **Sole worklist:** [`ADMIN-RELEASE-REALITY-AUDIT`](./TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md) **NEED_FIX**  
 **PCR:** [`PCR-20260726-BATCH14-COLLECTIVE-FIX`](../../registry/psg-change-records/PCR-20260726-BATCH14-COLLECTIVE-FIX.json)  
 **L2 probe:** [`evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json`](../../evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json) · **`l2_runtime_align: PASS`**（users/orders/disputes `meta.source=postgres`）  
@@ -60,11 +60,11 @@ Final Truth Recertify
 
 | Wave | 范围 | HU / 簇 | 状态 |
 |------|------|---------|------|
-| **W1 P0 数据** | Web/API 对齐 · disputes/orders/users `meta.source` · 去 memory 裂脑 · 向导 PG（HU-491） | 568 · 569 · 570 · 491 | **568/569 CLOSED** · 570 PARTIAL（三叶） · **491 OPEN** |
-| **W2 P0 UI** | 暗色对比度残差 | contrast_cluster | **CODE in bake** · 视觉复核 OPEN |
-| **W3 P1** | 财务导航 · guides 三角 · 多身份 · 权限矩阵 | 571～574 | **571 CODE** · 572～574 OPEN |
-| **W4 P2** | 响应式 · PAGE_SURFACE ED · 空态 | 575～577 | **576 ED**（Web deploy post-check DRIFT）· 余 OPEN |
-| **W5** | Staging 验证 · 证据 · 评分 | — | **L2 PASS** · L4 评分 122/200 · 仍 NEED_FIX |
+| **W1 P0 数据** | Web/API 对齐 · disputes/orders/users `meta.source` · 去 memory 裂脑 · 向导 PG（HU-491） | 568 · 569 · 570 · 491 | **568/569/491 CLOSED** · 570 PARTIAL（三叶） |
+| **W2 P0 UI** | 暗色对比度残差 | contrast_cluster | **CODE PASS** · visual recheck CODE_PASS（Web 叶页待 redeploy） |
+| **W3 P1** | 财务导航 · guides 三角 · 多身份 · 权限矩阵 | 571～574 | **571 CODE** · **572 CLOSED** · 573 pending redeploy · **574 BLOCKED_PROVISION** |
+| **W4 P2** | 响应式 · PAGE_SURFACE ED · 空态 | 575～577 | **575 CLOSED** · **576 ED** · 577 pending redeploy |
+| **W5** | Staging 验证 · 证据 · 评分 | — | **L2 PASS** · L4 评分 **134/200** · 仍 NEED_FIX |
 | **W6** | Final Truth Recertify | — | **DEFERRED**（≠ 本轮签收） |
 
 **禁止本轨关闭：** HU-**495** · **487** · **490**（另口令）
@@ -87,7 +87,7 @@ TT_ADMIN_BATCH14_FREEZE_UNLOCK: true
 TT_ADMIN_BATCH14_PATCH: PATCH-STG-019
 TT_ADMIN_BATCH14_LADDER: Candidate_v2→API→Runtime→Admin→Evidence→Recertify
 TT_ADMIN_BATCH14_NOT_WEB3_REDESIGN: true
-TT_ADMIN_BATCH14_WORKING_BAKE: a6f481c3
+TT_ADMIN_BATCH14_WORKING_BAKE: 2f943f3f
 TT_ADMIN_BATCH14_L1: PASS
 TT_ADMIN_BATCH14_L2: PASS
 TT_ADMIN_BATCH14_L3: CODE_DEPLOYED_PARTIAL_VERIFY

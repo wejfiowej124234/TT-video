@@ -150,10 +150,12 @@ Engineering SSOT Anchor
 | 键 | 值 |
 |----|-----|
 | Track | **B** Staging Patch · `PATCH-STG-019` · Admin Release Reality NEED_FIX → Collective Fix |
-| Working bake | `a6f481c3…`（Web+API · **≠ tip** · CONFIRM_DESIGN working bake） |
+| Working bake | `2f943f3f…` API SSOT solidify · HU-573/577 pending next Web/API redeploy（**≠ tip**） |
 | L1 / L2 | Admin users/orders/disputes **PG-first** · `meta.source=postgres` · L2 probe **PASS** |
 | Disputes CAST | `list_disputes_admin` · `CAST(refund_ratio AS double precision)` + tourist_id 补查 · **SSOT 固化** |
-| HU-491 | `select_latest_guide_for_user` · Admin guides list/detail PG · guide-application PG 读源 |
+| HU-491 | Staging probe **CLOSED** · guides list/detail + guide-application `postgres` |
+| W3/W4 | 572 CLOSED_REVERIFY · 573/577 code · 574 BLOCKED_PROVISION · 575 CLOSED · 576 ED |
+| Score | **134/200 NEED_FIX**（诚实抬阶 · ≠ 满分 · ≠ RELEASE_GRADE） |
 | Tip / Pin | **cite-only** `ea71c577` · `PSG-REL-20260720-WEB3-CAND-V2` — **不**因本批移动 |
 | Forbidden | Hard Gate unlock · Cutover · Production GO · tip move · FINANCE_WRITE |
 | Cite | [`TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST`](./TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST.md) · [`ADMIN-RELEASE-REALITY-AUDIT`](./TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md) · `evidence/GO_batch14_collective_fix/` |

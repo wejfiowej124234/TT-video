@@ -2,7 +2,7 @@
 
 **Machine:** `TT_ADMIN_BATCH14_ADMIN_RELEASE_REALITY_AUDIT`  
 **Stamp:** `20260726T105300Z`  
-**Verdict:** **`ADMIN_RELEASE_REALITY_AUDIT_NEED_FIX`** · **`RELEASE_GRADE: NO`** · **`Total: NEED_FIX`** · **122/200**（L2 后抬阶 · **≠** 满分）  
+**Verdict:** **`ADMIN_RELEASE_REALITY_AUDIT_NEED_FIX`** · **`RELEASE_GRADE: NO`** · **`Total: NEED_FIX`** · **134/200**（L2 后抬阶 · **≠** 满分）  
 **Patch:** `PATCH-STG-019`（集体改 · L1/L2 PASS · L5 Recertify **DEFERRED**）  
 **Working bake:** Web=`a6f481c3…` · API=`a6f481c3…` · **HU-568 CLOSED**  
 **L2 probe:** [`L2-RUNTIME-PROBE-LATEST.json`](../../evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json) · users/orders/disputes **`postgres`**  
@@ -256,7 +256,7 @@ PASS / NEED_FIX / BLOCKED  →  NEED_FIX
 |----|-----|------|--------------------------------------|------|
 | **HU-568** | **P0** | Web bake `67a6ccba` ≠ API `892c20c8` | PCR 对齐 API 部署或明示双 SHA 风险条 | 本审计 |
 | **HU-569** | **P0** | 争议列表 **memory** 源 | 接正式库或全域禁经营签收 | live `source=memory` |
-| **HU-491** | **P0** | 向导详/审 memory 与 PG 列表裂脑 | 统一读源（既有升级 · 不新功能） | B13 |
+| **HU-491** | **P0** | 向导详/审 memory 与 PG 列表裂脑 | **CLOSED** Staging PG | B14 |
 | **HU-570** | **P0** | 多叶 `meta.source` 空 + UI fail-closed | 后端补 source 标注 | users/orders UI |
 | **对比度簇** | **P0** | 财务/争议/入驻/用户/订单灰字贴底 | FP-A 对比度修复未满分 | B13 叶 |
 | **HU-495** | **P0** | 能力 21/30 未满分 | 另口令 · **禁止本会话关闭** | B13 |

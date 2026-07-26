@@ -1,0 +1,49 @@
+{
+  "machine": "TT_ADMIN_BATCH14_HU491_GUIDES_PROBE",
+  "stamp": "2026-07-26T11:20:34.094Z",
+  "patch": "PATCH-STG-019",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "api_build_sha": "2f943f3fb14a3546567c3c6fdb989e4091779ac5",
+  "login": "PASS",
+  "guides_list": {
+    "http": 200,
+    "source": "postgres",
+    "total": 78,
+    "item_count": 3
+  },
+  "guides_detail": {
+    "http": 200,
+    "source": "postgres",
+    "has_guide": true
+  },
+  "guide_applications_list": {
+    "http": 200,
+    "source": "postgres",
+    "total": 31,
+    "item_count": 31,
+    "keys": [
+      "status",
+      "items",
+      "total",
+      "pending_count",
+      "meta"
+    ]
+  },
+  "guide_application_detail": {
+    "http": 200,
+    "source": "postgres",
+    "passport_hash_present": false,
+    "has_application": true,
+    "keys": [
+      "status",
+      "application",
+      "meta"
+    ]
+  },
+  "hu491": "PASS",
+  "verdict": "PASS"
+}

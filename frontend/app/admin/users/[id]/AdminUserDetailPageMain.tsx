@@ -19,6 +19,7 @@ import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { outboundUrlFromPersisted } from "@/lib/communityMediaClientUrl";
 import {
   ADMIN_USER_OUTBOUND_URL_KEYS,
+  TT_ADMIN_USER_MULTI_IDENTITY_MARK,
   USER_DETAIL_RELATED_FOLD_LINKS,
   USER_DETAIL_ROW_DEFS,
   fmtUserDetailValue,
@@ -40,7 +41,19 @@ import {
 export function AdminUserDetailPageMain() {
   const { t } = useTranslation();
   const pageTitleId = useId();
-  const { userId, loading, refreshing, error, user, meta, acquisitionSuspendInitial } = useAdminUserDetailPage();
+  const {
+    userId,
+    loading,
+    refreshing,
+    error,
+    user,
+    meta,
+    acquisitionSuspendInitial,
+    identitySlots,
+    identitySlotsSource,
+    roleApplications,
+    roleApplicationsSource,
+  } = useAdminUserDetailPage();
 
   useEffect(() => {
     if ((loading && !user) || (error && !user) || !user) return;
@@ -119,6 +132,65 @@ export function AdminUserDetailPageMain() {
             </dl>
           </AdminDetailContentPanel>
         )}
+        {userId && user && !(loading && !user) && !(error && !user) ? (
+          <AdminDetailContentPanel
+            data-tt-admin-user-multi-identity="hu573"
+            data-tt-admin-user-multi-identity-mark={TT_ADMIN_USER_MULTI_IDENTITY_MARK}
+            data-tt-identity-slots-source={identitySlotsSource || undefined}
+            data-tt-role-applications-source={roleApplicationsSource || undefined}
+          >
+            <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>
+              {t("admin_user_detail_multi_identity_section")}
+            </h2>
+            <p className="mt-1 text-caption text-ink-600">{t("admin_user_detail_multi_identity_hint")}</p>
+            <h3 className="mt-4 text-caption font-medium text-ink-700">
+              {t("admin_user_detail_identity_slots_heading")}
+            </h3>
+            {identitySlots.length === 0 ? (
+              <p className="mt-2 text-body text-ink-600">{t("admin_home_empty_state_empty")}</p>
+            ) : (
+              <ul className="mt-2 grid gap-2 text-body sm:grid-cols-2">
+                {identitySlots.map((slot) => (
+                  <li
+                    key={String(slot.id || slot.state)}
+                    className={ADMIN_DETAIL_FIELD_ROW_CLASS}
+                    data-tt-identity-slot={slot.id || ""}
+                  >
+                    <span className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>{slot.id || t("admin_em_dash")}</span>
+                    <span className={ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS}>
+                      {slot.state || t("admin_em_dash")}
+                      {slot.stake_display ? ` · ${slot.stake_display}` : ""}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <h3 className="mt-4 text-caption font-medium text-ink-700">
+              {t("admin_user_detail_role_applications_heading")}
+            </h3>
+            {roleApplications.length === 0 ? (
+              <p className="mt-2 text-body text-ink-600">{t("admin_home_empty_state_empty")}</p>
+            ) : (
+              <ul className="mt-2 space-y-2 text-body">
+                {roleApplications.map((app) => (
+                  <li
+                    key={String(app.id || `${app.kind}-${app.updated_at}`)}
+                    className={ADMIN_DETAIL_FIELD_ROW_CLASS}
+                    data-tt-role-application-kind={app.kind || ""}
+                  >
+                    <span className={ADMIN_DETAIL_FIELD_LABEL_CLASS}>
+                      {app.kind || t("admin_em_dash")}
+                    </span>
+                    <span className={ADMIN_DETAIL_FIELD_VALUE_MONO_CLASS}>
+                      {app.status || t("admin_em_dash")}
+                      {app.updated_at ? ` · ${app.updated_at}` : ""}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </AdminDetailContentPanel>
+        ) : null}
         {userId && !(loading && !user) && !(error && !user) ? (
           <div className="space-y-4" data-tt-admin-user-onboarding="1">
             <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>
@@ -128,7 +200,8 @@ export function AdminUserDetailPageMain() {
               <AdminProviderApplicationReviewCard userId={userId} />
               <AdminGuideApplicationReviewCard userId={userId} />
               <AdminStewardApplicationReviewCard userId={userId} />
-            </div>            <div id="admin-acquisition-suspend" data-tt-admin-user-acquisition="1">
+            </div>
+            <div id="admin-acquisition-suspend" data-tt-admin-user-acquisition="1">
               <h2 className={`mb-3 ${ADMIN_DETAIL_SECTION_TITLE_CLASS}`}>
                 {t("admin_user_detail_acquisition_section")}
               </h2>

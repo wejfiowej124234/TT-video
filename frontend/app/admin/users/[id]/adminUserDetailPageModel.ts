@@ -2,12 +2,35 @@ import { ADMIN_INBOX_QUEUE_HREFS } from "@/lib/admin/adminInboxQueueHrefs";
 import type { AdminOpsDetailRelatedLink } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { ADMIN_OPS_OBSERVABILITY_RELATED_LINK } from "@/lib/admin/adminOpsListRelatedFoldLinks";
 
+export type AdminIdentitySlotRow = {
+  id?: string;
+  state?: string;
+  stake_display?: string | null;
+};
+
+export type AdminRoleApplicationArchiveRow = {
+  id?: string;
+  kind?: string;
+  status?: string;
+  submitted_at?: string | null;
+  decided_at?: string | null;
+  updated_at?: string | null;
+};
+
 export type AdminUserDetailRes = {
   status?: string;
   error?: string;
   user?: Record<string, unknown>;
   meta?: unknown;
+  /** Batch-14 HU-573 · slot projection (not a fifth users.role) */
+  identity_slots?: AdminIdentitySlotRow[];
+  identity_slots_source?: string;
+  /** Batch-14 HU-573 · PG role_applications archive */
+  role_applications?: AdminRoleApplicationArchiveRow[];
+  role_applications_source?: string;
 };
+
+export const TT_ADMIN_USER_MULTI_IDENTITY_MARK = "tt_admin_user_multi_identity_hu573" as const;
 
 export const USER_DETAIL_RELATED_FOLD_LINKS: AdminOpsDetailRelatedLink[] = [
   { href: "/admin/users", labelKey: "admin_user_detail_back_list", dataTt: "admin-user-detail-back-list" },

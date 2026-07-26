@@ -1835,6 +1835,59 @@ pub async fn get_admin_user_by_id(
         if let Some(user_obj) = body.get_mut("user").and_then(|v| v.as_object_mut()) {
             attach_acquisition_suspend_fields(pool, user_uuid, user_obj).await;
         }
+        // Batch-14 HU-573 · multi-identity archive summary (PG role_applications + slot projection)
+        let guide_opt = {
+            let store = co.store.read().await;
+            store
+                .guides
+                .values()
+                .find(|g| g.user_id == user_uuid)
+                .cloned()
+        };
+        let (provider_app, steward_app) = {
+            let store = co.store.read().await;
+            (
+                store.provider_applications_by_user.get(&user_uuid).cloned(),
+                store.steward_applications_by_user.get(&user_uuid).cloned(),
+            )
+        };
+        let slots = chain_off::build_identity_slots(
+            &u,
+            guide_opt.as_ref(),
+            provider_app.as_ref(),
+            steward_app.as_ref(),
+            None,
+            None,
+        );
+        body.as_object_mut().map(|o| {
+            o.insert("identity_slots".to_string(), slots);
+            o.insert("identity_slots_source".to_string(), json!("projection"));
+        });
+        match db::list_role_applications_for_user(pool, user_uuid).await {
+            Ok(apps) => {
+                body.as_object_mut().map(|o| {
+                    o.insert("role_applications".to_string(), json!(apps));
+                    o.insert("role_applications_source".to_string(), json!("postgres"));
+                });
+            }
+            Err(e) => {
+                eprintln!(
+                    "admin_user_detail role_applications pg err user={user_uuid}: {e}"
+                );
+                body.as_object_mut().map(|o| {
+                    o.insert("role_applications".to_string(), json!([]));
+                    o.insert(
+                        "role_applications_source".to_string(),
+                        json!("postgres_unavailable"),
+                    );
+                });
+            }
+        }
+    } else {
+        body.as_object_mut().map(|o| {
+            o.insert("identity_slots_source".to_string(), json!("unavailable"));
+            o.insert("role_applications_source".to_string(), json!("unavailable"));
+        });
     }
     admin_attach_meta_build(&mut body);
 

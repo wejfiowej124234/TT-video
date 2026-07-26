@@ -26,6 +26,12 @@ export function useAdminUserDetailPage() {
 
   const user = body?.user && typeof body.user === "object" ? body.user : null;
   const meta = body && isAdminMetaRecord(body.meta) ? body.meta : null;
+  const identitySlots = Array.isArray(body?.identity_slots) ? body.identity_slots : [];
+  const identitySlotsSource =
+    typeof body?.identity_slots_source === "string" ? body.identity_slots_source : null;
+  const roleApplications = Array.isArray(body?.role_applications) ? body.role_applications : [];
+  const roleApplicationsSource =
+    typeof body?.role_applications_source === "string" ? body.role_applications_source : null;
 
   const acquisitionSuspendInitial: AdminAcquisitionPublishSuspendSnapshot | null = useMemo(() => {
     if (!user) return null;
@@ -38,5 +44,17 @@ export function useAdminUserDetailPage() {
     };
   }, [user]);
 
-  return { userId, loading, refreshing, error, user, meta, acquisitionSuspendInitial };
+  return {
+    userId,
+    loading,
+    refreshing,
+    error,
+    user,
+    meta,
+    acquisitionSuspendInitial,
+    identitySlots,
+    identitySlotsSource,
+    roleApplications,
+    roleApplicationsSource,
+  };
 }
