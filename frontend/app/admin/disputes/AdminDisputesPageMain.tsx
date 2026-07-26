@@ -341,7 +341,7 @@ export function AdminDisputesPageMain() {
                       <p className="font-mono text-small font-medium text-ink-900" title={d.id}>
                         {shortAdminId(d.id) || t("admin_em_dash")}
                       </p>
-                      <p className="mt-0.5 text-meta text-ink-600" title={d.order_id}>
+                      <p className={`mt-0.5 text-meta ${ADMIN_TEXT_SECONDARY_CLASS}`} title={d.order_id}>
                         {t("admin_disputes_colOrderId")}:{" "}
                         {desk.orderAdminHref ? (
                           <Link

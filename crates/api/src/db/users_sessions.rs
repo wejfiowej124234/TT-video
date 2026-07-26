@@ -197,6 +197,13 @@ pub async fn list_users(pool: &PgPool) -> Result<Vec<UserRow>, sqlx::Error> {
         .collect())
 }
 
+/// Batch-14 HU-570 · Admin 用户列表 KPI total（正式库）。
+pub async fn count_users(pool: &PgPool) -> Result<i64, sqlx::Error> {
+    sqlx::query_scalar::<_, i64>("SELECT COUNT(*)::bigint FROM users")
+        .fetch_one(pool)
+        .await
+}
+
 /// 用户会话列表行（`GET /api/v1/me/sessions`）
 #[derive(Debug, Clone)]
 pub struct UserSessionListRow {

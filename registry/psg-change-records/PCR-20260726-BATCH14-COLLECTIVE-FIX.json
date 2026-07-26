@@ -1,0 +1,42 @@
+{
+  "schema": "traveltrust.psg_change_record.v1",
+  "id": "PCR-20260726-BATCH14-COLLECTIVE-FIX",
+  "stamp": "20260726T092200Z",
+  "recorded_utc": "2026-07-26T09:22:00Z",
+  "class": "non_financial_ui_staging_patch",
+  "summary": "Owner unlock Batch-14 collective fix (PATCH-STG-019). Sole worklist = Admin Release Reality Audit NEED_FIX. Alignment ladder (NOT Web3 redesign): Candidate v2 → API/Backend align → Runtime data truth → Admin display truth → Evidence → Final Truth Recertify. Tip ea71c577 immobile. Hard Gate LOCKED · Cutover LOCKED · TT_PRODUCTION_GO=NO_GO · FINANCE_WRITE FORBIDDEN. Does not close HU-495/487/490. No new HU beyond 568-577. No Production GO claim.",
+  "tip_mutated": false,
+  "final_truth_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "not_web3_redesign": true,
+  "alignment_ladder": [
+    "Candidate_v2",
+    "API_Backend_align",
+    "Runtime_data_truth",
+    "Admin_display_truth",
+    "Evidence_verify",
+    "Final_Truth_Recertify"
+  ],
+  "mutates_candidate_v2": false,
+  "mutates_hard_gate": false,
+  "mutates_cutover": false,
+  "patch": "PATCH-STG-019",
+  "equals_production_go": false,
+  "code_touched": true,
+  "deploy_target": "STAGING_PATCH",
+  "deploy_apps": ["tt-web-staging", "tt-api-staging"],
+  "worklist_hus": ["HU-568", "HU-569", "HU-570", "HU-491", "contrast_cluster", "HU-571", "HU-572", "HU-573", "HU-574", "HU-575", "HU-576", "HU-577"],
+  "must_remain_open": ["HU-495", "HU-487", "HU-490"],
+  "TT_HARD_GATE_LOCKED": true,
+  "TT_CUTOVER_LOCKED": true,
+  "TT_PRODUCTION_GO": "NO_GO",
+  "FINANCE_WRITE": "FORBIDDEN",
+  "artifacts": [
+    "docs/runbook/TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST.md",
+    "docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md",
+    "registry/psg-change-records/PCR-20260726-BATCH14-COLLECTIVE-FIX.json"
+  ],
+  "status": "ACTIVE",
+  "follows": "PCR-20260726-BATCH14-ADMIN-RELEASE-REALITY-AUDIT",
+  "owner_command": "开始第十四批集体改；NEED_FIX only；P0→P1→P2；Staging verify per wave；Recertify after pass；tip/HG/Cutover/GO locked"
+}

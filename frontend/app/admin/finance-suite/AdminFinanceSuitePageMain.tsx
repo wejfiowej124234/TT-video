@@ -89,15 +89,17 @@ export function AdminFinanceSuitePageMain() {
       </section>
       <AdminFinancePspPhase2DepthNotice />
 
+      {/* Batch-14 HU-571 · 次导航唯一折叠（磁贴 + 模块目录）· 主导航仍为七步 workflow */}
       <details
         className="mb-6"
+        data-tt-admin-fin-suite-secondary-nav="merged"
         data-tt-admin-fin-suite-nav-tiles-fold="1"
-        data-tt-admin-fin-suite-secondary-nav="tiles"
+        data-tt-admin-fin-suite-module-catalog="1"
       >
         <summary
           className={`${touchTargetLink44Classes} cursor-pointer list-none text-body font-semibold text-ink-900 marker:content-none [&::-webkit-details-marker]:hidden ${travelFocusRingOffset2Classes}`}
         >
-          {t("admin_fin_suite_nav_tiles_fold")}
+          {t("admin_fin_suite_nav_tiles_fold")} · {t("admin_fin_suite_module_catalog_fold")}
         </summary>
         <p className={`mt-2 text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_fin_suite_nav_lead")}</p>
         <div className="mt-3" data-tt-admin-fin-suite-nav-tiles="1">
@@ -108,37 +110,9 @@ export function AdminFinanceSuitePageMain() {
             showMoreFold={navTiles.length > 6}
           />
         </div>
-      </details>
-
-      {/* FN6/FN10 · 系统头寸进高级折叠 · 禁首屏墙 */}
-      <details
-        className="mb-6"
-        data-tt-admin-fin-suite-treasury-fold="1"
-        data-tt-admin-fin-suite-secondary-nav="treasury"
-      >
-        <summary
-          className={`${touchTargetLink44Classes} cursor-pointer list-none text-body font-semibold text-ink-900 marker:content-none [&::-webkit-details-marker]:hidden ${travelFocusRingOffset2Classes}`}
-        >
-          {t("admin_fin_suite_treasury_fold")}
-        </summary>
-        <div className="mt-3">
-          <AdminHomeTreasuryPoolStrip positionVariant="finance-suite" />
-        </div>
-      </details>
-
-      <details
-        className="mt-8"
-        data-tt-admin-fin-suite-module-catalog="1"
-        data-tt-admin-fin-suite-secondary-nav="module-catalog"
-      >
-        <summary
-          className={`${touchTargetLink44Classes} cursor-pointer list-none text-body font-semibold text-ink-900 marker:content-none [&::-webkit-details-marker]:hidden ${travelFocusRingOffset2Classes}`}
-        >
-          {t("admin_fin_suite_module_catalog_fold")}
-        </summary>
-        <p className={`mt-2 text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_fin_suite_module_catalog_lead")}</p>
+        <p className={`mt-4 text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_fin_suite_module_catalog_lead")}</p>
         <ul
-          className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
           data-tt-admin-fin-suite-module-grid="1"
         >
           {FINANCE_SUITE_MODULES.filter((m) => m.status !== "placeholder").map((m) => {
@@ -177,12 +151,28 @@ export function AdminFinanceSuitePageMain() {
                       : t("admin_fin_suite_open")}
                   </Link>
                 ) : (
-                  <span className="mt-3 block text-small text-ink-400">{t("admin_permissions_no")}</span>
+                  <span className={`mt-3 block text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_permissions_no")}</span>
                 )}
               </AdminWarmL5Surface>
             );
           })}
         </ul>
+      </details>
+
+      {/* FN6/FN10 · 系统头寸进高级折叠 · 禁首屏墙 */}
+      <details
+        className="mb-6"
+        data-tt-admin-fin-suite-treasury-fold="1"
+        data-tt-admin-fin-suite-secondary-nav="treasury"
+      >
+        <summary
+          className={`${touchTargetLink44Classes} cursor-pointer list-none text-body font-semibold text-ink-900 marker:content-none [&::-webkit-details-marker]:hidden ${travelFocusRingOffset2Classes}`}
+        >
+          {t("admin_fin_suite_treasury_fold")}
+        </summary>
+        <div className="mt-3">
+          <AdminHomeTreasuryPoolStrip positionVariant="finance-suite" />
+        </div>
       </details>
       <AdminFinanceSuiteSupplementStrip />
     </AdminDetailPageChrome>

@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.batch14_collective_fix_in_progress.v1",
+  "machine_key": "TT_ADMIN_BATCH14_COLLECTIVE_FIX",
+  "stamp": "20260726T092200Z",
+  "status": "FIX_IN_PROGRESS",
+  "freeze_unlock": true,
+  "freeze_unlock_scope": "batch14_collective_fix_only",
+  "patch": "PATCH-STG-019",
+  "sole_worklist": "docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md",
+  "pcr": "PCR-20260726-BATCH14-COLLECTIVE-FIX",
+  "wave_w1": "IN_PROGRESS",
+  "waves": ["W1_P0_DATA", "W2_P0_UI", "W3_P1", "W4_P2", "W5_STAGING_VERIFY", "W6_RECERTIFY"],
+  "must_remain_open": ["HU-495", "HU-487", "HU-490"],
+  "hu_range_locked": "568-577",
+  "tip": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "finance_write": "FORBIDDEN",
+  "new_features": false,
+  "not_web3_redesign": true,
+  "alignment_ladder": [
+    "L0_candidate_v2_protocol_baseline",
+    "L1_api_backend_align",
+    "L2_runtime_data_truth",
+    "L3_admin_display_truth",
+    "L4_evidence_verify",
+    "L5_final_truth_recertify"
+  ],
+  "alignment_ladder_note": "Batch-14 is Baseline inconsistency alignment along Candidate v2 → API → Runtime → Admin → Evidence → Recertify. Not a Web3 redesign.",
+  "equals_production_go": false
+}

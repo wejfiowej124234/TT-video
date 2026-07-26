@@ -775,8 +775,10 @@ async fn admin_users_not_impl_without_chain_off() {
             State(state_no_chain_off()),
             Query(AdminUsersListQuery {
                 limit: None,
+                offset: None,
                 role: None,
                 kyc_status: None,
+                email: None,
             }),
             HeaderMap::new(),
         )
@@ -849,6 +851,8 @@ async fn admin_memory_first_gets_not_impl_without_chain_off() {
             Query(AdminOrdersListQuery {
                 limit: None,
                 state: None,
+                id: None,
+                q: None,
             }),
             HeaderMap::new(),
         )
@@ -900,6 +904,9 @@ async fn admin_memory_first_gets_not_impl_without_chain_off() {
             Query(AdminDisputesListQuery {
                 limit: None,
                 status: None,
+                id: None,
+                order_id: None,
+                q: None,
             }),
             HeaderMap::new(),
         )
@@ -1681,8 +1688,10 @@ async fn admin_users_forbidden_for_non_admin_actor() {
         State(build_state(vec![tourist.clone()])),
         Query(AdminUsersListQuery {
             limit: None,
+            offset: None,
             role: None,
             kyc_status: None,
+            email: None,
         }),
         auth_headers(tourist.id),
     )
@@ -1818,6 +1827,8 @@ async fn admin_orders_list_includes_traveler_id_mirror() {
         Query(AdminOrdersListQuery {
             limit: Some(50),
             state: None,
+            id: None,
+            q: None,
         }),
         auth_headers(admin.id),
     )
@@ -1830,6 +1841,9 @@ async fn admin_orders_list_includes_traveler_id_mirror() {
     let row = &items[0];
     assert_eq!(row["tourist_id"].as_str().unwrap(), tid.to_string());
     assert_eq!(row["traveler_id"].as_str().unwrap(), tid.to_string());
+    // Batch-14 HU-570 · no pool → honest memory meta.source
+    assert_eq!(body["meta"]["source"].as_str().unwrap(), "memory");
+    assert_eq!(body["meta"]["items_source"].as_str().unwrap(), "memory");
 }
 
 #[tokio::test]
@@ -1898,6 +1912,9 @@ async fn admin_disputes_list_includes_tourist_traveler_mirror() {
         Query(AdminDisputesListQuery {
             limit: Some(50),
             status: None,
+            id: None,
+            order_id: None,
+            q: None,
         }),
         auth_headers(admin.id),
     )
@@ -1910,6 +1927,10 @@ async fn admin_disputes_list_includes_tourist_traveler_mirror() {
     let row = &items[0];
     assert_eq!(row["tourist_id"].as_str().unwrap(), tid.to_string());
     assert_eq!(row["traveler_id"].as_str().unwrap(), tid.to_string());
+    // Batch-14 HU-569/570 · no pool → honest memory source (not silent omit)
+    assert_eq!(body["meta"]["source"].as_str().unwrap(), "memory");
+    assert_eq!(body["meta"]["items_source"].as_str().unwrap(), "memory");
+    assert_eq!(body["applied_filters"]["source"].as_str().unwrap(), "memory");
 }
 
 #[tokio::test]

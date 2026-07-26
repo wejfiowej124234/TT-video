@@ -749,6 +749,8 @@ pub fn router() -> Router<ApiMetaState> {
         .merge(admin_guide_application_http::router())
         // ADM-U01 / Phase② post-soak：freeze 下仍须挂载只读 onboarding + trust-growth 探针路由
         .merge(admin_provider_application_http::router())
+        // Batch-8 HU-098：主理人入驻列表与 provider/guide 同属 onboarding SSOT · freeze 下仍须挂载
+        .merge(admin_steward_application_http::router())
         .merge(admin_onboarding::router())
         .merge(trust_growth_obs::router())
         // PD-009 Phase①：收购发布 suspend 属 Booking Core · freeze 下仍挂载（与 ADM-U01 同源）
@@ -761,7 +763,6 @@ pub fn router() -> Router<ApiMetaState> {
 
     if !crate::complexity_convergence::freeze_active() {
         r = r
-            .merge(admin_steward_application_http::router())
             .merge(admin_growth_referral_http::router())
             .merge(admin_growth_ledger_http::router())
             .merge(admin_growth_early_bird_http::router())
@@ -857,26 +858,35 @@ pub struct AdminReviewsQuery {
     pub max_score: Option<i16>,
 }
 
-/// Admin 订单列表：可选 **`limit`**（1～500，缺省 100）、**`state`**（与 **`order_state_to_str`** 同形，如 **`draft`**）。
+/// Admin 订单列表：可选 **`limit`**（1～500，缺省 100）、**`state`**、**`id`**（精确 UUID）、**`q`**（订单 ID 子串）。
 #[derive(Debug, Deserialize)]
 pub struct AdminOrdersListQuery {
     pub limit: Option<i64>,
     pub state: Option<String>,
+    /// Batch-13 HU-509 · FO6 · 精确订单 UUID
+    pub id: Option<String>,
+    /// Batch-13 HU-509 · FO6 · 订单 ID 子串（忽略大小写）
+    pub q: Option<String>,
 }
 
-/// Admin 争议列表：可选 **`limit`**（1～500，缺省 100）、**`status`**（与列表行 **`status`** 精确匹配）。
+/// Admin 争议列表：可选 **`limit`** / **`status`** / **`id`** / **`order_id`** / **`q`**（Batch-13 FD6）。
 #[derive(Debug, Deserialize)]
 pub struct AdminDisputesListQuery {
     pub limit: Option<i64>,
     pub status: Option<String>,
+    pub id: Option<String>,
+    pub order_id: Option<String>,
+    pub q: Option<String>,
 }
 
-/// Admin 用户列表：可选 **`limit`**（1～500，缺省 100）、**`role`** / **`kyc_status`**（与行内字段精确匹配）。
+/// Admin 用户列表：可选 **`limit`**（1～500，缺省 100）、**`offset`**、**`email`**（子串）、**`role`** / **`kyc_status`**（精确匹配）。
 #[derive(Debug, Deserialize)]
 pub struct AdminUsersListQuery {
     pub limit: Option<i64>,
+    pub offset: Option<i64>,
     pub role: Option<String>,
     pub kyc_status: Option<String>,
+    pub email: Option<String>,
 }
 
 /// Admin 向导台账：可选 **`limit`**（1～500，缺省 100）、**`status`**（与向导 **`status`** 精确匹配）。
@@ -1596,30 +1606,85 @@ pub async fn get_admin_users(
     let request_id = request_id_from_headers(&headers);
 
     let mut limit = q.limit.unwrap_or(100);
-    if limit < 1 {
-        limit = 1;
-    }
-    if limit > 500 {
-        limit = 500;
-    }
+    limit = limit.clamp(1, 500);
+    let offset = q.offset.unwrap_or(0).clamp(0, 100_000);
     let role_filter = q.role.as_deref().map(str::trim).filter(|s| !s.is_empty());
     let kyc_filter = q
         .kyc_status
         .as_deref()
         .map(str::trim)
         .filter(|s| !s.is_empty());
+    let email_filter = q
+        .email
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_ascii_lowercase());
 
     let pool_opt = co.db_pool.clone();
 
-    let items = {
+    // Batch-14 HU-570 · 有 PG 时正式库清单 + meta.source；无 pool 才 memory（本地无库烟测）。
+    let (mut items, total_after_filter, source, items_source) = if let Some(ref pool) = pool_opt {
+        match db::list_users(pool).await {
+            Ok(rows) => {
+                let mut items: Vec<_> = rows
+                    .into_iter()
+                    .filter(|u| {
+                        role_filter.is_none_or(|r| u.role == r)
+                            && kyc_filter.is_none_or(|k| u.kyc_status == k)
+                            && email_filter.as_ref().is_none_or(|needle| {
+                                u.email.to_ascii_lowercase().contains(needle.as_str())
+                            })
+                    })
+                    .map(|u| {
+                        json!({
+                            "id": u.id,
+                            "email": u.email,
+                            "role": u.role,
+                            "kyc_status": u.kyc_status,
+                            "created_at": u.created_at.to_rfc3339(),
+                            "updated_at": u.updated_at.to_rfc3339(),
+                        })
+                    })
+                    .collect();
+                items.sort_by(|a, b| {
+                    b.get("created_at")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or_default()
+                        .cmp(
+                            a.get("created_at")
+                                .and_then(|v| v.as_str())
+                                .unwrap_or_default(),
+                        )
+                });
+                let total_after_filter = items.len();
+                let start = (offset as usize).min(total_after_filter);
+                let end = (start + limit as usize).min(total_after_filter);
+                let page = items[start..end].to_vec();
+                (page, total_after_filter, "postgres", "postgres")
+            }
+            Err(_) => {
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "admin_users_pg_unavailable",
+                        "message": "admin_users_pg_unavailable",
+                    })),
+                )
+                    .into_response();
+            }
+        }
+    } else {
         let store = co.store.read().await;
-
         let mut items: Vec<_> = store
             .users
             .values()
             .filter(|u| {
-                role_filter.map_or(true, |r| u.role == r)
-                    && kyc_filter.map_or(true, |k| u.kyc_status == k)
+                role_filter.is_none_or(|r| u.role == r)
+                    && kyc_filter.is_none_or(|k| u.kyc_status == k)
+                    && email_filter.as_ref().is_none_or(|needle| {
+                        u.email.to_ascii_lowercase().contains(needle.as_str())
+                    })
             })
             .map(|u| {
                 json!({
@@ -1643,11 +1708,11 @@ pub async fn get_admin_users(
                 )
         });
         let total_after_filter = items.len();
-        items.truncate(limit as usize);
-        (items, total_after_filter)
+        let start = (offset as usize).min(total_after_filter);
+        let end = (start + limit as usize).min(total_after_filter);
+        let page = items[start..end].to_vec();
+        (page, total_after_filter, "memory", "memory")
     };
-
-    let (mut items, total_after_filter) = items;
 
     if let Some(ref pool) = pool_opt {
         let user_ids: Vec<Uuid> = items
@@ -1692,10 +1757,12 @@ pub async fn get_admin_users(
         json!({
             "result_count": items.len(),
             "limit": limit,
+            "offset": offset,
             "role": role_filter,
             "kyc_status": kyc_filter,
+            "email": email_filter.as_deref(),
             "matched_before_limit": total_after_filter,
-            "source": "memory",
+            "source": source,
         }),
     )
     .await;
@@ -1703,11 +1770,20 @@ pub async fn get_admin_users(
     let mut body = json!({
         "status": "ok",
         "items": items,
+        "total": total_after_filter,
         "applied_filters": {
             "limit": limit,
+            "offset": offset,
             "role": role_filter,
             "kyc_status": kyc_filter,
-            "source": "memory",
+            "email": email_filter.as_deref(),
+            "source": source,
+        },
+        "meta": {
+            "source": source,
+            "total": total_after_filter,
+            "items_source": items_source,
+            "implementation_status": "admin_users_list",
         }
     });
     admin_attach_meta_build(&mut body);
@@ -1795,12 +1871,7 @@ pub async fn get_admin_guides(
     let request_id = request_id_from_headers(&headers);
 
     let mut limit = q.limit.unwrap_or(100);
-    if limit < 1 {
-        limit = 1;
-    }
-    if limit > 500 {
-        limit = 500;
-    }
+    limit = limit.clamp(1, 500);
     let status_filter = q.status.as_deref().map(str::trim).filter(|s| !s.is_empty());
 
     let store = co.store.read().await;
@@ -1808,8 +1879,8 @@ pub async fn get_admin_guides(
     let mut items: Vec<_> = store
         .guides
         .values()
-        .filter(|g| status_filter.map_or(true, |sf| g.status == sf))
-        .map(|g| chain_off::guide_admin_row_json(g))
+        .filter(|g| status_filter.is_none_or(|sf| g.status == sf))
+        .map(chain_off::guide_admin_row_json)
         .collect();
     items.sort_by(|a, b| {
         b.get("created_at")
@@ -2071,46 +2142,133 @@ pub async fn get_admin_orders(
     let request_id = request_id_from_headers(&headers);
 
     let mut limit = q.limit.unwrap_or(100);
-    if limit < 1 {
-        limit = 1;
-    }
-    if limit > 500 {
-        limit = 500;
-    }
+    limit = limit.clamp(1, 500);
     let state_filter = q.state.as_deref().map(str::trim).filter(|s| !s.is_empty());
+    // Batch-13 HU-509 · FO6 · id 精确 / q 子串（订单 UUID 字符串）
+    let id_filter = q
+        .id
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_ascii_lowercase());
+    let q_filter = q
+        .q
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_ascii_lowercase());
 
-    let store = co.store.read().await;
-    let mut items: Vec<_> = store
-        .orders
-        .values()
-        .filter(|o| state_filter.map_or(true, |sf| chain_off::order_state_to_str(o.state) == sf))
-        .map(|o| {
-            json!({
-                "id": o.id,
-                "tourist_id": o.tourist_id,
-                "traveler_id": o.tourist_id,
-                "guide_id": o.guide_id,
-                "amount": o.amount,
-                "currency": o.currency,
-                "state": chain_off::order_state_to_str(o.state),
-                "created_at": o.created_at,
-                "updated_at": o.updated_at,
-                "escrow_address": o.escrow_address,
+    // Batch-14 · 有 PG 时 items+total 正式库（禁 COUNT=postgres / items=memory 裂脑）。
+    let (items, total_after_filter, source, items_source) = if let Some(pool) = co.db_pool.as_ref()
+    {
+        match db::list_orders(pool).await {
+            Ok(rows) => {
+                let mut items: Vec<_> = rows
+                    .into_iter()
+                    .filter(|o| state_filter.is_none_or(|sf| o.status == sf))
+                    .filter(|o| {
+                        let id_lc = o.id.to_string().to_ascii_lowercase();
+                        if let Some(ref exact) = id_filter {
+                            if id_lc != *exact {
+                                return false;
+                            }
+                        }
+                        if let Some(ref needle) = q_filter {
+                            if !id_lc.contains(needle) {
+                                return false;
+                            }
+                        }
+                        true
+                    })
+                    .map(|o| {
+                        json!({
+                            "id": o.id,
+                            "tourist_id": o.tourist_id,
+                            "traveler_id": o.tourist_id,
+                            "guide_id": o.guide_id,
+                            "amount": o.amount,
+                            "currency": o.currency,
+                            "state": o.status,
+                            "created_at": o.created_at.to_rfc3339(),
+                            "updated_at": o.updated_at.to_rfc3339(),
+                            "escrow_address": o.escrow_address,
+                        })
+                    })
+                    .collect();
+                items.sort_by(|a, b| {
+                    b.get("created_at")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or_default()
+                        .cmp(
+                            a.get("created_at")
+                                .and_then(|v| v.as_str())
+                                .unwrap_or_default(),
+                        )
+                });
+                let total_after_filter = items.len();
+                items.truncate(limit as usize);
+                (items, total_after_filter, "postgres", "postgres")
+            }
+            Err(_) => {
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "admin_orders_pg_unavailable",
+                        "message": "admin_orders_pg_unavailable",
+                    })),
+                )
+                    .into_response();
+            }
+        }
+    } else {
+        let store = co.store.read().await;
+        let mut items: Vec<_> = store
+            .orders
+            .values()
+            .filter(|o| state_filter.is_none_or(|sf| chain_off::order_state_to_str(o.state) == sf))
+            .filter(|o| {
+                let id_lc = o.id.to_string().to_ascii_lowercase();
+                if let Some(ref exact) = id_filter {
+                    if id_lc != *exact {
+                        return false;
+                    }
+                }
+                if let Some(ref needle) = q_filter {
+                    if !id_lc.contains(needle) {
+                        return false;
+                    }
+                }
+                true
             })
-        })
-        .collect();
-    items.sort_by(|a, b| {
-        b.get("created_at")
-            .and_then(|v| v.as_str())
-            .unwrap_or_default()
-            .cmp(
-                a.get("created_at")
-                    .and_then(|v| v.as_str())
-                    .unwrap_or_default(),
-            )
-    });
-    let total_after_filter = items.len();
-    items.truncate(limit as usize);
+            .map(|o| {
+                json!({
+                    "id": o.id,
+                    "tourist_id": o.tourist_id,
+                    "traveler_id": o.tourist_id,
+                    "guide_id": o.guide_id,
+                    "amount": o.amount,
+                    "currency": o.currency,
+                    "state": chain_off::order_state_to_str(o.state),
+                    "created_at": o.created_at,
+                    "updated_at": o.updated_at,
+                    "escrow_address": o.escrow_address,
+                })
+            })
+            .collect();
+        items.sort_by(|a, b| {
+            b.get("created_at")
+                .and_then(|v| v.as_str())
+                .unwrap_or_default()
+                .cmp(
+                    a.get("created_at")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or_default(),
+                )
+        });
+        let total_after_filter = items.len();
+        items.truncate(limit as usize);
+        (items, total_after_filter, "memory", "memory")
+    };
 
     write_admin_audit_log_best_effort(
         &state,
@@ -2123,8 +2281,10 @@ pub async fn get_admin_orders(
             "result_count": items.len(),
             "limit": limit,
             "state": state_filter,
+            "id": id_filter.as_deref(),
+            "q": q_filter.as_deref(),
             "matched_before_limit": total_after_filter,
-            "source": "memory",
+            "source": source,
         }),
     )
     .await;
@@ -2132,10 +2292,19 @@ pub async fn get_admin_orders(
     let mut body = json!({
         "status": "ok",
         "items": items,
+        "total": total_after_filter,
         "applied_filters": {
             "limit": limit,
             "state": state_filter,
-            "source": "memory",
+            "id": id_filter,
+            "q": q_filter,
+            "source": source,
+        },
+        "meta": {
+            "source": source,
+            "total": total_after_filter,
+            "items_source": items_source,
+            "implementation_status": "admin_orders_list",
         }
     });
     admin_attach_meta_build(&mut body);
@@ -2223,12 +2392,7 @@ pub async fn get_admin_reviews(
     let request_id = request_id_from_headers(&headers);
 
     let mut limit = q.limit.unwrap_or(100);
-    if limit < 1 {
-        limit = 1;
-    }
-    if limit > 500 {
-        limit = 500;
-    }
+    limit = limit.clamp(1, 500);
 
     let (items, source) = if let Some(pool) = co.db_pool.as_ref() {
         match db::list_reviews_admin(pool, limit, q.min_score, q.max_score).await {
@@ -3150,48 +3314,155 @@ pub async fn get_admin_disputes(
     let request_id = request_id_from_headers(&headers);
 
     let mut limit = q.limit.unwrap_or(100);
-    if limit < 1 {
-        limit = 1;
-    }
-    if limit > 500 {
-        limit = 500;
-    }
+    limit = limit.clamp(1, 500);
     let status_filter = q.status.as_deref().map(str::trim).filter(|s| !s.is_empty());
+    // Batch-13 FD6 · id / order_id 精确 · q 子串（争议或订单 UUID）
+    let id_filter = q
+        .id
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_ascii_lowercase());
+    let order_id_filter = q
+        .order_id
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_ascii_lowercase());
+    let q_filter = q
+        .q
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_ascii_lowercase());
 
-    let store = co.store.read().await;
-    let mut items: Vec<_> = store
-        .disputes
-        .values()
-        .filter(|d| status_filter.map_or(true, |sf| d.status == sf))
-        .map(|d| {
-            let order = store.orders.get(&d.order_id);
-            let (tourist_id, traveler_id) = chain_off::dispute_party_mirror(order);
-            json!({
-                "id": d.id,
-                "order_id": d.order_id,
-                "tourist_id": tourist_id,
-                "traveler_id": traveler_id,
-                "status": d.status,
-                "arbitrator_id": d.arbitrator_id,
-                "refund_ratio": d.refund_ratio,
-                "slash_guide": d.slash_guide,
-                "created_at": d.created_at,
-                "updated_at": d.updated_at,
+    // Batch-14 HU-569 · 有 PG 时正式库清单（禁 memory 经营签收）。
+    let (items, total_after_filter, source, items_source) = if let Some(pool) = co.db_pool.as_ref()
+    {
+        match db::list_disputes_admin(pool).await {
+            Ok(rows) => {
+                let mut items: Vec<_> = rows
+                    .into_iter()
+                    .filter(|d| status_filter.is_none_or(|sf| d.status == sf))
+                    .filter(|d| {
+                        let did = d.id.to_string().to_ascii_lowercase();
+                        let oid = d.order_id.to_string().to_ascii_lowercase();
+                        if let Some(ref exact) = id_filter {
+                            if did != *exact {
+                                return false;
+                            }
+                        }
+                        if let Some(ref oid_exact) = order_id_filter {
+                            if oid != *oid_exact {
+                                return false;
+                            }
+                        }
+                        if let Some(ref needle) = q_filter {
+                            if !did.contains(needle) && !oid.contains(needle) {
+                                return false;
+                            }
+                        }
+                        true
+                    })
+                    .map(|d| {
+                        let (tourist_id, traveler_id) =
+                            db::dispute_order_party_ids_json(d.order_tourist_id);
+                        json!({
+                            "id": d.id,
+                            "order_id": d.order_id,
+                            "tourist_id": tourist_id,
+                            "traveler_id": traveler_id,
+                            "status": d.status,
+                            "arbitrator_id": d.arbitrator_id,
+                            "refund_ratio": d.refund_ratio,
+                            "slash_guide": d.slash_guide,
+                            "created_at": d.created_at.to_rfc3339(),
+                            "updated_at": d.updated_at.to_rfc3339(),
+                        })
+                    })
+                    .collect();
+                items.sort_by(|a, b| {
+                    b.get("created_at")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or_default()
+                        .cmp(
+                            a.get("created_at")
+                                .and_then(|v| v.as_str())
+                                .unwrap_or_default(),
+                        )
+                });
+                let total_after_filter = items.len();
+                items.truncate(limit as usize);
+                (items, total_after_filter, "postgres", "postgres")
+            }
+            Err(_) => {
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "admin_disputes_pg_unavailable",
+                        "message": "admin_disputes_pg_unavailable",
+                    })),
+                )
+                    .into_response();
+            }
+        }
+    } else {
+        let store = co.store.read().await;
+        let mut items: Vec<_> = store
+            .disputes
+            .values()
+            .filter(|d| status_filter.is_none_or(|sf| d.status == sf))
+            .filter(|d| {
+                let did = d.id.to_string().to_ascii_lowercase();
+                let oid = d.order_id.to_string().to_ascii_lowercase();
+                if let Some(ref exact) = id_filter {
+                    if did != *exact {
+                        return false;
+                    }
+                }
+                if let Some(ref oid_exact) = order_id_filter {
+                    if oid != *oid_exact {
+                        return false;
+                    }
+                }
+                if let Some(ref needle) = q_filter {
+                    if !did.contains(needle) && !oid.contains(needle) {
+                        return false;
+                    }
+                }
+                true
             })
-        })
-        .collect();
-    items.sort_by(|a, b| {
-        b.get("created_at")
-            .and_then(|v| v.as_str())
-            .unwrap_or_default()
-            .cmp(
-                a.get("created_at")
-                    .and_then(|v| v.as_str())
-                    .unwrap_or_default(),
-            )
-    });
-    let total_after_filter = items.len();
-    items.truncate(limit as usize);
+            .map(|d| {
+                let order = store.orders.get(&d.order_id);
+                let (tourist_id, traveler_id) = chain_off::dispute_party_mirror(order);
+                json!({
+                    "id": d.id,
+                    "order_id": d.order_id,
+                    "tourist_id": tourist_id,
+                    "traveler_id": traveler_id,
+                    "status": d.status,
+                    "arbitrator_id": d.arbitrator_id,
+                    "refund_ratio": d.refund_ratio,
+                    "slash_guide": d.slash_guide,
+                    "created_at": d.created_at,
+                    "updated_at": d.updated_at,
+                })
+            })
+            .collect();
+        items.sort_by(|a, b| {
+            b.get("created_at")
+                .and_then(|v| v.as_str())
+                .unwrap_or_default()
+                .cmp(
+                    a.get("created_at")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or_default(),
+                )
+        });
+        let total_after_filter = items.len();
+        items.truncate(limit as usize);
+        (items, total_after_filter, "memory", "memory")
+    };
 
     write_admin_audit_log_best_effort(
         &state,
@@ -3204,8 +3475,11 @@ pub async fn get_admin_disputes(
             "result_count": items.len(),
             "limit": limit,
             "status": status_filter,
+            "id": id_filter.as_deref(),
+            "order_id": order_id_filter.as_deref(),
+            "q": q_filter.as_deref(),
             "matched_before_limit": total_after_filter,
-            "source": "memory",
+            "source": source,
         }),
     )
     .await;
@@ -3213,10 +3487,20 @@ pub async fn get_admin_disputes(
     let mut body = json!({
         "status": "ok",
         "items": items,
+        "total": total_after_filter,
         "applied_filters": {
             "limit": limit,
             "status": status_filter,
-            "source": "memory",
+            "id": id_filter,
+            "order_id": order_id_filter,
+            "q": q_filter,
+            "source": source,
+        },
+        "meta": {
+            "source": source,
+            "total": total_after_filter,
+            "items_source": items_source,
+            "implementation_status": "admin_disputes_list",
         }
     });
     admin_attach_meta_build(&mut body);
@@ -5743,7 +6027,7 @@ pub async fn post_admin_approval_approve(
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         "admin.console_role.change" => {
             let result = match db::approve_admin_console_role_change_request_with_audit(
@@ -5782,7 +6066,7 @@ pub async fn post_admin_approval_approve(
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         "catalog.entity.publish" => {
             let result = match db::approve_catalog_publish_request_with_audit(
@@ -5819,7 +6103,7 @@ pub async fn post_admin_approval_approve(
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         "catalog.poi_image.publish" => {
             let result = match db::approve_poi_image_publish_request_with_audit(
@@ -5855,7 +6139,7 @@ pub async fn post_admin_approval_approve(
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         "catalog.import.trigger" => {
             let mut tx = match pool.begin().await {
@@ -5904,7 +6188,7 @@ pub async fn post_admin_approval_approve(
                 "note": "Run catalog-import CLI on approved host",
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         "ops.official.account.publish" => {
             let result = match db::approve_official_account_publish_with_audit(
@@ -5939,7 +6223,7 @@ pub async fn post_admin_approval_approve(
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         "ops.official.guide.publish" => {
             let result = match db::approve_official_guide_publish_with_audit(
@@ -5974,7 +6258,7 @@ pub async fn post_admin_approval_approve(
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         "ops.itinerary_template.publish" => {
             let result = match db::approve_official_itinerary_template_publish_with_audit(
@@ -6009,7 +6293,7 @@ pub async fn post_admin_approval_approve(
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         "ops.cold_start.deploy" => {
             let result = match db::approve_cold_start_deploy_with_audit(
@@ -6044,14 +6328,14 @@ pub async fn post_admin_approval_approve(
                 "approved_by": approver_id,
             });
             admin_attach_meta_build(&mut body);
-            return Json(body).into_response();
+            Json(body).into_response()
         }
         _ => {
-            return (
+            (
                 StatusCode::BAD_REQUEST,
                 Json(crate::api_json::err_key("unsupported_approval_action")),
             )
-                .into_response();
+                .into_response()
         }
     }
 }
@@ -8136,7 +8420,7 @@ pub async fn patch_admin_community_moderation(
                 }
             };
             let updated = match db::update_community_report_moderation_conn(
-                &mut *tx,
+                &mut tx,
                 id,
                 body.expected_version,
                 st,
@@ -8166,7 +8450,7 @@ pub async fn patch_admin_community_moderation(
                     .into_response();
             };
             let pid = match db::insert_community_penalty_conn(
-                &mut *tx,
+                &mut tx,
                 Some(id),
                 subject,
                 act,
@@ -8189,8 +8473,8 @@ pub async fn patch_admin_community_moderation(
                         .into_response();
                 }
             };
-            if act == "content_remove" {
-                if db::apply_content_remove_for_report_conn(&mut *tx, &cur)
+            if act == "content_remove"
+                && db::apply_content_remove_for_report_conn(&mut tx, &cur)
                     .await
                     .is_err()
                 {
@@ -8203,9 +8487,8 @@ pub async fn patch_admin_community_moderation(
                     )
                         .into_response();
                 }
-            }
             if db::insert_community_moderation_case_conn(
-                &mut *tx,
+                &mut tx,
                 id,
                 actor_id,
                 &cur.status,
@@ -8226,7 +8509,7 @@ pub async fn patch_admin_community_moderation(
                 )
                     .into_response();
             }
-            if let Err(_) = tx.commit().await {
+            if (tx.commit().await).is_err() {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     Json(crate::api_json::err_key(
@@ -8250,7 +8533,7 @@ pub async fn patch_admin_community_moderation(
                 }
             };
             let updated = match db::update_community_report_moderation_conn(
-                &mut *tx,
+                &mut tx,
                 id,
                 body.expected_version,
                 st,
@@ -8280,7 +8563,7 @@ pub async fn patch_admin_community_moderation(
                     .into_response();
             };
             if db::insert_community_moderation_case_conn(
-                &mut *tx,
+                &mut tx,
                 id,
                 actor_id,
                 &cur.status,
@@ -8301,7 +8584,7 @@ pub async fn patch_admin_community_moderation(
                 )
                     .into_response();
             }
-            if let Err(_) = tx.commit().await {
+            if (tx.commit().await).is_err() {
                 return (
                     StatusCode::INTERNAL_SERVER_ERROR,
                     Json(crate::api_json::err_key(
@@ -9177,8 +9460,7 @@ pub async fn patch_admin_community_abuse_policy(
         )
             .into_response();
     }
-    if let Err(_) =
-        db::save_community_abuse_policy_and_audit_log(pool, actor_id, &after, &before).await
+    if (db::save_community_abuse_policy_and_audit_log(pool, actor_id, &after, &before).await).is_err()
     {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,

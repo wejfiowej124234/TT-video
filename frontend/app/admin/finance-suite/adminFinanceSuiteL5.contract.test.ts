@@ -49,13 +49,16 @@ describe("admin finance suite L5 (①)", () => {
     expect(partialHref).toContain('fin_suite_depth: "partial"');
     expect(workflowModel).toContain("admin_fin_workflow_audit");
     expect(workflow).toContain("data-tt-admin-fin-workflow-step");
-    // Batch-13 FP-C · FN2/FN5/FN6
+    // Batch-13 FP-C · FN2/FN5/FN6 · Batch-14 HU-571 merged secondary nav
     expect(pageMain).toContain('data-tt-admin-fin-suite-primary-nav="workflow"');
     expect(pageMain).toContain('data-tt-admin-fin-suite-nav-tiles-fold="1"');
+    expect(pageMain).toContain('data-tt-admin-fin-suite-secondary-nav="merged"');
     expect(pageMain).toContain('data-tt-admin-fin-suite-treasury-fold="1"');
     expect(pageMain.indexOf('data-tt-admin-fin-suite-primary-nav="workflow"')).toBeLessThan(
       pageMain.indexOf('data-tt-admin-fin-suite-nav-tiles-fold="1"'),
     );
+    expect(pageMain).not.toContain('data-tt-admin-fin-suite-secondary-nav="module-catalog"');
+    expect(pageMain).not.toContain('data-tt-admin-fin-suite-secondary-nav="tiles"');
   });
 
   it("uses localized module status badges not raw status strings", () => {

@@ -164,6 +164,34 @@ pub async fn count_disputes(
     }
 }
 
+/// Batch-14 HU-569 · Admin 争议列表正式库行（`LEFT JOIN orders` 取当事人）。
+#[derive(Debug, Clone, sqlx::FromRow)]
+pub struct AdminDisputeListRow {
+    pub id: Uuid,
+    pub order_id: Uuid,
+    pub status: String,
+    pub arbitrator_id: Option<Uuid>,
+    pub refund_ratio: Option<f64>,
+    pub slash_guide: Option<bool>,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
+    pub order_tourist_id: Option<Uuid>,
+}
+
+/// Batch-14 HU-569 · Admin `GET /admin/disputes` 正式库清单（有 pool 时优先于此，禁 memory 裂脑签收）。
+pub async fn list_disputes_admin(pool: &PgPool) -> Result<Vec<AdminDisputeListRow>, sqlx::Error> {
+    sqlx::query_as::<_, AdminDisputeListRow>(
+        r#"
+        SELECT d.id, d.order_id, d.status, d.arbitrator_id, d.refund_ratio, d.slash_guide,
+               d.created_at, d.updated_at, o.tourist_id AS order_tourist_id
+        FROM disputes d
+        LEFT JOIN orders o ON o.id = d.order_id
+        "#,
+    )
+    .fetch_all(pool)
+    .await
+}
+
 /// 加载所有争议（启动 hydrate）
 pub async fn list_disputes(pool: &PgPool) -> Result<Vec<DbDisputeRow>, sqlx::Error> {
     #[derive(sqlx::FromRow)]

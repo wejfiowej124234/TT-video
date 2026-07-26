@@ -56,6 +56,7 @@ import {
   ADMIN_TABLE_TD_MONO_CLASS,
   ADMIN_TABLE_TD_TIMESTAMP_CLASS,
   ADMIN_TEXT_META_CLASS,
+  ADMIN_TEXT_MUTED_CLASS,
   ADMIN_TEXT_SECONDARY_CLASS,
 } from "@/lib/adminUi";
 
@@ -319,7 +320,7 @@ export function AdminOrdersPageMain() {
                         {idShort || t("admin_em_dash")}
                       </p>
                       {o.escrow_address ? (
-                        <p className={`mt-0.5 ${ADMIN_TABLE_TD_MONO_CLASS} text-ink-500`} title={o.escrow_address}>
+                        <p className={`mt-0.5 ${ADMIN_TABLE_TD_MONO_CLASS} ${ADMIN_TEXT_MUTED_CLASS}`} title={o.escrow_address}>
                           {t("admin_orders_colEscrow")}: {shortEvmAddress(o.escrow_address)}
                         </p>
                       ) : null}

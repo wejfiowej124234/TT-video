@@ -24,7 +24,9 @@ import {
   ADMIN_TABLE_SECTION_CLASS,
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
   ADMIN_TABLE_DIVIDE_CLASS,
-  ADMIN_ACQUISITION_SUSPENDED_ROW_BADGE_CLASS,} from "@/lib/adminUi";
+  ADMIN_ACQUISITION_SUSPENDED_ROW_BADGE_CLASS,
+  ADMIN_TEXT_MUTED_CLASS,
+} from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import type { AdminUser } from "./adminUsersPageTypes";
 import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
@@ -86,7 +88,7 @@ export function AdminUsersDataSection({
 
       {!canUsersWrite || !canAcquisitionSuspend ? (
         <p
-          className="mt-3 text-meta text-ink-500"
+          className={`mt-3 text-meta ${ADMIN_TEXT_MUTED_CLASS}`}
           role="status"
           data-tt-admin-users-write-gate="advisory-disabled-v1"
         >
@@ -166,7 +168,7 @@ export function AdminUsersDataSection({
                           {t("admin_users_acquisitionSuspendedBadge")}
                         </Link>
                       ) : (
-                        <span className="text-meta text-ink-500">{t("admin_users_acquisitionNotSuspended")}</span>
+                        <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_users_acquisitionNotSuspended")}</span>
                       )}
                       <button
                         type="button"

@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.psg_change_record.v1",
+  "id": "PCR-20260726-BATCH14-ADMIN-RELEASE-REALITY-AUDIT",
+  "stamp": "20260726T091500Z",
+  "recorded_utc": "2026-07-26T09:15:00Z",
+  "class": "docs_registry_evidence_alignment",
+  "summary": "Batch-14 ADMIN_RELEASE_REALITY_AUDIT NEED_FIX; scores 18/22/14/28/19=/101/200; RELEASE_GRADE NO; registers HU-568～577; does not close HU-495/487/490; tip immobile; HG/Cutover LOCKED; FINANCE_WRITE FORBIDDEN; no product code",
+  "tip_mutated": false,
+  "final_truth_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "staging_web_bake": "67a6ccba716d3829dd2f1d6d4202209018562929",
+  "staging_api_build": "892c20c830bb7432441f540311277a1a66a1c12d",
+  "mutates_candidate_v2": false,
+  "mutates_hard_gate": false,
+  "mutates_cutover": false,
+  "patch": "PATCH-STG-018",
+  "equals_production_go": false,
+  "code_touched": false,
+  "TT_ADMIN_BATCH14_ADMIN_RELEASE_REALITY_AUDIT": "NEED_FIX",
+  "TT_ADMIN_BATCH14_RELEASE_GRADE": "NO",
+  "TT_ADMIN_BATCH14_SCORE_TOTAL": "101/200",
+  "TT_ADMIN_BATCH13_HU_495": "OPEN",
+  "TT_ADMIN_BATCH13_HU_487": "OPEN",
+  "TT_ADMIN_BATCH13_HU_490": "OPEN",
+  "TT_FINANCE_WRITE": "FORBIDDEN",
+  "artifacts": [
+    "docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md",
+    "docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.json",
+    "evidence/manual-uat/sessions/20260726T091122Z-batch14/admin-release-reality-probe.json"
+  ],
+  "status": "ACTIVE",
+  "follows": "PCR-20260726-HUMAN-UIUX-BATCH-14-CONTENT-PREP"
+}
