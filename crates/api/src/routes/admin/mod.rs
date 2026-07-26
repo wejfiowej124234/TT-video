@@ -1874,6 +1874,101 @@ pub async fn get_admin_guides(
     limit = limit.clamp(1, 500);
     let status_filter = q.status.as_deref().map(str::trim).filter(|s| !s.is_empty());
 
+    // Batch-14 HU-491/493 · 有 PG 时正式库清单（禁 memory 与申请详单裂脑）。
+    if let Some(pool) = co.db_pool.as_ref() {
+        match db::list_guides(pool).await {
+            Ok(rows) => {
+                let mut items: Vec<_> = rows
+                    .into_iter()
+                    .filter(|g| status_filter.is_none_or(|sf| g.status == sf))
+                    .map(|g| {
+                        json!({
+                            "id": g.id,
+                            "user_id": g.user_id,
+                            "city": g.city,
+                            "country_code": g.country_code,
+                            "languages": g.languages,
+                            "service_types": g.service_types,
+                            "bio": g.bio,
+                            "wallet_address": g.wallet_address,
+                            "real_name": g.real_name,
+                            "stake_amount": g.stake_amount,
+                            "hourly_rate": g.hourly_rate,
+                            "avatar_url": g.avatar_url,
+                            "public_title": g.public_title,
+                            "status": g.status,
+                            "id_photo_url": g.id_photo_url,
+                            "language_cert_url": g.language_cert_url,
+                            "guide_license_url": g.guide_license_url,
+                            "rejection_codes": g.rejection_codes,
+                            "rejection_message": g.rejection_message,
+                            "created_at": g.created_at,
+                            "updated_at": g.updated_at,
+                        })
+                    })
+                    .collect();
+                items.sort_by(|a, b| {
+                    b.get("created_at")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or_default()
+                        .cmp(
+                            a.get("created_at")
+                                .and_then(|v| v.as_str())
+                                .unwrap_or_default(),
+                        )
+                });
+                let total_after_filter = items.len();
+                items.truncate(limit as usize);
+                write_admin_audit_log_best_effort(
+                    &state,
+                    actor_id,
+                    request_id.as_deref(),
+                    "admin.guides.read",
+                    Some("guides"),
+                    None,
+                    json!({
+                        "result_count": items.len(),
+                        "limit": limit,
+                        "status": status_filter,
+                        "matched_before_limit": total_after_filter,
+                        "source": "postgres",
+                    }),
+                )
+                .await;
+                let mut body = json!({
+                    "status": "ok",
+                    "items": items,
+                    "total": total_after_filter,
+                    "applied_filters": {
+                        "limit": limit,
+                        "status": status_filter,
+                        "source": "postgres",
+                        "matched_before_limit": total_after_filter,
+                    },
+                    "meta": {
+                        "source": "postgres",
+                        "items_source": "postgres",
+                        "total": total_after_filter,
+                        "implementation_status": "admin_guides_list_pg",
+                    }
+                });
+                admin_attach_meta_build(&mut body);
+                return Json(body).into_response();
+            }
+            Err(e) => {
+                eprintln!("admin_guides_pg_unavailable: {e}");
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "admin_guides_pg_unavailable",
+                        "message": "admin_guides_pg_unavailable",
+                    })),
+                )
+                    .into_response();
+            }
+        }
+    }
+
     let store = co.store.read().await;
 
     let mut items: Vec<_> = store
@@ -1915,10 +2010,18 @@ pub async fn get_admin_guides(
     let mut body = json!({
         "status": "ok",
         "items": items,
+        "total": total_after_filter,
         "applied_filters": {
             "limit": limit,
             "status": status_filter,
             "source": "memory",
+            "matched_before_limit": total_after_filter,
+        },
+        "meta": {
+            "source": "memory",
+            "items_source": "memory",
+            "total": total_after_filter,
+            "implementation_status": "admin_guides_list_memory",
         }
     });
     admin_attach_meta_build(&mut body);
@@ -1952,6 +2055,75 @@ pub async fn get_admin_guide_by_id(
 
     let request_id = request_id_from_headers(&headers);
 
+    // Batch-14 HU-491 · 有 PG 时详情走正式库（与列表同源 · 禁 memory 裂脑）。
+    if let Some(pool) = co.db_pool.as_ref() {
+        match db::select_guide_by_id(pool, guide_uuid).await {
+            Ok(Some(g)) => {
+                let mut body = json!({
+                    "status": "ok",
+                    "guide": {
+                        "id": g.id,
+                        "user_id": g.user_id,
+                        "city": g.city,
+                        "country_code": g.country_code,
+                        "languages": g.languages,
+                        "service_types": g.service_types,
+                        "bio": g.bio,
+                        "wallet_address": g.wallet_address,
+                        "real_name": g.real_name,
+                        "stake_amount": g.stake_amount,
+                        "hourly_rate": g.hourly_rate,
+                        "avatar_url": g.avatar_url,
+                        "public_title": g.public_title,
+                        "status": g.status,
+                        "id_photo_url": g.id_photo_url,
+                        "language_cert_url": g.language_cert_url,
+                        "guide_license_url": g.guide_license_url,
+                        "rejection_codes": g.rejection_codes,
+                        "rejection_message": g.rejection_message,
+                        "created_at": g.created_at,
+                        "updated_at": g.updated_at,
+                    },
+                    "meta": {
+                        "source": "postgres",
+                        "implementation_status": "admin_guide_detail_pg",
+                    }
+                });
+                admin_attach_meta_build(&mut body);
+                let resource_id = guide_uuid.to_string();
+                write_admin_audit_log_best_effort(
+                    &state,
+                    actor_id,
+                    request_id.as_deref(),
+                    "admin.guides.detail.read",
+                    Some("guides"),
+                    Some(resource_id.as_str()),
+                    json!({ "guide_id": resource_id, "source": "postgres" }),
+                )
+                .await;
+                return Json(body).into_response();
+            }
+            Ok(None) => {
+                return (
+                    StatusCode::NOT_FOUND,
+                    Json(json!({"error": "guide_not_found", "message": "guide_not_found"})),
+                )
+                    .into_response();
+            }
+            Err(e) => {
+                eprintln!("admin_guide_detail_pg_unavailable: {e}");
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "admin_guides_pg_unavailable",
+                        "message": "admin_guides_pg_unavailable",
+                    })),
+                )
+                    .into_response();
+            }
+        }
+    }
+
     let store = co.store.read().await;
     let Some(g) = store.guides.get(&guide_uuid) else {
         return (
@@ -1972,7 +2144,7 @@ pub async fn get_admin_guide_by_id(
         "admin.guides.detail.read",
         Some("guides"),
         Some(resource_id.as_str()),
-        json!({ "guide_id": resource_id }),
+        json!({ "guide_id": resource_id, "source": "memory" }),
     )
     .await;
 
@@ -3395,7 +3567,8 @@ pub async fn get_admin_disputes(
                 items.truncate(limit as usize);
                 (items, total_after_filter, "postgres", "postgres")
             }
-            Err(_) => {
+            Err(e) => {
+                eprintln!("admin_disputes_pg_unavailable: {e}");
                 return (
                     StatusCode::SERVICE_UNAVAILABLE,
                     Json(json!({

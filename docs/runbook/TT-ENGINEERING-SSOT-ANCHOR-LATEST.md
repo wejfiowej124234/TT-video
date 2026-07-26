@@ -77,8 +77,91 @@ Engineering SSOT Anchor
 
 **Cite:** [`TT-FINAL-TRUTH-PRE-MAINNET-EXECUTION-LADDER-LATEST.md`](./TT-FINAL-TRUTH-PRE-MAINNET-EXECUTION-LADDER-LATEST.md) · [`registry/final-truth-pre-mainnet-execution-ladder.v1.yaml`](../../registry/final-truth-pre-mainnet-execution-ladder.v1.yaml)
 
-**禁止**新平行体系 · **禁止**改 Candidate v2 / PSG-EGM / Product Release Baseline。  
-L5 达标前 **禁止** Web3 主网部署。
+### Living · Batch-10 FINAL CLOSED FROZEN · Mainnet Deploy Prep Engineering cite（2026-07-25 · tip immobile）
+
+| 键 | 值 |
+|----|-----|
+| Track | **B** Staging · `PATCH-STG-014` · Batch-10 **archive face FROZEN** |
+| Status | `TT_ADMIN_BATCH10_STATUS: FINAL_CLOSED_FROZEN` · `TT_ADMIN_BATCH10_FREEZE_STATUS: FROZEN` · **W14 CLOSED ②** · bake `2026-07-25T06:16:38Z` · **FINAL CLOSED: YES** |
+| Phase now | `TT_PHASE_NOW: MAINNET_DEPLOY_PREP_PLACEHOLDER` |
+| Sync rule | 冻结基线不可改写冒充新 GO · 部署后一次性 Final Align |
+| Mainnet | **PLACEHOLDER** · Post-mainnet Final Align **DEFERRED** · Hard Gate/Cutover **LOCKED** · GO **NO_GO** |
+| Freeze | [`TT-BATCH10-FINAL-CLOSED-LATEST`](./TT-BATCH10-FINAL-CLOSED-LATEST.md) |
+| Phase | [`TT-FINAL-TRUTH-PHASE-TRANSITION-BATCH10-MAINLINE-LATEST`](./TT-FINAL-TRUTH-PHASE-TRANSITION-BATCH10-MAINLINE-LATEST.md) |
+| Cite | [`BATCH-10-FINAL-TRUTH-CITE`](./TT-PRE-MAINNET-HUMAN-UIUX-BATCH-10-FINAL-TRUTH-BASELINE-CITE-LATEST.md) · [`W14-VERIFY`](./TT-BATCH10-W14-STAGING-VERIFY-LATEST.md) · prior W13～W7 verify retained |
+| Tip | **仍** `ea71c577` · **≠** GO |
+
+### Living · Batch-10 W7 Engineering cite（2026-07-25 · tip immobile · **retained under FINAL CLOSED FROZEN**）
+
+| 键 | 值 |
+|----|-----|
+| Patch | PATCH-STG-014 · Web bake `892c20c8` · `build_time=2026-07-25T03:19:32Z` |
+| Product face | W7 CLOSED ② · HU-278/280/281/289/302 · four-greens PASS |
+| Refresh | [`TT-FINAL-TRUTH-BASELINE-REFRESH-LATEST`](./TT-FINAL-TRUTH-BASELINE-REFRESH-LATEST.md) |
+| Tip | **仍** `ea71c577` · **≠** GO |
+
+**禁止**新平行体系 · **禁止**改 Candidate v2 / PSG-EGM / Product Release Baseline 字节（仅活面 cite）。
+
+### 4.1 · Living ops cite（Batch-7 · 2026-07-24 · tip immobile · **R1 CLOSED**)
+
+| 键 | 值 |
+|----|-----|
+| Track | **B** Staging Patch · `PATCH-STG-011` · Product/Release Baseline 活面 |
+| Scope | Admin Shell IA + Inbox+guide + Home slim（HU-037～050）· Owner Freeze 窄豁免 |
+| Tip / Pin | **cite-only** `ea71c577` · `PSG-REL-20260720-WEB3-CAND-V2` — **不**因本批移动 |
+| Staging Web bake | `892c20c8`（≠ tip · CONFIRM_DESIGN） |
+| R1 | `TT_ADMIN_BATCH7_PUBLISH_SCORE: 100` · Staging UAT PASS · Delta dry-run PASS_WITH_ED |
+| Cite | [`TT-PRE-MAINNET-HUMAN-UIUX-BATCH-7-FINAL-TRUTH-BASELINE-CITE-LATEST`](./TT-PRE-MAINNET-HUMAN-UIUX-BATCH-7-FINAL-TRUTH-BASELINE-CITE-LATEST.md) · PCR-20260724-HUMAN-UIUX-BATCH-7-FINAL-TRUTH-CITE |
+| Forbidden | Candidate v2 · V3.1.1 · EGM · Gov Anchor · Hard Gate · Cutover · Production GO |
+| SSOT | [`TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST`](./TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md) · [`TT-STAGING-PATCH-LEDGER-LATEST`](./TT-STAGING-PATCH-LEDGER-LATEST.md) |
+
+### 4.2 · Living ops cite（Batch-8 · 2026-07-24 · tip immobile · **ARCHIVED**)
+
+| 键 | 值 |
+|----|-----|
+| Track | **B** Staging Patch · `PATCH-STG-012` · Product/Release Baseline 活面 |
+| Scope | Batch-8 **ARCHIVED** · UI+HU-098 API frozen · Phase③ 剩余工作 = 新批次 · sole SSOT = Final Truth Baseline |
+| Tip / Pin | **cite-only** `ea71c577` · `PSG-REL-20260720-WEB3-CAND-V2` — **不**因本批移动 |
+| Staging Web/API bake | stamp `892c20c8` · Web `build_time=2026-07-24T10:08:13Z` · API `11:19:01Z`（HU-098 user-upsert rebake · WORKTREE code · ED） |
+| Gates | ① vitest PASS · Delta dry-run PASS_WITH_ED（2026-07-24T11:34:16Z）· Staging bake WEB+API OK · **Owner UAT PASS** · **HU-098 business UAT PASS** · **HU-098 freeze recheck PASS** |
+| Status | `TT_ADMIN_BATCH8_STATUS: ARCHIVED` · `TT_ADMIN_BATCH8_FINAL_CLOSURE: true` · `TT_ADMIN_BATCH8_HU098: CLOSED` · `TT_HU098_STATUS: CLOSED` · `TT_HU098_API_CODE_FROZEN: true` · `TT_HU098_ACCEPTANCE_BASELINE: second_reinforce_user_kind_upsert` · `TT_HU098_FREEZE_FINAL_RECHECK: PASS` · `TT_ADMIN_BATCH8_OWNER_UAT: PASS` |
+| HU-098 evidence | business `HU098-STEWARD-APPROVE-RUNTIME.json` · freeze `HU098-FREEZE-FINAL-RECHECK.json` · baseline API `build_time=2026-07-24T11:19:01Z` · **不再调整 API** |
+| Cite | [`BATCH-8-ARCHIVE`](../../evidence/GO_pre_mainnet_human_uiux/batch8_archive/BATCH-8-ARCHIVE-LATEST.md) · [`Phase③ remaining`](./TT-PHASE3-REMAINING-WORK-AFTER-BATCH8-ARCHIVE-LATEST.md) · PCR-20260724-HUMAN-UIUX-BATCH-8-ARCHIVE |
+| Forbidden | Candidate v2 · V3.1.1 · EGM · Gov Anchor · Hard Gate · Cutover · Production GO · tip move |
+| Residual | PAGE_SURFACE Unsplash DRIFT · WORKTREE SHA ED · origin unpushed · C2 Staging `users.role=region_steward` post-UAT（Owner 可恢复 tourist · ≠ GO） |
+| SSOT | Register · Ledger PATCH-STG-012 |
+
+### 4.3 · Living ops cite（Batch-9 · tip immobile · **FINAL CLOSED** · Residual Final **CLOSED**）
+
+| 键 | 值 |
+|----|-----|
+| Track | **B** Staging Patch · `PATCH-STG-013` · Product/Release Baseline **archive face**（Admin Workbench L5） |
+| Scope | U-pack FINAL CLOSED · B19 Residual A CLOSED · Residual Final disposition CLOSED · Batch-8 **不回流** |
+| Tip / Pin | **cite-only** `ea71c577` · `PSG-REL-20260720-WEB3-CAND-V2` — **不**因本批移动 |
+| Staging bake | Web `build_time=2026-07-25T01:00:44Z` · API `2026-07-24T15:51:36Z` · pin `892c20c8` ED |
+| Status | `TT_ADMIN_BATCH9_STATUS: FINAL_CLOSED` · `TT_BATCH9_RESIDUAL_FINAL: CLOSED` · `TT_WEB3_MAINNET_BASELINE: PLACEHOLDER` |
+| Cite | [`BATCH-9-FINAL-TRUTH-CITE`](./TT-PRE-MAINNET-HUMAN-UIUX-BATCH-9-FINAL-TRUTH-BASELINE-CITE-LATEST.md) · [`TT-BATCH9-RESIDUAL-FINAL-CLOSURE-LATEST`](./TT-BATCH9-RESIDUAL-FINAL-CLOSURE-LATEST.md) · [`TT-BATCH9-FINAL-CLOSED-LATEST`](./TT-BATCH9-FINAL-CLOSED-LATEST.md) · PCR-20260725-BATCH9-RESIDUAL-FINAL-MAINNET-PLACEHOLDER |
+| Forbidden | Candidate v2 bytes mutate · Hard Gate unlock · Cutover · Production GO · tip move · Batch-9 WP reopen |
+| SSOT | Register · Ledger PATCH-STG-013 |
+| Mainnet | **PLACEHOLDER** in Final Truth · formal Recertify **DEFERRED_UNTIL_MAINNET_DEPLOY_COMPLETE** |
+
+### Living · Batch-14 Collective Fix · Engineering cite（2026-07-26 · tip immobile）
+
+| 键 | 值 |
+|----|-----|
+| Track | **B** Staging Patch · `PATCH-STG-019` · Admin Release Reality NEED_FIX → Collective Fix |
+| Working bake | `a6f481c3…`（Web+API · **≠ tip** · CONFIRM_DESIGN working bake） |
+| L1 / L2 | Admin users/orders/disputes **PG-first** · `meta.source=postgres` · L2 probe **PASS** |
+| Disputes CAST | `list_disputes_admin` · `CAST(refund_ratio AS double precision)` + tourist_id 补查 · **SSOT 固化** |
+| HU-491 | `select_latest_guide_for_user` · Admin guides list/detail PG · guide-application PG 读源 |
+| Tip / Pin | **cite-only** `ea71c577` · `PSG-REL-20260720-WEB3-CAND-V2` — **不**因本批移动 |
+| Forbidden | Hard Gate unlock · Cutover · Production GO · tip move · FINANCE_WRITE |
+| Cite | [`TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST`](./TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST.md) · [`ADMIN-RELEASE-REALITY-AUDIT`](./TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md) · `evidence/GO_batch14_collective_fix/` |
+| L5 Recertify | **DEFERRED** until remaining HU close · **≠** Production GO |
+
+**禁止**用本批 Working bake SHA 冒充 tip · **禁止**宣称 Production GO。
+
+---
 
 ## 诚实边界
 
@@ -94,6 +177,43 @@ CQ-02 后须先过 Compatibility Revalidation，再进 Human Product Acceptance�
 
 ---
 
+## Track B · Batch-12 W08a（cite · tip 不变 · 2026-07-25）
+
+**PCR / Patch:** `PATCH-STG-016` · [`W08A-FIX`](./TT-BATCH12-W08A-SHELL-PERMISSIONS-FIX-NOTE-LATEST.md) · [`W08A-STAGING 7/7`](./TT-BATCH12-W08A-STAGING-VERIFY-LATEST.md) · [`W08A-PROGRESS-CITE`](./TT-BATCH12-W08A-FINAL-TRUTH-PROGRESS-CITE-LATEST.md)
+
+| 键 | 值 |
+|----|-----|
+| Living tip（仍唯一） | `ea71c577` · pin Candidate v2 |
+| Product patch HEAD | WORKTREE · Admin Shell W08a（HU-465/466/467）**CLOSED ②** |
+| Staging Web bake | `build_time=2026-07-25T14:44:24Z` · sync · PAGE_SURFACE_DRIFT=ED |
+| Scope | 顶栏分叶资金闸 · caps 失败注入权限中心 · 加载骨架 · ≤5×12 保持 |
+| Hard Gate / Cutover / GO | **LOCKED / LOCKED / NO_GO** |
+| Finance write | **FORBIDDEN_BY_DESIGN** |
+| Next | **W08b** |
+
+**禁止**把 Track B bake SHA 写成 tip；**禁止**用本波冒充 Batch-12 CLOSED / Hard Gate PASS / Production GO。  
+**全量 Final Truth 十四锚刷新：** 留到 **Batch-12 收口**（本波仅 progress cite）。
+
+---
+
+## Track B · Batch-11 FINAL CLOSED + PRR PREP（cite · tip 不变）
+
+**PCR:** [`PCR-20260725-BATCH11-PRR-PREP`](../../registry/psg-change-records/PCR-20260725-BATCH11-PRR-PREP.json)  
+**Runbook:** [`TT-BATCH11-PRR-PREP-LATEST.md`](./TT-BATCH11-PRR-PREP-LATEST.md) · [`TT-BATCH11-FINAL-CLOSED-LATEST.md`](./TT-BATCH11-FINAL-CLOSED-LATEST.md)
+
+| 键 | 值 |
+|----|-----|
+| Living tip（仍唯一） | `ea71c577` · pin Candidate v2 |
+| Product patch HEAD | WORKTREE on `892c20c8`（Track B ED） |
+| Staging Web bake cite | `2026-07-25T12:41:19Z` · W14/W15 · `PATCH-STG-015` |
+| PRR PREP | `PRR_PREP_PASS_WITH_ED` · Feature Inventory / Reality / Owner / Release Integrity **ALIGNED** |
+| Hard Gate / Cutover / GO | **LOCKED / LOCKED / NO_GO** · **eval Hard Gate = false** |
+| Finance write | **FORBIDDEN_BY_DESIGN** |
+
+**禁止**把 Track B bake SHA 写成 tip；**禁止**用本批冒充正式 Hard Gate PASS / Production GO。
+
+---
+
 ## Track B · Pre-Mainnet Human UI/UX Batches 1–6（cite · tip 不变）
 
 **PCR:** [`PCR-20260724-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-CITE`](../../registry/psg-change-records/PCR-20260724-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-CITE.json)  
@@ -102,10 +222,10 @@ CQ-02 后须先过 Compatibility Revalidation，再进 Human Product Acceptance�
 | 键 | 值 |
 |----|-----|
 | Living tip（仍唯一） | `ea71c577` · pin Candidate v2 |
-| Product patch HEAD | `359273e5`（含 Batch-6） |
-| Staging Web bake | `1e1908a1` |
-| Staging API | `12b41d56`（邮件 Round · ED） |
-| Patch IDs | PATCH-STG-008 · 009 · 010 |
+| Product patch HEAD | WORKTREE on `892c20c8`（Batch-8 bake cite · Batch-7 stamp） |
+| Staging Web bake | stamp `892c20c8` · Batch-8 `build_time=2026-07-24T10:08:13Z`（PATCH-STG-012）· 祖先 Batch-7/6 |
+| Staging API | stamp `892c20c8` · Batch-8 `build_time=2026-07-24T11:19:01Z`（HU-098 business UAT rebake） |
+| Patch IDs | PATCH-STG-008 · 009 · 010 · 011 · **012** |
 | Hard Gate / Cutover / GO | **未因本批关闭或 PASS** |
 
 **禁止**把 Track B bake SHA 写成 tip；**禁止**用本批冒充正式 Delta Recertify / Production GO。

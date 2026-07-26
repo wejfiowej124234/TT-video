@@ -1,13 +1,15 @@
 # Batch-14 · ADMIN_RELEASE_REALITY_AUDIT · LATEST
 
 **Machine:** `TT_ADMIN_BATCH14_ADMIN_RELEASE_REALITY_AUDIT`  
-**Stamp:** `20260726T091500Z`  
-**Verdict:** **`ADMIN_RELEASE_REALITY_AUDIT_NEED_FIX`** · **`RELEASE_GRADE: NO`** · **`Total: NEED_FIX`**  
-**Patch:** `PATCH-STG-018`（审计入册 · **本口令不改产品代码**）  
+**Stamp:** `20260726T105300Z`  
+**Verdict:** **`ADMIN_RELEASE_REALITY_AUDIT_NEED_FIX`** · **`RELEASE_GRADE: NO`** · **`Total: NEED_FIX`** · **122/200**（L2 后抬阶 · **≠** 满分）  
+**Patch:** `PATCH-STG-019`（集体改 · L1/L2 PASS · L5 Recertify **DEFERRED**）  
+**Working bake:** Web=`a6f481c3…` · API=`a6f481c3…` · **HU-568 CLOSED**  
+**L2 probe:** [`L2-RUNTIME-PROBE-LATEST.json`](../../evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json) · users/orders/disputes **`postgres`**  
 **JSON:** [`TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.json`](./TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.json)  
-**开录：** [`BATCH14-OPEN`](./TT-BATCH14-OPEN-RECORDING-LATEST.md) · Plan [`BATCH-14-PLAN`](./TT-PRE-MAINNET-HUMAN-UIUX-BATCH-14-PLAN-LATEST.md)  
+**开录：** [`BATCH14-OPEN`](./TT-BATCH14-OPEN-RECORDING-LATEST.md) · Fix [`COLLECTIVE-FIX`](./TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST.md)  
 **证据会话：** `evidence/manual-uat/sessions/20260726T091122Z-batch14/` · 复截 cite `…/20260726T081800Z-batch13-fp-e/batch13-screenshots/`  
-**≠ tip 移动 · ≠ Hard Gate unlock · ≠ Cutover · ≠ Production GO · ≠ 假满分 · ≠ 重新设计 Web3**
+**≠ tip 移动 · ≠ Hard Gate unlock · ≠ Cutover · ≠ Production GO · ≠ 假满分 · ≠ 重新设计 Web3** · tip `ea71c577` **IMMOBILE**
 
 ---
 

@@ -180,16 +180,51 @@ pub struct AdminDisputeListRow {
 
 /// Batch-14 HU-569 · Admin `GET /admin/disputes` 正式库清单（有 pool 时优先于此，禁 memory 裂脑签收）。
 pub async fn list_disputes_admin(pool: &PgPool) -> Result<Vec<AdminDisputeListRow>, sqlx::Error> {
-    sqlx::query_as::<_, AdminDisputeListRow>(
+    // 两段查询：先拉争议行（NUMERIC→f64 CAST），再补 orders.tourist_id。
+    // 避免单条 JOIN 在 Staging 上不可见失败（空表仍 503）时无法定位。
+    #[derive(Debug, sqlx::FromRow)]
+    struct DisputeRow {
+        id: Uuid,
+        order_id: Uuid,
+        status: String,
+        arbitrator_id: Option<Uuid>,
+        refund_ratio: Option<f64>,
+        slash_guide: Option<bool>,
+        created_at: DateTime<Utc>,
+        updated_at: DateTime<Utc>,
+    }
+    let rows = sqlx::query_as::<_, DisputeRow>(
         r#"
-        SELECT d.id, d.order_id, d.status, d.arbitrator_id, d.refund_ratio, d.slash_guide,
-               d.created_at, d.updated_at, o.tourist_id AS order_tourist_id
-        FROM disputes d
-        LEFT JOIN orders o ON o.id = d.order_id
+        SELECT id, order_id, status, arbitrator_id,
+               CAST(refund_ratio AS double precision) AS refund_ratio, slash_guide,
+               created_at, updated_at
+        FROM disputes
+        ORDER BY created_at DESC
         "#,
     )
     .fetch_all(pool)
-    .await
+    .await?;
+
+    let mut out = Vec::with_capacity(rows.len());
+    for r in rows {
+        let order_tourist_id: Option<Uuid> =
+            sqlx::query_scalar::<_, Uuid>("SELECT tourist_id FROM orders WHERE id = $1")
+                .bind(r.order_id)
+                .fetch_optional(pool)
+                .await?;
+        out.push(AdminDisputeListRow {
+            id: r.id,
+            order_id: r.order_id,
+            status: r.status,
+            arbitrator_id: r.arbitrator_id,
+            refund_ratio: r.refund_ratio,
+            slash_guide: r.slash_guide,
+            created_at: r.created_at,
+            updated_at: r.updated_at,
+            order_tourist_id,
+        });
+    }
+    Ok(out)
 }
 
 /// 加载所有争议（启动 hydrate）

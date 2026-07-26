@@ -1,5 +1,6 @@
 //! ①.5 Phase A：**guides / onboarding_*** 写入时双写 **`role_applications`** / **`role_documents`** / **`staking_positions`**。
-//! **读路径不变**；失败仅审计日志，不推翻主表写入（除非日后 `TRAVELTRUST_STRICT_ROLE_IDENTITY_DUAL_WRITE=1`）。
+//! 写路径失败仅审计日志（除非 `TRAVELTRUST_STRICT_ROLE_IDENTITY_DUAL_WRITE=1`）。
+//! **Admin 入驻列表（HU-098）：** 有 PG 池时读 `role_applications` 为 SSOT；无池仍读 chain_off 内存。
 
 use chrono::{DateTime, Utc};
 use serde_json::json;
@@ -61,10 +62,15 @@ async fn upsert_application(
     created_at: DateTime<Utc>,
     updated_at: DateTime<Utc>,
 ) -> Result<Uuid, sqlx::Error> {
+    // HU-098：须按 legacy 业务键 upsert；缺键则每次 INSERT → Admin 列表重复行（审批后仍 stake_pending）
     let legacy_key = if legacy_ref.get("guides_id").is_some() {
         "guides_id"
     } else if legacy_ref.get("entitlement_id").is_some() {
         "entitlement_id"
+    } else if legacy_ref.get("steward_application_id").is_some() {
+        "steward_application_id"
+    } else if legacy_ref.get("provider_application_id").is_some() {
+        "provider_application_id"
     } else {
         return sqlx::query_scalar::<_, Uuid>(
             r#"
@@ -88,8 +94,7 @@ async fn upsert_application(
         .bind(updated_at)
         .fetch_one(pool)
         .await;
-    }
-;
+    };
     let legacy_id = legacy_ref
         .get(legacy_key)
         .and_then(|v| v.as_str())
@@ -113,17 +118,19 @@ async fn upsert_application(
             r#"
             UPDATE role_applications
             SET status = $2,
-                rejection_codes = $3,
-                rejection_message = $4,
-                metadata = metadata || $5::jsonb,
-                submitted_at = COALESCE($6, submitted_at),
-                decided_at = COALESCE($7, decided_at),
-                updated_at = $8
+                legacy_ref = $3,
+                rejection_codes = $4,
+                rejection_message = $5,
+                metadata = metadata || $6::jsonb,
+                submitted_at = COALESCE($7, submitted_at),
+                decided_at = COALESCE($8, decided_at),
+                updated_at = $9
             WHERE id = $1
             "#,
         )
         .bind(app_id)
         .bind(status)
+        .bind(Json(legacy_ref.clone()))
         .bind(&rejection_codes)
         .bind(rejection_message)
         .bind(&metadata)
@@ -133,6 +140,53 @@ async fn upsert_application(
         .execute(pool)
         .await?;
         return Ok(app_id);
+    }
+
+    // Steward/provider：同一用户同一 kind 仅保留一条（重启后新 application_id 仍须命中旧行）
+    if matches!(
+        kind,
+        "region_steward_onboarding" | "provider_onboarding"
+    ) {
+        if let Some(app_id) = sqlx::query_scalar::<_, Uuid>(
+            r#"
+            SELECT id FROM role_applications
+            WHERE user_id = $1 AND kind = $2
+            ORDER BY updated_at DESC
+            LIMIT 1
+            "#,
+        )
+        .bind(user_id)
+        .bind(kind)
+        .fetch_optional(pool)
+        .await?
+        {
+            sqlx::query(
+                r#"
+                UPDATE role_applications
+                SET status = $2,
+                    legacy_ref = $3,
+                    rejection_codes = $4,
+                    rejection_message = $5,
+                    metadata = metadata || $6::jsonb,
+                    submitted_at = COALESCE($7, submitted_at),
+                    decided_at = COALESCE($8, decided_at),
+                    updated_at = $9
+                WHERE id = $1
+                "#,
+            )
+            .bind(app_id)
+            .bind(status)
+            .bind(Json(legacy_ref.clone()))
+            .bind(&rejection_codes)
+            .bind(rejection_message)
+            .bind(&metadata)
+            .bind(submitted_at)
+            .bind(decided_at)
+            .bind(updated_at)
+            .execute(pool)
+            .await?;
+            return Ok(app_id);
+        }
     }
 
     sqlx::query_scalar::<_, Uuid>(
@@ -459,8 +513,6 @@ pub async fn dual_write_after_guide_stake(
     };
     let stake_status = if stake_amount != "0" && guides_status == "active" {
         "locked"
-    } else if stake_amount != "0" {
-        "pending"
     } else {
         "pending"
     };
@@ -658,6 +710,7 @@ pub async fn dual_write_after_steward_application_submit(
     let metadata = Json(json!({
         "phase": "P2",
         "source": "steward_applications",
+        "lifecycle_state": "stake_pending",
         "payload": metadata_payload,
     }));
 
@@ -1022,4 +1075,370 @@ pub async fn list_role_applications_for_user(
             },
         )
         .collect())
+}
+
+/// Admin 入驻队列读路径（HU-098）：有 PG 时以 `role_applications` 为 SSOT。
+#[derive(Debug, Clone)]
+pub struct AdminRoleApplicationListItem {
+    pub user_id: Uuid,
+    pub email: Option<String>,
+    pub user_role: String,
+    pub application: serde_json::Value,
+}
+
+fn admin_filter_matches_pg_row(
+    kind: &str,
+    filter: &str,
+    pg_status: &str,
+    lifecycle_state: Option<&str>,
+) -> bool {
+    let f = filter.trim().to_ascii_lowercase();
+    if f.is_empty() {
+        return true;
+    }
+    let pg = pg_status.trim().to_ascii_lowercase();
+    let life = lifecycle_state.map(|s| s.trim().to_ascii_lowercase());
+    match kind {
+        "guide" => match f.as_str() {
+            "pending" | "pending_review" => {
+                matches!(pg.as_str(), "submitted" | "reviewing" | "draft")
+            }
+            "active" => pg == "approved",
+            "rejected" => pg == "rejected",
+            "suspended" => pg == "suspended",
+            "submitted" => pg == "submitted",
+            "reviewing" => pg == "reviewing",
+            "approved" => pg == "approved",
+            _ => pg == f || life.as_deref() == Some(f.as_str()),
+        },
+        "provider_onboarding" => pg == f || life.as_deref() == Some(f.as_str()),
+        "region_steward_onboarding" => {
+            if life.as_deref() == Some(f.as_str()) {
+                return true;
+            }
+            match f.as_str() {
+                "stake_pending" => {
+                    pg == "submitted"
+                        && life
+                            .as_deref()
+                            .map(|l| l == "stake_pending" || l.is_empty())
+                            .unwrap_or(true)
+                }
+                "under_review" => pg == "reviewing" || life.as_deref() == Some("under_review"),
+                "stake_release_pending" => {
+                    life.as_deref() == Some("stake_release_pending") || pg == "submitted"
+                }
+                "approved" | "rejected" => pg == f,
+                _ => pg == f,
+            }
+        }
+        _ => pg == f || life.as_deref() == Some(f.as_str()),
+    }
+}
+
+fn display_status_for_admin(kind: &str, pg_status: &str, lifecycle_state: Option<&str>) -> String {
+    if let Some(life) = lifecycle_state.filter(|s| !s.trim().is_empty()) {
+        if kind == "region_steward_onboarding" {
+            return life.to_string();
+        }
+    }
+    match kind {
+        "guide" => match pg_status {
+            "approved" => "active".into(),
+            "submitted" | "reviewing" | "draft" => "pending".into(),
+            other => other.to_string(),
+        },
+        _ => pg_status.to_string(),
+    }
+}
+
+fn application_id_from_legacy(kind: &str, legacy_ref: &serde_json::Value, fallback: Uuid) -> String {
+    let key = match kind {
+        "guide" => "guides_id",
+        "provider_onboarding" => "provider_application_id",
+        "region_steward_onboarding" => "steward_application_id",
+        _ => "",
+    };
+    legacy_ref
+        .get(key)
+        .and_then(|v| v.as_str())
+        .filter(|s| !s.is_empty())
+        .map(str::to_string)
+        .unwrap_or_else(|| fallback.to_string())
+}
+
+fn is_pending_like(kind: &str, pg_status: &str, lifecycle_state: Option<&str>) -> bool {
+    let pg = pg_status.trim().to_ascii_lowercase();
+    match kind {
+        "guide" | "provider_onboarding" => matches!(pg.as_str(), "submitted" | "reviewing" | "draft"),
+        "region_steward_onboarding" => {
+            let life = lifecycle_state.map(|s| s.trim().to_ascii_lowercase());
+            if matches!(
+                life.as_deref(),
+                Some("approved") | Some("rejected")
+            ) {
+                return false;
+            }
+            matches!(pg.as_str(), "submitted" | "reviewing" | "draft")
+                || matches!(
+                    life.as_deref(),
+                    Some("stake_pending") | Some("under_review") | Some("stake_release_pending")
+                )
+        }
+        _ => matches!(pg.as_str(), "submitted" | "reviewing" | "draft"),
+    }
+}
+
+/// Admin list SSOT when `DATABASE_URL` / pool is present（HU-098）.
+#[derive(Debug, sqlx::FromRow)]
+struct AdminRoleApplicationPgRow {
+    user_id: Uuid,
+    email: Option<String>,
+    user_role: String,
+    id: Uuid,
+    status: String,
+    legacy_ref: Json<serde_json::Value>,
+    submitted_at: Option<DateTime<Utc>>,
+    rejection_codes: Json<serde_json::Value>,
+    rejection_message: Option<String>,
+    metadata: Json<serde_json::Value>,
+    created_at: DateTime<Utc>,
+    updated_at: DateTime<Utc>,
+    city: Option<String>,
+    country_code: Option<String>,
+    languages: Option<Json<serde_json::Value>>,
+    service_types: Option<Json<serde_json::Value>>,
+    guide_status: Option<String>,
+    guide_created_at: Option<DateTime<Utc>>,
+    guide_updated_at: Option<DateTime<Utc>>,
+}
+
+fn admin_row_status_rank(kind: &str, pg_status: &str, lifecycle_state: Option<&str>) -> i32 {
+    let display = display_status_for_admin(kind, pg_status, lifecycle_state).to_ascii_lowercase();
+    match display.as_str() {
+        "approved" | "active" => 50,
+        "rejected" => 40,
+        "under_review" | "reviewing" => 30,
+        "stake_release_pending" => 25,
+        "stake_pending" | "pending" | "submitted" | "draft" => 20,
+        _ => 10,
+    }
+}
+
+pub async fn list_role_applications_admin(
+    pool: &PgPool,
+    kind: &str,
+    status_filter: Option<&str>,
+) -> Result<(Vec<AdminRoleApplicationListItem>, i64, i64), sqlx::Error> {
+    let rows = sqlx::query_as::<_, AdminRoleApplicationPgRow>(
+        r#"
+        SELECT ra.user_id,
+               u.email,
+               COALESCE(NULLIF(TRIM(u.role), ''), 'traveler') AS user_role,
+               ra.id,
+               ra.status,
+               ra.legacy_ref,
+               ra.submitted_at,
+               ra.rejection_codes,
+               ra.rejection_message,
+               ra.metadata,
+               ra.created_at,
+               ra.updated_at,
+               g.city,
+               g.country_code,
+               g.languages,
+               g.service_types,
+               g.status AS guide_status,
+               g.created_at AS guide_created_at,
+               g.updated_at AS guide_updated_at
+        FROM role_applications ra
+        JOIN users u ON u.id = ra.user_id
+        LEFT JOIN guides g
+          ON ra.kind = 'guide'
+         AND g.id::text = ra.legacy_ref->>'guides_id'
+        WHERE ra.kind = $1
+        ORDER BY COALESCE(ra.submitted_at, ra.created_at) DESC
+        "#,
+    )
+    .bind(kind)
+    .fetch_all(pool)
+    .await?;
+
+    let filter = status_filter
+        .map(|s| s.trim().to_ascii_lowercase())
+        .filter(|s: &String| !s.is_empty());
+
+    // HU-098：按 legacy 业务 id 去重；主理人/商家再按 user_id 收敛为一人一行
+    let mut best_by_key: std::collections::HashMap<String, AdminRoleApplicationPgRow> =
+        std::collections::HashMap::new();
+    for row in rows {
+        let legacy = row.legacy_ref.0.clone();
+        let app_id = application_id_from_legacy(kind, &legacy, row.id);
+        let key = if matches!(kind, "region_steward_onboarding" | "provider_onboarding") {
+            format!("user:{}", row.user_id)
+        } else {
+            format!("{}:{}", row.user_id, app_id)
+        };
+        let life = row
+            .metadata
+            .0
+            .get("lifecycle_state")
+            .and_then(|v| v.as_str())
+            .map(str::to_string);
+        let rank = admin_row_status_rank(kind, &row.status, life.as_deref());
+        match best_by_key.get(&key) {
+            Some(prev) => {
+                let prev_life = prev
+                    .metadata
+                    .0
+                    .get("lifecycle_state")
+                    .and_then(|v| v.as_str());
+                let prev_rank = admin_row_status_rank(kind, &prev.status, prev_life);
+                if rank > prev_rank || (rank == prev_rank && row.updated_at > prev.updated_at) {
+                    best_by_key.insert(key, row);
+                }
+            }
+            None => {
+                best_by_key.insert(key, row);
+            }
+        }
+    }
+
+    let mut pending_count: i64 = 0;
+    let mut items: Vec<AdminRoleApplicationListItem> = Vec::with_capacity(best_by_key.len());
+
+    let mut ranked_rows: Vec<AdminRoleApplicationPgRow> = best_by_key.into_values().collect();
+    ranked_rows.sort_by(|a, b| {
+        b.updated_at
+            .cmp(&a.updated_at)
+            .then_with(|| b.created_at.cmp(&a.created_at))
+    });
+
+    for row in ranked_rows {
+        let legacy = row.legacy_ref.0;
+        let meta = row.metadata.0;
+        let lifecycle = meta
+            .get("lifecycle_state")
+            .and_then(|v| v.as_str())
+            .map(str::to_string);
+        if is_pending_like(kind, &row.status, lifecycle.as_deref()) {
+            pending_count += 1;
+        }
+        if let Some(ref f) = filter {
+            if !admin_filter_matches_pg_row(kind, f, &row.status, lifecycle.as_deref()) {
+                continue;
+            }
+        }
+
+        let app_id = application_id_from_legacy(kind, &legacy, row.id);
+        let display_status = if kind == "guide" {
+            row.guide_status
+                .as_deref()
+                .filter(|s: &&str| !s.is_empty())
+                .map(|s| s.to_string())
+                .unwrap_or_else(|| {
+                    display_status_for_admin(kind, &row.status, lifecycle.as_deref())
+                })
+        } else {
+            display_status_for_admin(kind, &row.status, lifecycle.as_deref())
+        };
+
+        let submitted_at_s = row
+            .submitted_at
+            .or(row.guide_created_at)
+            .unwrap_or(row.created_at)
+            .to_rfc3339();
+
+        let mut application = json!({
+            "id": app_id,
+            "status": display_status,
+            "submitted_at": submitted_at_s,
+            "rejection_codes": row.rejection_codes.0,
+            "role_application_id": row.id.to_string(),
+            "pg_status": row.status,
+        });
+
+        match kind {
+            "guide" => {
+                if let Some(obj) = application.as_object_mut() {
+                    obj.insert("city".into(), json!(row.city));
+                    obj.insert("country_code".into(), json!(row.country_code));
+                    obj.insert(
+                        "languages".into(),
+                        row.languages.map(|j| j.0).unwrap_or_else(|| json!([])),
+                    );
+                    obj.insert(
+                        "service_types".into(),
+                        row.service_types
+                            .map(|j| j.0)
+                            .unwrap_or_else(|| json!([])),
+                    );
+                    obj.insert(
+                        "updated_at".into(),
+                        json!(row.guide_updated_at.unwrap_or(row.updated_at).to_rfc3339()),
+                    );
+                }
+            }
+            "provider_onboarding" => {
+                let payload = meta.get("payload").cloned().unwrap_or_else(|| json!({}));
+                if let Some(obj) = application.as_object_mut() {
+                    obj.insert(
+                        "shop_name".into(),
+                        payload.get("shop_name").cloned().unwrap_or(json!(null)),
+                    );
+                    obj.insert(
+                        "legal_name".into(),
+                        payload.get("legal_name").cloned().unwrap_or(json!(null)),
+                    );
+                    obj.insert(
+                        "country_code".into(),
+                        payload
+                            .get("country_code")
+                            .cloned()
+                            .unwrap_or(json!(null)),
+                    );
+                    obj.insert(
+                        "entity_type".into(),
+                        payload.get("entity_type").cloned().unwrap_or(json!(null)),
+                    );
+                }
+            }
+            "region_steward_onboarding" => {
+                let payload = meta.get("payload").cloned().unwrap_or_else(|| json!({}));
+                if let Some(obj) = application.as_object_mut() {
+                    obj.insert("lifecycle_state".into(), json!(display_status));
+                    obj.insert(
+                        "jurisdictions".into(),
+                        payload
+                            .get("jurisdictions")
+                            .cloned()
+                            .unwrap_or_else(|| json!([])),
+                    );
+                    obj.insert(
+                        "legal_name".into(),
+                        payload.get("legal_name").cloned().unwrap_or(json!(null)),
+                    );
+                    obj.insert(
+                        "wallet_address".into(),
+                        payload
+                            .get("wallet_address")
+                            .cloned()
+                            .or_else(|| meta.get("wallet_address").cloned())
+                            .unwrap_or(json!(null)),
+                    );
+                }
+            }
+            _ => {}
+        }
+
+        items.push(AdminRoleApplicationListItem {
+            user_id: row.user_id,
+            email: row.email,
+            user_role: row.user_role,
+            application,
+        });
+    }
+
+    let total = items.len() as i64;
+    Ok((items, total, pending_count))
 }

@@ -361,6 +361,34 @@ pub async fn select_guide_by_id(pool: &PgPool, id: Uuid) -> Result<Option<GuideR
     Ok(rows.into_iter().find(|g| g.id == id))
 }
 
+/// Batch-13 HU-491 · Admin 向导申请详情 / 审核：按 user 取最新一条 `guides` 行。
+pub async fn select_latest_guide_for_user(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Option<GuideRow>, sqlx::Error> {
+    let mut rows = list_guides(pool).await?;
+    rows.retain(|g| g.user_id == user_id);
+    rows.sort_by(|a, b| b.updated_at.cmp(&a.updated_at).then(b.created_at.cmp(&a.created_at)));
+    Ok(rows.into_iter().next())
+}
+
+/// Batch-13 HU-493 / HU-481 · 概况库存 KPI · `COUNT(*)`（可选 status 过滤）。
+pub async fn count_guides(
+    pool: &PgPool,
+    status_filter: Option<&str>,
+) -> Result<i64, sqlx::Error> {
+    if let Some(st) = status_filter.map(str::trim).filter(|s| !s.is_empty()) {
+        sqlx::query_scalar::<_, i64>("SELECT COUNT(*)::bigint FROM guides WHERE status = $1")
+            .bind(st)
+            .fetch_one(pool)
+            .await
+    } else {
+        sqlx::query_scalar::<_, i64>("SELECT COUNT(*)::bigint FROM guides")
+            .fetch_one(pool)
+            .await
+    }
+}
+
 pub async fn select_active_guide_id_for_user(
     pool: &PgPool,
     user_id: Uuid,

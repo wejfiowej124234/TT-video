@@ -1,11 +1,13 @@
 # Batch-14 · COLLECTIVE FIX IN PROGRESS · LATEST
 
 **Machine:** `TT_ADMIN_BATCH14_COLLECTIVE_FIX`  
-**Stamp:** `20260726T092200Z`  
+**Stamp:** `20260726T103700Z`  
 **Status:** **`FIX_IN_PROGRESS`** · `FREEZE_UNLOCK: true`（**仅**本批集体改 · tip/HG/Cutover/GO **仍 LOCKED**）  
 **Patch:** `PATCH-STG-019`  
+**Working bake:** `a6f481c3…`（tip cite `ea71c577…` **IMMOBILE**）  
 **Sole worklist:** [`ADMIN-RELEASE-REALITY-AUDIT`](./TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md) **NEED_FIX**  
 **PCR:** [`PCR-20260726-BATCH14-COLLECTIVE-FIX`](../../registry/psg-change-records/PCR-20260726-BATCH14-COLLECTIVE-FIX.json)  
+**L2 probe:** [`evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json`](../../evidence/GO_batch14_collective_fix/L2-RUNTIME-PROBE-LATEST.json) · **`l2_runtime_align: PASS`**（users/orders/disputes `meta.source=postgres`）  
 **Open recording:** [`BATCH14-OPEN`](./TT-BATCH14-OPEN-RECORDING-LATEST.md) → 本包接管施工  
 **≠ tip 移动 · ≠ Hard Gate unlock · ≠ Cutover · ≠ Production GO · ≠ 新功能 · ≠ 关闭 HU-495/487/490 · ≠ 重新设计 Web3**
 
@@ -58,12 +60,12 @@ Final Truth Recertify
 
 | Wave | 范围 | HU / 簇 | 状态 |
 |------|------|---------|------|
-| **W1 P0 数据** | Web/API 对齐策略 · disputes/orders/users `meta.source` · 去 memory 裂脑 · 向导 PG 读源（部署兑现 HU-491） | 568 · 569 · 570 · 491 | **CODE_LANDED（①）· Staging 待部署** |
-| **W2 P0 UI** | 暗色对比度残差（财务→争议/入驻/用户/订单） | contrast_cluster | **PARTIAL（users/orders/disputes 残差抬阶）** |
-| **W3 P1** | 财务导航收敛 · guides 三角 · 多身份 UX · 权限矩阵 | 571～574 | **HU-571 PARTIAL（次导航合并）** |
-| **W4 P2** | 响应式 · PAGE_SURFACE ED · 空态词典 | 575～577 | PENDING |
-| **W5** | 各波 Staging 验证 · 证据 · 评分更新 | — | PENDING |
-| **W6** | Final Truth Recertify + baseline sync（**全通后**） | — | LOCKED until PASS |
+| **W1 P0 数据** | Web/API 对齐 · disputes/orders/users `meta.source` · 去 memory 裂脑 · 向导 PG（HU-491） | 568 · 569 · 570 · 491 | **568/569 CLOSED** · 570 PARTIAL（三叶） · **491 OPEN** |
+| **W2 P0 UI** | 暗色对比度残差 | contrast_cluster | **CODE in bake** · 视觉复核 OPEN |
+| **W3 P1** | 财务导航 · guides 三角 · 多身份 · 权限矩阵 | 571～574 | **571 CODE** · 572～574 OPEN |
+| **W4 P2** | 响应式 · PAGE_SURFACE ED · 空态 | 575～577 | **576 ED**（Web deploy post-check DRIFT）· 余 OPEN |
+| **W5** | Staging 验证 · 证据 · 评分 | — | **L2 PASS** · L4 评分 122/200 · 仍 NEED_FIX |
+| **W6** | Final Truth Recertify | — | **DEFERRED**（≠ 本轮签收） |
 
 **禁止本轨关闭：** HU-**495** · **487** · **490**（另口令）
 
@@ -85,7 +87,12 @@ TT_ADMIN_BATCH14_FREEZE_UNLOCK: true
 TT_ADMIN_BATCH14_PATCH: PATCH-STG-019
 TT_ADMIN_BATCH14_LADDER: Candidate_v2→API→Runtime→Admin→Evidence→Recertify
 TT_ADMIN_BATCH14_NOT_WEB3_REDESIGN: true
-TT_ADMIN_BATCH14_W1: CODE_LANDED_STAGING_API_DEPLOY_PENDING
+TT_ADMIN_BATCH14_WORKING_BAKE: a6f481c3
+TT_ADMIN_BATCH14_L1: PASS
+TT_ADMIN_BATCH14_L2: PASS
+TT_ADMIN_BATCH14_L3: CODE_DEPLOYED_PARTIAL_VERIFY
+TT_ADMIN_BATCH14_L4: PARTIAL_122_200_NEED_FIX
+TT_ADMIN_BATCH14_L5: DEFERRED
 TT_ADMIN_BATCH14_TIP: ea71c577_IMMOBILE
 TT_HARD_GATE_LOCKED: true
 TT_CUTOVER_LOCKED: true

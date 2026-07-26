@@ -1,0 +1,31 @@
+{
+  "machine": "TT_ADMIN_BATCH14_L2_L3_ALIGN_NOTE",
+  "stamp": "20260726T105253Z",
+  "patch": "PATCH-STG-019",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "working_bake": "a6f481c3fa551e44a0e4e4ae9e950e6723ff6f06",
+  "web_git_sha": "a6f481c3fa551e44a0e4e4ae9e950e6723ff6f06",
+  "api_git_sha": "a6f481c3fa551e44a0e4e4ae9e950e6723ff6f06",
+  "hu568_web_api_sha_align": true,
+  "l2_probe_verdict": "PASS",
+  "lists_postgres": {
+    "users": true,
+    "orders": true,
+    "disputes": true
+  },
+  "web_deploy_note": "deploy-tt-web-staging exit 2 due PAGE_SURFACE_DRIFT (HU-576 ED Unsplash) \u2014 app image live on a6f481c3",
+  "l3_code_in_bake": [
+    "users/orders/disputes contrast",
+    "finance-suite HU-571 merged secondary nav"
+  ],
+  "l5_recertify": "DEFERRED_UNTIL_REMAINING_HU_CLOSE",
+  "must_remain_open": [
+    "HU-495",
+    "HU-487",
+    "HU-490"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "machine": "TT_ADMIN_BATCH14_L2_RUNTIME_PROBE",
+  "stamp": "2026-07-26T10:52:21.913Z",
+  "patch": "PATCH-STG-019",
+  "tip_cite": "ea71c577",
+  "tip_immobile": true,
+  "hard_gate": "LOCKED",
+  "cutover": "LOCKED",
+  "production_go": "NO_GO",
+  "expect_sha_prefix": "a6f481c3",
+  "api_meta_http": 200,
+  "api_build_sha": "a6f481c3fa551e44a0e4e4ae9e950e6723ff6f06",
+  "api_sha_matches_expect": true,
+  "database_connected": true,
+  "treasury_address": null,
+  "web_http": 200,
+  "login_path": "/auth/login",
+  "login_http": 200,
+  "login": "PASS",
+  "role": "super_admin",
+  "lists": {
+    "users": {
+      "http": 200,
+      "total": 786,
+      "item_count": 2,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "items": "postgres"
+      },
+      "postgres_ok": true
+    },
+    "orders": {
+      "http": 200,
+      "total": 100,
+      "item_count": 2,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "items": "postgres"
+      },
+      "postgres_ok": true
+    },
+    "disputes": {
+      "http": 200,
+      "total": 7,
+      "item_count": 2,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "items": "postgres"
+      },
+      "postgres_ok": true
+    }
+  },
+  "l2_runtime_align": "PASS",
+  "verdict": "PASS"
+}
