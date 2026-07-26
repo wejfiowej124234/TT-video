@@ -258,9 +258,9 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
               </ul>
             </div>
           ) : null}
-          {documents.length > 0 ? (
-            <div>
-              <p className="text-meta font-medium text-ink-600">{t("admin_provider_app_documents")}</p>
+          <div>
+            <p className="text-meta font-medium text-ink-600">{t("admin_provider_app_documents")}</p>
+            {documents.length > 0 ? (
               <ul className="mt-1 space-y-1 text-meta" data-tt-admin-provider-docs="1">
                 {documents.map(({ labelKey, url }) => {
                   const href = url.split("#")[0] ?? url;
@@ -273,8 +273,16 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                   );
                 })}
               </ul>
-            </div>
-          ) : null}
+            ) : (
+              <p
+                className="mt-1 text-small text-ink-600"
+                data-tt-admin-provider-docs="empty"
+                role="status"
+              >
+                {t("admin_provider_app_docsEmptyHonest")}
+              </p>
+            )}
+          </div>
           {app?.rejection_codes && app.rejection_codes.length > 0 ? (
             <ul
               className="list-disc pl-5 text-small text-ink-700"

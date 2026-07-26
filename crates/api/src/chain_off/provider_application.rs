@@ -130,13 +130,96 @@ pub async fn get_provider_application_for_user_impl(
     state: ChainOffState,
     target_user_id: Uuid,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    // Batch-14 · Admin detail：有 PG 时读 role_applications SSOT（与列表同源；禁 silent memory 空壳）。
+    if let Some(pool) = state.db_pool.as_ref() {
+        let user_exists = sqlx::query_scalar::<_, bool>(
+            "SELECT EXISTS(SELECT 1 FROM users WHERE id = $1)",
+        )
+        .bind(target_user_id)
+        .fetch_one(pool)
+        .await;
+        match user_exists {
+            Ok(false) => {
+                return Err((
+                    StatusCode::NOT_FOUND,
+                    Json(crate::api_json::err_key("user_not_found")),
+                ));
+            }
+            Err(_) => {
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "provider_application_pg_unavailable",
+                        "message": "provider_application_pg_unavailable",
+                    })),
+                ));
+            }
+            Ok(true) => {}
+        }
+
+        let user_role = sqlx::query_scalar::<_, String>(
+            "SELECT COALESCE(NULLIF(TRIM(role), ''), 'traveler') FROM users WHERE id = $1",
+        )
+        .bind(target_user_id)
+        .fetch_one(pool)
+        .await
+        .unwrap_or_else(|_| "traveler".to_string());
+
+        if user_role == "provider" {
+            return Ok(Json(json!({
+                "status": "ok",
+                "application": {
+                    "status": "approved",
+                    "user_role": "provider"
+                },
+                "meta": {
+                    "implementation_status": "provider_application_role_active",
+                    "source": "postgres"
+                }
+            })));
+        }
+
+        match crate::db::get_provider_application_admin_detail(pool, target_user_id).await {
+            Ok(Some(application)) => {
+                return Ok(Json(json!({
+                    "status": "ok",
+                    "application": application,
+                    "meta": {
+                        "implementation_status": "provider_application_admin_detail",
+                        "source": "postgres"
+                    }
+                })));
+            }
+            Ok(None) => {
+                return Ok(Json(json!({
+                    "status": "ok",
+                    "application": null,
+                    "meta": {
+                        "implementation_status": "provider_application_none",
+                        "source": "postgres"
+                    }
+                })));
+            }
+            Err(_) => {
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "provider_application_pg_unavailable",
+                        "message": "provider_application_pg_unavailable",
+                    })),
+                ));
+            }
+        }
+    }
+
     let store = state.store.read().await;
     if store.users.get(&target_user_id).is_none() {
         return Err((
             StatusCode::NOT_FOUND,
             Json(crate::api_json::err_key("user_not_found")),
         ));
-    };    let user_role = store
+    }
+    let user_role = store
         .users
         .get(&target_user_id)
         .map(|u| u.role.clone())
@@ -335,11 +418,56 @@ pub async fn post_provider_application_impl(
     })))
 }
 
-/// Admin 列表：内存真源 **`provider_applications_by_user`**（可选 **`status`** 过滤）。
+/// Admin 列表：有 PG 时 **`role_applications` SSOT**（HU-098）；无池仍内存。
 pub async fn list_provider_applications_admin_impl(
     state: ChainOffState,
     status_filter: Option<String>,
-) -> Json<serde_json::Value> {
+) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
+    if let Some(pool) = state.db_pool.as_ref() {
+        match crate::db::list_role_applications_admin(
+            pool,
+            "provider_onboarding",
+            status_filter.as_deref(),
+        )
+        .await
+        {
+            Ok((rows, total, pending_count)) => {
+                let items: Vec<serde_json::Value> = rows
+                    .into_iter()
+                    .map(|r| {
+                        json!({
+                            "user_id": r.user_id,
+                            "email": r.email,
+                            "user_role": r.user_role,
+                            "application": r.application,
+                        })
+                    })
+                    .collect();
+                return Ok(Json(json!({
+                    "status": "ok",
+                    "items": items,
+                    "total": total,
+                    "pending_count": pending_count,
+                    "meta": {
+                        "implementation_status": "provider_applications_admin_list",
+                        "source": "postgres",
+                        "total": total,
+                        "pending_count": pending_count,
+                    }
+                })));
+            }
+            Err(_) => {
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "provider_applications_pg_unavailable",
+                        "message": "provider_applications_pg_unavailable",
+                    })),
+                ));
+            }
+        }
+    }
+
     let store = state.store.read().await;
     let filter = status_filter
         .as_deref()
@@ -380,11 +508,19 @@ pub async fn list_provider_applications_admin_impl(
         let tb = b["application"]["submitted_at"].as_str().unwrap_or("");
         tb.cmp(ta)
     });
-    Json(json!({
+    let total = items.len();
+    Ok(Json(json!({
         "status": "ok",
         "items": items,
-        "meta": { "implementation_status": "provider_applications_admin_list" }
-    }))
+        "total": total,
+        "pending_count": total,
+        "meta": {
+            "implementation_status": "provider_applications_admin_list",
+            "source": "memory",
+            "total": total,
+            "pending_count": total,
+        }
+    })))
 }
 
 #[derive(Debug, Deserialize)]
@@ -396,28 +532,23 @@ pub struct PatchProviderApplicationReviewBody {
     pub rejection_message: Option<String>,
 }
 
-/// Admin 审核商家申请（① 内存真源；PG 时双写 `role_applications`）。
+/// Admin 审核商家申请（Batch-14：有 PG 时先写 SSOT，再 best-effort 同步 memory）。
 pub async fn admin_review_provider_application_impl(
     state: ChainOffState,
     target_user_id: Uuid,
     Json(body): Json<PatchProviderApplicationReviewBody>,
 ) -> Result<Json<serde_json::Value>, (StatusCode, Json<serde_json::Value>)> {
     let status = body.status.trim().to_ascii_lowercase();
-    if status != "approved" && status != "rejected" && status != "reviewing" {
+    if status != "approved"
+        && status != "rejected"
+        && status != "reviewing"
+        && status != "needs_more_info"
+    {
         return Err((
             StatusCode::BAD_REQUEST,
             Json(crate::api_json::err_key("provider_application_invalid_review_status")),
         ));
-    };    let mut store = state.store.write().await;
-    let app = store
-        .provider_applications_by_user
-        .get(&target_user_id)
-        .cloned()
-        .ok_or((
-            StatusCode::NOT_FOUND,
-            Json(crate::api_json::err_key("provider_application_not_found")),
-        ))?;
-
+    }
     let now = Utc::now();
     let codes: Vec<String> = body
         .rejection_codes
@@ -432,15 +563,146 @@ pub async fn admin_review_provider_application_impl(
         .filter(|s| !s.is_empty())
         .map(|s| s.to_string());
 
+    // Batch-14 · PG-first（与 guide admin review 同形 · fail-closed）
+    if let Some(ref pool) = state.db_pool {
+        match crate::db::update_provider_application_review_pg(
+            pool,
+            target_user_id,
+            &status,
+            &codes,
+            rejection_message.as_deref(),
+            now,
+        )
+        .await
+        {
+            Ok(None) => {
+                return Err((
+                    StatusCode::NOT_FOUND,
+                    Json(crate::api_json::err_key("provider_application_not_found")),
+                ));
+            }
+            Ok(Some((ra_id, legacy_app_id))) => {
+                if status == "approved" {
+                    if let Err(e) =
+                        crate::db::update_user_role_if_safe(pool, target_user_id, "provider").await
+                    {
+                        eprintln!(
+                            "[audit] update_user_role_if_safe(provider) failed user_id={} error={}",
+                            target_user_id, e
+                        );
+                        return Err((
+                            StatusCode::SERVICE_UNAVAILABLE,
+                            Json(json!({
+                                "error": "provider_application_pg_role_write_failed",
+                                "message": "provider_application_pg_role_write_failed",
+                            })),
+                        ));
+                    }
+                }
+
+                // best-effort memory sync
+                {
+                    let mut store = state.store.write().await;
+                    if let Some(app) = store.provider_applications_by_user.get_mut(&target_user_id)
+                    {
+                        app.status = status.clone();
+                        app.updated_at = now;
+                        app.rejection_codes = if status == "rejected" || status == "needs_more_info"
+                        {
+                            codes.clone()
+                        } else {
+                            vec![]
+                        };
+                        app.rejection_message =
+                            if status == "rejected" || status == "needs_more_info" {
+                                rejection_message.clone()
+                            } else {
+                                None
+                            };
+                    }
+                    if status == "approved" {
+                        if let Some(u) = store.users.get_mut(&target_user_id) {
+                            u.role = "provider".to_string();
+                            u.updated_at = now;
+                        }
+                    }
+                }
+
+                let payload = json!({
+                    "application_id": if legacy_app_id.is_empty() {
+                        ra_id.to_string()
+                    } else {
+                        legacy_app_id
+                    },
+                    "role_application_id": ra_id.to_string(),
+                    "application_status": status,
+                    "rejection_codes": codes,
+                    "rejection_message": rejection_message,
+                });
+                let template = match status.as_str() {
+                    "approved" => "provider_application_approved",
+                    "rejected" => "provider_application_rejected",
+                    "needs_more_info" => "provider_application_needs_more_info",
+                    _ => "provider_application_reviewing",
+                };
+                if let Err(e) = crate::db::insert_user_security_notification(
+                    pool,
+                    target_user_id,
+                    "provider_application_review",
+                    template,
+                    &payload,
+                )
+                .await
+                {
+                    eprintln!("[provider_application] security_notification err={e}");
+                }
+
+                return Ok(Json(json!({
+                    "status": "ok",
+                    "user_id": target_user_id,
+                    "application_status": status,
+                    "user_role_updated": status == "approved",
+                    "meta": {
+                        "implementation_status": "provider_application_admin_review",
+                        "source": "postgres"
+                    }
+                })));
+            }
+            Err(e) => {
+                eprintln!(
+                    "[audit] update_provider_application_review_pg failed user_id={} error={}",
+                    target_user_id, e
+                );
+                return Err((
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "provider_application_pg_write_failed",
+                        "message": "provider_application_pg_write_failed",
+                    })),
+                ));
+            }
+        }
+    }
+
+    let mut store = state.store.write().await;
+    let app = store
+        .provider_applications_by_user
+        .get(&target_user_id)
+        .cloned()
+        .ok_or((
+            StatusCode::NOT_FOUND,
+            Json(crate::api_json::err_key("provider_application_not_found")),
+        ))?;
+
     let updated = ProviderApplicationRow {
         status: status.clone(),
         updated_at: now,
-        rejection_codes: if status == "rejected" {
+        rejection_codes: if status == "rejected" || status == "needs_more_info" {
             codes.clone()
         } else {
             vec![]
         },
-        rejection_message: if status == "rejected" {
+        rejection_message: if status == "rejected" || status == "needs_more_info" {
             rejection_message.clone()
         } else {
             None
@@ -456,51 +718,17 @@ pub async fn admin_review_provider_application_impl(
             u.role = "provider".to_string();
             u.updated_at = now;
         }
-    };    let app_id = updated.id;
-    drop(store);
-
-    if let Some(ref pool) = state.db_pool {
-        crate::db::dual_write_after_provider_application_review(
-            pool,
-            target_user_id,
-            app_id,
-            &status,
-            &codes,
-            rejection_message.as_deref(),
-            now,
-        )
-        .await;
-        if status == "approved" {
-            let _ = crate::db::update_user_role_if_safe(pool, target_user_id, "provider").await;
-        };        let payload = json!({
-            "application_id": app_id,
-            "application_status": status,
-            "rejection_codes": codes,
-            "rejection_message": rejection_message,
-        });
-        let template = match status.as_str() {
-            "approved" => "provider_application_approved",
-            "rejected" => "provider_application_rejected",
-            _ => "provider_application_reviewing",
-        };
-        if let Err(e) = crate::db::insert_user_security_notification(
-            pool,
-            target_user_id,
-            "provider_application_review",
-            template,
-            &payload,
-        )
-        .await
-        {
-            eprintln!("[provider_application] security_notification err={e}");
-        }
     }
+    drop(store);
 
     Ok(Json(json!({
         "status": "ok",
         "user_id": target_user_id,
         "application_status": status,
         "user_role_updated": status == "approved",
-        "meta": { "implementation_status": "provider_application_admin_review" }
+        "meta": {
+            "implementation_status": "provider_application_admin_review",
+            "source": "memory"
+        }
     })))
 }

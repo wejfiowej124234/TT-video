@@ -184,14 +184,14 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
                 </dd>
               </div>
             ) : null}
-            {app.passport_hash_present === true ? (
-              <div className="sm:col-span-2" data-tt-admin-guide-passport-hash="1">
-                <dt className="text-ink-500">{t("admin_guide_app_passportHash")}</dt>
-                <dd className="mt-0.5 text-small text-ink-600">
-                  {t("admin_guide_app_passportHashPresent")}
-                </dd>
-              </div>
-            ) : null}
+            <div className="sm:col-span-2" data-tt-admin-guide-passport-hash="1">
+              <dt className="text-ink-500">{t("admin_guide_app_passportHash")}</dt>
+              <dd className="mt-0.5 text-small text-ink-600">
+                {app.passport_hash_present === true
+                  ? t("admin_guide_app_passportHashPresent")
+                  : t("admin_guide_app_passportHashAbsent")}
+              </dd>
+            </div>
             {app.wallet_address ? (
               <div className="sm:col-span-2">
                 <dt className="text-ink-500">{t("admin_guide_app_wallet")}</dt>
@@ -220,7 +220,15 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
                 </li>
               ))}
             </ul>
-          ) : null}
+          ) : (
+            <p
+              className="text-small text-ink-600"
+              data-tt-admin-guide-docs="empty"
+              role="status"
+            >
+              {t("admin_guide_app_docsEmptyHonest")}
+            </p>
+          )}
           {app.status === "rejected" || app.status === "needs_more_info" ? (
             <div
               className="space-y-1"

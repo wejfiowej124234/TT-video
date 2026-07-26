@@ -1138,7 +1138,7 @@ fn admin_filter_matches_pg_row(
 
 fn display_status_for_admin(kind: &str, pg_status: &str, lifecycle_state: Option<&str>) -> String {
     if let Some(life) = lifecycle_state.filter(|s| !s.trim().is_empty()) {
-        if kind == "region_steward_onboarding" {
+        if kind == "region_steward_onboarding" || kind == "provider_onboarding" {
             return life.to_string();
         }
     }
@@ -1441,4 +1441,242 @@ pub async fn list_role_applications_admin(
 
     let total = items.len() as i64;
     Ok((items, total, pending_count))
+}
+
+/// Batch-14 · Admin 商家申请详情：有 PG 时读 `role_applications` + `role_documents`（禁 silent memory 冒充列表）。
+pub async fn get_provider_application_admin_detail(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Option<serde_json::Value>, sqlx::Error> {
+    let row = sqlx::query_as::<
+        _,
+        (
+            Uuid,
+            String,
+            Json<serde_json::Value>,
+            Option<DateTime<Utc>>,
+            Json<serde_json::Value>,
+            Option<String>,
+            Json<serde_json::Value>,
+            DateTime<Utc>,
+            DateTime<Utc>,
+        ),
+    >(
+        r#"
+        SELECT id, status, legacy_ref, submitted_at, rejection_codes, rejection_message,
+               metadata, created_at, updated_at
+        FROM role_applications
+        WHERE user_id = $1 AND kind = 'provider_onboarding'
+        ORDER BY updated_at DESC
+        LIMIT 1
+        "#,
+    )
+    .bind(user_id)
+    .fetch_optional(pool)
+    .await?;
+
+    let Some((
+        ra_id,
+        status,
+        legacy_ref,
+        submitted_at,
+        rejection_codes,
+        rejection_message,
+        metadata,
+        created_at,
+        updated_at,
+    )) = row
+    else {
+        return Ok(None);
+    };
+
+    let meta = metadata.0;
+    let lifecycle = meta
+        .get("lifecycle_state")
+        .and_then(|v| v.as_str())
+        .map(str::to_string);
+    let display_status = display_status_for_admin(
+        "provider_onboarding",
+        &status,
+        lifecycle.as_deref(),
+    );
+    let app_id = application_id_from_legacy("provider_onboarding", &legacy_ref.0, ra_id);
+
+    let mut payload = meta
+        .get("payload")
+        .cloned()
+        .unwrap_or_else(|| json!({}));
+    if !payload.is_object() {
+        payload = json!({});
+    }
+
+    // Merge role_documents into payload URL fields expected by Admin FE.
+    let docs = sqlx::query_as::<_, (String, String, Option<String>)>(
+        r#"
+        SELECT doc_type, storage_url, content_hash
+        FROM role_documents
+        WHERE application_id = $1
+        ORDER BY created_at ASC
+        "#,
+    )
+    .bind(ra_id)
+    .fetch_all(pool)
+    .await
+    .unwrap_or_default();
+
+    if let Some(obj) = payload.as_object_mut() {
+        let mut beneficial_urls: Vec<(String, Option<String>)> = Vec::new();
+        for (doc_type, url, content_hash) in docs {
+            let u = url.trim();
+            if u.is_empty() {
+                continue;
+            }
+            match doc_type.as_str() {
+                "business_license" => {
+                    obj.entry("business_license_url".to_string())
+                        .or_insert_with(|| json!(u));
+                }
+                "travel_agency_permit" => {
+                    obj.entry("travel_agency_permit_url".to_string())
+                        .or_insert_with(|| json!(u));
+                }
+                "insurance" => {
+                    obj.entry("insurance_url".to_string())
+                        .or_insert_with(|| json!(u));
+                }
+                "legal_representative_id" => {
+                    obj.entry("legal_representative_id_url".to_string())
+                        .or_insert_with(|| json!(u));
+                }
+                "beneficial_owner_id" => {
+                    beneficial_urls.push((u.to_string(), content_hash));
+                }
+                _ => {}
+            }
+        }
+        if !beneficial_urls.is_empty() {
+            let owners = obj
+                .entry("beneficial_owners".to_string())
+                .or_insert_with(|| json!([]));
+            if let Some(arr) = owners.as_array_mut() {
+                for (i, (url, hash)) in beneficial_urls.into_iter().enumerate() {
+                    if let Some(existing) = arr.get_mut(i) {
+                        if let Some(eo) = existing.as_object_mut() {
+                            eo.entry("id_doc_url".to_string())
+                                .or_insert_with(|| json!(url));
+                            if let Some(h) = hash.filter(|s| !s.trim().is_empty()) {
+                                eo.entry("id_number".to_string())
+                                    .or_insert_with(|| json!(h));
+                            }
+                        }
+                    } else {
+                        arr.push(json!({
+                            "full_name": format!("beneficial_owner_{}", i + 1),
+                            "id_doc_url": url,
+                            "id_number": hash,
+                        }));
+                    }
+                }
+            }
+        }
+    }
+
+    Ok(Some(json!({
+        "id": app_id,
+        "role_application_id": ra_id.to_string(),
+        "status": display_status,
+        "pg_status": status,
+        "payload": payload,
+        "submitted_at": submitted_at.unwrap_or(created_at).to_rfc3339(),
+        "updated_at": updated_at.to_rfc3339(),
+        "rejection_codes": rejection_codes.0,
+        "rejection_message": rejection_message,
+    })))
+}
+
+/// Batch-14 · Admin 审核商家申请写 PG SSOT（保留 metadata.payload · 禁 silent 丢字段）。
+pub async fn update_provider_application_review_pg(
+    pool: &PgPool,
+    user_id: Uuid,
+    status: &str,
+    rejection_codes: &[String],
+    rejection_message: Option<&str>,
+    updated_at: DateTime<Utc>,
+) -> Result<Option<(Uuid, String)>, sqlx::Error> {
+    // role_applications.status CHECK 无 needs_more_info · 用 reviewing + lifecycle_state 承载。
+    let app_status = match status {
+        "approved" => "approved",
+        "rejected" => "rejected",
+        "reviewing" | "needs_more_info" => "reviewing",
+        _ => "submitted",
+    };
+    let lifecycle = match status {
+        "needs_more_info" => Some("needs_more_info"),
+        "approved" => Some("approved"),
+        "rejected" => Some("rejected"),
+        "reviewing" => Some("reviewing"),
+        _ => Some("submitted"),
+    };
+    let row = sqlx::query_as::<_, (Uuid, Json<serde_json::Value>)>(
+        r#"
+        SELECT id, legacy_ref
+        FROM role_applications
+        WHERE user_id = $1 AND kind = 'provider_onboarding'
+        ORDER BY updated_at DESC
+        LIMIT 1
+        "#,
+    )
+    .bind(user_id)
+    .fetch_optional(pool)
+    .await?;
+
+    let Some((ra_id, legacy_ref)) = row else {
+        return Ok(None);
+    };
+    let legacy_app_id = legacy_ref
+        .0
+        .get("provider_application_id")
+        .and_then(|v| v.as_str())
+        .unwrap_or("")
+        .to_string();
+
+    let codes_json = Json(serde_json::to_value(rejection_codes).unwrap_or_else(|_| json!([])));
+    let decided_at = if matches!(app_status, "approved" | "rejected") {
+        Some(updated_at)
+    } else {
+        None
+    };
+    let meta_patch = Json(json!({
+        "admin_review": true,
+        "last_review_status": status,
+        "lifecycle_state": lifecycle,
+    }));
+
+    let n = sqlx::query(
+        r#"
+        UPDATE role_applications
+        SET status = $2,
+            rejection_codes = $3,
+            rejection_message = $4,
+            metadata = COALESCE(metadata, '{}'::jsonb) || $5::jsonb,
+            decided_at = COALESCE($6, decided_at),
+            updated_at = $7
+        WHERE id = $1
+        "#,
+    )
+    .bind(ra_id)
+    .bind(app_status)
+    .bind(codes_json)
+    .bind(rejection_message)
+    .bind(meta_patch)
+    .bind(decided_at)
+    .bind(updated_at)
+    .execute(pool)
+    .await?
+    .rows_affected();
+
+    if n == 0 {
+        return Ok(None);
+    }
+    Ok(Some((ra_id, legacy_app_id)))
 }

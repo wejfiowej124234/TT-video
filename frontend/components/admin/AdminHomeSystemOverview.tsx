@@ -425,6 +425,12 @@ export function AdminHomeSystemOverview(props: {
                     total: superAdminAlert.total,
                   })}
                 </p>
+                <p
+                  className="mt-1 text-meta text-red-100/90"
+                  data-tt-admin-home-superadmin-demo-honesty="1"
+                >
+                  {t("admin_home_superadmin_demo_honesty")}
+                </p>
                 <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
                   <AdminShellPrefetchLink
                     href={superAdminAlert.href}
@@ -472,6 +478,12 @@ export function AdminHomeSystemOverview(props: {
                     count: superAdminAlert.superAdminCount,
                     total: superAdminAlert.total,
                   })}
+                </p>
+                <p
+                  className="mt-1 text-meta text-amber-50/90"
+                  data-tt-admin-home-superadmin-demo-honesty="1"
+                >
+                  {t("admin_home_superadmin_demo_honesty")}
                 </p>
                 <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
                   <AdminShellPrefetchLink
