@@ -41,6 +41,14 @@ export function MerchantShowcaseStudioModalFooter({
               {t("market_studio_publish_footer_strip_form")}
             </p>
           )}
+          <p
+            className={`border-b ${D.filterBarGlassDivider} px-6 py-2 text-small text-warning`}
+            role="alert"
+            aria-live="assertive"
+            data-tt-publish-blocked-alert="1"
+          >
+            {t(publishBlockedKeys[0] ?? "market_studio_publish_form_incomplete_hint")}
+          </p>
           <ActionGateChecklist variant="marketFooter" itemKeys={publishBlockedKeys} t={t} />
           {publishBlockedKeys.includes(ACTION_GATE_KEYS.merchantRole) ||
           publishBlockedKeys.includes(ACTION_GATE_KEYS.merchantApplication) ? (

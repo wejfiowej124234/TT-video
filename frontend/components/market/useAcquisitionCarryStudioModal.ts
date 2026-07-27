@@ -4,9 +4,11 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { useTranslation } from "@/components/LocaleProvider";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import {
+  acquisitionDraftFromLocalPayload,
   acquisitionStudioDraftFingerprint,
   persistAcquisitionCarryStudioDraft,
   publishAcquisitionCarryStudioCatalog,
+  readAcquisitionStudioLocalBackup,
 } from "@/lib/marketStudioDraft";
 import type { AcquisitionStudioDraftPersistSource } from "@/lib/marketStudioDraft";
 import {
@@ -26,12 +28,44 @@ import {
   type AcquisitionStudioDraft,
   type AcquisitionStudioDraftSavedMeta,
 } from "./acquisitionCarryStudioModel";
+import type { AcquisitionCategorySlug } from "@/lib/marketSubsiteDemo";
+import { ACQUISITION_CATEGORY_SLUGS } from "@/lib/marketSubsiteFilters";
 
 export type UseAcquisitionCarryStudioModalArgs = {
   open: boolean;
   onClose: () => void;
   onDraftSaved?: (draft: AcquisitionStudioDraft, meta?: AcquisitionStudioDraftSavedMeta) => void;
 };
+
+function hydrateAcquisitionFormFromBackup(): AcquisitionStudioDraft {
+  const backup = readAcquisitionStudioLocalBackup();
+  if (!backup) return emptyAcquisitionStudioDraft();
+  const src = acquisitionDraftFromLocalPayload(backup.payload);
+  const cat = src.category as AcquisitionCategorySlug;
+  return {
+    ...emptyAcquisitionStudioDraft(),
+    title: src.title,
+    summary: src.summary,
+    supplyOrigin: src.supplyOrigin,
+    receiptHandoff: src.receiptHandoff,
+    category: ACQUISITION_CATEGORY_SLUGS.includes(cat) ? cat : "luxury",
+    destinationCountryIso: src.destinationCountryIso,
+    bountyMinUsdc: src.bountyMinUsdc,
+    bountyMaxUsdc: src.bountyMaxUsdc,
+    deadlineNote: src.deadlineNote,
+    coverFileName: src.coverFileName,
+    videoFileName: src.videoFileName,
+    videoUrl: src.videoUrl,
+    highlightsText: src.highlightsText,
+    description: src.description,
+    inspectionStandard: src.inspectionStandard,
+    authenticity: src.authenticity,
+    condition: src.condition,
+    rejections: src.rejections,
+    handoff: src.handoff,
+    agreeEscrowCopy: src.agreeEscrowCopy,
+  };
+}
 
 export function useAcquisitionCarryStudioModal({ open, onClose, onDraftSaved }: UseAcquisitionCarryStudioModalArgs) {
   const { t, locale } = useTranslation();
@@ -40,6 +74,7 @@ export function useAcquisitionCarryStudioModal({ open, onClose, onDraftSaved }: 
   const [videoTooBig, setVideoTooBig] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [discardConfirmOpen, setDiscardConfirmOpen] = useState(false);
   const coverInputRef = useRef<HTMLInputElement | null>(null);
   const videoInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -55,14 +90,27 @@ export function useAcquisitionCarryStudioModal({ open, onClose, onDraftSaved }: 
   );
 
   const requestClose = useCallback(() => {
-    if (typeof window !== "undefined" && isDirty && !window.confirm(t("market_studio_unsaved_confirm"))) return;
+    if (isDirty) {
+      setDiscardConfirmOpen(true);
+      return;
+    }
     onClose();
-  }, [isDirty, onClose, t]);
+  }, [isDirty, onClose]);
+
+  const cancelDiscardConfirm = useCallback(() => {
+    setDiscardConfirmOpen(false);
+  }, []);
+
+  const acceptDiscardConfirm = useCallback(() => {
+    setDiscardConfirmOpen(false);
+    onClose();
+  }, [onClose]);
 
   const trapRef = useFocusTrap(open, requestClose);
 
   useEffect(() => {
     if (!open) {
+      setDiscardConfirmOpen(false);
       setForm((prev) => {
         if (prev.coverPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(prev.coverPreviewUrl);
         if (prev.videoPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(prev.videoPreviewUrl);
@@ -72,7 +120,9 @@ export function useAcquisitionCarryStudioModal({ open, onClose, onDraftSaved }: 
       setVideoTooBig(false);
       setSubmitError(null);
       setSaving(false);
+      return;
     }
+    setForm(hydrateAcquisitionFormFromBackup());
   }, [open]);
 
   useEffect(() => {
@@ -270,6 +320,9 @@ export function useAcquisitionCarryStudioModal({ open, onClose, onDraftSaved }: 
     coverLabelId,
     videoLabelId,
     requestClose,
+    discardConfirmOpen,
+    cancelDiscardConfirm,
+    acceptDiscardConfirm,
     trapRef,
     categoryOptions,
     publishBlockedKeys,

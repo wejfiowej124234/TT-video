@@ -10,6 +10,8 @@ export interface CustomItineraryBody {
   title?: string;
   description?: string;
   image?: string;
+  /** Platform media SSOT id (preferred over inline data-URL `image`). */
+  cover_media_asset_id?: string;
   headcount?: number;
   travel_date?: string;
   day_plans?: Array<{

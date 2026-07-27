@@ -47,6 +47,26 @@ describe("market modals G4 (site theme V1 · D7)", () => {
     expect(src).not.toContain("bg-cta-gradient");
   });
 
+  it("DiscardConfirm portal z-index is above Studio shell (z-[410] > z-[400])", () => {
+    const layout = read("marketStudioModalLayout.ts");
+    expect(layout).toContain("marketStudioDiscardConfirmPortalRootClass");
+    expect(layout).toContain("z-[410]");
+    expect(layout).toContain("z-[400]");
+    const discard = readFileSync(join(root, "../shared/DiscardConfirmModal.tsx"), "utf8");
+    expect(discard).toContain("marketStudioDiscardConfirmPortalRootClass");
+    expect(discard).not.toMatch(/className="fixed inset-0 z-\[60]/);
+  });
+
+  it("Merchant/Acquisition footers expose assertive publish-blocked alert", () => {
+    const merchant = read("MerchantShowcaseStudioModalFooter.tsx");
+    const acquisition = read("AcquisitionCarryStudioModalFooter.tsx");
+    for (const src of [merchant, acquisition]) {
+      expect(src).toContain('role="alert"');
+      expect(src).toContain('aria-live="assertive"');
+      expect(src).toContain("data-tt-publish-blocked-alert");
+    }
+  });
+
   it("market detail drawer classes use warm drawer focus", () => {
     const src = read("marketDetailDrawerClasses.ts");
     expect(src).toContain("drawerControlFocus");

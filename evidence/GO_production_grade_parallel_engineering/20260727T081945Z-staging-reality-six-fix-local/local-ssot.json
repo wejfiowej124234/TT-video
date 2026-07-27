@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.staging_reality_six_fix_local_ssot.v1",
+  "stamp": "20260727T081945Z",
+  "recorded_utc": "2026-07-27T08:20:43Z",
+  "final_truth_tip_cite": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "worktree_head_observed": "79149b664d11a4ae450fd9a349be1226d8822293",
+  "tip_mutated": false,
+  "blocking_open": 1,
+  "sole_blocking": "B-MEDIA-001",
+  "b_media_status": "HARD_STOP_WAITING_OWNER_CF",
+  "owner_cf_ready_trigger_seen": false,
+  "acceptance_rerun": "FORBIDDEN",
+  "staging_deploy_this_session": false,
+  "TT_REALITY_CLOSURE": "NOT_ARMED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "living_score_uplift": false,
+  "pcr_id": "PCR-20260727-TRACK-B-STAGING-REALITY-SIX-FIX",
+  "vitest": { "result": "PASS", "tests": 12 },
+  "cargo": { "filter": "media_service", "result": "PASS", "tests": 2 },
+  "items": {
+    "1_tigris_cors": "OWNER_CHECKLIST_ALIGNED_PENDING",
+    "2_platform_media": "LOCAL_SSOT_PASS_SLICE",
+    "3_zindex": "LOCAL_SSOT_PASS",
+    "4_cancel_draft": "LOCAL_SSOT_PASS",
+    "5_publish_assertive": "LOCAL_SSOT_PASS",
+    "6_inventory_limits": "LOCAL_SSOT_PASS"
+  },
+  "equals_production_go": false,
+  "equals_b_media_closed": false
+}

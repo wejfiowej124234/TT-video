@@ -7,9 +7,11 @@ import { useFocusTrap } from "@/hooks/useFocusTrap";
 import type { AcquisitionCategorySlug } from "@/lib/marketSubsiteDemo";
 import { ACQUISITION_CATEGORY_SLUGS } from "@/lib/marketSubsiteFilters";
 import {
+  acquisitionDraftFromLocalPayload,
   acquisitionStudioDraftFingerprint,
   persistAcquisitionCarryStudioDraft,
   publishAcquisitionCarryStudioCatalog,
+  readAcquisitionStudioLocalBackup,
 } from "@/lib/marketStudioDraft";
 import type { AcquisitionStudioDraftPersistSource } from "@/lib/marketStudioDraft";
 import {
@@ -28,9 +30,15 @@ import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { trackMarketEvent } from "@/lib/analytics";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
-
-const COVER_MAX_BYTES = 2 * 1024 * 1024;
-const PROMO_VIDEO_MAX_BYTES = 20 * 1024 * 1024;
+import {
+  MARKET_STUDIO_COVER_MAX_BYTES as COVER_MAX_BYTES,
+  MARKET_STUDIO_PROMO_VIDEO_MAX_BYTES as PROMO_VIDEO_MAX_BYTES,
+} from "@/lib/marketStudioMediaLimits";
+import {
+  marketStudioModalPortalRootClass,
+  marketStudioModalScrimClass,
+} from "@/components/market/marketStudioModalLayout";
+import DiscardConfirmModal from "@/components/shared/DiscardConfirmModal";
 
 const ACQ_CAT_LABEL: Record<AcquisitionCategorySlug, string> = {
   luxury: "market_subsite_a_cat_luxury",
@@ -94,6 +102,36 @@ function emptyDraft(): AcquisitionStudioDraft {
   };
 }
 
+function hydrateAcquisitionFormFromBackup(): AcquisitionStudioDraft {
+  const backup = readAcquisitionStudioLocalBackup();
+  if (!backup) return emptyDraft();
+  const src = acquisitionDraftFromLocalPayload(backup.payload);
+  const cat = src.category as AcquisitionCategorySlug;
+  return {
+    ...emptyDraft(),
+    title: src.title,
+    summary: src.summary,
+    supplyOrigin: src.supplyOrigin,
+    receiptHandoff: src.receiptHandoff,
+    category: ACQUISITION_CATEGORY_SLUGS.includes(cat) ? cat : "luxury",
+    destinationCountryIso: src.destinationCountryIso,
+    bountyMinUsdc: src.bountyMinUsdc,
+    bountyMaxUsdc: src.bountyMaxUsdc,
+    deadlineNote: src.deadlineNote,
+    coverFileName: src.coverFileName,
+    videoFileName: src.videoFileName,
+    videoUrl: src.videoUrl,
+    highlightsText: src.highlightsText,
+    description: src.description,
+    inspectionStandard: src.inspectionStandard,
+    authenticity: src.authenticity,
+    condition: src.condition,
+    rejections: src.rejections,
+    handoff: src.handoff,
+    agreeEscrowCopy: src.agreeEscrowCopy,
+  };
+}
+
 const D = TT_MARKETING_MARKET_DARK_PATH;
 const labelClass = D.studioLabel;
 const inputClass = D.studioInput;
@@ -121,6 +159,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
   const [videoTooBig, setVideoTooBig] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [discardConfirmOpen, setDiscardConfirmOpen] = useState(false);
   const coverInputRef = useRef<HTMLInputElement | null>(null);
   const videoInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -136,14 +175,27 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
   );
 
   const requestClose = useCallback(() => {
-    if (typeof window !== "undefined" && isDirty && !window.confirm(t("market_studio_unsaved_confirm"))) return;
+    if (isDirty) {
+      setDiscardConfirmOpen(true);
+      return;
+    }
     onClose();
-  }, [isDirty, onClose, t]);
+  }, [isDirty, onClose]);
+
+  const cancelDiscardConfirm = useCallback(() => {
+    setDiscardConfirmOpen(false);
+  }, []);
+
+  const acceptDiscardConfirm = useCallback(() => {
+    setDiscardConfirmOpen(false);
+    onClose();
+  }, [onClose]);
 
   const trapRef = useFocusTrap(open, requestClose);
 
   useEffect(() => {
     if (!open) {
+      setDiscardConfirmOpen(false);
       setForm((prev) => {
         if (prev.coverPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(prev.coverPreviewUrl);
         if (prev.videoPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(prev.videoPreviewUrl);
@@ -153,7 +205,9 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
       setVideoTooBig(false);
       setSubmitError(null);
       setSaving(false);
+      return;
     }
+    setForm(hydrateAcquisitionFormFromBackup());
   }, [open]);
 
   useEffect(() => {
@@ -388,14 +442,15 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
+    <>
     <div
-      className="fixed inset-0 z-[400] flex items-center justify-center p-4 pt-20 pb-8 sm:pt-16 overflow-y-auto"
+      className={marketStudioModalPortalRootClass}
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
       aria-describedby={descId}
     >
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" aria-hidden onClick={requestClose} />
+      <div className={marketStudioModalScrimClass} aria-hidden onClick={requestClose} />
       <div
         ref={trapRef}
         className={D.studioModalPanelLg}
@@ -841,6 +896,7 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
 
           <div className={D.studioFooter}>
             {!publishGate.canPublish ? (
+              <>
               <p
                 className="border-b border-warning/20 px-4 py-2.5 sm:px-6 text-[0.7rem] leading-snug text-white/95"
                 role="status"
@@ -849,6 +905,15 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
                   ? t("market_studio_publish_footer_strip_no_session")
                   : t("market_studio_publish_footer_strip_form_acquisition")}
               </p>
+              <p
+                className="border-b border-warning/20 px-4 py-2.5 sm:px-6 text-small text-warning"
+                role="alert"
+                aria-live="assertive"
+                data-tt-publish-blocked-alert="1"
+              >
+                {publishGate.titleWhenDisabled || t("market_studio_publish_form_incomplete_hint")}
+              </p>
+              </>
             ) : null}
             <div className="flex flex-col-reverse gap-2 px-4 py-3 sm:flex-row sm:flex-wrap sm:justify-end sm:px-6">
             <button
@@ -888,7 +953,13 @@ export default function AcquisitionCarryStudioModal({ open, onClose, onDraftSave
           </div>
         </form>
       </div>
-    </div>,
+    </div>
+    <DiscardConfirmModal
+      open={discardConfirmOpen}
+      onCancel={cancelDiscardConfirm}
+      onConfirm={acceptDiscardConfirm}
+    />
+    </>,
     document.body,
   );
 }

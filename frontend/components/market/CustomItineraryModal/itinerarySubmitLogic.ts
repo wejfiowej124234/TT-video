@@ -6,6 +6,7 @@
 
 import type { OrderCardItem } from "@/lib/marketTypes";
 import type { CustomItineraryBody } from "@/lib/apiClient";
+import { resolvePlatformMediaCoverSrc } from "@/lib/platformMediaCover";
 import { DEFAULT_SETTLEMENT_CURRENCY_CODE } from "@/lib/defaultSettlementCurrency";
 import { DEFAULT_COUNTRY, getPricingForCountry } from "@/lib/countries";
 import { getAttractionDetails, getFoodDetails, getHotelDetails, resolveHotelSubmitLabel } from "@/lib/cityDetails";
@@ -181,7 +182,10 @@ export function validateAndBuildTourist(
         }
       : undefined;
   const cityTransports = form.dayPlans.map((d) => d.cityTransport).filter((x): x is NonNullable<typeof x> => x != null);
-  const coverImage = form.image.trim() || accountAvatarUrl || undefined;
+  const coverImage =
+    resolvePlatformMediaCoverSrc({ coverImage: form.image.trim() || null }) ||
+    accountAvatarUrl ||
+    undefined;
 
   const item: OrderCardItem = {
     id: `custom-${Date.now()}`,
@@ -235,7 +239,9 @@ export function buildTouristCustomBody(
     currency: DEFAULT_SETTLEMENT_CURRENCY_CODE,
     title: form.title.trim() || undefined,
     description: resolveItineraryDescription(form),
-    image: form.image.trim() || undefined,
+    image:
+      resolvePlatformMediaCoverSrc({ coverImage: form.image.trim() || null }) ||
+      undefined,
     headcount,
     day_plans: form.dayPlans.slice(0, daysNum).map((d) => {
       const attractionDetails = getAttractionDetails(d.city);
@@ -287,7 +293,9 @@ export function buildGuideCustomBody(form: CustomItineraryForm): CustomItinerary
     currency: DEFAULT_SETTLEMENT_CURRENCY_CODE,
     title: form.title.trim() || undefined,
     description: resolveItineraryDescription(form),
-    image: form.image.trim() || undefined,
+    image:
+      resolvePlatformMediaCoverSrc({ coverImage: form.image.trim() || null }) ||
+      undefined,
     headcount,
     guide_day_plans: plans.slice(0, daysNum).map((p) => ({
       city: (p as GuideDayPlan).city ?? "",

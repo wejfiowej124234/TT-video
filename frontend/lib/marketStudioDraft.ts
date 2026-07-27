@@ -125,6 +125,114 @@ function writeLocalBackup(key: string, draft_id: string, saved_at: string, paylo
   }
 }
 
+export type MarketStudioLocalBackup = {
+  draft_id: string;
+  saved_at: string;
+  payload: Record<string, unknown>;
+};
+
+function readLocalBackup(key: string): MarketStudioLocalBackup | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<MarketStudioLocalBackup>;
+    if (!parsed || typeof parsed.payload !== "object" || parsed.payload == null) return null;
+    return {
+      draft_id: typeof parsed.draft_id === "string" ? parsed.draft_id : "",
+      saved_at: typeof parsed.saved_at === "string" ? parsed.saved_at : "",
+      payload: parsed.payload as Record<string, unknown>,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function readMerchantStudioLocalBackup(): MarketStudioLocalBackup | null {
+  return readLocalBackup(LS_MERCHANT);
+}
+
+export function readAcquisitionStudioLocalBackup(): MarketStudioLocalBackup | null {
+  return readLocalBackup(LS_ACQUISITION);
+}
+
+export function clearMerchantStudioLocalBackup(): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(LS_MERCHANT);
+  } catch {
+    /* ignore */
+  }
+}
+
+export function clearAcquisitionStudioLocalBackup(): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(LS_ACQUISITION);
+  } catch {
+    /* ignore */
+  }
+}
+
+function strField(payload: Record<string, unknown>, key: string, fallback = ""): string {
+  const v = payload[key];
+  return typeof v === "string" ? v : fallback;
+}
+
+function boolField(payload: Record<string, unknown>, key: string): boolean {
+  return payload[key] === true;
+}
+
+/** Hydrate form text fields from localStorage backup (no blob media restore). */
+export function merchantDraftFromLocalPayload(
+  payload: Record<string, unknown>,
+): MerchantStudioDraftPersistSource {
+  const cat = strField(payload, "category", "dining");
+  const category = ["hotel", "dining", "attraction", "experience"].includes(cat) ? cat : "dining";
+  return {
+    title: strField(payload, "title"),
+    subtitle: strField(payload, "subtitle"),
+    category,
+    city: strField(payload, "city"),
+    countryIso: strField(payload, "countryIso"),
+    coverFileName: typeof payload.coverFileName === "string" ? payload.coverFileName : null,
+    videoFileName: typeof payload.videoFileName === "string" ? payload.videoFileName : null,
+    videoUrl: strField(payload, "videoUrl"),
+    highlightsText: strField(payload, "highlightsText"),
+    description: strField(payload, "description"),
+    priceUsdc: strField(payload, "priceUsdc"),
+    deliveryArchetype: strField(payload, "deliveryArchetype", "escrow_order") || "escrow_order",
+    agreeEscrowCopy: boolField(payload, "agreeEscrowCopy"),
+  };
+}
+
+export function acquisitionDraftFromLocalPayload(
+  payload: Record<string, unknown>,
+): AcquisitionStudioDraftPersistSource {
+  return {
+    title: strField(payload, "title"),
+    summary: strField(payload, "summary"),
+    supplyOrigin: strField(payload, "supplyOrigin"),
+    receiptHandoff: strField(payload, "receiptHandoff"),
+    category: strField(payload, "category", "luxury") || "luxury",
+    destinationCountryIso: strField(payload, "destinationCountryIso"),
+    bountyMinUsdc: strField(payload, "bountyMinUsdc"),
+    bountyMaxUsdc: strField(payload, "bountyMaxUsdc"),
+    deadlineNote: strField(payload, "deadlineNote"),
+    coverFileName: typeof payload.coverFileName === "string" ? payload.coverFileName : null,
+    videoFileName: typeof payload.videoFileName === "string" ? payload.videoFileName : null,
+    videoUrl: strField(payload, "videoUrl"),
+    highlightsText: strField(payload, "highlightsText"),
+    description: strField(payload, "description"),
+    inspectionStandard: strField(payload, "inspectionStandard"),
+    authenticity: strField(payload, "authenticity"),
+    condition: strField(payload, "condition"),
+    rejections: strField(payload, "rejections"),
+    handoff: strField(payload, "handoff"),
+    agreeEscrowCopy: boolField(payload, "agreeEscrowCopy"),
+  };
+}
+
 export async function persistMerchantShowcaseStudioDraft(form: MerchantStudioDraftPersistSource) {
   const payload = toMerchantPersist(form);
   const { draft_id, saved_at } = await postMarketProviderListingDraft(payload);

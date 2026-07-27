@@ -116,6 +116,28 @@ pub async fn insert_itinerary_tx(
     Ok(())
 }
 
+/// B-MEDIA-001 eng: bind platform media asset as itinerary cover (prefer over data URL).
+pub async fn set_itinerary_cover_media_asset_id_tx(
+    tx: &mut Transaction<'_, Postgres>,
+    order_id: Uuid,
+    cover_media_asset_id: Uuid,
+    updated_at: DateTime<Utc>,
+) -> Result<(), sqlx::Error> {
+    sqlx::query(
+        r#"
+        UPDATE itineraries
+           SET cover_media_asset_id = $1, updated_at = $2
+         WHERE order_id = $3
+        "#,
+    )
+    .bind(cover_media_asset_id)
+    .bind(updated_at)
+    .bind(order_id)
+    .execute(&mut **tx)
+    .await?;
+    Ok(())
+}
+
 /// 55-S2：更新行程 days/amount_breakdown/version（PATCH itinerary 写回 DB）
 pub async fn update_itinerary_days_breakdown_version(
     pool: &PgPool,

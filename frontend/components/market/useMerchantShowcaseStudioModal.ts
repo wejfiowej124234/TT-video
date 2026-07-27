@@ -4,9 +4,11 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react"
 import { useTranslation } from "@/components/LocaleProvider";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import {
+  merchantDraftFromLocalPayload,
   merchantStudioDraftFingerprint,
   persistMerchantShowcaseStudioDraft,
   publishMerchantShowcaseStudioCatalog,
+  readMerchantStudioLocalBackup,
 } from "@/lib/marketStudioDraft";
 import type { MerchantStudioDraftPersistSource } from "@/lib/marketStudioDraft";
 import {
@@ -25,6 +27,7 @@ import {
 import {
   emptyMerchantStudioDraft,
   merchantShowcaseCategoryOptions,
+  type MerchantShowcaseCategory,
   type MerchantStudioDraft,
   type MerchantStudioDraftSavedMeta,
 } from "./merchantShowcaseStudioModel";
@@ -35,6 +38,29 @@ export type UseMerchantShowcaseStudioModalArgs = {
   onDraftSaved?: (draft: MerchantStudioDraft, meta?: MerchantStudioDraftSavedMeta) => void;
 };
 
+function hydrateMerchantFormFromBackup(): MerchantStudioDraft {
+  const backup = readMerchantStudioLocalBackup();
+  if (!backup) return emptyMerchantStudioDraft();
+  const src = merchantDraftFromLocalPayload(backup.payload);
+  const category = src.category as MerchantShowcaseCategory;
+  return {
+    ...emptyMerchantStudioDraft(),
+    title: src.title,
+    subtitle: src.subtitle,
+    category: ["hotel", "dining", "attraction", "experience"].includes(category) ? category : "dining",
+    city: src.city,
+    countryIso: src.countryIso,
+    coverFileName: src.coverFileName,
+    videoFileName: src.videoFileName,
+    videoUrl: src.videoUrl,
+    highlightsText: src.highlightsText,
+    description: src.description,
+    priceUsdc: src.priceUsdc,
+    deliveryArchetype: "escrow_order",
+    agreeEscrowCopy: src.agreeEscrowCopy,
+  };
+}
+
 export function useMerchantShowcaseStudioModal({ open, onClose, onDraftSaved }: UseMerchantShowcaseStudioModalArgs) {
   const { t, locale } = useTranslation();
   const [form, setForm] = useState<MerchantStudioDraft>(emptyMerchantStudioDraft);
@@ -42,6 +68,7 @@ export function useMerchantShowcaseStudioModal({ open, onClose, onDraftSaved }: 
   const [videoTooBig, setVideoTooBig] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
+  const [discardConfirmOpen, setDiscardConfirmOpen] = useState(false);
   const [merchantGate, setMerchantGate] = useState<Awaited<
     ReturnType<typeof fetchMerchantPublishEligibility>
   > | null>(null);
@@ -60,14 +87,27 @@ export function useMerchantShowcaseStudioModal({ open, onClose, onDraftSaved }: 
   );
 
   const requestClose = useCallback(() => {
-    if (typeof window !== "undefined" && isDirty && !window.confirm(t("market_studio_unsaved_confirm"))) return;
+    if (isDirty) {
+      setDiscardConfirmOpen(true);
+      return;
+    }
     onClose();
-  }, [isDirty, onClose, t]);
+  }, [isDirty, onClose]);
+
+  const cancelDiscardConfirm = useCallback(() => {
+    setDiscardConfirmOpen(false);
+  }, []);
+
+  const acceptDiscardConfirm = useCallback(() => {
+    setDiscardConfirmOpen(false);
+    onClose();
+  }, [onClose]);
 
   const trapRef = useFocusTrap(open, requestClose);
 
   useEffect(() => {
     if (!open) {
+      setDiscardConfirmOpen(false);
       setForm((prev) => {
         if (prev.coverPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(prev.coverPreviewUrl);
         if (prev.videoPreviewUrl?.startsWith("blob:")) URL.revokeObjectURL(prev.videoPreviewUrl);
@@ -77,7 +117,9 @@ export function useMerchantShowcaseStudioModal({ open, onClose, onDraftSaved }: 
       setVideoTooBig(false);
       setSubmitError(null);
       setSaving(false);
+      return;
     }
+    setForm(hydrateMerchantFormFromBackup());
   }, [open]);
 
   useEffect(() => {
@@ -270,6 +312,9 @@ export function useMerchantShowcaseStudioModal({ open, onClose, onDraftSaved }: 
     coverLabelId,
     videoLabelId,
     requestClose,
+    discardConfirmOpen,
+    cancelDiscardConfirm,
+    acceptDiscardConfirm,
     trapRef,
     categoryOptions,
     publishBlockedKeys,

@@ -61,6 +61,9 @@ pub struct CustomItineraryBody {
     pub description: Option<String>,
     #[serde(default)]
     pub image: Option<String>,
+    /// B-MEDIA-001 eng: prefer platform media asset id over inline `image` data URL.
+    #[serde(default)]
+    pub cover_media_asset_id: Option<String>,
     #[serde(default = "default_headcount")]
     pub headcount: u32,
     #[serde(default)]
@@ -194,7 +197,7 @@ fn parse_itinerary_date_range(
     days: u32,
 ) -> (Option<NaiveDate>, Option<NaiveDate>) {
     let start = NaiveDate::parse_from_str(travel_date.trim(), "%Y-%m-%d").ok();
-    let days = days.max(1).min(365);
+    let days = days.clamp(1, 365);
     match start {
         Some(s) => {
             let end = s
@@ -234,15 +237,12 @@ fn non_empty_image_url(s: &str) -> Option<String> {
 fn first_image_from_named_items_array(arr: &JsonValue) -> Option<String> {
     let a = arr.as_array()?;
     for item in a {
-        match item {
-            JsonValue::Object(o) => {
-                if let Some(JsonValue::String(img)) = o.get("image") {
-                    if let Some(u) = non_empty_image_url(img) {
-                        return Some(u);
-                    }
+        if let JsonValue::Object(o) = item {
+            if let Some(JsonValue::String(img)) = o.get("image") {
+                if let Some(u) = non_empty_image_url(img) {
+                    return Some(u);
                 }
             }
-            _ => {}
         }
     }
     None
@@ -333,7 +333,7 @@ pub(crate) fn generate_itinerary_mock(
         Some(cities) if !cities.is_empty() => {
             let cities: Vec<String> = cities
                 .iter()
-                .take(body.days.max(1).min(30) as usize)
+                .take(body.days.clamp(1, 30) as usize)
                 .map(|s| s.trim().to_string())
                 .filter(|s| !s.is_empty())
                 .collect();
@@ -377,7 +377,7 @@ pub(crate) fn generate_itinerary_mock(
                 .collect()
         }
         _ => {
-            let days = body.days.max(1).min(30);
+            let days = body.days.clamp(1, 30);
             (1..=days)
                 .map(|d| ItineraryDayRow {
                     day_index: d,
@@ -1162,6 +1162,49 @@ pub async fn itinerary_custom_create_impl(
             Json(crate::api_json::err_key("invalid_amount")),
         ));
     }
+    // B-MEDIA-001 eng: reject data URL / inline Base64 as cover SSOT.
+    // When cover_media_asset_id is present, skip inline image reject (asset is SSOT).
+    let cover_asset_id = body
+        .cover_media_asset_id
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .and_then(|s| Uuid::parse_str(s).ok());
+    if cover_asset_id.is_none() {
+        if let Some(ref img) = body.image {
+            if let Err(code) = crate::storage::media_service::reject_inline_data_url(img) {
+                return Err((
+                    StatusCode::BAD_REQUEST,
+                    Json(json!({
+                        "error": code,
+                        "message": code,
+                        "hint": "use POST /api/v1/platform-media/assets then cover_media_asset_id (itineraries.cover_media_asset_id)",
+                    })),
+                ));
+            }
+        }
+    } else if let Some(aid) = cover_asset_id {
+        if let Some(ref pool) = state.db_pool {
+            match crate::db::get_platform_media_asset_owned(pool, aid, user_id).await {
+                Ok(Some(_)) => {}
+                Ok(None) => {
+                    return Err((
+                        StatusCode::BAD_REQUEST,
+                        Json(json!({
+                            "error": "cover_media_asset_not_found",
+                            "message": "cover_media_asset_not_found",
+                        })),
+                    ));
+                }
+                Err(_) => {
+                    return Err((
+                        StatusCode::SERVICE_UNAVAILABLE,
+                        Json(crate::api_json::err_key("database_unavailable")),
+                    ));
+                }
+            }
+        }
+    }
 
     let guide_uuid = resolve_preselected_guide_id(&state, body.guide_id.as_ref()).await?;
 
@@ -1315,7 +1358,19 @@ pub async fn itinerary_custom_create_impl(
                     .await
                     .is_ok()
                 {
-                    let _ = tx.commit().await;
+                    let cover_ok = match cover_asset_id {
+                        Some(aid) => crate::db::set_itinerary_cover_media_asset_id_tx(
+                            &mut tx, order_id, aid, now,
+                        )
+                        .await
+                        .is_ok(),
+                        None => true,
+                    };
+                    if cover_ok {
+                        let _ = tx.commit().await;
+                    } else {
+                        let _ = tx.rollback().await;
+                    }
                 } else {
                     let _ = tx.rollback().await;
                 }

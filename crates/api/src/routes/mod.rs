@@ -36,6 +36,7 @@ mod me_profile_avatar;
 mod me_referrals;
 mod me_market_bookmarks;
 mod media;
+mod platform_media;
 mod messages;
 mod onboarding;
 mod provider_applications;
@@ -150,6 +151,7 @@ pub fn api_router() -> Router<ApiMetaState> {
         .merge(disputes::router())
         .merge(evidence::router())
         .merge(media::router())
+        .merge(platform_media::router())
         .merge(intents::router())
         .merge(community::router())
         .merge(onboarding::router())

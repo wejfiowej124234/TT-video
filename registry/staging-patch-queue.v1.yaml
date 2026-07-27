@@ -263,6 +263,139 @@ patches:
       Final Truth / Candidate v2 cite-only · ≠ Hard Gate / Production GO.
     runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
 
+  - id: PATCH-STG-011
+    title: Batch-7 Admin R1 — Freeze narrow unlock · hub-first shell · Inbox+guide · Home slim · dual-control copy
+    scope: >
+      Admin Freeze narrow exemption Batch-7; shell IA hub-first (≤5/≤12);
+      Inbox five channels + guide; Home modules ≤8; dual-control rename;
+      maintainer-only preview chrome; HU-037..050
+    code_sha_or_worktree: "892c20c830bb7432441f540311277a1a66a1c12d"
+    impacts_psg: false
+    impacts_fg_or_web3: false
+    verification_result: FIXED_R1_100_STAGING_UAT_PASS
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: bug_fix
+    promotion_status: OPEN
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: LIVING_ENFORCED
+    note: >
+      Batch-7 Admin R1 CLOSED. Tip ea71c577 cite-only. Final Truth cite
+      TT-PRE-MAINNET-HUMAN-UIUX-BATCH-7-FINAL-TRUTH-BASELINE-CITE-LATEST.
+      ≠ Hard Gate / Cutover / Production GO.
+    runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
+
+  - id: PATCH-STG-012
+    title: Batch-8 Admin publish — WP-01..09 shell/data/hubs/dashboard · WP-08 DEFER hide copy · no 6th channel
+    scope: >
+      Admin Freeze narrow exemption Batch-8; WP-01 lock shell; WP-02 delete ops chrome;
+      WP-03 maintainer fold; WP-04 sidebar IA; WP-05 data hard gate (FE fail-closed + list totals);
+      WP-06 hub NAV_LINKS tiles; WP-07 ops dashboard + home reorder; WP-08 DEFER+hide suggestions;
+      WP-09 approval UX polish; HU-051..108; tip ea71c577 immobile
+    code_sha_or_worktree: "WORKTREE_on_892c20c830bb7432441f540311277a1a66a1c12d"
+    impacts_psg: false
+    impacts_fg_or_web3: false
+    verification_result: ARCHIVED_HU098_API_FROZEN_PHASE3_NEW_BATCH_ONLY
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: bug_fix
+    promotion_status: OPEN
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: LIVING_ENFORCED
+    note: >
+      Batch-8 ARCHIVED (immutable). Web bake 2026-07-24T10:08:13Z; API freeze baseline
+      2026-07-24T11:19:01Z (second_reinforce_user_kind_upsert; no further Batch-8 edits). Phase3 remaining = NEW_BATCH_ONLY.
+      WP-08 = DEFER_HIDE_COPY. HU-098 CLOSED + API FROZEN; freeze recheck PASS;
+      business UAT PASS. Evidence HU098-STEWARD-APPROVE-RUNTIME.json +
+      HU098-FREEZE-FINAL-RECHECK.json. Tip ea71c577 cite-only.
+      ED: C2 Staging users.role region_steward post-UAT. ≠ Hard Gate / Cutover / GO.
+    runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
+    cite: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-BATCH-8-FINAL-TRUTH-BASELINE-CITE-LATEST.md
+
+  - id: PATCH-STG-013
+    title: Batch-9 Admin Workbench L5 — overview-first · treasury pools UI · detech home · 3 sample hubs
+    scope: >
+      Admin Freeze narrow exemption Batch-9 WP-01..06; Workbench IA reorder
+      (system overview + honest treasury donuts above today inbox); remove home
+      tech build fold and Dev API REST reference; L5 kit on provider queue,
+      content hub, finance-suite; tip ea71c577 immobile; Batch-8 archived no reopen
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: false
+    impacts_fg_or_web3: false
+    verification_result: B19_RESIDUAL_A_CLOSED
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: bug_fix
+    promotion_status: OPEN
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: B19_RESIDUAL_A_CLOSED
+    note: >
+      Batch-9 FINAL CLOSED + B19 Residual A CLOSED. Web bake
+      build_time=2026-07-25T01:00:44Z image deployment-01KYBCNE9FHMPSH24HPJWWZGHX.
+      FIXED HU-129/134/136-140/153. HU-144 interactive AUTH_REQUIRED; HU-146/147
+      Owner/API residual. Tip ea71c577 cite-only. Pin 892c20c8 immobile.
+      PAGE_SURFACE_DRIFT=ED. Batch-10 opened as PATCH-STG-014 recording. != Production GO.
+      Cite docs/runbook/TT-B19-RESIDUAL-A-CLOSURE-LATEST.md
+    runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
+    cite: docs/runbook/TT-B19-RESIDUAL-A-CLOSURE-LATEST.md
+
+  - id: PATCH-STG-014
+    title: Batch-10 Admin L5 — ops + finance + super-admin full surface
+    scope: >
+      Super-admin multi-dim (top/left nav, workbench, ops, finance);
+      HU-165..306; P0 HU-288/289/302 + prior IA/Reality/finance;
+      SA-R0..R6; Batch-10 waves through W14; FINAL CLOSED YES; tip cite-only
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: false
+    impacts_fg_or_web3: false
+    verification_result: W14_CLOSED_FINAL_CLOSED_FROZEN
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: bug_fix
+    promotion_status: DEFERRED
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: FINAL_CLOSED_FROZEN
+    note: >
+      Batch-10 FINAL CLOSED FROZEN at stamp 20260725T064200Z.
+      W14 CLOSED after Staging Web bake 2026-07-25T06:16:38Z + Reality probe PASS.
+      P0/P1=0. P2 DEFER_NON_BLOCKING sealed. Phase now = MAINNET_DEPLOY_PREP_PLACEHOLDER.
+      PAGE_SURFACE_DRIFT=ED. tip ea71c577 cite-only. Mainnet PLACEHOLDER.
+      Hard Gate LOCKED. TT_PRODUCTION_GO=NO_GO. != Production GO.
+      Cite docs/runbook/TT-BATCH10-FINAL-CLOSED-LATEST.md.
+      PCR registry/psg-change-records/PCR-20260725-BATCH10-FINAL-CLOSED-MAINNET-PREP.json.
+    runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
+    cite: docs/runbook/TT-BATCH10-FINAL-CLOSED-LATEST.md
+
+  - id: PATCH-STG-015
+    title: Batch-11 Admin — W01–W13 CLOSED ② · W14 P2 polish
+    scope: >
+      HU-307..430; W01–W13 CLOSED ②; HU-419/424 FIXED ②;
+      W14 P2 polish next; Hard Gate and Cutover remain LOCKED; no fund writes
+    code_sha_or_worktree: WORKTREE
+    impacts_psg: false
+    impacts_fg_or_web3: false
+    verification_result: W01_TO_W13_CLOSED_2_W14_NEXT
+    merge_into_release: DEFERRED_TO_NEXT_RC
+    promotion_class: bug_fix
+    promotion_status: OPEN
+    production_impact: false
+    fg15_impact: false
+    enters_release: false
+    status: FIX_IN_PROGRESS
+    note: >
+      Batch-11 FIX_IN_PROGRESS. W01–W13 CLOSED ② (W13 bake 2026-07-25T12:14:26Z, Reality 10/10).
+      FIXED ②: HU-419/424. W14 next. Finance write FORBIDDEN. Escrow state-machine write FORBIDDEN.
+      Hard Gate/Cutover LOCKED. Mainnet PLACEHOLDER. TT_PRODUCTION_GO=NO_GO.
+      Frontend full test deferred until admin Reality all PASS.
+      Cite docs/runbook/TT-BATCH11-W13-STAGING-VERIFY-LATEST.md
+      and docs/runbook/TT-BATCH11-W13-FINAL-TRUTH-PROGRESS-CITE-LATEST.md.
+    runbook: docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md
+    cite: docs/runbook/TT-BATCH11-FULL-INVENTORY-AND-FIX-ORDER-LATEST.md
+
 related:
   - docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md
   - docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md

@@ -1,0 +1,114 @@
+# TravelTrust · Final Release Closure Mode
+# Human: docs/runbook/TT-FINAL-RELEASE-CLOSURE-MODE-LATEST.md
+# PCR: PCR-20260727-FINAL-RELEASE-CLOSURE-MODE
+#
+# Doctrine:
+#   - Governance overlay on Full System Completion Program (NOT a parallel program)
+#   - Final Truth tip ea71c577 cite-only · Pin immobile
+#   - EXISTING_FEATURES_ONLY · new_business_features FORBIDDEN
+#   - Blocking=0 BEFORE Phase 4 / Reality Closure ARM / PRR / Hard Gate / Production GO
+#   - Forbidden: fake close · docs-only CLOSED · Agent proxy Signoff · tip move · Living score fake progress
+
+schema: traveltrust.final_release_closure_mode.v1
+version: 1
+effective_utc: "2026-07-27"
+stamp: "20260727T080009Z"
+
+machine_keys:
+  TT_FINAL_RELEASE_CLOSURE: MODE_ACTIVE
+  TT_PG_FULL_SYSTEM_COMPLETION: PROGRAM_OPEN_PHASE1_BLOCKING_CLEAR
+  TT_REALITY_CLOSURE: NOT_ARMED
+  TT_PRODUCTION_GO: NO_GO
+  TT_HARD_GATE_LOCKED: true
+  TT_CUTOVER_LOCKED: true
+  MATRIX_RECALC: FORBIDDEN_UNTIL_BLOCKING_0_AND_RUNTIME_CELLS
+  MONEY_PATH_REBUILD: FORBIDDEN
+  FINANCE_REALITY_BASELINE: CITED_FROZEN
+
+role: GOVERNANCE_OVERLAY_FINAL_RELEASE_CLOSURE
+pcr_id: PCR-20260727-FINAL-RELEASE-CLOSURE-MODE
+
+parent_program: PRODUCTION_GRADE_FULL_SYSTEM_COMPLETION
+parent_program_pcr: PCR-20260727-PRODUCTION-GRADE-FULL-SYSTEM-COMPLETION-PROGRAM
+parent_program_registry: registry/production-grade-full-system-completion-program.v1.yaml
+parent_program_board: docs/runbook/TT-PRODUCTION-GRADE-FULL-SYSTEM-COMPLETION-PROGRAM-LATEST.md
+matrix_standard_board: docs/runbook/TT-PRODUCTION-GRADE-USER-ADMIN-REALITY-ALIGNMENT-LATEST.md
+blocking_phase_ssot: registry/blocking-remediation-phase.v1.yaml
+
+scope_policy: EXISTING_FEATURES_ONLY
+new_business_features: FORBIDDEN
+
+isolation:
+  final_truth_tip: ea71c577ce6f99696df33f9394cf96746edc843b
+  pin: PSG-REL-20260720-WEB3-CAND-V2
+  tip_cite_only: true
+  tip_immobile: true
+  hard_gate_locked: true
+  cutover_locked: true
+  mainnet_forbidden: true
+  reality_closure: NOT_ARMED
+  no_temp_patch: true
+  no_fake_close: true
+  no_docs_only_closed: true
+  no_agent_proxy_signoff: true
+  money_path_rebuild: FORBIDDEN
+  finance_reality_baseline: CITED_FROZEN_SR_TOTAL_3
+  living_score_uplift_as_progress: FORBIDDEN
+
+blocking:
+  open: 1
+  sole: B-MEDIA-001
+  media_pcr: PCR-20260727-TRACK-B-R2-CDN-LIVE-CUTOVER
+  media_status: WAITING_OWNER_CF
+  admin_pcr: PCR-20260727-TRACK-B-ADMIN-MATRIX-COMPLETENESS-WAVES
+  admin_status: CLOSED
+  owner_trigger: "B-MEDIA: CF_READY_RUN_GATE"
+
+phases:
+  phase1_blocking_clear: ACTIVE
+  phase2_architecture: QUEUED_UNTIL_BLOCKING_0
+  phase3_domain_loops: QUEUED
+  phase4_release_proof: FORBIDDEN_UNTIL_PHASE1_UNLOCK
+
+exit_criteria_before_web3_reality_prr_go:
+  - blocking_open_eq_0
+  - phase2_phase3_runtime_pass_or_owner_accepted_gap
+  - matrix_recalc_legal
+  - reality_closure_owner_arm_plus_evidence
+  - prr_pass
+  - then_evaluate_hard_gate_cutover_mainnet_production_go
+
+forbidden_until_exit_criteria:
+  - Web3_mainnet_deploy
+  - Reality_Closure_ARM
+  - PRR_as_complete
+  - Production_GO
+  - Hard_Gate_unlock
+  - Cutover_unlock
+  - Matrix_Recalc
+
+wave_b_hard_stop:
+  stamp: "20260727T080235Z"
+  owner_trigger_seen: false
+  status: HARD_STOP_WAITING_OWNER_CF
+  acceptance_rerun: FORBIDDEN
+  prior_acceptance_fail_cite: evidence/GO_media_cdn_production_acceptance/20260727T070100Z
+  prior_hard_stop_cite: evidence/PSG-PRODUCTION-READINESS/blocking-remediation-phase/20260727T074443Z-b-media-owner-cf-hard-stop
+
+wave_c_phases_while_blocking_gt_0:
+  phase2_architecture: QUEUED_NOT_STARTED
+  phase3_domain_loops: QUEUED_NOT_STARTED
+  phase4_release_proof: FORBIDDEN
+  executed: false
+
+wave_d_cf_wait:
+  gap_inventory_board: docs/runbook/TT-FINAL-RELEASE-CLOSURE-CF-WAIT-GAP-INVENTORY-LATEST.md
+  parallel_eng_may_continue: true
+  parallel_eng_closes_b_media: false
+  equals_release_ready: false
+
+honesty:
+  mode_active_neq_blocking_0: true
+  mode_active_neq_production_go: true
+  local_pass_neq_staging_reality: true
+  staging_neq_production_go: true

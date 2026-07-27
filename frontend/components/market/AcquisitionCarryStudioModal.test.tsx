@@ -31,7 +31,8 @@ describe("AcquisitionCarryStudioModal", () => {
       </LocaleProvider>,
     );
     fireEvent.click(screen.getByRole("button", { name: /保存收购草稿|Save acquisition draft/i }));
-    expect(screen.getByRole("alert")).toBeTruthy();
+    // Gate strip (assertive) + form validation may both expose role=alert.
+    expect(screen.getAllByRole("alert").length).toBeGreaterThanOrEqual(1);
     expect(onClose).not.toHaveBeenCalled();
   });
 });

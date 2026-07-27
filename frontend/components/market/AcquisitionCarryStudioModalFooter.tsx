@@ -37,6 +37,14 @@ export function AcquisitionCarryStudioModalFooter({
               {t("market_studio_publish_footer_strip_form_acquisition")}
             </p>
           )}
+          <p
+            className="border-b border-white/10 px-6 py-2 text-small text-warning"
+            role="alert"
+            aria-live="assertive"
+            data-tt-publish-blocked-alert="1"
+          >
+            {t(publishBlockedKeys[0] ?? "market_studio_publish_form_incomplete_hint")}
+          </p>
           <ActionGateChecklist variant="marketFooter" itemKeys={publishBlockedKeys} t={t} />
         </>
       ) : null}

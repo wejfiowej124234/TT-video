@@ -5,6 +5,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { travelFocusRingCoreOffset1Classes } from "@/lib/travelLinkFocus";
 import { TT_MARKETING_HOME_UNLOCK_MODAL_PAY_BTN } from "@/lib/marketingUi";
+import { marketStudioDiscardConfirmPortalRootClass } from "@/components/market/marketStudioModalLayout";
 
 export type DiscardConfirmModalProps = {
   open: boolean;
@@ -35,11 +36,12 @@ export default function DiscardConfirmModal({
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm"
+      className={marketStudioDiscardConfirmPortalRootClass}
       aria-modal="true"
       role="dialog"
       aria-labelledby={titleId}
       aria-describedby={descId}
+      data-tt-discard-confirm-z="410"
       onClick={(e) => e.target === e.currentTarget && onCancel()}
     >
       <div

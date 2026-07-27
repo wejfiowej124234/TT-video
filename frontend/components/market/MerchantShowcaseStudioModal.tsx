@@ -5,7 +5,9 @@ import { useCatalogProductCountries } from "@/lib/catalogApi/useCatalogGeo";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 import { touchTargetLink44Classes, travelFocusRingCoreOffset2Classes } from "@/lib/travelLinkFocus";
 import { MerchantShowcaseStudioModalFooter } from "@/components/market/MerchantShowcaseStudioModalFooter";
+import { marketStudioModalPortalRootClass, marketStudioModalScrimClass } from "@/components/market/marketStudioModalLayout";
 import { useMerchantShowcaseStudioModal } from "@/components/market/useMerchantShowcaseStudioModal";
+import DiscardConfirmModal from "@/components/shared/DiscardConfirmModal";
 import type { MerchantStudioDraft, MerchantStudioDraftSavedMeta } from "./merchantShowcaseStudioModel";
 
 export type { MerchantStudioDraft, MerchantStudioDraftSavedMeta } from "./merchantShowcaseStudioModel";
@@ -40,6 +42,9 @@ export default function MerchantShowcaseStudioModal({ open, onClose, onDraftSave
     coverLabelId,
     videoLabelId,
     requestClose,
+    discardConfirmOpen,
+    cancelDiscardConfirm,
+    acceptDiscardConfirm,
     trapRef,
     categoryOptions,
     publishBlockedKeys,
@@ -58,14 +63,15 @@ export default function MerchantShowcaseStudioModal({ open, onClose, onDraftSave
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
+    <>
     <div
-      className="fixed inset-0 z-[400] flex items-center justify-center p-4 pt-20 pb-8 sm:pt-16 overflow-y-auto"
+      className={marketStudioModalPortalRootClass}
       role="dialog"
       aria-modal="true"
       aria-labelledby={titleId}
       aria-describedby={descId}
     >
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" aria-hidden onClick={requestClose} />
+      <div className={marketStudioModalScrimClass} aria-hidden onClick={requestClose} />
       <div
         ref={trapRef}
         className={D.studioModalPanelLg}
@@ -378,7 +384,13 @@ export default function MerchantShowcaseStudioModal({ open, onClose, onDraftSave
           />
         </form>
       </div>
-    </div>,
+    </div>
+    <DiscardConfirmModal
+      open={discardConfirmOpen}
+      onCancel={cancelDiscardConfirm}
+      onConfirm={acceptDiscardConfirm}
+    />
+    </>,
     document.body,
   );
 }

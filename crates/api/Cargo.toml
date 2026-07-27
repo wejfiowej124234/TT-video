@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 description = "TravelTrust REST API (Axum)"
 
+[lints]
+workspace = true
+
 [lib]
 name = "traveltrust_vacancy_indexer"
 path = "src/vacancy_indexer_lib.rs"

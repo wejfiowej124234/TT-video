@@ -11,6 +11,13 @@ const D = TT_MARKETING_MARKET_DARK_PATH;
 export const marketStudioModalPortalRootClass =
   "fixed inset-0 z-[400] flex items-center justify-center p-4 pt-20 pb-8 sm:pt-16 overflow-y-auto";
 
+/**
+ * 未保存丢弃确认：与 Studio 主壳同为 body 级 portal 兄弟时，须 **高于** `z-[400]`，
+ * 否则 Confirm 会被橱窗/收购/行程玻璃壳遮住（HU-007-B / Staging Reality #3）。
+ */
+export const marketStudioDiscardConfirmPortalRootClass =
+  "fixed inset-0 z-[410] flex items-center justify-center p-4 bg-black/55 backdrop-blur-sm";
+
 export const marketStudioModalScrimClass = "absolute inset-0 bg-black/40 backdrop-blur-sm";
 
 export const marketStudioModalPanelClass = D.studioModalPanelLg;

@@ -1,0 +1,132 @@
+# TravelTrust · Production Grade Parallel Engineering Track
+# Human: docs/runbook/TT-PRODUCTION-GRADE-PARALLEL-ENGINEERING-TRACK-LATEST.md
+# PCR: PCR-20260727-PARALLEL-ENG-MEDIA-ADMIN-IMPL
+#
+# Owner override 2026-07-27: Agent may land engineering SSOT in parallel with
+# Owner CF/DNS/R2 gates. Live cutover / Blocking−1 / Matrix Recalc / Reality
+# Closure ARM / Production GO remain Owner-gated and FORBIDDEN here.
+
+schema: traveltrust.production_grade_parallel_engineering_track.v1
+version: 1
+effective_utc: "2026-07-27"
+stamp: "20260727T071146Z"
+
+machine_keys:
+  TT_PG_PARALLEL_ENGINEERING: ACTIVE
+  TT_PG_FULL_SYSTEM_COMPLETION: PROGRAM_OPEN_PHASE1_BLOCKING_CLEAR
+  TT_REALITY_CLOSURE: NOT_ARMED
+  TT_PRODUCTION_GO: NO_GO
+  TT_HARD_GATE_LOCKED: true
+  TT_CUTOVER_LOCKED: true
+  MATRIX_RECALC: FORBIDDEN_UNTIL_BLOCKING_0_AND_RUNTIME_CELLS
+  BLOCKING_OPEN: 2
+
+pcr_id: PCR-20260727-PARALLEL-ENG-MEDIA-ADMIN-IMPL
+umbrella_pcr: PCR-20260727-PRODUCTION-GRADE-FULL-SYSTEM-COMPLETION-PROGRAM
+final_truth_tip: ea71c577ce6f99696df33f9394cf96746edc843b
+pin: PSG-REL-20260720-WEB3-CAND-V2
+
+isolation:
+  tip_immobile: true
+  does_not_close_b_media_live: true
+  does_not_close_b_admin_pcr: true
+  does_not_uplift_matrix_score: true
+  does_not_arm_reality_closure: true
+  admin_home_cards_remain_empty_batch9: true
+
+lanes:
+  B_MEDIA_001_ENG:
+    blocking_id: B-MEDIA-001
+    live_pcr: PCR-20260727-TRACK-B-R2-CDN-LIVE-CUTOVER
+    live_status: WAITING_OWNER_CF_UNCHANGED
+    eng_deliverables:
+      - platform_media_assets_table
+      - media_service_trait
+      - multipart_metadata_hooks
+      - video_status_machine
+      - kill_data_url_as_truth_path
+    owner_only:
+      - Cloudflare_DNS
+      - CF_Token
+      - R2_Secret
+      - CDN_Acceptance_PASS
+  B_ADMIN_001_ENG:
+    blocking_id: B-ADMIN-001
+    live_pcr: PCR-20260727-TRACK-B-ADMIN-MATRIX-COMPLETENESS-WAVES
+    live_status: OPEN_UNCHANGED
+    eng_deliverables:
+      - adminOpsOverviewModel
+      - seven_column_card_metadata
+      - matrix_wave_completeness_no_score_chase
+    owner_only:
+      - Contrast_visual_signoff
+      - adminHomeModel_staging_verify
+      - HU490_signoff
+  DOMAIN_CLOSED_LOOPS_ENG:
+    status: DESIGN_SEEDS_THEN_IMPL_WAVES
+    domains:
+      - itinerary
+      - community
+      - merchant
+      - guide
+      - cms
+      - acquisition
+
+ladder:
+  - Design
+  - Delta_Review
+  - Implementation_PCR
+  - Local_SSOT_Verify
+  - Staging_Reality
+  - Evidence
+  - PCR_Close
+
+inventory_fold_in:
+  stamp: "20260727T072300Z"
+  admin_matrix_home:
+    keep_admin_home_cards_empty: true
+    living_score_cite: "144/200 NEED_FIX"
+    living_score_ssot: docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md
+    seven_col_ssot: registry/production-grade-user-admin-reality-alignment.v1.yaml
+    seven_columns:
+      - user_surface
+      - admin_surface
+      - approval_state_machine
+      - permission_model
+      - data_persistence
+      - evidence_chain
+      - runtime_verification
+    residual_owner: admin_home_model_staging_redeploy_verify
+  media_upload_paths:
+    do_not_rebuild:
+      - community_media_assets multipart sessions
+      - community_media_s3.rs
+      - profile_avatar_presign.rs
+    eng_gaps_priority:
+      - G5_itinerary_cover_media_asset_id
+      - G3_unify_media_service_facade
+      - G4_image_off_base64_disk
+      - G6_cms_object_key_fill
+    owner_gap_unchanged: G1_r2_cdn_cutover
+    note: "G1 alone clears B-MEDIA Owner-CF exit; G2-G8 remain eng debt under MEDIA_DUAL_TRACK_STAGING"
+
+next_eng_priority:
+  - persist_cover_media_asset_id_itinerary
+  - platform_media_wrap_community_multipart
+  - cms_catalog_object_key_path
+  - admin_ops_live_stamps_seven_col_map
+  - domain_impl_pcr_waves
+
+forbidden:
+  - tip_move
+  - hard_gate_unlock
+  - cutover
+  - mainnet
+  - production_go
+  - reality_closure_arm
+  - matrix_recalc_before_blocking_0
+  - fake_blocking_minus_one
+  - claim_cdn_acceptance_without_owner_cf
+  - refill_ADMIN_HOME_CARDS
+  - docs_only_closed
+  - uplift_batch14_144_without_score_wave_pcr
