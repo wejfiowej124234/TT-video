@@ -1,0 +1,43 @@
+ocs-admin-client: seed attempt=1 503 {"error":"idempotency_db_persist_failed","message":"idempotency_db_persist_faile
+ocs-admin-client: seed attempt=2 503 {"error":"idempotency_db_persist_failed","message":"idempotency_db_persist_faile
+ocs-admin-client: session OK email=adm-10x4-20260719143519@traveltrust.test role=super_admin cap=200 (attempt=2 seed=idempotency_db_persist_failed)
+{
+  "stamp": "sr-runtime-probe",
+  "auth_gate": "seed_login_role_capabilities_200",
+  "auth_email": "adm-10x4-20260719143519@traveltrust.test",
+  "capabilities_http": 200,
+  "tip_cite": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "TT_REALITY_CLOSURE": "NOT_ARMED",
+  "PRR_READY": false,
+  "TT_PRODUCTION_GO": "NO_GO",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "health_http": 200,
+  "finance_summary_http": 200,
+  "finance_sr_total": 3,
+  "finance_sr_via": "meta.settlement_router_stats",
+  "finance_sr_stats": {
+    "total": 3,
+    "max_block_number": 11321386,
+    "min_block_number": 11321384,
+    "latest_inserted_at": "2026-07-27T05:07:56.693113+00:00",
+    "by_event_name": {
+      "DistributableMarked": 1,
+      "Distributed": 1,
+      "SettlementReadyMarked": 1
+    }
+  },
+  "sr_events_http": 200,
+  "sr_events_total": 3,
+  "sr_events_items_len": 3,
+  "rbac_http": 200,
+  "rbac_has_settlement_router_row": true,
+  "web_admin_settlement_router_http": 307,
+  "web_admin_settlement_router_redirect": "/auth/login?returnUrl=%2Fadmin%2Fsettlement-router",
+  "web_admin_finance_http": 307,
+  "web_sr_html_mentions_route": true,
+  "align_bridge_total_3": true,
+  "events_list_deployed": true,
+  "honest_boundary": "API/WEB runtime PASS ≠ B-ADMIN CLOSED ≠ Matrix Recalc ≠ Reality Closure ARM ≠ Production GO",
+  "verdict": "PASS_RUNTIME_PARTIAL"
+}

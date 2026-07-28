@@ -1,0 +1,32 @@
+{
+  "http": 200,
+  "dig": {
+    "via": "summary.total",
+    "total": 3,
+    "stats": {
+      "total": 3,
+      "max_block_number": 11321386,
+      "min_block_number": 11321384,
+      "latest_inserted_at": "2026-07-27T05:07:56.693113+00:00",
+      "chain_id_filter": null
+    }
+  },
+  "items_len": 3,
+  "sample_keys": [
+    "id",
+    "chain_id",
+    "block_number",
+    "log_index",
+    "block_hash",
+    "tx_hash",
+    "router_address",
+    "event_name",
+    "order_id_hex",
+    "escrow_address",
+    "token_address",
+    "amount_u256_hex",
+    "steward_share_u256_hex",
+    "pool_share_u256_hex",
+    "inserted_at"
+  ]
+}

@@ -1,0 +1,20 @@
+  "pillars_pass": {
+    "L1_Product": false,
+    "L2_Data": false,
+    "L3_Security": false,
+    "L4_Operations": false,
+    "L5_Financial_Grade_Web3": false
+  },
+  "blockers": [
+    "L1_Product_OPEN",
+    "L2_Data_OPEN",
+    "L3_Security_OPEN",
+    "L4_Operations_OPEN",
+    "L5_FG_Web3_NOT_PASS_FG15_OR_EMPIRICAL",
+    "RELEASE_IDENTITY_CURRENT_NOT_OK",
+    "OWNER_SIGNOFF_MISSING"
+  ],
+  "observation_48h": "ELAPSED_PASS",
+  "ACTIVE_FLIP": "FORBIDDEN",
+  "production_go": false
+}

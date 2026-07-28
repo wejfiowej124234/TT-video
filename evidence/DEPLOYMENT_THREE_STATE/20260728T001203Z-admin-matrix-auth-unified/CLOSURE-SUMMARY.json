@@ -1,0 +1,102 @@
+{
+  "pack": "evidence/DEPLOYMENT_THREE_STATE/20260728T001203Z-admin-matrix-auth-unified",
+  "phase": "②",
+  "stamp": "20260728T001203Z",
+  "title": "Admin Client auth unification — seed_login_role_capabilities_200",
+  "root_cause": "Staging seed may return db_failed / idempotency_db_persist_failed while login still returns super_admin + Bearer; token alone fails GET /api/v1/admin/capabilities with login_required until retry loop succeeds",
+  "auth_ssot": {
+    "gate": "seed_login_role_capabilities_200",
+    "files": [
+      "scripts/dev/lib/official-cold-start-admin-client.cjs",
+      "scripts/dev/run-admin-l5-staging-audit.sh",
+      "frontend/e2e/admin-l5-staging-closure.spec.ts",
+      "scripts/dev/probe-admin-matrix-meta-source-staging.cjs",
+      "scripts/dev/probe-admin-matrix-sr-staging-runtime.cjs"
+    ],
+    "removed": "token-only / login-without-capabilities-200 session shortcut"
+  },
+  "admin_matrix_audit": {
+    "verdict": "PASS",
+    "browser_verdict": "PASS",
+    "playwright_tests": "4/4",
+    "probe_count": 24,
+    "fail_count": 0,
+    "p0": 0,
+    "login_attempt": 1,
+    "capabilities_http": 200
+  },
+  "reality_probes": {
+    "meta_source_first_run": {
+      "verdict": "FAIL",
+      "note": "transient Staging flake — 4×401 on finance/users/orders/disputes immediately after cap=200; audit same session had 200 on those routes",
+      "canonical": false,
+      "artifact": "meta-source-probe/SUMMARY.json"
+    },
+    "meta_source_rerun": {
+      "verdict": "PASS_WITH_CONFIRM_DESIGN",
+      "counts": {
+        "pass": 9,
+        "confirm_design": 1,
+        "fail": 0
+      },
+      "canonical": true,
+      "artifact": "meta-source-probe-rerun/SUMMARY.json"
+    },
+    "sr_runtime": {
+      "verdict": "PASS_RUNTIME_PARTIAL",
+      "finance_sr_total": 3,
+      "sr_events_total": 3,
+      "artifact": "sr-runtime-probe/SUMMARY.json"
+    }
+  },
+  "three_state_bake": {
+    "bake": "bake.json",
+    "health": "health.json",
+    "meta": "meta.json"
+  },
+  "bake": {
+    "git_sha": "72c764a32407062f19e7f16e11294f94ac4c3f3f",
+    "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+    "build_time": "2026-07-27T14:11:39Z"
+  },
+  "bake_vs_tip": {
+    "classification": "EXPECTED_DIFFERENCE",
+    "bake_sha": "72c764a32407062f19e7f16e11294f94ac4c3f3f",
+    "cited_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+    "note": "Staging deploy SHA ≠ Final Truth Baseline tip cite — CONFIRM_DESIGN per TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY"
+  },
+  "frozen": {
+    "final_truth_tip": "ea71c577",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "candidate": "v2",
+    "v311": true,
+    "psg_egm": true
+  },
+  "matrix_recalc": {
+    "verdict": "PSG_COMPLETION_RECALC_NOT_COMPLETE",
+    "psg_complete": false,
+    "ACTIVE_FLIP": "FORBIDDEN",
+    "production_go": false,
+    "artifact": "psg-matrix-recalculate.json"
+  },
+  "forbid": [
+    "ARM",
+    "PRR",
+    "Production_GO",
+    "Active_Flip"
+  ],
+  "claims_forbidden": [
+    "Production GO",
+    "Reality Closure ARM",
+    "PRR ready",
+    "Matrix Recalc complete",
+    "B-ADMIN CLOSED",
+    "tip ea71c577 deployed on Staging without bake drift note"
+  ],
+  "honesty": "② Staging verification only; unified auth gate PASS ≠ ③ Production GO",
+  "git_commit": {
+    "intent": "auth-unification slice independent commit",
+    "associated_pack": "evidence/DEPLOYMENT_THREE_STATE/20260728T001203Z-admin-matrix-auth-unified",
+    "status": "pending_commit"
+  }
+}

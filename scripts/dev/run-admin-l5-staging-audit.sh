@@ -14,6 +14,12 @@ API="${STAGING_API_BASE:-https://tt-api-staging.fly.dev}"
 WEB="${STAGING_WEB_BASE:-https://tt-web-staging.fly.dev}"
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUT="${STAGING_ADMIN_L5_AUDIT_OUT:-$ROOT/evidence/GO_staging_admin_l5_audit/$STAMP}"
+# Playwright subshell `cd frontend` — relative OUT would write under frontend/ and break tee/record.
+case "$OUT" in
+  /*) ;;
+  [A-Za-z]:/*|[A-Za-z]:\\*) ;;
+  *) OUT="$ROOT/$OUT" ;;
+esac
 EMAIL="${STAGING_AUDIT_EMAIL:-tourist@test.com}"
 PASS="${STAGING_AUDIT_PASSWORD:-Test123!}"
 GIT_SHA="$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo unknown)"
@@ -22,6 +28,7 @@ mkdir -p "$OUT"
 REPORT="$OUT/report.json"
 LOG="$OUT/run.log"
 BROWSER_NDJSON="$OUT/browser.ndjson"
+: >"$BROWSER_NDJSON"
 
 log() { echo "$*" | tee -a "$LOG"; }
 
@@ -72,20 +79,58 @@ probe_fe_redirect() {
 log "run-admin-l5-staging-audit: START $STAMP"
 log "API=$API WEB=$WEB EMAIL=$EMAIL OUT=$OUT git=$GIT_SHA"
 
-curl -sS -X POST "$API/auth/seed-test-accounts" -H "Content-Type: application/json" \
-  -d "{\"promote_admin_email\":\"$EMAIL\"}" >>"$LOG" 2>&1 || true
-
-login_raw="$(curl_json POST "$API/auth/login" "{\"email\":\"$EMAIL\",\"password\":\"$PASS\"}")"
-parse_http "$login_raw"
-AUDIT_TOKEN="$(node -e "try{const o=JSON.parse(process.argv[1]);process.stdout.write(o.token||'')}catch(e){}" "$BODY" 2>/dev/null || true)"
-ROLE="$(node -e "try{const o=JSON.parse(process.argv[1]);process.stdout.write(o.role||'')}catch(e){}" "$BODY" 2>/dev/null || true)"
+# Login hardening: seed may return db_failed while login still emits a Bearer
+# that capabilities rejects as login_required — accept session only after cap 200.
+AUDIT_TOKEN=""
+ROLE=""
+LOGIN_DETAIL=""
+for attempt in 1 2 3 4 5 6 7 8; do
+  seed_raw="$(curl -sS -X POST "$API/auth/seed-test-accounts" -H "Content-Type: application/json" \
+    -d "{\"promote_admin_email\":\"$EMAIL\"}" --max-time 45 2>/dev/null || true)"
+  seed_note="$(node -e "try{const o=JSON.parse(process.argv[1]);process.stdout.write(o.error||o.code||'ok')}catch(e){process.stdout.write('seed_parse')}" "$seed_raw" 2>/dev/null || echo seed_err)"
+  login_raw="$(curl_json POST "$API/auth/login" "{\"email\":\"$EMAIL\",\"password\":\"$PASS\"}")"
+  parse_http "$login_raw"
+  AUDIT_TOKEN="$(node -e "try{const o=JSON.parse(process.argv[1]);process.stdout.write(o.token||'')}catch(e){}" "$BODY" 2>/dev/null || true)"
+  ROLE="$(node -e "try{const o=JSON.parse(process.argv[1]);process.stdout.write(o.role||'')}catch(e){}" "$BODY" 2>/dev/null || true)"
+  if [[ -z "$AUDIT_TOKEN" ]]; then
+    LOGIN_DETAIL="attempt=$attempt seed=$seed_note login_http=$HTTP_CODE no_token"
+    sleep $((attempt < 4 ? attempt : 3))
+    continue
+  fi
+  case "$ROLE" in
+    admin|super_admin) ;;
+    *)
+      LOGIN_DETAIL="attempt=$attempt seed=$seed_note role=$ROLE"
+      AUDIT_TOKEN=""
+      sleep $((attempt < 4 ? attempt : 3))
+      continue
+      ;;
+  esac
+  cap_raw="$(curl_auth GET "$API/api/v1/admin/capabilities" "$AUDIT_TOKEN")"
+  parse_http "$cap_raw"
+  if [[ "$HTTP_CODE" == "200" ]]; then
+    LOGIN_DETAIL="attempt=$attempt seed=$seed_note role=$ROLE cap=200"
+    break
+  fi
+  LOGIN_DETAIL="attempt=$attempt seed=$seed_note role=$ROLE cap=$HTTP_CODE (dead_token)"
+  AUDIT_TOKEN=""
+  sleep $((attempt < 4 ? attempt : 3))
+done
 
 if [[ -z "$AUDIT_TOKEN" ]]; then
-  log "FAIL: login HTTP $HTTP_CODE — set STAGING_AUDIT_EMAIL/PASSWORD"
-  echo "{\"verdict\":\"FAIL\",\"reason\":\"login_failed\",\"stamp\":\"$STAMP\"}" >"$REPORT"
+  log "FAIL: login hardening exhausted — $LOGIN_DETAIL — set STAGING_AUDIT_EMAIL/PASSWORD"
+  echo "{\"verdict\":\"FAIL\",\"reason\":\"login_or_capabilities_failed\",\"detail\":\"$LOGIN_DETAIL\",\"stamp\":\"$STAMP\"}" >"$REPORT"
   exit 2
 fi
-log "login OK role=$ROLE token_prefix=${AUDIT_TOKEN:0:12}..."
+case "$ROLE" in
+  admin|super_admin) ;;
+  *)
+    log "FAIL_P0: login_role=$ROLE — need admin|super_admin (tourist→capabilities 403 is role wall, not fe_proxy Cookie break)"
+    echo "{\"verdict\":\"FAIL_P0\",\"reason\":\"login_role_not_admin\",\"login_role\":\"$ROLE\",\"stamp\":\"$STAMP\",\"note\":\"Do not treat admin_required 403 as fe_proxy_capabilities_http_401\"}" >"$REPORT"
+    exit 3
+    ;;
+esac
+log "login OK role=$ROLE token_prefix=${AUDIT_TOKEN:0:12}... ($LOGIN_DETAIL)"
 
 PROBES="$OUT/probes.ndjson"
 : >"$PROBES"

@@ -1,0 +1,18 @@
+{
+  "http": 200,
+  "dig": {
+    "via": "meta.settlement_router_stats",
+    "total": 3,
+    "stats": {
+      "total": 3,
+      "max_block_number": 11321386,
+      "min_block_number": 11321384,
+      "latest_inserted_at": "2026-07-27T05:07:56.693113+00:00",
+      "by_event_name": {
+        "DistributableMarked": 1,
+        "Distributed": 1,
+        "SettlementReadyMarked": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "machine": "TT_ADMIN_MATRIX_META_SOURCE_REALITY",
+  "stamp": "meta-source-probe-rerun",
+  "tip_cite": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "tip_immobile": true,
+  "TT_REALITY_CLOSURE": "NOT_ARMED",
+  "PRR_READY": false,
+  "TT_PRODUCTION_GO": "NO_GO",
+  "auth_gate": "seed_login_role_capabilities_200",
+  "auth_email": "adm-10x4-20260719143519@traveltrust.test",
+  "capabilities_http": 200,
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "api_build_sha": "72c764a32407062f19e7f16e11294f94ac4c3f3f",
+  "counts": {
+    "pass": 9,
+    "confirm_design": 1,
+    "need_fix": 0,
+    "fail": 0
+  },
+  "rows": {
+    "approvals": {
+      "path": "/api/v1/admin/approvals?limit=5",
+      "http": 200,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "top": null
+      },
+      "expect_any": [
+        "postgres",
+        "memory"
+      ],
+      "status": "PASS",
+      "got": "postgres",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    },
+    "fee_router_routed": {
+      "path": "/api/v1/admin/fee-router/routed-events?limit=5",
+      "http": 200,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "top": null
+      },
+      "expect_any": [
+        "postgres"
+      ],
+      "status": "PASS",
+      "got": "postgres",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    },
+    "settlement_router_events": {
+      "path": "/api/v1/admin/settlement-router/events?limit=5",
+      "http": 200,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "top": null
+      },
+      "expect_any": [
+        "postgres"
+      ],
+      "status": "PASS",
+      "got": "postgres",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    },
+    "region_vault_forwarded": {
+      "path": "/api/v1/admin/region-vault/forwarded-events?limit=5",
+      "http": 200,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "top": null
+      },
+      "expect_any": [
+        "postgres"
+      ],
+      "status": "PASS",
+      "got": "postgres",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    },
+    "metrics_home_overview": {
+      "path": "/api/v1/admin/metrics/home-overview",
+      "http": 200,
+      "source": {
+        "meta": "postgres",
+        "applied": null,
+        "top": "postgres"
+      },
+      "expect_any": [
+        "postgres",
+        "derived",
+        "snapshot",
+        "live"
+      ],
+      "status": "PASS",
+      "got": "postgres",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    },
+    "capabilities": {
+      "path": "/api/v1/admin/capabilities",
+      "http": 200,
+      "source": {
+        "meta": "rbac_matrix_v1",
+        "applied": null,
+        "top": null
+      },
+      "expect_any": [
+        "rbac_matrix_v1",
+        "postgres"
+      ],
+      "status": "PASS",
+      "got": "rbac_matrix_v1",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    },
+    "finance_summary": {
+      "path": "/api/v1/admin/finance/summary",
+      "http": 200,
+      "source": {
+        "meta": "chain_off",
+        "applied": null,
+        "top": null
+      },
+      "expect_any": [
+        "chain_off",
+        "postgres"
+      ],
+      "status": "PASS_CONFIRM_DESIGN",
+      "got": "chain_off",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": true
+    },
+    "users": {
+      "path": "/api/v1/admin/users?limit=2",
+      "http": 200,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "top": null
+      },
+      "expect_any": [
+        "postgres"
+      ],
+      "status": "PASS",
+      "got": "postgres",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    },
+    "orders": {
+      "path": "/api/v1/admin/orders?limit=2",
+      "http": 200,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "top": null
+      },
+      "expect_any": [
+        "postgres"
+      ],
+      "status": "PASS",
+      "got": "postgres",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    },
+    "disputes": {
+      "path": "/api/v1/admin/disputes?limit=2",
+      "http": 200,
+      "source": {
+        "meta": "postgres",
+        "applied": "postgres",
+        "top": null
+      },
+      "expect_any": [
+        "postgres"
+      ],
+      "status": "PASS",
+      "got": "postgres",
+      "okHttp": true,
+      "okSrc": true,
+      "confirm": false
+    }
+  },
+  "web_unauth": {
+    "/admin": {
+      "status": 307,
+      "location": "/auth/login?returnUrl=%2Fadmin"
+    },
+    "/admin/finance": {
+      "status": 307,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Ffinance"
+    },
+    "/admin/approvals": {
+      "status": 307,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fapprovals"
+    },
+    "/admin/capabilities": {
+      "status": 307,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fcapabilities"
+    },
+    "/admin/settlement-router": {
+      "status": 307,
+      "location": "/auth/login?returnUrl=%2Fadmin%2Fsettlement-router"
+    }
+  },
+  "verdict": "PASS_WITH_CONFIRM_DESIGN",
+  "honesty": "PASS≠Admin200/200≠ARM≠PRR≠ProductionGO; Staging bake SHA may ≠ tip (CONFIRM_DESIGN)"
+}

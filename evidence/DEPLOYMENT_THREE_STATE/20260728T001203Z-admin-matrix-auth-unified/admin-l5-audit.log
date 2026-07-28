@@ -1,0 +1,51 @@
+run-admin-l5-staging-audit: START 20260728T001203Z
+API=https://tt-api-staging.fly.dev WEB=https://tt-web-staging.fly.dev EMAIL=adm-10x4-20260719143519@traveltrust.test OUT=/d/TravelTrust-V1.1/evidence/GO_staging_admin_l5_audit/20260728T001203Z git=72c764a32407062f19e7f16e11294f94ac4c3f3f
+login OK role=super_admin token_prefix=tts_35998c8d... (attempt=1 seed=ok role=super_admin cap=200)
+== API probes (Bearer) ==
+  capabilities HTTP 200 0.785075s
+  home_overview HTTP 200 0.921546s
+  orders_list HTTP 200 0.837344s
+  users_list HTTP 200 0.753373s
+  guides_list HTTP 200 0.763570s
+  disputes_list HTTP 200 0.912116s
+  approvals_list HTTP 200 0.785385s
+  audit_logs HTTP 200 0.806388s
+  finance_summary HTTP 200 1.026619s
+  rbac_matrix HTTP 200 0.964765s
+  2fa_policy HTTP 200 0.707090s
+  community_reports HTTP 200 0.708141s
+  provider_apps HTTP 200 0.742513s
+  steward_apps HTTP 200 0.698303s
+== auth boundary ==
+  capabilities_no_auth HTTP 401 0.719124s
+== FE middleware (must redirect without valid session_ok) ==
+  fe_middleware_no_cookie HTTP 307 redirect=https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin
+  fe_middleware_uid_only HTTP 307 redirect=https://tt-web-staging.fly.dev/auth/login?returnUrl=%2Fadmin
+  fe_middleware_uid_and_ok HTTP 200 redirect=—
+== FE shell HTML (no session cookie) ==
+  FE /admin HTTP 307
+  FE /admin/orders HTTP 307
+  FE /admin/users HTTP 307
+  FE /admin/permissions HTTP 307
+  FE /admin/approvals HTTP 307
+== FE capabilities via same-origin proxy (Bearer) ==
+  FE proxy capabilities HTTP 200 0.757521s
+== FE browser probes (Playwright) ==
+
+Running 4 tests using 1 worker
+
+[1A[2K(node:6396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:6396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/4] e2e\admin-l5-staging-closure.spec.ts:309:7 › admin l5 staging closure · negative › invalid cookie-only /admin redirects to login
+[1A[2K[2/4] e2e\admin-l5-staging-closure.spec.ts:326:7 › admin l5 staging closure · negative › stale Bearer clears session and redirects or shows session expired
+[1A[2K[3/4] e2e\admin-l5-staging-closure.spec.ts:392:7 › admin l5 staging closure · seeded › super_admin orders nav does not stay pending
+[1A[2K[4/4] e2e\admin-l5-staging-closure.spec.ts:409:7 › admin l5 staging closure · seeded › home inbox 去处理 navigates to queue list without frozen stall
+[1A[2K  4 passed (1.3m)
+verdict=PASS p0=0 fails=0
+run-admin-l5-staging-audit: DONE /d/TravelTrust-V1.1/evidence/GO_staging_admin_l5_audit/20260728T001203Z/report.json
