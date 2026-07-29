@@ -7,6 +7,7 @@ import type { FormEvent } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/components/LocaleProvider";
 import { postRegister, postRegisterSendVerificationCode, applyClientSessionAfterAuth, postGuideUploadDoc, getReferralValidate } from "@/lib/apiClient";
+import { normalizeRegisterVerificationCode } from "./RegisterVerificationCodeField";
 import { PENDING_GUIDE_KEY } from "@/lib/constants";
 import { PASSWORD_MIN_LEN, MAX_FILE_SIZE } from "./constants";
 import { registerPageShellClass } from "./registerBackgrounds";
@@ -156,11 +157,12 @@ export function useRegisterPage() {
       setError("email_required");
       return;
     }
-    if (!verificationCode.trim()) {
+    const codeNorm = normalizeRegisterVerificationCode(verificationCode);
+    if (!codeNorm) {
       setError("verification_code_required");
       return;
     }
-    if (verificationCode.trim().length !== 6) {
+    if (codeNorm.length !== 6) {
       setError("verification_code_invalid");
       return;
     }
@@ -190,7 +192,7 @@ export function useRegisterPage() {
       const res = await postRegister({
         email: emailTrim,
         password,
-        verification_code: verificationCode.trim(),
+        verification_code: codeNorm,
         nickname: nickname || undefined,
         default_wallet_address: walletTrim && isValidWalletAddress(walletTrim) ? walletTrim : undefined,
         referral_code: referralPrefill?.trim() || undefined,
@@ -229,11 +231,12 @@ export function useRegisterPage() {
       setError("email_required");
       return;
     }
-    if (!verificationCode.trim()) {
+    const codeNorm = normalizeRegisterVerificationCode(verificationCode);
+    if (!codeNorm) {
       setError("verification_code_required");
       return;
     }
-    if (verificationCode.trim().length !== 6) {
+    if (codeNorm.length !== 6) {
       setError("verification_code_invalid");
       return;
     }
@@ -285,7 +288,7 @@ export function useRegisterPage() {
       const res = await postRegister({
         email: emailTrim,
         password,
-        verification_code: verificationCode.trim(),
+        verification_code: codeNorm,
         nickname: nickname || undefined,
         referral_code: referralPrefill?.trim() || undefined,
       });

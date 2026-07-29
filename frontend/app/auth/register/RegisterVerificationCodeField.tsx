@@ -15,6 +15,11 @@ type RegisterVerificationCodeFieldProps = {
   onSendCode: () => void;
 };
 
+/** Strip spaces / nbsp from mail copy so paste of "6 5 9 5 7 2" becomes "659572". */
+export function normalizeRegisterVerificationCode(raw: string): string {
+  return raw.replace(/\D/g, "").slice(0, 6);
+}
+
 export default function RegisterVerificationCodeField({
   t,
   labelClass,
@@ -40,11 +45,18 @@ export default function RegisterVerificationCodeField({
           type="text"
           inputMode="numeric"
           autoComplete="one-time-code"
-          maxLength={6}
+          // Do not use maxLength={6}: browsers truncate paste of spaced codes before onChange.
+          maxLength={32}
           pattern="[0-9]{6}"
           placeholder={t("auth_register_verificationCodePlaceholder")}
           value={verificationCode}
-          onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+          onChange={(e) => setVerificationCode(normalizeRegisterVerificationCode(e.target.value))}
+          onPaste={(e) => {
+            const text = e.clipboardData.getData("text");
+            if (!text) return;
+            e.preventDefault();
+            setVerificationCode(normalizeRegisterVerificationCode(text));
+          }}
           required
           className={`${inputClass} sm:flex-1`}
           aria-describedby={devCodeHint ? `${codeInputId}-dev-hint` : undefined}

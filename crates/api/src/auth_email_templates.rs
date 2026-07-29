@@ -20,7 +20,30 @@ fn escape_html(s: &str) -> String {
     out
 }
 
+/// 公网品牌资产宿主（邮件客户端无法拉取 localhost / 内网）。
+const EMAIL_BRAND_MARK_PUBLIC_FALLBACK_BASE: &str = "https://www.web3-ttg.com";
+
+fn public_asset_base_for_email(base: &str) -> String {
+    let trimmed = base.trim().trim_end_matches('/');
+    let Ok(parsed) = url::Url::parse(trimmed) else {
+        return EMAIL_BRAND_MARK_PUBLIC_FALLBACK_BASE.to_string();
+    };
+    let host = parsed
+        .host_str()
+        .unwrap_or("")
+        .to_ascii_lowercase();
+    let loopback = host == "localhost"
+        || host == "127.0.0.1"
+        || host == "::1"
+        || host.ends_with(".local");
+    if loopback || parsed.scheme().is_empty() {
+        return EMAIL_BRAND_MARK_PUBLIC_FALLBACK_BASE.to_string();
+    }
+    trimmed.to_string()
+}
+
 /// 邮件内品牌标 URL。优先 `TRAVELTRUST_EMAIL_BRAND_MARK_URL`，否则 `{PUBLIC_APP_BASE}/brand/traveltrust-email-mark.png`（与 BIMI TT 同源）。
+/// 若 PUBLIC_APP_BASE 为 localhost / 未设（默认本地），**不得**把 localhost 写进出站 HTML — Gmail 会显示裂图；回退公网 `www.web3-ttg.com`。
 pub fn read_email_brand_mark_url() -> String {
     if let Ok(v) = std::env::var("TRAVELTRUST_EMAIL_BRAND_MARK_URL") {
         let t = v.trim().to_string();
@@ -30,7 +53,7 @@ pub fn read_email_brand_mark_url() -> String {
     }
     format!(
         "{}/brand/traveltrust-email-mark.png",
-        read_public_app_base_url().trim_end_matches('/')
+        public_asset_base_for_email(&read_public_app_base_url())
     )
 }
 
@@ -130,20 +153,16 @@ pub fn register_verification_code_text(code: &str) -> String {
 
 /// 注册 6 位验证码 — HTML（Auth L5 · TT 品牌标）。
 pub fn register_verification_code_html(code: &str) -> String {
-    // 字距：用 &nbsp; 分隔，避免部分客户端忽略 letter-spacing。
-    let code_spaced: String = code
-        .chars()
-        .filter(|c| !c.is_whitespace())
-        .map(|c| escape_html(&c.to_string()))
-        .collect::<Vec<_>>()
-        .join("&nbsp;");
+    // 连续数字便于选中/复制；视觉字距用 letter-spacing（禁止 &nbsp; 分隔，否则粘贴进表单会带空格被截断）。
+    let code_digits: String = code.chars().filter(|c| c.is_ascii_digit()).collect();
+    let code_e = escape_html(&code_digits);
     let inner = format!(
         r##"<p style="margin:0 0 6px;font-size:15px;line-height:1.65;color:#e2e8f0;">使用以下验证码完成 TravelTrust 注册：</p>
-<p style="margin:0 0 22px;font-size:13px;line-height:1.55;color:#94a3b8;">Use this code to finish creating your account.</p>
+<p style="margin:0 0 22px;font-size:13px;line-height:1.55;color:#94a3b8;">Use this code to finish creating your account. Tap/hold the code to copy.</p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px;border-collapse:separate;">
 <tr><td align="center" style="background:#14100d;border:1px solid rgba(249,215,121,0.40);border-radius:14px;padding:26px 18px;">
   <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(249,215,121,0.88);font-weight:700;margin-bottom:16px;">验证码 · Verification</div>
-  <div style="font-size:34px;line-height:1.2;font-weight:700;color:#fde9a8;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Courier New',monospace;">{code_spaced}</div>
+  <div style="font-size:34px;line-height:1.2;font-weight:700;color:#fde9a8;letter-spacing:0.28em;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Courier New',monospace;-webkit-user-select:all;user-select:all;-webkit-touch-callout:default;" dir="ltr">{code_e}</div>
 </td></tr>
 </table>
 <p style="margin:0;font-size:14px;line-height:1.65;color:#94a3b8;">有效期 <strong style="color:#f9d779;">10 分钟</strong>。请勿与他人分享。<br>Valid for <strong style="color:#f9d779;">10 minutes</strong>. Do not share this code.</p>"##
@@ -246,5 +265,35 @@ mod tests {
             "https://tt-web-staging.fly.dev/brand/traveltrust-email-mark.png"
         );
         std::env::remove_var("TRAVELTRUST_PUBLIC_APP_BASE_URL");
+    }
+
+    #[test]
+    fn brand_mark_url_never_emits_localhost_in_outbound_mail() {
+        std::env::remove_var("TRAVELTRUST_EMAIL_BRAND_MARK_URL");
+        std::env::remove_var("TRAVELTRUST_PUBLIC_APP_BASE_URL");
+        let u = read_email_brand_mark_url();
+        assert!(
+            u.starts_with("https://www.web3-ttg.com/"),
+            "unset PUBLIC_APP_BASE must not embed localhost: {u}"
+        );
+        assert!(!u.contains("localhost"));
+        std::env::set_var("TRAVELTRUST_PUBLIC_APP_BASE_URL", "http://127.0.0.1:3000");
+        let u2 = read_email_brand_mark_url();
+        assert_eq!(
+            u2,
+            "https://www.web3-ttg.com/brand/traveltrust-email-mark.png"
+        );
+        std::env::remove_var("TRAVELTRUST_PUBLIC_APP_BASE_URL");
+    }
+
+    #[test]
+    fn register_code_html_is_contiguous_for_copy_paste() {
+        let html = register_verification_code_html("659572");
+        assert!(html.contains(">659572<"), "digits must be contiguous for copy");
+        assert!(
+            !html.contains("6&nbsp;5") && !html.contains("6&#160;5"),
+            "nbsp between digits breaks paste into maxLength=6 inputs"
+        );
+        assert!(html.contains("user-select:all"));
     }
 }
