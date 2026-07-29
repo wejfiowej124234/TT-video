@@ -4,3 +4,15 @@ members = [
     "crates/core",
     "crates/api",
 ]
+
+# Production clippy policy (① · Eng SSOT / CQ-02)
+# Structural debt stays allow — requires dedicated modularity PRs, not drive-by refactors.
+# Real hygiene lints stay warn (promoted to error via `clippy -- -D warnings`).
+[workspace.lints.rust]
+private_interfaces = "allow"
+
+[workspace.lints.clippy]
+too_many_arguments = "allow"
+type_complexity = "allow"
+result_large_err = "allow"
+large_enum_variant = "allow"
