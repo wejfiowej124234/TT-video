@@ -1,7 +1,7 @@
 {
   "pack_id": "GO_admin_inbox_focus_product_baseline",
   "stamp": "20260730T124928Z",
-  "recorded_at_utc": "2026-07-30T12:51:11Z",
+  "recorded_at_utc": "2026-07-30T13:01:37Z",
   "phase": "① Local · Product / Release Baseline (Admin UX Policy)",
   "verdict": "PASS",
   "scope": {
@@ -20,9 +20,9 @@
   },
   "pins": {
     "fe_tip": {
-      "sha": "6929606a2d66bc1e187c0e63373b35a03d10a286",
-      "status": "UNCHANGED",
-      "note": "No re-bake; Product Baseline is UX policy source — tip pin frozen"
+      "sha": "f19fd144ce12af3fec401360980f61c002cbfa15",
+      "status": "TIP_SYNCED",
+      "note": "FE tip includes Inbox Focus Product Baseline always-on workbench layout; Staging bake next"
     },
     "css_baseline": {
       "file": "38ee6c50cc925a9a.css",
@@ -52,5 +52,5 @@
     "exit": 0,
     "artifact": "VITEST.txt"
   },
-  "honesty": "① Product Baseline PASS ≠ ② Staging GO ≠ ③ Production GO. Live Staging/Prod screenshot after next authorized tip that includes this policy tree; tip 6929606a remains frozen this pack."
+  "honesty": "Local Product Baseline PASS + tip f19fd144 committed != Staging GO != Production GO. Staging bake + Runtime/Screenshot required before Production release evaluation."
 }
