@@ -218,6 +218,11 @@ pub const ROUTE_DENY_MATRIX: &[(&str, &str, &str)] = &[
     ("GET", "/api/v1/admin/fee-router/routed-events", PERM_FEE_ROUTER_READ),
     (
         "GET",
+        "/api/v1/admin/settlement-router/events",
+        PERM_FINANCE_READ,
+    ),
+    (
+        "GET",
         "/api/v1/admin/region-vault/forwarded-events",
         PERM_FINANCE_READ,
     ),
@@ -614,6 +619,7 @@ pub async fn get_admin_capabilities(
         "route_deny_matrix_preview": route_deny_matrix_json(),
         "phase2_prep": phase2_prep_flags(&state).await,
         "implementation_note": "phase_01_console_role_db_prep",
+        "meta": { "source": "rbac_matrix_v1" },
     });
     admin_attach_meta_build(&mut body);
 
@@ -705,7 +711,7 @@ pub async fn patch_admin_2fa_policy(
         Err(r) => return r,
     };
     let enforced = body.enforced.unwrap_or(false);
-    if let Err(_) = db::patch_admin_2fa_policy_enforced(pool, enforced).await {
+    if (db::patch_admin_2fa_policy_enforced(pool, enforced).await).is_err() {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,
             Json(crate::api_json::err_key("admin_2fa_policy_patch_failed")),
@@ -955,14 +961,14 @@ pub async fn put_admin_user_console_role(
         )
             .into_response();
     }
-    if let Err(_) = db::upsert_admin_console_role(
+    if (db::upsert_admin_console_role(
         pool,
         target,
         role,
         Some(actor_id),
         body.reason.as_deref(),
     )
-    .await
+    .await).is_err()
     {
         return (
             StatusCode::INTERNAL_SERVER_ERROR,

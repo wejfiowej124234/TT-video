@@ -29,6 +29,7 @@ use super::not_impl_json;
 mod trust_growth_obs;
 mod admin_acquisition_suspend_http;
 mod admin_metrics_home_http;
+mod admin_ops_overview_http;
 mod admin_steward_application_http;
 mod admin_provider_application_http;
 mod admin_guide_application_http;
@@ -229,7 +230,7 @@ fn finance_summary_to_csv(meta: &Value, summary: &Value) -> String {
     if let Some(mo) = meta.as_object() {
         for (k, v) in mo {
             match (k.as_str(), v) {
-                ("fee_router_stats" | "region_vault_stats", Value::Object(m)) => {
+                ("fee_router_stats" | "region_vault_stats" | "settlement_router_stats", Value::Object(m)) => {
                     let group = format!("meta.{k}");
                     for (sk, sv) in m {
                         push_finance_csv_row(
@@ -376,6 +377,7 @@ async fn compute_admin_finance_summary(
         db_orders_with_escrow_count,
         fee_router_stats,
         region_vault_stats,
+        settlement_router_stats,
         last_stored_orders_projection_reconcile,
         orders_projection_reconcile_report_count,
         reconciliation_reports_total_count,
@@ -399,6 +401,28 @@ async fn compute_admin_finance_summary(
                 "min_block_number": s.min_block_number,
                 "latest_inserted_at": s.latest_inserted_at.map(|t| t.to_rfc3339()),
             }),
+            Err(_) => Value::Null,
+        };
+        let settlement_router_stats = match db::settlement_router_event_stats(pool, None).await {
+            Ok(s) => {
+                let by_name = match db::settlement_router_event_counts_by_name(pool, None).await {
+                    Ok(rows) => {
+                        let mut m = serde_json::Map::new();
+                        for (name, count) in rows {
+                            m.insert(name, json!(count));
+                        }
+                        Value::Object(m)
+                    }
+                    Err(_) => Value::Null,
+                };
+                json!({
+                    "total": s.total,
+                    "max_block_number": s.max_block_number,
+                    "min_block_number": s.min_block_number,
+                    "latest_inserted_at": s.latest_inserted_at.map(|t| t.to_rfc3339()),
+                    "by_event_name": by_name,
+                })
+            }
             Err(_) => Value::Null,
         };
         let last_stored_orders_projection_reconcile =
@@ -437,6 +461,7 @@ async fn compute_admin_finance_summary(
             db::count_orders_with_escrow_address(pool).await.ok(),
             fee_router_stats,
             region_vault_stats,
+            settlement_router_stats,
             last_stored_orders_projection_reconcile,
             orders_projection_reconcile_report_count,
             reconciliation_reports_total_count,
@@ -448,6 +473,7 @@ async fn compute_admin_finance_summary(
         (
             None,
             None,
+            Value::Null,
             Value::Null,
             Value::Null,
             Value::Null,
@@ -475,6 +501,32 @@ async fn compute_admin_finance_summary(
         .filter(|s| !s.is_empty())
         .map(std::string::ToString::to_string);
 
+    let settlement_router_address_meta = state
+        .chain_config
+        .as_ref()
+        .and_then(|c| c.settlement_router_address.as_ref())
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+        .map(std::string::ToString::to_string);
+
+    let fee_router_total = fee_router_stats.get("total").and_then(|x| x.as_i64());
+    let region_vault_total = region_vault_stats.get("total").and_then(|x| x.as_i64());
+    let settlement_router_total = settlement_router_stats
+        .get("total")
+        .and_then(|x| x.as_i64());
+
+    let finance_source_matrix = json!({
+        "money_path_ssot": "settlement_router_events",
+        "legacy_fee_router_table": "fee_router_routed_events",
+        "legacy_region_vault_table": "region_vault_forwarded_events",
+        "meta_source_meaning": "CONFIRM_DESIGN: meta.source=chain_off labels in-memory order rollups; it does not mean indexer disabled",
+        "empty_legacy_honesty": "LEGACY PlatformFeeRouted / RegionVaultForwarded totals may stay 0 while Money Path SettlementRouter events are present; empty LEGACY ≠ indexer broken",
+        "settlement_router_configured": settlement_router_address_meta.is_some(),
+        "settlement_router_total": settlement_router_total,
+        "legacy_fee_router_total": fee_router_total,
+        "legacy_region_vault_total": region_vault_total,
+    });
+
     let meta = json!({
         "generated_at": Utc::now().to_rfc3339(),
         "source": "chain_off",
@@ -489,6 +541,9 @@ async fn compute_admin_finance_summary(
         "fee_router_stats": fee_router_stats,
         "region_vault_address": region_vault_address_meta,
         "region_vault_stats": region_vault_stats,
+        "settlement_router_address": settlement_router_address_meta,
+        "settlement_router_stats": settlement_router_stats,
+        "finance_source_matrix": finance_source_matrix,
         "last_stored_orders_projection_reconcile": last_stored_orders_projection_reconcile,
     });
 
@@ -557,6 +612,10 @@ pub fn router() -> Router<ApiMetaState> {
         .route(
             "/api/v1/admin/fee-router/routed-events",
             get(get_admin_fee_router_routed_events),
+        )
+        .route(
+            "/api/v1/admin/settlement-router/events",
+            get(get_admin_settlement_router_events),
         )
         .route(
             "/api/v1/admin/region-vault/forwarded-events",
@@ -746,6 +805,7 @@ pub fn router() -> Router<ApiMetaState> {
     let mut r = router;
     r = r
         .merge(admin_metrics_home_http::router())
+        .merge(admin_ops_overview_http::router())
         .merge(admin_guide_application_http::router())
         // ADM-U01 / Phase② post-soak：freeze 下仍须挂载只读 onboarding + trust-growth 探针路由
         .merge(admin_provider_application_http::router())
@@ -825,6 +885,9 @@ pub struct AdminFeeRouterRoutedQuery {
 
 /// RegionVault `RegionVaultForwarded` 投影：query 形与 FeeRouter 管理端一致（110、70、04 §3.5）
 pub type AdminRegionVaultForwardedQuery = AdminFeeRouterRoutedQuery;
+
+/// SettlementRouter events（Money Path SSOT）：query 形与 FeeRouter 管理端一致（L5-C · 70 · 04 §3.5）
+pub type AdminSettlementRouterEventsQuery = AdminFeeRouterRoutedQuery;
 
 /// **`GET …/region-vault/forwarded-events/export`**：只读快照导出（**`region_vault_forwarded_events`**；P5-2-B）。
 #[derive(Debug, Deserialize)]
@@ -3158,7 +3221,169 @@ pub async fn get_admin_fee_router_routed_events(
             "limit": limit,
             "cursor": cursor_applied,
             "chain_id": q.chain_id,
+            "source": "postgres",
+        },
+        "meta": { "source": "postgres" }
+    });
+    admin_attach_meta_build(&mut body);
+    Json(body).into_response()
+}
+
+/// SettlementRouter event projection list（Money Path SSOT · L5-C · Admin Finance ops）。
+pub async fn get_admin_settlement_router_events(
+    State(state): State<ApiMetaState>,
+    Query(q): Query<AdminSettlementRouterEventsQuery>,
+    headers: HeaderMap,
+) -> impl IntoResponse {
+    let Some(ref _co) = state.chain_off else {
+        return not_impl_json("GET /api/v1/admin/settlement-router/events").into_response();
+    };
+    let actor_id = match require_finance_read_uid(&state, &headers).await {
+        Ok(uid) => uid,
+        Err(resp) => return resp,
+    };
+    let request_id = request_id_from_headers(&headers);
+
+    let limit = match db::parse_admin_fee_router_limit(q.limit) {
+        Ok(n) => n,
+        Err(e) => {
+            return (
+                StatusCode::BAD_REQUEST,
+                Json(crate::api_json::err_key_detail(
+                    e,
+                    format!(
+                        "limit must be 1..={} or omit for default 50",
+                        db::ADMIN_FEE_ROUTER_MAX_LIMIT
+                    ),
+                )),
+            )
+                .into_response();
         }
+    };
+
+    let (after_block, after_log) = match q.cursor.as_deref() {
+        None | Some("") => (None, None),
+        Some(s) => match db::parse_fee_routes_cursor(s) {
+            Ok((b, l)) => (Some(b), Some(l)),
+            Err(e) => {
+                return (
+                    StatusCode::BAD_REQUEST,
+                    Json(crate::api_json::err_key_detail(
+                        e,
+                        "cursor must be block_number:log_index from page.next_cursor",
+                    )),
+                )
+                    .into_response();
+            }
+        },
+    };
+
+    let pool = match admin_db_pool_required(&state) {
+        Ok(p) => p,
+        Err(resp) => return resp,
+    };
+
+    let stats = match db::settlement_router_event_stats(pool, q.chain_id).await {
+        Ok(s) => s,
+        Err(e) => {
+            return (
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Json(crate::api_json::err_key_detail(
+                    "settlement_router_stats_failed",
+                    e.to_string(),
+                )),
+            )
+                .into_response();
+        }
+    };
+
+    let (rows, has_more) =
+        match db::list_settlement_router_events(pool, q.chain_id, after_block, after_log, limit)
+            .await
+        {
+            Ok(x) => x,
+            Err(e) => {
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    Json(crate::api_json::err_key_detail(
+                        "settlement_router_list_failed",
+                        e.to_string(),
+                    )),
+                )
+                    .into_response();
+            }
+        };
+
+    let items: Vec<_> = rows
+        .iter()
+        .map(|r| {
+            json!({
+                "id": r.id.to_string(),
+                "chain_id": r.chain_id,
+                "block_number": r.block_number,
+                "log_index": r.log_index,
+                "block_hash": r.block_hash,
+                "tx_hash": r.tx_hash,
+                "router_address": r.router_address,
+                "event_name": r.event_name,
+                "order_id_hex": r.order_id_hex,
+                "escrow_address": r.escrow_address,
+                "token_address": r.token_address,
+                "amount_u256_hex": r.amount_u256_hex,
+                "steward_share_u256_hex": r.steward_share_u256_hex,
+                "pool_share_u256_hex": r.pool_share_u256_hex,
+                "inserted_at": r.inserted_at.to_rfc3339()
+            })
+        })
+        .collect();
+
+    let next_cursor = rows
+        .last()
+        .map(|r| db::encode_fee_routes_cursor(r.block_number, r.log_index));
+
+    let cursor_applied = match q.cursor.as_deref() {
+        None | Some("") => json!(null),
+        Some(s) => json!(s),
+    };
+
+    write_admin_audit_log_best_effort(
+        &state,
+        actor_id,
+        request_id.as_deref(),
+        "admin.settlement_router_events.read",
+        Some("settlement_router_events"),
+        None,
+        json!({
+            "result_count": items.len(),
+            "limit": limit,
+            "chain_id_filter": q.chain_id,
+            "stats_total": stats.total,
+        }),
+    )
+    .await;
+
+    let mut body = json!({
+        "status": "ok",
+        "summary": {
+            "total": stats.total,
+            "max_block_number": stats.max_block_number,
+            "min_block_number": stats.min_block_number,
+            "latest_inserted_at": stats.latest_inserted_at.map(|t| t.to_rfc3339()),
+            "chain_id_filter": q.chain_id,
+        },
+        "items": items,
+        "page": {
+            "has_more": has_more,
+            "next_cursor": next_cursor,
+        },
+        "applied_filters": {
+            "limit": limit,
+            "cursor": cursor_applied,
+            "chain_id": q.chain_id,
+            "source": "postgres",
+        },
+        "money_path_ssot": "settlement_router_events",
+        "meta": { "source": "postgres" }
     });
     admin_attach_meta_build(&mut body);
     Json(body).into_response()
@@ -3315,7 +3540,9 @@ pub async fn get_admin_region_vault_forwarded_events(
             "limit": limit,
             "cursor": cursor_applied,
             "chain_id": q.chain_id,
-        }
+            "source": "postgres",
+        },
+        "meta": { "source": "postgres" }
     });
     admin_attach_meta_build(&mut body);
     Json(body).into_response()
@@ -6014,8 +6241,12 @@ pub async fn get_admin_approvals(
                 "status": "ok",
                 "items": [],
                 "note": "admin_approvals_no_db",
+                "applied_filters": {
+                    "source": "memory",
+                },
                 "meta": {
                     "note": "admin_approvals_no_db",
+                    "source": "memory",
                 }
             });
             admin_attach_meta_build(&mut body);
@@ -6070,7 +6301,9 @@ pub async fn get_admin_approvals(
         "applied_filters": {
             "status": status_filter,
             "limit": limit,
+            "source": "postgres",
         },
+        "meta": { "source": "postgres" },
     });
     admin_attach_meta_build(&mut body);
     Json(body).into_response()

@@ -586,6 +586,12 @@ async fn admin_finance_summary_ok_includes_meta_and_disputes() {
     assert!(body["meta"]["fee_router_stats"].is_null());
     assert!(body["meta"]["region_vault_address"].is_null());
     assert!(body["meta"]["region_vault_stats"].is_null());
+    assert!(body["meta"]["settlement_router_address"].is_null());
+    assert!(body["meta"]["settlement_router_stats"].is_null());
+    assert_eq!(
+        body["meta"]["finance_source_matrix"]["money_path_ssot"],
+        "settlement_router_events"
+    );
     assert!(body["meta"]["last_stored_orders_projection_reconcile"].is_null());
     assert!(body["meta"]["orders_projection_reconcile_report_count"].is_null());
     assert!(body["meta"]["reconciliation_reports_total_count"].is_null());
@@ -675,6 +681,12 @@ fn finance_summary_to_csv_flattens_router_vault_and_projection_meta() {
             "min_block_number": null,
             "latest_inserted_at": null
         },
+        "settlement_router_stats": {
+            "total": 4,
+            "max_block_number": 20,
+            "min_block_number": 5,
+            "latest_inserted_at": "2020-01-02T00:00:00Z"
+        },
         "last_stored_orders_projection_reconcile": {
             "report_id": "r1",
             "projection_reconcile_clean": true,
@@ -687,6 +699,7 @@ fn finance_summary_to_csv_flattens_router_vault_and_projection_meta() {
     assert!(csv.contains("meta,fee_router_address,0xfee\n"));
     assert!(csv.contains("meta.fee_router_stats,total,2\n"));
     assert!(csv.contains("meta.region_vault_stats,total,3\n"));
+    assert!(csv.contains("meta.settlement_router_stats,total,4\n"));
     assert!(csv.contains("meta.last_stored_orders_projection_reconcile,report_id,r1\n"));
     assert!(csv.contains(
         "meta.last_stored_orders_projection_reconcile,projection_reconcile_clean,true\n"
@@ -764,6 +777,25 @@ async fn admin_region_vault_forwarded_events_not_impl_without_chain_off() {
         .await
         .into_response(),
         "GET /api/v1/admin/region-vault/forwarded-events",
+    )
+    .await;
+}
+
+#[tokio::test]
+async fn admin_settlement_router_events_not_impl_without_chain_off() {
+    assert_chain_off_not_impl(
+        get_admin_settlement_router_events(
+            State(state_no_chain_off()),
+            Query(AdminSettlementRouterEventsQuery {
+                limit: None,
+                cursor: None,
+                chain_id: None,
+            }),
+            HeaderMap::new(),
+        )
+        .await
+        .into_response(),
+        "GET /api/v1/admin/settlement-router/events",
     )
     .await;
 }
@@ -2736,6 +2768,7 @@ async fn admin_observability_overview_orders_deadline_ssot_chain_read_success_hi
         escrow_factory_address: None,
         fee_router_address: None,
         region_vault_address: None,
+        settlement_router_address: None,
         country_pool_ledger_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
@@ -2814,6 +2847,7 @@ async fn admin_observability_overview_orders_deadline_ssot_old_governor_fallback
         escrow_factory_address: None,
         fee_router_address: None,
         region_vault_address: None,
+        settlement_router_address: None,
         country_pool_ledger_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
@@ -2873,6 +2907,7 @@ async fn admin_observability_overview_orders_deadline_ssot_rpc_failure_fallback_
         escrow_factory_address: None,
         fee_router_address: None,
         region_vault_address: None,
+        settlement_router_address: None,
         country_pool_ledger_address: None,
         investor_share_token_addresses: vec![],
         staking_address: None,
@@ -3361,6 +3396,63 @@ async fn admin_region_vault_forwarded_events_requires_db() {
     assert_eq!(resp.status(), StatusCode::SERVICE_UNAVAILABLE);
     let body = body_json(resp).await;
     assert_eq!(body["error"], "admin_db_required");
+}
+
+#[tokio::test]
+async fn admin_settlement_router_events_requires_db() {
+    let admin = user_with_role("admin");
+    let resp = get_admin_settlement_router_events(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminSettlementRouterEventsQuery {
+            limit: Some(10),
+            cursor: None,
+            chain_id: None,
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(resp.status(), StatusCode::SERVICE_UNAVAILABLE);
+    let body = body_json(resp).await;
+    assert_eq!(body["error"], "admin_db_required");
+}
+
+#[tokio::test]
+async fn admin_settlement_router_events_forbidden_for_non_admin() {
+    let tourist = user_with_role("tourist");
+    let resp = get_admin_settlement_router_events(
+        State(build_state(vec![tourist.clone()])),
+        Query(AdminSettlementRouterEventsQuery {
+            limit: None,
+            cursor: None,
+            chain_id: None,
+        }),
+        auth_headers(tourist.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(resp.status(), StatusCode::FORBIDDEN);
+    let body = body_json(resp).await;
+    assert_eq!(body["error"], "admin_required");
+}
+
+#[tokio::test]
+async fn admin_settlement_router_events_limit_zero_returns_400_before_db() {
+    let admin = user_with_role("admin");
+    let resp = get_admin_settlement_router_events(
+        State(build_state(vec![admin.clone()])),
+        Query(AdminSettlementRouterEventsQuery {
+            limit: Some(0),
+            cursor: None,
+            chain_id: None,
+        }),
+        auth_headers(admin.id),
+    )
+    .await
+    .into_response();
+    assert_eq!(resp.status(), StatusCode::BAD_REQUEST);
+    let body = body_json(resp).await;
+    assert_eq!(body["error"], "invalid_limit");
 }
 
 #[tokio::test]
