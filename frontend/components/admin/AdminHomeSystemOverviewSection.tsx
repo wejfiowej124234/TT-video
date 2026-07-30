@@ -22,7 +22,7 @@ export function AdminHomeSystemOverviewSection(props: {
   focusInbox: boolean;
 }) {
   const overview = useAdminHomeSystemOverview();
-  /** HU-455：聚焦（pending>0）默认收起；无待办仍展开 */
+  /** HU-455 · Product Baseline：概况恒为辅助 → 默认收起（不随 pending 展开） */
   const defaultOpen = adminHomeSystemOverviewDefaultOpen(props.inboxPendingTotal);
   const summaryVars = adminHomeSystemOverviewCollapsedSummaryVars({
     users: overview.users,

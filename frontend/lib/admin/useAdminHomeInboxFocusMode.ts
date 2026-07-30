@@ -10,7 +10,7 @@ import {
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { useAdminHomeInbox } from "@/lib/admin/useAdminHomeInbox";
 
-/** ① `/admin` 工作台 · 四通道待办 > 0 时收件箱聚焦（与 `AdminHomeClient` 同源）。 */
+/** ① `/admin` 工作台 · Inbox Focus Product Baseline（恒开；与 `AdminHomeClient` 同源）。 */
 export function adminHomeInboxFocusOnPath(
   pathname: string,
   pendingTotal: number | null,

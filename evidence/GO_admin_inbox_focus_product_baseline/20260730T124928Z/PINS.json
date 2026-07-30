@@ -1,0 +1,56 @@
+{
+  "pack_id": "GO_admin_inbox_focus_product_baseline",
+  "stamp": "20260730T124928Z",
+  "recorded_at_utc": "2026-07-30T12:51:11Z",
+  "phase": "① Local · Product / Release Baseline (Admin UX Policy)",
+  "verdict": "PASS",
+  "scope": {
+    "in": [
+      "Admin UX Policy (inbox focus default)",
+      "Admin home layout / display priority",
+      "Contract + vitest regression",
+      "Screenshot-level IA checklist"
+    ],
+    "out": [
+      "API / RBAC / data model",
+      "FE release tip bake",
+      "CSS Baseline redeploy",
+      "Staging GO / Production GO"
+    ]
+  },
+  "pins": {
+    "fe_tip": {
+      "sha": "6929606a2d66bc1e187c0e63373b35a03d10a286",
+      "status": "UNCHANGED",
+      "note": "No re-bake; Product Baseline is UX policy source — tip pin frozen"
+    },
+    "css_baseline": {
+      "file": "38ee6c50cc925a9a.css",
+      "status": "UNCHANGED"
+    },
+    "runtime_data_closure": {
+      "pack": "evidence/GO_admin_dashboard_runtime_data_closure/20260730T122703Z",
+      "verdict": "PASS",
+      "status": "CITED_IMMUTABLE"
+    }
+  },
+  "product_baseline": {
+    "driver": "inbox_focus_product_baseline_default",
+    "adminHomeInboxFocusLayoutActive": true,
+    "adminHomeSecondaryWidgetsCollapsed": true,
+    "adminHomeSystemOverviewDefaultOpen": false,
+    "adminHomeModulesFoldDefaultOpen": false,
+    "ia_order_focus": [
+      "AdminHomeInboxStrip (待办 / 收件箱 / 运营动作)",
+      "AdminHomeSystemOverviewSection (概况 · 辅助 · 默认收起)",
+      "AdminHomeFocusCompanion + KPI / 域健康 fold (辅助)"
+    ]
+  },
+  "vitest": {
+    "files": 4,
+    "tests": 35,
+    "exit": 0,
+    "artifact": "VITEST.txt"
+  },
+  "honesty": "① Product Baseline PASS ≠ ② Staging GO ≠ ③ Production GO. Live Staging/Prod screenshot after next authorized tip that includes this policy tree; tip 6929606a remains frozen this pack."
+}

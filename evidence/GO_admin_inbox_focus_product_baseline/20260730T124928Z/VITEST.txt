@@ -1,0 +1,13 @@
+
+ RUN  v3.2.6 D:/TravelTrust-V1.1/frontend
+
+ ✓ lib/admin/adminDesignSystemBaseline.test.ts (6 tests) 5ms
+ ✓ lib/admin/adminShellUxPolicy.test.ts (11 tests) 3ms
+ ✓ lib/admin/adminHomeInboxPendingTotal.test.ts (7 tests) 3ms
+ ✓ lib/admin/adminWorkbenchW02.batch12.contract.test.ts (11 tests) 6ms
+
+ Test Files  4 passed (4)
+      Tests  35 passed (35)
+   Start at  20:51:11
+   Duration  1.97s (transform 512ms, setup 69ms, collect 670ms, tests 17ms, environment 2.61s, prepare 1.81s)
+

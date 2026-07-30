@@ -5,12 +5,13 @@ import { readAdminHomeInboxPendingTotalCache } from "./adminHomeInboxPendingTota
 
 export const ADMIN_HOME_INBOX_QUEUE_KEYS: readonly AdminHomeInboxKey[] = [
   "provider",
+  "guide",
   "steward",
   "approvals",
   "reports",
 ];
 
-/** 今日待办四通道合计（跳过无权限通道）。 */
+/** 今日待办五通道合计（跳过无权限 / 拉取失败通道；失败通道不得计为 0）。 */
 export function adminHomeInboxPendingTotal(
   counts: AdminHomeInboxCounts,
   channels: AdminHomeInboxChannels,
@@ -24,13 +25,17 @@ export function adminHomeInboxPendingTotal(
   const sum = ADMIN_HOME_INBOX_QUEUE_KEYS.reduce((acc, key) => {
     if (!canAccessAdminInboxChannel(key, hasPermission, permissionsLoaded)) return acc;
     if (channels[key].permissionDenied) return acc;
-    return acc + (counts[key] ?? 0);
+    if (channels[key].errorKind != null) return acc;
+    const n = counts[key];
+    if (n === null) return acc;
+    return acc + n;
   }, 0);
 
   if (loading) {
     const hasResolvedCount = ADMIN_HOME_INBOX_QUEUE_KEYS.some(
       (key) =>
         !channels[key].permissionDenied &&
+        channels[key].errorKind == null &&
         canAccessAdminInboxChannel(key, hasPermission, permissionsLoaded) &&
         counts[key] !== null,
     );
@@ -54,7 +59,11 @@ export function resolveAdminHomeInboxPendingTotal(
   return readAdminHomeInboxPendingTotalCache();
 }
 
-/** 有待办时默认收起「全部模块」卡片墙，减轻三重导航（P3 · ①）。 */
+/**
+ * Product Baseline · Inbox Focus 默认：模块墙为辅助 → 恒默认收起。
+ * `pendingTotal` 保留签名（调用方兼容）。
+ */
 export function adminHomeModulesFoldDefaultOpen(pendingTotal: number | null): boolean {
-  return pendingTotal === null || pendingTotal === 0;
+  void pendingTotal;
+  return false;
 }

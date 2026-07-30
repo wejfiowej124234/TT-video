@@ -5,15 +5,18 @@ import {
   adminHomeKpiFoldDefaultOpen,
   adminHomeSystemOverviewDefaultOpen,
   adminShellCommandPaletteTriggerVisible,
+  adminShellDeployEnvBadgeQuiet,
   adminShellNavGroupDefaultOpen,
   adminShellPreviewBadgeVisible,
   adminShellRolePerspectiveSwitcherVisible,
   adminHomeMaintainerFoldVisible,
+  adminShellWorkspaceOpsChromeDemoted,
+  TT_ADMIN_SHELL_WORKSPACE_OPS_DEMOTED_MARK,
 } from "./adminShellUxPolicy";
 import { writeAdminHomeInboxPendingTotalCache } from "./adminHomeInboxPendingTotalCache";
 
 describe("adminShellUxPolicy", () => {
-  it("defers focus layout while inbox loading (no flash to four-card grid)", () => {
+  it("Product Baseline · Inbox Focus always-on (no pending/loading flash)", () => {
     expect(
       adminHomeInboxFocusLayoutActive({
         pendingTotal: null,
@@ -30,22 +33,22 @@ describe("adminShellUxPolicy", () => {
         permissionsLoaded: true,
         inboxError: false,
       }),
-    ).toBe(false);
+    ).toBe(true);
     writeAdminHomeInboxPendingTotalCache(78);
     expect(
       adminHomeInboxFocusLayoutActive({
-        pendingTotal: null,
-        inboxLoading: true,
+        pendingTotal: 0,
+        inboxLoading: false,
         permissionsLoaded: true,
         inboxError: false,
       }),
     ).toBe(true);
   });
 
-  it("collapses system overview in idle grid when pending; focus layout uses static section", () => {
-    expect(adminHomeSystemOverviewDefaultOpen(0)).toBe(true);
-    expect(adminHomeSystemOverviewDefaultOpen(78)).toBe(false);
+  it("Product Baseline · system overview auxiliary (always collapsed default)", () => {
+    expect(adminHomeSystemOverviewDefaultOpen(0)).toBe(false);
     expect(adminHomeSystemOverviewDefaultOpen(null)).toBe(false);
+    expect(adminHomeSystemOverviewDefaultOpen(78)).toBe(false);
   });
 
   it("hides role perspective and command palette on workspace when pending (non-maintainer)", () => {
@@ -55,35 +58,88 @@ describe("adminShellUxPolicy", () => {
     expect(adminShellPreviewBadgeVisible(input)).toBe(false);
   });
 
-  it("keeps maintainer controls on workspace with pending", () => {
+  it("Product Baseline · preview badge demoted on workspace for non-maintainer (any pending)", () => {
+    expect(
+      adminShellPreviewBadgeVisible({
+        maintainerUi: false,
+        onWorkspace: true,
+        pendingTotal: 0,
+      }),
+    ).toBe(false);
+    expect(
+      adminShellPreviewBadgeVisible({
+        maintainerUi: false,
+        onWorkspace: true,
+        pendingTotal: null,
+      }),
+    ).toBe(false);
+  });
+
+  it("HU-437 · hides command palette chip on workspace for all roles (⌘K remains)", () => {
+    expect(
+      adminShellCommandPaletteTriggerVisible({
+        maintainerUi: true,
+        onWorkspace: true,
+        pendingTotal: 0,
+      }),
+    ).toBe(false);
+    expect(
+      adminShellCommandPaletteTriggerVisible({
+        maintainerUi: false,
+        onWorkspace: true,
+        pendingTotal: null,
+      }),
+    ).toBe(false);
+    expect(
+      adminShellCommandPaletteTriggerVisible({
+        maintainerUi: true,
+        onWorkspace: false,
+        pendingTotal: 0,
+      }),
+    ).toBe(true);
+  });
+
+  it("HU-437 · deploy env quiet + ops chrome demoted only on workspace", () => {
+    expect(adminShellDeployEnvBadgeQuiet({ onWorkspace: true })).toBe(true);
+    expect(adminShellDeployEnvBadgeQuiet({ onWorkspace: false })).toBe(false);
+    expect(adminShellWorkspaceOpsChromeDemoted(true)).toBe(true);
+    expect(adminShellWorkspaceOpsChromeDemoted(false)).toBe(false);
+    expect(TT_ADMIN_SHELL_WORKSPACE_OPS_DEMOTED_MARK).toBe(
+      "tt_admin_shell_workspace_ops_demoted_hu437",
+    );
+  });
+
+  it("keeps maintainer role switcher on workspace with pending (search chip demoted HU-437)", () => {
     const input = { maintainerUi: true, onWorkspace: true, pendingTotal: 78 };
     expect(adminShellRolePerspectiveSwitcherVisible(input)).toBe(true);
-    expect(adminShellCommandPaletteTriggerVisible(input)).toBe(true);
+    expect(adminShellCommandPaletteTriggerVisible(input)).toBe(false);
     expect(adminShellPreviewBadgeVisible(input)).toBe(true);
   });
 
-  it("hides maintainer fold for non-maintainers during inbox focus", () => {
+  it("WP-03: maintainer fold only when maintainerUi (both layouts)", () => {
     expect(adminHomeMaintainerFoldVisible({ maintainerUi: false, focusInbox: true })).toBe(false);
     expect(adminHomeMaintainerFoldVisible({ maintainerUi: true, focusInbox: true })).toBe(true);
-    expect(adminHomeMaintainerFoldVisible({ maintainerUi: false, focusInbox: false })).toBe(true);
+    expect(adminHomeMaintainerFoldVisible({ maintainerUi: false, focusInbox: false })).toBe(false);
+    expect(adminHomeMaintainerFoldVisible({ maintainerUi: true, focusInbox: false })).toBe(true);
   });
 
-  it("collapses finance/governance/more nav groups by default", () => {
+  it("HU-474 · collapsed-default set empty; more stays open for Finance filter (was HU-224)", () => {
+    // Batch-12 HU-474 removed dead finance/governance group ids from collapse set
     expect(adminShellNavGroupDefaultOpen("finance", { groupActive: false, pendingRollup: 0 })).toBe(
-      false,
+      true,
     );
     expect(
-      adminShellNavGroupDefaultOpen("finance", {
+      adminShellNavGroupDefaultOpen("more", {
         groupActive: false,
         pendingRollup: 0,
         shellFilterRole: "Finance",
       }),
     ).toBe(true);
     expect(adminShellNavGroupDefaultOpen("governance", { groupActive: false, pendingRollup: 0 })).toBe(
-      false,
+      true,
     );
     expect(adminShellNavGroupDefaultOpen("more", { groupActive: false, pendingRollup: 0 })).toBe(
-      false,
+      true,
     );
     expect(adminShellNavGroupDefaultOpen("onboarding", { groupActive: false, pendingRollup: 0 })).toBe(
       true,
@@ -94,10 +150,10 @@ describe("adminShellUxPolicy", () => {
     );
   });
 
-  it("opens KPI fold when idle; when inbox focused only disputes open KPI", () => {
+  it("HU-441 · ops detail fold defaults collapsed; opens only when disputes>0", () => {
     expect(
       adminHomeKpiFoldDefaultOpen({ pendingTotal: 0, disputesKpi: 0, ordersKpi: 0 }),
-    ).toBe(true);
+    ).toBe(false);
     expect(
       adminHomeKpiFoldDefaultOpen({ pendingTotal: 78, disputesKpi: 0, ordersKpi: 162 }),
     ).toBe(false);
@@ -106,9 +162,6 @@ describe("adminShellUxPolicy", () => {
     ).toBe(true);
     expect(
       adminHomeKpiFoldDefaultOpen({ pendingTotal: null, disputesKpi: 0, ordersKpi: 0 }),
-    ).toBe(false);
-    expect(
-      adminHomeKpiFoldDefaultOpen({ pendingTotal: null, disputesKpi: 0, ordersKpi: 162 }),
     ).toBe(false);
   });
 
