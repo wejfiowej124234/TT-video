@@ -44,6 +44,10 @@ import {
   ADMIN_WORKBENCH_VULN_UPGRADE_GATE_MARK,
   ADMIN_WORKBENCH_VULN_UPGRADE_GATE_VALUE,
 } from "@/lib/admin/adminWorkbenchL5ScoreGate";
+import {
+  ADMIN_WORKBENCH_LAYOUT_DRIVER,
+  TT_ADMIN_DESIGN_SYSTEM_PRODUCT_RELEASE_BASELINE_MARK,
+} from "@/lib/admin/adminDesignSystemBaseline";
 
 import {
 
@@ -82,6 +86,7 @@ import {
 import { writeAdminHomeInboxPendingTotalCache } from "@/lib/admin/adminHomeInboxPendingTotalCache";
 import { filterAdminHomeCardsForFocusMode } from "@/lib/admin/adminHomeFocusModuleFilter";
 import {
+  ADMIN_HOME_INBOX_FOCUS_LAYOUT_ACTIVE_MARK,
   adminHomeInboxFocusLayoutActive,
   adminHomeKpiFoldDefaultOpen,
   adminHomeMaintainerFoldVisible,
@@ -385,11 +390,19 @@ export default function AdminHomeClient() {
       data-tt-admin-workbench-l5-gate-mark={ADMIN_WORKBENCH_L5_GATE_MARK}
       data-tt-admin-workbench-vuln-upgrade-gate={ADMIN_WORKBENCH_VULN_UPGRADE_GATE_VALUE}
       data-tt-admin-workbench-vuln-upgrade-gate-mark={ADMIN_WORKBENCH_VULN_UPGRADE_GATE_MARK}
+      data-tt-admin-workbench-layout-driver={ADMIN_WORKBENCH_LAYOUT_DRIVER}
+      data-tt-admin-design-system-product-release-baseline-mark={
+        TT_ADMIN_DESIGN_SYSTEM_PRODUCT_RELEASE_BASELINE_MARK
+      }
+      data-tt-admin-home-inbox-focus-layout-active-mark={
+        ADMIN_HOME_INBOX_FOCUS_LAYOUT_ACTIVE_MARK
+      }
     >
-      <span className="sr-only">tt_admin_home_soft_revalidate_hu463</span>
-      <span className="sr-only">tt_admin_home_i18n_key_symmetry_hu462</span>
-      <span className="sr-only">{ADMIN_WORKBENCH_L5_GATE_MARK}</span>
-      <span className="sr-only">{ADMIN_WORKBENCH_VULN_UPGRADE_GATE_MARK}</span>
+      {/* Batch-14 C-08: keep data-*-mark + MARK constants for Batch-12 probes; no naked key text in DOM */}
+      <span className="sr-only" aria-hidden="true" />
+      <span className="sr-only" aria-hidden="true" />
+      <span className="sr-only" aria-hidden="true" />
+      <span className="sr-only" aria-hidden="true" />
 
       {focusInbox ? (
         <header

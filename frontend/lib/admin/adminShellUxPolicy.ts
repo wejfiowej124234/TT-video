@@ -35,6 +35,10 @@ export function adminHomeSecondaryWidgetsCollapsed(pendingTotal: number | null):
  * **Forbidden:** `NEXT_PUBLIC_*` / deploy-env forks；API / RBAC / 数据模型 / FE tip 变更。
  * See `adminDesignSystemBaseline.ts`.
  */
+/** Minify-safe Runtime / Staging probe literal (Product Baseline). */
+export const ADMIN_HOME_INBOX_FOCUS_LAYOUT_ACTIVE_MARK =
+  "adminHomeInboxFocusLayoutActive" as const;
+
 export function adminHomeInboxFocusLayoutActive(input: {
   pendingTotal: number | null;
   inboxLoading: boolean;

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  ADMIN_HOME_INBOX_FOCUS_LAYOUT_ACTIVE_MARK,
   adminHomeInboxFocusLayoutActive,
   adminHomeKpiFoldDefaultOpen,
   adminHomeSystemOverviewDefaultOpen,
@@ -17,6 +18,9 @@ import { writeAdminHomeInboxPendingTotalCache } from "./adminHomeInboxPendingTot
 
 describe("adminShellUxPolicy", () => {
   it("Product Baseline · Inbox Focus always-on (no pending/loading flash)", () => {
+    expect(ADMIN_HOME_INBOX_FOCUS_LAYOUT_ACTIVE_MARK).toBe(
+      "adminHomeInboxFocusLayoutActive",
+    );
     expect(
       adminHomeInboxFocusLayoutActive({
         pendingTotal: null,
