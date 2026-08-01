@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.final_truth_release_composition_manifest.v1",
   "machine_key": "TT_FINAL_TRUTH_RELEASE_COMPOSITION_MANIFEST",
-  "at": "2026-08-01T07:58:51Z",
+  "at": "2026-08-01T08:30:00Z",
   "tt_production_go": "NO_GO",
   "human_uat_open": false,
   "production_go_review_open": false,
@@ -9,6 +9,11 @@
   "forbid_fuzzy_sha_equality": true,
   "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
   "fly_release": "v60",
+  "pending_compat_fix": {
+    "id": "HSTS_APEX_ALIGN_STAGING",
+    "status": "CODE_READY_PENDING_DEPLOY",
+    "note": "frontend/next.config.js Strict-Transport-Security for production bake; closes SEC-HEADERS-MISSING:prod_apex"
+  },
   "layers": {
     "product_base": {
       "tip_sha": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
@@ -35,7 +40,8 @@
     "build_restore_568f4988",
     "admin_safe_retain_de6105a8",
     "did_rank_ssr_itineraries_f1802552",
-    "admin_permissionDenied_guard_539f0876"
+    "admin_permissionDenied_guard_539f0876",
+    "hsts_apex_align_pending"
   ],
   "web3_truth": {
     "status": "LOCKED_FROZEN",
@@ -43,11 +49,19 @@
     "pin": "PSG-REL-20260720-WEB3-CAND-V2",
     "touched": false
   },
+  "owner_deep": {
+    "audit": "docs/runbook/TT-FINAL-TRUTH-OWNER-DEEP-CLOSURE-AUDIT-LATEST.json",
+    "performance_benchmark": "PASS",
+    "database_reality": "PARTIAL",
+    "cms_cos_media": "PARTIAL",
+    "security_observability": "FAIL"
+  },
   "postverify": {
     "identity": "PASS",
     "did_rank_ssr_beijing": "PASS",
     "api_itineraries_beijing": "PASS",
     "admin_http": "200",
-    "owner_hard_refresh_admin": true
+    "owner_hard_refresh_admin": true,
+    "apex_hsts": "FAIL_PENDING_REDEPLOY"
   }
 }

@@ -1,13 +1,14 @@
 {
   "schema": "traveltrust.final_truth_baseline_final_alignment_closure.v1",
   "machine_key": "TT_FINAL_TRUTH_BASELINE_FINAL_ALIGNMENT_CLOSURE",
-  "at": "2026-08-01T07:58:51Z",
+  "at": "2026-08-01T08:30:00Z",
   "tt_production_go": "NO_GO",
   "human_uat_open": false,
   "production_go_review_open": false,
-  "verdict": "COMPOSITION_DEPLOYED_BEIJING_SSR_PASS_OWNER_GATES_OPEN",
+  "verdict": "OWNER_DEEP_PARTIAL_PERF_PASS_HSTS_FIX_PENDING_DEPLOY",
   "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
   "fly_release": "v60",
+  "owner_deep_audit": "docs/runbook/TT-FINAL-TRUTH-OWNER-DEEP-CLOSURE-AUDIT-LATEST.json",
   "beijing": {
     "api_itineraries_city_beijing": 10,
     "prod_html_beijing": 10,
@@ -16,49 +17,54 @@
   },
   "admin": {
     "freeze": true,
-    "rollback_then_redeploy_with_guards": true,
-    "owner_reconfirm": "hard refresh + re-login Admin workbench"
+    "structure_changed": false,
+    "runtime_compat_only": true
+  },
+  "web3_truth": {
+    "status": "LOCKED_FROZEN",
+    "tip_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "touched": false
   },
   "counts": {
-    "FIX_REQUIRED": 0,
-    "OWNER_REQUIRED": 4,
-    "ACCEPTED_ENV_DIFFERENCE": 2
+    "FIX_REQUIRED": 1,
+    "OWNER_REQUIRED": 3,
+    "ACCEPTED_ENV_DIFFERENCE": 6
   },
   "gaps": [
     {
-      "id": "DB-DEEP-UNVERIFIED",
+      "id": "SEC-HEADERS-MISSING:prod_apex",
+      "class": "FIX_REQUIRED",
+      "summary": "Apex HSTS missing vs Staging; next.config.js fix prepared"
+    },
+    {
+      "id": "DB-SCHEMA-MIGRATION-SQL",
       "class": "OWNER_REQUIRED",
-      "summary": "DB schema/migration deep audit still open"
+      "summary": "DB schema/migration SQL pairwise still open (needs Owner DSN unlock)"
     },
     {
-      "id": "CMS-COS-CDN-UNVERIFIED",
+      "id": "CMS-COS-PUBLISH-CHAIN",
       "class": "OWNER_REQUIRED",
-      "summary": "CMS/COS/Media/CDN deep audit still open"
+      "summary": "CMS/COS publish chain deep still open (needs Owner CMS unlock)"
     },
     {
-      "id": "PERF-BENCHMARK-INFORMAL",
+      "id": "SEC-SECRET-ALERT-METRIC-DEEP",
       "class": "OWNER_REQUIRED",
-      "summary": "Formal multi-sample Performance Benchmark still open"
-    },
-    {
-      "id": "SECURITY-OBS-DEEP",
-      "class": "OWNER_REQUIRED",
-      "summary": "Auth/session/secret/log/metric/alert deep check still open"
-    },
-    {
-      "id": "CHUNK-SET-ENV-INLINING",
-      "class": "ACCEPTED_ENV_DIFFERENCE",
-      "summary": "Build env host inlining / chunk hash rename"
-    },
-    {
-      "id": "ADMIN-UI-FREEZE-RETAIN",
-      "class": "ACCEPTED_ENV_DIFFERENCE",
-      "summary": "Admin Focus Reality retained; structure frozen; only permissionDenied bugfix guards"
+      "summary": "Secret/alert/metric/audit deep still open (needs Owner Sec unlock)"
     }
   ],
+  "gates_owner_deep": {
+    "database_reality": "PARTIAL",
+    "cms_cos_media": "PARTIAL",
+    "performance_benchmark": "PASS",
+    "security_observability": "FAIL"
+  },
+  "non_web3_product_reality_closure": false,
   "next": [
-    "Owner hard-refresh Admin confirm no permissionDenied crash",
-    "Continue OWNER_REQUIRED: API deep / DB / CMS-COS / Perf / Security-Obs",
-    "Keep TT_PRODUCTION_GO=NO_GO until full closure"
+    "Commit + Admin-safe redeploy HSTS next.config fix; verify Apex HSTS",
+    "Owner unlock DB/CMS/Sec deep (TT_OWNER_DEEP_DB_OK / CMS_OK / SEC_OK + credentials)",
+    "Re-run scripts/dev/run-final-truth-owner-deep-closure-audit.py",
+    "Keep Human UAT / Production GO Review CLOSED until Non-Web3 Product Reality Closure",
+    "Keep TT_PRODUCTION_GO=NO_GO"
   ]
 }

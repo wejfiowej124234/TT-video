@@ -194,6 +194,11 @@ const nextConfig = {
     ];
     if (process.env.NODE_ENV === "production") {
       base.splice(1, 0, { key: "X-Content-Type-Options", value: "nosniff" });
+      /** Align Production Apex to Staging Product Truth security headers (HSTS). */
+      base.push({
+        key: "Strict-Transport-Security",
+        value: "max-age=31536000; includeSubDomains",
+      });
     }
     return [{ source: "/:path*", headers: base }];
   },

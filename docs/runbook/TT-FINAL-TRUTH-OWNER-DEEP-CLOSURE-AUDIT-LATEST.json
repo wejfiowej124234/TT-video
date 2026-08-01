@@ -1,0 +1,172 @@
+{
+  "schema": "traveltrust.final_truth_owner_deep_closure_audit.v1",
+  "machine_key": "TT_FINAL_TRUTH_OWNER_DEEP_CLOSURE_AUDIT",
+  "at": "2026-08-01T08:19:16Z",
+  "stamp": "20260801T081916Z",
+  "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "product_tip_oral": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+  "web3_truth": {
+    "status": "LOCKED_FROZEN",
+    "tip_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "touched": false
+  },
+  "admin_ui_freeze": true,
+  "admin_structure_changed": false,
+  "tt_production_go": "NO_GO",
+  "human_uat_open": false,
+  "production_go_review_open": false,
+  "identity": {
+    "staging_web": {
+      "status": 200,
+      "git_sha": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+      "build_time": "2026-07-30T13:37:13Z",
+      "cms_baseline": "public_display_10x4 + catalog_bake=1",
+      "database_baseline": "staging_rc_ssot_alignment.v1#expected_staging_surface",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "ms": 1905.0
+    },
+    "prod_web": {
+      "status": 200,
+      "git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+      "build_time": "2026-08-01T07:47:40Z",
+      "cms_baseline": "public_display_10x4 + catalog_bake=1",
+      "database_baseline": "production_surface",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "ms": 1818.7
+    },
+    "prod_apex": {
+      "status": 200,
+      "git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+      "build_time": "2026-08-01T07:47:40Z",
+      "cms_baseline": "public_display_10x4 + catalog_bake=1",
+      "database_baseline": "production_surface",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "ms": 1745.3
+    },
+    "composition_match": true,
+    "apex_match": true,
+    "staging_product_tip": true
+  },
+  "gates": {
+    "database_reality": "PARTIAL",
+    "cms_cos_media": "PARTIAL",
+    "performance_benchmark": "PASS",
+    "security_observability": "FAIL"
+  },
+  "non_web3_product_reality_closure": false,
+  "counts": {
+    "FIX_REQUIRED": 1,
+    "OWNER_REQUIRED": 3,
+    "ACCEPTED_ENV_DIFFERENCE": 6
+  },
+  "gaps": [
+    {
+      "id": "DB-SCHEMA-MIGRATION-SQL",
+      "class": "OWNER_REQUIRED",
+      "summary": "Schema/Migration/Index/Constraint/Enum/Default SQL alignment not closed: provide TT_OWNER_DEEP_DB_OK=1 + PRODUCTION_DATABASE_URL (+ STAGING_DATABASE_URL for pairwise). Public /meta only proves connected=true.",
+      "detail": {
+        "attempted": false,
+        "reason": "no PRODUCTION_DATABASE_URL and/or TT_OWNER_DEEP_DB_OK!=1"
+      },
+      "section": "database"
+    },
+    {
+      "id": "CMS-COS-PUBLISH-CHAIN",
+      "class": "OWNER_REQUIRED",
+      "summary": "CMS lifecycle · object storage ACL/metadata · CDN invalidation · Review→Publish→Verify chain not Owner-unlocked this pass (set TT_OWNER_DEEP_CMS_OK=1 + CMS/COS credentials to close)",
+      "section": "cms"
+    },
+    {
+      "id": "SEC-HEADERS-MISSING:prod_apex",
+      "class": "FIX_REQUIRED",
+      "summary": "Required security headers missing on prod_apex: ['strict-transport-security']",
+      "section": "security"
+    },
+    {
+      "id": "SEC-SECRET-ALERT-METRIC-DEEP",
+      "class": "OWNER_REQUIRED",
+      "summary": "Secret inventory · log PII redaction · metric/alert routes · audit-log sink not Owner-unlocked (TT_OWNER_DEEP_SEC_OK=1 + access)",
+      "section": "security"
+    }
+  ],
+  "accepted_env_differences": [
+    {
+      "id": "API-DEPLOYMENT-PROFILE",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "API deployment_profile staging vs production (same git_sha)",
+      "stg": "staging",
+      "prod": "production"
+    },
+    {
+      "id": "ORDER-MOCK-PAY",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "order_mock_pay_enabled Staging=true Production=false (prod hardening)",
+      "stg": true,
+      "prod": false
+    },
+    {
+      "id": "STRICT-MODE-PROD",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "strict_mode / ssot tighter on Production than Staging",
+      "stg": {
+        "strict_ssot": false,
+        "require_idempotency_key": false,
+        "strict_session_gate": true,
+        "internal_api_secret_configured": true,
+        "rule": "strict_ssot 与 GET /meta.ssot_version 及启动 STRICT_SSOT 同源；require_idempotency_key = strict_ssot 或 REQUIRE_IDEMPOTENCY_KEY=1；strict_session_gate = STRICT_SESSION_GATE=1（非公开 /api/v1 须 Bearer，04 §7.8）；internal_api_secret_configured 表示 INTERNAL_API_SECRET 非空 trim；731 GET /meta strict_mode 对象 strict_mode_top_keys / strict_mode_top_keys_contract_731 与 STRICT_MODE_META_TOP_KEYS 七键顺序同源",
+        "strict_mode_top_keys": [
+          "strict_ssot",
+          "require_idempotency_key",
+          "strict_session_gate",
+          "internal_api_secret_configured",
+          "rule",
+          "strict_mode_top_keys",
+          "strict_mode_top_keys_contract_731"
+        ],
+        "strict_mode_top_keys_contract_731": "**731**：**`strict_mode_top_keys`** **与 **`STRICT_MODE_META_TOP_KEYS`** **同源（顺序 `strict_ssot`****→**`require_idempotency_key`****→**`strict_session_gate`****→**`internal_api_secret_configured`****→**`rule`****→**`strict_mode_top_keys`****→**`strict_mode_top_keys_contract_731`）"
+      },
+      "prod": {
+        "strict_ssot": true,
+        "require_idempotency_key": true,
+        "strict_session_gate": true,
+        "internal_api_secret_configured": true,
+        "rule": "strict_ssot 与 GET /meta.ssot_version 及启动 STRICT_SSOT 同源；require_idempotency_key = strict_ssot 或 REQUIRE_IDEMPOTENCY_KEY=1；strict_session_gate = STRICT_SESSION_GATE=1（非公开 /api/v1 须 Bearer，04 §7.8）；internal_api_secret_configured 表示 INTERNAL_API_SECRET 非空 trim；731 GET /meta strict_mode 对象 strict_mode_top_keys / strict_mode_top_keys_contract_731 与 STRICT_MODE_META_TOP_KEYS 七键顺序同源",
+        "strict_mode_top_keys": [
+          "strict_ssot",
+          "require_idempotency_key",
+          "strict_session_gate",
+          "internal_api_secret_configured",
+          "rule",
+          "strict_mode_top_keys",
+          "strict_mode_top_keys_contract_731"
+        ],
+        "strict_mode_top_keys_contract_731": "**731**：**`strict_mode_top_keys`** **与 **`STRICT_MODE_META_TOP_KEYS`** **同源（顺序 `strict_ssot`****→**`require_idempotency_key`****→**`strict_session_gate`****→**`internal_api_secret_configured`****→**`rule`****→**`strict_mode_top_keys`****→**`strict_mode_top_keys_contract_731`）"
+      }
+    },
+    {
+      "id": "CHARGEBACK-POLICY",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "chargeback_policy Staging unset vs Production warn",
+      "stg": "unset",
+      "prod": "warn"
+    },
+    {
+      "id": "CHUNK-SET-ENV-INLINING",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "Build env host inlining / chunk hash rename (composition bake)"
+    },
+    {
+      "id": "ADMIN-UI-FREEZE-RETAIN",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "Admin Focus Reality retained; structure frozen; runtime guards only"
+    }
+  ],
+  "evidence_dir": "evidence/GO_final_truth_vfinal_alignment/owner-deep-20260801T081916Z",
+  "next_actions": [
+    "Owner unlock DB: TT_OWNER_DEEP_DB_OK=1 + PRODUCTION_DATABASE_URL (+ STAGING_DATABASE_URL)",
+    "Owner unlock CMS/COS: TT_OWNER_DEEP_CMS_OK=1 + object-storage credentials",
+    "Owner unlock Sec/Obs deep: TT_OWNER_DEEP_SEC_OK=1 + secret/alert/metric access",
+    "Re-run this script; only then open Human UAT / Production GO Review"
+  ]
+}
