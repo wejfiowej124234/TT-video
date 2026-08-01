@@ -1,17 +1,28 @@
 {
   "schema": "traveltrust.admin_freeze_compatibility_check.v1",
-  "at": "2026-08-01T07:39:20Z",
+  "at": "2026-08-01T07:47:00Z",
   "admin_ui_freeze": true,
   "web3_freeze": true,
-  "base_composition_sha": "de6105a850e3acf8f7bae7a9105d1cb9d42c3a24",
-  "compat_fix": "DID_RANK_SSR_ITINERARIES_BEIJING",
-  "sidebar_sha16_composition": "a43b7dad8b12aa1c",
-  "sidebar_sha16_working_tree": "a43b7dad8b12aa1c",
-  "sidebar_byte_identical_to_frozen_bake": true,
-  "admin_paths_changed": [],
-  "did_rank_only_diff": true,
-  "runtime_patch_validation": "PASS",
+  "composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "lineage": [
+    "tip_1ff71858",
+    "build_restore_568f4988",
+    "admin_safe_retain_de6105a8",
+    "did_rank_ssr_itineraries_f1802552",
+    "admin_permissionDenied_guard_539f0876"
+  ],
+  "sidebar_sha16": "a43b7dad8b12aa1c",
+  "sidebar_byte_identical_to_frozen_focus": true,
+  "admin_structure_changed": false,
+  "admin_bugfix_only": [
+    "optional-chain channels[key]?.permissionDenied",
+    "filter Boolean(task) before task.permissionDenied"
+  ],
+  "compat_fix": [
+    "DID_RANK_SSR_ITINERARIES_BEIJING",
+    "ADMIN_PERMISSIONDENIED_UNDEFINED_GUARD"
+  ],
   "verdict": "PASS",
   "tt_production_go": "NO_GO",
-  "note": "Admin Focus Sidebar unchanged; only public /did-rank SSR itineraries prefetch for Beijing Product Truth"
+  "note": "No Sidebar/IA/layout/visual change; Focus retain bytes unchanged"
 }

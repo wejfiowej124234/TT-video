@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.final_truth_baseline_final_alignment_closure.v1",
+  "machine_key": "TT_FINAL_TRUTH_BASELINE_FINAL_ALIGNMENT_CLOSURE",
+  "at": "2026-08-01T07:58:51Z",
+  "tt_production_go": "NO_GO",
+  "human_uat_open": false,
+  "production_go_review_open": false,
+  "verdict": "COMPOSITION_DEPLOYED_BEIJING_SSR_PASS_OWNER_GATES_OPEN",
+  "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "fly_release": "v60",
+  "beijing": {
+    "api_itineraries_city_beijing": 10,
+    "prod_html_beijing": 10,
+    "apex_html_beijing": 10,
+    "ssr_verdict": "PASS"
+  },
+  "admin": {
+    "freeze": true,
+    "rollback_then_redeploy_with_guards": true,
+    "owner_reconfirm": "hard refresh + re-login Admin workbench"
+  },
+  "counts": {
+    "FIX_REQUIRED": 0,
+    "OWNER_REQUIRED": 4,
+    "ACCEPTED_ENV_DIFFERENCE": 2
+  },
+  "gaps": [
+    {
+      "id": "DB-DEEP-UNVERIFIED",
+      "class": "OWNER_REQUIRED",
+      "summary": "DB schema/migration deep audit still open"
+    },
+    {
+      "id": "CMS-COS-CDN-UNVERIFIED",
+      "class": "OWNER_REQUIRED",
+      "summary": "CMS/COS/Media/CDN deep audit still open"
+    },
+    {
+      "id": "PERF-BENCHMARK-INFORMAL",
+      "class": "OWNER_REQUIRED",
+      "summary": "Formal multi-sample Performance Benchmark still open"
+    },
+    {
+      "id": "SECURITY-OBS-DEEP",
+      "class": "OWNER_REQUIRED",
+      "summary": "Auth/session/secret/log/metric/alert deep check still open"
+    },
+    {
+      "id": "CHUNK-SET-ENV-INLINING",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "Build env host inlining / chunk hash rename"
+    },
+    {
+      "id": "ADMIN-UI-FREEZE-RETAIN",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "Admin Focus Reality retained; structure frozen; only permissionDenied bugfix guards"
+    }
+  ],
+  "next": [
+    "Owner hard-refresh Admin confirm no permissionDenied crash",
+    "Continue OWNER_REQUIRED: API deep / DB / CMS-COS / Perf / Security-Obs",
+    "Keep TT_PRODUCTION_GO=NO_GO until full closure"
+  ]
+}

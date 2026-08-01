@@ -1,0 +1,52 @@
+{
+  "schema": "traveltrust.final_truth_vfinal_gap_inventory.v1",
+  "machine_key": "TT_FINAL_TRUTH_VFIMAL_GAP_INVENTORY",
+  "at": "2026-08-01T07:58:51Z",
+  "stamp": "ADMIN_SAFE_COMPOSITION_DEPLOY_539f0876",
+  "product_tip_oral": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+  "buildable_git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "tt_production_go": "NO_GO",
+  "human_uat_open": false,
+  "production_go_review_open": false,
+  "fix_required_still_open": [],
+  "counts": {
+    "FIX_REQUIRED": 0,
+    "OWNER_REQUIRED": 4,
+    "ACCEPTED_ENV_DIFFERENCE": 2
+  },
+  "gaps": [
+    {
+      "id": "DB-DEEP-UNVERIFIED",
+      "class": "OWNER_REQUIRED",
+      "summary": "DB schema/migration deep audit still open"
+    },
+    {
+      "id": "CMS-COS-CDN-UNVERIFIED",
+      "class": "OWNER_REQUIRED",
+      "summary": "CMS/COS/Media/CDN deep audit still open"
+    },
+    {
+      "id": "PERF-BENCHMARK-INFORMAL",
+      "class": "OWNER_REQUIRED",
+      "summary": "Formal multi-sample Performance Benchmark still open"
+    },
+    {
+      "id": "SECURITY-OBS-DEEP",
+      "class": "OWNER_REQUIRED",
+      "summary": "Auth/session/secret/log/metric/alert deep check still open"
+    },
+    {
+      "id": "CHUNK-SET-ENV-INLINING",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "Build env host inlining / chunk hash rename"
+    },
+    {
+      "id": "ADMIN-UI-FREEZE-RETAIN",
+      "class": "ACCEPTED_ENV_DIFFERENCE",
+      "summary": "Admin Focus Reality retained; structure frozen; only permissionDenied bugfix guards"
+    }
+  ],
+  "beijing_ssr_closed": true,
+  "evidence": "docs/runbook/TT-FINAL-TRUTH-BASELINE-FINAL-ALIGNMENT-CLOSURE-LATEST.json"
+}

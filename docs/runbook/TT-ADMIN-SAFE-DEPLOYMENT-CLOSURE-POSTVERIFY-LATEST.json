@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.admin_safe_deployment_closure_postverify.v1",
+  "at": "2026-08-01T07:58:51Z",
+  "composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "fly_release": "v60",
+  "verdict": "PASS_BEIJING_SSR",
+  "beijing_html_prod": 10,
+  "beijing_api": 10,
+  "tt_production_go": "NO_GO",
+  "human_uat_open": false,
+  "owner_admin_reconfirm": true
+}

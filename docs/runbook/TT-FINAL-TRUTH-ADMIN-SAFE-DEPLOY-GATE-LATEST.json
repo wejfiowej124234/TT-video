@@ -1,0 +1,19 @@
+{
+  "schema": "traveltrust.final_truth_admin_safe_deploy_gate.v1",
+  "machine_key": "TT_FINAL_TRUTH_ADMIN_SAFE_DEPLOY_GATE",
+  "at": "2026-08-01T07:58:51Z",
+  "tt_production_go": "NO_GO",
+  "production_deployment": "COMPLETED_ADMIN_SAFE_539f0876",
+  "composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "composition": [
+    "tip_1ff71858",
+    "build_restore_568f4988",
+    "admin_safe_retain_de6105a8",
+    "did_rank_ssr_itineraries_f1802552",
+    "admin_permissionDenied_guard_539f0876"
+  ],
+  "postverify": "BEIJING_SSR_PASS",
+  "human_uat_open": false,
+  "production_go_review_open": false,
+  "admin_ui_freeze": true
+}

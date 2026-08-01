@@ -1,0 +1,139 @@
+{
+  "schema": "traveltrust.final_truth_baseline.v1",
+  "machine_key": "TT_FINAL_TRUTH_BASELINE",
+  "status": "ACTIVE_UNIQUE_SSOT",
+  "lock_status": "LOCKED",
+  "recorded_utc": "2026-08-01T07:30:40Z",
+  "tt_production_go": "NO_GO",
+  "phase_now": "ADMIN_SAFE_COMPOSITION_539f0876_BEIJING_SSR_PASS",
+  "live_audit_utc": "2026-08-01T07:58:51Z",
+  "vfinal_program": "docs/runbook/TT-FINAL-TRUTH-VFIMAL-ALIGNMENT-PROGRAM-LATEST.json",
+  "vfinal_gap_inventory": "docs/runbook/TT-FINAL-TRUTH-VFIMAL-GAP-INVENTORY-LATEST.json",
+  "admin_ui_freeze": true,
+  "prod_fe_release_observed": "v60_539f0876",
+  "prod_build_id_observed": null,
+  "stg_build_id_observed": null,
+  "staging_align_audit": "docs/runbook/TT-FINAL-TRUTH-BASELINE-STAGING-ALIGN-AUDIT-LATEST.json",
+  "prod_align_audit": "docs/runbook/TT-FINAL-TRUTH-BASELINE-PROD-ALIGN-AUDIT-LATEST.json",
+  "registry": "registry/traveltrust-final-truth-baseline.v1.yaml",
+  "human": "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md",
+  "pcr": "registry/psg-change-records/PCR-20260801-FINAL-TRUTH-BASELINE-CONSOLIDATION.yaml",
+  "umbrella_name": "TravelTrust Final Truth Baseline",
+  "product_tag": null,
+  "product_code": null,
+  "no_separate_product_tag": true,
+  "identity_rule": "Product Truth = Staging deployed field set only; oral label is not a Tag",
+  "layers": {
+    "web3_truth": {
+      "id": "Web3_Truth_Layer",
+      "name": "Web3 Truth Layer",
+      "status": "LOCKED_FROZEN_REALITY_BROADCAST",
+      "reality_broadcast": true,
+      "mutate_forbidden": true,
+      "redeploy_forbidden": true,
+      "reinterpret_forbidden": true,
+      "migrate_forbidden": true,
+      "unauthorized_change_forbidden": true,
+      "tip_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+      "tip_sha_short": "ea71c577",
+      "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+      "contract_profile": "v311_fund_safety_candidate_v2",
+      "includes": [
+        "on_chain_contracts",
+        "indexer",
+        "governance_params",
+        "hard_gate",
+        "candidate_v2"
+      ],
+      "unlock_requires_all": [
+        "owner_explicit_session_authorization",
+        "TRAVELTRUST_WEB3_TRUTH_UNLOCK=1",
+        "new_PCR_recording_scope_and_reason"
+      ],
+      "machine": [
+        "registry/web3-candidate-v2.v1.yaml",
+        "registry/final-release-baseline.v1.yaml",
+        "registry/web3-mainline.v1.yaml"
+      ],
+      "human": [
+        "docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md",
+        "docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.md"
+      ]
+    },
+    "product_truth": {
+      "id": "Product_Truth_Layer",
+      "name": "Product Truth Layer",
+      "status": "ACTIVE_STAGING_RUNTIME_TRUTH_100_PERCENT",
+      "oral_label": "Inbox Focus Product Baseline (1ff71858)",
+      "product_tag": null,
+      "commit_subject": "fix(admin): wire Inbox Focus Product Baseline marks into Admin home",
+      "fe_git_sha": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+      "fe_git_sha_short": "1ff71858",
+      "psg_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+      "contract_profile": "v311_fund_safety_candidate_v2",
+      "cms_baseline": "public_display_10x4 + catalog_bake=1",
+      "bake_time": "2026-07-30T13:37:13Z",
+      "runtime_truth": "STAGING_DEPLOYED_VERSION",
+      "staging_web": "https://tt-web-staging.fly.dev",
+      "staging_api": "https://tt-api-staging.fly.dev",
+      "mutate_staging_forbidden": true,
+      "alignment_direction": "Production_aligns_to_Staging_only",
+      "alignment_ladder": [
+        "Local",
+        "Git",
+        "Artifact",
+        "Staging_Deployment",
+        "Production",
+        "Browser_Reality"
+      ],
+      "alignment_target_sha": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+      "legacy_fe_tips_forbidden": [
+        "5482271207b3533efa26e7ffc44cabf677f997bc",
+        "5490a1d79152a852ad3e55f4af55ec77c9e785cf",
+        "d80f6b138089b91d79fe3cb327544255322cf49d",
+        "cac322354cc8970f173e688b7ed6ed7b0fb6d3d8"
+      ],
+      "buildable_git_sha": "de6105a850e3acf8f7bae7a9105d1cb9d42c3a24",
+      "fe_git_sha_lineage_tip": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+      "note": "Product Truth tip = Staging deployed 1ff71858. Production Non-Web3 FE currently Admin-safe composition de6105a8 (tip+restore+Focus retain). Strict tip equality NOT met; Admin freeze forbids pure tip.",
+      "production_composition_sha": "de6105a850e3acf8f7bae7a9105d1cb9d42c3a24"
+    }
+  },
+  "forbidden": [
+    "conflate_web3_tip_with_product_fe_tip",
+    "unauthorized_web3_mutate",
+    "invent_product_tag",
+    "reverse_fix_staging",
+    "claim_production_go_from_docs_alone"
+  ],
+  "live_identity_matrix": {
+    "staging_tip": "PASS",
+    "production_composition": "PASS_de6105a8",
+    "apex_composition": "PASS_de6105a8",
+    "strict_prod_tip_equals_stg_tip": "FAIL",
+    "accepted_env_only": [
+      "database_baseline_label",
+      "chunk_set_env_inlining"
+    ]
+  },
+  "live_product_markers": {
+    "did_rank_itineraries_beijing_api": "PASS",
+    "did_rank_beijing_ssr_html_prod": "PASS"
+  },
+  "next": [
+    "Fix did-rank Beijing marker on Production",
+    "Owner decide FE composition vs tip identity",
+    "Close OWNER_REQUIRED deep gates",
+    "Then Owner UAT Final Acceptance"
+  ],
+  "honesty": "Web3 untouched. Admin UI not mutated. Docs repaired to current Runtime Truth in this audit. Public FE mostly title-parity PASS but FE SHA and did-rank Beijing marker block 100% claim.",
+  "buildable_git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "product_tip_oral": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+  "final_alignment_audit": "docs/runbook/TT-FINAL-TRUTH-BASELINE-FINAL-ALIGNMENT-AUDIT-LATEST.json",
+  "equation_100_percent": false,
+  "owner_uat_final_acceptance_open": false,
+  "production_go_review_open": false,
+  "release_composition_manifest": "docs/runbook/TT-FINAL-TRUTH-RELEASE-COMPOSITION-MANIFEST-LATEST.json",
+  "final_alignment_closure": "docs/runbook/TT-FINAL-TRUTH-BASELINE-FINAL-ALIGNMENT-CLOSURE-LATEST.json",
+  "human_uat_open": false
+}

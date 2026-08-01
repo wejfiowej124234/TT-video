@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.final_truth_release_composition_manifest.v1",
+  "machine_key": "TT_FINAL_TRUTH_RELEASE_COMPOSITION_MANIFEST",
+  "at": "2026-08-01T07:58:51Z",
+  "tt_production_go": "NO_GO",
+  "human_uat_open": false,
+  "production_go_review_open": false,
+  "equation": "Production_Release_Truth = Product_Base + Admin_Frozen_Runtime + Required_Compatibility_Fix",
+  "forbid_fuzzy_sha_equality": true,
+  "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "fly_release": "v60",
+  "layers": {
+    "product_base": {
+      "tip_sha": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+      "bake_lineage": "2026-07-30T13:37:13Z",
+      "role": "UNIQUE_PRODUCT_TRUTH"
+    },
+    "admin_frozen_runtime": {
+      "status": "FROZEN",
+      "retain_from": "de6105a8",
+      "sidebar_sha16": "a43b7dad8b12aa1c",
+      "bugfix_guards": "539f0876 permissionDenied optional-chain",
+      "structure_changed": false
+    },
+    "required_compatibility_fix": {
+      "id": "DID_RANK_SSR_ITINERARIES_BEIJING",
+      "status": "DEPLOYED_VERIFIED_PASS",
+      "sha": "f1802552",
+      "live_prod_html_beijing": 10,
+      "api_itineraries_beijing": 10
+    }
+  },
+  "lineage": [
+    "tip_1ff71858",
+    "build_restore_568f4988",
+    "admin_safe_retain_de6105a8",
+    "did_rank_ssr_itineraries_f1802552",
+    "admin_permissionDenied_guard_539f0876"
+  ],
+  "web3_truth": {
+    "status": "LOCKED_FROZEN",
+    "tip_sha": "ea71c577ce6f99696df33f9394cf96746edc843b",
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "touched": false
+  },
+  "postverify": {
+    "identity": "PASS",
+    "did_rank_ssr_beijing": "PASS",
+    "api_itineraries_beijing": "PASS",
+    "admin_http": "200",
+    "owner_hard_refresh_admin": true
+  }
+}
