@@ -24,11 +24,11 @@ export function onboardingSectionPending(
 
   if (loading || !permissionsLoaded) return null;
 
-  return (["provider", "steward", "approvals"] as const).reduce((sum, key) => {
+  return (["provider", "guide", "steward", "approvals"] as const).reduce((sum, key) => {
 
     if (!canAccessAdminInboxChannel(key, hasPermission, permissionsLoaded)) return sum;
 
-    if (channels[key].permissionDenied) return sum;
+    if (channels[key]?.permissionDenied) return sum;
 
     return sum + (counts[key] ?? 0);
 
@@ -56,7 +56,7 @@ export function communitySectionPending(
 
   if (!canAccessAdminInboxChannel("reports", hasPermission, permissionsLoaded)) return 0;
 
-  if (channels.reports.permissionDenied) return 0;
+  if (channels.reports?.permissionDenied) return 0;
 
   return counts.reports ?? 0;
 

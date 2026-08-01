@@ -1,6 +1,7 @@
 /** ① SSOT：统一收件箱任务链与顶栏 onboarding/community 队列 href 对拍。 */
 export const ADMIN_INBOX_QUEUE_HREFS = {
   provider: "/admin/provider-applications?status=submitted",
+  guide: "/admin/guide-applications?status=pending",
   steward: "/admin/steward-applications?status=stake_pending",
   approvals: "/admin/approvals?status=pending",
   reports: "/admin/community/reports?status=open",

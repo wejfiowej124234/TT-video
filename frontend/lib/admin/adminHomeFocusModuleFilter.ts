@@ -6,6 +6,7 @@ import type { AdminHomeInboxChannels, AdminHomeInboxCounts } from "./useAdminHom
 
 const QUEUE_HREF_TO_INBOX_KEY: Record<string, AdminHomeInboxKey> = {
   [ADMIN_INBOX_QUEUE_HREFS.provider]: "provider",
+  [ADMIN_INBOX_QUEUE_HREFS.guide]: "guide",
   [ADMIN_INBOX_QUEUE_HREFS.steward]: "steward",
   [ADMIN_INBOX_QUEUE_HREFS.approvals]: "approvals",
   [ADMIN_INBOX_QUEUE_HREFS.reports]: "reports",
@@ -29,7 +30,7 @@ function channelHasPending(
   loading: boolean,
 ): boolean {
   if (loading) return false;
-  if (channels[key].permissionDenied) return false;
+  if (channels[key]?.permissionDenied) return false;
   const n = counts[key];
   return n !== null && n > 0;
 }
@@ -39,7 +40,7 @@ function anyOnboardingQueuePending(
   channels: AdminHomeInboxChannels,
   loading: boolean,
 ): boolean {
-  return (["provider", "steward", "approvals"] as const).some((key) =>
+  return (["provider", "guide", "steward", "approvals"] as const).some((key) =>
     channelHasPending(key, counts, channels, loading),
   );
 }
@@ -65,7 +66,7 @@ export function adminHomeCardVisibleInFocusMode(input: {
   if (card.href.startsWith("/admin/permissions")) return true;
 
   if (card.href === "/admin/inbox") {
-    return (["provider", "steward", "approvals", "reports"] as const).some((key) =>
+    return (["provider", "guide", "steward", "approvals", "reports"] as const).some((key) =>
       channelHasPending(key, counts, channels, loading),
     );
   }

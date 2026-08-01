@@ -157,7 +157,8 @@ export function AdminHomeInboxStrip(props: {
       <ul className={`grid gap-3 ${gridClass}`} data-tt-admin-inbox-grid-count={visibleLinks.length}>
         {INBOX_LINKS.map(({ key, href, labelKey, descKey }) => {
           const ch = channels[key];
-          if (ch.permissionDenied) return null;
+          // guide (and any future key) must not crash when channel state is briefly missing
+          if (!ch || ch.permissionDenied) return null;
           const n = counts[key];
           const errKey = adminInboxErrorLabelKey(ch.errorKind);
           const countDisplay = adminHomeKpiMetricDisplay(

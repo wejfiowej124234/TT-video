@@ -8,6 +8,7 @@ import { ADMIN_PERM } from "./adminPermissionIds";
 describe("adminInboxChannelPermission", () => {
   it("maps inbox keys to queue permissions", () => {
     expect(ADMIN_INBOX_CHANNEL_PERMISSION.provider).toBe(ADMIN_PERM.ONBOARDING_PROVIDER_REVIEW);
+    expect(ADMIN_INBOX_CHANNEL_PERMISSION.guide).toBe(ADMIN_PERM.ONBOARDING_PROVIDER_REVIEW);
     expect(ADMIN_INBOX_CHANNEL_PERMISSION.steward).toBe(ADMIN_PERM.ONBOARDING_STEWARD_REVIEW);
     expect(ADMIN_INBOX_CHANNEL_PERMISSION.approvals).toBe(ADMIN_PERM.APPROVE);
     expect(ADMIN_INBOX_CHANNEL_PERMISSION.reports).toBe(ADMIN_PERM.COMMUNITY_READ);

@@ -7,7 +7,7 @@ export type AdminHomeCardTier = "read" | "write" | "super_write" | "placeholder"
 
 export type AdminHomeSectionId = "onboarding" | "ops_planes" | "core" | "audit_finance" | "community" | "platform";
 
-export type AdminHomeInboxKey = "provider" | "steward" | "approvals" | "reports";
+export type AdminHomeInboxKey = "provider" | "guide" | "steward" | "approvals" | "reports";
 
 export type AdminHomeCard = {
   href: string;

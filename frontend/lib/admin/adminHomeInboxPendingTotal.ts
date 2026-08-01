@@ -5,6 +5,7 @@ import { readAdminHomeInboxPendingTotalCache } from "./adminHomeInboxPendingTota
 
 export const ADMIN_HOME_INBOX_QUEUE_KEYS: readonly AdminHomeInboxKey[] = [
   "provider",
+  "guide",
   "steward",
   "approvals",
   "reports",

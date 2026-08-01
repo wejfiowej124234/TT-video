@@ -53,7 +53,7 @@ export function AdminHomePrimaryCtas(props: {
   const links = useMemo(() => {
     const scored: { href: string; labelKey: string; score: number }[] = [];
     for (const c of CTA_CANDIDATES) {
-      if (channels[c.key].permissionDenied) continue;
+      if (channels[c.key]?.permissionDenied) continue;
       const n = counts[c.key];
       if (n !== null && n > 0) {
         scored.push({ href: c.href, labelKey: c.labelKey, score: n });

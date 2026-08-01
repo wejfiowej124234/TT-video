@@ -65,6 +65,26 @@ export function buildAdminUnifiedInboxTasks(input: {
 
     {
 
+      id: "guide",
+
+      labelKey: "admin_home_inbox_guide",
+
+      descKey: "admin_home_inbox_guide_desc",
+
+      href: ADMIN_INBOX_QUEUE_HREFS.guide,
+
+      count: channels.guide?.permissionDenied ? null : counts.guide,
+
+      permissionDenied: Boolean(channels.guide?.permissionDenied),
+
+      errorKind: channels.guide?.errorKind ?? null,
+
+      priority: counts.guide ?? 0,
+
+    },
+
+    {
+
       id: "steward",
 
       labelKey: "admin_home_inbox_steward",

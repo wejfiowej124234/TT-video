@@ -15,6 +15,11 @@ export function adminInboxQueueListFetchConfig(key: AdminHomeInboxKey): AdminInb
         scope: "provider-applications",
         listUrl: `${routes.adminProviderApplications}?status=${encodeURIComponent("submitted")}`,
       };
+    case "guide":
+      return {
+        scope: "guide-applications",
+        listUrl: `${routes.adminGuideApplications}?status=${encodeURIComponent("pending")}`,
+      };
     case "steward":
       return {
         scope: "steward-applications",

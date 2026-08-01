@@ -101,6 +101,8 @@ const EMPTY_COUNTS: AdminHomeInboxCounts = {
 
   provider: null,
 
+  guide: null,
+
   steward: null,
 
   approvals: null,
@@ -114,6 +116,8 @@ const EMPTY_COUNTS: AdminHomeInboxCounts = {
 const EMPTY_CHANNELS: AdminHomeInboxChannels = {
 
   provider: { count: null, errorKind: null },
+
+  guide: { count: null, errorKind: null },
 
   steward: { count: null, errorKind: null },
 
@@ -239,6 +243,8 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
 
       () => fetchInboxChannel("provider", "AdminHomeInbox.provider", can("provider"), caps.permissionsLoaded),
 
+      () => fetchInboxChannel("guide", "AdminHomeInbox.guide", can("guide"), caps.permissionsLoaded),
+
       () => fetchInboxChannel("steward", "AdminHomeInbox.steward", can("steward"), caps.permissionsLoaded),
 
       () => fetchInboxChannel("approvals", "AdminHomeInbox.approvals", can("approvals"), caps.permissionsLoaded),
@@ -247,13 +253,19 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
 
     ])
 
-      .then(([providerRes, stewardRes, approvalsRes, reportsRes]) => {
+      .then(([providerRes, guideRes, stewardRes, approvalsRes, reportsRes]) => {
 
         const provider = providerRes.permissionDenied
 
           ? null
 
           : countFromItems(providerRes.items, providerRes.errorKind);
+
+        const guide = guideRes.permissionDenied
+
+          ? null
+
+          : countFromItems(guideRes.items, guideRes.errorKind);
 
         const steward = stewardRes.permissionDenied
 
@@ -275,7 +287,7 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
 
 
 
-        setCounts({ provider, steward, approvals, reports });
+        setCounts({ provider, guide, steward, approvals, reports });
 
         setChannels({
 
@@ -288,6 +300,18 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
             permissionDenied: providerRes.permissionDenied,
 
             skipped: providerRes.skipped,
+
+          },
+
+          guide: {
+
+            count: guide,
+
+            errorKind: guideRes.errorKind,
+
+            permissionDenied: guideRes.permissionDenied,
+
+            skipped: guideRes.skipped,
 
           },
 
@@ -331,7 +355,7 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
 
 
 
-        const results = [providerRes, stewardRes, approvalsRes, reportsRes];
+        const results = [providerRes, guideRes, stewardRes, approvalsRes, reportsRes];
 
         if (results.some((r) => r.rateLimited)) {
 
