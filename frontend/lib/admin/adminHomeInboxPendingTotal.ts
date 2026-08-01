@@ -5,13 +5,12 @@ import { readAdminHomeInboxPendingTotalCache } from "./adminHomeInboxPendingTota
 
 export const ADMIN_HOME_INBOX_QUEUE_KEYS: readonly AdminHomeInboxKey[] = [
   "provider",
-  "guide",
   "steward",
   "approvals",
   "reports",
 ];
 
-/** 今日待办五通道合计（跳过无权限 / 拉取失败通道；失败通道不得计为 0）。 */
+/** 今日待办四通道合计（跳过无权限 / 拉取失败通道；失败通道不得计为 0）。 */
 export function adminHomeInboxPendingTotal(
   counts: AdminHomeInboxCounts,
   channels: AdminHomeInboxChannels,
@@ -24,21 +23,25 @@ export function adminHomeInboxPendingTotal(
 
   const sum = ADMIN_HOME_INBOX_QUEUE_KEYS.reduce((acc, key) => {
     if (!canAccessAdminInboxChannel(key, hasPermission, permissionsLoaded)) return acc;
-    if (channels[key].permissionDenied) return acc;
-    if (channels[key].errorKind != null) return acc;
+    const ch = channels[key];
+    if (!ch || ch.permissionDenied) return acc;
+    if (ch.errorKind != null) return acc;
     const n = counts[key];
     if (n === null) return acc;
     return acc + n;
   }, 0);
 
   if (loading) {
-    const hasResolvedCount = ADMIN_HOME_INBOX_QUEUE_KEYS.some(
-      (key) =>
-        !channels[key].permissionDenied &&
-        channels[key].errorKind == null &&
+    const hasResolvedCount = ADMIN_HOME_INBOX_QUEUE_KEYS.some((key) => {
+      const ch = channels[key];
+      return (
+        !!ch &&
+        !ch.permissionDenied &&
+        ch.errorKind == null &&
         canAccessAdminInboxChannel(key, hasPermission, permissionsLoaded) &&
-        counts[key] !== null,
-    );
+        counts[key] !== null
+      );
+    });
     return hasResolvedCount ? sum : null;
   }
 

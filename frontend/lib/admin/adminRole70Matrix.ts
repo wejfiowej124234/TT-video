@@ -20,6 +20,15 @@ export const CONSOLE_ROLE_70_LABEL_KEYS: Record<ConsoleRole70, string> = {
   Auditor: "admin_role70_auditor",
 };
 
+/** 70 角色展示名；未知角色原样回传。 */
+export function consoleRole70DisplayLabel(
+  role: string,
+  t: (key: string) => string,
+): string {
+  const key = CONSOLE_ROLE_70_LABEL_KEYS[role as ConsoleRole70];
+  return key ? t(key) : role;
+}
+
 export type AdminPhase2PrepFlags = {
   admin_console_role_db?: boolean;
   permission_center_edit?: boolean;

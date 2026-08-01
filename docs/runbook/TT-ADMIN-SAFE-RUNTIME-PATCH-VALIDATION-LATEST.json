@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.admin_safe_runtime_patch_validation.v1",
+  "at": "2026-08-01T06:44:06Z",
+  "copied": [
+    {
+      "path": "frontend/lib/admin/adminShellSidebarModel.ts",
+      "sha16": "a43b7dad8b12aa1c",
+      "bytes": 3325
+    },
+    {
+      "path": "frontend/lib/admin/adminDeployEnvBadge.ts",
+      "sha16": "6d204255114b0fca",
+      "bytes": 1948
+    },
+    {
+      "path": "frontend/lib/admin/adminShellCapabilitiesFailureNav.ts",
+      "sha16": "eeded469283825f7",
+      "bytes": 1256
+    },
+    {
+      "path": "frontend/lib/admin/adminHomeSystemOverviewMetrics.ts",
+      "sha16": "cb972785f62f6d3c",
+      "bytes": 8408
+    },
+    {
+      "path": "frontend/lib/admin/adminHomeInboxPendingTotal.ts",
+      "sha16": "8c1d9cae2553825b",
+      "bytes": 2351
+    },
+    {
+      "path": "frontend/lib/admin/adminRecentVisits.ts",
+      "sha16": "2f889d7236fda3cc",
+      "bytes": 3329
+    },
+    {
+      "path": "frontend/lib/admin/adminRole70Matrix.ts",
+      "sha16": "c1883164dc3ec004",
+      "bytes": 1242
+    }
+  ],
+  "gaps": [],
+  "verdict": "PASS"
+}

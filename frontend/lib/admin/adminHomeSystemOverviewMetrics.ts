@@ -49,14 +49,36 @@ export function computeAdminHomeUserSnapshot(
   };
 }
 
+/** HU-439 · Top-N role pills on workbench overview (density fold). */
+export const ADMIN_HOME_OVERVIEW_TOP_ROLES_MAX = 4;
+export const TT_ADMIN_HOME_OVERVIEW_DENSITY_MARK = "tt_admin_home_overview_density_hu439";
+
 export function adminHomeSystemOverviewTopRoles(
   byRole: Record<string, number>,
-  max = 4,
+  max = ADMIN_HOME_OVERVIEW_TOP_ROLES_MAX,
 ): { role: string; count: number }[] {
   return Object.entries(byRole)
     .map(([role, count]) => ({ role, count }))
     .sort((a, b) => b.count - a.count || a.role.localeCompare(b.role))
     .slice(0, max);
+}
+
+/** Roles after Top-N (fold contents); sorted same as top. */
+export function adminHomeSystemOverviewRolesBeyondTop(
+  byRole: Record<string, number>,
+  max = ADMIN_HOME_OVERVIEW_TOP_ROLES_MAX,
+): { role: string; count: number }[] {
+  return Object.entries(byRole)
+    .map(([role, count]) => ({ role, count }))
+    .sort((a, b) => b.count - a.count || a.role.localeCompare(b.role))
+    .slice(max);
+}
+
+/** Metrics source → i18n key（禁 raw postgres/memory 进 UI）. */
+export function adminHomeMetricsSourceLabelKey(source: string | undefined | null): string {
+  if (source === "postgres") return "admin_home_system_overview_source_store";
+  if (source === "memory") return "admin_home_system_overview_source_memory";
+  return "admin_home_system_overview_source_sample";
 }
 
 export function parseAdminHomeObservabilityLite(body: unknown): AdminHomeObservabilityLite {
@@ -209,10 +231,11 @@ export function adminHomeSystemOverviewRolesRemainder(
 
 export type AdminHomeChainLagDisplay =
   | { kind: "local_dev"; lag: number | null }
+  | { kind: "sepolia"; lag: number | null }
   | { kind: "generic"; chainId: string; lag: number | null }
   | { kind: "empty" };
 
-/** 本地 dev 链 ID 人话化（31337 / 1337 等）。 */
+/** 本地 / Sepolia / 其它链 ID 人话化（31337 / 1337 / 11155111 等）。 */
 export function adminHomeSystemOverviewChainLagDisplay(
   chainId: string | null,
   lagBlocks: number | null,
@@ -221,6 +244,9 @@ export function adminHomeSystemOverviewChainLagDisplay(
   const id = chainId.trim();
   if (id === "31337" || id === "1337") {
     return { kind: "local_dev", lag: lagBlocks };
+  }
+  if (id === "11155111") {
+    return { kind: "sepolia", lag: lagBlocks };
   }
   return { kind: "generic", chainId: id, lag: lagBlocks };
 }

@@ -75,4 +75,14 @@ export const ADMIN_RECENT_PATH_TITLE_KEYS: Record<string, string> = {
   "/admin/onboarding": "admin_onboarding_hub_title",
   "/admin/permissions": "admin_permissions_title",
   "/admin/inbox": "admin_unified_inbox_title",
+  "/admin/content/countries": "admin_content_countries_title",
+  "/admin/content/landing-ambient": "admin_content_landing_ambient_title",
 };
+
+/** HU-434 · 未知路径统一「未命名页」，禁 eng slug 直出。 */
+export const ADMIN_RECENT_UNNAMED_TITLE_KEY = "admin_home_recent_unnamed";
+
+export function adminRecentVisitTitleKey(pathname: string): string {
+  const path = (pathname.split("?")[0] ?? pathname).replace(/\/$/, "") || pathname;
+  return ADMIN_RECENT_PATH_TITLE_KEYS[path] ?? ADMIN_RECENT_UNNAMED_TITLE_KEY;
+}

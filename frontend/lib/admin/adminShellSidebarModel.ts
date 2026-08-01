@@ -1,201 +1,122 @@
 import type { AdminPermissionId } from "@/lib/admin/adminPermissionIds";
-
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import type { AdmU01ShellGroupId } from "@/lib/admin/admU01ShellGroupVisibility";
 
-import { ADMIN_SHELL_COMMUNITY_NAV_LINKS } from "@/lib/admin/adminShellCommunityNavLinks";
-import { ADMIN_SHELL_CONTENT_NAV_LINKS } from "@/lib/admin/adminShellContentNavLinks";
-import { ADMIN_SHELL_FINANCE_NAV_LINKS } from "@/lib/admin/adminShellFinanceNavLinks";
-import { ADMIN_SHELL_GOVERNANCE_NAV_LINKS } from "@/lib/admin/adminShellGovernanceNavLinks";
-import { ADMIN_SHELL_GROWTH_NAV_LINKS } from "@/lib/admin/adminShellGrowthNavLinks";
-import { ADMIN_SHELL_MORE_NAV_LINKS } from "@/lib/admin/adminShellMoreNavLinks";
-import { ADMIN_SHELL_ONBOARDING_NAV_LINKS } from "@/lib/admin/adminShellOnboardingNavLinks";
-import { ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS } from "@/lib/admin/adminShellOfficialOpsNavLinks";
-import { ADMIN_SHELL_OPERATIONS_NAV_LINKS } from "@/lib/admin/adminShellOperationsNavLinks";
-
-
-
 export type AdminShellSidebarLink = {
-
   href: string;
-
   labelKey: string;
-
   permission?: AdminPermissionId;
-
   activeExact?: boolean;
-
 };
-
-
 
 export type AdminShellSidebarGroup = {
-
   id: AdmU01ShellGroupId | "workspace";
-
   labelKey: string;
-
   links: AdminShellSidebarLink[];
-
 };
 
-
-
-/** 与顶栏 Shell 同序 · 侧栏持久导航（U2 ① · Batch 25 社区深度对齐）。 */
-
+/**
+ * Inbox Focus Product Baseline · Staging Runtime SSOT (publish IA).
+ * 5 groups · ≤12 leaves — not the legacy 10-group deep nav dump.
+ */
 export const ADMIN_SHELL_SIDEBAR_GROUPS: AdminShellSidebarGroup[] = [
-
   {
-
     id: "workspace",
-
     labelKey: "admin_shell_sidebar_hub_group",
-
     links: [
-
       { href: "/admin", labelKey: "admin_shell_nav_workspace" },
-
       { href: "/admin/inbox", labelKey: "admin_unified_inbox_nav_short" },
-
-      { href: "/admin/operator-guide", labelKey: "admin_operator_guide_title" },
-
     ],
-
   },
-
   {
-
-    id: "onboarding",
-
-    labelKey: "admin_shell_nav_group_onboarding",
-
-    links: ADMIN_SHELL_ONBOARDING_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
-  },
-
-  {
-
     id: "operations",
-
     labelKey: "admin_shell_nav_group_operations",
-
-    links: ADMIN_SHELL_OPERATIONS_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
+    links: [
+      {
+        href: "/admin/users",
+        labelKey: "admin_shell_nav_users_short",
+        permission: ADMIN_PERM.USERS_READ,
+      },
+      {
+        href: "/admin/guides",
+        labelKey: "admin_shell_nav_guides_short",
+        permission: ADMIN_PERM.USERS_READ,
+      },
+      {
+        href: "/admin/orders",
+        labelKey: "admin_shell_nav_orders_short",
+        permission: ADMIN_PERM.ORDERS_READ,
+      },
+      {
+        href: "/admin/disputes",
+        labelKey: "admin_shell_nav_disputes_short",
+        permission: ADMIN_PERM.ORDERS_READ,
+      },
+    ],
   },
-
   {
-
+    id: "onboarding",
+    labelKey: "admin_shell_nav_group_onboarding",
+    links: [
+      {
+        href: "/admin/onboarding",
+        labelKey: "admin_shell_nav_onboarding_short",
+        permission: ADMIN_PERM.ONBOARDING_READ,
+        activeExact: true,
+      },
+    ],
+  },
+  {
     id: "content",
-
-    labelKey: "admin_shell_nav_group_content",
-
-    links: ADMIN_SHELL_CONTENT_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
+    labelKey: "admin_shell_nav_group_centers",
+    links: [
+      {
+        href: "/admin/content",
+        labelKey: "admin_shell_nav_content_short",
+        permission: ADMIN_PERM.CONTENT_READ,
+        activeExact: true,
+      },
+      {
+        href: "/admin/official",
+        labelKey: "admin_shell_nav_official_short",
+        permission: ADMIN_PERM.OFFICIAL_READ,
+        activeExact: true,
+      },
+      {
+        href: "/admin/growth",
+        labelKey: "admin_shell_nav_growth_short",
+        permission: ADMIN_PERM.GROWTH_READ,
+        activeExact: true,
+      },
+    ],
   },
-
   {
-
-    id: "official_ops",
-
-    labelKey: "admin_shell_nav_group_official_ops",
-
-    links: ADMIN_SHELL_OFFICIAL_OPS_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
-  },
-
-  {
-
-    id: "growth",
-
-    labelKey: "admin_shell_nav_group_growth",
-
-    links: ADMIN_SHELL_GROWTH_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
-  },
-
-  {
-
-    id: "community",
-
-    labelKey: "admin_shell_nav_group_community",
-
-    links: ADMIN_SHELL_COMMUNITY_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
-  },
-
-  {
-
-    id: "finance",
-
-    labelKey: "admin_shell_nav_group_finance",
-
-    links: ADMIN_SHELL_FINANCE_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
-  },
-
-  {
-
-    id: "governance",
-
-    labelKey: "admin_shell_nav_group_governance",
-
-    links: ADMIN_SHELL_GOVERNANCE_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
-  },
-
-  {
-
     id: "more",
-
-    labelKey: "admin_shell_nav_group_more",
-
-    links: ADMIN_SHELL_MORE_NAV_LINKS.map(({ href, labelKey, permission, activeExact }) => ({
-      href,
-      labelKey,
-      permission,
-      activeExact,
-    })),
-
+    labelKey: "admin_shell_nav_group_platform",
+    links: [
+      {
+        href: "/admin/finance-suite",
+        labelKey: "admin_shell_nav_finance_short",
+        permission: ADMIN_PERM.FINANCE_READ,
+        activeExact: true,
+      },
+      {
+        href: "/admin/config",
+        labelKey: "admin_shell_nav_settings_short",
+        permission: ADMIN_PERM.PLATFORM_READ,
+        activeExact: true,
+      },
+    ],
   },
-
 ];
 
+/** Publish IA · max leaves in persistent shell sidebar (Batch-12). */
+export const ADMIN_SHELL_SIDEBAR_PUBLISH_MAX_LEAVES = 12;
+
+export function adminShellSidebarGroupCount(): number {
+  return ADMIN_SHELL_SIDEBAR_GROUPS.length;
+}
+
+export function adminShellSidebarLeafCount(): number {
+  return ADMIN_SHELL_SIDEBAR_GROUPS.reduce((n, g) => n + g.links.length, 0);
+}

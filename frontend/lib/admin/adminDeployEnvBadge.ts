@@ -25,3 +25,28 @@ export function adminDeployEnvBadgeClass(env: AdminDeployEnv): string {
   if (env === "production") return ADMIN_DEPLOY_ENV_PRODUCTION_BADGE_CLASS;
   return ADMIN_DEPLOY_ENV_LOCAL_BADGE_CLASS;
 }
+
+/**
+ * Staging / production：全体 Admin 可见。
+ * Local：仅 maintainer UI（避免普通 Admin 误读本地徽章）。
+ */
+export function adminDeployEnvBadgeVisible(
+  env: AdminDeployEnv | null | undefined,
+  maintainerUi: boolean,
+): boolean {
+  if (!env) return false;
+  if (env === "local") return maintainerUi;
+  return true;
+}
+
+/** i18n 徽章文案；Staging + Sepolia（chain 11155111）追加链名。 */
+export function adminDeployEnvDisplayLabel(
+  env: AdminDeployEnv,
+  t: (key: string) => string,
+): string {
+  const base = t(adminDeployEnvLabelKey(env));
+  if (env === "staging" && process.env.NEXT_PUBLIC_CHAIN_ID === "11155111") {
+    return `${base} · ${t("admin_shell_env_staging_chain_sepolia")}`;
+  }
+  return base;
+}

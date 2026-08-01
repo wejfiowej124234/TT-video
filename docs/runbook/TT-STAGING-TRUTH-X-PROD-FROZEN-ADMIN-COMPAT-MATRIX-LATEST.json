@@ -1,0 +1,67 @@
+{
+  "schema": "traveltrust.staging_truth_x_prod_frozen_admin_compat_matrix.v1",
+  "at": "2026-08-01T06:44:06Z",
+  "product_truth_tip": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+  "restore_base_sha": "568f4988f117a4d970f46784b43d25a29ee4c555",
+  "frozen_prod_image": "registry.fly.io/tt-web-prod:deployment-01KYXVT3AA2K87MEBM8XQB3FMN",
+  "frozen_admin_source": "D:\\TravelTrust-bake-1ff71858",
+  "web3_frozen": true,
+  "admin_ui_frozen": true,
+  "merge_policy": {
+    "allow": [
+      "missing runtime exports",
+      "null-safe fixes",
+      "build dependency completion already in 568f4988",
+      "retain Focus Sidebar IA bytes from frozen bake WT"
+    ],
+    "forbid": [
+      "Admin UI redesign",
+      "Sidebar IA regression to tip 10-group dump",
+      "pure tip rebake",
+      "restore-only artifact",
+      "unregistered overlay"
+    ]
+  },
+  "retain_files": [
+    "frontend/lib/admin/adminShellSidebarModel.ts",
+    "frontend/lib/admin/adminDeployEnvBadge.ts",
+    "frontend/lib/admin/adminShellCapabilitiesFailureNav.ts",
+    "frontend/lib/admin/adminHomeSystemOverviewMetrics.ts",
+    "frontend/lib/admin/adminHomeInboxPendingTotal.ts",
+    "frontend/lib/admin/adminRecentVisits.ts",
+    "frontend/lib/admin/adminRole70Matrix.ts"
+  ],
+  "required_symbols": {
+    "frontend/lib/admin/adminShellSidebarModel.ts": [
+      "id: \"workspace\"",
+      "id: \"operations\"",
+      "id: \"onboarding\"",
+      "id: \"content\"",
+      "id: \"more\"",
+      "/admin/finance-suite",
+      "/admin/config"
+    ],
+    "frontend/lib/admin/adminDeployEnvBadge.ts": [
+      "adminDeployEnvBadgeVisible",
+      "adminDeployEnvDisplayLabel"
+    ],
+    "frontend/lib/admin/adminShellCapabilitiesFailureNav.ts": [
+      "ADMIN_SHELL_CAPABILITIES_FAILURE_EXTRA_LINKS"
+    ],
+    "frontend/lib/admin/adminHomeSystemOverviewMetrics.ts": [
+      "adminHomeSystemOverviewRolesBeyondTop",
+      "adminHomeMetricsSourceLabelKey"
+    ],
+    "frontend/lib/admin/adminHomeInboxPendingTotal.ts": [
+      "adminHomeInboxPendingTotal",
+      "resolveAdminHomeInboxPendingTotal",
+      "ADMIN_HOME_INBOX_QUEUE_KEYS"
+    ],
+    "frontend/lib/admin/adminRecentVisits.ts": [
+      "adminRecentVisitTitleKey"
+    ],
+    "frontend/lib/admin/adminRole70Matrix.ts": [
+      "consoleRole70DisplayLabel"
+    ]
+  }
+}
