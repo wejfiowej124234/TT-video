@@ -133,6 +133,8 @@ export function useDidRankPage(options?: { initialSnapshot?: DidRankPageInitialS
   });
   const itineraryBoard = useDidRankItineraryBoard(timeRange, {
     enabled: secondaryBoardWarm.has("itinerary"),
+    initialItems:
+      initialSnapshot?.period === timeRange ? initialSnapshot.itineraries ?? null : null,
   });
   const secondaryLivePollActive =
     (activeBoard === "provider" && providerBoard.livePollActive) ||

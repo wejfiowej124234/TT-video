@@ -8,9 +8,10 @@ import { attachDidRankRankDeltas } from "@/lib/didRankRankDelta";
 import {
   extractDidRankList,
   normalizeDidRankGuideRow,
+  normalizeDidRankItineraryRow,
   normalizeDidRankTravelerRow,
 } from "@/lib/didRankResponseNormalize";
-import type { GuideRankItem, TravelerRankItem } from "@/lib/didRankTypes";
+import type { GuideRankItem, ItineraryRankItem, TravelerRankItem } from "@/lib/didRankTypes";
 import { parseGuideSortParam, parsePeriodParam, type GuideLeaderboardSort, type Period } from "@/lib/didRankUtils";
 import type { DidRankPageInitialSnapshot } from "@/lib/did-rank/didRankPageInitialData";
 
@@ -108,7 +109,17 @@ export type DidRankPageInitialFetchOpts = {
   forwardAuthHeaders?: Record<string, string>;
 };
 
-/** 并行拉 travelers + guides + prize-pool；失败时返回 null（客户端照常 fetch） */
+function normalizeItineraries(raw: unknown, period: Period): ItineraryRankItem[] {
+  if (!raw) return [];
+  const dash = "—";
+  const rows = extractDidRankList(raw, "itineraries")
+    .map((x) => normalizeDidRankItineraryRow(x, dash))
+    .filter((x): x is ItineraryRankItem => x != null);
+  if (rows.some((r) => r.rank_delta != null)) return rows;
+  return attachDidRankRankDeltas(rows, `itinerary:${period}`);
+}
+
+/** 并行拉 travelers + guides + itineraries + prize-pool；失败时返回 null（客户端照常 fetch） */
 export async function fetchDidRankPageInitialSnapshot(
   opts?: DidRankPageInitialFetchOpts,
 ): Promise<DidRankPageInitialSnapshot | null> {
@@ -116,9 +127,10 @@ export async function fetchDidRankPageInitialSnapshot(
   const guideSort = parseGuideSortParam(opts?.guideSort ?? null);
   const sortQ = guideSortQueryParam(guideSort);
   const auth = opts?.forwardAuthHeaders ?? {};
-  const [tRaw, gRaw, prizeRaw] = await Promise.all([
+  const [tRaw, gRaw, iRaw, prizeRaw] = await Promise.all([
     fetchJson(`${apiUrl(routes.didRankTravelers)}?period=${period}`, auth),
     fetchJson(`${apiUrl(routes.didRankGuides)}?period=${period}&sort=${sortQ}`, auth),
+    fetchJson(`${apiUrl(routes.didRankItineraries)}?period=${period}`, auth),
     fetchJson(apiUrl(routes.didRankPrizePool), auth),
   ]);
 
@@ -129,6 +141,7 @@ export async function fetchDidRankPageInitialSnapshot(
     period,
     guideSort,
     ...lists,
+    itineraries: normalizeItineraries(iRaw, period),
     prizePool: parsePrizePool(prizeRaw),
   };
 }

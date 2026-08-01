@@ -121,6 +121,17 @@ describe("did-rank theme V1 (contract)", () => {
     expect(src).not.toMatch(/bg-slate-900\/95/);
   });
 
+  it("SSR initial snapshot prefetches itineraries (Beijing city Product Truth)", () => {
+    const server = readFileSync(
+      join(root, "../../lib/did-rank/didRankPageInitialData.server.ts"),
+      "utf8",
+    );
+    const types = readFileSync(join(root, "../../lib/did-rank/didRankPageInitialData.ts"), "utf8");
+    expect(server).toContain("didRankItineraries");
+    expect(server).toContain("normalizeDidRankItineraryRow");
+    expect(types).toContain("itineraries: ItineraryRankItem[]");
+  });
+
   it("app did-rank page delegates to DidRankPageClient + DidRankPageInner", () => {
     const src = readFileSync(join(root, "../../app/did-rank/page.tsx"), "utf8");
     const client = readFileSync(join(root, "../../app/did-rank/DidRankPageClient.tsx"), "utf8");

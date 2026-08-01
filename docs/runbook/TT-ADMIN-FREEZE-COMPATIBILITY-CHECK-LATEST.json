@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.admin_freeze_compatibility_check.v1",
+  "at": "2026-08-01T07:39:20Z",
+  "admin_ui_freeze": true,
+  "web3_freeze": true,
+  "base_composition_sha": "de6105a850e3acf8f7bae7a9105d1cb9d42c3a24",
+  "compat_fix": "DID_RANK_SSR_ITINERARIES_BEIJING",
+  "sidebar_sha16_composition": "a43b7dad8b12aa1c",
+  "sidebar_sha16_working_tree": "a43b7dad8b12aa1c",
+  "sidebar_byte_identical_to_frozen_bake": true,
+  "admin_paths_changed": [],
+  "did_rank_only_diff": true,
+  "runtime_patch_validation": "PASS",
+  "verdict": "PASS",
+  "tt_production_go": "NO_GO",
+  "note": "Admin Focus Sidebar unchanged; only public /did-rank SSR itineraries prefetch for Beijing Product Truth"
+}
