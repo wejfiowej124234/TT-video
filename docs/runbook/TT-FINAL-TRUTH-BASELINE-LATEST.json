@@ -5,13 +5,13 @@
   "lock_status": "LOCKED",
   "recorded_utc": "2026-08-01T07:30:40Z",
   "tt_production_go": "NO_GO",
-  "phase_now": "OWNER_DEEP_PARTIAL_PERF_PASS_HSTS_FIX_PENDING",
-  "live_audit_utc": "2026-08-01T08:30:00Z",
+  "phase_now": "OWNER_DEEP_PARTIAL_FIX0_HSTS_PASS_COMPOSITION_d77584db",
+  "live_audit_utc": "2026-08-01T08:45:30Z",
   "vfinal_program": "docs/runbook/TT-FINAL-TRUTH-VFIMAL-ALIGNMENT-PROGRAM-LATEST.json",
   "vfinal_gap_inventory": "docs/runbook/TT-FINAL-TRUTH-VFIMAL-GAP-INVENTORY-LATEST.json",
   "owner_deep_closure_audit": "docs/runbook/TT-FINAL-TRUTH-OWNER-DEEP-CLOSURE-AUDIT-LATEST.json",
   "admin_ui_freeze": true,
-  "prod_fe_release_observed": "v60_539f0876",
+  "prod_fe_release_observed": "v62_d77584db",
   "prod_build_id_observed": null,
   "stg_build_id_observed": null,
   "staging_align_audit": "docs/runbook/TT-FINAL-TRUTH-BASELINE-STAGING-ALIGN-AUDIT-LATEST.json",
@@ -94,10 +94,10 @@
         "d80f6b138089b91d79fe3cb327544255322cf49d",
         "cac322354cc8970f173e688b7ed6ed7b0fb6d3d8"
       ],
-      "buildable_git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+      "buildable_git_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
       "fe_git_sha_lineage_tip": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
-      "note": "Product Truth tip = Staging deployed 1ff71858. Production Non-Web3 FE = Admin-safe composition 539f0876 (tip+restore+Focus retain+SSR Beijing+permissionDenied guards). Strict tip equality NOT the judgment rule — use Release Composition Manifest.",
-      "production_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506"
+      "note": "Product Truth tip = Staging deployed 1ff71858. Production Non-Web3 FE = Admin-safe composition d77584db (+HSTS). Use Release Composition Manifest; not fuzzy tip equality.",
+      "production_composition_sha": "d77584dbf4108b472f02e49620dff959e3838a7e"
     }
   },
   "forbidden": [
@@ -109,8 +109,8 @@
   ],
   "live_identity_matrix": {
     "staging_tip": "PASS",
-    "production_composition": "PASS_539f0876",
-    "apex_composition": "PASS_539f0876",
+    "production_composition": "PASS_d77584db",
+    "apex_composition": "PASS_d77584db",
     "strict_prod_tip_equals_stg_tip": "FAIL_BY_DESIGN_USE_COMPOSITION",
     "accepted_env_only": [
       "database_baseline_label",
@@ -129,15 +129,17 @@
     "database_reality": "PARTIAL",
     "cms_cos_media": "PARTIAL",
     "performance_benchmark": "PASS",
-    "security_observability": "FAIL"
+    "security_observability": "PARTIAL"
   },
   "next": [
-    "Redeploy HSTS next.config fix on Admin-safe composition; verify Apex HSTS",
-    "Owner unlock DB/CMS/Sec deep credentials and re-run owner-deep audit",
+    "Owner unlock: TT_OWNER_DEEP_DB_OK=1 + PRODUCTION_DATABASE_URL (+ STAGING_DATABASE_URL)",
+    "Owner unlock: TT_OWNER_DEEP_CMS_OK=1 + CMS/COS credentials",
+    "Owner unlock: TT_OWNER_DEEP_SEC_OK=1 + secret/alert/metric access",
+    "Re-run python scripts/dev/run-final-truth-owner-deep-closure-audit.py",
     "Only after Non-Web3 Product Reality Closure → Owner Human UAT → Production GO Review"
   ],
-  "honesty": "Web3 untouched. Admin UI structure/visual frozen. OWNER deep: Perf PASS; Apex HSTS FIX_REQUIRED (code ready); DB/CMS/Sec deep OWNER_REQUIRED without unlock. Human UAT/GO Review stay closed. TT_PRODUCTION_GO=NO_GO.",
-  "buildable_git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "honesty": "Web3 untouched. Admin structure/visual frozen. OWNER deep: Perf PASS; Apex HSTS PASS; FIX_REQUIRED=0; DB/CMS/Sec deep remain OWNER_REQUIRED. Human UAT/GO Review CLOSED. TT_PRODUCTION_GO=NO_GO.",
+  "buildable_git_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
   "product_tip_oral": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
   "final_alignment_audit": "docs/runbook/TT-FINAL-TRUTH-BASELINE-FINAL-ALIGNMENT-AUDIT-LATEST.json",
   "equation_100_percent": false,

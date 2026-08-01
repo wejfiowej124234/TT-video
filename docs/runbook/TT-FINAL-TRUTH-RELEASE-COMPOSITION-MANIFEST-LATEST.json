@@ -1,19 +1,14 @@
 {
   "schema": "traveltrust.final_truth_release_composition_manifest.v1",
   "machine_key": "TT_FINAL_TRUTH_RELEASE_COMPOSITION_MANIFEST",
-  "at": "2026-08-01T08:30:00Z",
+  "at": "2026-08-01T08:45:30Z",
   "tt_production_go": "NO_GO",
   "human_uat_open": false,
   "production_go_review_open": false,
   "equation": "Production_Release_Truth = Product_Base + Admin_Frozen_Runtime + Required_Compatibility_Fix",
   "forbid_fuzzy_sha_equality": true,
-  "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
-  "fly_release": "v60",
-  "pending_compat_fix": {
-    "id": "HSTS_APEX_ALIGN_STAGING",
-    "status": "CODE_READY_PENDING_DEPLOY",
-    "note": "frontend/next.config.js Strict-Transport-Security for production bake; closes SEC-HEADERS-MISSING:prod_apex"
-  },
+  "live_composition_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
+  "fly_release": "v62",
   "layers": {
     "product_base": {
       "tip_sha": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
@@ -23,7 +18,6 @@
     "admin_frozen_runtime": {
       "status": "FROZEN",
       "retain_from": "de6105a8",
-      "sidebar_sha16": "a43b7dad8b12aa1c",
       "bugfix_guards": "539f0876 permissionDenied optional-chain",
       "structure_changed": false
     },
@@ -33,6 +27,12 @@
       "sha": "f1802552",
       "live_prod_html_beijing": 10,
       "api_itineraries_beijing": 10
+    },
+    "security_compat_fix": {
+      "id": "HSTS_APEX_ALIGN_STAGING",
+      "status": "DEPLOYED_VERIFIED_PASS",
+      "sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
+      "apex_hsts": "PASS"
     }
   },
   "lineage": [
@@ -41,7 +41,7 @@
     "admin_safe_retain_de6105a8",
     "did_rank_ssr_itineraries_f1802552",
     "admin_permissionDenied_guard_539f0876",
-    "hsts_apex_align_pending"
+    "hsts_apex_align_d77584db"
   ],
   "web3_truth": {
     "status": "LOCKED_FROZEN",
@@ -51,17 +51,16 @@
   },
   "owner_deep": {
     "audit": "docs/runbook/TT-FINAL-TRUTH-OWNER-DEEP-CLOSURE-AUDIT-LATEST.json",
-    "performance_benchmark": "PASS",
     "database_reality": "PARTIAL",
     "cms_cos_media": "PARTIAL",
-    "security_observability": "FAIL"
+    "performance_benchmark": "PASS",
+    "security_observability": "PARTIAL"
   },
   "postverify": {
     "identity": "PASS",
     "did_rank_ssr_beijing": "PASS",
     "api_itineraries_beijing": "PASS",
-    "admin_http": "200",
-    "owner_hard_refresh_admin": true,
-    "apex_hsts": "FAIL_PENDING_REDEPLOY"
+    "apex_hsts": "PASS",
+    "admin_http": "307"
   }
 }

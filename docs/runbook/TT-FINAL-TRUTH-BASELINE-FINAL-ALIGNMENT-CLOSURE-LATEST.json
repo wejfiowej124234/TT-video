@@ -1,20 +1,20 @@
 {
   "schema": "traveltrust.final_truth_baseline_final_alignment_closure.v1",
   "machine_key": "TT_FINAL_TRUTH_BASELINE_FINAL_ALIGNMENT_CLOSURE",
-  "at": "2026-08-01T08:30:00Z",
+  "at": "2026-08-01T08:45:30Z",
   "tt_production_go": "NO_GO",
   "human_uat_open": false,
   "production_go_review_open": false,
-  "verdict": "OWNER_DEEP_PARTIAL_PERF_PASS_HSTS_FIX_PENDING_DEPLOY",
-  "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
-  "fly_release": "v60",
+  "verdict": "OWNER_DEEP_PARTIAL_FIX0_HSTS_PASS_OWNER_UNLOCK_REMAINING",
+  "live_composition_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
+  "fly_release": "v62",
   "owner_deep_audit": "docs/runbook/TT-FINAL-TRUTH-OWNER-DEEP-CLOSURE-AUDIT-LATEST.json",
   "beijing": {
     "api_itineraries_city_beijing": 10,
     "prod_html_beijing": 10,
-    "apex_html_beijing": 10,
     "ssr_verdict": "PASS"
   },
+  "apex_hsts": "PASS",
   "admin": {
     "freeze": true,
     "structure_changed": false,
@@ -27,16 +27,11 @@
     "touched": false
   },
   "counts": {
-    "FIX_REQUIRED": 1,
+    "FIX_REQUIRED": 0,
     "OWNER_REQUIRED": 3,
     "ACCEPTED_ENV_DIFFERENCE": 6
   },
   "gaps": [
-    {
-      "id": "SEC-HEADERS-MISSING:prod_apex",
-      "class": "FIX_REQUIRED",
-      "summary": "Apex HSTS missing vs Staging; next.config.js fix prepared"
-    },
     {
       "id": "DB-SCHEMA-MIGRATION-SQL",
       "class": "OWNER_REQUIRED",
@@ -57,14 +52,15 @@
     "database_reality": "PARTIAL",
     "cms_cos_media": "PARTIAL",
     "performance_benchmark": "PASS",
-    "security_observability": "FAIL"
+    "security_observability": "PARTIAL"
   },
   "non_web3_product_reality_closure": false,
   "next": [
-    "Commit + Admin-safe redeploy HSTS next.config fix; verify Apex HSTS",
-    "Owner unlock DB/CMS/Sec deep (TT_OWNER_DEEP_DB_OK / CMS_OK / SEC_OK + credentials)",
-    "Re-run scripts/dev/run-final-truth-owner-deep-closure-audit.py",
-    "Keep Human UAT / Production GO Review CLOSED until Non-Web3 Product Reality Closure",
+    "Owner unlock: TT_OWNER_DEEP_DB_OK=1 + PRODUCTION_DATABASE_URL (+ STAGING_DATABASE_URL)",
+    "Owner unlock: TT_OWNER_DEEP_CMS_OK=1 + CMS/COS credentials",
+    "Owner unlock: TT_OWNER_DEEP_SEC_OK=1 + secret/alert/metric access",
+    "Re-run python scripts/dev/run-final-truth-owner-deep-closure-audit.py",
+    "Only when all OWNER deep gates PASS open Human UAT / Production GO Review",
     "Keep TT_PRODUCTION_GO=NO_GO"
   ]
 }

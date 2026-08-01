@@ -1,56 +1,49 @@
 {
   "schema": "traveltrust.final_truth_vfinal_gap_inventory.v1",
   "machine_key": "TT_FINAL_TRUTH_VFIMAL_GAP_INVENTORY",
-  "at": "2026-08-01T08:30:00Z",
-  "stamp": "OWNER_DEEP_CLOSURE_AUDIT_20260801T081916Z",
+  "at": "2026-08-01T08:45:30Z",
+  "stamp": "OWNER_DEEP_POST_HSTS_20260801T083753Z",
   "product_tip_oral": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
-  "buildable_git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
-  "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "buildable_git_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
+  "live_composition_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
+  "fly_release": "v62",
   "owner_deep_audit": "docs/runbook/TT-FINAL-TRUTH-OWNER-DEEP-CLOSURE-AUDIT-LATEST.json",
-  "evidence": "evidence/GO_final_truth_vfinal_alignment/owner-deep-20260801T081916Z",
+  "evidence": "evidence/GO_final_truth_vfinal_alignment/owner-deep-20260801T083753Z",
   "tt_production_go": "NO_GO",
   "human_uat_open": false,
   "production_go_review_open": false,
   "non_web3_product_reality_closure": false,
-  "fix_required_still_open": [
-    "SEC-HEADERS-MISSING:prod_apex (HSTS) — code fix staged in next.config.js; pending composition redeploy + verify"
-  ],
+  "fix_required_still_open": [],
   "counts": {
-    "FIX_REQUIRED": 1,
+    "FIX_REQUIRED": 0,
     "OWNER_REQUIRED": 3,
     "ACCEPTED_ENV_DIFFERENCE": 6
   },
   "gaps": [
     {
-      "id": "SEC-HEADERS-MISSING:prod_apex",
-      "class": "FIX_REQUIRED",
-      "summary": "Apex www.web3-ttg.com missing Strict-Transport-Security (Staging has HSTS). next.config.js fix prepared; must redeploy composition and re-verify.",
-      "section": "security"
-    },
-    {
       "id": "DB-SCHEMA-MIGRATION-SQL",
       "class": "OWNER_REQUIRED",
-      "summary": "Schema/Migration/Index/Constraint/Enum/Default SQL pairwise alignment needs TT_OWNER_DEEP_DB_OK=1 + PRODUCTION_DATABASE_URL (+ STAGING_DATABASE_URL). Public /meta: both database_connected=true."
+      "summary": "Schema/Migration/Index/Constraint/Enum/Default SQL pairwise needs TT_OWNER_DEEP_DB_OK=1 + PRODUCTION_DATABASE_URL (+ STAGING_DATABASE_URL). /meta both database_connected=true."
     },
     {
       "id": "CMS-COS-PUBLISH-CHAIN",
       "class": "OWNER_REQUIRED",
-      "summary": "CMS lifecycle · COS ACL/metadata · CDN invalidation · Review→Publish→Verify needs TT_OWNER_DEEP_CMS_OK=1 + credentials. Public: cms_baseline aligned; CDN host reachable; catalog/media/ocs listing 404 accepted for dir index."
+      "summary": "CMS lifecycle · COS ACL/metadata · CDN invalidation · Review→Publish→Verify needs TT_OWNER_DEEP_CMS_OK=1 + credentials. Public cms_baseline aligned; CDN reachable."
     },
     {
       "id": "SEC-SECRET-ALERT-METRIC-DEEP",
       "class": "OWNER_REQUIRED",
-      "summary": "Secret inventory · log PII redaction · metric/alert routes · audit-log sink needs TT_OWNER_DEEP_SEC_OK=1. Public: API security headers present; x-request-id present; rate_limits meta equal."
+      "summary": "Secret inventory · log PII redaction · metric/alert · audit-log sink needs TT_OWNER_DEEP_SEC_OK=1. Public headers/HSTS/x-request-id/rate_limits PASS."
     },
     {
       "id": "API-DEPLOYMENT-PROFILE",
       "class": "ACCEPTED_ENV_DIFFERENCE",
-      "summary": "API deployment_profile staging vs production (same API git_sha 6929606a)"
+      "summary": "API deployment_profile staging vs production"
     },
     {
       "id": "ORDER-MOCK-PAY",
       "class": "ACCEPTED_ENV_DIFFERENCE",
-      "summary": "order_mock_pay_enabled Staging=true Production=false"
+      "summary": "order_mock_pay Staging=true Production=false"
     },
     {
       "id": "STRICT-MODE-PROD",
@@ -70,17 +63,17 @@
     {
       "id": "ADMIN-UI-FREEZE-RETAIN",
       "class": "ACCEPTED_ENV_DIFFERENCE",
-      "summary": "Admin Focus Reality retained; structure frozen; runtime guards only"
+      "summary": "Admin Focus Reality retained; structure frozen"
     }
   ],
   "gates_owner_deep": {
     "database_reality": "PARTIAL",
     "cms_cos_media": "PARTIAL",
     "performance_benchmark": "PASS",
-    "security_observability": "FAIL"
+    "security_observability": "PARTIAL"
   },
-  "performance_note": "Formal multi-sample (n=3) Staging vs Prod pages/APIs/SSR/JS/image/cache PASS; no page regression >2.5x",
   "beijing_ssr_closed": true,
+  "apex_hsts": "PASS",
   "web3_touched": false,
   "admin_structure_changed": false
 }

@@ -1,9 +1,9 @@
 {
   "schema": "traveltrust.final_truth_owner_deep_closure_audit.v1",
   "machine_key": "TT_FINAL_TRUTH_OWNER_DEEP_CLOSURE_AUDIT",
-  "at": "2026-08-01T08:19:16Z",
-  "stamp": "20260801T081916Z",
-  "live_composition_sha": "539f0876f537ee00f980c731fce061e9fb911506",
+  "at": "2026-08-01T08:37:53Z",
+  "stamp": "20260801T083753Z",
+  "live_composition_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
   "product_tip_oral": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
   "web3_truth": {
     "status": "LOCKED_FROZEN",
@@ -24,25 +24,25 @@
       "cms_baseline": "public_display_10x4 + catalog_bake=1",
       "database_baseline": "staging_rc_ssot_alignment.v1#expected_staging_surface",
       "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
-      "ms": 1905.0
+      "ms": 1642.0
     },
     "prod_web": {
       "status": 200,
-      "git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
-      "build_time": "2026-08-01T07:47:40Z",
+      "git_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
+      "build_time": "2026-08-01T08:29:37Z",
       "cms_baseline": "public_display_10x4 + catalog_bake=1",
       "database_baseline": "production_surface",
       "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
-      "ms": 1818.7
+      "ms": 1727.3
     },
     "prod_apex": {
       "status": 200,
-      "git_sha": "539f0876f537ee00f980c731fce061e9fb911506",
-      "build_time": "2026-08-01T07:47:40Z",
+      "git_sha": "d77584dbf4108b472f02e49620dff959e3838a7e",
+      "build_time": "2026-08-01T08:29:37Z",
       "cms_baseline": "public_display_10x4 + catalog_bake=1",
       "database_baseline": "production_surface",
       "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
-      "ms": 1745.3
+      "ms": 1767.1
     },
     "composition_match": true,
     "apex_match": true,
@@ -52,11 +52,11 @@
     "database_reality": "PARTIAL",
     "cms_cos_media": "PARTIAL",
     "performance_benchmark": "PASS",
-    "security_observability": "FAIL"
+    "security_observability": "PARTIAL"
   },
   "non_web3_product_reality_closure": false,
   "counts": {
-    "FIX_REQUIRED": 1,
+    "FIX_REQUIRED": 0,
     "OWNER_REQUIRED": 3,
     "ACCEPTED_ENV_DIFFERENCE": 6
   },
@@ -76,12 +76,6 @@
       "class": "OWNER_REQUIRED",
       "summary": "CMS lifecycle · object storage ACL/metadata · CDN invalidation · Review→Publish→Verify chain not Owner-unlocked this pass (set TT_OWNER_DEEP_CMS_OK=1 + CMS/COS credentials to close)",
       "section": "cms"
-    },
-    {
-      "id": "SEC-HEADERS-MISSING:prod_apex",
-      "class": "FIX_REQUIRED",
-      "summary": "Required security headers missing on prod_apex: ['strict-transport-security']",
-      "section": "security"
     },
     {
       "id": "SEC-SECRET-ALERT-METRIC-DEEP",
@@ -162,7 +156,7 @@
       "summary": "Admin Focus Reality retained; structure frozen; runtime guards only"
     }
   ],
-  "evidence_dir": "evidence/GO_final_truth_vfinal_alignment/owner-deep-20260801T081916Z",
+  "evidence_dir": "evidence/GO_final_truth_vfinal_alignment/owner-deep-20260801T083753Z",
   "next_actions": [
     "Owner unlock DB: TT_OWNER_DEEP_DB_OK=1 + PRODUCTION_DATABASE_URL (+ STAGING_DATABASE_URL)",
     "Owner unlock CMS/COS: TT_OWNER_DEEP_CMS_OK=1 + object-storage credentials",
