@@ -53,11 +53,11 @@ export function buildAdminUnifiedInboxTasks(input: {
 
       href: ADMIN_INBOX_QUEUE_HREFS.provider,
 
-      count: channels.provider.permissionDenied ? null : counts.provider,
+      count: channels.provider?.permissionDenied ? null : counts.provider,
 
-      permissionDenied: channels.provider.permissionDenied,
+      permissionDenied: Boolean(channels.provider?.permissionDenied),
 
-      errorKind: channels.provider.errorKind,
+      errorKind: channels.provider?.errorKind ?? null,
 
       priority: counts.provider ?? 0,
 
@@ -73,11 +73,11 @@ export function buildAdminUnifiedInboxTasks(input: {
 
       href: ADMIN_INBOX_QUEUE_HREFS.steward,
 
-      count: channels.steward.permissionDenied ? null : counts.steward,
+      count: channels.steward?.permissionDenied ? null : counts.steward,
 
-      permissionDenied: channels.steward.permissionDenied,
+      permissionDenied: Boolean(channels.steward?.permissionDenied),
 
-      errorKind: channels.steward.errorKind,
+      errorKind: channels.steward?.errorKind ?? null,
 
       priority: counts.steward ?? 0,
 
@@ -93,11 +93,11 @@ export function buildAdminUnifiedInboxTasks(input: {
 
       href: ADMIN_INBOX_QUEUE_HREFS.approvals,
 
-      count: channels.approvals.permissionDenied ? null : counts.approvals,
+      count: channels.approvals?.permissionDenied ? null : counts.approvals,
 
-      permissionDenied: channels.approvals.permissionDenied,
+      permissionDenied: Boolean(channels.approvals?.permissionDenied),
 
-      errorKind: channels.approvals.errorKind,
+      errorKind: channels.approvals?.errorKind ?? null,
 
       priority: counts.approvals ?? 0,
 
@@ -113,11 +113,11 @@ export function buildAdminUnifiedInboxTasks(input: {
 
       href: ADMIN_INBOX_QUEUE_HREFS.reports,
 
-      count: channels.reports.permissionDenied ? null : counts.reports,
+      count: channels.reports?.permissionDenied ? null : counts.reports,
 
-      permissionDenied: channels.reports.permissionDenied,
+      permissionDenied: Boolean(channels.reports?.permissionDenied),
 
-      errorKind: channels.reports.errorKind,
+      errorKind: channels.reports?.errorKind ?? null,
 
       priority: counts.reports ?? 0,
 

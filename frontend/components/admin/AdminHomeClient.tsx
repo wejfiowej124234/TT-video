@@ -211,7 +211,7 @@ function inboxBadgeForCard(
 
   if (!canAccessAdminInboxChannel(card.inboxKey, hasPermission, permissionsLoaded)) return null;
 
-  if (channels[card.inboxKey].permissionDenied) return null;
+  if (channels[card.inboxKey]?.permissionDenied) return null;
 
   const n = counts[card.inboxKey];
 

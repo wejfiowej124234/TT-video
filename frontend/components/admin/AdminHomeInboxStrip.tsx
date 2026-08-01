@@ -114,9 +114,9 @@ export function AdminHomeInboxStrip(props: {
   );
 
   const workflowTasks = buildAdminUnifiedInboxTasks({ counts, channels });
-  const visibleLinks = INBOX_LINKS.filter(({ key }) => !channels[key].permissionDenied);
-  const deniedLinks = INBOX_LINKS.filter(({ key }) => channels[key].permissionDenied);
-  const approvalsDenied = channels.approvals.permissionDenied;
+  const visibleLinks = INBOX_LINKS.filter(({ key }) => !channels[key]?.permissionDenied);
+  const deniedLinks = INBOX_LINKS.filter(({ key }) => Boolean(channels[key]?.permissionDenied));
+  const approvalsDenied = Boolean(channels.approvals?.permissionDenied);
   const workflowKeys = approvalsDenied
     ? ([
         "admin_home_inbox_workflow_1_ops",

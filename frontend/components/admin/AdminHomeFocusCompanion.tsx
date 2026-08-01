@@ -51,7 +51,7 @@ export function AdminHomeFocusCompanion(props: {
     return buildAdminUnifiedInboxTasks({
       counts: props.counts,
       channels: props.channels,
-    }).filter((task) => !task.permissionDenied);
+    }).filter((task) => Boolean(task) && !task.permissionDenied);
   }, [props.counts, props.channels]);
 
   if (!caps.permissionsLoaded) return null;

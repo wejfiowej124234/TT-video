@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.admin_prod_rollback_v49.v1",
+  "at": "2026-08-01T07:44:00Z",
+  "action": "ROLLBACK_IMAGE_ONLY",
+  "reason": "Admin crash on v56/de6105a8: TypeError reading permissionDenied on undefined channel/task",
+  "from": {
+    "fly_release": "v56",
+    "image": "registry.fly.io/tt-web-prod:deployment-01KYY1AAZ2N83Q1VXMSFESPZ94",
+    "git_sha": "de6105a850e3acf8f7bae7a9105d1cb9d42c3a24"
+  },
+  "to": {
+    "fly_release": "v57",
+    "image": "registry.fly.io/tt-web-prod:deployment-01KYXVT3AA2K87MEBM8XQB3FMN",
+    "same_as": "v49",
+    "git_sha": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+    "bake": "2026-07-30T13:37:13Z"
+  },
+  "admin_ui_freeze": true,
+  "no_admin_structure_change": true,
+  "tt_production_go": "NO_GO",
+  "owner_action": "Hard refresh Admin (Ctrl+Shift+R) and re-login to confirm workbench"
+}
