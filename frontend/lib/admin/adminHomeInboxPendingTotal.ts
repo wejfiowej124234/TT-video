@@ -1,15 +1,10 @@
-import type { AdminHomeInboxKey } from "./adminHomeModel";
+import { ADMIN_HOME_INBOX_KEYS, type AdminHomeInboxKey } from "./adminHomeModel";
 import { canAccessAdminInboxChannel } from "./adminInboxChannelPermission";
 import type { AdminHomeInboxChannels, AdminHomeInboxCounts } from "./useAdminHomeInbox";
 import { readAdminHomeInboxPendingTotalCache } from "./adminHomeInboxPendingTotalCache";
 
-export const ADMIN_HOME_INBOX_QUEUE_KEYS: readonly AdminHomeInboxKey[] = [
-  "provider",
-  "guide",
-  "steward",
-  "approvals",
-  "reports",
-];
+/** Alias of canonical keys — do not diverge from ADMIN_HOME_INBOX_KEYS. */
+export const ADMIN_HOME_INBOX_QUEUE_KEYS: readonly AdminHomeInboxKey[] = ADMIN_HOME_INBOX_KEYS;
 
 /** 今日待办四通道合计（跳过无权限 / 拉取失败通道；失败通道不得计为 0）。 */
 export function adminHomeInboxPendingTotal(

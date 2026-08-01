@@ -7,7 +7,16 @@ export type AdminHomeCardTier = "read" | "write" | "super_write" | "placeholder"
 
 export type AdminHomeSectionId = "onboarding" | "ops_planes" | "core" | "audit_finance" | "community" | "platform";
 
-export type AdminHomeInboxKey = "provider" | "guide" | "steward" | "approvals" | "reports";
+/** Canonical Inbox Focus channels · UI + runtime + fetch MUST stay 1:1 (crash-class). */
+export const ADMIN_HOME_INBOX_KEYS = [
+  "provider",
+  "guide",
+  "steward",
+  "approvals",
+  "reports",
+] as const;
+
+export type AdminHomeInboxKey = (typeof ADMIN_HOME_INBOX_KEYS)[number];
 
 export type AdminHomeCard = {
   href: string;

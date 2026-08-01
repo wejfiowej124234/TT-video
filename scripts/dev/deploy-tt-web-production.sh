@@ -36,6 +36,16 @@ CHECK_ONLY=0
 command -v fly >/dev/null 2>&1 || fail "fly CLI not found"
 [[ -f "$ROOT/frontend/$FLY_CONFIG" ]] || fail "missing $ROOT/frontend/$FLY_CONFIG"
 
+# Crash-class hard gate: Inbox UI keys must match channels/HREFS/fetch (guide included).
+# Skip only with explicit Owner override — never default in CI/prod deploy.
+if [[ "${TT_SKIP_ADMIN_INBOX_CHANNEL_RUNTIME_PARITY:-}" != "1" ]]; then
+  info "Admin Inbox channel runtime parity gate…"
+  bash "$ROOT/scripts/gates/check-admin-inbox-channel-runtime-parity.sh" \
+    || fail "Admin Inbox channel runtime parity FAIL (would reintroduce permissionDenied crash)"
+else
+  info "WARN TT_SKIP_ADMIN_INBOX_CHANNEL_RUNTIME_PARITY=1 — skipping crash-class gate"
+fi
+
 if [[ ! -f "$BUILD_ENV" ]]; then
   echo "deploy-tt-web-production: seeding $BUILD_ENV from example"
   mkdir -p "$(dirname "$BUILD_ENV")"

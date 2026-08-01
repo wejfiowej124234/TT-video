@@ -5,7 +5,7 @@ import { adminListFetchCacheKey } from "./adminListFetchCache";
 
 describe("adminHomeInboxQueueListCache", () => {
   it("aligns inbox channels with list SWR scopes", () => {
-    for (const key of ["provider", "steward", "approvals", "reports"] as const) {
+    for (const key of ["provider", "guide", "steward", "approvals", "reports"] as const) {
       const cfg = adminInboxQueueListFetchConfig(key);
       expect(cfg.scope.length).toBeGreaterThan(0);
       expect(cfg.listUrl.startsWith("/api/v1/admin/")).toBe(true);

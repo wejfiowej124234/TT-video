@@ -21,15 +21,17 @@ describe("admin inbox ↔ shell nav alignment (① · U2)", () => {
 
   it("unified inbox tasks use ADMIN_INBOX_QUEUE_HREFS", () => {
     const tasks = buildAdminUnifiedInboxTasks({
-      counts: { provider: 1, steward: 0, approvals: 2, reports: 3 },
+      counts: { provider: 1, guide: 0, steward: 0, approvals: 2, reports: 3 },
       channels: {
         provider: { count: 1, permissionDenied: false, errorKind: null },
+        guide: { count: 0, permissionDenied: false, errorKind: null },
         steward: { count: 0, permissionDenied: false, errorKind: null },
         approvals: { count: 2, permissionDenied: false, errorKind: null },
         reports: { count: 3, permissionDenied: false, errorKind: null },
       },
     });
     expect(tasks.find((t) => t.id === "provider")?.href).toBe(ADMIN_INBOX_QUEUE_HREFS.provider);
+    expect(tasks.find((t) => t.id === "guide")?.href).toBe(ADMIN_INBOX_QUEUE_HREFS.guide);
     expect(tasks.find((t) => t.id === "reports")?.href).toBe(ADMIN_INBOX_QUEUE_HREFS.reports);
   });
 
