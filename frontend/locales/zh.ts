@@ -2529,6 +2529,10 @@ export default {
   admin_content_announcements_col_lane: "分轨",
   admin_content_announcements_publish_btn: "发布",
   admin_content_announcements_published: "已在公开页展示",
+  home_cms_announcements_aria: "官方公告",
+  home_cms_announcements_kicker: "公告",
+  home_cms_announcements_lead: "来自 Admin CMS 发布 — 无静态 fallback。",
+  home_cms_announcements_cta: "查看详情",
   admin_content_roadmap_title: "产品路线图",
   admin_content_roadmap_subtitle: "独立 CMS — 区块标题与里程碑；不进入公告列表或 Pulse。",
   admin_content_roadmap_rust_api_banner:

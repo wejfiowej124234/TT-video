@@ -28,6 +28,9 @@ fn public_cache_headers() -> HeaderMap {
 pub struct PublicAnnouncementsQuery {
     pub lane: Option<String>,
     pub limit: Option<i64>,
+    /// Homepage CMS strip: product lane + calendar window; max 3; never static.
+    #[serde(default)]
+    pub for_home: Option<u8>,
 }
 
 pub fn router() -> Router<ApiMetaState> {
@@ -48,11 +51,33 @@ pub async fn get_public_announcements(
         )
             .into_response();
     };
-    let limit = q.limit.unwrap_or(50);
-    match crate::db::list_public_cms_announcements(pool, q.lane.as_deref(), false, limit).await {
+    let for_home = matches!(q.for_home, Some(1));
+    let limit = if for_home {
+        q.limit.unwrap_or(3)
+    } else {
+        q.limit.unwrap_or(50)
+    };
+    match crate::db::list_public_cms_announcements_opts(
+        pool,
+        q.lane.as_deref(),
+        false,
+        for_home,
+        limit,
+    )
+    .await
+    {
         Ok(items) => {
             let source = if items.is_empty() { "cms_empty" } else { "cms" };
-            (public_cache_headers(), Json(json!({ "status": "ok", "items": items, "source": source }))).into_response()
+            (
+                public_cache_headers(),
+                Json(json!({
+                    "status": "ok",
+                    "items": items,
+                    "source": source,
+                    "for_home": for_home,
+                })),
+            )
+                .into_response()
         }
         Err(e) => (
             StatusCode::INTERNAL_SERVER_ERROR,

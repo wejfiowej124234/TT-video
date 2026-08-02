@@ -21,6 +21,7 @@ describe("home `/` SSOT (marketing closure)", () => {
     expect(src).toContain("LandingHeroForm");
     expect(src).toContain("showConsumerValue");
     expect(src).toContain("ColdStartHomeHeroHighlights");
+    expect(src).toContain("HomeCmsAnnouncementStrip");
     expect(src).not.toContain("PersistentRoleEntryBar");
     expect(src).toContain("ItineraryResultsSection");
     expect(src).toContain("UnlockModal");

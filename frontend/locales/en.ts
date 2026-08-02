@@ -2627,6 +2627,10 @@ export default {
   admin_content_announcements_col_lane: "Lane",
   admin_content_announcements_publish_btn: "Publish",
   admin_content_announcements_published: "Live on public page",
+  home_cms_announcements_aria: "Official announcements",
+  home_cms_announcements_kicker: "Announcements",
+  home_cms_announcements_lead: "Published from Admin CMS — no static fallback.",
+  home_cms_announcements_cta: "Read more",
   admin_content_roadmap_title: "Product roadmap",
   admin_content_roadmap_subtitle: "Independent CMS — section copy + milestones; excluded from announcements list and Pulse.",
   admin_content_roadmap_rust_api_banner:

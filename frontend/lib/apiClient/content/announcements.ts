@@ -96,7 +96,7 @@ export async function patchAdminContentAnnouncement(
 export async function postAdminContentAnnouncementWorkflow(
   id: string,
   action: "publish" | "unpublish" | "submit-review" | "archive",
-  body: { version: number },
+  body: { version: number; reason?: string },
 ) {
   return adminAnnouncementsFetch<{ item?: CmsAnnouncementAdminRow }>(
     `${routes.adminContentAnnouncements}/${encodeURIComponent(id)}/${action}`,
@@ -108,17 +108,32 @@ export async function postAdminContentAnnouncementWorkflow(
   );
 }
 
-export async function getPublicCmsAnnouncements(params?: { lane?: string; limit?: number }) {
+export async function getPublicCmsAnnouncements(params?: {
+  lane?: string;
+  limit?: number;
+  for_home?: boolean;
+}) {
   const q = new URLSearchParams();
   if (params?.lane) q.set("lane", params.lane);
   if (params?.limit != null) q.set("limit", String(params.limit));
+  if (params?.for_home) q.set("for_home", "1");
   const suffix = q.toString() ? `?${q}` : "";
   const res = await fetch(apiUrl(`${routes.publicAnnouncements}${suffix}`), {
     cache: "no-store",
     headers: writeRequestHeaders(),
   });
-  const data = (await parseResponse(res)) as { items?: CmsPublicAnnouncementRow[]; source?: string };
-  if (!res.ok) return { items: [] as CmsPublicAnnouncementRow[], source: "static" as const };
+  const data = (await parseResponse(res)) as {
+    items?: CmsPublicAnnouncementRow[];
+    source?: string;
+    for_home?: boolean;
+  };
+  if (!res.ok) {
+    // Homepage CMS-only path must never invent static rows.
+    if (params?.for_home) {
+      return { items: [] as CmsPublicAnnouncementRow[], source: "unavailable" as const };
+    }
+    return { items: [] as CmsPublicAnnouncementRow[], source: "static" as const };
+  }
   return { items: data.items ?? [], source: (data.source ?? "cms") as string };
 }
 

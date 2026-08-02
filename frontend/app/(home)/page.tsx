@@ -14,6 +14,7 @@ import {
   TT_MARKETING_HOME_SECTION_BRIDGE_LINE,
 } from "@/lib/marketingUi";
 import { ColdStartHomeHeroHighlights } from "@/components/coldStartCampaign/ColdStartHomeHeroHighlights";
+import { HomeCmsAnnouncementStrip } from "@/components/landing/HomeCmsAnnouncementStrip";
 
 const UnlockModal = dynamic(
   () => import("@/components/landing/UnlockModal"),
@@ -70,6 +71,7 @@ export default function Home() {
           draftQuota={data.draftQuota}
         />
         <ColdStartHomeHeroHighlights className="relative z-10 mt-3 mb-1" />
+        <HomeCmsAnnouncementStrip className="relative z-10 mt-2 mb-1" />
         <div className={TT_MARKETING_HOME_SECTION_BRIDGE} aria-hidden>
           <div className={TT_MARKETING_HOME_SECTION_BRIDGE_LINE} />
         </div>

@@ -436,10 +436,28 @@ pub async fn list_public_cms_announcements(
     pulse_only: bool,
     limit: i64,
 ) -> Result<Vec<PublicCmsAnnouncementRow>, sqlx::Error> {
+    list_public_cms_announcements_opts(pool, lane, pulse_only, false, limit).await
+}
+
+/// `for_home=true` → product lane + calendar window via `governed_home_announcements_v1` (CMS-only).
+pub async fn list_public_cms_announcements_opts(
+    pool: &sqlx::PgPool,
+    lane: Option<&str>,
+    pulse_only: bool,
+    for_home: bool,
+    limit: i64,
+) -> Result<Vec<PublicCmsAnnouncementRow>, sqlx::Error> {
+    let from_view = if for_home {
+        "governed_home_announcements_v1"
+    } else {
+        "governed_public_announcements_v1"
+    };
     let mut qb = sqlx::QueryBuilder::new(format!(
-        "SELECT {PUBLIC_SELECT_COLS} FROM governed_public_announcements_v1 WHERE 1=1"
+        "SELECT {PUBLIC_SELECT_COLS} FROM {from_view} WHERE 1=1"
     ));
-    if pulse_only {
+    if for_home {
+        // View already constrains lane=product + time window.
+    } else if pulse_only {
         qb.push(" AND lane = 'product'");
     } else if let Some(l) = lane.filter(|s| !s.is_empty() && *s != "all") {
         if validate_cms_lane(l).is_err() {
@@ -450,7 +468,12 @@ pub async fn list_public_cms_announcements(
     }
     qb.push(" ORDER BY pinned DESC, sort_order DESC, published_at DESC NULLS LAST");
     qb.push(" LIMIT ");
-    qb.push_bind(limit.max(1).min(100));
+    let lim = if for_home {
+        limit.max(1).min(3)
+    } else {
+        limit.max(1).min(100)
+    };
+    qb.push_bind(lim);
     qb.build_query_as::<PublicCmsAnnouncementRow>()
         .fetch_all(pool)
         .await
