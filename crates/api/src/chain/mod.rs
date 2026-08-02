@@ -32,6 +32,8 @@ pub struct ChainConfig {
     pub escrow_factory_v2_address: Option<String>,
     /// FeeRouter 合约地址；设后 `indexer-tick` 额外拉取 `PlatformFeeRouted`（14 §1.1、110）
     pub fee_router_address: Option<String>,
+    /// SettlementRouter（Money Path）；Admin finance meta / matrix honesty
+    pub settlement_router_address: Option<String>,
     /// RegionVault 合约地址；设后 `indexer-tick` 额外拉取 `RegionVaultForwarded`（14 §1.1.1、110）
     pub region_vault_address: Option<String>,
     /// **CountryPoolLedgerV0**；设后 **`indexer-tick`** 拉取 **`CountryLedgerCredited`** → **`p5_country_ledger_lines`**（**P5-1-B**）
@@ -131,6 +133,7 @@ impl ChainConfig {
             escrow_factory_address: Self::env_nonempty("ESCROW_FACTORY_ADDRESS"),
             escrow_factory_v2_address: Self::env_nonempty("ESCROW_FACTORY_V2_ADDRESS"),
             fee_router_address: Self::env_nonempty("FEE_ROUTER_ADDRESS"),
+            settlement_router_address: Self::env_nonempty("SETTLEMENT_ROUTER_ADDRESS"),
             region_vault_address: Self::env_nonempty("REGION_VAULT_ADDRESS"),
             country_pool_ledger_address: Self::env_nonempty("COUNTRY_POOL_NET_PROFIT_LEDGER_ADDRESS")
                 .or_else(|| Self::env_nonempty("COUNTRY_POOL_LEDGER_ADDRESS")),
