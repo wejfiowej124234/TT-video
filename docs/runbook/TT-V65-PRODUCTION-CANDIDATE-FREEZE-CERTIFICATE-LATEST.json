@@ -1,0 +1,262 @@
+{
+  "schema": "traveltrust.v65_production_candidate_freeze_certificate.v1",
+  "key": "V65_PRODUCTION_CANDIDATE_FREEZE",
+  "title": "V65 Production Candidate Freeze Certificate",
+  "stamp": "20260802T134705Z",
+  "verdict": "PASS",
+  "freeze_status": "FROZEN",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "frozen_composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "live_verified_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "live_verified_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+    "contract_profile": "v311_fund_safety_candidate_v2",
+    "cms_baseline": "public_display_10x4 + catalog_bake=1"
+  },
+  "immutable_rules": {
+    "no_unregistered_deploy_into_frozen_tips": true,
+    "api_before_fe": true,
+    "ri01_required_before_api_deploy": true,
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_substitute": true
+  },
+  "sections": {
+    "CF-01_release_identity": {
+      "id": "CF-01",
+      "title": "Release Identity Freeze",
+      "status": "PASS",
+      "pinned": {
+        "candidate_id": "V65-PROD-CAND-20260802",
+        "v65_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+        "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+        "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+        "live_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+        "live_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+        "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+        "contract_profile": "v311_fund_safety_candidate_v2",
+        "cms_baseline": "public_display_10x4 + catalog_bake=1"
+      },
+      "checks": {
+        "api_health_200": true,
+        "api_sha_matches_freeze": true,
+        "web_sha_matches_freeze": true,
+        "api_attestation_ok": true,
+        "web_attestation_ok": true,
+        "psg_pin_aligned": true,
+        "contract_profile_api": true,
+        "cms_baseline_web": true,
+        "api_ancestor_of_repo_tip": true,
+        "web_ancestor_of_repo_tip": true
+      }
+    },
+    "CF-02_unregistered_surface": {
+      "id": "CF-02",
+      "title": "Unregistered code / migration surface",
+      "status": "PASS",
+      "blockers": [],
+      "warnings": {
+        "material_dirty_paths": [
+          " M crates/api/migrations/20260802120000_role_applications_kind_status_submitted_idx.sql",
+          " M crates/api/migrations/20260802180000_cms_home_announcements_time_window.sql",
+          " M frontend/components/admin/AdminHomeFocusCompanion.tsx",
+          " M frontend/components/admin/AdminHomeInboxStrip.tsx",
+          " M frontend/components/landing/HomeCmsAnnouncementStrip.tsx",
+          " M frontend/e2e/helpers/apiSession.ts",
+          " M frontend/lib/admin/adminHomeInboxQueueListCache.test.ts",
+          " M frontend/lib/admin/adminInboxChannelRuntimeParity.contract.test.ts",
+          " M frontend/lib/admin/adminUnifiedInboxTasks.ts",
+          " M frontend/lib/homeCmsAnnouncements.contract.test.ts",
+          " M frontend/lib/homeCmsAnnouncements.ts",
+          " M frontend/next.config.js"
+        ],
+        "unregistered_migrations_vs_web_tip_count": 0,
+        "unregistered_migrations_sample": [],
+        "note": "Local WIP dirty ≠ live Production tip; freeze pins live SHAs only"
+      },
+      "tip_required_migrations": [
+        {
+          "file": "20260802120000_role_applications_kind_status_submitted_idx.sql",
+          "in_api_tip": true
+        },
+        {
+          "file": "20260802180000_cms_home_announcements_time_window.sql",
+          "in_api_tip": true
+        }
+      ],
+      "autofix": []
+    },
+    "CF-03_config_flag_cache_seo": {
+      "id": "CF-03",
+      "title": "Config / FeatureFlag / Cache / SEO drift",
+      "status": "PASS",
+      "checks": {
+        "deployment_profile_production": true,
+        "seed_test_accounts_off": true,
+        "attestation_ok": true,
+        "showcase_flags_off_or_absent": true,
+        "cms_cache_policy_stable": true,
+        "seo_robots_sitemap": true,
+        "hsts_present": true
+      },
+      "showcase_flags": {
+        "community_public_showcase": null,
+        "market_public_showcase": null
+      },
+      "cms_cache_control": "public, max-age=60, stale-while-revalidate=120",
+      "security_headers_sample": {
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "x-frame-options": "SAMEORIGIN"
+      }
+    },
+    "CF-04_security_rbac_audit": {
+      "id": "CF-04",
+      "title": "Security / RBAC / Audit Reality Probe",
+      "status": "PASS",
+      "probes": [
+        {
+          "name": "admin_finance_rbac",
+          "url": "/api/v1/admin/finance/summary",
+          "http": 401,
+          "status": "PASS"
+        },
+        {
+          "name": "admin_ops_overview_rbac",
+          "url": "/api/v1/admin/ops-overview",
+          "http": 401,
+          "status": "PASS"
+        },
+        {
+          "name": "admin_audit_rbac",
+          "url": "/api/v1/admin/audit-logs",
+          "http": 401,
+          "status": "PASS"
+        },
+        {
+          "name": "me_auth",
+          "url": "/api/v1/me",
+          "http": 401,
+          "status": "PASS"
+        },
+        {
+          "name": "orders_auth",
+          "url": "/api/v1/orders",
+          "http": 401,
+          "status": "PASS"
+        },
+        {
+          "name": "internal_blocked",
+          "url": "/api/v1/internal/indexer/tick",
+          "http": 403,
+          "status": "PASS"
+        }
+      ],
+      "fail_count": 0
+    },
+    "CF-05_audit_ssot_chain": {
+      "id": "CF-05",
+      "title": "Audit / prior closure SSOT chain",
+      "status": "PASS",
+      "checks": {
+        "cms_reality_closure_ssot": true,
+        "release_integrity_ssot": true,
+        "cms_verdict_pass": true,
+        "ri_verdict_pass": true,
+        "admin_content_announcements_gated": true
+      }
+    },
+    "CF-06_data_cms_runtime": {
+      "id": "CF-06",
+      "title": "Data / CMS runtime consumption",
+      "status": "PASS",
+      "for_home": true,
+      "source": "cms",
+      "items": 3
+    },
+    "RI-01_migration_integrity": {
+      "status": "PASS",
+      "proof": "runtime_boot_plus_image_migrations",
+      "chain": {
+        "migration_files": "PASS",
+        "checksum_verify": "PASS",
+        "database_applied": "PASS",
+        "runtime_boot_health": "PASS"
+      }
+    },
+    "RI-03_reality_probe": {
+      "status": "PASS",
+      "fail_chains": [],
+      "chains": [
+        {
+          "chain": "CMS",
+          "status": "PASS"
+        },
+        {
+          "chain": "Auth",
+          "status": "PASS"
+        },
+        {
+          "chain": "Guide",
+          "status": "PASS"
+        },
+        {
+          "chain": "Provider_Market",
+          "status": "PASS"
+        },
+        {
+          "chain": "Orders",
+          "status": "PASS"
+        },
+        {
+          "chain": "Disputes",
+          "status": "PASS"
+        },
+        {
+          "chain": "Finance",
+          "status": "PASS"
+        },
+        {
+          "chain": "Official_Growth",
+          "status": "PASS"
+        },
+        {
+          "chain": "RBAC",
+          "status": "PASS"
+        },
+        {
+          "chain": "Notification",
+          "status": "PASS"
+        },
+        {
+          "chain": "Public_Runtime_SEO",
+          "status": "PASS"
+        }
+      ]
+    },
+    "reality_drift_scan": {
+      "status": "PASS",
+      "open_count": 0,
+      "findings": [
+        {
+          "id": "DRIFT-CMS-HOME",
+          "class": "admin_ok_user_invisible",
+          "status": "CLOSED",
+          "detail": "Closed by Production CMS Reality Closure"
+        }
+      ]
+    }
+  },
+  "fail_sections": [],
+  "autofix_applied": [],
+  "honesty": {
+    "candidate_freeze_is_not_production_go": true,
+    "candidate_freeze_is_not_final_release_web3_freeze": true,
+    "live_psp_commercial_not_in_scope": true,
+    "human_uat_still_required_before_go": true
+  },
+  "certificate_sha256": "6b0e47714bc7af1dd59fa0ef436ecba25835af5e7213dd5a687c000ae38d6235"
+}

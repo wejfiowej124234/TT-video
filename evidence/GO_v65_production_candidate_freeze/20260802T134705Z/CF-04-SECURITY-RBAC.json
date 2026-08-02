@@ -1,0 +1,44 @@
+{
+  "id": "CF-04",
+  "title": "Security / RBAC / Audit Reality Probe",
+  "status": "PASS",
+  "probes": [
+    {
+      "name": "admin_finance_rbac",
+      "url": "/api/v1/admin/finance/summary",
+      "http": 401,
+      "status": "PASS"
+    },
+    {
+      "name": "admin_ops_overview_rbac",
+      "url": "/api/v1/admin/ops-overview",
+      "http": 401,
+      "status": "PASS"
+    },
+    {
+      "name": "admin_audit_rbac",
+      "url": "/api/v1/admin/audit-logs",
+      "http": 401,
+      "status": "PASS"
+    },
+    {
+      "name": "me_auth",
+      "url": "/api/v1/me",
+      "http": 401,
+      "status": "PASS"
+    },
+    {
+      "name": "orders_auth",
+      "url": "/api/v1/orders",
+      "http": 401,
+      "status": "PASS"
+    },
+    {
+      "name": "internal_blocked",
+      "url": "/api/v1/internal/indexer/tick",
+      "http": 403,
+      "status": "PASS"
+    }
+  ],
+  "fail_count": 0
+}

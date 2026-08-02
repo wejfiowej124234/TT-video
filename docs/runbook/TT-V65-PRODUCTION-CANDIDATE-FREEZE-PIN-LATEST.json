@@ -1,0 +1,11 @@
+{
+  "schema": "traveltrust.v65_production_candidate_freeze_pin.v1",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "freeze_status": "FROZEN",
+  "stamp": "20260802T134705Z",
+  "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+  "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+  "v65_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+  "certificate_sha256": "6b0e47714bc7af1dd59fa0ef436ecba25835af5e7213dd5a687c000ae38d6235",
+  "tt_production_go": "NO_GO"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "CF-01",
+  "title": "Release Identity Freeze",
+  "status": "PASS",
+  "pinned": {
+    "candidate_id": "V65-PROD-CAND-20260802",
+    "v65_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "live_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "live_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+    "contract_profile": "v311_fund_safety_candidate_v2",
+    "cms_baseline": "public_display_10x4 + catalog_bake=1"
+  },
+  "checks": {
+    "api_health_200": true,
+    "api_sha_matches_freeze": true,
+    "web_sha_matches_freeze": true,
+    "api_attestation_ok": true,
+    "web_attestation_ok": true,
+    "psg_pin_aligned": true,
+    "contract_profile_api": true,
+    "cms_baseline_web": true,
+    "api_ancestor_of_repo_tip": true,
+    "web_ancestor_of_repo_tip": true
+  }
+}

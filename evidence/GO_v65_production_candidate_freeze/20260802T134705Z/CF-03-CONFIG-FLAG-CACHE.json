@@ -1,0 +1,23 @@
+{
+  "id": "CF-03",
+  "title": "Config / FeatureFlag / Cache / SEO drift",
+  "status": "PASS",
+  "checks": {
+    "deployment_profile_production": true,
+    "seed_test_accounts_off": true,
+    "attestation_ok": true,
+    "showcase_flags_off_or_absent": true,
+    "cms_cache_policy_stable": true,
+    "seo_robots_sitemap": true,
+    "hsts_present": true
+  },
+  "showcase_flags": {
+    "community_public_showcase": null,
+    "market_public_showcase": null
+  },
+  "cms_cache_control": "public, max-age=60, stale-while-revalidate=120",
+  "security_headers_sample": {
+    "strict-transport-security": "max-age=31536000; includeSubDomains",
+    "x-frame-options": "SAMEORIGIN"
+  }
+}

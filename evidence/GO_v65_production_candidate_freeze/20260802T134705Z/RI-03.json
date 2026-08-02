@@ -1,0 +1,178 @@
+{
+  "id": "RI-03",
+  "title": "Production Reality Probe",
+  "status": "PASS",
+  "fail_chains": [],
+  "chains": [
+    {
+      "chain": "CMS",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "API_for_home",
+          "status": "PASS",
+          "http": 200,
+          "source": "cms",
+          "items": 3
+        },
+        {
+          "step": "Homepage_bundle_consumes_CMS",
+          "status": "PASS"
+        },
+        {
+          "step": "no_static_fallback",
+          "status": "PASS"
+        }
+      ],
+      "note": "Admin create\u2192DB assumed wired; public proof is API\u2192Homepage"
+    },
+    {
+      "chain": "Auth",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Register_page",
+          "status": "PASS"
+        },
+        {
+          "step": "Login_page",
+          "status": "PASS"
+        },
+        {
+          "step": "Me_requires_auth",
+          "status": "PASS",
+          "http": 401
+        }
+      ],
+      "note": ""
+    },
+    {
+      "chain": "Guide",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Public_catalog_API",
+          "status": "PASS",
+          "http": 200,
+          "items": 5
+        },
+        {
+          "step": "Web_guides_route",
+          "status": "PASS"
+        }
+      ],
+      "note": "Approve path is Admin RBAC \u2014 not exercised without Owner token"
+    },
+    {
+      "chain": "Provider_Market",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Discover_API",
+          "status": "PASS",
+          "http": 401,
+          "note": "401+market_page=auth-gated listing accepted"
+        },
+        {
+          "step": "Market_page",
+          "status": "PASS"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "chain": "Orders",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Orders_list_auth_gate",
+          "status": "PASS",
+          "http": 401,
+          "note": "unauthenticated must not freely list private orders"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "chain": "Disputes",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Disputes_auth_gate",
+          "status": "PASS",
+          "http": 401
+        }
+      ],
+      "note": ""
+    },
+    {
+      "chain": "Finance",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Admin_finance_RBAC_gate",
+          "status": "PASS",
+          "http": 401
+        }
+      ],
+      "note": ""
+    },
+    {
+      "chain": "Official_Growth",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Public_announcements_product",
+          "status": "PASS",
+          "http": 200
+        },
+        {
+          "step": "Traveltrust_announcements_page",
+          "status": "PASS"
+        }
+      ],
+      "note": ""
+    },
+    {
+      "chain": "RBAC",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Admin_ops_overview_requires_auth",
+          "status": "PASS",
+          "http": 401
+        }
+      ],
+      "note": ""
+    },
+    {
+      "chain": "Notification",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "Notifications_auth_gate",
+          "status": "PASS",
+          "http": 401
+        }
+      ],
+      "note": ""
+    },
+    {
+      "chain": "Public_Runtime_SEO",
+      "status": "PASS",
+      "steps": [
+        {
+          "step": "robots_disallow_admin",
+          "status": "PASS"
+        },
+        {
+          "step": "sitemap_urlset",
+          "status": "PASS"
+        }
+      ],
+      "note": ""
+    }
+  ],
+  "cache_control_cms": "public, max-age=60, stale-while-revalidate=120",
+  "announcements_source_header": "cms-rust"
+}

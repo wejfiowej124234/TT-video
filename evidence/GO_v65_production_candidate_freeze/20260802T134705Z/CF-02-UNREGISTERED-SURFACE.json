@@ -1,0 +1,36 @@
+{
+  "id": "CF-02",
+  "title": "Unregistered code / migration surface",
+  "status": "PASS",
+  "blockers": [],
+  "warnings": {
+    "material_dirty_paths": [
+      " M crates/api/migrations/20260802120000_role_applications_kind_status_submitted_idx.sql",
+      " M crates/api/migrations/20260802180000_cms_home_announcements_time_window.sql",
+      " M frontend/components/admin/AdminHomeFocusCompanion.tsx",
+      " M frontend/components/admin/AdminHomeInboxStrip.tsx",
+      " M frontend/components/landing/HomeCmsAnnouncementStrip.tsx",
+      " M frontend/e2e/helpers/apiSession.ts",
+      " M frontend/lib/admin/adminHomeInboxQueueListCache.test.ts",
+      " M frontend/lib/admin/adminInboxChannelRuntimeParity.contract.test.ts",
+      " M frontend/lib/admin/adminUnifiedInboxTasks.ts",
+      " M frontend/lib/homeCmsAnnouncements.contract.test.ts",
+      " M frontend/lib/homeCmsAnnouncements.ts",
+      " M frontend/next.config.js"
+    ],
+    "unregistered_migrations_vs_web_tip_count": 0,
+    "unregistered_migrations_sample": [],
+    "note": "Local WIP dirty \u2260 live Production tip; freeze pins live SHAs only"
+  },
+  "tip_required_migrations": [
+    {
+      "file": "20260802120000_role_applications_kind_status_submitted_idx.sql",
+      "in_api_tip": true
+    },
+    {
+      "file": "20260802180000_cms_home_announcements_time_window.sql",
+      "in_api_tip": true
+    }
+  ],
+  "autofix": []
+}
