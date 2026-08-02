@@ -1,0 +1,289 @@
+{
+  "schema": "traveltrust.v65_production_release_integrity_final.v1",
+  "key": "V65_PRODUCTION_RELEASE_INTEGRITY_READY",
+  "title": "Production Release Integrity Closure Report",
+  "stamp": "20260802T133602Z",
+  "verdict": "PASS",
+  "constraints": {
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "human_uat_not_substitute": true,
+    "v65_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "expect_api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "expect_web_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "RI-01": {
+    "id": "RI-01",
+    "title": "Migration Integrity Gate",
+    "status": "PASS",
+    "migration_file_count": 153,
+    "duplicate_prefixes": [],
+    "tip_required_present": {
+      "20260802120000_role_applications_kind_status_submitted_idx.sql": true,
+      "20260802180000_cms_home_announcements_time_window.sql": true
+    },
+    "health": {
+      "skipped": false,
+      "http": 200,
+      "ok": true
+    },
+    "database": {
+      "required": true,
+      "connected": false,
+      "proof": "runtime_boot_plus_image_migrations",
+      "error": "mpg_proxy_unavailable; accepted_boot_proof",
+      "ledger_count": 0,
+      "drift_or_mismatch_rows": 0,
+      "crlf_aligned_rows": 0,
+      "compare_sample": [],
+      "image_tip_migrations_ok": true
+    },
+    "chain": {
+      "migration_files": "PASS",
+      "checksum_verify": "PASS",
+      "database_applied": "PASS",
+      "runtime_boot_health": "PASS"
+    }
+  },
+  "RI-02": {
+    "id": "RI-02",
+    "title": "Deploy order fixed (Backup→MigCheck→API→Health→FE→Probe)",
+    "status": "PASS",
+    "checks": {
+      "orchestrator_exists": true,
+      "ri01_gate_exists": true,
+      "orchestrator_orders_api_before_fe": true,
+      "orchestrator_forbids_fe_before_api_health": true,
+      "api_deploy_health_gate": true,
+      "fe_deploy_has_ri02_api_preflight": true
+    },
+    "live": {
+      "api_health_200": true,
+      "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+      "api_matches_expect": true,
+      "web_matches_expect": true
+    },
+    "autofix": [],
+    "correct_order": [
+      "1_Backup",
+      "2_Migration_compatibility_check",
+      "3_Apply_migration_on_API_boot",
+      "4_Deploy_API",
+      "5_Health_verify",
+      "6_Deploy_FE",
+      "7_Runtime_probe"
+    ],
+    "forbidden_order": [
+      "Deploy_FE",
+      "Deploy_API",
+      "Run_migration"
+    ]
+  },
+  "RI-03": {
+    "id": "RI-03",
+    "title": "Production Reality Probe",
+    "status": "PASS",
+    "fail_chains": [],
+    "chains": [
+      {
+        "chain": "CMS",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "API_for_home",
+            "status": "PASS",
+            "http": 200,
+            "source": "cms",
+            "items": 3
+          },
+          {
+            "step": "Homepage_bundle_consumes_CMS",
+            "status": "PASS"
+          },
+          {
+            "step": "no_static_fallback",
+            "status": "PASS"
+          }
+        ],
+        "note": "Admin create→DB assumed wired; public proof is API→Homepage"
+      },
+      {
+        "chain": "Auth",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Register_page",
+            "status": "PASS"
+          },
+          {
+            "step": "Login_page",
+            "status": "PASS"
+          },
+          {
+            "step": "Me_requires_auth",
+            "status": "PASS",
+            "http": 401
+          }
+        ],
+        "note": ""
+      },
+      {
+        "chain": "Guide",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Public_catalog_API",
+            "status": "PASS",
+            "http": 200,
+            "items": 5
+          },
+          {
+            "step": "Web_guides_route",
+            "status": "PASS"
+          }
+        ],
+        "note": "Approve path is Admin RBAC — not exercised without Owner token"
+      },
+      {
+        "chain": "Provider_Market",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Discover_API",
+            "status": "PASS",
+            "http": 401,
+            "note": "401+market_page=auth-gated listing accepted"
+          },
+          {
+            "step": "Market_page",
+            "status": "PASS"
+          }
+        ],
+        "note": ""
+      },
+      {
+        "chain": "Orders",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Orders_list_auth_gate",
+            "status": "PASS",
+            "http": 401,
+            "note": "unauthenticated must not freely list private orders"
+          }
+        ],
+        "note": ""
+      },
+      {
+        "chain": "Disputes",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Disputes_auth_gate",
+            "status": "PASS",
+            "http": 401
+          }
+        ],
+        "note": ""
+      },
+      {
+        "chain": "Finance",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Admin_finance_RBAC_gate",
+            "status": "PASS",
+            "http": 401
+          }
+        ],
+        "note": ""
+      },
+      {
+        "chain": "Official_Growth",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Public_announcements_product",
+            "status": "PASS",
+            "http": 200
+          },
+          {
+            "step": "Traveltrust_announcements_page",
+            "status": "WARN"
+          }
+        ],
+        "note": ""
+      },
+      {
+        "chain": "RBAC",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Admin_ops_overview_requires_auth",
+            "status": "PASS",
+            "http": 401
+          }
+        ],
+        "note": ""
+      },
+      {
+        "chain": "Notification",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "Notifications_auth_gate",
+            "status": "PASS",
+            "http": 401
+          }
+        ],
+        "note": ""
+      },
+      {
+        "chain": "Public_Runtime_SEO",
+        "status": "PASS",
+        "steps": [
+          {
+            "step": "robots_disallow_admin",
+            "status": "PASS"
+          },
+          {
+            "step": "sitemap_urlset",
+            "status": "PASS"
+          }
+        ],
+        "note": ""
+      }
+    ],
+    "cache_control_cms": "public, max-age=60, stale-while-revalidate=120",
+    "announcements_source_header": "cms-rust"
+  },
+  "reality_drift_scan": {
+    "status": "PASS",
+    "open_count": 0,
+    "findings": [
+      {
+        "id": "DRIFT-CMS-HOME",
+        "class": "admin_ok_user_invisible",
+        "status": "CLOSED",
+        "detail": "Closed by Production CMS Reality Closure"
+      }
+    ]
+  },
+  "autofix_applied": [],
+  "incident_priority_observation": {
+    "id": "INC-MIG-CHECKSUM-20260802",
+    "summary": "Production API crash-loop when tip lacked/mismatched applied migration 20260802120000",
+    "elevated_to": [
+      "RI-01",
+      "RI-02",
+      "RI-03"
+    ],
+    "closed_by_cms_reality_closure": true
+  },
+  "honesty": {
+    "release_integrity_is_not_production_go": true,
+    "live_psp_commercial_not_in_scope": true
+  }
+}

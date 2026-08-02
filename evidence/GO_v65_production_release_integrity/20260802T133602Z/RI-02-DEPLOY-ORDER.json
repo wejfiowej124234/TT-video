@@ -1,0 +1,35 @@
+{
+  "id": "RI-02",
+  "title": "Deploy order fixed (Backup\u2192MigCheck\u2192API\u2192Health\u2192FE\u2192Probe)",
+  "status": "PASS",
+  "checks": {
+    "orchestrator_exists": true,
+    "ri01_gate_exists": true,
+    "orchestrator_orders_api_before_fe": true,
+    "orchestrator_forbids_fe_before_api_health": true,
+    "api_deploy_health_gate": true,
+    "fe_deploy_has_ri02_api_preflight": true
+  },
+  "live": {
+    "api_health_200": true,
+    "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "api_matches_expect": true,
+    "web_matches_expect": true
+  },
+  "autofix": [],
+  "correct_order": [
+    "1_Backup",
+    "2_Migration_compatibility_check",
+    "3_Apply_migration_on_API_boot",
+    "4_Deploy_API",
+    "5_Health_verify",
+    "6_Deploy_FE",
+    "7_Runtime_probe"
+  ],
+  "forbidden_order": [
+    "Deploy_FE",
+    "Deploy_API",
+    "Run_migration"
+  ]
+}

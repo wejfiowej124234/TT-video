@@ -34,6 +34,15 @@ CHECK_ONLY=0
 [[ "${1:-}" == "--check-only" ]] && CHECK_ONLY=1
 
 command -v fly >/dev/null 2>&1 || fail "fly CLI not found"
+
+# RI-02 · refuse FE deploy when Production API is unhealthy (API before FE)
+if [[ "${TT_SKIP_RI02_API_PREFLIGHT:-}" != "1" ]]; then
+  _ri02_api="${PROD_API_BASE:-https://api.web3-ttg.com}"
+  _ri02_hc="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 30 "${_ri02_api%/}/health" 2>/dev/null || echo 000)"
+  [[ "$_ri02_hc" == "200" ]] || fail "RI-02: API health not 200 (got ${_ri02_hc}) — deploy API + migrations before FE"
+  info "RI-02 API preflight OK ${_ri02_api}/health=200"
+fi
+
 [[ -f "$ROOT/frontend/$FLY_CONFIG" ]] || fail "missing $ROOT/frontend/$FLY_CONFIG"
 
 # Crash-class hard gate: Inbox UI keys must match channels/HREFS/fetch (guide included).

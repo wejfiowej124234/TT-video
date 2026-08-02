@@ -20,6 +20,14 @@ SECRETS_ONLY=0
 [[ "${1:-}" == "--secrets-only" ]] && SECRETS_ONLY=1
 
 command -v fly >/dev/null 2>&1 || fail "fly CLI not found"
+
+# RI-01 · Migration Integrity Gate (files + prefixes) before Production API deploy
+if [[ "${TT_SKIP_RI01_MIGRATION_GATE:-}" != "1" ]]; then
+  RI_REQUIRE_DB=0 RI_SKIP_HEALTH=1 \
+    bash "$ROOT/scripts/gates/check-ri-migration-integrity-gate.sh" \
+    || fail "RI-01 Migration Integrity Gate FAIL"
+fi
+
 [[ -f "$FLY_CONFIG" ]] || fail "missing $FLY_CONFIG"
 [[ -f "$PROD_ENV" ]] || fail "missing $PROD_ENV — cp scripts/dev/.env.production.example"
 

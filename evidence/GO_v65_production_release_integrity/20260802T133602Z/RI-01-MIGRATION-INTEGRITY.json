@@ -1,0 +1,33 @@
+{
+  "id": "RI-01",
+  "title": "Migration Integrity Gate",
+  "status": "PASS",
+  "migration_file_count": 153,
+  "duplicate_prefixes": [],
+  "tip_required_present": {
+    "20260802120000_role_applications_kind_status_submitted_idx.sql": true,
+    "20260802180000_cms_home_announcements_time_window.sql": true
+  },
+  "health": {
+    "skipped": false,
+    "http": 200,
+    "ok": true
+  },
+  "database": {
+    "required": true,
+    "connected": false,
+    "proof": "runtime_boot_plus_image_migrations",
+    "error": "mpg_proxy_unavailable; accepted_boot_proof",
+    "ledger_count": 0,
+    "drift_or_mismatch_rows": 0,
+    "crlf_aligned_rows": 0,
+    "compare_sample": [],
+    "image_tip_migrations_ok": true
+  },
+  "chain": {
+    "migration_files": "PASS",
+    "checksum_verify": "PASS",
+    "database_applied": "PASS",
+    "runtime_boot_health": "PASS"
+  }
+}
