@@ -26,6 +26,15 @@ export function writeCmsAnnouncementsCache(partial: {
   };
 }
 
+type InvalidateFn = () => void;
+let homeInvalidate: InvalidateFn | null = null;
+
+/** Homepage strip registers so Admin publish/invalidate also clears home TTL cache. */
+export function registerHomeCmsAnnouncementsInvalidate(fn: InvalidateFn): void {
+  homeInvalidate = fn;
+}
+
 export function invalidateCmsAnnouncementsCache(): void {
   cache = null;
+  homeInvalidate?.();
 }
