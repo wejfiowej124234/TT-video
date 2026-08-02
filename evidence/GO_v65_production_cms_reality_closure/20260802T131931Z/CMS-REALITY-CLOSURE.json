@@ -1,0 +1,17 @@
+{
+  "title": "Production CMS Reality Closure",
+  "key": "V65_PRODUCTION_CMS_REALITY_CLOSURE",
+  "verdict": "PASS",
+  "stamp": "20260802T131931Z",
+  "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+  "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+  "drift_closed": {
+    "L2_for_home_filter_and_payload": "PASS",
+    "L3_HomeCmsAnnouncementStrip": "PASS"
+  },
+  "honesty": {
+    "cms_reality_closure_is_not_production_go": true,
+    "live_psp_commercial_not_in_scope": true,
+    "human_uat_not_substitute": true
+  }
+}

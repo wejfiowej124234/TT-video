@@ -1,0 +1,20 @@
+HTTP/1.1 200 OK
+content-type: application/json
+cache-control: public, max-age=60, stale-while-revalidate=120
+x-tt-announcements-source: cms-rust
+vary: origin, access-control-request-method, access-control-request-headers
+access-control-allow-credentials: true
+x-authority-source: db_projection
+x-request-id: 0d25f210-cbb0-4787-ae20-64567a018402
+x-message-id: 1a9d0138-a95a-494c-9a5c-de403c2bedbd
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: geolocation=(), microphone=(), camera=()
+strict-transport-security: max-age=31536000; includeSubDomains
+content-length: 2419
+date: Sun, 02 Aug 2026 13:19:34 GMT
+server: Fly/30b4b59b0 (2026-07-30)
+via: 1.1 fly.io, 1.1 fly.io
+fly-request-id: 01KZ1A2EBY8NZHYXNV4ZEC3YWE-sjc
+

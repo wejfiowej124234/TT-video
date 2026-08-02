@@ -1,0 +1,54 @@
+{
+  "stamp": "20260802T131931Z",
+  "composition_baseline_v65": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+  "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+  "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+  "layers": {
+    "L2_API": {
+      "status": "PASS",
+      "for_home": true,
+      "source": "cms",
+      "items": 3,
+      "cache_control": "public, max-age=60, stale-while-revalidate=120",
+      "announcements_source_header": "cms-rust",
+      "item_window_fields_present": true,
+      "missing_item_fields": [],
+      "sample": {
+        "slug": "product-escrow-usdc",
+        "effective_at": null,
+        "release_at": "2026-07-15",
+        "target_at": null,
+        "sort_order": 80,
+        "pinned": false
+      }
+    },
+    "L3_FE": {
+      "status": "PASS",
+      "home_page_chunk": "/_next/static/chunks/app/(home)/page-cbaf825740824365.js",
+      "has_tt_home_cms_marker": true,
+      "has_for_home_client": true,
+      "no_static_fallback_in_home_chunk": true
+    },
+    "Database": {
+      "status": "PASS",
+      "note": "API boot: database connected and migrations applied; governed_home_announcements_v1 consumed (for_home=true, items<=3)"
+    },
+    "Admin_Content": {
+      "status": "PASS_CODE_WIRED",
+      "note": "Admin Content announcements remain traveltrust-api RBAC + audit; no Admin IA/UI redesign. Homepage now consumes CMS."
+    },
+    "Public_Runtime_SEO": {
+      "status": "PASS",
+      "robots_disallow_admin": true,
+      "sitemap_urlset": true
+    }
+  },
+  "constraints": {
+    "web3_frozen": true,
+    "admin_ia_ui_freeze": true,
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "static_fallback_forbidden": true
+  },
+  "overall": "PASS",
+  "fail_layers": []
+}
