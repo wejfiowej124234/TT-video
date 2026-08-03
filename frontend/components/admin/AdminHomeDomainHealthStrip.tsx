@@ -85,10 +85,10 @@ export function AdminHomeDomainHealthStrip(props: {
         data-tt-admin-domain-health-kpi-source-kind={kpiSourceKind}
       >
         {items.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className="min-w-0 overflow-hidden">
             <Link
               href={item.href}
-              className={`${touchTargetLink44Classes} flex min-h-[44px] flex-col gap-1 rounded-[var(--radius-md)] border px-3 py-2 text-small ${TONE_CLASS[item.tone]} ${travelFocusRingOffset2Classes}`}
+              className={`${touchTargetLink44Classes} flex min-h-[44px] min-w-0 flex-col gap-1 overflow-hidden rounded-[var(--radius-md)] border px-3 py-2 text-small ${TONE_CLASS[item.tone]} ${travelFocusRingOffset2Classes}`}
               data-tt-admin-domain-health={item.id}
               data-tt-admin-domain-health-tone={item.tone}
               data-tt-admin-domain-health-ops-source={
@@ -109,8 +109,9 @@ export function AdminHomeDomainHealthStrip(props: {
               </span>
               {item.sourceBadgeKey ? (
                 <span
-                  className="pl-4 text-meta opacity-90"
+                  className="min-w-0 truncate pl-4 text-meta opacity-90"
                   data-tt-admin-domain-health-source-badge="1"
+                  title={t(item.sourceBadgeKey)}
                 >
                   {t(item.sourceBadgeKey)}
                 </span>

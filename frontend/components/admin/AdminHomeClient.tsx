@@ -6,9 +6,8 @@ import { AdminShellPrefetchLink } from "@/components/admin/AdminShellPrefetchLin
 
 
 
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId } from "react";
 
-import { usePathname, useRouter } from "next/navigation";
 
 
 
@@ -37,7 +36,7 @@ import { AdminHomeShellPreviewBanner } from "@/components/admin/AdminHomeShellPr
 import AdminSubpageRouteLoading from "@/components/admin/AdminSubpageRouteLoading";
 import { AdminHomePrimaryCtas } from "@/components/admin/AdminHomePrimaryCtas";
 
-import { isSuperAdminActorRole } from "@/lib/admin/adminActorFromMe";
+
 import {
   ADMIN_WORKBENCH_L5_GATE_MARK,
   ADMIN_WORKBENCH_L5_GATE_VALUE,
@@ -49,75 +48,27 @@ import {
   TT_ADMIN_DESIGN_SYSTEM_PRODUCT_RELEASE_BASELINE_MARK,
 } from "@/lib/admin/adminDesignSystemBaseline";
 
-import {
-
-  ADMIN_HOME_CARDS,
-
-  ADMIN_HOME_SECTION_ORDER,
-
-  adminHomeCardsBySection,
-
-  resolveAdminHomeCardTier,
-
-  type AdminHomeCard,
-
-  type AdminHomeCardTier,
-
-  type AdminHomeInboxKey,
-
-  type AdminHomeSectionId,
-
-} from "@/lib/admin/adminHomeModel";
-
-
-
-import { filterAdminHomeCardsForCapabilities } from "@/lib/admin/adminHomeCardPermission";
-
-import {
-  sectionDefaultOpenByPending,
-  sectionPendingCount,
-} from "@/lib/admin/adminHomeSectionPending";
 
 import {
   adminHomeInboxPendingTotal,
-  adminHomeModulesFoldDefaultOpen,
   resolveAdminHomeInboxPendingTotal,
 } from "@/lib/admin/adminHomeInboxPendingTotal";
 import { writeAdminHomeInboxPendingTotalCache } from "@/lib/admin/adminHomeInboxPendingTotalCache";
-import { filterAdminHomeCardsForFocusMode } from "@/lib/admin/adminHomeFocusModuleFilter";
+
 import {
   ADMIN_HOME_INBOX_FOCUS_LAYOUT_ACTIVE_MARK,
   adminHomeInboxFocusLayoutActive,
   adminHomeKpiFoldDefaultOpen,
   adminHomeMaintainerFoldVisible,
-  adminHomeModuleCardTierBadgeVisible,
   adminWorkspaceBootActive,
 } from "@/lib/admin/adminShellUxPolicy";
 import { isAdminMaintainerUi } from "@/lib/admin/adminMaintainerUiMode";
 
-import {
-
-  canAccessAdminInboxChannel,
-
-} from "@/lib/admin/adminInboxChannelPermission";
-
-import type { AdminHomeInboxChannels } from "@/lib/admin/useAdminHomeInbox";
 
 
 
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
 import { useAdminEffectiveShellRole } from "@/lib/admin/useAdminEffectiveShellRole";
-
-
-
-import {
-
-  adminHomeTierLabelKey,
-
-  filterAdminHomeCardsForRole,
-
-} from "@/lib/admin/adminHomeVisibility";
-
 
 
 import { useAdminHomeInbox } from "@/lib/admin/useAdminHomeInbox";
@@ -127,9 +78,7 @@ import { useAdminHomeInbox } from "@/lib/admin/useAdminHomeInbox";
 import { useAdminHomeKpi } from "@/lib/admin/useAdminHomeKpi";
 import { adminHomeHonestMetricDisplay } from "@/lib/admin/adminHomeHonestMetricDisplay";
 
-import { adminTruthBadgeLabelKey } from "@/lib/admin/adminTruthBadge";
-import { scheduleAdminDeferredShellWork } from "@/lib/admin/adminDeferredShellWork";
-import { prefetchAdminRoutesBatched } from "@/lib/admin/adminNavPrefetchBatch";
+
 import { useAdminShellActor } from "@/lib/admin/useAdminShellActor";
 
 
@@ -139,20 +88,6 @@ import {
   ADMIN_HOME_CANVAS_CLASS,
   ADMIN_HOME_FOCUS_HEADER_CLASS,
   ADMIN_HOME_FOCUS_CANVAS_CLASS,
-  ADMIN_HOME_CARD_TIER_PLACEHOLDER_BADGE_CLASS,
-  ADMIN_HOME_CARD_TIER_READ_BADGE_CLASS,
-  ADMIN_HOME_CARD_TIER_SUPER_WRITE_BADGE_CLASS,
-  ADMIN_HOME_CARD_TIER_WRITE_BADGE_CLASS,
-  ADMIN_KPI_CARD_IDLE_CLASS,
-  ADMIN_MOTION_CARD_HOVER_CLASS,
-  ADMIN_PENDING_COUNT_BADGE_CLASS,
-  ADMIN_WARM_L5_FRAME_CLASS,
-  ADMIN_WARM_L5_INNER_CLASS,
-  ADMIN_WARM_L5_PAD_CLASS,
-  ADMIN_HOME_SECTION_COMPACT_FRAME_CLASS,
-  ADMIN_COLLAPSE_CHEVRON_CLASS,
-  ADMIN_INLINE_LINK_CLASS,
-  ADMIN_LINK_FOCUS_CLASS,
   ADMIN_INBOX_TASK_CTA_ACTIVE_CLASS,
   ADMIN_WORKSPACE_TITLE_CLASS,
   ADMIN_WORKSPACE_TITLE_FOCUS_CLASS,
@@ -174,64 +109,11 @@ import {
 
 
 
-function cardTier(card: AdminHomeCard): AdminHomeCardTier {
-
-  return resolveAdminHomeCardTier(card);
-
-}
-
-function homeCardTierBadgeClass(tier: AdminHomeCardTier): string {
-  if (tier === "super_write") return ADMIN_HOME_CARD_TIER_SUPER_WRITE_BADGE_CLASS;
-  if (tier === "write") return ADMIN_HOME_CARD_TIER_WRITE_BADGE_CLASS;
-  if (tier === "read") return ADMIN_HOME_CARD_TIER_READ_BADGE_CLASS;
-  return ADMIN_HOME_CARD_TIER_PLACEHOLDER_BADGE_CLASS;
-}
-
-
-
-function inboxBadgeForCard(
-
-  card: AdminHomeCard,
-
-  counts: Record<AdminHomeInboxKey, number | null>,
-
-  channels: AdminHomeInboxChannels,
-
-  loading: boolean,
-
-  hasPermission: (perm: string) => boolean,
-
-  permissionsLoaded: boolean,
-
-  t: (k: string, vars?: Record<string, string | number>) => string,
-
-): string | null {
-
-  if (!card.inboxKey) return null;
-
-  if (!canAccessAdminInboxChannel(card.inboxKey, hasPermission, permissionsLoaded)) return null;
-
-  if (channels[card.inboxKey]?.permissionDenied) return null;
-
-  const n = counts[card.inboxKey];
-
-  if (loading || n === null) return null;
-
-  if (n <= 0) return null;
-
-  return t("admin_home_card_pending_badge", { count: n });
-
-}
-
-
-
-/** `/admin` 首页：Batch-9 系统概况(+池图) → 今日待办 → 经营模块 · 维护者折叠 */
+/** `/admin` 首页：Batch-9 系统概况(+池图) → 今日待办 · 维护者折叠（模块入口仅左侧目录） */
 
 export default function AdminHomeClient() {
 
   const { t } = useTranslation();
-  const pathname = usePathname() ?? "";
-  const router = useRouter();
 
   const pageTitleId = useId();
 
@@ -245,22 +127,6 @@ export default function AdminHomeClient() {
   const kpi = useAdminHomeKpi();
 
 
-
-  const cardsBySection = useMemo(() => {
-
-    const byRole = filterAdminHomeCardsForRole(ADMIN_HOME_CARDS, actor.role);
-
-    const byCaps = caps.permissionsLoaded
-
-      ? filterAdminHomeCardsForCapabilities(byRole, caps.hasPermission)
-
-      : byRole;
-
-
-
-    return adminHomeCardsBySection(byCaps);
-
-  }, [actor.role, caps.hasPermission, caps.permissionsLoaded]);
 
   const inboxPendingTotal = adminHomeInboxPendingTotal(
     inbox.counts,
@@ -278,9 +144,6 @@ export default function AdminHomeClient() {
     inbox.error,
   );
 
-  const modulesFoldDefaultOpen = adminHomeModulesFoldDefaultOpen(
-    inboxPendingResolved ?? inboxPendingTotal,
-  );
   const focusInbox = adminHomeInboxFocusLayoutActive({
     pendingTotal: inboxPendingTotal,
     inboxLoading: inbox.loading,
@@ -294,73 +157,12 @@ export default function AdminHomeClient() {
     disputesKpi: kpi.counts.disputes,
     ordersKpi: kpi.counts.orders,
   });
-  const [showAllModules, setShowAllModules] = useState(false);
 
   useEffect(() => {
     if (inboxPendingTotal !== null && !inbox.error) {
       writeAdminHomeInboxPendingTotalCache(inboxPendingTotal);
     }
   }, [inboxPendingTotal, inbox.error]);
-
-  const visibleModuleCount = useMemo(() => {
-    let n = 0;
-    for (const { id } of ADMIN_HOME_SECTION_ORDER) {
-      n += cardsBySection.get(id)?.length ?? 0;
-    }
-    return n;
-  }, [cardsBySection]);
-
-  const modulesDisplayBySection = useMemo(() => {
-    if (!focusInbox || showAllModules) return cardsBySection;
-    const next = new Map<AdminHomeSectionId, AdminHomeCard[]>();
-    const focusInput = {
-      counts: inbox.counts,
-      channels: inbox.channels,
-      loading: inbox.loading,
-      consoleRole70: caps.consoleRole70,
-    };
-    for (const { id } of ADMIN_HOME_SECTION_ORDER) {
-      const cards = cardsBySection.get(id) ?? [];
-      const filtered = filterAdminHomeCardsForFocusMode(cards, focusInput);
-      if (filtered.length > 0) next.set(id, filtered);
-    }
-    return next;
-  }, [
-    cardsBySection,
-    caps.consoleRole70,
-    focusInbox,
-    inbox.channels,
-    inbox.counts,
-    inbox.loading,
-    showAllModules,
-  ]);
-
-  const focusModuleShownCount = useMemo(() => {
-    let n = 0;
-    for (const { id } of ADMIN_HOME_SECTION_ORDER) {
-      n += modulesDisplayBySection.get(id)?.length ?? 0;
-    }
-    return n;
-  }, [modulesDisplayBySection]);
-
-  const modulesFocusFilterActive =
-    focusInbox && !showAllModules && focusModuleShownCount < visibleModuleCount;
-
-  useEffect(() => {
-    if (pathname !== "/admin") return;
-    const hrefs: string[] = [];
-    for (const cards of modulesDisplayBySection.values()) {
-      for (const card of cards) hrefs.push(card.href);
-    }
-    if (hrefs.length === 0) return;
-    return scheduleAdminDeferredShellWork(() => {
-      prefetchAdminRoutesBatched(router, hrefs, { batchSize: 5, gapMs: 36 });
-    }, { timeoutMs: 640 });
-  }, [modulesDisplayBySection, pathname, router]);
-
-  useEffect(() => {
-    if (!focusInbox) setShowAllModules(false);
-  }, [focusInbox]);
 
   if (
     adminWorkspaceBootActive({
@@ -563,7 +365,7 @@ export default function AdminHomeClient() {
             </div>
           ) : (
             <>
-              {/* V65 UX Operability · non-focus: Inbox → KPI → System → modules */}
+              {/* V65 UX · non-focus: Inbox → KPI → System（模块入口仅左侧目录） */}
               <AdminHomeInboxStrip
                 counts={inbox.counts}
                 channels={inbox.channels}
@@ -667,237 +469,7 @@ export default function AdminHomeClient() {
 
 
 
-      {visibleModuleCount > 0 ? (
-<details
-        key={modulesFoldDefaultOpen ? "admin-home-modules-open" : "admin-home-modules-fold"}
-        className={`group overflow-hidden ${
-          focusInbox ? `${ADMIN_HOME_SECTION_COMPACT_FRAME_CLASS} mt-4` : `${ADMIN_WARM_L5_FRAME_CLASS} mt-8`
-        }`}
-        open={modulesFoldDefaultOpen}
-        data-tt-admin-home-modules-fold="1"
-        data-tt-admin-home-section-frame={focusInbox ? "compact" : "warm"}
-      >
-        <summary
-          className={`flex cursor-pointer list-none items-center gap-2 marker:content-none [&::-webkit-details-marker]:hidden ${
-            focusInbox
-              ? "px-3 py-2.5"
-              : `${ADMIN_WARM_L5_INNER_CLASS} ${ADMIN_WARM_L5_PAD_CLASS}`
-          }`}
-          data-tt-admin-home-modules-summary="1"
-        >
-          <span
-            className={`${ADMIN_COLLAPSE_CHEVRON_CLASS} group-open:rotate-90 ${ADMIN_MOTION_CARD_HOVER_CLASS}`}
-            aria-hidden
-          >
-            ›
-          </span>
-          <span className={`text-body-l font-semibold ${ADMIN_TEXT_BODY_CLASS}`}>
-            {modulesFocusFilterActive
-              ? t("admin_home_modules_fold_summary_focus", {
-                  shown: focusModuleShownCount,
-                  total: visibleModuleCount,
-                })
-              : t("admin_home_modules_fold_summary", { count: visibleModuleCount })}
-          </span>
-        </summary>
-        <div
-          className={`border-t ${
-            focusInbox ? "border-white/8 px-3 pb-3 pt-2" : `border-ref-sun/15 ${ADMIN_WARM_L5_INNER_CLASS} px-4 pb-4 pt-3`
-          }`}
-          aria-label={t("admin_home_modules_aria")}
-          data-tt-admin-home-modules-focus-filter={modulesFocusFilterActive ? "1" : undefined}
-        >
-        <div className="space-y-3">
-        {ADMIN_HOME_SECTION_ORDER.map(({ id, titleKey }) => {
-
-          const cards = modulesDisplayBySection.get(id) ?? [];
-
-          if (cards.length === 0) return null;
-
-          const pending = sectionPendingCount(
-
-            id,
-
-            inbox.counts,
-
-            inbox.channels,
-
-            kpi.counts,
-
-            kpi.loading,
-
-            inbox.loading,
-
-            caps.hasPermission,
-
-            caps.permissionsLoaded,
-
-          );
-
-          const defaultOpen = focusInbox ? false : sectionDefaultOpenByPending(pending);
-
-          const badge =
-
-            pending !== null && pending > 0 ? String(pending) : null;
-
-          return (
-
-            <AdminHomeCollapsibleSection
-
-              key={id}
-
-              sectionId={id}
-
-              titleKey={titleKey}
-
-              defaultOpen={defaultOpen}
-
-              persistOpen={!focusInbox}
-
-              frame={focusInbox ? "compact" : "warm"}
-
-              badge={badge}
-
-              collapsedSummaryKey={!defaultOpen ? "admin_home_section_collapsed_summary" : undefined}
-
-              collapsedSummaryVars={
-
-                !defaultOpen
-
-                  ? {
-
-                      pending: pending ?? 0,
-
-                      modules: cards.length,
-
-                    }
-
-                  : undefined
-
-              }
-
-            >
-
-              <div className="grid gap-2 sm:grid-cols-2">
-
-                {cards
-
-                  .filter((card) => {
-
-                    const tier = cardTier(card);
-
-                    if (tier === "placeholder" && !isSuperAdminActorRole(actor.role)) return false;
-
-                    return true;
-
-                  })
-
-                  .map((card) => {
-
-                  const badgeCount = inboxBadgeForCard(
-
-                    card,
-
-                    inbox.counts,
-
-                    inbox.channels,
-
-                    inbox.loading,
-
-                    caps.hasPermission,
-
-                    caps.permissionsLoaded,
-
-                    t,
-
-                  );
-
-                  const tier = cardTier(card);
-
-
-
-                  return (
-
-                    <AdminShellPrefetchLink
-
-                      key={card.href}
-
-                      href={card.href}
-
-                      data-tt-admin-card-tier={tier}
-
-                      className={`${touchTargetLink44Classes} !flex-col !items-stretch !justify-start rounded-[var(--radius-lg)] p-3 text-ink-800 ${ADMIN_MOTION_CARD_HOVER_CLASS} ${travelFocusRingCoreOffset2WhiteClasses} ${ADMIN_KPI_CARD_IDLE_CLASS}`}
-
-                    >
-
-                      <div className="flex items-start justify-between gap-2">
-
-                        <h3 className="text-body font-semibold text-ink-900">{t(card.titleKey)}</h3>
-
-                        <div className="flex shrink-0 flex-col items-end gap-1">
-
-                          {adminHomeModuleCardTierBadgeVisible() && tier !== "placeholder" ? (
-                            <span
-                              className={`rounded-full border px-2 py-0.5 text-meta font-medium ${homeCardTierBadgeClass(tier)}`}
-                              title={t("admin_home_card_tier_hint")}
-                            >
-                              {t(adminHomeTierLabelKey(tier))}
-                            </span>
-                          ) : null}
-
-                          {badgeCount ? (
-
-                            <span className={ADMIN_PENDING_COUNT_BADGE_CLASS}>
-
-                              {badgeCount}
-
-                            </span>
-
-                          ) : null}
-
-                        </div>
-
-                      </div>
-
-                      <p className={`mt-1.5 text-small leading-relaxed ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t(card.descKey)}</p>
-                      {card.truthBadge && card.truthBadge !== "HIDE" ? (
-                        <p
-                          className={`mt-1.5 text-meta ${ADMIN_TEXT_SECONDARY_CLASS}`}
-                          data-tt-admin-home-card-truth-badge={card.truthBadge}
-                        >
-                          {t(adminTruthBadgeLabelKey(card.truthBadge))}
-                        </p>
-                      ) : null}
-
-                    </AdminShellPrefetchLink>
-
-                  );
-
-                })}
-
-              </div>
-
-            </AdminHomeCollapsibleSection>
-
-          );
-
-        })}
-
-        {modulesFocusFilterActive ? (
-          <button
-            type="button"
-            className={`${touchTargetLink44Classes} ${ADMIN_TEXT_BODY_CLASS} font-semibold text-ink-800 underline-offset-2 hover:text-ink-900 hover:underline ${ADMIN_LINK_FOCUS_CLASS}`}
-            data-tt-admin-home-modules-expand-all="1"
-            onClick={() => setShowAllModules(true)}
-          >
-            {t("admin_home_modules_expand_all", { total: visibleModuleCount })}
-          </button>
-        ) : null}
-
-        </div>
-        </div>
-      </details>
-      ) : !focusInbox ? (
+      {!focusInbox ? (
         <p
           className={`mt-6 text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}
           data-tt-admin-home-sidebar-sole-nav="1"

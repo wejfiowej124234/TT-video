@@ -122,7 +122,8 @@ describe("admin home L5", () => {
     expect(src).toContain("data-tt-admin-home-phase2-prep-tech");
     expect(src).toContain("data-tt-admin-home-phase2-backlog-link");
     expect(src).toContain("admin-phase2-remaining-backlog");
-    expect(src).toContain("admin_home_section_collapsed_summary");
+    expect(src).toContain("admin_home_sidebar_sole_nav_hint");
+    expect(src).toContain("data-tt-admin-home-sidebar-sole-nav");
     expect(src).toContain("sectionDefaultOpenByPending");
     expect(src).toContain("adminInboxQueueListFetchConfig");
     expect(src).toContain("communityReports");
@@ -200,7 +201,6 @@ describe("admin home L5", () => {
     expect(src).toContain('frame="compact"');
     expect(src).toContain("ADMIN_HOME_SECTION_COMPACT_FRAME_CLASS");
     expect(src).toContain("persistOpen={false}");
-    expect(src).toContain('frame={focusInbox ? "compact" : "warm"}');
     expect(src).toContain("adminHomeMaintainerFoldVisible");
     expect(src).toContain("AdminHomeFocusCompanion");
     expect(src).toContain("data-tt-admin-home-focus-companion");
@@ -234,11 +234,8 @@ describe("admin home L5", () => {
     expect(src).toContain("data-tt-admin-kpi-perm-denied");
     expect(src).toContain("adminHomeKpiMetricDisplay");
     expect(src).toContain("data-tt-admin-home-command-palette-hint");
-    expect(src).toContain("data-tt-admin-home-modules-fold");
-    expect(src).toContain("adminHomeModulesFoldDefaultOpen");
-    expect(src).toContain("filterAdminHomeCardsForFocusMode");
-    expect(src).toContain("data-tt-admin-home-modules-expand-all");
-    expect(src).toContain("admin_home_modules_fold_summary_focus");
+    expect(src).toContain("data-tt-admin-home-sidebar-sole-nav");
+    expect(src).toContain("admin_home_sidebar_sole_nav_hint");
     expect(src).toContain("AdminHomeInbox.reports");
     // Batch-7: queue cards live in Inbox strip only (not home module wall inboxKey)
     expect(inboxStrip).toContain('key: "guide"');
@@ -274,6 +271,8 @@ describe("admin home L5", () => {
     expect(calmInbox).toBeLessThan(calmKpi);
     expect(calmKpi).toBeLessThan(calmSys);
     expect(homeClient).not.toContain("data-tt-admin-home-tech-fold");
+    expect(homeClient).not.toContain("data-tt-admin-home-modules-fold");
+    expect(homeClient).not.toContain("data-tt-admin-home-modules-expand-all");
     expect(homeClient).not.toContain("AdminHomeDevApiReference");
     expect(homeClient).not.toContain("AdminMetaBuildSection");
 
@@ -283,11 +282,9 @@ describe("admin home L5", () => {
     const overviewBody = readFileSync(join(__dir, "AdminHomeSystemOverview.tsx"), "utf8");
     expect(overviewBody).not.toContain("admin_home_tech_fold_summary");
 
-    // Card wall is taxonomy-complete; role filter shapes visibility (not a hard ≤8 product cap).
+    // Card taxonomy remains for search/palette; home no longer renders a modules card wall.
     expect(ADMIN_HOME_CARDS.length).toBeGreaterThan(0);
-
-    expect(src).toContain("data-tt-admin-card-tier");
-
+    expect(homeClient).not.toMatch(/data-tt-admin-card-tier=/);
     expect(src).toContain("filterAdminHomeCardsForRole(ADMIN_HOME_CARDS");
 
     expect(src).toContain("admin_home_inbox_retry");

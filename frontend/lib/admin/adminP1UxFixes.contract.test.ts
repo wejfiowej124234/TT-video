@@ -31,7 +31,8 @@ describe("admin P1 UX fixes (①)", () => {
     expect(zh).toMatch(
       /admin_home_system_overview_honesty_metrics:\s*\n\s*"用户与趋势来自控制台统计/,
     );
-    expect(overview).toContain("admin_home_system_overview_honesty_dev_metrics");
+    expect(overview).toContain("admin_home_system_overview_honesty_metrics");
+    expect(overview).not.toContain("admin_home_system_overview_honesty_dev_metrics");
     expect(overview).toContain("<details");
   });
 
@@ -93,10 +94,12 @@ describe("admin P1 UX fixes (①)", () => {
     expect(audit).toContain("ADMIN_FILTER_GRID_4_CLASS");
   });
 
-  it("home modules grid uses compact gap (P2-7)", () => {
-    const home = readFileSync(join(FE, "components", "admin", "AdminHomeClient.tsx"), "utf8");
-    expect(home).toContain('className="grid gap-2 sm:grid-cols-2"');
-    expect(home).toContain("rounded-[var(--radius-lg)] p-3 text-ink-800");
+  it("domain health grid uses compact gap + touch targets (P2-7)", () => {
+    const strip = readFileSync(join(FE, "components", "admin", "AdminHomeDomainHealthStrip.tsx"), "utf8");
+    expect(strip).toContain('className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3"');
+    expect(strip).toContain("touchTargetLink44Classes");
+    expect(strip).toContain("rounded-[var(--radius-md)]");
+    expect(strip).toContain("min-w-0 overflow-hidden");
   });
 
   it("community reports drops header link wall for subnav + slim aside (P2-1)", () => {
@@ -125,11 +128,16 @@ describe("admin P1 UX fixes (①)", () => {
       "app/admin/approvals/AdminApprovalsTableSection.tsx",
       "app/admin/orders/AdminOrdersPageMain.tsx",
       "app/admin/disputes/AdminDisputesPageMain.tsx",
+    ]) {
+      const src = readFileSync(join(FE, rel), "utf8");
+      expect(src, rel).toContain("adminTableRowPrimaryActionClass");
+    }
+    for (const rel of [
       "app/admin/provider-applications/AdminProviderApplicationsPageMain.tsx",
       "app/admin/steward-applications/AdminStewardApplicationsPageMain.tsx",
     ]) {
       const src = readFileSync(join(FE, rel), "utf8");
-      expect(src, rel).toContain("adminTableRowPrimaryActionClass");
+      expect(src, rel).toContain("AdminOnboardingQueueRowCard");
     }
     const orders = readFileSync(join(FE, "app", "admin", "orders", "AdminOrdersPageMain.tsx"), "utf8");
     expect(orders).toContain("adminTableRowSecondaryActionClass");
@@ -169,11 +177,12 @@ describe("admin P1 UX fixes (①)", () => {
     expect(cross).toContain("admin_cross_check_slot_technical_id_hint");
   });
 
-  it("home expand-all uses console body link tokens (P3-1)", () => {
+  it("home defers primary nav to sidebar (no modules wall · P3-1)", () => {
     const home = readFileSync(join(FE, "components", "admin", "AdminHomeClient.tsx"), "utf8");
-    expect(home).toContain("data-tt-admin-home-modules-expand-all");
-    expect(home).toContain("${ADMIN_TEXT_BODY_CLASS} font-semibold text-ink-800");
-    expect(home).not.toContain("${ADMIN_INLINE_LINK_CLASS} underline-offset-2 hover:underline");
+    expect(home).toContain("data-tt-admin-home-sidebar-sole-nav");
+    expect(home).toContain("admin_home_sidebar_sole_nav_hint");
+    expect(home).not.toContain("data-tt-admin-home-modules-fold");
+    expect(home).not.toContain("data-tt-admin-home-modules-expand-all");
   });
 
   it("finance hub partial CTAs are per-module (P3-2)", () => {
@@ -218,8 +227,6 @@ describe("admin P1 UX fixes (①)", () => {
   it("extended queue tables use table row action tokens (P2-4 batch 7)", () => {
     for (const rel of [
       "app/admin/disputes/AdminDisputesPageMain.tsx",
-      "app/admin/provider-applications/AdminProviderApplicationsPageMain.tsx",
-      "app/admin/steward-applications/AdminStewardApplicationsPageMain.tsx",
       "app/admin/guides/AdminGuidesPageMain.tsx",
       "app/admin/community/appeals/AdminCommunityAppealsPageMain.tsx",
       "app/admin/reviews/AdminReviewsTableSection.tsx",
@@ -227,6 +234,13 @@ describe("admin P1 UX fixes (①)", () => {
     ]) {
       const src = readFileSync(join(FE, rel), "utf8");
       expect(src, rel).toContain("adminTableRowPrimaryActionClass");
+    }
+    for (const rel of [
+      "app/admin/provider-applications/AdminProviderApplicationsPageMain.tsx",
+      "app/admin/steward-applications/AdminStewardApplicationsPageMain.tsx",
+    ]) {
+      const src = readFileSync(join(FE, rel), "utf8");
+      expect(src, rel).toContain("AdminOnboardingQueueRowCard");
     }
     const reviews = readFileSync(join(FE, "app", "admin", "reviews", "AdminReviewsTableSection.tsx"), "utf8");
     expect(reviews).toContain("adminTableRowSecondaryActionClass");
@@ -401,6 +415,8 @@ describe("admin P1 UX fixes (①)", () => {
     const financeSuite = readFileSync(join(FE, "app", "admin", "finance-suite", "AdminFinanceSuitePageMain.tsx"), "utf8");
     expect(orders).toContain("ORDERS_LIST_RELATED_FOLD_LINKS");
     expect(authAudit).toContain('data-tt-admin-auth-audit-refresh="1"');
-    expect(financeSuite).toContain("FINANCE_SUITE_HUB_RELATED_FOLD_LINKS");
+    expect(financeSuite).toContain('data-tt-admin-finance-suite');
+    expect(financeSuite).toContain("AdminOpsHubNavTiles");
+    expect(financeSuite).toContain("FINANCE_SUITE_MODULES");
   });
 });
