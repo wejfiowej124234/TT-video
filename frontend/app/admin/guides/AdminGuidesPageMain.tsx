@@ -17,6 +17,7 @@ import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptySt
 import { ADMIN_EMPTY_NEXT_GUIDES_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
 import { GUIDES_LIST_RELATED_FOLD_LINKS } from "@/lib/admin/adminOpsListRelatedFoldLinks";
 import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+import { guideDirectoryStatusLabelKey } from "@/lib/admin/adminGuidesLabels";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { shortEvmAddress } from "@/lib/formatEvmAddress";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
@@ -26,9 +27,13 @@ import {
   ADMIN_FILTER_CARD_CLASS,
   ADMIN_FORM_FIELD_FOCUS_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_STATUS_NEUTRAL_BADGE_CLASS,
   ADMIN_TABLE_ROW_CLASS,
   ADMIN_TABLE_THEAD_CLASS,
   ADMIN_TABLE_TH_CELL_CLASS,
+  ADMIN_TABLE_TD_CELL_CLASS,
+  ADMIN_TABLE_TD_MONO_CLASS,
+  ADMIN_TABLE_TD_TIMESTAMP_CLASS,
   adminPageNavLinkClass,
   adminTableRowPrimaryActionClass,
   adminTableRowSecondaryActionClass,
@@ -41,7 +46,9 @@ import {
   ADMIN_FILTER_FIELD_LABEL_CLASS,
   ADMIN_FILTER_GRID_CLASS,
   ADMIN_FILTER_HINT_CLASS,
-  ADMIN_FILTER_TITLE_CLASS} from "@/lib/adminUi";
+  ADMIN_FILTER_TITLE_CLASS,
+  ADMIN_TEXT_META_CLASS,
+} from "@/lib/adminUi";
 
 type GuideSortKey = "status" | "updated_at" | "city";
 
@@ -227,24 +234,38 @@ export function AdminGuidesPageMain() {
                 </th>
               </tr>
             </thead>
-            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-800`}>
+            <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-slate-200`}>
               {sortedItems.map((row) => {
                 const w = row.wallet_address?.trim();
                 const hasDocs =
                   !!(row.id_photo_url?.trim() || row.language_cert_url?.trim() || row.guide_license_url?.trim());
                 return (
                   <tr key={row.id} className={ADMIN_TABLE_ROW_CLASS}>
-                    <td className="px-4 py-2 font-mono text-small text-ink-800">{row.id}</td>
-                    <td className="px-4 py-2 font-mono text-small text-ink-800">{row.user_id}</td>
-                    <td className="px-4 py-2">{row.city ?? t("admin_em_dash")}</td>
-                    <td className="px-4 py-2">{row.country_code ?? t("admin_em_dash")}</td>
-                    <td className="px-4 py-2">{row.status ?? t("admin_em_dash")}</td>
-                    <td className="px-4 py-2 tabular-nums">{row.stake_amount ?? t("admin_em_dash")}</td>
-                    <td className="px-4 py-2 font-mono text-small text-ink-800">{w ? shortEvmAddress(w) : t("admin_em_dash")}</td>
-                    <td className="px-4 py-2 text-meta">
+                    <td className={`px-4 py-2 ${ADMIN_TABLE_TD_MONO_CLASS}`}>{row.id}</td>
+                    <td className={`px-4 py-2 ${ADMIN_TABLE_TD_MONO_CLASS}`}>{row.user_id}</td>
+                    <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.city ?? t("admin_em_dash")}</td>
+                    <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.country_code ?? t("admin_em_dash")}</td>
+                    <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                      {row.status ? (
+                        <span className={ADMIN_STATUS_NEUTRAL_BADGE_CLASS}>
+                          {t(guideDirectoryStatusLabelKey(row.status))}
+                        </span>
+                      ) : (
+                        t("admin_em_dash")
+                      )}
+                    </td>
+                    <td className={`${ADMIN_TABLE_TD_CELL_CLASS} tabular-nums`}>
+                      {row.stake_amount ?? t("admin_em_dash")}
+                    </td>
+                    <td className={`px-4 py-2 ${ADMIN_TABLE_TD_MONO_CLASS}`}>
+                      {w ? shortEvmAddress(w) : t("admin_em_dash")}
+                    </td>
+                    <td className={`px-4 py-2 ${ADMIN_TEXT_META_CLASS}`}>
                       {hasDocs ? t("admin_guides_docsPresent") : t("admin_guides_docsMissing")}
                     </td>
-                    <td className="px-4 py-2 text-meta whitespace-nowrap">{row.updated_at ?? t("admin_em_dash")}</td>
+                    <td className={`px-4 py-2 ${ADMIN_TABLE_TD_TIMESTAMP_CLASS}`}>
+                      {row.updated_at ?? t("admin_em_dash")}
+                    </td>
                     <td className="px-4 py-3">
                       <Link
                         href={`/admin/guides/${encodeURIComponent(row.id)}`}

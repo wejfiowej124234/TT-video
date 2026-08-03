@@ -1,0 +1,22 @@
+HTTP/1.1 404 Not Found
+x-frame-options: SAMEORIGIN
+x-content-type-options: nosniff
+referrer-policy: strict-origin-when-cross-origin
+permissions-policy: camera=(), microphone=(), geolocation=(self)
+strict-transport-security: max-age=31536000; includeSubDomains
+cache-control: private, no-cache, no-store, max-age=0, must-revalidate
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+x-nextjs-cache: HIT
+x-nextjs-prerender: 1
+x-nextjs-prerender: 1
+x-nextjs-stale-time: 900
+etag: "17xk9fk6aunj4z"
+content-type: text/html; charset=utf-8
+content-length: 25171
+date: Mon, 03 Aug 2026 02:08:44 GMT
+connection: keep-alive
+keep-alive: timeout=5
+server: Fly/30b4b59b0 (2026-07-30)
+via: 1.1 fly.io, 1.1 fly.io
+fly-request-id: 01KZ2P2VHZJH87GYM7JX78XKB9-sjc
+

@@ -10,10 +10,13 @@ const STATUS_VALUE_KEYS: Record<string, string> = {
   published: "admin_config_releases_status_published",
   rolled_back: "admin_config_releases_status_rolled_back",
   accepted: "admin_appeal_review_opt_accepted",
-  rejected: "admin_appeal_review_opt_rejected",
+  rejected: "admin_guides_directory_status_rejected",
   visible: "admin_comment_vis_opt_visible",
   hidden: "admin_comment_vis_opt_hidden",
   removed: "admin_comment_vis_opt_removed",
+  active: "admin_guides_directory_status_active",
+  suspended: "admin_guides_directory_status_suspended",
+  pending_review: "admin_guides_directory_status_pending_review",
 };
 
 const REASON_CODE_VALUE_KEYS: Record<string, string> = {

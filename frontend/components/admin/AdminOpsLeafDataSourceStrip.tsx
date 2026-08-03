@@ -17,9 +17,9 @@ type Props = {
 
 function toneClass(tone: OpsDataSourceTone): string {
   if (tone === "unavailable") return "border-warning/50 bg-warning/5 text-warning";
-  if (tone === "memory") return "border-ref-sun/40 bg-bg-console/50 text-ink-800";
-  if (tone === "mixed") return "border-ink-300 bg-bg-console/40 text-ink-700";
-  return "border-ink-200 bg-bg-console/30 text-ink-600";
+  if (tone === "memory") return "border-ref-sun/40 bg-bg-console/50 text-slate-200";
+  if (tone === "mixed") return "border-white/12 bg-bg-console/40 text-slate-200";
+  return "border-white/10 bg-bg-console/30 text-slate-300";
 }
 
 /** Batch-11 HU-412 / HU-420 · 经营四叶列表强制数据源条（fail-closed） */
@@ -48,14 +48,17 @@ export function AdminOpsLeafDataSourceStrip({ leaf, meta, emphasizeUsersDrift }:
       ) : null}
       {strip.metaSource ? (
         <p
-          className="mt-1 font-mono text-meta"
+          className={`mt-1 ${ADMIN_TEXT_META_CLASS}`}
           data-tt-admin-ops-meta-source={strip.metaSource}
         >
-          meta.source={strip.metaSource}
+          {t("admin_ops_leaf_data_source_connected")}
         </p>
       ) : (
-        <p className="mt-1 font-mono text-meta" data-tt-admin-ops-meta-source-missing="1">
-          meta.source=—
+        <p
+          className={`mt-1 ${ADMIN_TEXT_META_CLASS}`}
+          data-tt-admin-ops-meta-source-missing="1"
+        >
+          {t("admin_ops_leaf_data_source_unmarked")}
         </p>
       )}
     </aside>

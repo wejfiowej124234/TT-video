@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { adminErrorUserText, type AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
@@ -55,6 +56,13 @@ export function AdminFinanceReconciliationApiSection({
         <AdminListLoadingStatus message={t("admin_finance_reconciliation_summary_loading")} className="mt-4 text-body text-ink-600" />
       ) : error ? (
         <AdminListFetchError className="mt-4" errorKind={error} message={adminErrorUserText(error, t)} />
+      ) : !hasCachedRows ? (
+        <AdminListPageEmptyState
+          messageKey="admin_finance_reconciliation_data_unavailable"
+          nextLinks={[
+            { href: "/admin/indexer/reconcile-reports", labelKey: "admin_finance_reconciliation_open_reconcile_reports" },
+          ]}
+        />
       ) : (
         <div
           className={`mt-4 space-y-6${refreshing ? ` ${ADMIN_LIST_REFRESHING_SURFACE_CLASS}` : ""}`}

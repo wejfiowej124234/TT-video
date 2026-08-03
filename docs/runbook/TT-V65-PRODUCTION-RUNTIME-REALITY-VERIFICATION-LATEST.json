@@ -1,0 +1,90 @@
+{
+  "schema": "TT-V65-PRODUCTION-RUNTIME-REALITY-VERIFICATION.v1",
+  "stamp": "20260803T020818Z",
+  "generated_at": "2026-08-03T02:14:00Z",
+  "phase": "③ Production Runtime Reality — NOT Production GO",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "verdict": "V65_OPEX_NOT_IN_PRODUCTION_WEB_RUNTIME_PIN_MATCH_AUDIT_DRIFT",
+  "most_likely_cause": "1_FIXES_NEVER_ENTERED_PRODUCTION_WEB_BUILD_GIT",
+  "cause_rank": [
+    {
+      "rank": 1,
+      "id": "audit_git_runtime_split",
+      "status": "CONFIRMED",
+      "detail": "Audit MACHINE_PASS / WT OPEX locales exist, but Production Web pin 075a295f still ships English Ops Leaf stubs; admin_orders_op_more absent from live chunk."
+    },
+    {
+      "rank": 2,
+      "id": "tip_eq_bytes_false",
+      "status": "CONFIRMED_VARIANT",
+      "detail": "Runtime tip correctly equals frozen Web pin; tip==pin does NOT equal tip==WT OPEX bytes. OPEX never committed onto pin."
+    },
+    {
+      "rank": 3,
+      "id": "cdn_browser_cache",
+      "status": "SECONDARY_NON_ROOT",
+      "detail": "Live chunk 39847-18c0fd88b2e244f3.js still contains Ops Leaf Data Source Title — not a stale-browser-only illusion."
+    },
+    {
+      "rank": 4,
+      "id": "ui_ok_data_old",
+      "status": "PARTIAL",
+      "detail": "Locale keys themselves are PIN stubs; CMS/data secondary."
+    }
+  ],
+  "three_truths": {
+    "A_audit_truth": "OPEX audit After 96.7 MACHINE_PASS against local/audit target — NOT proof of www runtime",
+    "B_git_truth_at_pin": "075a295f: zh/en admin_ops_leaf_data_source_title=Ops Leaf Data Source Title; admin_orders_op_more MISSING",
+    "C_runtime_truth": "www.web3-ttg.com release-identity git_sha=075a295f build_time=2026-08-02T13:11:32Z; chunk embeds PIN stubs"
+  },
+  "production_web_identity": {
+    "host": "https://www.web3-ttg.com",
+    "git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "artifact_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "build_time": "2026-08-02T13:11:32Z",
+    "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+    "identity_source": "docker-bake",
+    "matches_frozen_web_pin": true
+  },
+  "frozen_pins_untouched": {
+    "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web_pre_redeploy": "075a295fbf5138777dd957feea4d885004a6a953",
+    "web3": "PSG-REL-20260720-WEB3-CAND-V2"
+  },
+  "chunk_probe": {
+    "url": "https://www.web3-ttg.com/_next/static/chunks/39847-18c0fd88b2e244f3.js",
+    "bytes": 1675081,
+    "Ops_Leaf_Data_Source_Title": "HIT",
+    "admin_orders_op_more": "MISS",
+    "已连接真实数据库": "MISS",
+    "Connected_to_real_database": "MISS"
+  },
+  "working_tree_opex": {
+    "zh_admin_ops_leaf_data_source_title": "数据来源",
+    "zh_admin_ops_leaf_data_source_real_db": "已连接真实数据库",
+    "en_admin_ops_leaf_data_source_title": "Data source",
+    "en_admin_ops_leaf_data_source_real_db": "Connected to real database",
+    "admin_orders_op_more_zh": "更多",
+    "committed_on_pin": false,
+    "commits_after_pin": [
+      "dab2da0f docs CMS Reality",
+      "9ea94166 feat RI audit",
+      "ccfe8833 docs Freeze Certificate"
+    ],
+    "note": "No OPEX/locale/admin UX commit after Web pin — fixes live only in dirty WT"
+  },
+  "required_action": {
+    "1": "Commit minimal frontend OPEX/locale/admin UX slice (tip=bytes)",
+    "2": "Minimal Web redeploy + cache refresh via deploy-tt-web-production.sh",
+    "3": "Re-probe release-identity + chunk strings + screenshot",
+    "4": "Update Runtime SSOT web_git_sha only after success; keep TT_PRODUCTION_GO=NO_GO",
+    "forbidden": [
+      "dirty bake without commit",
+      "Web3 pin change",
+      "Sidebar IA change",
+      "claim Production GO"
+    ]
+  },
+  "honest_boundary": "① audit green / After 96.7 ≠ ③ Production Runtime contains V65 OPEX. Runtime correctly serves pin; pin never received OPEX."
+}

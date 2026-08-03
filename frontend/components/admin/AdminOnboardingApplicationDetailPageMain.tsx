@@ -7,10 +7,12 @@ import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
 import { AdminGuideApplicationReviewCard } from "@/components/admin/AdminGuideApplicationReviewCard";
+import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { AdminProviderApplicationReviewCard } from "@/components/admin/AdminProviderApplicationReviewCard";
 import { AdminStewardApplicationReviewCard } from "@/components/admin/AdminStewardApplicationReviewCard";
 import type { OnboardingQueueKind } from "@/lib/admin/adminOnboardingQueueRowDisplay";
-import { ADMIN_INLINE_LINK_CLASS } from "@/lib/adminUi";
+import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
+import { ADMIN_INLINE_LINK_CLASS, ADMIN_TEXT_MUTED_CLASS } from "@/lib/adminUi";
 
 /**
  * Batch-11 HU-363 · 入驻申请专用详情（路由 id = user_id · 与 Admin API 同源）。
@@ -45,7 +47,8 @@ export function AdminOnboardingApplicationDetailPageMain(props: { kind: Onboardi
         "data-testid": `admin-${props.kind}-application-detail`,
       }}
     >
-      <p className="mb-4 text-meta text-ink-500">
+      <AdminPermissionDeniedBanner permission={ADMIN_PERM.READ} />
+      <p className={`mb-4 text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>
         <Link href={listHref} className={ADMIN_INLINE_LINK_CLASS} data-tt-admin-onboarding-detail-back="1">
           {t("admin_onboarding_detail_back")}
         </Link>

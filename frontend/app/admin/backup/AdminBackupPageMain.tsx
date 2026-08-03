@@ -6,6 +6,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminOpsPlanePermissionBanners } from "@/components/admin/ops/AdminOpsPlanePermissionBanners";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import {
@@ -66,14 +67,18 @@ export function AdminBackupPageMain() {
           </section>
           <section>
             <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>{t("admin_backup_runbooks_heading")}</h2>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-small text-ink-700">
-              {(body.runbooks ?? []).map((rb) => (
-                <li key={rb.id}>
-                  <span className="font-mono">{rb.id}</span>
-                  <span className="text-ink-500"> — {rb.path}</span>
-                </li>
-              ))}
-            </ul>
+            {(body.runbooks ?? []).length === 0 ? (
+              <AdminListPageEmptyState messageKey="admin_list_empty_backup_runbooks" nextLinks={[]} />
+            ) : (
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-small text-ink-700">
+                {(body.runbooks ?? []).map((rb) => (
+                  <li key={rb.id}>
+                    <span className="font-mono">{rb.id}</span>
+                    <span className="text-ink-500"> — {rb.path}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
           <section>
             <h2 className={ADMIN_DETAIL_SECTION_TITLE_CLASS}>{t("admin_backup_baseline_json_heading")}</h2>
@@ -82,7 +87,9 @@ export function AdminBackupPageMain() {
             </pre>
           </section>
         </div>
-      ) : null}
+      ) : (
+        <AdminListPageEmptyState messageKey="admin_list_empty_backup" nextLinks={[]} />
+      )}
     </AdminListPageChrome>
   );
 }

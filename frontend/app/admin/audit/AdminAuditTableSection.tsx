@@ -33,6 +33,8 @@ import {
 
   ADMIN_TABLE_TH_CELL_CLASS,
 
+  ADMIN_TABLE_TD_MONO_CLASS,
+
   adminTableRowPrimaryActionClass,
   ADMIN_TABLE_SECTION_CLASS,
   ADMIN_LIST_REFRESHING_SURFACE_CLASS,
@@ -90,7 +92,7 @@ export function AdminAuditTableSection({ listQ, items, refreshing = false }: Pro
 
 
 
-  const filterLinkClass = `${touchTargetLink44Classes} font-mono text-small text-ink-800 ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`;
+  const filterLinkClass = `${touchTargetLink44Classes} ${ADMIN_TABLE_TD_MONO_CLASS} ${ADMIN_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`;
 
 
 
@@ -162,13 +164,13 @@ export function AdminAuditTableSection({ listQ, items, refreshing = false }: Pro
 
         </thead>
 
-        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-ink-700`}>
+        <tbody className={`${ADMIN_TABLE_DIVIDE_CLASS} text-slate-200`}>
 
           {sortedItems.map((row, idx) => (
 
             <tr key={row.id ?? `${row.request_id ?? "req"}-${idx}`} className={ADMIN_TABLE_ROW_CLASS}>
 
-              <td className="px-4 py-3 font-mono text-small text-ink-800">
+              <td className={`px-4 py-3 ${ADMIN_TABLE_TD_MONO_CLASS}`}>
 
                 {row.action ? (
 

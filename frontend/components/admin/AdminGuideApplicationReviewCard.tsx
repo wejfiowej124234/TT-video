@@ -17,6 +17,7 @@ import {
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_SEMANTIC_APPROVE_BTN_CLASS,
   ADMIN_SEMANTIC_REJECT_BTN_CLASS,
+  ADMIN_TEXT_MUTED_CLASS,
 } from "@/lib/adminUi";
 
 type GuideApplicationPayload = {
@@ -129,7 +130,7 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
       data-testid="admin-guide-application-review"
       data-tt-admin-onboarding-review-card="guide"
     >
-      <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">{t("admin_guide_app_title")}</h2>
+      <h2 className={`text-small font-semibold uppercase tracking-wide ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_guide_app_title")}</h2>
       {loading ? (
         <p className="mt-3 text-body text-ink-600" role="status">
           {t("admin_users_loading")}
@@ -141,39 +142,39 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
       ) : (
         <div className="mt-3 space-y-3 text-body">
           <p>
-            <span className="text-meta text-ink-500">{t("admin_guide_app_status")}: </span>
+            <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_guide_app_status")}: </span>
             <span className="font-mono text-meta">
               {app?.status === "needs_more_info" ? t("admin_guide_app_status_needs_more_info") : app?.status}
             </span>
           </p>
           {app.submitted_at ? (
             <p>
-              <span className="text-meta text-ink-500">{t("admin_guide_app_submitted")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_guide_app_submitted")}: </span>
               <span className="font-mono text-meta">{app.submitted_at}</span>
             </p>
           ) : null}
           <dl className="grid gap-2 sm:grid-cols-2 text-meta">
             {app.city ? (
               <div>
-                <dt className="text-ink-500">{t("admin_guide_app_city")}</dt>
+                <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_guide_app_city")}</dt>
                 <dd className="mt-0.5 font-mono text-ink-800">{app.city}</dd>
               </div>
             ) : null}
             {app.country_code ? (
               <div>
-                <dt className="text-ink-500">{t("admin_guide_app_country")}</dt>
+                <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_guide_app_country")}</dt>
                 <dd className="mt-0.5 font-mono text-ink-800">{app.country_code}</dd>
               </div>
             ) : null}
             {app.real_name ? (
               <div>
-                <dt className="text-ink-500">{t("admin_guide_app_realName")}</dt>
+                <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_guide_app_realName")}</dt>
                 <dd className="mt-0.5 font-mono text-ink-800">{app.real_name}</dd>
               </div>
             ) : null}
             {typeof app.avatar_url === "string" && app.avatar_url.trim().length > 0 ? (
               <div className="sm:col-span-2" data-tt-admin-guide-avatar="1">
-                <dt className="text-ink-500">{t("admin_guide_app_avatar")}</dt>
+                <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_guide_app_avatar")}</dt>
                 <dd className="mt-1">
                   {/* eslint-disable-next-line @next/next/no-img-element -- Admin review thumb; URL from API */}
                   <img
@@ -185,7 +186,7 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
               </div>
             ) : null}
             <div className="sm:col-span-2" data-tt-admin-guide-passport-hash="1">
-              <dt className="text-ink-500">{t("admin_guide_app_passportHash")}</dt>
+              <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_guide_app_passportHash")}</dt>
               <dd className="mt-0.5 text-small text-ink-600">
                 {app.passport_hash_present === true
                   ? t("admin_guide_app_passportHashPresent")
@@ -194,13 +195,13 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
             </div>
             {app.wallet_address ? (
               <div className="sm:col-span-2">
-                <dt className="text-ink-500">{t("admin_guide_app_wallet")}</dt>
+                <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_guide_app_wallet")}</dt>
                 <dd className="mt-0.5 break-all font-mono text-ink-800">{app.wallet_address}</dd>
               </div>
             ) : null}
             {app.hourly_rate ? (
               <div data-tt-admin-guide-field-archive="hourly_rate">
-                <dt className="text-ink-500">{t("admin_guide_app_hourlyRateArchive")}</dt>
+                <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_guide_app_hourlyRateArchive")}</dt>
                 <dd className="mt-0.5 font-mono text-ink-800">{app.hourly_rate}</dd>
               </div>
             ) : null}
@@ -237,13 +238,13 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
             >
               {Array.isArray(app.rejection_codes) && app.rejection_codes.length > 0 ? (
                 <p className="text-small text-ink-700">
-                  <span className="text-meta text-ink-500">{t("admin_guide_app_rejectionCodes")}: </span>
+                  <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_guide_app_rejectionCodes")}: </span>
                   <span className="font-mono text-meta">{app.rejection_codes.join(", ")}</span>
                 </p>
               ) : null}
               {app.rejection_message ? (
                 <p className="text-small text-ink-700 whitespace-pre-wrap">
-                  <span className="text-meta text-ink-500">
+                  <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>
                     {app.status === "needs_more_info"
                       ? t("admin_guide_app_needsMoreInfoNote")
                       : t("admin_guide_app_rejectionMessage")}

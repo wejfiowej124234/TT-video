@@ -23,14 +23,14 @@ export function AdminGuidesInventoryStrip({ loadedCount, apiTotal = null, loadin
 
   return (
     <aside
-      className={`mb-4 rounded-[var(--radius-md)] border border-ink-200 bg-bg-console/40 px-4 py-3 ${ADMIN_FILTER_CARD_CLASS}`}
+      className={`mb-4 rounded-[var(--radius-md)] border border-white/10 bg-bg-console/40 px-4 py-3 ${ADMIN_FILTER_CARD_CLASS}`}
       role="status"
       data-tt-admin-guides-inventory="1"
       data-tt-admin-guides-inventory-kind={snap.kind}
       data-tt-admin-guides-inventory-total={snap.total != null ? String(snap.total) : "null"}
       data-tt-admin-guides-inventory-loaded={String(snap.loaded)}
     >
-      <p className="text-body font-medium text-ink-800">{t("admin_guides_inventory_title")}</p>
+      <p className="text-body font-medium text-slate-100">{t("admin_guides_inventory_title")}</p>
       {loading ? (
         <p className={`mt-1 ${ADMIN_TEXT_META_CLASS}`}>{t("admin_loading")}</p>
       ) : (

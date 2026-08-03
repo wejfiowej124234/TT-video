@@ -45,7 +45,7 @@ export function formatOrdersAppliedFiltersHuman(
   }
   const state = applied.state;
   if (typeof state === "string" && state.trim()) {
-    parts.push(`${t("admin_orders_state_label")} ${t(orderStateLabelKey(state))} (${state.trim()})`);
+    parts.push(`${t("admin_orders_state_label")} ${t(orderStateLabelKey(state))}`);
   }
   return parts.join(" · ");
 }

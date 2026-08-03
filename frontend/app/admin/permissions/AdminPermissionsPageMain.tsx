@@ -9,6 +9,7 @@ import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome"
 import { AdminOpsDetailRelatedFold } from "@/components/admin/AdminOpsDetailRelatedFold";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
 import { ADMIN_PERMISSION_MATRIX_ROWS } from "@/lib/admin/adminPermissionIds";
 import {
@@ -425,7 +426,12 @@ export function AdminPermissionsPageMain() {
 
           {caps.roleMatrixPreview ? (
             <AdminConsoleRoleShellPreview currentRole={caps.consoleRole70} />
-          ) : null}
+          ) : (
+            <AdminListPageEmptyState
+              messageKey="admin_permissions_matrix_empty"
+              nextLinks={[{ href: "/admin/config", labelKey: "admin_config_hub_title" }]}
+            />
+          )}
         </>
       )}
 

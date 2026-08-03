@@ -5,6 +5,7 @@ import { useId } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
+import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
 import { AdminNoticeBanner } from "@/components/admin/AdminNoticeBanner";
 import { AdminFinanceSuiteBackLinks } from "@/components/admin/AdminFinanceSuiteBackLinks";
@@ -215,7 +216,12 @@ export default function AdminCrossCheckPageMain({
               </div>
             </AdminWarmL5Surface>
           </div>
-        ) : null}
+        ) : (
+          <AdminListPageEmptyState
+            messageKey="admin_list_empty_cross_check"
+            nextLinks={[{ href: "/admin/finance-reconciliation", labelKey: "admin_finance_reconciliation_title" }]}
+          />
+        )}
       </div>
     </AdminListPageChrome>
   );

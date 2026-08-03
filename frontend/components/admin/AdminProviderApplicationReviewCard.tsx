@@ -20,6 +20,7 @@ import {
   ADMIN_INNER_DIVIDER_CLASS,
   ADMIN_SEMANTIC_APPROVE_BTN_CLASS,
   ADMIN_SEMANTIC_REJECT_BTN_CLASS,
+  ADMIN_TEXT_MUTED_CLASS,
 } from "@/lib/adminUi";
 
 type ProviderApplicationPayload = {
@@ -161,7 +162,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
       data-testid="admin-provider-application-review"
       data-tt-admin-onboarding-review-card="provider"
     >
-      <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
+      <h2 className={`text-small font-semibold uppercase tracking-wide ${ADMIN_TEXT_MUTED_CLASS}`}>
         {t("admin_provider_app_title")}
       </h2>
       {loading ? (
@@ -175,7 +176,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
       ) : (
         <div className="mt-3 space-y-3 text-body">
           <p>
-            <span className="text-meta text-ink-500">{t("admin_provider_app_status")}: </span>
+            <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_provider_app_status")}: </span>
             <span className="font-mono text-meta">
               {app?.status === "needs_more_info"
                 ? t("admin_provider_app_status_needs_more_info")
@@ -184,7 +185,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
           </p>
           {app.submitted_at ? (
             <p>
-              <span className="text-meta text-ink-500">{t("admin_provider_app_submitted")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_provider_app_submitted")}: </span>
               <span className="font-mono text-meta">{app.submitted_at}</span>
             </p>
           ) : null}
@@ -209,14 +210,14 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
                 if (!val) return null;
                 return (
                   <div key={field} data-tt-admin-provider-field={field}>
-                    <dt className="text-ink-500">{t(labelKey)}</dt>
+                    <dt className={ADMIN_TEXT_MUTED_CLASS}>{t(labelKey)}</dt>
                     <dd className="mt-0.5 break-all font-mono text-ink-800">{val}</dd>
                   </div>
                 );
               })}
               {Array.isArray(payload.categories) && payload.categories.length > 0 ? (
                 <div className="sm:col-span-2" data-tt-admin-provider-categories="1">
-                  <dt className="text-ink-500">{t("admin_provider_app_categories")}</dt>
+                  <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_provider_app_categories")}</dt>
                   <dd className="mt-0.5 text-ink-800">
                     {(payload.categories as unknown[])
                       .map((c) => (typeof c === "string" ? c.trim() : ""))
@@ -227,19 +228,19 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
               ) : null}
               {payloadField(payload, "bio") ? (
                 <div className="sm:col-span-2" data-tt-admin-provider-bio="1">
-                  <dt className="text-ink-500">{t("admin_provider_app_bio")}</dt>
+                  <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_provider_app_bio")}</dt>
                   <dd className="mt-0.5 whitespace-pre-wrap text-ink-800">{payloadField(payload, "bio")}</dd>
                 </div>
               ) : null}
               {registeredAddr ? (
                 <div className="sm:col-span-2">
-                  <dt className="text-ink-500">{t("admin_provider_app_registeredAddress")}</dt>
+                  <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_provider_app_registeredAddress")}</dt>
                   <dd className="mt-0.5 break-all font-mono text-ink-800">{registeredAddr}</dd>
                 </div>
               ) : null}
               {operatingAddr ? (
                 <div className="sm:col-span-2">
-                  <dt className="text-ink-500">{t("admin_provider_app_operatingAddress")}</dt>
+                  <dt className={ADMIN_TEXT_MUTED_CLASS}>{t("admin_provider_app_operatingAddress")}</dt>
                   <dd className="mt-0.5 break-all font-mono text-ink-800">{operatingAddr}</dd>
                 </div>
               ) : null}
@@ -291,7 +292,7 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
               {app.rejection_codes.map((code) => (
                 <li key={code}>
                   {providerRejectionCodeLabel(t, code)}
-                  <span className="ml-1 font-mono text-meta text-ink-500">({code})</span>
+                  <span className={`ml-1 font-mono text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>({code})</span>
                 </li>
               ))}
             </ul>

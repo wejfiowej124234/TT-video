@@ -11,11 +11,14 @@ import {
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
-import { ADMIN_PRIMARY_ACTION_BTN_CLASS,
+import {
+ ADMIN_PRIMARY_ACTION_BTN_CLASS,
   ADMIN_FORM_CONTROL_SM_CLASS,
   ADMIN_INNER_DIVIDER_CLASS,
   ADMIN_SEMANTIC_APPROVE_BTN_CLASS,
-  ADMIN_SEMANTIC_REJECT_BTN_CLASS,} from "@/lib/adminUi";
+  ADMIN_SEMANTIC_REJECT_BTN_CLASS,
+  ADMIN_TEXT_MUTED_CLASS,
+} from "@/lib/adminUi";
 
 type StewardApplicationPayload = {
   id?: string;
@@ -105,7 +108,7 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
       data-testid="admin-steward-application-review"
       data-tt-admin-onboarding-review-card="steward"
     >
-      <h2 className="text-small font-semibold uppercase tracking-wide text-ink-500">
+      <h2 className={`text-small font-semibold uppercase tracking-wide ${ADMIN_TEXT_MUTED_CLASS}`}>
         {t("admin_steward_app_title")}
       </h2>
       {loading ? (
@@ -119,7 +122,7 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
       ) : (
         <div className="mt-3 space-y-3 text-body">
           <p>
-            <span className="text-meta text-ink-500">{t("admin_steward_app_status")}: </span>
+            <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_status")}: </span>
             <span className="font-mono text-meta">
               {app?.status === "needs_more_info"
                 ? t("admin_steward_app_status_needs_more_info")
@@ -128,13 +131,13 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
           </p>
           {app?.jurisdictions?.length ? (
             <p>
-              <span className="text-meta text-ink-500">{t("admin_steward_app_jurisdictions")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_jurisdictions")}: </span>
               <span className="font-mono text-meta">{app.jurisdictions.join(", ")}</span>
             </p>
           ) : null}
           {app?.stake_quote?.cumulative_ttg_units_required != null ? (
             <p>
-              <span className="text-meta text-ink-500">{t("admin_steward_app_ttg")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_ttg")}: </span>
               <span className="font-mono text-meta">
                 {app.stake_quote.cumulative_ttg_units_required.toLocaleString()} TTG
               </span>
@@ -142,25 +145,25 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
           ) : null}
           {legalName ? (
             <p>
-              <span className="text-meta text-ink-500">{t("admin_steward_app_legalName")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_legalName")}: </span>
               <span className="font-mono text-meta">{legalName}</span>
             </p>
           ) : null}
           {typeof payload?.motivation === "string" && payload.motivation.trim() ? (
             <div data-tt-admin-steward-motivation="1">
-              <p className="text-meta text-ink-500">{t("admin_steward_app_motivation")}</p>
+              <p className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_motivation")}</p>
               <p className="mt-0.5 whitespace-pre-wrap text-small text-ink-800">{payload.motivation}</p>
             </div>
           ) : null}
           {typeof payload?.contact_email === "string" && payload.contact_email.trim() ? (
             <p data-tt-admin-steward-contact-email="1">
-              <span className="text-meta text-ink-500">{t("admin_steward_app_contactEmail")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_contactEmail")}: </span>
               <span className="font-mono text-meta">{payload.contact_email}</span>
             </p>
           ) : null}
           {typeof payload?.country_code === "string" && payload.country_code.trim() ? (
             <p data-tt-admin-steward-country="1">
-              <span className="text-meta text-ink-500">{t("admin_steward_app_country")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_country")}: </span>
               <span className="font-mono text-meta">{payload.country_code}</span>
             </p>
           ) : null}
@@ -177,7 +180,7 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
           ) : null}
           {app?.status === "rejected" && app.rejection_message ? (
             <p className="text-small text-ink-700 whitespace-pre-wrap" data-tt-admin-steward-rejection="1">
-              <span className="text-meta text-ink-500">{t("admin_steward_app_rejectionMessage")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_rejectionMessage")}: </span>
               {app.rejection_message}
             </p>
           ) : null}
@@ -186,7 +189,7 @@ export function AdminStewardApplicationReviewCard({ userId }: { userId: string }
               className="text-small text-ink-700 whitespace-pre-wrap"
               data-tt-admin-steward-needs-more-info="1"
             >
-              <span className="text-meta text-ink-500">{t("admin_steward_app_needsMoreInfoNote")}: </span>
+              <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_steward_app_needsMoreInfoNote")}: </span>
               {app.rejection_message}
             </p>
           ) : null}

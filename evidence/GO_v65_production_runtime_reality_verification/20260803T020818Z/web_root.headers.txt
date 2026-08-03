@@ -1,0 +1,22 @@
+HTTP/1.1 200 OK
+x-frame-options: SAMEORIGIN
+x-content-type-options: nosniff
+referrer-policy: strict-origin-when-cross-origin
+permissions-policy: camera=(), microphone=(), geolocation=(self)
+strict-transport-security: max-age=31536000; includeSubDomains
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+x-nextjs-cache: HIT
+x-nextjs-prerender: 1
+x-nextjs-prerender: 1
+x-nextjs-stale-time: 900
+cache-control: s-maxage=31536000
+etag: "12j6dyu2pl51n8u"
+content-type: text/html; charset=utf-8
+content-length: 78739
+date: Mon, 03 Aug 2026 02:08:31 GMT
+connection: keep-alive
+keep-alive: timeout=5
+server: Fly/30b4b59b0 (2026-07-30)
+via: 1.1 fly.io, 1.1 fly.io
+fly-request-id: 01KZ2P2EF7JC6ACFSVV199B90J-sjc
+

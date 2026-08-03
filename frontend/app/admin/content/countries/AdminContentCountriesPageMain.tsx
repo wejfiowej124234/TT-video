@@ -93,45 +93,53 @@ export function AdminContentCountriesPageMain() {
             </tr>
           </AdminContentTableHead>
           <AdminContentTableBody>
-            {items.map((row) => {
-              const edit = editNames[row.id] ?? { zh: row.name_zh, en: row.name_en };
-              return (
-                <tr key={row.id}>
-                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.iso3166}</td>
-                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>
-                    <input
-                      className={`w-full ${ADMIN_FILTER_INPUT_SM_CLASS}`}
-                      value={edit.zh}
-                      onChange={(e) =>
-                        setEditNames((prev) => ({ ...prev, [row.id]: { ...edit, zh: e.target.value } }))
-                      }
-                    />
-                  </td>
-                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>
-                    <AdminContentStatusBadge status={row.publish_status} />
-                  </td>
-                  <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.version}</td>
-                  <td className={`${ADMIN_TABLE_TD_CELL_CLASS} space-x-2`}>
-                    <button type="button" disabled={busy} className="underline" onClick={() => saveRow(row, edit.zh, edit.en)}>
-                      {t("admin_content_action_save")}
-                    </button>
-                    <button type="button" disabled={busy} className="underline" onClick={() => submitReview(row)}>
-                      {t("admin_content_action_submit_review")}
-                    </button>
-                    <button
-                      type="button"
-                      disabled={busy}
-                      className="underline"
-                      onClick={() =>
-                        requestConfirm(adminConfirmCatalogPublish(() => publish(row)))
-                      }
-                    >
-                      {t("admin_content_action_publish")}
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {items.length === 0 ? (
+              <tr>
+                <td colSpan={5} className={`${ADMIN_TABLE_TD_CELL_CLASS} text-ink-500`}>
+                  {t("admin_content_countries_empty")}
+                </td>
+              </tr>
+            ) : (
+              items.map((row) => {
+                const edit = editNames[row.id] ?? { zh: row.name_zh, en: row.name_en };
+                return (
+                  <tr key={row.id}>
+                    <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.iso3166}</td>
+                    <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                      <input
+                        className={`w-full ${ADMIN_FILTER_INPUT_SM_CLASS}`}
+                        value={edit.zh}
+                        onChange={(e) =>
+                          setEditNames((prev) => ({ ...prev, [row.id]: { ...edit, zh: e.target.value } }))
+                        }
+                      />
+                    </td>
+                    <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                      <AdminContentStatusBadge status={row.publish_status} />
+                    </td>
+                    <td className={ADMIN_TABLE_TD_CELL_CLASS}>{row.version}</td>
+                    <td className={`${ADMIN_TABLE_TD_CELL_CLASS} space-x-2`}>
+                      <button type="button" disabled={busy} className="underline" onClick={() => saveRow(row, edit.zh, edit.en)}>
+                        {t("admin_content_action_save")}
+                      </button>
+                      <button type="button" disabled={busy} className="underline" onClick={() => submitReview(row)}>
+                        {t("admin_content_action_submit_review")}
+                      </button>
+                      <button
+                        type="button"
+                        disabled={busy}
+                        className="underline"
+                        onClick={() =>
+                          requestConfirm(adminConfirmCatalogPublish(() => publish(row)))
+                        }
+                      >
+                        {t("admin_content_action_publish")}
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </AdminContentTableBody>
         </AdminContentDataTable>
       </div>

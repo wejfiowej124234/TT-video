@@ -1,0 +1,1 @@
+/auth/login?returnUrl=%2Fadmin

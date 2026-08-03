@@ -15,8 +15,8 @@ type Props = {
 
 function toneClass(tone: FinanceDataSourceTone): string {
   if (tone === "unavailable") return "border-warning/50 bg-warning/5 text-warning";
-  if (tone === "mixed") return "border-ref-sun/40 bg-bg-console/50 text-ink-800";
-  return "border-ink-300 bg-bg-console/40 text-ink-700";
+  if (tone === "mixed") return "border-ref-sun/40 bg-bg-console/50 text-slate-200";
+  return "border-white/12 bg-bg-console/40 text-slate-300";
 }
 
 /** Batch-11 HU-402 · finance summary 强制数据源条（fail-closed） */
@@ -34,8 +34,11 @@ export function AdminFinanceSummaryDataSourceStrip({ meta, summary }: Props) {
       <p className="text-body font-medium">{t("admin_finance_summary_data_source_title")}</p>
       <p className={`mt-1 ${ADMIN_TEXT_META_CLASS}`}>{t(strip.labelKey)}</p>
       {meta?.source ? (
-        <p className="mt-1 font-mono text-meta" data-tt-admin-finance-meta-source={meta.source}>
-          meta.source={meta.source}
+        <p
+          className={`mt-1 ${ADMIN_TEXT_META_CLASS}`}
+          data-tt-admin-finance-meta-source={meta.source}
+        >
+          {t("admin_ops_leaf_data_source_connected")}
         </p>
       ) : null}
     </aside>

@@ -63,7 +63,8 @@ describe("admin P1 UX fixes (①)", () => {
     expect(adminUi).toContain("ADMIN_TABLE_TD_TIMESTAMP_CLASS");
     const auditTable = readFileSync(join(FE, "app", "admin", "audit", "AdminAuditTableSection.tsx"), "utf8");
     expect(auditTable).not.toContain("font-mono text-meta");
-    expect(auditTable).toContain("font-mono text-small text-ink-800");
+    expect(auditTable).toContain("ADMIN_TABLE_TD_MONO_CLASS");
+    expect(auditTable).not.toContain("text-ink-800");
   });
 
   it("governance list pages have breadcrumb leaf keys (P1-9)", () => {

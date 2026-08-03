@@ -22,7 +22,13 @@ export function AdminTrustGrowthAlertsSection({ alerts }: AdminTrustGrowthAlerts
         {t("admin_trust_growth_section_alerts")}
       </h2>
       {alerts.length === 0 ? (
-        <p className="mt-2 text-body text-ink-600">{t("admin_trust_growth_no_alerts")}</p>
+        <p
+          className="mt-2 text-body text-ink-600"
+          role="status"
+          data-tt-admin-trust-growth-alerts-empty="1"
+        >
+          {t("admin_trust_growth_no_alerts")}
+        </p>
       ) : (
         <ul className="mt-3 space-y-2">
           {alerts.map((a, i) => {

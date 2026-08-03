@@ -1,0 +1,21 @@
+HTTP/1.1 200 OK
+content-type: application/json
+cache-control: private, max-age=5, stale-while-revalidate=15
+x-traveltrust-meta-cache: hit
+x-traveltrust-meta-view: compact
+vary: origin, access-control-request-method, access-control-request-headers
+access-control-allow-credentials: true
+x-authority-source: db_projection
+x-request-id: 6d9880f9-7072-47ba-bee5-ce5e0a00f33c
+x-message-id: dbd789db-e65d-470a-892b-2dec231b49d7
+x-content-type-options: nosniff
+x-frame-options: DENY
+referrer-policy: no-referrer
+permissions-policy: geolocation=(), microphone=(), camera=()
+strict-transport-security: max-age=31536000; includeSubDomains
+content-length: 20947
+date: Mon, 03 Aug 2026 02:08:28 GMT
+server: Fly/30b4b59b0 (2026-07-30)
+via: 1.1 fly.io, 1.1 fly.io
+fly-request-id: 01KZ2P2BW7MTB8582V8YSWRRVK-sjc
+

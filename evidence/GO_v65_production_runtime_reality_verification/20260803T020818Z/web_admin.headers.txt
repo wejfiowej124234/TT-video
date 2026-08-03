@@ -1,0 +1,15 @@
+HTTP/1.1 307 Temporary Redirect
+x-frame-options: SAMEORIGIN
+x-content-type-options: nosniff
+referrer-policy: strict-origin-when-cross-origin
+permissions-policy: camera=(), microphone=(), geolocation=(self)
+strict-transport-security: max-age=31536000; includeSubDomains
+location: /auth/login?returnUrl=%2Fadmin
+date: Mon, 03 Aug 2026 02:08:37 GMT
+connection: keep-alive
+keep-alive: timeout=5
+transfer-encoding: chunked
+server: Fly/30b4b59b0 (2026-07-30)
+via: 1.1 fly.io, 1.1 fly.io
+fly-request-id: 01KZ2P2MKHE4J9VDK69YCFWBAF-sjc
+

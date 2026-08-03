@@ -563,16 +563,7 @@ export default function AdminHomeClient() {
             </div>
           ) : (
             <>
-              <AdminHomeSystemOverviewSection
-                counts={inbox.counts}
-                channels={inbox.channels}
-                inboxLoading={inbox.loading}
-                kpi={kpi.counts}
-                kpiLoading={kpi.loading}
-                kpiSource={kpi.kpiSource}
-                inboxPendingTotal={inboxPendingResolved ?? inboxPendingTotal}
-                focusInbox={focusInbox}
-              />
+              {/* V65 UX Operability · non-focus: Inbox → KPI → System → modules */}
               <AdminHomeInboxStrip
                 counts={inbox.counts}
                 channels={inbox.channels}
@@ -596,6 +587,16 @@ export default function AdminHomeClient() {
                   inbox.reload();
                   kpi.reload();
                 }}
+              />
+              <AdminHomeSystemOverviewSection
+                counts={inbox.counts}
+                channels={inbox.channels}
+                inboxLoading={inbox.loading}
+                kpi={kpi.counts}
+                kpiLoading={kpi.loading}
+                kpiSource={kpi.kpiSource}
+                inboxPendingTotal={inboxPendingResolved ?? inboxPendingTotal}
+                focusInbox={focusInbox}
               />
             </>
           )}

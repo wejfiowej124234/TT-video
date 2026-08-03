@@ -10,6 +10,7 @@ import { AdminHomeTreasuryPoolStrip } from "@/components/admin/AdminHomeTreasury
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminListPageChrome } from "@/components/admin/AdminListPageChrome";
+import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminPermissionDeniedBanner } from "@/components/admin/AdminPermissionDeniedBanner";
 import { ADMIN_PERM } from "@/lib/admin/adminPermissionIds";
 import { AdminMetaBuildSection, isAdminMetaRecord } from "@/components/admin/AdminMetaBuildPanel";
@@ -174,6 +175,13 @@ export default function AdminFinancePageMain() {
           <AdminFinanceSummaryGridSection t={t} summary={summary} />
         </section>
       )}
+
+      {!loading && !error && !summary ? (
+        <AdminListPageEmptyState
+          messageKey="admin_finance_summary_empty"
+          nextLinks={[{ href: "/admin/finance-suite", labelKey: "admin_fin_suite_title" }]}
+        />
+      ) : null}
     </AdminListPageChrome>
   );
 }
