@@ -1,0 +1,20 @@
+{
+  "stamp": "20260803T040941Z",
+  "totals": {
+    "open": 19,
+    "p0_open": 0,
+    "p1_open": 0,
+    "p2_open": 19,
+    "closed_in_batch_fix": 11,
+    "closed_confirm_design": 2,
+    "closed_campaign": 1
+  },
+  "freeze_gate_eval": {
+    "p0_ok": true,
+    "p1_ok": true,
+    "p2_ok": true,
+    "batch_size_ok": true,
+    "ready": true,
+    "evaluated_at": "20260803T040941Z"
+  }
+}

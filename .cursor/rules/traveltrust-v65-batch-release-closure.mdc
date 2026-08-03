@@ -1,0 +1,27 @@
+# V65 · Batch Release Closure
+
+**SSOT:** [TT-V65-BATCH-RELEASE-CLOSURE-LATEST.md](../../docs/runbook/TT-V65-BATCH-RELEASE-CLOSURE-LATEST.md) · [TT-V65-BATCH-RELEASE-CLOSURE-LATEST.json](../../docs/runbook/TT-V65-BATCH-RELEASE-CLOSURE-LATEST.json)
+
+**ACTIVE:** Admin UX / UI / Locale / Dashboard / Workbench 变更走 **Batch Closure**，禁止碎片化上线。  
+**Candidate lock:** 工作挂在 **V65** tip / Runtime SSOT 上。**禁止**另起 `V65.1` / `V65.x` 版本轨；Batch 名只是 V65 内收口波次。
+
+## Agent MUST
+
+- Put every non-P0 fix into Gap Inventory → active Batch (current: **V65 Admin UX Batch** · same V65)
+- Prefer Daily Release Cut: Audit → Fix → Freeze → one Commit → one Build → one Production Deploy → Runtime Evidence
+- Keep batch size in **10–50** items when collecting Admin UX (split modules if 100+)
+- After Batch Freeze: verify-only; new findings → next Batch
+- Verify `Git` = `Build` = `Deploy` = `Runtime` before claiming Batch CLOSED
+- Cite Batch ID + Gap Inventory in handoff notes
+
+## Agent MUST NOT
+
+- Single small fix → immediate Production Deploy (except **P0** incident with explicit Owner scope)
+- More than **one** Production Deploy per calendar day for this track (P0 exception)
+- Expand scope after Freeze
+- Claim Local Batch PASS as Production GO / flip `TT_PRODUCTION_GO`
+- Bypass Gap Inventory for Admin UX/UI/Locale/Workbench polish
+
+## P0 exception
+
+Online incident only · separate incident note + Evidence · still record SHA alignment.

@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0.0",
+  "document_id": "TT-V65-BATCH-RELEASE-CLOSURE",
+  "status": "ACTIVE",
+  "stamp_utc": "20260803T040941Z",
+  "mode": "BATCH_RELEASE_CLOSURE",
+  "supersedes_process": "fragment_fix_then_immediate_production_deploy",
+  "tt_production_go": "NO_GO",
+  "truth_chain": [
+    "V65_PRODUCT_TRUTH",
+    "RELEASE_CANDIDATE_BATCH",
+    "PRODUCTION_RUNTIME"
+  ],
+  "forbidden": [
+    "local_direct_to_production_except_p0",
+    "single_issue_production_deploy"
+  ],
+  "pipeline": [
+    "deep_audit",
+    "gap_inventory",
+    "batch_fix",
+    "local_full_verify",
+    "release_batch_freeze",
+    "one_commit",
+    "one_build",
+    "one_production_deploy",
+    "runtime_verify"
+  ],
+  "batch_size_guidance": {
+    "daily_recommended_min": 10,
+    "daily_recommended_max": 50,
+    "small": {
+      "min": 10,
+      "max": 30,
+      "fit": [
+        "copy",
+        "style",
+        "locale",
+        "small_widget"
+      ]
+    },
+    "medium": {
+      "min": 30,
+      "max": 80,
+      "fit": [
+        "single_module",
+        "single_domain"
+      ]
+    },
+    "large": {
+      "min": 100,
+      "max": null,
+      "fit": [
+        "must_split_by_module"
+      ]
+    }
+  },
+  "daily_release_window": {
+    "max_production_deploys_per_day": 1,
+    "p0_exception": true,
+    "cut_id_pattern": "V65-BATCH-YYYYMMDD",
+    "schedule": {
+      "morning": "audit_and_gap_inventory",
+      "afternoon": "batch_fix_and_local_verify",
+      "evening": "release_cut_freeze_commit_build_deploy_runtime_evidence"
+    },
+    "cut_must_register": [
+      "batch_id",
+      "commit_sha",
+      "build_artifact_sha",
+      "deploy_proof",
+      "evidence_dir",
+      "gap_inventory_closed_count"
+    ]
+  },
+  "rules": {
+    "R1_all_fixes_enter_batch": true,
+    "R2_batch_freeze_then_verify_only": true,
+    "R3_max_one_production_deploy_per_day": true,
+    "R4_git_build_deploy_runtime_must_match": true
+  },
+  "active_batch": {
+    "id": "V65-ADMIN-UX",
+    "name": "V65 Admin UX Batch Closure",
+    "candidate": "V65",
+    "not_a_new_version": true,
+    "status": "FROZEN_BATCH_FIX_APPLIED",
+    "gate": "G005_CN_RUNTIME_UAT",
+    "inventory_stamp": "20260803T040941Z",
+    "scope": [
+      "admin_ui",
+      "admin_ux",
+      "locale_i18n",
+      "dashboard",
+      "workbench",
+      "live_production_findings"
+    ],
+    "batch_tree": [
+      "i18n",
+      "domain_language",
+      "visual",
+      "workbench",
+      "tables"
+    ],
+    "gap_inventory": "docs/runbook/TT-V65-ADMIN-UX-BATCH-GAP-INVENTORY-LATEST.json",
+    "evidence_pack": "evidence/GO_v65_admin_ux_batch/20260803T040941Z/",
+    "freeze_status": "FROZEN",
+    "totals_snapshot": {
+      "open": 19,
+      "p0_open": 0,
+      "p1_open": 0,
+      "p2_open_children": 19,
+      "locale_keys_patched": 61
+    },
+    "freeze_gate": {
+      "p0_open_max": 0,
+      "p1_open_max": 0,
+      "p2_open_max": 50,
+      "batch_size_min": 10,
+      "batch_size_max": 50
+    },
+    "next": "one_commit → one_build → one_production_web_deploy → runtime_evidence",
+    "batch_fix": {
+      "stamp": "20260803T040941Z",
+      "locale_keys_applied": 61,
+      "locale_keys_missed": [],
+      "closed_gap_ids": [
+        "V65-UX-G012",
+        "V65-UX-G013",
+        "V65-UX-G014",
+        "V65-UX-G015",
+        "V65-UX-G016",
+        "V65-UX-G017",
+        "V65-UX-G018",
+        "V65-UX-G019",
+        "V65-UX-G020",
+        "V65-UX-G021",
+        "V65-UX-G022"
+      ]
+    }
+  },
+  "transitional_note": {
+    "last_fragment_web_tip_sha": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
+    "meaning": "Workbench polish shipped before Batch Closure ACTIVE; further Admin UX changes must enter V65 Admin UX Batch"
+  },
+  "related": {
+    "md": "docs/runbook/TT-V65-BATCH-RELEASE-CLOSURE-LATEST.md",
+    "runtime_ssot": "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.md",
+    "cursor_rule": ".cursor/rules/traveltrust-v65-batch-release-closure.mdc"
+  }
+}

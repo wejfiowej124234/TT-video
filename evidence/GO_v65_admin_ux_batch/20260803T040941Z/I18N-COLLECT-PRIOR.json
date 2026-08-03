@@ -1,0 +1,804 @@
+{
+  "en_residual_ops": [
+    {
+      "key": "admin_audit_ops_operations",
+      "zh_value": "operations"
+    },
+    {
+      "key": "admin_users_role_filter_ph",
+      "zh_value": "tourist、guide、admin…"
+    },
+    {
+      "key": "admin_users_kyc_filter_ph",
+      "zh_value": "none、pending…"
+    },
+    {
+      "key": "admin_shell_brand_wordmark",
+      "zh_value": "TravelTrust"
+    },
+    {
+      "key": "admin_business_superadmin_shortcut_title",
+      "zh_value": "Development Shortcut · Business Account · Not ADM-U01"
+    },
+    {
+      "key": "admin_onboarding_dual_ledger_payment",
+      "zh_value": "Payment-events"
+    },
+    {
+      "key": "admin_onboarding_dual_ledger_webhook",
+      "zh_value": "Webhook jobs"
+    },
+    {
+      "key": "admin_fin_drift_depth_detected",
+      "zh_value": "drift_detected"
+    },
+    {
+      "key": "admin_fin_drift_depth_status",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_fin_drift_depth_link_cross_check",
+      "zh_value": "cross-check"
+    },
+    {
+      "key": "admin_official_templates_col_catalog",
+      "zh_value": "Catalog"
+    },
+    {
+      "key": "admin_public_operations_stats_col_origin",
+      "zh_value": "data_origin"
+    },
+    {
+      "key": "admin_public_operations_publish_status_filter",
+      "zh_value": "display_status"
+    },
+    {
+      "key": "admin_public_operations_publish_col_display_status",
+      "zh_value": "display_status"
+    },
+    {
+      "key": "admin_public_operations_publish_col_display_origin",
+      "zh_value": "display_origin"
+    },
+    {
+      "key": "admin_public_operations_col_featured",
+      "zh_value": "featured"
+    },
+    {
+      "key": "admin_public_operations_col_priority",
+      "zh_value": "display_priority"
+    },
+    {
+      "key": "admin_public_operations_col_surfaces",
+      "zh_value": "display_surfaces"
+    },
+    {
+      "key": "admin_public_operations_col_display_start_at",
+      "zh_value": "display_start_at"
+    },
+    {
+      "key": "admin_public_operations_col_display_end_at",
+      "zh_value": "display_end_at"
+    },
+    {
+      "key": "admin_public_operations_history_col_entity",
+      "zh_value": "entity_id"
+    },
+    {
+      "key": "admin_official_cold_start_action_deploy",
+      "zh_value": "Deploy"
+    },
+    {
+      "key": "admin_official_cold_start_action_rollback",
+      "zh_value": "Rollback"
+    },
+    {
+      "key": "admin_official_cold_start_col_surfaces",
+      "zh_value": "Surfaces"
+    },
+    {
+      "key": "admin_backup_runbooks_heading",
+      "zh_value": "Runbook"
+    },
+    {
+      "key": "admin_orders_state_placeholder",
+      "zh_value": "draft、escrowed、disputed…"
+    },
+    {
+      "key": "admin_disputes_status_placeholder",
+      "zh_value": "open、resolved…"
+    },
+    {
+      "key": "admin_audit_list_actorId",
+      "zh_value": "Actor ID"
+    },
+    {
+      "key": "admin_audit_list_action",
+      "zh_value": "Action"
+    },
+    {
+      "key": "admin_audit_list_resourceType",
+      "zh_value": "Resource type"
+    },
+    {
+      "key": "admin_audit_list_phAction",
+      "zh_value": "admin.audit_logs.read"
+    },
+    {
+      "key": "admin_audit_list_phResourceType",
+      "zh_value": "orders"
+    },
+    {
+      "key": "admin_audit_list_colRequestId",
+      "zh_value": "Request ID"
+    },
+    {
+      "key": "admin_region_share_reconcile_closure_clean",
+      "zh_value": "projection_closure_clean"
+    },
+    {
+      "key": "admin_region_share_reconcile_triangle_marker",
+      "zh_value": "amount_triangle_marker"
+    },
+    {
+      "key": "admin_region_share_reconcile_epoch_marker",
+      "zh_value": "epoch_reconcile_marker"
+    },
+    {
+      "key": "admin_rank_snapshots_feed_mode",
+      "zh_value": "feed_mode"
+    },
+    {
+      "key": "admin_rank_snapshots_colMode",
+      "zh_value": "feed_mode"
+    },
+    {
+      "key": "admin_rank_snapshots_colCount",
+      "zh_value": "item_count"
+    },
+    {
+      "key": "admin_rank_snapshots_colTopPosts",
+      "zh_value": "top_post_ids"
+    },
+    {
+      "key": "admin_rank_snapshots_colCreated",
+      "zh_value": "created_at"
+    },
+    {
+      "key": "admin_penalties_reportId",
+      "zh_value": "report_id"
+    },
+    {
+      "key": "admin_penalties_status",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_penalties_colAction",
+      "zh_value": "action"
+    },
+    {
+      "key": "admin_penalties_colStatus",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_penalties_colSubject",
+      "zh_value": "subject"
+    },
+    {
+      "key": "admin_penalties_colReport",
+      "zh_value": "report_id"
+    },
+    {
+      "key": "admin_penalties_colReason",
+      "zh_value": "reason"
+    },
+    {
+      "key": "admin_penalties_colBy",
+      "zh_value": "created_by"
+    },
+    {
+      "key": "admin_penalties_colExpires",
+      "zh_value": "expires_at"
+    },
+    {
+      "key": "admin_penalties_colMeta",
+      "zh_value": "metadata"
+    },
+    {
+      "key": "admin_penalties_colCreated",
+      "zh_value": "created_at"
+    },
+    {
+      "key": "admin_penalties_createSubject",
+      "zh_value": "subject_user_id（UUID）"
+    },
+    {
+      "key": "admin_penalties_createAction",
+      "zh_value": "action"
+    },
+    {
+      "key": "admin_comment_vis_commentId",
+      "zh_value": "comment_id（UUID）"
+    },
+    {
+      "key": "admin_comment_vis_status",
+      "zh_value": "visibility_status"
+    },
+    {
+      "key": "admin_abuse_field_comment_rate_window_sec",
+      "zh_value": "comment_rate_window_sec（10～86400）"
+    },
+    {
+      "key": "admin_abuse_field_comment_max_per_window",
+      "zh_value": "comment_max_per_window（1～2000）"
+    },
+    {
+      "key": "admin_abuse_field_comment_min_interval_sec",
+      "zh_value": "comment_min_interval_sec（0～3600）"
+    },
+    {
+      "key": "admin_abuse_field_comment_duplicate_lookback_sec",
+      "zh_value": "comment_duplicate_lookback_sec（0～2592000）"
+    },
+    {
+      "key": "admin_abuse_field_post_rate_window_sec",
+      "zh_value": "post_rate_window_sec（60～86400）"
+    },
+    {
+      "key": "admin_abuse_field_post_max_per_window",
+      "zh_value": "post_max_per_window（1～500）"
+    },
+    {
+      "key": "admin_abuse_field_post_min_interval_sec",
+      "zh_value": "post_min_interval_sec（0～86400）"
+    },
+    {
+      "key": "admin_abuse_field_post_duplicate_lookback_sec",
+      "zh_value": "post_duplicate_lookback_sec（0～2592000）"
+    },
+    {
+      "key": "admin_abuse_field_report_rate_window_sec",
+      "zh_value": "report_rate_window_sec（60～2592000）"
+    },
+    {
+      "key": "admin_abuse_field_report_max_per_window",
+      "zh_value": "report_max_per_window（1～500）"
+    },
+    {
+      "key": "admin_abuse_field_report_min_interval_sec",
+      "zh_value": "report_min_interval_sec（0～86400）"
+    },
+    {
+      "key": "admin_abuse_field_report_duplicate_target_lookback_sec",
+      "zh_value": "report_duplicate_target_lookback_sec（0～7776000）"
+    },
+    {
+      "key": "admin_appeals_reportId",
+      "zh_value": "report_id"
+    },
+    {
+      "key": "admin_appeals_status",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_appeal_review_appealId",
+      "zh_value": "appeal_id（UUID）"
+    },
+    {
+      "key": "admin_appeal_review_expectedVer",
+      "zh_value": "expected_version"
+    },
+    {
+      "key": "admin_appeal_review_decision",
+      "zh_value": "decision"
+    },
+    {
+      "key": "admin_mod_cases_actorId",
+      "zh_value": "actor_id"
+    },
+    {
+      "key": "admin_mod_cases_statusBefore",
+      "zh_value": "status_before"
+    },
+    {
+      "key": "admin_mod_cases_statusAfter",
+      "zh_value": "status_after"
+    },
+    {
+      "key": "admin_risk_signals_signalType",
+      "zh_value": "signal_type"
+    },
+    {
+      "key": "admin_risk_signals_ruleId",
+      "zh_value": "rule_id"
+    },
+    {
+      "key": "admin_risk_signals_severity",
+      "zh_value": "severity"
+    },
+    {
+      "key": "admin_policy_logs_summary",
+      "zh_value": "summary"
+    },
+    {
+      "key": "admin_policy_logs_source",
+      "zh_value": "source"
+    },
+    {
+      "key": "admin_policy_logs_actor_id",
+      "zh_value": "actor_id"
+    },
+    {
+      "key": "admin_lifecycle_filter_machine",
+      "zh_value": "machine_code"
+    },
+    {
+      "key": "admin_lifecycle_filter_domain",
+      "zh_value": "domain"
+    },
+    {
+      "key": "admin_lifecycle_filter_entity",
+      "zh_value": "entity_type"
+    },
+    {
+      "key": "admin_lifecycle_filter_version",
+      "zh_value": "version"
+    },
+    {
+      "key": "admin_lifecycle_filter_sot",
+      "zh_value": "source_of_truth"
+    },
+    {
+      "key": "admin_lifecycle_filter_anomaly",
+      "zh_value": "anomaly_flag"
+    },
+    {
+      "key": "admin_policies_filter_status",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_policies_publishVer",
+      "zh_value": "expected_version"
+    },
+    {
+      "key": "admin_tool_audits_filter_approval_id",
+      "zh_value": "approval_request_id"
+    },
+    {
+      "key": "admin_media_access_logs_filter_token_id",
+      "zh_value": "token_id"
+    },
+    {
+      "key": "admin_media_access_logs_col_object",
+      "zh_value": "object_id"
+    },
+    {
+      "key": "admin_media_access_logs_col_actor",
+      "zh_value": "actor_or_ip"
+    },
+    {
+      "key": "admin_media_access_logs_col_token",
+      "zh_value": "token_id"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_filter_scope",
+      "zh_value": "url_scope"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_filter_issued_to",
+      "zh_value": "issued_to"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_created",
+      "zh_value": "created_at"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_expires",
+      "zh_value": "expires_at"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_scope",
+      "zh_value": "url_scope"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_object",
+      "zh_value": "object_id"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_issued",
+      "zh_value": "issued_to"
+    },
+    {
+      "key": "admin_flags_filter_enabled",
+      "zh_value": "enabled"
+    },
+    {
+      "key": "admin_flags_publishEnabled",
+      "zh_value": "enabled"
+    },
+    {
+      "key": "admin_flags_publishRegionMode",
+      "zh_value": "region"
+    },
+    {
+      "key": "admin_flags_publishVer",
+      "zh_value": "expected_version"
+    },
+    {
+      "key": "admin_secrets_meta_status_active",
+      "zh_value": "active"
+    },
+    {
+      "key": "admin_secrets_meta_status_deprecated",
+      "zh_value": "deprecated"
+    },
+    {
+      "key": "admin_secrets_meta_status_revoked",
+      "zh_value": "revoked"
+    },
+    {
+      "key": "admin_secrets_meta_status_pending",
+      "zh_value": "pending"
+    },
+    {
+      "key": "admin_secrets_meta_status_suspended",
+      "zh_value": "suspended"
+    },
+    {
+      "key": "admin_tenant_scopes_filter_status",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_tenant_scopes_filter_scope_class",
+      "zh_value": "scope_class"
+    },
+    {
+      "key": "admin_tenant_scopes_colTenant",
+      "zh_value": "tenant_key"
+    },
+    {
+      "key": "admin_tenant_scopes_colRegion",
+      "zh_value": "region"
+    },
+    {
+      "key": "admin_tenant_scopes_colClass",
+      "zh_value": "scope_class"
+    },
+    {
+      "key": "admin_tenant_scopes_colStatus",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_tenant_scopes_colVer",
+      "zh_value": "version"
+    },
+    {
+      "key": "admin_tenant_scopes_colUpdated",
+      "zh_value": "updated_at"
+    },
+    {
+      "key": "admin_compliance_requests_filter_request_type",
+      "zh_value": "request_type"
+    },
+    {
+      "key": "admin_compliance_requests_filter_status",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_compliance_requests_colRef",
+      "zh_value": "request_ref"
+    },
+    {
+      "key": "admin_compliance_requests_colStatus",
+      "zh_value": "status"
+    },
+    {
+      "key": "admin_compliance_requests_colVer",
+      "zh_value": "version"
+    },
+    {
+      "key": "admin_compliance_events_requestId",
+      "zh_value": "request_id"
+    },
+    {
+      "key": "admin_compliance_events_colTime",
+      "zh_value": "occurred_at"
+    },
+    {
+      "key": "admin_compliance_events_colType",
+      "zh_value": "event_type"
+    },
+    {
+      "key": "admin_compliance_events_colDetail",
+      "zh_value": "event_detail"
+    },
+    {
+      "key": "admin_compliance_update_expectedVersion",
+      "zh_value": "expected_version"
+    },
+    {
+      "key": "admin_page_subtitle",
+      "zh_value": "Product Enhancement Sprint · Conversion Analytics Layer"
+    },
+    {
+      "key": "admin_steward_app_actionNeedsMoreInfo",
+      "zh_value": "Steward App ActionNeedsMoreInfo"
+    },
+    {
+      "key": "admin_steward_app_contactEmail",
+      "zh_value": "Steward App ContactEmail"
+    },
+    {
+      "key": "admin_steward_app_needsMoreInfoNote",
+      "zh_value": "Steward App NeedsMoreInfoNote"
+    }
+  ],
+  "title_case": [
+    {
+      "key": "admin_business_superadmin_shortcut_title",
+      "zh_value": "Development Shortcut · Business Account · Not ADM-U01"
+    },
+    {
+      "key": "admin_page_subtitle",
+      "zh_value": "Product Enhancement Sprint · Conversion Analytics Layer"
+    },
+    {
+      "key": "admin_steward_app_actionNeedsMoreInfo",
+      "zh_value": "Steward App ActionNeedsMoreInfo"
+    },
+    {
+      "key": "admin_steward_app_contactEmail",
+      "zh_value": "Steward App ContactEmail"
+    },
+    {
+      "key": "admin_steward_app_needsMoreInfoNote",
+      "zh_value": "Steward App NeedsMoreInfoNote"
+    }
+  ],
+  "snake_labels": [
+    {
+      "key": "admin_fin_drift_depth_detected",
+      "zh_value": "drift_detected"
+    },
+    {
+      "key": "admin_public_operations_stats_col_origin",
+      "zh_value": "data_origin"
+    },
+    {
+      "key": "admin_public_operations_publish_status_filter",
+      "zh_value": "display_status"
+    },
+    {
+      "key": "admin_public_operations_publish_col_display_status",
+      "zh_value": "display_status"
+    },
+    {
+      "key": "admin_public_operations_publish_col_display_origin",
+      "zh_value": "display_origin"
+    },
+    {
+      "key": "admin_public_operations_col_priority",
+      "zh_value": "display_priority"
+    },
+    {
+      "key": "admin_public_operations_col_surfaces",
+      "zh_value": "display_surfaces"
+    },
+    {
+      "key": "admin_public_operations_col_display_start_at",
+      "zh_value": "display_start_at"
+    },
+    {
+      "key": "admin_public_operations_col_display_end_at",
+      "zh_value": "display_end_at"
+    },
+    {
+      "key": "admin_public_operations_history_col_entity",
+      "zh_value": "entity_id"
+    },
+    {
+      "key": "admin_region_share_reconcile_closure_clean",
+      "zh_value": "projection_closure_clean"
+    },
+    {
+      "key": "admin_region_share_reconcile_triangle_marker",
+      "zh_value": "amount_triangle_marker"
+    },
+    {
+      "key": "admin_region_share_reconcile_epoch_marker",
+      "zh_value": "epoch_reconcile_marker"
+    },
+    {
+      "key": "admin_rank_snapshots_feed_mode",
+      "zh_value": "feed_mode"
+    },
+    {
+      "key": "admin_rank_snapshots_colMode",
+      "zh_value": "feed_mode"
+    },
+    {
+      "key": "admin_rank_snapshots_colCount",
+      "zh_value": "item_count"
+    },
+    {
+      "key": "admin_rank_snapshots_colTopPosts",
+      "zh_value": "top_post_ids"
+    },
+    {
+      "key": "admin_rank_snapshots_colCreated",
+      "zh_value": "created_at"
+    },
+    {
+      "key": "admin_penalties_reportId",
+      "zh_value": "report_id"
+    },
+    {
+      "key": "admin_penalties_colReport",
+      "zh_value": "report_id"
+    },
+    {
+      "key": "admin_penalties_colBy",
+      "zh_value": "created_by"
+    },
+    {
+      "key": "admin_penalties_colExpires",
+      "zh_value": "expires_at"
+    },
+    {
+      "key": "admin_penalties_colCreated",
+      "zh_value": "created_at"
+    },
+    {
+      "key": "admin_comment_vis_status",
+      "zh_value": "visibility_status"
+    },
+    {
+      "key": "admin_appeals_reportId",
+      "zh_value": "report_id"
+    },
+    {
+      "key": "admin_appeal_review_expectedVer",
+      "zh_value": "expected_version"
+    },
+    {
+      "key": "admin_mod_cases_actorId",
+      "zh_value": "actor_id"
+    },
+    {
+      "key": "admin_mod_cases_statusBefore",
+      "zh_value": "status_before"
+    },
+    {
+      "key": "admin_mod_cases_statusAfter",
+      "zh_value": "status_after"
+    },
+    {
+      "key": "admin_risk_signals_signalType",
+      "zh_value": "signal_type"
+    },
+    {
+      "key": "admin_risk_signals_ruleId",
+      "zh_value": "rule_id"
+    },
+    {
+      "key": "admin_policy_logs_actor_id",
+      "zh_value": "actor_id"
+    },
+    {
+      "key": "admin_lifecycle_filter_machine",
+      "zh_value": "machine_code"
+    },
+    {
+      "key": "admin_lifecycle_filter_entity",
+      "zh_value": "entity_type"
+    },
+    {
+      "key": "admin_lifecycle_filter_sot",
+      "zh_value": "source_of_truth"
+    },
+    {
+      "key": "admin_lifecycle_filter_anomaly",
+      "zh_value": "anomaly_flag"
+    },
+    {
+      "key": "admin_policies_publishVer",
+      "zh_value": "expected_version"
+    },
+    {
+      "key": "admin_tool_audits_filter_approval_id",
+      "zh_value": "approval_request_id"
+    },
+    {
+      "key": "admin_media_access_logs_filter_token_id",
+      "zh_value": "token_id"
+    },
+    {
+      "key": "admin_media_access_logs_col_object",
+      "zh_value": "object_id"
+    },
+    {
+      "key": "admin_media_access_logs_col_actor",
+      "zh_value": "actor_or_ip"
+    },
+    {
+      "key": "admin_media_access_logs_col_token",
+      "zh_value": "token_id"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_filter_scope",
+      "zh_value": "url_scope"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_filter_issued_to",
+      "zh_value": "issued_to"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_created",
+      "zh_value": "created_at"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_expires",
+      "zh_value": "expires_at"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_scope",
+      "zh_value": "url_scope"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_object",
+      "zh_value": "object_id"
+    },
+    {
+      "key": "admin_media_signed_url_tokens_col_issued",
+      "zh_value": "issued_to"
+    },
+    {
+      "key": "admin_flags_publishVer",
+      "zh_value": "expected_version"
+    },
+    {
+      "key": "admin_tenant_scopes_filter_scope_class",
+      "zh_value": "scope_class"
+    },
+    {
+      "key": "admin_tenant_scopes_colTenant",
+      "zh_value": "tenant_key"
+    },
+    {
+      "key": "admin_tenant_scopes_colClass",
+      "zh_value": "scope_class"
+    },
+    {
+      "key": "admin_tenant_scopes_colUpdated",
+      "zh_value": "updated_at"
+    },
+    {
+      "key": "admin_compliance_requests_filter_request_type",
+      "zh_value": "request_type"
+    },
+    {
+      "key": "admin_compliance_requests_colRef",
+      "zh_value": "request_ref"
+    },
+    {
+      "key": "admin_compliance_events_requestId",
+      "zh_value": "request_id"
+    },
+    {
+      "key": "admin_compliance_events_colTime",
+      "zh_value": "occurred_at"
+    },
+    {
+      "key": "admin_compliance_events_colType",
+      "zh_value": "event_type"
+    },
+    {
+      "key": "admin_compliance_events_colDetail",
+      "zh_value": "event_detail"
+    },
+    {
+      "key": "admin_compliance_update_expectedVersion",
+      "zh_value": "expected_version"
+    }
+  ]
+}
