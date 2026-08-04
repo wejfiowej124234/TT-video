@@ -1,0 +1,28 @@
+VERSION	STATUS  	DESCRIPTION	USER                  	DATE            	DOCKER IMAGE                                                      
+v72    	complete	Release    	github3344@hotmail.com	3m35s ago       	registry.fly.io/tt-api-prod:deployment-01KZ18QMVPM2VS9SJJBZMJ2808	
+v71    	failed  	Release    	github3344@hotmail.com	7m21s ago       	registry.fly.io/tt-api-prod:deployment-01KZ5BBQEZ0W6Z844YWDGNT404	
+v70    	complete	Release    	github3344@hotmail.com	13m19s ago      	registry.fly.io/tt-api-prod:deployment-01KZ18QMVPM2VS9SJJBZMJ2808	
+v69    	complete	Release    	github3344@hotmail.com	Aug 2 2026 13:49	registry.fly.io/tt-api-prod:deployment-01KZ18QMVPM2VS9SJJBZMJ2808	
+v68    	complete	Release    	github3344@hotmail.com	Aug 2 2026 13:01	registry.fly.io/tt-api-prod:deployment-01KZ18QMVPM2VS9SJJBZMJ2808	
+v67    	complete	Release    	github3344@hotmail.com	Aug 2 2026 12:47	registry.fly.io/tt-api-prod:deployment-01KZ17XMPRGJCQMS07C203THDJ	
+v66    	complete	Release    	github3344@hotmail.com	Aug 2 2026 12:32	registry.fly.io/tt-api-prod:deployment-01KZ17BP9ASVJVZ1Q7V9N6NSSD	
+v65    	complete	Release    	github3344@hotmail.com	Aug 2 2026 12:32	registry.fly.io/tt-api-prod:deployment-01KZ16S2PD23S6T6N3WVRR29X1	
+v64    	failed  	Release    	github3344@hotmail.com	Aug 2 2026 12:27	registry.fly.io/tt-api-prod:deployment-01KZ16S2PD23S6T6N3WVRR29X1	
+v63    	complete	Release    	github3344@hotmail.com	Aug 2 2026 12:21	registry.fly.io/tt-api-prod:deployment-01KZ105MXZ37M48524FGVK0YV7	
+v62    	complete	Release    	github3344@hotmail.com	Aug 2 2026 12:10	registry.fly.io/tt-api-prod:deployment-01KZ105MXZ37M48524FGVK0YV7	
+v61    	complete	Release    	github3344@hotmail.com	Aug 2 2026 10:32	registry.fly.io/tt-api-prod:deployment-01KZ105MXZ37M48524FGVK0YV7	
+v60    	complete	Release    	github3344@hotmail.com	Aug 2 2026 10:26	registry.fly.io/tt-api-prod:deployment-01KZ0ZAAF9D8JCVR8VRNZYNAEM	
+v59    	complete	Release    	github3344@hotmail.com	Aug 2 2026 10:17	registry.fly.io/tt-api-prod:deployment-01KZ0ZAAF9D8JCVR8VRNZYNAEM	
+v58    	complete	Release    	github3344@hotmail.com	Aug 2 2026 10:10	registry.fly.io/tt-api-prod:deployment-01KZ0XXF5T8CK2HFGZP08BM132	
+v57    	complete	Release    	github3344@hotmail.com	Aug 2 2026 09:53	registry.fly.io/tt-api-prod:deployment-01KZ0XXF5T8CK2HFGZP08BM132	
+v56    	complete	Release    	github3344@hotmail.com	Aug 2 2026 09:46	registry.fly.io/tt-api-prod:deployment-01KZ0VBZE5XA9GEST8K52FGTN4	
+v55    	complete	Release    	github3344@hotmail.com	Aug 2 2026 09:26	registry.fly.io/tt-api-prod:deployment-01KZ0VBZE5XA9GEST8K52FGTN4	
+v54    	complete	Release    	github3344@hotmail.com	Aug 2 2026 09:08	registry.fly.io/tt-api-prod:deployment-01KZ0VBZE5XA9GEST8K52FGTN4	
+v53    	complete	Release    	github3344@hotmail.com	Aug 2 2026 09:02	registry.fly.io/tt-api-prod:deployment-01KZ0QTZAC6G5B0QZS1J5F4DYH	
+v52    	complete	Release    	github3344@hotmail.com	Aug 2 2026 08:06	registry.fly.io/tt-api-prod:deployment-01KZ0QTZAC6G5B0QZS1J5F4DYH	
+v51    	complete	Release    	github3344@hotmail.com	Aug 2 2026 08:00	registry.fly.io/tt-api-prod:deployment-01KYYEK7996Y4X7YFBD6SA7969	
+v50    	complete	Release    	github3344@hotmail.com	Aug 1 2026 14:50	registry.fly.io/tt-api-prod:deployment-01KYYEK7996Y4X7YFBD6SA7969	
+v49    	complete	Release    	github3344@hotmail.com	Aug 1 2026 14:48	registry.fly.io/tt-api-prod:deployment-01KYYEK7996Y4X7YFBD6SA7969	
+v48    	complete	Release    	github3344@hotmail.com	Aug 1 2026 14:47	registry.fly.io/tt-api-prod:deployment-01KYYEK7996Y4X7YFBD6SA7969	
+
+Warning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type billable limitedAccessTokens { nodes { id name expiresAt revokedAt user { email } } } } }: context canceled

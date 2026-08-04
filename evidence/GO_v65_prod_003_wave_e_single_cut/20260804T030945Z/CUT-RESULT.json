@@ -1,0 +1,67 @@
+{
+  "ritual": "V65-PROD-003 Wave E Single Production Cut",
+  "stamp": "20260804T030945Z",
+  "verdict": "BLOCKED",
+  "tt_production_go": "NO_GO",
+  "wave": "E",
+  "scope": "G076 G084 G086 G087 G088 G089 + Batch11 HU-361/368 + Inbox Focus IA contracts",
+  "attempted_tip_sha": "3fa7b010c1abf806ec779f132d3ddbabe5ae8f66",
+  "product_tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
+  "worktree": ".tmp-v65-prod-003-wave-e-cut",
+  "web_check_only": "PASS",
+  "api_bake": {
+    "exit": 1,
+    "failed_release": "v71",
+    "failed_deployment_id": "deployment-01KZ5BBQEZ0W6Z844YWDGNT404",
+    "blocker": "sqlx migration checksum mismatch",
+    "migration": "20260708120000_orders_service_completion_bilateral.sql",
+    "message": "migration 20260708120000 was previously applied but has been modified",
+    "tip_file_sha256_16": "91e4762a1714db92",
+    "living_dirty_sha256_16": "4b417262c2e85e5f",
+    "note": "Tip vs tip identical; prod DB _sqlx_migrations checksum != tip bake image file. Living dirty M — never bake from living dirty checkout."
+  },
+  "web_bake": {
+    "started": false,
+    "reason": "API bake failed; do not bake www while API tip cut unsafe"
+  },
+  "outage": {
+    "occurred": true,
+    "app": "tt-api-prod",
+    "machine_id": "683e791f797668"
+  },
+  "rollback": {
+    "release": "v72",
+    "image": "registry.fly.io/tt-api-prod:deployment-01KZ18QMVPM2VS9SJJBZMJ2808",
+    "image_note": "Aug-2 last-good",
+    "machine_state_after": "started",
+    "api_health_http": 200,
+    "api_meta_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "api_meta_image_digest": "registry.fly.io/tt-api-prod:deployment-01KZ18QMVPM2VS9SJJBZMJ2808"
+  },
+  "live_after_rollback": {
+    "api": "healthy",
+    "www_tip": "pre-Wave-E (unchanged; Web bake not started)",
+    "www_note": "live www still prior tip; Wave E not on production runtime"
+  },
+  "local_verify_prior": {
+    "verdict": "PASS_LOCAL",
+    "evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z"
+  },
+  "honesty": [
+    "SCOPE_FROZEN != CLOSED != Production GO",
+    "PASS_LOCAL != RUNTIME_VERIFIED",
+    "API restored != Wave E cut PASS",
+    "TT_PRODUCTION_GO=NO_GO until production acceptance"
+  ],
+  "owner_next": [
+    "Reconcile migration 20260708120000 checksum before re-bake",
+    "Do not Web-bake until API tip bake is safe",
+    "Then resume Single Cut → Runtime Verify → PRV-3b → SSOT/Baseline; keep NO_GO"
+  ],
+  "forbidden": [
+    "Claim Wave E CLOSED / Production GO",
+    "Invent V65-PROD-004",
+    "Mutate frozen PSG Archive v1.1.0-psg-go.20260717",
+    "Bake from living dirty migration checkout"
+  ]
+}

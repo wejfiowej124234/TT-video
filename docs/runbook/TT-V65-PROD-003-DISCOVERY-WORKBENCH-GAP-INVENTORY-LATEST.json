@@ -24,7 +24,7 @@
     "wave_c_deferred": false,
     "local_verify_ne_prod_tip": false,
     "wave_b_green_ne_batch_003_closed": true,
-    "note": "Wave D RUNTIME_VERIFIED ≠ 003 CLOSED; Wave E G050–G080 OPEN_DISCOVERY (R4+R5 Owner Admin production reality + machine gates G070–G072 + deep-scan G073–G080); Solo BRANCHLESS_ON_LIVING_TIP; TT_PRODUCTION_GO=NO_GO; Owner KYC=DELETE · 准入费=REMOVE · queues PRODUCTION_WRITABLE · Admin Console Production Reality Closure",
+    "note": "Wave D RUNTIME_VERIFIED ≠ 003 CLOSED; Wave E G050–G080 OPEN_DISCOVERY (R4+R5 Owner Admin production reality + machine gates G070–G072 + deep-scan G073–G080); Solo BRANCHLESS_ON_LIVING_TIP; TT_PRODUCTION_GO=NO_GO; Owner KYC=DELETE · 准入费=REMOVE · queues PRODUCTION_WRITABLE · Admin Console Production Reality Closure · Wave E Single Cut BLOCKED 20260804T030945Z (sqlx migration checksum 20260708120000); API rolled back v72 Aug-2 image; Web not baked; TT_PRODUCTION_GO=NO_GO",
     "prv_residual_from_004": true,
     "no_fix_without_owner_scope_freeze": true,
     "wave_d_runtime_verified": true,
@@ -40,7 +40,10 @@
     "owner_decision_config_hub_name_config_center": true,
     "owner_decision_appeals_moderation_in_scope": true,
     "owner_decision_content_keep_and_productionize": true,
-    "r6_enterprise_reaudit_injected": true
+    "r6_enterprise_reaudit_injected": true,
+    "wave_e_single_cut_blocked": true,
+    "pass_local_ne_runtime": true,
+    "api_restored_ne_wave_e_cut_pass": true
   },
   "surface": {
     "route": "/admin",
@@ -3989,7 +3992,7 @@
   },
   "wave_plan": [],
   "wave_d_status": "RUNTIME_VERIFIED",
-  "lifecycle_status": "WAVE_D_RUNTIME_VERIFIED__WAVE_E_SCOPE_FROZEN_P1_LOCAL_VERIFY_PASS",
+  "lifecycle_status": "WAVE_D_RUNTIME_VERIFIED__WAVE_E_SCOPE_FROZEN_P1_LOCAL_VERIFY_PASS__SINGLE_CUT_BLOCKED",
   "tt_production_go": "NO_GO",
   "wave_e_status": "SCOPE_FROZEN",
   "wave_e": {
@@ -4216,12 +4219,19 @@
       ],
       "batch_closed": false,
       "runtime_verified": false
+    },
+    "r10_note": "R10 20260804T030945Z: Single Cut BLOCKED — API_BAKE_EXIT=1 migration checksum; rollback v72; Web not started; gaps remain OPEN; NO_GO",
+    "single_cut": {
+      "verdict": "BLOCKED",
+      "stamp": "20260804T030945Z",
+      "evidence": "evidence/GO_v65_prod_003_wave_e_single_cut/20260804T030945Z",
+      "runtime_verified": false
     }
   },
   "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
   "gap_count": 89,
   "open_wave_e": 40,
-  "notes": "| R6 20260804T001500Z: Owner 配置中心 LOCK · G078 IN_SCOPE · G080 KEEP_AND_PRODUCTIONIZE · +G081-G085 enterprise re-audit | R7 20260804T002417Z: G084 KEEP_AND_PRODUCTIONIZE · final audit +G086-G089 · Wave E SCOPE_FROZEN · NO_GO · no fragment ship | R8 20260804T005951Z: P0 local FE strip/honesty fix_notes · wave_e_status=SCOPE_FROZEN reconciled · gap status OPEN until runtime · NO_GO · no fragment ship | R9 20260804T023500Z: Wave E P1 local fix_notes + PASS_LOCAL · status OPEN until runtime · NO_GO · no fragment ship · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z | R9 20260804T023500Z: Wave E P1 local fix_notes + PASS_LOCAL · status OPEN until runtime · NO_GO · no fragment ship · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z | post-commit tip sync 2738a68dc816 Wave E on living tip; ladder Single Cut next; NO_GO",
+  "notes": "| R6 20260804T001500Z: Owner 配置中心 LOCK · G078 IN_SCOPE · G080 KEEP_AND_PRODUCTIONIZE · +G081-G085 enterprise re-audit | R7 20260804T002417Z: G084 KEEP_AND_PRODUCTIONIZE · final audit +G086-G089 · Wave E SCOPE_FROZEN · NO_GO · no fragment ship | R8 20260804T005951Z: P0 local FE strip/honesty fix_notes · wave_e_status=SCOPE_FROZEN reconciled · gap status OPEN until runtime · NO_GO · no fragment ship | R9 20260804T023500Z: Wave E P1 local fix_notes + PASS_LOCAL · status OPEN until runtime · NO_GO · no fragment ship · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z | R9 20260804T023500Z: Wave E P1 local fix_notes + PASS_LOCAL · status OPEN until runtime · NO_GO · no fragment ship · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z | post-commit tip sync 2738a68dc816 Wave E on living tip; ladder Single Cut next; NO_GO | R10 20260804T030945Z: Wave E Single Cut BLOCKED · API bake fail (20260708120000 checksum) · rollback v72 Aug-2 · Web not baked · evidence=evidence/GO_v65_prod_003_wave_e_single_cut/20260804T030945Z · gaps OPEN · NO_GO · no fragment ship",
   "owner_r7": {
     "stamp": "20260804T002417Z",
     "g084": "KEEP_AND_PRODUCTIONIZE",
@@ -4253,9 +4263,46 @@
     "statuses_remain_open_until_runtime": true,
     "tt_production_go": "NO_GO",
     "no_fragment_ship": true,
-    "ladder_blocked_on": "Single Cut bake API+Web on tip 2738a68dc816; live www still 3d1cca13b319",
-    "ladder_note": "Wave E committed; tip sync; TT_PRODUCTION_GO=NO_GO until production acceptance"
+    "ladder_blocked_on": "Reconcile sqlx checksum for migration 20260708120000_orders_service_completion_bilateral.sql before re-bake tip 3fa7b010; API restored on Aug-2 image deployment-01KZ18QMVPM2VS9SJJBZMJ2808; evidence=evidence/GO_v65_prod_003_wave_e_single_cut/20260804T030945Z; live www still pre-Wave-E; TT_PRODUCTION_GO=NO_GO",
+    "ladder_note": "Wave E PASS_LOCAL committed; Single Cut BLOCKED on migration checksum; TT_PRODUCTION_GO=NO_GO until production acceptance"
   },
-  "live_web_tip_note": "Pre-Single-Cut production www still 3d1cca13; Wave E tip 2738a68d committed locally; bake next",
-  "ladder_blocked_on": "Single Cut bake API+Web on tip 2738a68dc816; live www still 3d1cca13b319"
+  "live_web_tip_note": "Production www unchanged (Web bake not started). API healthy after v72 rollback to Aug-2 image. Wave E tip 2738a68d/3fa7b010 NOT on production runtime.",
+  "ladder_blocked_on": "Reconcile sqlx checksum for migration 20260708120000_orders_service_completion_bilateral.sql before re-bake tip 3fa7b010; API restored on Aug-2 image deployment-01KZ18QMVPM2VS9SJJBZMJ2808; evidence=evidence/GO_v65_prod_003_wave_e_single_cut/20260804T030945Z; live www still pre-Wave-E; TT_PRODUCTION_GO=NO_GO",
+  "attempted_cut_tip_sha": "3fa7b010c1abf806ec779f132d3ddbabe5ae8f66",
+  "owner_r10": {
+    "stamp": "20260804T030945Z",
+    "ritual": "Wave E Single Production Cut",
+    "verdict": "BLOCKED",
+    "attempted_tip_sha": "3fa7b010c1abf806ec779f132d3ddbabe5ae8f66",
+    "product_tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
+    "tt_production_go": "NO_GO",
+    "scope_frozen": true,
+    "statuses_remain_open_until_runtime": true,
+    "no_fragment_ship": true,
+    "batch_closed": false,
+    "runtime_verified": false,
+    "api_bake_exit": 1,
+    "failed_release": "v71",
+    "failed_deployment_id": "deployment-01KZ5BBQEZ0W6Z844YWDGNT404",
+    "blocker": "sqlx migration checksum mismatch",
+    "migration": "20260708120000_orders_service_completion_bilateral.sql",
+    "web_bake_started": false,
+    "rollback_release": "v72",
+    "rollback_image": "registry.fly.io/tt-api-prod:deployment-01KZ18QMVPM2VS9SJJBZMJ2808",
+    "api_health_http": 200,
+    "api_meta_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "evidence": "evidence/GO_v65_prod_003_wave_e_single_cut/20260804T030945Z",
+    "ladder_blocked_on": "Reconcile sqlx checksum for migration 20260708120000_orders_service_completion_bilateral.sql before re-bake tip 3fa7b010; API restored on Aug-2 image deployment-01KZ18QMVPM2VS9SJJBZMJ2808; evidence=evidence/GO_v65_prod_003_wave_e_single_cut/20260804T030945Z; live www still pre-Wave-E; TT_PRODUCTION_GO=NO_GO",
+    "owner_next": [
+      "Reconcile migration 20260708120000 checksum (Owner: match tip file to DB vs repair _sqlx_migrations vs forward-only — never silently rewrite applied migration in prod)",
+      "Do not Web-bake until API tip bake is safe",
+      "Resume Single Cut → Runtime Verify → PRV-3b → SSOT/Baseline; keep NO_GO"
+    ],
+    "forbidden": [
+      "Claim Wave E CLOSED / Production GO",
+      "Invent V65-PROD-004",
+      "Mutate frozen PSG Archive v1.1.0-psg-go.20260717",
+      "Bake from living dirty migration checkout"
+    ]
+  }
 }
