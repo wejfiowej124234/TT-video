@@ -225,7 +225,6 @@ export default function AdminShellBar() {
             data-tt-admin-shell-brand-mark={TT_ADMIN_SHELL_BRAND_WORDMARK_MARK}
             aria-label={t(ADMIN_SHELL_BRAND_WORDMARK_KEY)}
           >
-            <span className="sr-only">{TT_ADMIN_SHELL_BRAND_WORDMARK_MARK}</span>
             {t(ADMIN_SHELL_BRAND_WORDMARK_KEY)}
           </Link>
 

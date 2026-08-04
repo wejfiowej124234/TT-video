@@ -25,7 +25,11 @@ const EVENTS_DEFAULT: u32 = 50;
 const EVENTS_MAX: u32 = 200;
 
 pub fn router() -> Router<ApiMetaState> {
-    Router::new().route("/net-profit-ledger", get(get_admin_net_profit_operations_console))
+    // B3-R014 sibling: align with FE `routes.adminNetProfitLedgerOps`.
+    Router::new().route(
+        "/api/v1/admin/net-profit-ledger",
+        get(get_admin_net_profit_operations_console),
+    )
 }
 
 async fn get_admin_net_profit_operations_console(

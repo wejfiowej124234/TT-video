@@ -3977,17 +3977,42 @@ pub async fn get_admin_dispute_by_id(
 
     let request_id = request_id_from_headers(&headers);
 
-    let store = co.store.read().await;
-    let Some(d) = store.disputes.get(&dispute_uuid) else {
-        return (
-            StatusCode::NOT_FOUND,
-            Json(json!({"error": "dispute_not_found", "message": "dispute_not_found"})),
-        )
-            .into_response();
+    // Batch-3 B3-R007 · list is PG-first (HU-569); detail must prefer the same store
+    // so Admin cannot open a list row that memory cannot resolve.
+    let mut body = if let Some(pool) = co.db_pool.as_ref() {
+        match db::get_dispute_public_detail(pool, dispute_uuid).await {
+            Ok(Some(detail)) => detail,
+            Ok(None) => {
+                return (
+                    StatusCode::NOT_FOUND,
+                    Json(json!({"error": "dispute_not_found", "message": "dispute_not_found"})),
+                )
+                    .into_response();
+            }
+            Err(e) => {
+                eprintln!("admin_dispute_detail_pg_unavailable: {e}");
+                return (
+                    StatusCode::SERVICE_UNAVAILABLE,
+                    Json(json!({
+                        "error": "admin_disputes_pg_unavailable",
+                        "message": "admin_disputes_pg_unavailable",
+                    })),
+                )
+                    .into_response();
+            }
+        }
+    } else {
+        let store = co.store.read().await;
+        let Some(d) = store.disputes.get(&dispute_uuid) else {
+            return (
+                StatusCode::NOT_FOUND,
+                Json(json!({"error": "dispute_not_found", "message": "dispute_not_found"})),
+            )
+                .into_response();
+        };
+        let order = store.orders.get(&d.order_id);
+        chain_off::dispute_detail_envelope(d, order)
     };
-
-    let order = store.orders.get(&d.order_id);
-    let mut body = chain_off::dispute_detail_envelope(d, order);
     admin_attach_meta_build(&mut body);
 
     let resource_id = dispute_uuid.to_string();

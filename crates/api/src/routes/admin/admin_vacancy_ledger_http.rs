@@ -31,10 +31,15 @@ const EVENTS_DEFAULT: u32 = 50;
 const EVENTS_MAX: u32 = 200;
 
 pub fn router() -> Router<ApiMetaState> {
+    // B3-R014: must match FE `routes.adminVacancyLedgerOps` — short `/vacancy-ledger`
+    // collided with public Vacancy Ledger and left `/api/v1/admin/vacancy-ledger` → 404.
     Router::new()
-        .route("/vacancy-ledger", get(get_admin_vacancy_operations_console))
         .route(
-            "/vacancy-ledger/:jurisdiction",
+            "/api/v1/admin/vacancy-ledger",
+            get(get_admin_vacancy_operations_console),
+        )
+        .route(
+            "/api/v1/admin/vacancy-ledger/:jurisdiction",
             get(get_admin_vacancy_ledger_snapshot),
         )
 }

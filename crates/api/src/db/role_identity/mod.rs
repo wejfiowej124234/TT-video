@@ -1111,9 +1111,13 @@ fn admin_filter_matches_pg_row(
             "approved" => pg == "approved",
             _ => pg == f || life.as_deref() == Some(f.as_str()),
         },
-        "provider_onboarding" => pg == f || life.as_deref() == Some(f.as_str()),
+        // B3-R006 · filter on the same display status the list card shows (not stale lifecycle).
+        "provider_onboarding" => {
+            display_status_for_admin(kind, pg_status, lifecycle_state).eq_ignore_ascii_case(&f)
+        }
         "region_steward_onboarding" => {
-            if life.as_deref() == Some(f.as_str()) {
+            let display = display_status_for_admin(kind, pg_status, lifecycle_state);
+            if display.eq_ignore_ascii_case(&f) {
                 return true;
             }
             match f.as_str() {
@@ -1123,10 +1127,18 @@ fn admin_filter_matches_pg_row(
                             .as_deref()
                             .map(|l| l == "stake_pending" || l.is_empty())
                             .unwrap_or(true)
+                        && !matches!(
+                            pg.as_str(),
+                            "approved" | "rejected" | "suspended" | "withdrawn" | "cancelled"
+                        )
                 }
-                "under_review" => pg == "reviewing" || life.as_deref() == Some("under_review"),
+                "under_review" => {
+                    !matches!(pg.as_str(), "approved" | "rejected")
+                        && (pg == "reviewing" || life.as_deref() == Some("under_review"))
+                }
                 "stake_release_pending" => {
-                    life.as_deref() == Some("stake_release_pending") || pg == "submitted"
+                    !matches!(pg.as_str(), "approved" | "rejected")
+                        && (life.as_deref() == Some("stake_release_pending") || pg == "submitted")
                 }
                 "approved" | "rejected" => pg == f,
                 _ => pg == f,
@@ -1137,6 +1149,18 @@ fn admin_filter_matches_pg_row(
 }
 
 fn display_status_for_admin(kind: &str, pg_status: &str, lifecycle_state: Option<&str>) -> String {
+    let pg = pg_status.trim();
+    let pg_lc = pg.to_ascii_lowercase();
+    // B3-R006 · terminal PG status wins over stale metadata.lifecycle_state so
+    // `?status=submitted` cannot surface already-approved rows as actionable.
+    if matches!(kind, "provider_onboarding" | "region_steward_onboarding")
+        && matches!(
+            pg_lc.as_str(),
+            "approved" | "rejected" | "suspended" | "withdrawn" | "cancelled"
+        )
+    {
+        return pg.to_string();
+    }
     if let Some(life) = lifecycle_state.filter(|s| !s.trim().is_empty()) {
         if kind == "region_steward_onboarding" || kind == "provider_onboarding" {
             return life.to_string();
