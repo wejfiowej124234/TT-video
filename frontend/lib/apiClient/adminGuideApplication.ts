@@ -1,5 +1,13 @@
 import { apiUrl, routes } from "../api";
-import { apiFetch, getAuthHeaders, logApiJsonStatusNotOk, parseResponse, requestId, throwUnlessApiOk } from "./core";
+import {
+  apiFetch,
+  getAuthHeaders,
+  logApiJsonStatusNotOk,
+  parseResponse,
+  requestId,
+  throwUnlessApiOk,
+  writeRequestHeaders,
+} from "./core";
 
 const fetch = apiFetch;
 
@@ -44,8 +52,9 @@ export async function patchAdminGuideApplicationReview(
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      "x-request-id": requestId(),
-      ...getAuthHeaders(),
+      // Prod STRICT_SSOT requires Idempotency-Key; omit → 400 missing_idempotency_key
+      // and early middleware return skips CORS → browser TypeError Failed to fetch.
+      ...writeRequestHeaders(),
     },
     body: JSON.stringify(body),
   });
