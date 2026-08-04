@@ -39,7 +39,6 @@ import {
   buildUsersListPath,
   clampUserLimit,
   defaultTargetRole,
-  KYC_FILTER_MAX,
   parseUsersListQuery,
   ROLE_FILTER_MAX,
   roleChangeErrText,
@@ -61,8 +60,6 @@ export type UseAdminUsersPageResult = {
   setDraftLimit: Dispatch<SetStateAction<string>>;
   draftRole: string;
   setDraftRole: Dispatch<SetStateAction<string>>;
-  draftKyc: string;
-  setDraftKyc: Dispatch<SetStateAction<string>>;
   draftEmail: string;
   setDraftEmail: Dispatch<SetStateAction<string>>;
   roleUser: AdminUser | null;
@@ -101,7 +98,7 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
   const requestConfirm = useAdminL5ConfirmRequest();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { limit, offset, role, kyc_status, email } = useMemo(
+  const { limit, offset, role, email } = useMemo(
     () => parseUsersListQuery(new URLSearchParams(searchParams.toString())),
     [searchParams],
   );
@@ -115,9 +112,8 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
         offset,
         ...(email ? { email } : {}),
         ...(role ? { role } : {}),
-        ...(kyc_status ? { kyc_status } : {}),
       }),
-    [limit, offset, email, role, kyc_status],
+    [limit, offset, email, role],
   );
 
   const {
@@ -143,15 +139,13 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
 
   const [draftLimit, setDraftLimit] = useState(String(limit));
   const [draftRole, setDraftRole] = useState(role);
-  const [draftKyc, setDraftKyc] = useState(kyc_status);
   const [draftEmail, setDraftEmail] = useState(email);
 
   useEffect(() => {
     setDraftLimit(String(limit));
     setDraftRole(role);
-    setDraftKyc(kyc_status);
     setDraftEmail(email);
-  }, [limit, role, kyc_status, email]);
+  }, [limit, role, email]);
 
   const [roleUser, setRoleUser] = useState<AdminUser | null>(null);
   const [targetRole, setTargetRole] = useState<string>(TARGET_ROLES[0]);
@@ -175,7 +169,6 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
         limit: lim,
         offset: 0,
         role: draftRole.trim().slice(0, ROLE_FILTER_MAX),
-        kyc_status: draftKyc.trim().slice(0, KYC_FILTER_MAX),
         email: draftEmail.trim().slice(0, EMAIL_FILTER_MAX),
       }),
     );
@@ -183,7 +176,7 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
 
   const resetFilters = () => {
     router.push(
-      buildUsersListPath({ limit: 100, offset: 0, role: "", kyc_status: "", email: "" }),
+      buildUsersListPath({ limit: 100, offset: 0, role: "", email: "" }),
     );
   };
 
@@ -194,7 +187,6 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
         limit,
         offset: Math.max(0, offset - limit),
         role,
-        kyc_status,
         email,
       }),
     );
@@ -207,7 +199,6 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
         limit,
         offset: offset + limit,
         role,
-        kyc_status,
         email,
       }),
     );
@@ -361,8 +352,6 @@ export function useAdminUsersPage(): UseAdminUsersPageResult {
     setDraftLimit,
     draftRole,
     setDraftRole,
-    draftKyc,
-    setDraftKyc,
     draftEmail,
     setDraftEmail,
     roleUser,

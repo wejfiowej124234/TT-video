@@ -19,10 +19,20 @@ describe("stewardBTrackModel", () => {
     ).toBe(false);
   });
 
-  it("isStewardBTrackComplete requires paid + role confirm", () => {
+  it("isStewardBTrackComplete is role-confirm only (fee REMOVE · G088)", () => {
     expect(
       isStewardBTrackComplete({
         entitlements: paidEntitlements,
+        mePayload: { user: { id: "u1", role: "region_steward" } },
+      }),
+    ).toBe(true);
+    expect(
+      isStewardBTrackComplete({
+        entitlements: {
+          items: [],
+          implementationStatus: null,
+          hasActivePaid: false,
+        },
         mePayload: { user: { id: "u1", role: "region_steward" } },
       }),
     ).toBe(true);

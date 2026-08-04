@@ -30,6 +30,7 @@ mod trust_growth_obs;
 mod admin_acquisition_suspend_http;
 mod admin_metrics_home_http;
 mod admin_ops_overview_http;
+mod admin_onboarding_queue_list_limit;
 mod admin_steward_application_http;
 mod admin_provider_application_http;
 mod admin_guide_application_http;
@@ -942,13 +943,13 @@ pub struct AdminDisputesListQuery {
     pub q: Option<String>,
 }
 
-/// Admin 用户列表：可选 **`limit`**（1～500，缺省 100）、**`offset`**、**`email`**（子串）、**`role`** / **`kyc_status`**（精确匹配）。
+/// Admin 用户列表：可选 **`limit`**（1～500，缺省 100）、**`offset`**、**`email`**（子串）、**`role`**（精确匹配）。
+/// V65-PROD-003-G076 · Owner KYC=DELETE — **禁止** **`kyc_status`** 查询/筛选/列表契约字段。
 #[derive(Debug, Deserialize)]
 pub struct AdminUsersListQuery {
     pub limit: Option<i64>,
     pub offset: Option<i64>,
     pub role: Option<String>,
-    pub kyc_status: Option<String>,
     pub email: Option<String>,
 }
 
@@ -1672,11 +1673,6 @@ pub async fn get_admin_users(
     limit = limit.clamp(1, 500);
     let offset = q.offset.unwrap_or(0).clamp(0, 100_000);
     let role_filter = q.role.as_deref().map(str::trim).filter(|s| !s.is_empty());
-    let kyc_filter = q
-        .kyc_status
-        .as_deref()
-        .map(str::trim)
-        .filter(|s| !s.is_empty());
     let email_filter = q
         .email
         .as_deref()
@@ -1687,6 +1683,7 @@ pub async fn get_admin_users(
     let pool_opt = co.db_pool.clone();
 
     // Batch-14 HU-570 · 有 PG 时正式库清单 + meta.source；无 pool 才 memory（本地无库烟测）。
+    // V65-PROD-003-G076 · KYC DELETE — 列表契约不返回 / 不筛选 kyc_status。
     let (mut items, total_after_filter, source, items_source) = if let Some(ref pool) = pool_opt {
         match db::list_users(pool).await {
             Ok(rows) => {
@@ -1694,7 +1691,6 @@ pub async fn get_admin_users(
                     .into_iter()
                     .filter(|u| {
                         role_filter.is_none_or(|r| u.role == r)
-                            && kyc_filter.is_none_or(|k| u.kyc_status == k)
                             && email_filter.as_ref().is_none_or(|needle| {
                                 u.email.to_ascii_lowercase().contains(needle.as_str())
                             })
@@ -1704,7 +1700,6 @@ pub async fn get_admin_users(
                             "id": u.id,
                             "email": u.email,
                             "role": u.role,
-                            "kyc_status": u.kyc_status,
                             "created_at": u.created_at.to_rfc3339(),
                             "updated_at": u.updated_at.to_rfc3339(),
                         })
@@ -1744,7 +1739,6 @@ pub async fn get_admin_users(
             .values()
             .filter(|u| {
                 role_filter.is_none_or(|r| u.role == r)
-                    && kyc_filter.is_none_or(|k| u.kyc_status == k)
                     && email_filter.as_ref().is_none_or(|needle| {
                         u.email.to_ascii_lowercase().contains(needle.as_str())
                     })
@@ -1754,7 +1748,6 @@ pub async fn get_admin_users(
                     "id": u.id,
                     "email": u.email,
                     "role": u.role,
-                    "kyc_status": u.kyc_status,
                     "created_at": u.created_at,
                     "updated_at": u.updated_at,
                 })
@@ -1822,7 +1815,6 @@ pub async fn get_admin_users(
             "limit": limit,
             "offset": offset,
             "role": role_filter,
-            "kyc_status": kyc_filter,
             "email": email_filter.as_deref(),
             "matched_before_limit": total_after_filter,
             "source": source,
@@ -1838,7 +1830,6 @@ pub async fn get_admin_users(
             "limit": limit,
             "offset": offset,
             "role": role_filter,
-            "kyc_status": kyc_filter,
             "email": email_filter.as_deref(),
             "source": source,
         },

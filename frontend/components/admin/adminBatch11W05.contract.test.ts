@@ -57,13 +57,19 @@ describe("adminBatch11W05 onboarding flow", () => {
     const user = read("app/admin/users/[id]/AdminUserDetailPageMain.tsx");
     expect(user).toContain("data-tt-admin-user-onboarding-conditional");
     for (const rel of [
-      "components/admin/AdminGuideApplicationReviewCard.tsx",
       "components/admin/AdminProviderApplicationReviewCard.tsx",
       "components/admin/AdminStewardApplicationReviewCard.tsx",
     ]) {
       const src = read(rel);
       expect(src).toMatch(/if \(!loading && !error && !app\?\.status\) return null/);
     }
+    // Guide: embed keeps HU-364 silent null; page surface (G018) shows admin_guide_app_none
+    const guide = read("components/admin/AdminGuideApplicationReviewCard.tsx");
+    expect(guide).toContain('surface === "embed"');
+    expect(guide).toContain("admin_guide_app_none");
+    expect(guide).toMatch(/if \(surface === "embed"\) return null/);
+    const detail = read("components/admin/AdminOnboardingApplicationDetailPageMain.tsx");
+    expect(detail).toContain('surface="page"');
   });
 
   it("HU-368 FE ACL marker + API helper present", () => {

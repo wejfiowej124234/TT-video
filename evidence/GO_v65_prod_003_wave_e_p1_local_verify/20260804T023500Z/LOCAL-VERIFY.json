@@ -1,0 +1,74 @@
+{
+  "schema": "traveltrust.v65_prod_003_wave_e_p1_local_verify.v1",
+  "stamp": "20260804T023500Z",
+  "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "branch": "release/inbox-focus-product-truth-1ff71858",
+  "phase": "① Local Full Verify",
+  "verdict": "PASS_LOCAL",
+  "tt_production_go": "NO_GO",
+  "honesty": {
+    "scope_frozen_ne_closed": true,
+    "local_green_ne_runtime_verified": true,
+    "local_green_ne_production_go": true,
+    "no_fragment_ship": true,
+    "statuses_remain_open_until_runtime": true
+  },
+  "gaps_in_scope": [
+    "V65-PROD-003-G076",
+    "V65-PROD-003-G084",
+    "V65-PROD-003-G086",
+    "V65-PROD-003-G087",
+    "V65-PROD-003-G088",
+    "V65-PROD-003-G089"
+  ],
+  "checks": [
+    {
+      "id": "cargo_check_api",
+      "cmd": "cargo check -p traveltrust-api --bin traveltrust-api",
+      "result": "PASS",
+      "note": "warnings only; exit 0"
+    },
+    {
+      "id": "vitest_admin_batch11_w05",
+      "cmd": "npx vitest run adminBatch11W05.contract.test.ts",
+      "result": "PASS",
+      "note": "4/4 — HU-361/HU-368 unblocked"
+    },
+    {
+      "id": "vitest_wave_e_set",
+      "cmd": "npx vitest run <Wave E contract set · 11 files>",
+      "result": "PASS",
+      "tests": 78,
+      "log": "vitest-wave-e.log"
+    },
+    {
+      "id": "cargo_test_steward_review_status_validates",
+      "cmd": "cargo test -p traveltrust-api steward_review_status_validates",
+      "result": "BLOCKED_UNRELATED",
+      "note": "test binary compile fails on missing ChainConfig.settlement_router_address in internal_indexer_admin_db_api_tests helpers — orthogonal to Wave E; product path cargo check green; steward_review_status_valid includes needs_more_info"
+    }
+  ],
+  "product_markers": {
+    "G076": "Admin users list JSON omits kyc_status; query has no kyc_status filter",
+    "G084_G087": "AdminCommunityRelatedLinks bounded honesty markers",
+    "G086": "error.tsx on guide/provider/steward-applications + inbox + content + backup",
+    "G088": "data-tt-steward-workbench-b-track-fee-removed=1",
+    "G089": "admin_onboarding_queue_list_limit + truncated honesty"
+  },
+  "artifacts": [
+    "stamp.txt",
+    "vitest-wave-e.log",
+    "HONESTY-GREPS.txt",
+    "cargo-steward-unit.log",
+    "LOCAL-VERIFY.json",
+    "README.md"
+  ],
+  "next_ladder": [
+    "Owner commit/bake Wave E product + contract fixes (ask before cut)",
+    "Single Cut",
+    "Runtime Evidence",
+    "PRV-3b",
+    "Update TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST + Final Truth Baseline",
+    "Keep TT_PRODUCTION_GO=NO_GO"
+  ]
+}

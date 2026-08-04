@@ -1,0 +1,42 @@
+=== G076 BE kyc_status list contract ===
+crates/api/src/routes/admin/admin_users_http.rs:43:    // V65-PROD-003-G076 · Owner KYC=DELETE — 列表不筛选 / 不返回 kyc_status。
+crates/api/src/routes/admin/query_types.rs:95:/// V65-PROD-003-G076 · Owner KYC=DELETE — **禁止** **`kyc_status`** 查询/筛选/列表契约字段。
+crates/api/src/routes/admin/mod.rs:947:/// V65-PROD-003-G076 · Owner KYC=DELETE — **禁止** **`kyc_status`** 查询/筛选/列表契约字段。
+crates/api/src/routes/admin/mod.rs:1470:                        kyc_status: u.kyc_status,
+crates/api/src/routes/admin/mod.rs:1686:    // V65-PROD-003-G076 · KYC DELETE — 列表契约不返回 / 不筛选 kyc_status。
+=== G088 fee-removed marker ===
+23:      data-tt-steward-workbench-b-track-fee-removed="1"
+=== G084/G087 community related ===
+13:  { href: "/admin/community/risk-signals", labelKey: "admin_risk_signals_title" },
+17:  { href: "/admin/audit/operations", labelKey: "admin_audit_ops_title" },
+30:      data-tt-admin-community-related="1"
+31:      data-tt-admin-community-bounded-honesty="1"
+=== G086 error.tsx ===
+OK frontend/app/admin/guide-applications/error.tsx
+OK frontend/app/admin/provider-applications/error.tsx
+OK frontend/app/admin/steward-applications/error.tsx
+OK frontend/app/admin/inbox/error.tsx
+OK frontend/app/admin/content/error.tsx
+OK frontend/app/admin/backup/error.tsx
+=== G089 onboarding limit ===
+frontend/lib/admin/adminOnboardingQueueListLimit.ts:9:/** True when BE applied_filters reports truncation (items clipped to limit). */
+frontend/lib/admin/adminOnboardingQueueListLimit.ts:15:  if (appliedFilters.truncated === true) return true;
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:1://! V65-PROD-003-G089 · Onboarding queue list limit + applied_filters honesty.
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:4://! surface `applied_filters` so Ops can see truncation without inventing pagination UI.
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:11:pub fn clamp_onboarding_queue_list_limit(limit: Option<i64>) -> i64 {
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:17:/// Truncate `items` and attach `applied_filters` (`limit` · optional `status` ·
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:18:/// `matched_before_limit` · optional `truncated`).
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:25:    let truncated = matched > limit;
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:26:    if truncated {
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:38:    if truncated {
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:39:        af["truncated"] = json!(true);
+crates/api/src/routes/admin/admin_onboarding_queue_list_limit.rs:41:    body["applied_filters"] = af;
+=== G089 FE truncated marker ===
+frontend/locales\zh.ts:1256:  admin_onboarding_queue_list_truncated_hint:
+frontend/app/admin/guide-applications\AdminGuideApplicationsPageMain.tsx:96:            <span className="mt-1 block text-meta text-amber-200/90" data-tt-admin-onboarding-queue-truncated="1">
+frontend/app/admin/guide-applications\AdminGuideApplicationsPageMain.tsx:97:              {t("admin_onboarding_queue_list_truncated_hint")}
+frontend/app/admin/steward-applications\AdminStewardApplicationsPageMain.tsx:140:            <span className="mt-1 block text-meta text-amber-200/90" data-tt-admin-onboarding-queue-truncated="1">
+frontend/app/admin/steward-applications\AdminStewardApplicationsPageMain.tsx:141:              {t("admin_onboarding_queue_list_truncated_hint")}
+frontend/app/admin/provider-applications\AdminProviderApplicationsPageMain.tsx:134:            <span className="mt-1 block text-meta text-amber-200/90" data-tt-admin-onboarding-queue-truncated="1">
+frontend/app/admin/provider-applications\AdminProviderApplicationsPageMain.tsx:135:              {t("admin_onboarding_queue_list_truncated_hint")}
+frontend/locales\en.ts:1320:  admin_onboarding_queue_list_truncated_hint:

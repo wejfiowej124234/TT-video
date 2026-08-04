@@ -3,7 +3,11 @@ import { apiFetch, getAuthHeaders, logApiJsonStatusNotOk, parseResponse, request
 
 const fetch = apiFetch;
 
-export type GuideApplicationReviewStatus = "reviewing" | "approved" | "rejected";
+export type GuideApplicationReviewStatus =
+  | "reviewing"
+  | "approved"
+  | "rejected"
+  | "needs_more_info";
 
 export type PatchAdminGuideApplicationReviewBody = {
   status: GuideApplicationReviewStatus;

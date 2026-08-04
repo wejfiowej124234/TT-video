@@ -43,8 +43,6 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
     setDraftLimit,
     draftRole,
     setDraftRole,
-    draftKyc,
-    setDraftKyc,
     draftEmail,
     setDraftEmail,
     roleUser,
@@ -118,8 +116,6 @@ export function AdminUsersPageMain({ vm }: { vm: UseAdminUsersPageResult }) {
         setDraftLimit={setDraftLimit}
         draftRole={draftRole}
         setDraftRole={setDraftRole}
-        draftKyc={draftKyc}
-        setDraftKyc={setDraftKyc}
         draftEmail={draftEmail}
         setDraftEmail={setDraftEmail}
         applyFilters={applyFilters}

@@ -49,3 +49,7 @@ export const ADMIN_SHELL_FINANCE_NAV_LINKS: readonly AdminShellNavLinkDef[] = [
     matchPrefix: "/admin/alerts/incidents",
   },
 ] as const;
+
+/** Peers only (skip finance-suite hub self) · used by financeSuiteNavTiles / hub folds. */
+export const ADMIN_SHELL_FINANCE_PEER_NAV_LINKS: readonly AdminShellNavLinkDef[] =
+  ADMIN_SHELL_FINANCE_NAV_LINKS.filter((l) => !l.activeExact);

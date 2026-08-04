@@ -10,7 +10,7 @@ import {
   ADMIN_FILTER_INPUT_MD_CLASS,
   ADMIN_FILTER_ACTIONS_CLASS,
   ADMIN_FILTER_FIELD_LABEL_CLASS,
-  ADMIN_FILTER_GRID_4_CLASS,
+  ADMIN_FILTER_GRID_3_CLASS,
   ADMIN_FILTER_HINT_CLASS,
   ADMIN_FILTER_TITLE_CLASS,
 } from "@/lib/adminUi";
@@ -25,8 +25,6 @@ export function AdminUsersFiltersCard({
   setDraftLimit,
   draftRole,
   setDraftRole,
-  draftKyc,
-  setDraftKyc,
   draftEmail,
   setDraftEmail,
   applyFilters,
@@ -42,8 +40,6 @@ export function AdminUsersFiltersCard({
   setDraftLimit: Dispatch<SetStateAction<string>>;
   draftRole: string;
   setDraftRole: Dispatch<SetStateAction<string>>;
-  draftKyc: string;
-  setDraftKyc: Dispatch<SetStateAction<string>>;
   draftEmail: string;
   setDraftEmail: Dispatch<SetStateAction<string>>;
   applyFilters: (e?: FormEvent) => void;
@@ -66,7 +62,7 @@ export function AdminUsersFiltersCard({
         <p id={adminListApplyResetHintId} className={ADMIN_FILTER_HINT_CLASS}>
           {t("admin_list_filters_apply_reset_hint")}
         </p>
-        <div className={ADMIN_FILTER_GRID_4_CLASS} data-tt-admin-users-filters-grid="1">
+        <div className={ADMIN_FILTER_GRID_3_CLASS} data-tt-admin-users-filters-grid="1">
           <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
             {t("admin_users_email_filter_label")}
             <input
@@ -98,15 +94,6 @@ export function AdminUsersFiltersCard({
               value={draftRole}
               onChange={(e) => setDraftRole(e.target.value)}
               placeholder={t("admin_users_role_filter_ph")}
-            />
-          </label>
-          <label className={ADMIN_FILTER_FIELD_LABEL_CLASS}>
-            {t("admin_users_kyc_filter_label")}
-            <input
-              className={`mt-1 w-full min-h-[44px] ${ADMIN_FILTER_INPUT_MD_CLASS} px-3 py-2 font-mono text-meta ${ADMIN_FORM_FIELD_FOCUS_CLASS}`}
-              value={draftKyc}
-              onChange={(e) => setDraftKyc(e.target.value)}
-              placeholder={t("admin_users_kyc_filter_ph")}
             />
           </label>
         </div>

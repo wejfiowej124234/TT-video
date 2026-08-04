@@ -40,28 +40,21 @@ pub async fn get_admin_users(
 
     let request_id = request_id_from_headers(&headers);
 
+    // V65-PROD-003-G076 · Owner KYC=DELETE — 列表不筛选 / 不返回 kyc_status。
     let limit = q.limit.unwrap_or(100).clamp(1, 500);
     let role_filter = q.role.as_deref().map(str::trim).filter(|s| !s.is_empty());
-    let kyc_filter = q
-        .kyc_status
-        .as_deref()
-        .map(str::trim)
-        .filter(|s| !s.is_empty());
 
     let store = co.store.read().await;
 
     let mut items: Vec<_> = store
         .users
         .values()
-        .filter(|u| {
-            role_filter.is_none_or(|r| u.role == r) && kyc_filter.is_none_or(|k| u.kyc_status == k)
-        })
+        .filter(|u| role_filter.is_none_or(|r| u.role == r))
         .map(|u| {
             json!({
                 "id": u.id,
                 "email": u.email,
                 "role": u.role,
-                "kyc_status": u.kyc_status,
                 "created_at": u.created_at,
                 "updated_at": u.updated_at,
             })
@@ -91,7 +84,6 @@ pub async fn get_admin_users(
             "result_count": items.len(),
             "limit": limit,
             "role": role_filter,
-            "kyc_status": kyc_filter,
             "matched_before_limit": total_after_filter,
             "source": "memory",
         }),
@@ -104,7 +96,6 @@ pub async fn get_admin_users(
         "applied_filters": {
             "limit": limit,
             "role": role_filter,
-            "kyc_status": kyc_filter,
             "source": "memory",
         }
     });

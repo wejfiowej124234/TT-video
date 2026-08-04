@@ -8,7 +8,7 @@ use axum::routing::{get, post};
 use axum::Json;
 use axum::Router;
 use serde::Deserialize;
-use serde_json::json;
+use serde_json::{json, Value};
 use std::fs;
 use std::path::PathBuf;
 use std::time::{Duration, Instant};
@@ -275,6 +275,29 @@ pub async fn upload_guide_doc(
     (StatusCode::OK, Json(json!({ "status": "ok", "url": url }))).into_response()
 }
 
+/// True when a stored upload URL ends with this filename segment (guide ∪ provider KYB).
+fn payload_contains_upload_name(v: &Value, name: &str) -> bool {
+    match v {
+        Value::String(s) => s.ends_with(name),
+        Value::Array(arr) => arr.iter().any(|x| payload_contains_upload_name(x, name)),
+        Value::Object(map) => map
+            .values()
+            .any(|x| payload_contains_upload_name(x, name)),
+        _ => false,
+    }
+}
+
+fn owner_provider(
+    store: &chain_off::ChainOffStore,
+    uid: Uuid,
+    name: &str,
+) -> bool {
+    store
+        .provider_applications_by_user
+        .values()
+        .any(|app| app.user_id == uid && payload_contains_upload_name(&app.payload, name))
+}
+
 pub async fn serve_guide_upload(
     State(state): State<ApiMetaState>,
     Path(name): Path<String>,
@@ -315,7 +338,8 @@ pub async fn serve_guide_upload(
                     || g.language_cert_url.as_deref().map_or(false, url_ends)
                     || g.guide_license_url.as_deref().map_or(false, url_ends))
         });
-        if !is_staff && !owner_doc {
+        let owner_provider = owner_provider(&store, uid, &name);
+        if !is_staff && !owner_doc && !owner_provider {
             return (
                 StatusCode::FORBIDDEN,
                 Json(json!({"error": "forbidden", "message": "forbidden"})),

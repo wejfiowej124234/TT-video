@@ -5,9 +5,11 @@ import type { AdminHomeCardTier } from "./adminHomeModel";
  * ② 六角色 RBAC 落库后，由权限中心覆盖本表（见 spec 70 · ADM-U01）。
  */
 export const ADMIN_HOME_CARD_TIER_BY_HREF: Record<string, AdminHomeCardTier> = {
+  "/admin/guide-applications": "write",
   "/admin/provider-applications": "write",
   "/admin/steward-applications": "write",
   "/admin/approvals": "super_write",
+  /** V65-PROD-003 G065/G075：准入费枢纽不再标运营写权；子路由 LEGACY 只读保留至下线 */
   "/admin/onboarding": "read",
   "/admin/onboarding/entitlements": "read",
   "/admin/onboarding/webhook-jobs": "read",

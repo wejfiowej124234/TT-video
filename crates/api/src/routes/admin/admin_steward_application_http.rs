@@ -18,6 +18,8 @@ use super::{require_admin_actor, write_admin_audit_log_best_effort};
 #[derive(Debug, Deserialize)]
 pub struct AdminStewardApplicationsQuery {
     pub status: Option<String>,
+    /// Optional page size; clamped in `admin_onboarding_queue_list_limit` (G089).
+    pub limit: Option<i64>,
 }
 
 pub fn router() -> Router<ApiMetaState> {
@@ -59,9 +61,17 @@ pub async fn get_admin_steward_applications_list(
                 .into_response();
         }
     };
-    chain_off::list_steward_applications_admin_impl(co, q.status)
-        .await
-        .into_response()
+    // list_steward_applications_admin_impl returns Json<Value> (memory SSOT; not Result).
+    let Json(mut body) =
+        chain_off::list_steward_applications_admin_impl(co, q.status.clone()).await;
+    let limit =
+        super::admin_onboarding_queue_list_limit::clamp_onboarding_queue_list_limit(q.limit);
+    super::admin_onboarding_queue_list_limit::apply_onboarding_queue_list_limit(
+        &mut body,
+        limit,
+        q.status.as_deref(),
+    );
+    Json(body).into_response()
 }
 
 pub async fn get_admin_user_steward_application(

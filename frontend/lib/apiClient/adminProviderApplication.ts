@@ -3,7 +3,11 @@ import { apiFetch, getAuthHeaders, logApiJsonStatusNotOk, parseResponse, request
 
 const fetch = apiFetch;
 
-export type ProviderApplicationReviewStatus = "reviewing" | "approved" | "rejected";
+export type ProviderApplicationReviewStatus =
+  | "reviewing"
+  | "approved"
+  | "rejected"
+  | "needs_more_info";
 
 export type PatchAdminProviderApplicationReviewBody = {
   status: ProviderApplicationReviewStatus;

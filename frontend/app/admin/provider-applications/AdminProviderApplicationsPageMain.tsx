@@ -6,6 +6,7 @@ import { useId, useMemo } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminOnboardingQueueRowCard } from "@/components/admin/AdminOnboardingQueueRowCard";
 import { AdminQueueListPageChrome } from "@/components/admin/AdminQueueListPageChrome";
+import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
 import { AdminStandardListSection } from "@/components/admin/AdminStandardListSection";
 import { AdminOnboardingQueueSortToolbar } from "@/components/admin/AdminOnboardingQueueSortToolbar";
@@ -15,6 +16,8 @@ import {
   parseAdminQueueStatusQuery,
 } from "@/lib/admin/adminQueueListPageModel";
 import { ADMIN_EMPTY_NEXT_PROVIDER_QUEUE_EMPTY } from "@/lib/admin/adminListEmptyStateNextLinks";
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+import { isAdminOnboardingQueueListTruncated } from "@/lib/admin/adminOnboardingQueueListLimit";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { sortOnboardingQueueItems, type OnboardingQueueSortKey } from "@/lib/admin/sortOnboardingQueueItems";
 import { useAdminTableSort } from "@/lib/admin/useAdminTableSort";
@@ -35,6 +38,7 @@ const BASE_PATH = "/admin/provider-applications";
 export function AdminProviderApplicationsPageMain() {
   const { t } = useTranslation();
   const titleId = useId();
+  const adminAppliedFiltersDescId = useId();
   const router = useRouter();
   const searchParams = useSearchParams();
   const statusFilter = useMemo(
@@ -42,7 +46,8 @@ export function AdminProviderApplicationsPageMain() {
     [searchParams],
   );
 
-  const { items, loading, refreshing, error, staleWhileError, bumpReload } = useAdminProviderApplicationsPage(statusFilter);
+  const { items, loading, refreshing, error, staleWhileError, appliedFilters, bumpReload } =
+    useAdminProviderApplicationsPage(statusFilter);
   const onStatusChange = (next: string) => {
 
     router.push(buildAdminQueueListPath(BASE_PATH, next));
@@ -54,6 +59,7 @@ export function AdminProviderApplicationsPageMain() {
     () => sortOnboardingQueueItems(items, sort.key, sort.dir),
     [items, sort.key, sort.dir],
   );
+  const listTruncated = isAdminOnboardingQueueListTruncated(appliedFilters, items.length);
 
   return (
 
@@ -121,7 +127,16 @@ export function AdminProviderApplicationsPageMain() {
 
       </div>
 
-
+      {!loading && !error && appliedFilters ? (
+        <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="card">
+          {t("admin_onboarding_queue_applied")} {formatAdminAppliedFiltersHuman(appliedFilters, t)}
+          {listTruncated ? (
+            <span className="mt-1 block text-meta text-amber-200/90" data-tt-admin-onboarding-queue-truncated="1">
+              {t("admin_onboarding_queue_list_truncated_hint")}
+            </span>
+          ) : null}
+        </AdminAppliedFiltersBanner>
+      ) : null}
 
       <AdminStandardListSection
         loading={loading}

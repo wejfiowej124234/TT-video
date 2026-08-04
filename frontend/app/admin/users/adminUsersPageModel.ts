@@ -6,6 +6,7 @@ import {
 
 export const TARGET_ROLES = ["tourist", "guide", "arbitrator", "admin", "super_admin"] as const;
 export const ROLE_FILTER_MAX = 32;
+/** @deprecated Owner DELETE KYC — kept only so stale URLs strip cleanly */
 export const KYC_FILTER_MAX = 32;
 export const EMAIL_FILTER_MAX = USERS_EMAIL_FILTER_MAX;
 
@@ -43,7 +44,6 @@ export type UsersListQuery = {
   limit: number;
   offset: number;
   role: string;
-  kyc_status: string;
   email: string;
 };
 
@@ -51,9 +51,10 @@ export function parseUsersListQuery(sp: URLSearchParams): UsersListQuery {
   const limit = clampUserLimit(Number.parseInt(sp.get("limit") ?? "100", 10));
   const offset = clampUserOffset(Number.parseInt(sp.get("offset") ?? "0", 10));
   const role = (sp.get("role") ?? "").trim().slice(0, ROLE_FILTER_MAX);
-  const kyc_status = (sp.get("kyc_status") ?? "").trim().slice(0, KYC_FILTER_MAX);
   const email = (sp.get("email") ?? "").trim().slice(0, EMAIL_FILTER_MAX);
-  return { limit, offset, role, kyc_status, email };
+  // Ignore legacy `kyc_status` query (Owner DELETE KYC — V65-PROD-003 G057).
+  void sp.get("kyc_status");
+  return { limit, offset, role, email };
 }
 
 export function buildUsersListPath(q: UsersListQuery): string {
@@ -63,8 +64,6 @@ export function buildUsersListPath(q: UsersListQuery): string {
   if (off > 0) sp.set("offset", String(off));
   const r = q.role.trim().slice(0, ROLE_FILTER_MAX);
   if (r) sp.set("role", r);
-  const k = q.kyc_status.trim().slice(0, KYC_FILTER_MAX);
-  if (k) sp.set("kyc_status", k);
   const e = q.email.trim().slice(0, EMAIL_FILTER_MAX);
   if (e) sp.set("email", e);
   return `/admin/users?${sp.toString()}`;

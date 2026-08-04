@@ -345,7 +345,11 @@ pub struct PatchStewardApplicationReviewBody {
 fn steward_review_status_valid(status: &str) -> bool {
     matches!(
         status,
-        "under_review" | "approved" | "rejected" | "stake_release_pending"
+        "under_review"
+            | "approved"
+            | "rejected"
+            | "needs_more_info"
+            | "stake_release_pending"
     )
 }
 
@@ -396,16 +400,17 @@ pub async fn admin_review_steward_application_impl(
     } else {
         status.clone()
     };
+    let keep_notes = status == "rejected" || status == "needs_more_info";
 
     let updated = StewardApplicationRow {
         status: next_status.clone(),
         updated_at: now,
-        rejection_codes: if status == "rejected" {
+        rejection_codes: if keep_notes {
             codes.clone()
         } else {
             vec![]
         },
-        rejection_message: if status == "rejected" {
+        rejection_message: if keep_notes {
             rejection_message.clone()
         } else {
             None
@@ -510,6 +515,7 @@ mod tests {
     fn steward_review_status_validates_state_machine_subset() {
         assert!(steward_review_status_valid("under_review"));
         assert!(steward_review_status_valid("approved"));
+        assert!(steward_review_status_valid("needs_more_info"));
         assert!(!steward_review_status_valid("reviewing"));
     }
 

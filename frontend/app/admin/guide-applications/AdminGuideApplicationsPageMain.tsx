@@ -5,10 +5,13 @@ import { useId, useMemo } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminOnboardingQueueRowCard } from "@/components/admin/AdminOnboardingQueueRowCard";
 import { AdminQueueListPageChrome } from "@/components/admin/AdminQueueListPageChrome";
+import { AdminAppliedFiltersBanner } from "@/components/admin/AdminAppliedFiltersBanner";
 import {
   buildAdminQueueListPath,
   parseAdminQueueStatusQuery,
 } from "@/lib/admin/adminQueueListPageModel";
+import { formatAdminAppliedFiltersHuman } from "@/lib/admin/formatAdminAppliedFiltersHuman";
+import { isAdminOnboardingQueueListTruncated } from "@/lib/admin/adminOnboardingQueueListLimit";
 import { adminErrorUserText } from "@/lib/adminFetchDisplay";
 import { sortOnboardingQueueItems, type OnboardingQueueSortKey } from "@/lib/admin/sortOnboardingQueueItems";
 import { useAdminTableSort } from "@/lib/admin/useAdminTableSort";
@@ -32,6 +35,7 @@ const BASE_PATH = "/admin/guide-applications";
 export function AdminGuideApplicationsPageMain() {
   const { t } = useTranslation();
   const titleId = useId();
+  const adminAppliedFiltersDescId = useId();
   const router = useRouter();
   const searchParams = useSearchParams();
   const statusFilter = useMemo(
@@ -39,7 +43,7 @@ export function AdminGuideApplicationsPageMain() {
     [searchParams],
   );
 
-  const { items, loading, refreshing, error, staleWhileError, bumpReload } =
+  const { items, loading, refreshing, error, staleWhileError, appliedFilters, bumpReload } =
     useAdminGuideApplicationsPage(statusFilter);
   const onStatusChange = (next: string) => {
     router.push(buildAdminQueueListPath(BASE_PATH, next));
@@ -50,6 +54,7 @@ export function AdminGuideApplicationsPageMain() {
     () => sortOnboardingQueueItems(items, sort.key, sort.dir),
     [items, sort.key, sort.dir],
   );
+  const listTruncated = isAdminOnboardingQueueListTruncated(appliedFilters, items.length);
 
   return (
     <AdminQueueListPageChrome
@@ -83,6 +88,17 @@ export function AdminGuideApplicationsPageMain() {
           {t("admin_guide_list_refresh")}
         </button>
       </div>
+
+      {!loading && !error && appliedFilters ? (
+        <AdminAppliedFiltersBanner id={adminAppliedFiltersDescId} variant="card">
+          {t("admin_onboarding_queue_applied")} {formatAdminAppliedFiltersHuman(appliedFilters, t)}
+          {listTruncated ? (
+            <span className="mt-1 block text-meta text-amber-200/90" data-tt-admin-onboarding-queue-truncated="1">
+              {t("admin_onboarding_queue_list_truncated_hint")}
+            </span>
+          ) : null}
+        </AdminAppliedFiltersBanner>
+      ) : null}
 
       <AdminStandardListSection
         loading={loading}

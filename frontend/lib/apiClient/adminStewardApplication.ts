@@ -3,7 +3,11 @@ import { apiFetch, getAuthHeaders, logApiJsonStatusNotOk, parseResponse, request
 
 const fetch = apiFetch;
 
-export type StewardApplicationReviewStatus = "under_review" | "approved" | "rejected";
+export type StewardApplicationReviewStatus =
+  | "under_review"
+  | "approved"
+  | "rejected"
+  | "needs_more_info";
 
 export type PatchAdminStewardApplicationReviewBody = {
   status: StewardApplicationReviewStatus;

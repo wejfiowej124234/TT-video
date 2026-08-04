@@ -91,13 +91,13 @@ pub struct AdminDisputesListQuery {
     pub q: Option<String>,
 }
 
-/// Admin 用户列表：可选 **`limit`**（1～500，缺省 100）、**`offset`**、**`email`**（子串）、**`role`** / **`kyc_status`**（精确匹配）。
+/// Admin 用户列表：可选 **`limit`**（1～500，缺省 100）、**`offset`**、**`email`**（子串）、**`role`**（精确匹配）。
+/// V65-PROD-003-G076 · Owner KYC=DELETE — **禁止** **`kyc_status`** 查询/筛选/列表契约字段。
 #[derive(Debug, Deserialize)]
 pub struct AdminUsersListQuery {
     pub limit: Option<i64>,
     pub offset: Option<i64>,
     pub role: Option<String>,
-    pub kyc_status: Option<String>,
     pub email: Option<String>,
 }
 

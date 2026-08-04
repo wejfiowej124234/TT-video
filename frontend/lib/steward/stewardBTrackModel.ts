@@ -11,12 +11,17 @@ export function isStewardBTrackPaid(
   return onboardingEntitlementPaidForRole(entitlements, "region_steward");
 }
 
-/** B 轨闭环：paid + role-confirm（或 users.role=region_steward） */
+/**
+ * Track A closed for workbench gate (V65-PROD-003 · G088).
+ * Owner REMOVE: TT ledger USDC admission fee is not required —
+ * complete = role-confirm (or users.role=region_steward).
+ * `entitlements` kept for call-site compatibility / legacy paid echo.
+ */
 export function isStewardBTrackComplete(input: {
   entitlements: OnboardingEntitlementsView | null | undefined;
   mePayload: unknown;
 }): boolean {
-  if (!isStewardBTrackPaid(input.entitlements)) return false;
+  void input.entitlements;
   return onboardingRoleConfirmedForQuote(input.mePayload, "region_steward");
 }
 

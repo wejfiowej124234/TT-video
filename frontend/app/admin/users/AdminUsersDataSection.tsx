@@ -136,9 +136,6 @@ export function AdminUsersDataSection({
                   onToggle={() => toggle("role")}
                 />
                 <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
-                  {t("admin_users_colKyc")}
-                </th>
-                <th scope="col" className={`${ADMIN_TABLE_TH_CELL_CLASS} font-medium`}>
                   {t("admin_users_colAcquisitionSuspend")}
                 </th>
                 <AdminSortableTh
@@ -156,7 +153,6 @@ export function AdminUsersDataSection({
                 <tr key={u.id} className={ADMIN_TABLE_ROW_CLASS}>
                   <td className="px-4 py-3">{u.email}</td>
                   <td className="px-4 py-3">{u.role}</td>
-                  <td className="px-4 py-3">{u.kyc_status ?? t("admin_em_dash")}</td>
                   <td className="px-4 py-3">
                     <div className="flex flex-col gap-1 items-start">
                       {u.acquisition_publish_suspended === true ? (

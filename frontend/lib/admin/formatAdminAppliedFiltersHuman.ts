@@ -2,6 +2,17 @@ import type { LocaleTranslateFn } from "@/lib/i18n";
 import { adminAppliedFilterFieldLabel } from "@/lib/admin/adminAppliedFilterFieldLabel";
 import { adminAppliedFilterValueLabel } from "@/lib/admin/adminAppliedFilterValueLabel";
 
+/** Internal / engine meta — never surface in Ops applied-filter strip. */
+const INTERNAL_APPLIED_FILTER_KEYS = new Set([
+  "source",
+  "meta_source",
+  "data_source",
+  "matched_before_limit",
+  "truncated",
+  "store",
+  "db",
+]);
+
 function displayFilterValue(value: unknown): string {
   if (value == null || value === "") return "";
   if (typeof value === "string") {
@@ -21,6 +32,7 @@ export function formatAdminAppliedFiltersHuman(
   if (!filters || typeof filters !== "object") return "";
   const parts: string[] = [];
   for (const [key, value] of Object.entries(filters)) {
+    if (INTERNAL_APPLIED_FILTER_KEYS.has(key)) continue;
     const localizedValue = adminAppliedFilterValueLabel(key, value, t);
     const display = localizedValue ?? displayFilterValue(value);
     if (!display) continue;

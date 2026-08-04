@@ -25,7 +25,6 @@ import {
   isGuidePendingReview,
   isGuideRejected,
   isGuideSuspended,
-  isKycBlockingGuideApply,
   validateGuideRegisterStep1,
   validateGuideRegisterStep2,
   type GuideRegisterFieldKey,
@@ -89,9 +88,6 @@ export function useGuideRegisterPage() {
   const [copied, setCopied] = useState(false);
   const [copyWalletBusy, setCopyWalletBusy] = useState(false);
   const [sessionDraftRestored, setSessionDraftRestored] = useState(false);
-  const [kycStatus, setKycStatus] = useState("none");
-  const requireKycVerified =
-    typeof process !== "undefined" && process.env.NEXT_PUBLIC_GUIDE_REGISTER_REQUIRE_KYC === "1";
   const { address: connectedAddress, isConnected } = useAccount();
   const walletVerify = useGuideRegisterWalletVerify(t, walletAddress);
   const successFocusRef = useRef<HTMLDivElement>(null);
@@ -151,7 +147,8 @@ export function useGuideRegisterPage() {
     [fieldError, error],
   );
 
-  const kycBlocksSubmit = isKycBlockingGuideApply(kycStatus, requireKycVerified);
+  /** Owner DELETE KYC (V65-PROD-003 G074) — never block guide apply on KYC. */
+  const kycBlocksSubmit = false;
 
   const handleCopyWallet = useCallback(async () => {
     if (!walletAddress.trim() || !isValidWalletAddress(walletAddress)) return;
@@ -209,7 +206,6 @@ export function useGuideRegisterPage() {
         if (cancelled) return;
         const user = userFromGetMePayload(data);
         const trust = parseMeTrustFromMeResponse(data, user);
-        setKycStatus(trust.kyc_status ?? user?.kyc_status ?? "none");
         const status = trust.guide_registration_status;
         if (isGuideAlreadyRegistered(status)) setIsAlreadyGuide(true);
         else if (isGuideSuspended(status)) setGuideSuspended(true);
@@ -370,10 +366,6 @@ export function useGuideRegisterPage() {
 
   const goToStep = useCallback(
     (target: GuideRegisterStep) => {
-      if (target > 1 && kycBlocksSubmit) {
-        setError(t("guideRegister_kycBlocked"));
-        return;
-      }
       if (target > 1 && isLoggedIn === false) {
         setFieldError("login");
         setError(t("guideRegister_errorLoginRequired"));
@@ -391,7 +383,7 @@ export function useGuideRegisterPage() {
       clearSubmitError();
       setStep(target);
     },
-    [applyValidationFailure, clearSubmitError, isLoggedIn, kycBlocksSubmit, onValidateStep, setStep, step, t],
+    [applyValidationFailure, clearSubmitError, isLoggedIn, onValidateStep, setStep, step, t],
   );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -425,10 +417,6 @@ export function useGuideRegisterPage() {
     if (isLoggedIn === false) {
       setFieldError("login");
       setError(t("guideRegister_errorLoginRequired"));
-      return;
-    }
-    if (kycBlocksSubmit) {
-      setError(t("guideRegister_kycBlocked"));
       return;
     }
     setLoading(true);
@@ -504,8 +492,6 @@ export function useGuideRegisterPage() {
     error,
     fieldError,
     fieldInlineError,
-    kycStatus,
-    requireKycVerified,
     kycBlocksSubmit,
     walletVerify,
     setError,

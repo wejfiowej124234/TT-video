@@ -1,0 +1,60 @@
+=== G076 BE kyc_status (AdminUsersListQuery / list JSON) ===
+crates/api/src/routes/admin/admin_users_http.rs:43:    // V65-PROD-003-G076 · Owner KYC=DELETE — 列表不筛选 / 不返回 kyc_status。
+crates/api/src/routes/admin/query_types.rs:95:/// V65-PROD-003-G076 · Owner KYC=DELETE — **禁止** **`kyc_status`** 查询/筛选/列表契约字段。
+crates/api/src/routes/admin/mod.rs:947:/// V65-PROD-003-G076 · Owner KYC=DELETE — **禁止** **`kyc_status`** 查询/筛选/列表契约字段。
+crates/api/src/routes/admin/mod.rs:1470:                        kyc_status: u.kyc_status,
+crates/api/src/routes/admin/mod.rs:1686:    // V65-PROD-003-G076 · KYC DELETE — 列表契约不返回 / 不筛选 kyc_status。
+
+=== G088 fee residual markers ===
+frontend/components/governance/StewardWorkbenchBTrackCompleteStrip.tsx:23:      data-tt-steward-workbench-b-track-fee-removed="1"
+
+=== G084/G087 community bounded ===
+30:      data-tt-admin-community-related="1"
+31:      data-tt-admin-community-bounded-honesty="1"
+
+=== G086 error.tsx leaves ===
+OK frontend/app/admin/guide-applications/error.tsx
+OK frontend/app/admin/provider-applications/error.tsx
+OK frontend/app/admin/steward-applications/error.tsx
+OK frontend/app/admin/inbox/error.tsx
+OK frontend/app/admin/content/error.tsx
+OK frontend/app/admin/backup/error.tsx
+
+=== G089 pagination honesty ===
+1://! V65-PROD-003-G089 · Onboarding queue list limit + applied_filters honesty.
+4://! surface `applied_filters` so Ops can see truncation without inventing pagination UI.
+17:/// Truncate `items` and attach `applied_filters` (`limit` · optional `status` ·
+18:/// `matched_before_limit` · optional `truncated`).
+25:    let truncated = matched > limit;
+26:    if truncated {
+38:    if truncated {
+39:        af["truncated"] = json!(true);
+41:    body["applied_filters"] = af;
+frontend/app/admin/guide-applications\useAdminGuideApplicationsPage.ts:4:import { appendAdminOnboardingQueueListLimit } from "@/lib/admin/adminOnboardingQueueListLimit";
+frontend/app/admin/steward-applications\AdminStewardApplicationsPageMain.tsx:20:import { isAdminOnboardingQueueListTruncated } from "@/lib/admin/adminOnboardingQueueListLimit";
+frontend/app/admin/steward-applications\AdminStewardApplicationsPageMain.tsx:140:            <span className="mt-1 block text-meta text-amber-200/90" data-tt-admin-onboarding-queue-truncated="1">
+frontend/app/admin/provider-applications\AdminProviderApplicationsPageMain.tsx:20:import { isAdminOnboardingQueueListTruncated } from "@/lib/admin/adminOnboardingQueueListLimit";
+frontend/app/admin/provider-applications\AdminProviderApplicationsPageMain.tsx:134:            <span className="mt-1 block text-meta text-amber-200/90" data-tt-admin-onboarding-queue-truncated="1">
+frontend/app/admin/steward-applications\useAdminStewardApplicationsPage.ts:5:import { appendAdminOnboardingQueueListLimit } from "@/lib/admin/adminOnboardingQueueListLimit";
+frontend/app/admin/guide-applications\AdminGuideApplicationsPageMain.tsx:14:import { isAdminOnboardingQueueListTruncated } from "@/lib/admin/adminOnboardingQueueListLimit";
+frontend/app/admin/guide-applications\AdminGuideApplicationsPageMain.tsx:96:            <span className="mt-1 block text-meta text-amber-200/90" data-tt-admin-onboarding-queue-truncated="1">
+frontend/app/admin/provider-applications\useAdminProviderApplicationsPage.ts:5:import { appendAdminOnboardingQueueListLimit } from "@/lib/admin/adminOnboardingQueueListLimit";
+
+=== HU-361 needs_more_info ===
+frontend/lib/apiClient/adminStewardApplication.ts:10:  | "needs_more_info";
+crates/api/src/chain_off/steward_application.rs:351:            | "needs_more_info"
+crates/api/src/chain_off/steward_application.rs:403:    let keep_notes = status == "rejected" || status == "needs_more_info";
+crates/api/src/chain_off/steward_application.rs:518:        assert!(steward_review_status_valid("needs_more_info"));
+frontend/lib/apiClient/adminProviderApplication.ts:10:  | "needs_more_info";
+frontend/lib/apiClient/adminGuideApplication.ts:10:  | "needs_more_info";
+
+=== HU-368 upload ACL helpers ===
+279:fn payload_contains_upload_name(v: &Value, name: &str) -> bool {
+282:        Value::Array(arr) => arr.iter().any(|x| payload_contains_upload_name(x, name)),
+285:            .any(|x| payload_contains_upload_name(x, name)),
+290:fn owner_provider(
+298:        .any(|app| app.user_id == uid && payload_contains_upload_name(&app.payload, name))
+301:pub async fn serve_guide_upload(
+341:        let owner_provider = owner_provider(&store, uid, &name);
+342:        if !is_staff && !owner_doc && !owner_provider {
+389:        .route("/api/v1/uploads/guides/:name", get(serve_guide_upload))

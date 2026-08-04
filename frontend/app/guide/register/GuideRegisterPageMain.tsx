@@ -25,8 +25,6 @@ export function GuideRegisterPageMain() {
     goToStep,
     fieldError,
     fieldInlineError,
-    kycStatus,
-    requireKycVerified,
     kycBlocksSubmit,
     walletVerify,
     uploadPhase,
@@ -156,9 +154,6 @@ export function GuideRegisterPageMain() {
           {!showLoginGate ? (
             <GuideRegisterContextBanners
               t={t}
-              kycStatus={kycStatus}
-              requireKycVerified={requireKycVerified}
-              kycBlocksSubmit={kycBlocksSubmit}
               pendingIdPhoto={pendingIdPhoto}
               pendingLangCert={pendingLangCert}
               sessionDraftRestored={sessionDraftRestored}

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import { appendAdminOnboardingQueueListLimit } from "@/lib/admin/adminOnboardingQueueListLimit";
 import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { routes } from "@/lib/api/routes";
 
@@ -21,15 +22,16 @@ export function useAdminStewardApplicationsPage(statusFilter: string) {
 
   const listUrl = useMemo(() => {
     const q = statusFilter.trim() ? `?status=${encodeURIComponent(statusFilter.trim())}` : "";
-    return `${routes.adminStewardApplications}${q}`;
+    return appendAdminOnboardingQueueListLimit(`${routes.adminStewardApplications}${q}`);
   }, [statusFilter]);
 
-  const { items, loading, refreshing, error, staleWhileError } = useAdminStandardListFetch<AdminStewardApplicationRow>({
-    scope: "steward-applications",
-    context: "AdminStewardApplicationsPage.load",
-    listUrl,
-    refreshToken: reloadTick,
-  });
+  const { items, loading, refreshing, error, staleWhileError, appliedFilters } =
+    useAdminStandardListFetch<AdminStewardApplicationRow>({
+      scope: "steward-applications",
+      context: "AdminStewardApplicationsPage.load",
+      listUrl,
+      refreshToken: reloadTick,
+    });
 
   return {
     items,
@@ -37,6 +39,7 @@ export function useAdminStewardApplicationsPage(statusFilter: string) {
     refreshing,
     error,
     staleWhileError,
+    appliedFilters,
     bumpReload: () => setReloadTick((n) => n + 1),
   };
 }

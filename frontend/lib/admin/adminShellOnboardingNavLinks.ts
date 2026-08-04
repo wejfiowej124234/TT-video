@@ -19,7 +19,7 @@ export const ADMIN_SHELL_ONBOARDING_NAV_LINKS: readonly AdminShellOnboardingNavL
   {
     href: "/admin/guide-applications",
     labelKey: "admin_guide_list_title",
-    permission: ADMIN_PERM.USERS_READ,
+    permission: ADMIN_PERM.USERS_WRITE,
   },
   {
     href: ADMIN_INBOX_QUEUE_HREFS.steward,
@@ -37,16 +37,7 @@ export const ADMIN_SHELL_ONBOARDING_NAV_LINKS: readonly AdminShellOnboardingNavL
     permission: ADMIN_PERM.ONBOARDING_READ,
     activeExact: true,
   },
-  {
-    href: "/admin/onboarding/entitlements",
-    labelKey: "admin_onb_entitlements_title",
-    permission: ADMIN_PERM.ONBOARDING_READ,
-  },
-  {
-    href: "/admin/onboarding/payment-events",
-    labelKey: "admin_onb_payment_events_title",
-    permission: ADMIN_PERM.ONBOARDING_READ,
-  },
+  /** V65-PROD-003 G065/G075：准入费 entitlements / payment-events 退出侧栏（路径仍可直达至下线） */
   {
     href: "/admin/onboarding/webhook-jobs",
     labelKey: "admin_onboarding_hub_webhooks",
@@ -59,7 +50,7 @@ export const ADMIN_SHELL_ONBOARDING_NAV_LINKS: readonly AdminShellOnboardingNavL
   },
 ] as const;
 
-/** 枢纽页卡片（不含四队列；含按用户查权益）。 */
+/** 枢纽页卡片（不含四队列；不含准入费账本入口 — Owner REMOVE_ENTRY_FEE_HUB）。 */
 export const ADMIN_ONBOARDING_HUB_PAGE_LINKS: readonly {
   href: string;
   titleKey: string;
@@ -69,16 +60,6 @@ export const ADMIN_ONBOARDING_HUB_PAGE_LINKS: readonly {
     href: "/admin/users",
     titleKey: "admin_onboarding_hub_users",
     descKey: "admin_onboarding_hub_users_desc",
-  },
-  {
-    href: "/admin/onboarding/entitlements",
-    titleKey: "admin_onboarding_hub_entitlements",
-    descKey: "admin_onboarding_hub_entitlements_desc",
-  },
-  {
-    href: "/admin/onboarding/payment-events",
-    titleKey: "admin_onb_payment_events_title",
-    descKey: "admin_onb_payment_events_subtitle_l5",
   },
   {
     href: "/admin/onboarding/webhook-jobs",

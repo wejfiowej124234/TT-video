@@ -2,7 +2,6 @@ export type AdminUser = {
   id: string;
   email: string;
   role: string;
-  kyc_status?: string;
   created_at?: string;
   acquisition_publish_suspended?: boolean;
   acquisition_publish_suspended_until?: string | null;

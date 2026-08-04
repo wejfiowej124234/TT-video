@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { appendAdminOnboardingQueueListLimit } from "@/lib/admin/adminOnboardingQueueListLimit";
 import { useAdminStandardListFetch } from "@/lib/admin/useAdminStandardListFetch";
 import { routes } from "@/lib/api/routes";
 
@@ -21,10 +22,10 @@ export function useAdminGuideApplicationsPage(statusFilter: string) {
 
   const listUrl = useMemo(() => {
     const q = statusFilter.trim() ? `?status=${encodeURIComponent(statusFilter.trim())}` : "";
-    return `${routes.adminGuideApplications}${q}`;
+    return appendAdminOnboardingQueueListLimit(`${routes.adminGuideApplications}${q}`);
   }, [statusFilter]);
 
-  const { items, loading, refreshing, error, staleWhileError } =
+  const { items, loading, refreshing, error, staleWhileError, appliedFilters } =
     useAdminStandardListFetch<AdminGuideApplicationRow>({
       scope: "guide-applications",
       context: "AdminGuideApplicationsPage.load",
@@ -38,6 +39,7 @@ export function useAdminGuideApplicationsPage(statusFilter: string) {
     refreshing,
     error,
     staleWhileError,
+    appliedFilters,
     bumpReload: () => setReloadTick((n) => n + 1),
   };
 }

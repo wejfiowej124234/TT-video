@@ -1,0 +1,4258 @@
+{
+  "schema": "traveltrust.v65_prod_003_discovery_workbench_gap_inventory.v1",
+  "machine": "TT_V65_PROD_003_DISCOVERY_WORKBENCH",
+  "status": "RUNTIME_VERIFIED__WAVE_E_OPEN_DISCOVERY",
+  "lifecycle": "WAVE_D_RUNTIME_VERIFIED__WAVE_E_OPEN_DISCOVERY",
+  "batch_id": "V65-PROD-003",
+  "round": "R1_workbench + R2_inbox_onboarding_approvals + R3_community_reports_guide_onboarding_audit_404 + PRV_RESIDUAL_from_V65-PROD-004_R4_SUPERSEDED + R4_owner_13_screenshot_wave_e + R5_owner_wave_e_scope_g070_g080_deep_scan · R6_owner_confirm_config_center_appeals_in_content_keep_plus_enterprise_reaudit_g081_g085",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "live_web_tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "stamp": "20260804T002417Z",
+  "phase": "3_public_production",
+  "honesty": {
+    "discovery_ne_implementing": false,
+    "no_fix_without_owner_confirm": false,
+    "runtime_verified_002_ne_go": true,
+    "tt_production_go": "NO_GO",
+    "working_tree_next_config_has_cdn_allowlist_not_on_tip": true,
+    "click_through_full_matrix": "PARTIAL_CODE_REVIEW_ONLY",
+    "wave_a_owner_authorized": true,
+    "wave_b_c_deferred": false,
+    "full_batch_003_ne_closed": true,
+    "wave_a_runtime_verified": true,
+    "wave_b_implementing": false,
+    "wave_c_deferred": false,
+    "local_verify_ne_prod_tip": false,
+    "wave_b_green_ne_batch_003_closed": true,
+    "note": "Wave D RUNTIME_VERIFIED ≠ 003 CLOSED; Wave E G050–G080 OPEN_DISCOVERY (R4+R5 Owner Admin production reality + machine gates G070–G072 + deep-scan G073–G080); Solo BRANCHLESS_ON_LIVING_TIP; TT_PRODUCTION_GO=NO_GO; Owner KYC=DELETE · 准入费=REMOVE · queues PRODUCTION_WRITABLE · Admin Console Production Reality Closure",
+    "prv_residual_from_004": true,
+    "no_fix_without_owner_scope_freeze": true,
+    "wave_d_runtime_verified": true,
+    "wave_e_open_discovery": true,
+    "solo_branchless_batch_repair": true,
+    "wave_e_r4_owner_13": true,
+    "owner_decision_kyc_delete": true,
+    "owner_decision_entry_fee_remove": true,
+    "wave_e_r5_scope": true,
+    "owner_decision_admin_production_reality": true,
+    "discovery_ne_closed": true,
+    "inventory_ne_production_go": true,
+    "owner_decision_config_hub_name_config_center": true,
+    "owner_decision_appeals_moderation_in_scope": true,
+    "owner_decision_content_keep_and_productionize": true,
+    "r6_enterprise_reaudit_injected": true
+  },
+  "surface": {
+    "route": "/admin",
+    "focus": "admin_workbench_home",
+    "components": [
+      "frontend/components/admin/AdminHomeClient.tsx",
+      "frontend/components/admin/AdminHomeDomainHealthStrip.tsx",
+      "frontend/components/admin/AdminHomeFocusCompanion.tsx",
+      "frontend/components/admin/AdminHomeKpiStrip.tsx",
+      "frontend/components/admin/AdminHomeMaintainerFold.tsx",
+      "frontend/lib/admin/adminRecentVisits.ts",
+      "frontend/next.config.js"
+    ]
+  },
+  "owner_evidence": {
+    "console": [
+      "R1: GET https://www.web3-ttg.com/_next/image?url=https%3A%2F%2Fcdn.web3-ttg.com%2F…&w=48&q=75 → 400 (Bad Request); stack label orders:2",
+      "R3: GET https://www.web3-ttg.com/admin/audit-logs?_rsc=… → 404 (Not Found); IntersectionObserver prefetch from approvals detail link"
+    ],
+    "screenshots": [
+      "domain_health_vault_banner",
+      "ops_snapshot_and_maintainer_fold",
+      "focus_companion_quick_view_and_recent_visits",
+      "R2_inbox_provider_onboarding_approvals",
+      "R3_community_reports_start_disposal_contrast",
+      "R3_guide_onboarding_queue_overflow_open_contrast",
+      "R3_guide_application_detail_empty_shell"
+    ]
+  },
+  "totals": {
+    "open": 31,
+    "p0": 3,
+    "p1": 6,
+    "p2": 2,
+    "confirm_design_or_expected_difference": 1,
+    "awaiting_owner_keep_cut_fix": 3,
+    "runtime_verified_residual_g021_g049": 29,
+    "gap_count": 80,
+    "open_wave_e": 31,
+    "updated_at": "2026-08-04T01:00:00Z",
+    "r4_owner_13_gaps": [
+      "V65-PROD-003-G057",
+      "V65-PROD-003-G058",
+      "V65-PROD-003-G059",
+      "V65-PROD-003-G060",
+      "V65-PROD-003-G061",
+      "V65-PROD-003-G062",
+      "V65-PROD-003-G063",
+      "V65-PROD-003-G064",
+      "V65-PROD-003-G065",
+      "V65-PROD-003-G066",
+      "V65-PROD-003-G067",
+      "V65-PROD-003-G068",
+      "V65-PROD-003-G069"
+    ],
+    "r5_new_gaps": [
+      "V65-PROD-003-G070",
+      "V65-PROD-003-G071",
+      "V65-PROD-003-G072",
+      "V65-PROD-003-G073",
+      "V65-PROD-003-G074",
+      "V65-PROD-003-G075",
+      "V65-PROD-003-G076",
+      "V65-PROD-003-G077",
+      "V65-PROD-003-G078",
+      "V65-PROD-003-G079",
+      "V65-PROD-003-G080"
+    ]
+  },
+  "gaps": [
+    {
+      "id": "V65-PROD-003-G001",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Production Next/Image 400 for cdn.web3-ttg.com URLs",
+      "title_zh": "生产站 /_next/image 对 cdn.web3-ttg.com 返回 400",
+      "category": "media_cdn_config",
+      "repro": "Live tip 4809b039: frontend/next.config.js images.remotePatterns has NO cdn.web3-ttg.com / www.web3-ttg.com. Console: GET /_next/image?url=https://cdn.web3-ttg.com/…png&w=48&q=75 → 400. Stack label orders:2 (may be traveler /orders or admin orders chrome, not necessarily workbench).",
+      "code_ssot": "git show 4809b039:frontend/next.config.js — remotePatterns lack web3-ttg CDN host; WT may already draft allowlist (uncommitted · NOT shipped).",
+      "owner_decision_needed": "CONFIRM enter IMPLEMENTING for next.config remotePatterns + redeploy web tip",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "wave": "A",
+      "fix_note": "Wave A · local code path; tip deploy + runtime evidence required",
+      "runtime_evidence": "evidence/GO_v65_prod_003_wave_a_single_cut/20260803T114543Z",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507",
+      "fix_landed_commit": "0cc49f0b78d23de16a1ba48b118d015f562b734c"
+    },
+    {
+      "id": "V65-PROD-003-G002",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "经营快照 fold is sparse / low-value in focus mode",
+      "title_zh": "焦点模式下「经营快照」几乎无指标，仅说明+链，价值存疑",
+      "category": "ia_necessity",
+      "repro": "Focus inbox layout: AdminHomeKpiStrip detailOnly — lead + 订单/争议/向导目录 text links + honesty note (list API capped). Screenshot shows empty-looking section vs「快照」期望.",
+      "code_ssot": "AdminHomeClient.tsx detailOnly; AdminHomeKpiStrip.tsx detailOnly branch",
+      "owner_decision_needed": false,
+      "recommended_disposition": "CUT_FOCUS_KPI_FOLD",
+      "wave": "B",
+      "owner_decision": "IA=A · CUT focus「经营快照」; non-focus KPI detail retained",
+      "lifecycle": "IMPLEMENTING",
+      "local_verify": "PASS",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G003",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "维护者与手册 fold weak / possible redundancy",
+      "title_zh": "「维护者与手册」弱交互，可能与壳层导航重复",
+      "category": "ia_necessity",
+      "repro": "Focus: three plain text links (权限中心 / 维护者可观测性 / 完整操作手册). Large empty frame; overlaps Shell/nav destinations.",
+      "code_ssot": "AdminHomeMaintainerFold.tsx focusMode",
+      "owner_decision_needed": false,
+      "recommended_disposition": "CUT_FOCUS_MAINTAINER_FOLD",
+      "wave": "B",
+      "owner_decision": "IA=A · CUT focus「维护者与手册」; non-focus MaintainerFold retained; no Sidebar merge",
+      "lifecycle": "IMPLEMENTING",
+      "local_verify": "PASS",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G004",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "最近访问 not production-grade (未命名页 · localStorage · incomplete title map)",
+      "title_zh": "「最近访问」未达生产级：出现未命名页、仅本机、标题表不全",
+      "category": "recent_visits_quality",
+      "repro": "Screenshot shows pill「未命名页」. adminRecentVisits: localStorage only (no cross-device); ADMIN_RECENT_PATH_TITLE_KEYS missing e.g. /admin/observability (and other hubs) → ADMIN_RECENT_UNNAMED_TITLE_KEY.",
+      "code_ssot": "frontend/lib/admin/adminRecentVisits.ts",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_TITLE_MAP_FILTER_UNNAMED",
+      "wave": "B",
+      "owner_decision": "G004=A · expand ADMIN_RECENT_PATH_TITLE_KEYS + filter unnamed; localStorage-only = Expected Difference",
+      "lifecycle": "IMPLEMENTING",
+      "local_verify": "PASS",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G005",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Duplicate ops signals across 速览 / 域健康 / 经营快照",
+      "title_zh": "速览待办 · 域健康 · 经营快照信号重复",
+      "category": "duplication",
+      "repro": "Companion 速览 lists onboarding/approvals/reports counts; Domain Health repeats 入驻/经营订单争议/社区举报; 经营快照 again links 订单/争议. Cognitive overlap for same work queues.",
+      "code_ssot": "AdminHomeFocusCompanion · AdminHomeDomainHealthStrip · AdminHomeKpiStrip",
+      "owner_decision_needed": false,
+      "recommended_disposition": "DOMAIN_LIGHTS_ONLY_COMPANION_SOLE_QUEUE",
+      "wave": "B",
+      "owner_decision": "IA=A · companion 速览 = sole queue counts; domain health lights-only (no countLabel on focus path)",
+      "lifecycle": "IMPLEMENTING",
+      "local_verify": "PASS",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G006",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Vault empty state on workbench (honest / likely Expected Difference)",
+      "title_zh": "工作台金库「未接入/未部署」空态（诚实空态，疑为预期差异）",
+      "category": "expected_difference_candidate",
+      "repro": "Vault card: 未部署 / 金库未接入 / 不伪造数字. Staging/prod honesty copy present.",
+      "code_ssot": "AdminHomeSystemOverview / vault strip on home",
+      "owner_decision_needed": false,
+      "recommended_disposition": "CONFIRM_DESIGN",
+      "wave": "B",
+      "owner_decision": "G006=A · CONFIRM_DESIGN — keep vault honest empty (no data-source rewrite)",
+      "lifecycle": "CONFIRM_DESIGN",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G007",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "经营四叶内存数据风险 banner",
+      "title_zh": "数据源风险提示：经营四叶存在内存数据风险",
+      "category": "data_honesty_risk",
+      "repro": "Top banner 数据源风险提示 · 经营四叶存在内存数据风险. Honesty good; production operators may need severity/owner path if still memory-backed on live tip.",
+      "code_ssot": "AdminHomeDomainHealth / ops clover data path",
+      "owner_decision_needed": false,
+      "recommended_disposition": "ACCEPT",
+      "wave": "B",
+      "owner_decision": "G007=A · ACCEPT — keep four-leaf memory risk banner (no Web3/memory truth rewrite)",
+      "lifecycle": "ACCEPT",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G008",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Workbench link affordance / sparse chrome UX",
+      "title_zh": "工作台链点弱可发现性 · 大空框 · 排版稀疏",
+      "category": "ui_ux_affordance",
+      "repro": "用户列表/订单列表、经营快照 tabs、维护者三链多为纯文本；域健康灰点「打开…」与橙点「需处理」混排；大块空白；右栏指引写「展开下方经营快照」但折叠态易迷失。",
+      "code_ssot": "AdminHomeClient focus layout + companion footer copy",
+      "owner_decision_needed": false,
+      "recommended_disposition": "AFFORDANCE_POLISH",
+      "wave": "B",
+      "owner_decision": "Polish remaining weak links to touchTargetLink44 / hover; no new card stacks",
+      "lifecycle": "IMPLEMENTING",
+      "local_verify": "PASS",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G009",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Inbox recommended-order chip highlight vs counts (live mismatch vs code)",
+      "title_zh": "收件箱推荐顺序芯片：截图空队列亮/有量暗，与代码「有量亮空暗」不一致",
+      "category": "inbox_workflow_chips",
+      "repro": "Screenshot: steward chip gold, no count; provider 26 / approvals 5 / reports 13 appear idle. Code AdminInboxWorkflowQuickNav: hasWork = count!==null && count>0 → ACTIVE else IDLE. Do NOT flip styles blindly.",
+      "code_ssot": "frontend/components/admin/AdminInboxWorkflowQuickNav.tsx · adminUi ADMIN_INBOX_WORKFLOW_CHIP_* · adminInboxWorkflowOrder.ts",
+      "owner_decision_needed": false,
+      "recommended_disposition": "VERIFY_THEN_FIX",
+      "optimization_note": "Owner expectation (busy=bright) already matches tip source intent; verify runtime before any CSS swap.",
+      "wave": "B",
+      "owner_decision": "VERIFY tip 0cc49f0b workflow chip ACTIVE/IDLE before any style flip; no blind invert",
+      "lifecycle": "IMPLEMENTING",
+      "local_verify": "PASS",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G010",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Inbox task cards sparse UX / naming / guide-as-queue count / hover",
+      "title_zh": "收件箱任务大卡稀疏·指引带计数·命名可对齐·缺 hover",
+      "category": "inbox_cards_ux_copy",
+      "repro": "Large empty cards; guide card shows count 23; names 商家入驻 / 待批审批单 OK vs KYB vs approvals; optional align with 审批队列; no hover motion.",
+      "code_ssot": "AdminUnifiedInboxPageMain · adminUnifiedInboxTasks.ts · locales admin_home_inbox_*",
+      "owner_decision_needed": false,
+      "recommended_disposition": "INBOX_DENSITY_COPY_POLISH",
+      "optimization_note": "L5 dark+sun already on-brand; hover lift optional; naming largely correct.",
+      "wave": "B",
+      "owner_decision": "Light density + hover; disambiguate guide-queue vs inbox-guide copy",
+      "lifecycle": "IMPLEMENTING",
+      "local_verify": "PASS",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G011",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Onboarding queues (provider + guide): literal {age} + email primary + English status",
+      "title_zh": "入驻队列（商家+向导）：字面量「已等待 {age}」·长邮箱主键重复·状态英文",
+      "category": "onboarding_queue_i18n_ux",
+      "repro": "admin_queue_wait_age uses {age}; applyLocalePlaceholders only replaces {{key}}. Reproduced on provider queue (R2) AND guide applications queue (R3 Owner screenshot). Long acrp-…@traveltrust.test as title + repeated tech id.",
+      "code_ssot": "AdminOnboardingQueueRowCard.tsx · AdminGuideApplicationsPageMain · locales zh/en admin_queue_wait_age · frontend/lib/i18n.ts applyLocalePlaceholders",
+      "owner_decision_needed": "FIX locale to {{age}} + humanize primary label in IMPLEMENTING (covers provider+guide)",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "optimization_note": "Confirmed P1 i18n defect; approvals already use {{age}}. Guide overflow layout tracked as G017; root cause for {age} stays G011.",
+      "wave": "A",
+      "fix_note": "Wave A · local code path; tip deploy + runtime evidence required",
+      "runtime_evidence": "evidence/GO_v65_prod_003_wave_a_single_cut/20260803T114543Z",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507",
+      "fix_landed_commit": "0cc49f0b78d23de16a1ba48b118d015f562b734c"
+    },
+    {
+      "id": "V65-PROD-003-G012",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Provider application detail: raw status, jargon empty, thin fields, actions gated",
+      "title_zh": "商家入驻申请详情：裸英文状态·研发空态话术·字段薄·approved 无审核钮",
+      "category": "onboarding_detail_ux",
+      "repro": "Status shows raw 'approved'; docsEmptyHonest mentions 诚实空态非加载失败; no Approve/Reject when canReview false (approved/rejected). Screenshot strikethrough not in source CSS — treat as unverified visual. Thin merchant identity surface.",
+      "code_ssot": "AdminOnboardingApplicationDetailPageMain · AdminProviderApplicationReviewCard.tsx",
+      "owner_decision_needed": "i18n status + operator empty copy + key fields; confirm actions only for reviewable statuses",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "optimization_note": "Missing buttons on approved sample is expected gate; queue→detail status consistency still worth UAT.",
+      "wave": "C",
+      "local_verify": "PASS",
+      "note": " | Wave C code+i18n LOCAL_VERIFIED 20260803; ship with single 003 cut (not separate C release).",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G013",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Approvals queue not production-readable (other action + UUID + seed); purpose ≠ KYB",
+      "title_zh": "审批队列未达生产可读（其它审批动作+UUID+seed）；用途≠商家入驻",
+      "category": "approvals_queue_product",
+      "repro": "Pending Priority lists 其它审批动作 + applicant UUID; seed reasons ACRP F… Separate from /admin/provider-applications KYB queue. Purpose = high-risk/generic admin approvals.",
+      "code_ssot": "AdminApprovalsPageMain · adminApprovalWorkflowModel · locales admin_approvals_*",
+      "owner_decision_needed": "Human action labels + applicant display name; clarify IA vs 商家入驻",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "optimization_note": "Naming 待批审批单 is OK; content quality is the gap.",
+      "wave": "C",
+      "local_verify": "PASS",
+      "note": " | Wave C code+i18n LOCAL_VERIFIED 20260803; ship with single 003 cut (not separate C release).",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G014",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Approvals filter exposes API path and postgres source to operators",
+      "title_zh": "审批筛选暴露 GET /admin/approvals 与 source: postgres",
+      "category": "approvals_filter_dev_surface",
+      "repro": "admin_approvals_list_filter_hint mentions GET …/admin/approvals; status bar shows source: postgres.",
+      "code_ssot": "AdminApprovalsFiltersCard · locales admin_approvals_list_filter_hint",
+      "owner_decision_needed": "Hide tech meta from operator UI",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "optimization_note": "Dev honesty ok for staging debug flag; production UI should not default-show.",
+      "wave": "C",
+      "local_verify": "PASS",
+      "note": " | Wave C code+i18n LOCAL_VERIFIED 20260803; ship with single 003 cut (not separate C release).",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G015",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Approval detail dense tech UX; Approve/Reject present for pending — needs live UAT",
+      "title_zh": "审批单详情技术密度高；pending 有批准/驳回 — 须真网 UAT",
+      "category": "approval_detail_ux_function",
+      "repro": "Timeline + monospace summary keys; right panel 批准/驳回 with required reject reason. Do not claim broken without live fail. Optimize human labels + density.",
+      "code_ssot": "app/admin/approvals/[id]/AdminApprovalDetailPageMain · workflow panel",
+      "owner_decision_needed": "UX polish + Owner click approve/reject → audit log before close",
+      "recommended_disposition": "FIX_NON_BLOCKING_PLUS_UAT",
+      "optimization_note": "Functional surface exists in code; production gap is readability + verified runtime.",
+      "wave": "C",
+      "local_verify": "PASS",
+      "note": " | Wave C code+i18n LOCAL_VERIFIED 20260803; ship with single 003 cut (not separate C release).",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+    },
+    {
+      "id": "V65-PROD-003-G016",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Admin dark-shell primary CTA contrast: hardcoded near-black text (开始处置 / 打开)",
+      "title_zh": "Admin 暗壳主 CTA 靠色：硬编码近黑字（开始处置 / 打开）",
+      "category": "admin_cta_contrast",
+      "repro": "Owner screenshots: community reports table/strip「开始处置」and guide triangle「打开」nearly invisible (black on dark). ADMIN_TABLE_PRIMARY_ACTION_BTN_CLASS uses text-[#0c0a09] — bypasses Admin ink remap (.text-ink-900 → near-white). Warm gradient fill may not paint reliably on live → black label on dark.",
+      "code_ssot": "frontend/lib/adminUi.ts ADMIN_TABLE_PRIMARY_ACTION_BTN_CLASS ~L1119 · adminTableRowPrimaryActionClass · AdminCommunityReportsTable.tsx · AdminGuidesTriangleStrip.tsx · AdminOnboardingQueueRowCard.tsx · globals.css [data-tt-admin-zone-content-stack] ink remap",
+      "owner_decision_needed": "FIX shared CTA tokens for dark Admin console in IMPLEMENTING",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "optimization_note": "Single token fix covers multiple surfaces; also review secondary text-travel-700 on dark.",
+      "wave": "A",
+      "fix_note": "Wave A · local code path; tip deploy + runtime evidence required",
+      "runtime_evidence": "evidence/GO_v65_prod_003_wave_a_single_cut/20260803T114543Z",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507",
+      "fix_landed_commit": "0cc49f0b78d23de16a1ba48b118d015f562b734c"
+    },
+    {
+      "id": "V65-PROD-003-G017",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Guide onboarding queue: long-email primary overflow + duplicate tech line",
+      "title_zh": "向导入驻队列：超长 email 主键溢出 + 技术行重复",
+      "category": "guide_onboarding_queue_layout",
+      "repro": "Guide queue rows show ultra-long test emails as bold primary overflowing the card; tech block reprints email. {age} literal = extend G011 (same locale key), do not invent duplicate root-cause ID.",
+      "code_ssot": "frontend/lib/admin/adminOnboardingQueueRowDisplay.ts resolveOnboardingQueuePrimaryLabel · AdminOnboardingQueueRowCard.tsx · AdminGuideApplicationsPageMain.tsx",
+      "owner_decision_needed": "Humanize guide primary (city/real_name) + truncate/tooltip email; ship with G011",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "optimization_note": "Layout/IA gap orthogonal to i18n {age}; CTA contrast = G016.",
+      "wave": "A",
+      "fix_note": "Wave A · local code path; tip deploy + runtime evidence required",
+      "runtime_evidence": "evidence/GO_v65_prod_003_wave_a_single_cut/20260803T114543Z",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507",
+      "fix_landed_commit": "0cc49f0b78d23de16a1ba48b118d015f562b734c"
+    },
+    {
+      "id": "V65-PROD-003-G018",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Guide application detail empty shell: silent null when no status; registration-parity materials missing",
+      "title_zh": "向导审核详情空壳：无 status 时 silent null；未对齐注册提交材料面",
+      "category": "guide_onboarding_detail_empty",
+      "repro": "Owner: /admin/guide-applications/[id] shows only back/open-user links inside empty bordered canvas. AdminGuideApplicationReviewCard returns null when !loading && !error && !app?.status. When data exists card can show city/country/real_name/avatar/passport_hash/wallet/hourly_rate/languages/bio + docs id_photo_url/language_cert_url/guide_license_url. Traveler submit SSOT: guide/register → real_name, passport_number, id_photo_url, language_cert_url, guide_license_url, city, country_code, languages, bio, wallet.",
+      "code_ssot": "AdminOnboardingApplicationDetailPageMain kind=guide · AdminGuideApplicationReviewCard.tsx ~L112 return null · frontend/app/guide/register/guideRegisterSubmitFlow.ts",
+      "owner_decision_needed": "Forbid silent null; always show materials matrix + empty/error UX; verify API payload vs UI",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "optimization_note": "Distinguish API empty vs UI swallow; approve/reject only for pending-like statuses.",
+      "wave": "A",
+      "fix_note": "Wave A · local code path; tip deploy + runtime evidence required",
+      "runtime_evidence": "evidence/GO_v65_prod_003_wave_a_single_cut/20260803T114543Z",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507",
+      "fix_landed_commit": "0cc49f0b78d23de16a1ba48b118d015f562b734c"
+    },
+    {
+      "id": "V65-PROD-003-G019",
+      "severity": "P2",
+      "status": "DEFERRED_OPTIONAL_WITH_G016",
+      "title": "Community reports surface residual polish (strip hint contrast / density)",
+      "title_zh": "社区举报工单残余：待办条动线偏暗 / 表密度与筛选感",
+      "category": "community_reports_ux_polish",
+      "repro": "Inbox strip admin_reports_wizard_flow_hint uses text-ink-600 — may read dark on strip; primary CTA contrast owned by G016. Filters/table still ops-tool dense.",
+      "code_ssot": "AdminCommunityReportsInboxStrip.tsx · AdminCommunityReportsTable.tsx · AdminCommunityReportsPageMain",
+      "owner_decision_needed": "Same IMPLEMENTING polish cut as G016 or defer non-blocking",
+      "recommended_disposition": "FIX_NON_BLOCKING",
+      "optimization_note": "Do not duplicate G016; this is residual surface polish only.",
+      "wave": "A_optional"
+    },
+    {
+      "id": "V65-PROD-003-G020",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Dead Admin page link /admin/audit-logs → 404 (canonical /admin/audit)",
+      "title_zh": "死链 /admin/audit-logs → 404（真页面 /admin/audit）",
+      "category": "admin_dead_route_audit_logs",
+      "repro": "Owner console: GET https://www.web3-ttg.com/admin/audit-logs?_rsc=… 404 via IntersectionObserver prefetch. App Router has frontend/app/admin/audit/page.tsx; no admin/audit-logs dir. Broken href in AdminApprovalDetailWorkflowPanel ~L131 href=\"/admin/audit-logs\". API /api/v1/admin/audit-logs is separate and OK.",
+      "code_ssot": "frontend/app/admin/approvals/[id]/AdminApprovalDetailWorkflowPanel.tsx · frontend/app/admin/audit/page.tsx",
+      "owner_decision_needed": "FIX href to /admin/audit + rg sweep page links (keep API path)",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "optimization_note": "Prefetch 404 is hard evidence of wrong page path, not API outage.",
+      "wave": "A",
+      "fix_note": "Wave A · local code path; tip deploy + runtime evidence required",
+      "runtime_evidence": "evidence/GO_v65_prod_003_wave_a_single_cut/20260803T114543Z",
+      "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507",
+      "fix_landed_commit": "0cc49f0b78d23de16a1ba48b118d015f562b734c"
+    },
+    {
+      "id": "V65-PROD-003-G021",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Operations nav missing Merchant / Provider directory leaf",
+      "title_zh": "经营侧栏缺「商家目录」叶子",
+      "category": "sidebar_ia_completeness",
+      "repro": "S1: 经营仅 用户/向导目录/订单/争议. Code: adminShellSidebarModel.ts operations.links has no merchant/provider href.",
+      "code_ssot": "frontend/lib/admin/adminShellSidebarModel.ts · operations group",
+      "owner_decision_needed": "CONFIRM route target (/admin/providers vs /admin/merchants) + label 商家目录 + Scope Freeze",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-01",
+      "wave": "D-A",
+      "depends_on": [
+        "V65-PROD-003-G025"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G001",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G022",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Operations nav missing Travel Acquisition directory leaf",
+      "title_zh": "经营侧栏缺「旅行收购目录」叶子",
+      "repro": "S1 missing 旅行收购. Today acquisition ops live under users#admin-acquisition-suspend (adminHomeModel), not a 经营 directory.",
+      "code_ssot": "adminShellSidebarModel.ts; adminHomeModel.ts /admin/users#admin-acquisition-suspend",
+      "category": "sidebar_ia_completeness",
+      "owner_decision_needed": "CONFIRM dedicated /admin/acquisition (or alias) vs keep suspend-only under Users",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-01",
+      "wave": "D-A",
+      "depends_on": [
+        "V65-PROD-003-G025"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G002",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G023",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Operations leaf order not Owner 1..6 sequence",
+      "title_zh": "经营叶子顺序不符合 Owner 1用户→2向导→3商家→4旅行收购→5订单→6争议",
+      "category": "sidebar_ia_order",
+      "repro": "Current order: users → guides → orders → disputes (4 leaves). Target: insert merchants+acquisition before orders.",
+      "code_ssot": "ADMIN_SHELL_SIDEBAR_GROUPS[operations].links array order",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-01",
+      "wave": "D-A",
+      "depends_on": [
+        "V65-PROD-003-G021",
+        "V65-PROD-003-G022",
+        "V65-PROD-003-G025"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G003",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G024",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Left-nav naming not normalized across six directories",
+      "title_zh": "左侧目录命名不规范（用户 vs 向导目录 等）",
+      "category": "sidebar_naming",
+      "repro": "zh: admin_shell_nav_users_short=用户; admin_shell_nav_guides_short=向导目录; orders/disputes 无「目录」后缀. Owner wants 规范命名 for all six.",
+      "code_ssot": "frontend/locales/zh.ts admin_shell_nav_*_short",
+      "owner_decision_needed": "CONFIRM naming pattern: 用户目录/向导目录/商家目录/旅行收购目录/订单/争议 OR keep 订单/争议 without 目录",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-01",
+      "wave": "D-A",
+      "depends_on": [
+        "GATE-NAMING"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G004",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G025",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Publish sidebar leaf budget 12 blocks +2 operations leaves",
+      "title_zh": "侧栏 Publish 叶子上限 12：经营+2 将变成 14",
+      "category": "sidebar_leaf_budget",
+      "repro": "ADMIN_SHELL_SIDEBAR_PUBLISH_MAX_LEAVES=12; current leafCount=12; +商家+收购 → 14.",
+      "code_ssot": "adminShellSidebarModel.ts ADMIN_SHELL_SIDEBAR_PUBLISH_MAX_LEAVES",
+      "owner_decision_needed": "CONFIRM one of: raise budget to 14 · compress other groups · overflow/More · demote a leaf",
+      "recommended_disposition": "CONFIRM_DESIGN",
+      "modification_proposal_ref": "MP-01",
+      "wave": "D-GATE0",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G005",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G026",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "No production Merchant/Provider catalog list page under /admin",
+      "title_zh": "无经营级商家目录列表页（仅有入驻队列 provider-applications）",
+      "category": "route_surface_gap",
+      "repro": "frontend/app/admin has provider-applications/ (入驻) and guides/ (目录) but no providers/ or merchants/ catalog. 经营「商家目录」cannot deep-link today.",
+      "code_ssot": "frontend/app/admin/* inventory; GET admin provider-applications ≠ directory SSOT",
+      "owner_decision_needed": "CONFIRM: new /admin/providers catalog vs promote/repurpose provider-applications for ops directory",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-02",
+      "wave": "D-B",
+      "depends_on": [
+        "V65-PROD-003-G021",
+        "V65-PROD-003-G025",
+        "V65-PROD-003-G048"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G006",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G027",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Travel Acquisition has no directory surface; only suspend anchor under Users",
+      "title_zh": "旅行收购无独立目录页，仅用户页锚点「收购暂停」",
+      "category": "route_surface_gap",
+      "repro": "adminHomeModel acquisition href=/admin/users#admin-acquisition-suspend. No /admin/acquisition list/filter table.",
+      "code_ssot": "adminHomeModel.ts; AdminUsersPageMain acquisition suspend section",
+      "owner_decision_needed": "CONFIRM directory columns (bond/listing/suspend/KYC) + API readiness",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-02",
+      "wave": "D-B",
+      "depends_on": [
+        "V65-PROD-003-G022",
+        "V65-PROD-003-G025",
+        "V65-PROD-003-G048"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G007",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z",
+      "owner_supersede_columns": {
+        "kyc": "DELETE_via_G057",
+        "at": "2026-08-04T00:00:00Z",
+        "note_zh": "目录列确认不再含 KYC"
+      }
+    },
+    {
+      "id": "V65-PROD-003-G028",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Orders parties UI is Guide-only; Merchant bilateral path absent",
+      "title_zh": "订单参与方仅游客+向导，缺商家双边呈现",
+      "category": "orders_bilateral_model",
+      "repro": "S2 + AdminOrdersPageMain: traveler + guide_id only; no provider/merchant party row. Domain: traveler places order to guide OR merchant.",
+      "code_ssot": "AdminOrdersPageMain.tsx parties cell; locales admin_orders_party_*",
+      "owner_decision_needed": "CONFIRM counterparty taxonomy (guide | merchant | acquisition?) + empty-state rules when draft has no guide",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-03",
+      "wave": "D-D",
+      "depends_on": [
+        "V65-PROD-003-G048"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G008",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G029",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Orders filters lack counterparty type / party id / date range",
+      "title_zh": "订单筛选缺对方类型、参与方 ID、时间范围等生产级过滤",
+      "category": "orders_filters",
+      "repro": "S2 filters: 订单 ID · 条数 · 状态 only. No 对方类型(向导/商家) · party id · created_at range.",
+      "code_ssot": "useAdminOrdersPage + AdminOrdersPageMain filter card",
+      "owner_decision_needed": "CONFIRM filter set for Scope Freeze (must stay URL-driven like Users)",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-03",
+      "wave": "D-D",
+      "depends_on": [
+        "V65-PROD-003-G028"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G009",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G030",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Orders list lacks service/product summary; ID-heavy density",
+      "title_zh": "订单列表缺服务/商品摘要，信息密度偏 ID",
+      "category": "orders_list_columns",
+      "repro": "S2 primary column is truncated order id; no itinerary/title/SKU. Industry order ops usually show what was purchased.",
+      "code_ssot": "AdminOrdersPageMain summary column",
+      "owner_decision_needed": "CONFIRM which summary field is API-available (title / city / product_type)",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-03",
+      "wave": "D-D",
+      "depends_on": [
+        "V65-PROD-003-G028"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G010",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G031",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Guides directory presents vertical/tall-row layout vs Users horizontal golden",
+      "title_zh": "向导目录竖版观感（高行/窄列），与用户横板金标不一致",
+      "category": "directory_layout_unify",
+      "repro": "S3 Users horizontal vs S4 Guides tall wrapped UUID rows. Code: Guides renders full UUIDs; Users/Orders use shortAdminId.",
+      "code_ssot": "AdminGuidesPageMain.tsx td row.id/user_id full; AdminUsersPageMain horizontal filter+table",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-04",
+      "wave": "D-C",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G011",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G032",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Six operations directory pages lack shared layout kit discipline",
+      "title_zh": "经营六项子页未强制同一布局套件（筛选条/宽表/状态横排/操作列）",
+      "category": "directory_style_consistency",
+      "repro": "Owner requires 用户横板 style for 用户·向导·商家·旅行收购·订单·争议. Today tokens shared but column density/ID shortening/filter richness diverge.",
+      "code_ssot": "adminUi ADMIN_FILTER_* / ADMIN_TABLE_*; per-page *PageMain.tsx",
+      "owner_decision_needed": "CONFIRM Users page as golden template for all six",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-04",
+      "wave": "D-C",
+      "depends_on": [
+        "V65-PROD-003-G031"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G012",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G033",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Guides table shows full UUID without shortAdminId (root cause of wrap)",
+      "title_zh": "向导表直接渲染完整 UUID，导致换行竖挤",
+      "category": "directory_layout_unify",
+      "repro": "AdminGuidesPageMain: {row.id} / {row.user_id} raw; Orders uses shortAdminId(o.id).",
+      "code_ssot": "AdminGuidesPageMain.tsx ~244-245; shortAdminId in lib/admin/shortAdminId.ts",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-04",
+      "wave": "D-C",
+      "depends_on": [
+        "V65-PROD-003-G031"
+      ],
+      "subsumed_by": "V65-PROD-004-G011",
+      "note_zh": "R4：实施以 G011 为主；G013 为根因明细，勿双开 PR。",
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G013",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G034",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Orders / Disputes naming vs directory pages — classification UX unclear",
+      "title_zh": "订单与争议的经营分类/跳转关系未按双边业务讲清",
+      "category": "orders_classification_ux",
+      "repro": "S2 drafts with guide=—; disputed path exists but no counterparty-type tabs (向导单/商家单) or classification chips.",
+      "code_ssot": "AdminOrdersPageMain; AdminOrdersOpsJumpPack; disputes?orderId=",
+      "owner_decision_needed": "CONFIRM: tabs vs filter chips for 向导订单 / 商家订单 / 全部",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-03",
+      "wave": "D-D",
+      "depends_on": [
+        "V65-PROD-003-G028",
+        "V65-PROD-003-G029"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G014",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G035",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Onboarding sidebar group+leaf both labeled 入驻",
+      "title_zh": "侧栏「入驻」组名与叶子同名，信息重复且与页标题「准入费」不对齐",
+      "category": "sidebar_naming",
+      "repro": "S5: group 入驻 + leaf 入驻. Hub title is 准入费·运营枢纽. Keys admin_shell_nav_group_onboarding / admin_shell_nav_onboarding_short both 入驻.",
+      "code_ssot": "adminShellSidebarModel.ts onboarding group; locales zh.ts",
+      "owner_decision_needed": "CONFIRM rename pattern: 组=准入费 / 叶=运营枢纽 OR 组折叠单叶=准入费",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-05",
+      "wave": "D-E",
+      "depends_on": [
+        "V65-PROD-003-G038"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G015",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G036",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Onboarding hub review strip duplicates existing application queues",
+      "title_zh": "枢纽「待审核发现」三卡深链重复既有入驻队列（向导/商家/区域主理人）",
+      "category": "onboarding_hub_dedup",
+      "repro": "S6 cards → guide-applications / provider-applications / steward-applications. Same queues already reachable via inbox/workspace/onboarding nav links.",
+      "code_ssot": "AdminOnboardingHubPageMain ONBOARDING_REVIEW_CARDS; adminInboxQueueHrefs.ts",
+      "owner_decision_needed": "CONFIRM: delete strip entirely vs collapse to one Inbox link",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-05",
+      "note_zh": "此为重复功能；建议删除/折叠。≠删除整页准入费枢纽。",
+      "wave": "D-E",
+      "depends_on": [
+        "V65-PROD-003-G038"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G016",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G037",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Steward review card wrongly labeled 区域管家",
+      "title_zh": "枢纽审核卡误称「区域管家」——应为「区域主理人」",
+      "category": "i18n_copy_defect",
+      "repro": "S6 区域管家审核. Locale admin_onboarding_hub_review_steward=区域管家审核; elsewhere admin_steward_list_title uses 区域主理人.",
+      "code_ssot": "frontend/locales/zh.ts admin_onboarding_hub_review_steward",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-05",
+      "wave": "D-W0",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G017",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G038",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Owner asked to delete 入驻; fee hub must not be wholesale-deleted",
+      "title_zh": "Owner 感知整块入驻可删——须区分：审核深链可删，准入费台账独有须保留",
+      "category": "confirm_design_ia",
+      "repro": "Owner: 入驻页功能是否基本都有了若是就删除. Code: fee surfaces (entitlements/payment-events/webhook/compliance) unique under /admin/onboarding/*.",
+      "code_ssot": "AdminOnboardingHubPageMain action grid; onboarding subroutes",
+      "owner_decision_needed": "CONFIRM_DESIGN: KEEP fee hub + REMOVE review strip (+ rename 入驻→准入费). REJECT wholesale delete of /admin/onboarding group.",
+      "recommended_disposition": "CONFIRM_DESIGN",
+      "modification_proposal_ref": "MP-05",
+      "wave": "D-GATE0",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G018",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z",
+      "owner_supersede": {
+        "by": "V65-PROD-003-G065",
+        "decision": "REMOVE_ENTRY_FEE_HUB",
+        "at": "2026-08-04T00:00:00Z",
+        "note_zh": "R4 Owner：准入费不入账、区域主理人私下转账 → 删除准入费枢纽；旧 KEEP fee hub CONFIRM_DESIGN 被覆盖"
+      }
+    },
+    {
+      "id": "V65-PROD-003-G039",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Inbox workflow chips: pending should be lit, empty should be dim (steward@0 lit on live)",
+      "title_zh": "任务收件箱推荐顺序：有待办应亮、无待办应暗——主理人@0 亮、有数队列暗（Owner 确认）",
+      "category": "inbox_chip_highlight",
+      "repro": "S7: chip「主理人申请」实心暖底且无角标；商家26/审批5/举报13 描边暗。Owner rule: 有请求亮/无请求暗。Worktree AdminInboxWorkflowQuickNav: hasWork=(count>0)→ACTIVE else IDLE — live screenshot contradicts.",
+      "code_ssot": "AdminInboxWorkflowQuickNav.tsx; adminUi ADMIN_INBOX_WORKFLOW_CHIP_ACTIVE_CLASS / IDLE_CLASS; adminInboxWorkflowOrder.ts",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-06",
+      "note_zh": "可能原因：live tip 逻辑漂移；或 ACTIVE(/16) 对比 IDLE ghost 在深色下视觉倒置。以截图为缺陷真源；实施时须验 count 绑定 + ACTIVE/IDLE 对比度。",
+      "wave": "D-W0",
+      "depends_on": [],
+      "priority_note_zh": "R4：升为 Wave 0 —— 活网可见缺陷，不依赖六叶 IA。",
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G019",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G040",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Guide onboarding queue missing from inbox recommended-order chips",
+      "title_zh": "推荐顺序 chip 缺「向导入驻」——卡片有向导(23)但动线四钮无向导",
+      "category": "inbox_chip_coverage",
+      "repro": "S7 cards include 向导入驻 23; ADMIN_INBOX_WORKFLOW_IDS = provider→steward→approvals→reports only (no guide).",
+      "code_ssot": "adminInboxWorkflowOrder.ts ADMIN_INBOX_WORKFLOW_IDS; adminUnifiedInboxTasks.ts",
+      "owner_decision_needed": "CONFIRM chip order: insert guide after provider? before steward?",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-06",
+      "wave": "D-W0",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G020",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G041",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Task inbox coverage vs six ops dirs: extras + missing (Owner 5-of-6 intent)",
+      "title_zh": "任务收件箱 vs 经营六目录：用户排除 OK；缺旅行收购/争议？；多余主理人/审批/社区举报",
+      "category": "inbox_ia_vs_six_dirs",
+      "repro": "Owner: 收件箱应对齐除用户外的审批面。Cards today: provider+guide+steward+approvals+reports. Six dirs: users|guides|merchants|acquisition|orders|disputes. Missing acquisition+disputes; extras steward/approvals/reports; orders=directory not queue.",
+      "code_ssot": "adminUnifiedInboxTasks.ts; adminShellSidebarModel operations; disputes/acquisition surfaces",
+      "owner_decision_needed": "CONFIRM_DESIGN: (1) keep steward/approvals/reports as inbox extras? (2) add travel-acquisition pending? (3) add disputes open tickets? (4) users stay excluded",
+      "recommended_disposition": "CONFIRM_DESIGN",
+      "modification_proposal_ref": "MP-07",
+      "wave": "D-GATE0",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G021",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G042",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Approvals queue meaning opaque; seed cards show 其它审批动作 + UUID",
+      "title_zh": "审批队列业务语义不清：seed「其它审批动作」+ 申请人 UUID，Owner 看不懂审批什么",
+      "category": "approvals_queue_ux",
+      "repro": "S9: 标题=其它审批动作·seed；摘要 ACRP F approval seed；申请人=UUID。Code: approvals = high-risk ops needing super_admin (role/catalog/official/cold_start…), NOT onboarding. Fallback i18n admin_approvals_action_other.",
+      "code_ssot": "adminApprovalWorkflowModel.ts; AdminApprovalsTableSection.tsx; locales admin_approvals_action_*",
+      "owner_decision_needed": "CONFIRM whether seed rows stay in staging Admin UAT or must be filtered/hidden for ops readability",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-08",
+      "note_zh": "产品说明须写清：审批≠商家/向导入驻；入驻走各自 applications 队列。",
+      "wave": "D-F",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G022",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G043",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Approval detail page mixes Git/build/Idempotency with business approve UI",
+      "title_zh": "审批单详情运维/构建信息与批准驳回混排，业务可读性差",
+      "category": "approvals_detail_ux",
+      "repro": "S10: 发布构建信息(Git)默认可见区 + Idempotency 脚注 + acrp_seed 摘要。Ops reviewer needs action/resource/applicant first.",
+      "code_ssot": "AdminApprovalDetailPageMain.tsx; AdminApprovalDetailWorkflowPanel.tsx",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-08",
+      "wave": "D-F",
+      "depends_on": [
+        "V65-PROD-003-G042"
+      ],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G023",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G044",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Merchant onboarding queue list: technical email as primary title",
+      "title_zh": "商家入驻队列：列表主键为长测试邮箱，缺可读商家身份，信息密度差",
+      "category": "onboarding_queue_list_ux",
+      "repro": "S8: title=acrp-f-provider-…@traveltrust.test; status+等待天数; 每行技术元数据。Auditor cannot scan who the merchant is.",
+      "code_ssot": "frontend/app/admin/provider-applications/*",
+      "owner_decision_needed": "CONFIRM primary fields (display name / company / city) when API available",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-09",
+      "wave": "D-F",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G024",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G045",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Guide onboarding queue: tall workspace explainer + technical email titles",
+      "title_zh": "向导入驻队列：向导工作区三卡冗长「不是…」推挤列表；主键长邮箱",
+      "category": "onboarding_queue_list_ux",
+      "repro": "S11: Guide Workspace three boxes explain what they are NOT; list titles=acrp-f-guide-…@traveltrust.test. Same readability issue as S8.",
+      "code_ssot": "frontend/app/admin/guide-applications/*",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-09",
+      "wave": "D-F",
+      "depends_on": [],
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G025",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G046",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Onboarding/approvals queue pages not unified with Users horizontal golden",
+      "title_zh": "入驻/审批队列页未对齐用户横板金标（筛选条/宽表/短 ID/操作列）",
+      "category": "directory_style_consistency",
+      "repro": "S8/S9/S11 card stacks + tech metadata vs S3 Users horizontal filter+table. Extends G012 to inbox-deep queue surfaces.",
+      "code_ssot": "provider-applications; guide-applications; approvals; adminUi directory kit",
+      "owner_decision_needed": "CONFIRM Users golden also applies to inbox queue pages",
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-09",
+      "wave": "D-F",
+      "depends_on": [
+        "V65-PROD-003-G049"
+      ],
+      "overlap_with": [
+        "MP-04",
+        "V65-PROD-004-G012"
+      ],
+      "note_zh": "R4：队列页金标归 MP-09；经营六目录金标归 MP-04。见 G029。",
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G026",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G047",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Recent visits omit guide-applications → inbox href remap",
+      "title_zh": "最近访问：有商家/主理人→收件箱映射，缺向导申请队列映射",
+      "category": "inbox_parity_recent_visits",
+      "repro": "adminRecentVisits.ts ADMIN_RECENT_PATH_TO_INBOX_HREF maps provider/steward/approvals/reports but NOT /admin/guide-applications. Cards include guide queue; recent-visit deep-link parity broken.",
+      "code_ssot": "frontend/lib/admin/adminRecentVisits.ts",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "modification_proposal_ref": "MP-06",
+      "wave": "D-W0",
+      "depends_on": [
+        "V65-PROD-003-G040"
+      ],
+      "note_zh": "与 G020 同波：补 guide chip 时一并补 recent visits 映射。",
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G027",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G048",
+      "severity": "P1",
+      "status": "RUNTIME_VERIFIED",
+      "title": "API tip risk: merchant bilateral + acquisition directory may need backend fields",
+      "title_zh": "API tip 风险：订单商家双边 / 旅行收购目录可能缺后端字段",
+      "category": "api_tip_risk",
+      "repro": "MP-02 acquisition catalog + MP-03 merchant party/filters may require API list fields beyond current web tip. Live API tip already Expected Difference vs web. Risk: FE-only mock or blocked acceptance.",
+      "code_ssot": "AdminOrdersPageMain; potential /admin/acquisition; traveltrust-api admin list endpoints",
+      "owner_decision_needed": "CONFIRM: FE degrade-only in 004 vs open API sub-batch / tip cut",
+      "recommended_disposition": "RISK_REGISTER_OWNER_GATE",
+      "modification_proposal_ref": "MP-02",
+      "wave": "D-GATE0",
+      "depends_on": [],
+      "note_zh": "非 CONFIRM_DESIGN 产品文案；属实施边界风险。未决前 Wave B/D 不得宣称 CLOSED。",
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G028",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G049",
+      "severity": "P2",
+      "status": "RUNTIME_VERIFIED",
+      "title": "Layout-kit ownership overlap MP-04 vs MP-09 / G026",
+      "title_zh": "横板金标职责重叠：六目录(MP-04) vs 入驻队列(MP-09/G026) 边界未写死",
+      "category": "repair_scope_overlap",
+      "repro": "G012/G026 both say unify to Users golden. Without ownership matrix, implementers may double-refactor adminUi or leave queues inconsistent.",
+      "code_ssot": "deep_audit.kit_surface_matrix; MP-04; MP-09",
+      "owner_decision_needed": false,
+      "recommended_disposition": "CONFIRM_DESIGN",
+      "modification_proposal_ref": "MP-04",
+      "wave": "D-GATE0",
+      "depends_on": [],
+      "note_zh": "默认拍板建议：经营六叶=MP-04；入驻队列=MP-09；审批=MP-08；共享仅 token/shortAdminId。",
+      "source_batch": "V65-PROD-004",
+      "source_gap_id": "V65-PROD-004-G029",
+      "umbrella_wave": "D",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+      "runtime": "PASS",
+      "updated_at": "2026-08-03T16:24:39Z"
+    },
+    {
+      "id": "V65-PROD-003-G050",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Finance Suite depth UX still partial-gated",
+      "title_zh": "财务套件深度 UX 仍被 fin_suite_depth=partial 门控",
+      "category": "finance_ux_depth",
+      "repro": "Open /admin/finance-suite; depth nav / panels still gate on fin_suite_depth=partial (AdminFinanceWorkflowCompactNav, AdminFinanceSuiteHubDepthSection).",
+      "code_ssot": "frontend/components/admin/AdminFinanceWorkflowCompactNav.tsx; AdminFinanceSuiteHubDepthSection.tsx",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "wave": "E-FIN",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Wave E discovery; Solo branchless; under V65-PROD-003 only",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-03T23:20:00Z",
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G051",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Fee-router / net-profit / reconciliation not in G001–G049 coverage",
+      "title_zh": "fee-router · net-profit-ledger · finance-reconciliation 未纳入 G001–G049",
+      "category": "finance_surface_coverage",
+      "repro": "Routes /admin/fee-router, net-profit-ledger, finance-reconciliation exist but were not covered by Waves A–D residual inventory.",
+      "code_ssot": "frontend/app/admin/fee-router*; net-profit-ledger*; finance-reconciliation*",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "wave": "E-FIN",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Discovery only — click/runtime verify before Batch Fix",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-03T23:20:00Z",
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G052",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Admin media* surfaces not in Waves A–D",
+      "title_zh": "/admin/media* 未进入 Wave A–D",
+      "category": "media_admin_coverage",
+      "repro": "Admin media lanes not inventoried in G001–G049; need production usability / L5 honesty pass.",
+      "code_ssot": "frontend/app/admin/media*",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "wave": "E-MEDIA",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Discovery open under 003; no new batch id",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-03T23:20:00Z",
+      "priority": "P2"
+    },
+    {
+      "id": "V65-PROD-003-G053",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Vacancy ledger admin surfaces not in Waves A–D",
+      "title_zh": "/admin/vacancy-ledger* 未进入 Wave A–D",
+      "category": "vacancy_admin_coverage",
+      "repro": "Vacancy ledger admin not covered by residual G021–G049.",
+      "code_ssot": "frontend/app/admin/vacancy-ledger*",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "wave": "E-VACANCY",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Discovery open",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-03T23:20:00Z",
+      "priority": "P2"
+    },
+    {
+      "id": "V65-PROD-003-G054",
+      "severity": "P2",
+      "status": "OPEN",
+      "title": "Region vault / region-share not in Waves A–D",
+      "title_zh": "region-vault · region-share 未进入 Wave A–D",
+      "category": "region_admin_coverage",
+      "repro": "/admin/region-vault and region-share not inventoried in G001–G049.",
+      "code_ssot": "frontend/app/admin/region-vault*; region-share*",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "wave": "E-REGION",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Discovery open",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-03T23:20:00Z",
+      "priority": "P2"
+    },
+    {
+      "id": "V65-PROD-003-G055",
+      "severity": "P2",
+      "status": "OPEN",
+      "title": "Finance export accounting placeholder honesty",
+      "title_zh": "财务导出会计占位诚实性",
+      "category": "finance_export_honesty",
+      "repro": "AdminFinanceExportDepthPanel may present placeholder / partial accounting depth without production-honest empty or deferred state.",
+      "code_ssot": "frontend/components/admin/AdminFinanceExportDepthPanel.tsx",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "wave": "E-FIN",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G050"
+      ],
+      "note_zh": "Honesty / L5 empty-state; not Production GO",
+      "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-03T23:20:00Z",
+      "priority": "P2"
+    },
+    {
+      "id": "V65-PROD-003-G056",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Primary checkout tip lags living tip (Solo branchless hygiene)",
+      "title_zh": "主 checkout tip 落后活 tip（Solo 无分支卫生）",
+      "category": "solo_tip_hygiene",
+      "repro": "Primary checkout tip is now 35872b40…; inventory pin historically 3d1cca13…. Keep Solo BRANCHLESS_ON_LIVING_TIP — no cut/feature ritual. Re-verify lag each Wave E stamp.",
+      "code_ssot": "docs/runbook/TT-V65-PRODUCTION-BATCH-REPAIR-MATRIX-LATEST.*; .cursor/rules/traveltrust-v65-batch-release-closure.mdc",
+      "owner_decision_needed": true,
+      "recommended_disposition": "PROCESS_HYGIENE",
+      "wave": "E-PROCESS",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Owner-safe tip hygiene; living tip advanced; NOT a new batch; NOT Production GO",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T00:00:00Z",
+      "priority": "P2"
+    },
+    {
+      "id": "V65-PROD-003-G057",
+      "severity": "P0",
+      "status": "OPEN",
+      "title": "Program-wide KYC DELETE (Owner: no KYC business model)",
+      "title_zh": "全站 KYC 清理（Owner：TravelTrust=无 KYC 业务模型）",
+      "category": "product_surface_removal",
+      "owner_issue": 1,
+      "repro": "Admin Users filter「KYC 状态」+ table KYC column show none/pending; registration/meTrust KYC paths; finance/onboarding copy may cite KYC. Owner: delete all KYC logic and UI — not needed for TravelTrust.",
+      "code_ssot": "frontend/app/admin/users/*; GuideRegisterKycBanner; MeProfileSection; meTrustKycL5*; frontend/lib/api.ts users kyc_status; locales *_kyc*",
+      "owner_decision_needed": false,
+      "owner_decision": "DELETE_KYC_EVERYWHERE",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) Admin Users：删筛选/列/详情 KYC。2) GuideRegisterKycBanner + NEXT_PUBLIC_GUIDE_REGISTER_REQUIRE_KYC 门闸删除。3) MeProfileSection / meTrust KYC 展示删除。4) API admin users?kyc_status= 与前端调用删除。5) locales *_kyc* 运营文案清零。6) 机读：rg + vitest 契约。7) 联动 G074。",
+      "wave": "E-KYC",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "related_gaps": [
+        "V65-PROD-003-G027",
+        "V65-PROD-003-G063",
+        "V65-PROD-003-G065",
+        "V65-PROD-003-G067",
+        "V65-PROD-003-G074"
+      ],
+      "note_zh": "Owner Wave E P0：代码不存在 KYC 展示和流程入口。验证=全仓搜索+页面无 KYC+数据模型不影响业务。①绿≠③GO。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T00:59:51Z",
+      "acceptance_zh": [
+        "用户注册流程无 KYC 门闸/文案/入口",
+        "用户管理筛选/列/详情无 KYC",
+        "角色申请与信任中心无 KYC",
+        "Admin 任何筛选/表字段/财务页无 KYC",
+        "API/状态机不向运营面暴露 kyc_status",
+        "全仓 rg KYC|kyc 管理面与旅客面无展示与流程入口（测试夹具可留注释）",
+        "数据模型残留字段不得驱动业务路径"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P0",
+      "fix_note": "R8 20260804T005951Z LOCAL_FE_STRIP: Admin Users KYC filter/column/detail removed; API client users() no longer sends kyc_status; GuideRegisterKycBanner deleted; Me/Trust/Guide/Merchant workbench KYC UI stripped. Residual: BE may still accept/return kyc_status (see G076); meTrust parse helper retained for legacy payloads. status=OPEN until runtime evidence. TT_PRODUCTION_GO=NO_GO.",
+      "local_fix_stamp": "20260804T005951Z"
+    },
+    {
+      "id": "V65-PROD-003-G058",
+      "severity": "P0",
+      "status": "OPEN",
+      "title": "Guide onboarding production closed-loop (list→detail→review→approve/reject/needs_more→audit)",
+      "title_zh": "向导入驻审核生产化闭环（列表→详情→材料→批准/拒绝/补充→状态→审计）",
+      "category": "onboarding_queue_write_ux",
+      "owner_issue": [
+        2,
+        3
+      ],
+      "repro": "Screenshot#1: title badge 只读. Root: /admin/guide-applications missing from ADMIN_HOME_CARD_TIER_BY_HREF → default tier=read → adminWritePermissionForPathname returns undefined → AdminPageAccessBadge always readonly even if USERS_WRITE in WRITE_PERM_BY_BASE. List is filter+「审核详情」only; placeholders 待补姓名; English pending badge; tech metadata fold; sparse card layout (screenshot#2).",
+      "code_ssot": "frontend/lib/admin/adminHomeCardCapability.ts; adminListPageWritePermission.ts; AdminQueueListPageChrome; AdminGuideApplicationsPageMain; AdminOnboardingQueueRowCard; AdminOnboardingApplicationDetailPageMain kind=guide",
+      "owner_decision_needed": false,
+      "owner_decision": "QUEUE_MUST_BE_PRODUCTION_WRITABLE",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) ADMIN_HOME_CARD_TIER_BY_HREF 补 /admin/guide-applications=write。2) 徽章与 USERS_WRITE/专用写权一致。3) 列表/详情共用 Workbench：中文状态、可读姓名、压缩技术元数据。4) 详情：批准/拒绝/补充材料 + 审计。5) 禁止永久只读。6) 与 G059/G073 共享队列组件。",
+      "wave": "E-ONBOARD",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "related_gaps": [
+        "V65-PROD-003-G017",
+        "V65-PROD-003-G018",
+        "V65-PROD-003-G045",
+        "V65-PROD-003-G046"
+      ],
+      "note_zh": "Owner P0：现在❌只读展示 → 必须生产闭环。代码已有 needs_more_info 能力，但列表假只读挡住运营。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T00:59:51Z",
+      "acceptance_zh": [
+        "申请列表可读（非 UUID 主视觉）",
+        "查看详情",
+        "审核材料",
+        "批准 / 拒绝 / 补充材料(needs_more_info)",
+        "状态流转可见",
+        "审计记录可追溯",
+        "UI=Workbench L5 · 中文完整 · 无技术字段泄漏 · 徽章可写非假只读"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P0",
+      "fix_note": "R8 20260804T005951Z LOCAL_FE: adminHomeCardCapability guide-applications=write; AdminGuideApplicationReviewCard + queue status i18n via adminOnboardingApplicationStatusLabel. status=OPEN until runtime. NO_GO.",
+      "local_fix_stamp": "20260804T005951Z"
+    },
+    {
+      "id": "V65-PROD-003-G059",
+      "severity": "P0",
+      "status": "OPEN",
+      "title": "Merchant onboarding production closed-loop (submit→review→supplement→pass/reject→record)",
+      "title_zh": "商家入驻审核生产化闭环（提交→审核→补充→通过/拒绝→记录）",
+      "category": "onboarding_queue_write_ux",
+      "owner_issue": 4,
+      "repro": "Screenshot#3: 商家入驻审核队列 badge 只读 + 待补店铺名 + submitted EN + 审核详情 only. Tier map has provider-applications=write + ONBOARDING_PROVIDER_REVIEW — if still 只读, verify caps.hasPermission for super_admin / permissionsLoaded. Same sparse card UX as guide.",
+      "code_ssot": "frontend/app/admin/provider-applications/*; AdminOnboardingQueueRowCard; adminHomeCardCapability ONBOARDING_PROVIDER_REVIEW; AdminOnboardingApplicationDetailPageMain kind=provider",
+      "owner_decision_needed": false,
+      "owner_decision": "QUEUE_MUST_BE_PRODUCTION_WRITABLE",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 验 ONBOARDING_PROVIDER_REVIEW / super_admin 写权与徽章。2) 详情闭环批准/驳回/补充+审计。3) 店铺名/中文状态/横板密度与向导同金标。4) 共享队列组件禁止分叉。",
+      "wave": "E-ONBOARD",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G058"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G044",
+        "V65-PROD-003-G046"
+      ],
+      "note_zh": "Owner P0：同向导完整闭环。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T00:59:51Z",
+      "acceptance_zh": [
+        "提交可见",
+        "审核材料",
+        "补充材料",
+        "通过 / 拒绝",
+        "状态流转 + 审计记录",
+        "Workbench L5 · 中文 · 无 UUID 主视觉 · 徽章可写"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P0",
+      "fix_note": "R8 20260804T005951Z LOCAL_FE: provider-applications write + shop_name-missing honesty + status i18n on AdminProviderApplicationReviewCard / queue cards. status=OPEN until runtime. NO_GO.",
+      "local_fix_stamp": "20260804T005951Z"
+    },
+    {
+      "id": "V65-PROD-003-G060",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Disputes center closed-loop (list→detail→evidence→ruling→refund/release→record)",
+      "title_zh": "争议中心闭环（列表→详情→证据→裁决→退款/释放→记录）",
+      "category": "disputes_production_l5",
+      "owner_issue": 5,
+      "repro": "Owner asks whether /admin/disputes meets production + L5. Tier=write / DISPUTES_WRITE exists; need list→detail write path, empty honesty, i18n, density vs 经营横板金标.",
+      "code_ssot": "frontend/app/admin/disputes/*; adminHomeCardCapability /admin/disputes; DISPUTES_WRITE",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 审计 AdminDisputesPageMain + DisputeDetail：证据→裁决→退款/释放是否真写。2) 状态色/时间线/操作区对齐 Workbench。3) 技术字段折叠（refund_ratio 等）。4) 中文状态。5) 缺口用 G070/G071 机扫复核。",
+      "wave": "E-DISPUTES",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "related_gaps": [
+        "V65-PROD-003-G034"
+      ],
+      "note_zh": "Owner P1：不能只列表；须完整处置链。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "争议列表",
+        "详情",
+        "证据区",
+        "裁决操作",
+        "退款/释放路径诚实可达",
+        "记录/时间线",
+        "状态颜色 · 操作区 · 权限 DISPUTES_WRITE · Workbench L5"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G061",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Approvals center ops language (事项/申请人/类型/风险/操作 · no seed/UUID primary)",
+      "title_zh": "审批中心运营语言化（审批事项·申请人·类型·风险等级·操作）",
+      "category": "approvals_production_ux",
+      "owner_issue": 6,
+      "repro": "Screenshot#4: 待办优先 seed「其它审批动作 · seed」「ACRP F」+ 申请人 hash + 技术 ID 折叠 + 批量批准。G042/G043 RUNTIME_VERIFIED still need product-facing titles and business-first layout.",
+      "code_ssot": "frontend/app/admin/approvals/*; AdminApprovals*",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 列表列模型改为运营五列。2) seed/UUID 折入次要元数据。3) 续 G042/G043。4) 批量操作保留但文案运营化。",
+      "wave": "E-APPROVALS",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "related_gaps": [
+        "V65-PROD-003-G042",
+        "V65-PROD-003-G043"
+      ],
+      "note_zh": "Owner P1：不要像开发后台。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "标题=审批事项（非「其它审批动作」/seed）",
+        "申请人可读",
+        "类型中文",
+        "风险等级可见",
+        "操作区清晰",
+        "UUID/seed 不进主视觉"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G062",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Community reports closed-loop (report→review→handle→close→record)",
+      "title_zh": "社区举报闭环（举报→审核→处理→关闭→记录）",
+      "category": "community_reports_production",
+      "owner_issue": 7,
+      "repro": "Owner asks production-grade community reports. Prior G016 contrast / G019 strip; need full moderate path COMMUNITY_MODERATE usable end-to-end.",
+      "code_ssot": "frontend/app/admin/community/reports/*; COMMUNITY_MODERATE",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 端到端写路径 + 对比度（续 G016/G019）。2) 状态机与审计。3) Workbench 操作区。4) G071 机扫覆盖。",
+      "wave": "E-COMMUNITY",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "related_gaps": [
+        "V65-PROD-003-G016",
+        "V65-PROD-003-G019"
+      ],
+      "note_zh": "Owner P1：不能只是列表。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "举报列表",
+        "审核入口",
+        "处理动作",
+        "关闭状态",
+        "记录可追溯",
+        "非只读列表壳"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G063",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Users management ops wrap (no KYC · role ZH · actions · detail)",
+      "title_zh": "用户管理：删 KYC · 角色变更中文 · 操作按钮 · 用户详情",
+      "category": "users_directory_ux_i18n",
+      "owner_issue": 8,
+      "repro": "Screenshot#5: 「角色变更申请」 wraps to 2nd line under 监管详情. Screenshot#6: 目标角色 options tourist/guide/arbitrator/admin/super_admin English while UI zh.",
+      "code_ssot": "AdminUsersDataSection ops column; AdminUsersRoleChangeModal TARGET_ROLES option={r}",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 操作列 nowrap。2) AdminUsersRoleChangeModal 角色 i18n。3) KYC 由 G057 删除。4) 详情页技术字段折叠。",
+      "wave": "E-USERS",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G057"
+      ],
+      "note_zh": "Owner P1。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "无 KYC（→G057）",
+        "角色变更申请排版可读",
+        "中文角色",
+        "操作按钮不换行塌陷",
+        "用户详情运营可读"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G064",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Pay page CTA contrast · Workbench/pay token unify",
+      "title_zh": "支付页黑字对比修复 · 统一 Design Token",
+      "category": "pay_hub_a11y_contrast",
+      "owner_issue": 9,
+      "repro": "Screenshot#7 /pay: 「前往我的订单」 and order-ID open button near-black on dark gray. payHubPrimaryCtaClass=escrowProtocolSolidBtnClass may assume light surface.",
+      "code_ssot": "frontend/lib/pay/payHubL5.ts; PayPagePrimaryCardActionLinks; escrowProtocolSolidBtnClass / Secondary",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) payHubL5 / escrowProtocolSolidBtnClass 深色适配。2) vitest 契约。3) 与 Admin Workbench token 对齐原则（同色阶语义）。",
+      "wave": "E-PAY",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Owner P1；站点 /pay 非 Admin。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "CTA 浅色字或亮底达标对比",
+        "主/次按钮统一 token",
+        "深色底无黑字"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G065",
+      "severity": "P0",
+      "status": "OPEN",
+      "title": "Entry-fee REMOVE across Admin/menu/finance/steward (private wallet ≠ TT ledger)",
+      "title_zh": "准入费移除（菜单·财务·表·运营·主理人流程=个人钱包转账≠TT财务）",
+      "category": "product_surface_removal",
+      "owner_issue": 10,
+      "repro": "Owner: 准入费 per Web3 freeze = private wallet transfer to steward, not ledger — remove. Finance must not host KYC/entry-fee. SUPERSEDES G038 KEEP fee hub framing.",
+      "code_ssot": "frontend/app/admin/onboarding/* fee hub; entitlements/payment-events; finance-suite copy; sidebar 入驻/准入费",
+      "owner_decision_needed": false,
+      "owner_decision": "REMOVE_ENTRY_FEE_HUB",
+      "supersedes": [
+        "V65-PROD-003-G038"
+      ],
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 删/改 /admin/onboarding 准入费枢纽与侧栏文案。2) 财务清准入费/KYC 项。3) 主理人申请页改为私下转账诚实说明（非账本）。4) 覆盖 G038。5) 子路由见 G075。",
+      "wave": "E-FEE-REMOVE",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G057"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G035",
+        "V65-PROD-003-G036",
+        "V65-PROD-003-G038",
+        "V65-PROD-003-G050"
+      ],
+      "note_zh": "Owner P0：不是简单删页面；全路径清零。SUPERSEDES G038。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T00:59:51Z",
+      "acceptance_zh": [
+        "Admin 菜单无准入费枢纽作为财务收入项",
+        "财务统计无准入费/KYC 无关收入项",
+        "数据表/运营页无准入费台账冒充",
+        "区域主理人申请=个人钱包转账逻辑说明 · 不入 TravelTrust 财务系统",
+        "onboarding fee subroutes（entitlements/payment-events/quote）处理或降级为非财务诚实态",
+        "联动 G075"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P0",
+      "fix_note": "R8 20260804T005951Z LOCAL_FE_HONESTY: Admin shell/hub removed entitlements + payment-events nav; LEGACY list honestyBannerKey on entitlements/payment-events/compliance-audit. Traveler steward/provider workbench fee honesty panels. status=OPEN until runtime. NO_GO.",
+      "local_fix_stamp": "20260804T005951Z"
+    },
+    {
+      "id": "V65-PROD-003-G066",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Content hub prune (keep real publish/review/edit/delete · cut test/dup/empty)",
+      "title_zh": "内容中心：保留真发布/审核/编辑/删除 · 删测试/重复/空壳",
+      "category": "content_hub_prune",
+      "owner_issue": 11,
+      "repro": "Screenshot#8: Content hub duplicates 发布队列 (box + link + grid read-only), 产品路线图 / Landing 氛围 may be non-ops. Owner: keep real only.",
+      "code_ssot": "frontend/lib/admin/contentOpsL5.ts CONTENT_HUB_SECTIONS; content hub page",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 重审 CONTENT_HUB_SECTIONS。2) 去重发布队列。3) 死链/空壳下线。4) G071 覆盖写路径。",
+      "wave": "E-CONTENT",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Owner P1。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "保留真正发布·审核·编辑·删除",
+        "删除测试入口",
+        "删除重复入口",
+        "删除空壳页面"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G067",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Finance center simplify (orders/escrow/settlement/refund/fee only)",
+      "title_zh": "财务中心简化：只关注订单收入·Escrow·Settlement·Refund·Fee",
+      "category": "finance_production_ux",
+      "owner_issue": 12,
+      "repro": "Screenshot#9: key leaks admin_fin_three_track_* ; workflow cards feel roadmap-like; depth=partial (G050). Owner: simplify but production-capable; audit child popovers.",
+      "code_ssot": "AdminFinanceSuite*; AdminFinanceWorkflowCompactNav; locales finance keys; fee-router/reconciliation child routes",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 修 admin_fin_three_track_* key 泄漏。2) IA 对齐 Owner 五类。3) 联动 G050/G065/G057。4) 导出诚实性 G055。",
+      "wave": "E-FIN",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G050"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G051",
+        "V65-PROD-003-G055",
+        "V65-PROD-003-G065"
+      ],
+      "note_zh": "Owner P1：财务应该简单。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "只保留：订单收入 / Escrow / Settlement / Refund / Fee",
+        "删除：KYC · 准入费 · 无关运营配置",
+        "无 i18n key 泄漏",
+        "三轨增长/无关运营配置降级或移出"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P1"
+    },
+    {
+      "id": "V65-PROD-003-G068",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Config hub name unify to config center + permission/tile honesty",
+      "title_zh": "配置中心命名统一 + 权限/磁贴诚实（Owner LOCK）",
+      "category": "config_hub_ia",
+      "owner_issue": 13,
+      "repro": "Screenshot#10: sidebar 设置 → page 配置中心 + 只读; audit card key admin_config_hub_desc_audit; tiles overlap approvals/flags/jobs.",
+      "code_ssot": "adminShellSidebarModel settings→/admin/config; AdminConfigHub*; locales admin_config_hub_* / admin_shell_nav_settings_short",
+      "owner_decision_needed": null,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) admin_shell_nav_settings_short「设置」与 admin_config_hub_title「配置中心」统一为一个产品名。2) 修 audit desc key 泄漏。3) 去重入口。4) 权限检查。",
+      "wave": "E-CONFIG",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "note_zh": "Owner P1：必须一个名字。建议统一为「配置中心」或「设置」二选一，实施前 Owner 可再确认偏好。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "侧栏短名与页标题同一中文名",
+        "权限模型清晰",
+        "功能不重复",
+        "是否保留 Owner 确认后写死"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P1",
+      "stamp": "20260804T001500Z",
+      "description": "Owner CONFIRM R6: product name LOCKED to 配置中心 — do NOT use 设置. Live conflict: sidebar admin_shell_nav_settings_short=设置 (adminShellSidebarModel → /admin/config) vs page admin_config_hub_title=配置中心 and home tile already 配置中心. Also: audit desc key leak; overlapping tiles; /admin/config parent tier=read while children flags/jobs/releases/secrets=super_write. Fix: i18n short+full → 配置中心; dedupe tiles; clarify permission model; fix audit copy keys.",
+      "owner_decision": "CONFIG_CENTER_NAME_LOCKED",
+      "owner_decision_detail": "统一交配置中心 — sidebar/page/home/i18n must all say 配置中心; 设置 forbidden on this surface",
+      "disposition": "FIX_CANDIDATE",
+      "related_gaps": [
+        "V65-PROD-003-G069",
+        "V65-PROD-003-G085"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-G069",
+      "severity": "P2",
+      "status": "OPEN",
+      "title": "Onboarding queue display-name honesty (待补姓名/店铺名)",
+      "title_zh": "入驻队列展示名诚实性（待补姓名/待补店铺名）",
+      "category": "onboarding_display_honesty",
+      "owner_issue": [
+        3,
+        4
+      ],
+      "repro": "Queues show 待补姓名 / 待补店铺名 for seed/parity accounts — production should prefer profile/shop fields or honest empty, not fake-ready names.",
+      "code_ssot": "AdminOnboardingQueueRowCard display name fallbacks; guide/provider application list mappers",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 优先真实 profile/shop。2) 缺失用「未填写」空态非「待补」伪完成。3) 与 G058/G059 同批。",
+      "wave": "E-ONBOARD",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G058",
+        "V65-PROD-003-G059"
+      ],
+      "note_zh": "Owner P2；列表假完成展示。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "acceptance_zh": [
+        "待补姓名/店铺名改为「未填写」诚实空态",
+        "不冒充已完成身份",
+        "随 G058/G059/G073 同批"
+      ],
+      "r5_owner_scope_enriched": true,
+      "priority": "P2"
+    },
+    {
+      "id": "V65-PROD-003-G070",
+      "priority": "P1",
+      "status": "OPEN",
+      "title": "Admin full-page visual consistency machine scan",
+      "title_zh": "G070 Admin 全页面视觉一致性扫描（机读）",
+      "category": "admin_visual_consistency_gate",
+      "owner_issue": "G070",
+      "repro": "Owner R5: add machine check across Admin — font/color, bg contrast, button states, table density, empty states, Modal, Dropdown. Current Wave E lacks a single visual gate covering all /admin pages.",
+      "code_ssot": "frontend/app/admin/**; Workbench tokens; adminUi; proposed scripts/dev/run-admin-visual-consistency-scan.cjs (to land with implementing)",
+      "owner_decision_needed": false,
+      "owner_decision": "ADD_MACHINE_CHECK_VISUAL",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "字体颜色对比达标",
+        "背景对比度",
+        "Button 状态一致",
+        "表格密度统一",
+        "空状态统一",
+        "Modal / Dropdown 样式一致",
+        "机读脚本 exit 0 作为 Batch Fix 门"
+      ],
+      "fix_plan_zh": "1) 建 Admin 视觉一致性扫描脚本（路由清单×token 契约）。2) 对失败页登记子缺陷或同批修。3) 覆盖 G064 类对比问题与队列稀疏卡。4) PRV-3b 前必绿。",
+      "wave": "E-GATE",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "related_gaps": [
+        "V65-PROD-003-G032",
+        "V65-PROD-003-G046",
+        "V65-PROD-003-G064",
+        "V65-PROD-003-G072"
+      ],
+      "note_zh": "Owner 建议新增机器检查；Discovery 登记 ≠ 脚本已落地。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z"
+    },
+    {
+      "id": "V65-PROD-003-G071",
+      "priority": "P1",
+      "status": "OPEN",
+      "title": "Admin per-page functional closed-loop machine scan",
+      "title_zh": "G071 Admin 功能闭环扫描（每页：列表/详情/创建/编辑/审核/删除/状态/权限）",
+      "category": "admin_closed_loop_gate",
+      "owner_issue": "G071",
+      "repro": "Owner R5: each Admin page must be checked for list→detail→create→edit→review→delete→state change→permission completeness. Many pages are list-only or false-readonly.",
+      "code_ssot": "frontend/app/admin/**; adminHomeCardCapability; adminListPageWritePermission; proposed run-admin-closed-loop-scan.cjs",
+      "owner_decision_needed": false,
+      "owner_decision": "ADD_MACHINE_CHECK_CLOSED_LOOP",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "每页矩阵：列表 · 详情 · 创建 · 编辑 · 审核 · 删除 · 状态变化 · 权限",
+        "缺失项登记为 OPEN 或本批 FIX",
+        "入驻/争议/举报/审批等写路径不得假只读",
+        "机读 exit 0"
+      ],
+      "fix_plan_zh": "1) 路由×能力矩阵机扫。2) 与 G058/G059/G060/G062/G073 写闭环对拍。3) 权限徽章 vs 真写权一致性。4) PRV-3b 前必绿。",
+      "wave": "E-GATE",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "related_gaps": [
+        "V65-PROD-003-G058",
+        "V65-PROD-003-G059",
+        "V65-PROD-003-G060",
+        "V65-PROD-003-G062",
+        "V65-PROD-003-G073"
+      ],
+      "note_zh": "Owner 建议新增；第三批统一 Batch Fix 门之一。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z"
+    },
+    {
+      "id": "V65-PROD-003-G072",
+      "priority": "P1",
+      "status": "OPEN",
+      "title": "Admin L5 Design System alignment (Workbench header/card/table/badge/action)",
+      "title_zh": "G072 Admin L5 Design System 对齐（Workbench 风格统一）",
+      "category": "admin_l5_design_system_gate",
+      "owner_issue": "G072",
+      "repro": "Owner R5: all Admin pages must unify Workbench style — Header, Card, Table, Badge, Action. Residual vertical/sparse/tech-primary layouts remain on queues and hubs.",
+      "code_ssot": "AdminQueueListPageChrome; AdminOps* shells; adminUi tokens; proposed admin-l5-alignment contract tests",
+      "owner_decision_needed": false,
+      "owner_decision": "ADD_MACHINE_CHECK_L5_DS",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "Header 统一",
+        "Card 统一",
+        "Table 统一",
+        "Badge 统一",
+        "Action 区统一",
+        "与经营横板金标一致",
+        "机读/契约 exit 0"
+      ],
+      "fix_plan_zh": "1) 固化 Workbench L5 组件清单为契约。2) 队列/财务/内容/配置页逐页对齐。3) 与 G070 视觉扫描互补（结构 vs 对比度）。",
+      "wave": "E-GATE",
+      "umbrella_wave": "E",
+      "depends_on": [],
+      "related_gaps": [
+        "V65-PROD-003-G032",
+        "V65-PROD-003-G046",
+        "V65-PROD-003-G070"
+      ],
+      "note_zh": "Owner：所有页面统一 Workbench。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z"
+    },
+    {
+      "id": "V65-PROD-003-G073",
+      "priority": "P0",
+      "status": "OPEN",
+      "title": "Steward applications production closed-loop + private-wallet honesty",
+      "title_zh": "区域主理人申请队列生产闭环 + 私下转账诚实说明（非财务入账）",
+      "category": "onboarding_queue_write_ux",
+      "owner_issue": "deep_scan_steward",
+      "repro": "Deep scan R5: /admin/steward-applications has review card + needs_more_info, but Owner Wave E fee REMOVE requires steward path = personal wallet transfer ≠ TT finance. Queue must still be production-writable closed-loop; copy must not imply ledger fee. Inbox chip highlight residual G039.",
+      "code_ssot": "frontend/app/admin/steward-applications/*; AdminStewardApplicationReviewCard; AdminOnboardingHubPageMain; me onboarding region_steward quote paths",
+      "owner_decision_needed": false,
+      "owner_decision": "STEWARD_QUEUE_WRITABLE_AND_NON_LEDGER",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "列表→详情→审核→批准/拒绝/补充→状态→审计",
+        "文案明确：私下钱包转账 · 不入 TT 财务",
+        "无准入费台账入口",
+        "Workbench L5 · 中文 · 非 UUID 主视觉",
+        "与 G058/G059 同金标"
+      ],
+      "fix_plan_zh": "1) 写权/徽章/闭环与向导商家同标。2) 去除准入费账本暗示。3) 联动 G065/G075。4) Inbox 主理人 chip 亮度见 G039。",
+      "wave": "E-ONBOARD",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G065"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G058",
+        "V65-PROD-003-G059",
+        "V65-PROD-003-G039",
+        "V65-PROD-003-G065"
+      ],
+      "note_zh": "深度扫描新增 P0：Owner 范围写明区域主理人申请流程。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T00:59:51Z",
+      "fix_note": "R8 20260804T005951Z LOCAL_FE: steward-applications write + private-transfer honesty banner on AdminStewardApplicationsPageMain; status i18n. status=OPEN until runtime. NO_GO.",
+      "local_fix_stamp": "20260804T005951Z"
+    },
+    {
+      "id": "V65-PROD-003-G074",
+      "priority": "P0",
+      "status": "OPEN",
+      "title": "Traveler-facing KYC surfaces still live (GuideRegister + Me profile)",
+      "title_zh": "旅客面 KYC 仍存活（向导注册 Banner + 我的资料 KYC 状态）",
+      "category": "product_surface_removal",
+      "owner_issue": "deep_scan_traveler_kyc",
+      "repro": "Deep scan: GuideRegisterKycBanner + NEXT_PUBLIC_GUIDE_REGISTER_REQUIRE_KYC; MeProfileSection renders me_kycStatus / me_kycReservedNote; meTrust kyc_status. Admin Users KYC alone ≠ program DELETE.",
+      "code_ssot": "frontend/app/guide/register/GuideRegisterKycBanner.tsx; useGuideRegisterPage.ts; MeProfileSection.tsx; meTrust*; meTrustKycL5*",
+      "owner_decision_needed": false,
+      "owner_decision": "DELETE_KYC_EVERYWHERE",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "向导注册无 KYC Banner/门闸",
+        "我的资料无 KYC 状态行",
+        "信任中心无 KYC CTA",
+        "rg 旅客面无 KYC 流程入口"
+      ],
+      "fix_plan_zh": "1) 删 Banner 与 require-KYC env 门闸。2) Me 资料/信任链清 KYC。3) 随 G057 同批；机读覆盖旅客面。",
+      "wave": "E-KYC",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G057"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G057"
+      ],
+      "note_zh": "深度扫描：G057 Admin 清零不够，旅客面仍展示。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T00:59:51Z",
+      "fix_note": "R8 20260804T005951Z LOCAL_FE_STRIP: Traveler GuideRegister KYC banner/gate removed; Me settings trust progress no KYC step; guide GateProgress + TrustSummary KYC tiles removed; markers data-tt-guide-workbench-kyc-removed. status=OPEN until runtime. NO_GO.",
+      "local_fix_stamp": "20260804T005951Z"
+    },
+    {
+      "id": "V65-PROD-003-G075",
+      "priority": "P0",
+      "status": "OPEN",
+      "title": "Onboarding fee subroutes still shipped (entitlements/payment-events/quote)",
+      "title_zh": "入驻准入费子路由仍在产（entitlements / payment-events / quote 等）",
+      "category": "product_surface_removal",
+      "owner_issue": "deep_scan_fee_subroutes",
+      "repro": "Deep scan: /admin/onboarding/entitlements*, payment-events, webhook-jobs, compliance-audit + traveler /me/onboarding quote still frame 96-18 fee ledger. Owner REMOVE ≠ only hide hub card.",
+      "code_ssot": "frontend/app/admin/onboarding/**; me/onboarding; traveltrustLiquidityContract onboarding_fee_quote_path; adminShellOnboardingNavLinks",
+      "owner_decision_needed": false,
+      "owner_decision": "REMOVE_ENTRY_FEE_HUB",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "Admin 无准入费台账/支付事件作为财务收入运营面",
+        "侧栏/枢纽深链清理或改为非财务诚实态",
+        "旅客 quote 路径不冒充 TT 入账",
+        "财务统计无准入费项"
+      ],
+      "fix_plan_zh": "1) 盘点 ADMIN_SHELL_ONBOARDING_NAV_LINKS 与 hub links。2) 下线或改诚实说明。3) 随 G065；禁止只藏首页卡片。",
+      "wave": "E-FEE-REMOVE",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G065"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G065",
+        "V65-PROD-003-G035",
+        "V65-PROD-003-G036"
+      ],
+      "note_zh": "深度扫描：G065「不是简单删除页面」的具体子路由清单。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T00:59:51Z",
+      "fix_note": "R8 20260804T005951Z LOCAL_FE_HONESTY: paired with G065 — fee subroutes marked LEGACY honesty; StewardWorkbenchBTrackAdmissionSection private-transfer honesty; ProviderWorkbenchAdmissionLinks → /provider/register. status=OPEN until runtime. NO_GO.",
+      "local_fix_stamp": "20260804T005951Z"
+    },
+    {
+      "id": "V65-PROD-003-G076",
+      "priority": "P1",
+      "status": "OPEN",
+      "title": "Admin API/admin users still expose kyc_status query contract",
+      "title_zh": "Admin Users API 仍暴露 kyc_status 查询契约",
+      "category": "api_contract_cleanup",
+      "owner_issue": "deep_scan_api_kyc",
+      "repro": "frontend/lib/api.ts users({ kyc_status }) builds /api/v1/admin/users?kyc_status=; api.test asserts path. Even if UI removed, contract invites KYC ops filters.",
+      "code_ssot": "frontend/lib/api.ts; frontend/lib/api.test.ts; crates/api admin users list filters (if any)",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "前端 API helper 无 kyc_status 参数",
+        "Admin UI 无调用",
+        "后端列表过滤若仅服务 KYC 则 deprecate/fail-closed 文档化",
+        "测试不再要求 KYC query"
+      ],
+      "fix_plan_zh": "1) 删 FE query 参数与测试断言。2) BE：确认是否可保留列但禁止运营过滤；按 Owner DELETE 对齐。3) 随 G057。",
+      "wave": "E-KYC",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G057"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G057",
+        "V65-PROD-003-G074"
+      ],
+      "note_zh": "深度扫描：契约层残留会让 KYC「假删」。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T02:35:00Z",
+      "fix_note": "R9 20260804T023500Z LOCAL_BE_CONTRACT: AdminUsersListQuery / list JSON omit kyc_status (mod.rs live path + query_types + admin_users_http). Internal UserRow.kyc_status mapping retained (not list contract). Local verify PASS_LOCAL · status=OPEN until runtime · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z · TT_PRODUCTION_GO=NO_GO.",
+      "local_fix_stamp": "20260804T023500Z",
+      "local_verify_evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+      "local_verify_verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "V65-PROD-003-G077",
+      "priority": "P1",
+      "status": "OPEN",
+      "title": "Disputes detail tech-field primary + refund/release path honesty residual",
+      "title_zh": "争议详情技术字段主视觉 + 退款/释放路径诚实性残余",
+      "category": "disputes_production_l5",
+      "owner_issue": "deep_scan_disputes_detail",
+      "repro": "AdminDisputeDetailPageMain exposes evidence_hashes; model lists refund_ratio/slash_guide raw keys. Owner wants evidence→ruling→refund/release→record with ops UI (colors/timeline/actions/perms). Need verify write path vs read-only desk.",
+      "code_ssot": "frontend/app/admin/disputes/[id]/*; disputeOpsL5; AdminDisputesPageMain",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "证据区运营可读（非仅 hash 堆）",
+        "裁决操作区清晰",
+        "退款/释放可达或诚实不可达说明",
+        "时间线+记录",
+        "技术字段折叠"
+      ],
+      "fix_plan_zh": "1) 详情 L5 重组。2) 验证裁决写 API。3) 随 G060；G071 机扫覆盖。",
+      "wave": "E-DISPUTES",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G060"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G060",
+        "V65-PROD-003-G071"
+      ],
+      "note_zh": "深度扫描：G060 验收细则落地页。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z"
+    },
+    {
+      "id": "V65-PROD-003-G078",
+      "priority": "P1",
+      "status": "OPEN",
+      "title": "Appeals + moderation + penalties IN_SCOPE production closed-loop",
+      "title_zh": "申诉/审核/处罚纳入第三批 · 生产闭环（Owner IN_SCOPE）",
+      "category": "community_ops_closed_loop",
+      "owner_issue": "deep_scan_community_siblings",
+      "repro": "Owner G062 covers /admin/community/reports. Deep scan: appeals, moderation/cases, penalties also list-heavy with EN status options in places (compliance rejected raw). Need same review→handle→close→record bar or explicit OUT_OF_SCOPE.",
+      "code_ssot": "frontend/app/admin/community/appeals/*; moderation/cases/*; penalties/*; abuse-policy",
+      "owner_decision_needed": null,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "acceptance_zh": [
+        "若纳入：申诉/案件同举报闭环",
+        "中文状态",
+        "或 Owner 书面 OUT_OF_SCOPE 不进 PRV-3b 阻塞"
+      ],
+      "fix_plan_zh": "1) Owner 确认范围。2) 纳入则对齐 G062/G071。3) 否则登记 Expected Difference。",
+      "wave": "E-COMMUNITY",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G062"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G062",
+        "V65-PROD-003-G081",
+        "V65-PROD-003-G084"
+      ],
+      "note_zh": "深度扫描：避免只修举报列表、漏申诉/处罚。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "stamp": "20260804T001500Z",
+      "description": "Owner CONFIRM R6: appeals/moderation/penalties IN_SCOPE for Wave E. Surfaces: /admin/community/appeals*, moderation/cases*, penalties*, abuse-policy. Critical residual: ADMIN_HOME_CARD_TIER_BY_HREF moderation/cases=read while appeals=super_write and penalties=write — read tier blocks closed-loop write under IN_SCOPE (see G081). Must deliver production approve/reject/sanction actions + honest empty/error + no EN status shells.",
+      "owner_decision": "IN_SCOPE",
+      "owner_decision_detail": "申诉/审核纳入第三批 — production closed-loop required",
+      "disposition": "FIX_CANDIDATE"
+    },
+    {
+      "id": "V65-PROD-003-G079",
+      "priority": "P2",
+      "status": "OPEN",
+      "title": "Finance three-track IA vs Owner five-bucket conflict",
+      "title_zh": "财务「三轨」IA 与 Owner 五类（订单/Escrow/Settlement/Refund/Fee）冲突",
+      "category": "finance_ia",
+      "owner_issue": "deep_scan_finance_ia",
+      "repro": "zh admin_fin_three_track_* frames Stripe/USDC/增长三轨只读. Owner G067 wants only orders/escrow/settlement/refund/fee — no KYC/entry-fee/unrelated ops. Three-track growth badge may keep ops noise.",
+      "code_ssot": "AdminFinanceSuite*; locales admin_fin_three_track_*; finance-suite page",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "acceptance_zh": [
+        "首屏 IA 对齐五类资金动作",
+        "增长/无关运营配置移出或折叠诚实说明",
+        "无 key 泄漏"
+      ],
+      "fix_plan_zh": "1) 重排财务套件导航。2) 随 G067/G050。3) G070 扫对比度。",
+      "wave": "E-FIN",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G067"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G050",
+        "V65-PROD-003-G067",
+        "V65-PROD-003-G065"
+      ],
+      "note_zh": "深度扫描：G067 的 IA 冲突点。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z"
+    },
+    {
+      "id": "V65-PROD-003-G080",
+      "priority": "P1",
+      "status": "OPEN",
+      "title": "Content sibling leaves KEEP and productionize (not delete)",
+      "title_zh": "内容兄弟页保留并生产化（Owner KEEP_AND_PRODUCTIONIZE）",
+      "category": "content_hub_hygiene",
+      "owner_issue": "deep_scan_content_siblings",
+      "repro": "Beyond G066 CONTENT_HUB_SECTIONS: /admin/reviews*, official/cold-start, content/import-operations, geo-validation may be test/ops shells. Need prune or confirm KEEP with real write path.",
+      "code_ssot": "frontend/lib/admin/contentOpsL5.ts; app/admin/content/**; app/admin/reviews/**; app/admin/official/**",
+      "owner_decision_needed": null,
+      "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+      "acceptance_zh": [
+        "每叶子：真发布/审核/编辑/删除 或 下线",
+        "无测试入口",
+        "无重复深链"
+      ],
+      "fix_plan_zh": "1) 逐叶清单。2) 随 G066；G071 机扫。3) Owner 确认 CUT 列表。",
+      "wave": "E-CONTENT",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G066"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G066",
+        "V65-PROD-003-G083"
+      ],
+      "note_zh": "深度扫描：内容中心周边页。",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "evidence": null,
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T01:00:00Z",
+      "stamp": "20260804T001500Z",
+      "description": "Owner CONFIRM R6: KEEP content sibling empty/thin shells AND bring each to production-grade function (publish/review/edit/delete as designed) — NOT cut/delete. Nav SSOT: adminShellContentNavLinks.ts. Announcements/roadmap already stronger; residual thin leaves + CONTENT_READ-only sidebar + reviews tier=read must gain production write path (see G083). Deduplicate overlapping routes without deleting capability.",
+      "owner_decision": "KEEP_AND_PRODUCTIONIZE",
+      "owner_decision_detail": "留着但要具备生产级别功能 — no prune-only; each leaf must be production-grade",
+      "disposition": "FIX_CANDIDATE"
+    },
+    {
+      "id": "V65-PROD-003-G081",
+      "stamp": "20260804T001500Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P1",
+      "category": "community_moderation_tier",
+      "title": "Moderation cases tier=read blocks IN_SCOPE write closed-loop",
+      "title_zh": "审核案件 tier=read 阻断 IN_SCOPE 写闭环",
+      "description": "Enterprise re-audit R6 under Owner G078 IN_SCOPE: frontend/lib/admin/adminHomeCardCapability.ts ADMIN_HOME_CARD_TIER_BY_HREF[/admin/community/moderation/cases]=read while appeals=super_write and penalties=write. Same class of chrome bug as G058 (guide missing → default read). With IN_SCOPE, cases page must allow production moderate/write actions; read tier forces read-only badge + write-gated UI. Fix: set cases (and related moderation detail) to write|super_write consistent with closed-loop; verify adminListPageWritePermission mapping.",
+      "surfaces": [
+        "frontend/lib/admin/adminHomeCardCapability.ts",
+        "frontend/app/admin/community/moderation/cases",
+        "frontend/lib/admin/adminListPageWritePermission.ts"
+      ],
+      "evidence_refs": [
+        "code_audit_20260804_enterprise_r6"
+      ],
+      "disposition": "FIX_CANDIDATE",
+      "owner_decision": "IN_SCOPE_WITH_G078",
+      "related_gaps": [
+        "V65-PROD-003-G078",
+        "V65-PROD-003-G058"
+      ],
+      "wave": "E",
+      "batch_id": "V65-PROD-003",
+      "status": "OPEN"
+    },
+    {
+      "id": "V65-PROD-003-G082",
+      "stamp": "20260804T001500Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P1",
+      "category": "ops_backup_schema_production",
+      "title": "Backup/Schema placeholder — not production DR/ops consoles",
+      "title_zh": "备份/Schema 仍为 placeholder · 非生产运维台",
+      "description": "Enterprise re-audit R6: ADMIN_HOME_CARD_TIER schema+backup=placeholder. AdminBackupPageMain: baseline often PLANNED, readonly note, JSON dump — no production restore/trigger/runbook actions. AdminSchemaPageMain: migrations read-only JSON buckets. Under Admin Console Production Reality Closure, either (a) deliver production-grade backup restore + schema ops honesty with real actions, or (b) Owner CONFIRM_DESIGN Expected Difference with explicit non-production labeling and no fake GO claim. Default disposition FIX_CANDIDATE toward production honesty.",
+      "surfaces": [
+        "frontend/app/admin/backup",
+        "frontend/app/admin/schema",
+        "frontend/lib/admin/adminHomeCardCapability.ts"
+      ],
+      "evidence_refs": [
+        "code_audit_20260804_enterprise_r6"
+      ],
+      "disposition": "FIX_CANDIDATE",
+      "owner_decision_needed": "CONFIRM production DR console vs Expected Difference labeled non-prod",
+      "related_gaps": [
+        "V65-PROD-003-G069"
+      ],
+      "wave": "E",
+      "batch_id": "V65-PROD-003",
+      "status": "OPEN"
+    },
+    {
+      "id": "V65-PROD-003-G083",
+      "stamp": "20260804T001500Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P1",
+      "category": "content_write_productionize",
+      "title": "Content leaves CONTENT_READ + reviews read — production write path missing",
+      "title_zh": "内容叶页 CONTENT_READ / reviews 只读 · 缺生产写路径",
+      "description": "Enterprise re-audit R6 under Owner G080 KEEP_AND_PRODUCTIONIZE: adminShellContentNavLinks / sidebar content group maps leaves to CONTENT_READ; /admin/reviews locked tier=read in ADMIN_HOME_CARD_TIER_BY_HREF. Productionize requires publish/review/edit/delete (or honest disable) per leaf — not nav-only shells. Prefer leaf-by-leaf closed-loop (countries/cities/pois/pricing/…/publish-queue/import-operations) + reviews moderate write. Complements G066 dedupe without deleting capability.",
+      "surfaces": [
+        "frontend/lib/admin/adminShellContentNavLinks.ts",
+        "frontend/lib/admin/adminHomeCardCapability.ts",
+        "frontend/app/admin/content",
+        "frontend/app/admin/reviews"
+      ],
+      "evidence_refs": [
+        "code_audit_20260804_enterprise_r6"
+      ],
+      "disposition": "FIX_CANDIDATE",
+      "owner_decision": "KEEP_AND_PRODUCTIONIZE_WITH_G080",
+      "related_gaps": [
+        "V65-PROD-003-G080",
+        "V65-PROD-003-G066"
+      ],
+      "wave": "E",
+      "batch_id": "V65-PROD-003",
+      "status": "OPEN"
+    },
+    {
+      "id": "V65-PROD-003-G084",
+      "stamp": "20260804T002417Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P1",
+      "category": "community_core_productionize",
+      "title": "Community residual KEEP_AND_PRODUCTIONIZE (Owner locked · bounded)",
+      "title_zh": "社区残余 KEEP_AND_PRODUCTIONIZE（Owner 锁定·有界·非独立风控系统）",
+      "description": "Owner R7 locked G084=KEEP_AND_PRODUCTIONIZE. Community is a TravelTrust core domain — do not leave half-built risk/ranking/policy-log shells. Productionize bounded checklist: reports, appeals, risk records, content handling, user behavior records, moderator ops log, RBAC. Surfaces: risk-signals, ranking/snapshots, policy-change-logs (+ G078 appeals/moderation/penalties). FORBIDDEN: expand into standalone risk platform. Pair G087 for moderator/user-behavior audit wiring.",
+      "surfaces": [
+        "frontend/app/admin/community/risk-signals",
+        "frontend/app/admin/community/ranking",
+        "frontend/app/admin/community/policy-change-logs"
+      ],
+      "evidence_refs": [
+        "owner_r7_g084_keep_and_productionize",
+        "final_audit_r7_20260804"
+      ],
+      "disposition": "FIX_CANDIDATE",
+      "owner_decision_needed": false,
+      "related_gaps": [
+        "V65-PROD-003-G062",
+        "V65-PROD-003-G078",
+        "V65-PROD-003-G081",
+        "V65-PROD-003-G087"
+      ],
+      "wave": "E-COMMUNITY",
+      "batch_id": "V65-PROD-003",
+      "status": "OPEN",
+      "owner_decision": "KEEP_AND_PRODUCTIONIZE",
+      "owner_decision_detail": "社区核心域；有界生产化；禁止独立风控系统",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) risk-signals：生产可读风控记录+空/错诚实。2) ranking/snapshots：运营可读或诚实降级。3) policy-change-logs：策略变更可追溯。4) 与 G062/G078/G081 闭环举报/申诉/内容处理。5) G087 补 Moderator/用户行为日志有界面。6) RBAC 诚实。7) 禁止新风控产品域。",
+      "umbrella_wave": "E",
+      "acceptance_zh": [
+        "举报闭环可用（→G062）",
+        "申诉/处罚/审核生产化（→G078/G081）",
+        "风控记录可运营查阅（非半成品壳）",
+        "内容处理动作可达",
+        "用户行为记录有界可查（→G087）",
+        "Moderator 操作日志有界可查（→G087）",
+        "权限控制诚实",
+        "未扩成独立风控系统"
+      ],
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T02:35:00Z",
+      "r7_owner_locked": true,
+      "fix_note": "R9 20260804T023500Z LOCAL_FE_BOUNDED: AdminCommunityRelatedLinks KEEP_AND_PRODUCTIONIZE — 举报/申诉/风控/内容/用户行为/Moderator日志/RBAC links + data-tt-admin-community-related + data-tt-admin-community-bounded-honesty. No standalone risk platform. Local verify PASS_LOCAL · status=OPEN until runtime · NO_GO.",
+      "local_fix_stamp": "20260804T023500Z",
+      "local_verify_evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+      "local_verify_verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "V65-PROD-003-G085",
+      "stamp": "20260804T001500Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P1",
+      "category": "config_hub_permission_honesty",
+      "title": "Config hub parent read vs children super_write — permission honesty",
+      "title_zh": "配置中心父页 read vs 子页 super_write · 权限诚实",
+      "description": "Enterprise re-audit R6 under Owner G068 配置中心 LOCK: /admin/config parent ADMIN_HOME_CARD_TIER=read while /admin/config/flags|/jobs|/releases|/secrets=super_write. Operators see hub as read-only then enter super_write children — permission model opaque. Fix with name unify: either hub inherits write capability summary honestly, or hub is explicit read-only directory with clear CTA into privileged children; no fake write chrome on parent.",
+      "surfaces": [
+        "frontend/app/admin/config",
+        "frontend/lib/admin/adminHomeCardCapability.ts",
+        "frontend/lib/admin/adminShellSidebarModel.ts"
+      ],
+      "evidence_refs": [
+        "code_audit_20260804_enterprise_r6"
+      ],
+      "disposition": "FIX_CANDIDATE",
+      "owner_decision": "WITH_G068_CONFIG_CENTER",
+      "related_gaps": [
+        "V65-PROD-003-G068"
+      ],
+      "wave": "E",
+      "batch_id": "V65-PROD-003",
+      "status": "OPEN",
+      "umbrella_wave": "E"
+    },
+    {
+      "id": "V65-PROD-003-G086",
+      "stamp": "20260804T002417Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P1",
+      "status": "OPEN",
+      "category": "error_boundary_coverage",
+      "title": "Wave E critical Admin leaves missing error.tsx",
+      "title_zh": "Wave E 关键运营页缺 leaf error.tsx（入驻队列/收件箱/内容/备份等）",
+      "description": "Final enterprise production-release audit R7: leaf error.tsx missing for /admin/guide-applications, provider-applications, steward-applications, inbox, content, backup, growth, official. Root frontend/app/admin/error.tsx exists but P0/P1 queues rely on generic catch. Community appeals/reports/moderation already have error.tsx.",
+      "surfaces": [
+        "frontend/app/admin/guide-applications",
+        "frontend/app/admin/provider-applications",
+        "frontend/app/admin/steward-applications",
+        "frontend/app/admin/inbox",
+        "frontend/app/admin/content",
+        "frontend/app/admin/backup"
+      ],
+      "code_ssot": "frontend/app/admin/*/error.tsx; frontend/app/admin/error.tsx",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 为 P0 入驻三队列 + inbox + content + backup 补 leaf error.tsx。2) 诚实错误文案 + 返回队列 CTA。3) 契约测存在性。4) 不冒充全站 error 穷举。",
+      "wave": "E-HARDENING",
+      "umbrella_wave": "E",
+      "related_gaps": [
+        "V65-PROD-003-G058",
+        "V65-PROD-003-G059",
+        "V65-PROD-003-G073"
+      ],
+      "acceptance_zh": [
+        "guide/provider/steward-applications 有 leaf error.tsx",
+        "inbox/content/backup 有 leaf error.tsx",
+        "错误页可回队列且无白屏",
+        "①契约绿 ≠ ③GO"
+      ],
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T02:35:00Z",
+      "evidence_refs": [
+        "final_audit_r7_20260804_error_boundary"
+      ],
+      "batch_id": "V65-PROD-003",
+      "audit_dimension": "error_boundary",
+      "fix_note": "R9 20260804T023500Z LOCAL_FE: error.tsx via AdminRouteErrorShell on guide-applications / provider-applications / steward-applications / inbox / content / backup. Local verify PASS_LOCAL · status=OPEN until runtime · NO_GO.",
+      "local_fix_stamp": "20260804T023500Z",
+      "local_verify_evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+      "local_verify_verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "V65-PROD-003-G087",
+      "stamp": "20260804T002417Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P1",
+      "status": "OPEN",
+      "category": "community_moderator_audit",
+      "title": "G084 productionize: moderator ops log + user behavior record (bounded)",
+      "title_zh": "G084 生产化：Moderator 操作日志 · 用户行为记录（有界·非独立风控系统）",
+      "description": "Final audit R7 + Owner G084=KEEP_AND_PRODUCTIONIZE: no first-class moderator ops log / user behavior record surface. Owner checklist: reports, appeals, risk records, content handling, user behavior, moderator ops log, RBAC. Do NOT expand into standalone risk platform. Wire via moderation cases actor filter, policy-change-logs, auth-audit reuse.",
+      "surfaces": [
+        "frontend/app/admin/community/moderation/cases",
+        "frontend/app/admin/community/policy-change-logs",
+        "frontend/app/admin/community/risk-signals",
+        "frontend/app/admin/audit"
+      ],
+      "code_ssot": "admin community moderation cases actor_id; policy-change-logs; admin audit routes",
+      "owner_decision_needed": false,
+      "owner_decision": "KEEP_AND_PRODUCTIONIZE_BOUNDED",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 清点 moderation cases / policy-change-logs / auth-audit 覆盖。2) 缺则补有界列表+筛选挂社区运营，禁止独立风控产品。3) RBAC 诚实。4) 与 G062/G078/G081/G084 同批验收。",
+      "wave": "E-COMMUNITY",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G084",
+        "V65-PROD-003-G078"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G062",
+        "V65-PROD-003-G081"
+      ],
+      "acceptance_zh": [
+        "Moderator 关键处理动作可追溯",
+        "用户行为/处罚相关记录可查（有界）",
+        "非独立风控系统/无无限扩展",
+        "权限控制诚实"
+      ],
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T02:35:00Z",
+      "evidence_refs": [
+        "final_audit_r7_20260804_mod_log_absent"
+      ],
+      "batch_id": "V65-PROD-003",
+      "audit_dimension": "ops_workflow_security",
+      "fix_note": "R9 20260804T023500Z LOCAL_FE_BOUNDED: paired with G084 — Moderator ops log + user-behavior surfaces linked in AdminCommunityRelatedLinks honesty strip (bounded; not a new risk platform). Local verify PASS_LOCAL · status=OPEN until runtime · NO_GO.",
+      "local_fix_stamp": "20260804T023500Z",
+      "local_verify_evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+      "local_verify_verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "V65-PROD-003-G088",
+      "stamp": "20260804T002417Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P1",
+      "status": "OPEN",
+      "category": "entry_fee_workbench_residual",
+      "title": "Traveler workbench still exposes B-track admission fee UI after Owner REMOVE",
+      "title_zh": "主理人/商家工作台仍暴露 B 轨准入费 UI（Owner REMOVE 残留）",
+      "description": "Final audit R7 under G065 REMOVE_ENTRY_FEE: StewardWorkbenchAdmission* and ProviderWorkbenchAdmissionLinks still ship B-track/admission fee CTA. Admin hub removal alone leaves product surface. Fold with G065/G075 — private wallet != TT ledger.",
+      "surfaces": [
+        "frontend/components/governance/StewardWorkbenchAdmissionQuotePanel.tsx",
+        "frontend/components/governance/StewardWorkbenchBTrackCompleteStrip.tsx",
+        "frontend/components/provider/ProviderWorkbenchAdmissionLinks.tsx"
+      ],
+      "code_ssot": "StewardWorkbench*Admission*; ProviderWorkbenchAdmissionLinks",
+      "owner_decision_needed": false,
+      "owner_decision": "REMOVE_ENTRY_FEE_HUB",
+      "recommended_disposition": "FIX_CANDIDATE",
+      "disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 移除/降级工作台准入费报价与 B 轨 CTA。2) 文案与路由不再引导 TT 账本准入费。3) 与 G065/G075 同验。4) 机扫 rg 准入费 workbench。",
+      "wave": "E-FEE",
+      "umbrella_wave": "E",
+      "depends_on": [
+        "V65-PROD-003-G065"
+      ],
+      "related_gaps": [
+        "V65-PROD-003-G075",
+        "V65-PROD-003-G057"
+      ],
+      "acceptance_zh": [
+        "主理人工作台无准入费报价/支付 CTA",
+        "商家工作台无 trust admission 入驻费链",
+        "不暗示 TT 财务入账"
+      ],
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T02:35:00Z",
+      "evidence_refs": [
+        "final_audit_r7_20260804_workbench_fee"
+      ],
+      "batch_id": "V65-PROD-003",
+      "audit_dimension": "product_surface_ui",
+      "fix_note": "R9 20260804T023500Z LOCAL_FE_REMOVE: StewardWorkbenchBTrackCompleteStrip amountLabel removed; data-tt-steward-workbench-b-track-fee-removed=1; StewardRegionWorkbenchMain no longer passes amountLabel. Local verify PASS_LOCAL · status=OPEN until runtime · NO_GO.",
+      "local_fix_stamp": "20260804T023500Z",
+      "local_verify_evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+      "local_verify_verdict": "PASS_LOCAL"
+    },
+    {
+      "id": "V65-PROD-003-G089",
+      "stamp": "20260804T002417Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "priority": "P2",
+      "status": "OPEN",
+      "category": "admin_list_pagination_perf",
+      "title": "Onboarding/admin queue list pagination honesty (unbounded fetch risk)",
+      "title_zh": "入驻/运营队列列表分页诚实性（无界拉取风险）",
+      "description": "Final audit R7 performance: guide-applications tree has weak pageSize/pagination markers; ops queues may load unbounded. Require honest limit+next or cursor on production writable queues — not a new paging framework.",
+      "surfaces": [
+        "frontend/app/admin/guide-applications",
+        "frontend/app/admin/provider-applications",
+        "frontend/app/admin/steward-applications"
+      ],
+      "code_ssot": "Admin*Applications* hooks; admin list limit params",
+      "owner_decision_needed": false,
+      "recommended_disposition": "FIX_CANDIDATE",
+      "disposition": "FIX_CANDIDATE",
+      "fix_plan_zh": "1) 三入驻队列统一 limit 默认+加载更多/翻页。2) 空/满页诚实。3) 不引入重型表格框架。",
+      "wave": "E-HARDENING",
+      "umbrella_wave": "E",
+      "related_gaps": [
+        "V65-PROD-003-G058",
+        "V65-PROD-003-G059",
+        "V65-PROD-003-G073"
+      ],
+      "acceptance_zh": [
+        "队列请求带明确 limit",
+        "超量数据可翻页或加载更多",
+        "无静默全量拖垮"
+      ],
+      "runtime": "NOT_STARTED",
+      "updated_at": "2026-08-04T02:35:00Z",
+      "evidence_refs": [
+        "final_audit_r7_20260804_pagination"
+      ],
+      "batch_id": "V65-PROD-003",
+      "audit_dimension": "performance",
+      "fix_note": "R9 20260804T023500Z LOCAL_BE_FE: admin_onboarding_queue_list_limit (default 100 / max 500) + applied_filters.truncated; FE appendAdminOnboardingQueueListLimit + truncation hint data-tt-admin-onboarding-queue-truncated. Local verify PASS_LOCAL · status=OPEN until runtime · NO_GO.",
+      "local_fix_stamp": "20260804T023500Z",
+      "local_verify_evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+      "local_verify_verdict": "PASS_LOCAL"
+    }
+  ],
+  "click_nav_notes": [
+    {
+      "item": "最近访问 pills",
+      "likely_broken": false,
+      "note": "Href uses stored pathname (or inbox remap). 「未命名页」仍可跳转真实 path；问题是标签而非死链。"
+    },
+    {
+      "item": "/admin/observability via 维护者可观测性",
+      "likely_broken": false,
+      "note": "Route exists; missing from recent-visit title map → G004 if later recorded."
+    },
+    {
+      "item": "完整 click matrix of Domain Health cells",
+      "likely_broken": "UNVERIFIED_LIVE",
+      "note": "Discovery code-reviewed; Owner UAT click pass recommended before IMPLEMENTING close."
+    },
+    {
+      "item": "Inbox workflow chips",
+      "likely_broken": "UNVERIFIED_LIVE_MISMATCH",
+      "note": "Code intent busy=ACTIVE; screenshot contradicts — G009 verify on live tip."
+    },
+    {
+      "item": "Provider onboarding queue → detail",
+      "likely_broken": false,
+      "note": "Nav works; {age} display bug G011; approved detail hides review actions by design."
+    },
+    {
+      "item": "Approvals list → detail Approve/Reject",
+      "likely_broken": "UNVERIFIED_LIVE",
+      "note": "UI present for pending; Owner UAT required (G015). Not claimed broken."
+    },
+    {
+      "item": "Community reports → Start disposal CTA",
+      "likely_broken": false,
+      "note": "Href/action present; label contrast broken (G016). Strip hint residual G019."
+    },
+    {
+      "item": "Guide onboarding queue → Audit details",
+      "likely_broken": "PARTIAL_EMPTY_DETAIL",
+      "note": "Nav reaches detail chrome; body may silent-null (G018). Queue overflow G017; {age} G011."
+    },
+    {
+      "item": "/admin/audit-logs link from approvals detail",
+      "likely_broken": true,
+      "note": "Confirmed 404 page path G020; use /admin/audit."
+    }
+  ],
+  "next_steps_owner": [
+    "Owner PRV-3b logged-in Admin UAT on production tip 3d1cca13b319",
+    "After OWNER_VALIDATED: close V65-PROD-003 in Matrix",
+    "Do not claim Production GO; do not open V65-PROD-004"
+  ],
+  "repair_waves": [
+    {
+      "wave": "W0",
+      "order": 0,
+      "gap_ids": [
+        "V65-PROD-003-G009"
+      ],
+      "goal_zh": "真网复现推荐顺序亮暗（只 VERIFY）",
+      "note": "Do not flip ACTIVE/IDLE styles until verified"
+    },
+    {
+      "wave": "W1",
+      "order": 1,
+      "gap_ids": [
+        "V65-PROD-003-G016",
+        "V65-PROD-003-G019"
+      ],
+      "goal_zh": "暗壳主 CTA 可读（开始处置 / 打开）",
+      "note": "Highest UX blast; G019 optional same PR"
+    },
+    {
+      "wave": "W2",
+      "order": 2,
+      "gap_ids": [
+        "V65-PROD-003-G011",
+        "V65-PROD-003-G017"
+      ],
+      "goal_zh": "{age} 插值 + 入驻/向导队列主键人读",
+      "note": "Same cut provider+guide queues"
+    },
+    {
+      "wave": "W3",
+      "order": 3,
+      "gap_ids": [
+        "V65-PROD-003-G018"
+      ],
+      "goal_zh": "向导审核详情材料面（禁 silent null）",
+      "note": "Business blocker"
+    },
+    {
+      "wave": "W4",
+      "order": 4,
+      "gap_ids": [
+        "V65-PROD-003-G020",
+        "V65-PROD-003-G001"
+      ],
+      "goal_zh": "audit 死链 404 + CDN image 400",
+      "note": "G001 requires web tip redeploy"
+    },
+    {
+      "wave": "W5",
+      "order": 5,
+      "gap_ids": [
+        "V65-PROD-003-G012"
+      ],
+      "goal_zh": "商家入驻详情人读 + 空态标准",
+      "note": "After guide detail W3"
+    },
+    {
+      "wave": "W6",
+      "order": 6,
+      "gap_ids": [
+        "V65-PROD-003-G013",
+        "V65-PROD-003-G014",
+        "V65-PROD-003-G015"
+      ],
+      "goal_zh": "审批队列/详情运营可读 + 批准驳回 UAT",
+      "note": "G015 needs Owner click-through"
+    },
+    {
+      "wave": "W7",
+      "order": 7,
+      "gap_ids": [
+        "V65-PROD-003-G010"
+      ],
+      "goal_zh": "收件箱 polish / G009 若证实再修",
+      "note": "After W0 verify"
+    },
+    {
+      "wave": "W8",
+      "order": 8,
+      "gap_ids": [
+        "V65-PROD-003-G002",
+        "V65-PROD-003-G003",
+        "V65-PROD-003-G004",
+        "V65-PROD-003-G005",
+        "V65-PROD-003-G006",
+        "V65-PROD-003-G007",
+        "V65-PROD-003-G008"
+      ],
+      "goal_zh": "工作台 KEEP/CUT/CONFIRM",
+      "note": "Owner product decisions required first"
+    }
+  ],
+  "related": {
+    "batch_matrix": "docs/runbook/TT-V65-PRODUCTION-BATCH-REPAIR-MATRIX-LATEST.md",
+    "batch_matrix_json": "docs/runbook/TT-V65-PRODUCTION-BATCH-REPAIR-MATRIX-LATEST.json",
+    "md_mirror": "docs/runbook/TT-V65-PROD-003-DISCOVERY-WORKBENCH-GAP-INVENTORY-LATEST.md",
+    "prior_ux_batch": "docs/runbook/TT-V65-ADMIN-UX-BATCH-GAP-INVENTORY-LATEST.json"
+  },
+  "title": "V65-PROD-003 Discovery · Workbench + Inbox/Onboarding/Approvals + Community/Guide/Audit404",
+  "summary": "V65-PROD-003 Residual G021–G049 RUNTIME_VERIFIED on tip 3d1cca13b319; A+B+C prior tip SUPERSEDED; NOT CLOSED; NO_GO",
+  "owner_wave_plan": {
+    "batch_id": "V65-PROD-003",
+    "note": "Internal Waves inside V65-PROD-003 — NOT new batch IDs 004/005",
+    "active_wave": "A+B+C",
+    "waves": [
+      {
+        "wave_id": "A",
+        "name": "Production Usability Critical Fix",
+        "status": "RUNTIME_VERIFIED",
+        "gap_ids": [
+          "V65-PROD-003-G001",
+          "V65-PROD-003-G011",
+          "V65-PROD-003-G016",
+          "V65-PROD-003-G017",
+          "V65-PROD-003-G018",
+          "V65-PROD-003-G020"
+        ],
+        "completion_criteria": [
+          "page_opens",
+          "no_console_error_target",
+          "no_black_cta_on_dark",
+          "no_dead_link_audit",
+          "no_silent_null_guide_detail",
+          "zh_complete_target",
+          "five_state_where_applicable",
+          "runtime_evidence",
+          "ssot_runtime_truth_update",
+          "ftb_pointer"
+        ],
+        "local_verify": "PASS_WAVE_A",
+        "next": "WAVE_B_WHEN_OWNER_AUTHORIZES",
+        "stamp": "20260803T132825Z",
+        "note": "A+B+C Single Cut tip 0a53e8029f75; batch NOT CLOSED",
+        "runtime": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_single_cut_a_b_c/20260803T132825Z",
+        "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+      },
+      {
+        "wave_id": "B",
+        "name": "Admin L5 UX Consistency",
+        "status": "RUNTIME_VERIFIED",
+        "gap_ids": [
+          "V65-PROD-003-G002",
+          "V65-PROD-003-G003",
+          "V65-PROD-003-G004",
+          "V65-PROD-003-G005",
+          "V65-PROD-003-G006",
+          "V65-PROD-003-G007",
+          "V65-PROD-003-G008",
+          "V65-PROD-003-G009",
+          "V65-PROD-003-G010"
+        ],
+        "note": "A+B+C Single Cut tip 0a53e8029f75; batch NOT CLOSED",
+        "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507",
+        "evidence": "evidence/GO_v65_prod_003_single_cut_a_b_c/20260803T132825Z",
+        "runtime": "PASS",
+        "stamp": "20260803T132825Z"
+      },
+      {
+        "wave_id": "C",
+        "name": "Operational Workflow Certification",
+        "status": "RUNTIME_VERIFIED",
+        "gap_ids": [
+          "V65-PROD-003-G012",
+          "V65-PROD-003-G013",
+          "V65-PROD-003-G014",
+          "V65-PROD-003-G015"
+        ],
+        "note": "A+B+C Single Cut tip 0a53e8029f75; batch NOT CLOSED",
+        "tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507",
+        "evidence": "evidence/GO_v65_prod_003_single_cut_a_b_c/20260803T132825Z",
+        "runtime": "PASS",
+        "stamp": "20260803T132825Z"
+      }
+    ],
+    "deferred_optional": [
+      "V65-PROD-003-G019"
+    ]
+  },
+  "repair_waves_owner": [
+    {
+      "wave": "A",
+      "maps_from": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "gap_ids": [
+        "V65-PROD-003-G001",
+        "V65-PROD-003-G011",
+        "V65-PROD-003-G016",
+        "V65-PROD-003-G017",
+        "V65-PROD-003-G018",
+        "V65-PROD-003-G020"
+      ],
+      "status": "LOCAL_VERIFIED",
+      "local_verify": "PASS_WAVE_A",
+      "next": "SINGLE_CUT_DEPLOY",
+      "stamp": "20260803T112500Z"
+    },
+    {
+      "wave": "B",
+      "maps_from": [
+        "W0",
+        "W7",
+        "W8"
+      ],
+      "gap_ids": [
+        "V65-PROD-003-G002",
+        "V65-PROD-003-G003",
+        "V65-PROD-003-G004",
+        "V65-PROD-003-G005",
+        "V65-PROD-003-G006",
+        "V65-PROD-003-G007",
+        "V65-PROD-003-G008",
+        "V65-PROD-003-G009",
+        "V65-PROD-003-G010"
+      ],
+      "status": "DEFERRED"
+    },
+    {
+      "wave": "C",
+      "maps_from": [
+        "W5",
+        "W6"
+      ],
+      "gap_ids": [
+        "V65-PROD-003-G012",
+        "V65-PROD-003-G013",
+        "V65-PROD-003-G014",
+        "V65-PROD-003-G015"
+      ],
+      "status": "DEFERRED"
+    }
+  ],
+  "active_wave": "D",
+  "local_verify": {
+    "status": "PASS_RESIDUAL_G021_G049",
+    "stamp": "20260803T162045Z",
+    "deploy": "PASS",
+    "runtime": "PASS_WAVE_D",
+    "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+    "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+    "next": "OWNER_PRV_THEN_CLOSED"
+  },
+  "wave_b_status": "LOCAL_VERIFIED",
+  "updated_at": "2026-08-04T00:24:17Z",
+  "owner_product_locks": {
+    "IA": "A",
+    "G004": "A",
+    "G006": "A",
+    "G007": "A",
+    "locked_at": "2026-08-03T12:18:22Z",
+    "note": "Wave B Workbench L5 UX · IA=A · G004/6/7=A"
+  },
+  "generated_at": "2026-08-03T16:18:00Z",
+  "wave_a_status": "RUNTIME_VERIFIED",
+  "wave_c_status": "LOCAL_VERIFIED",
+  "batch_release_policy": {
+    "mode": "SINGLE_CUT_AFTER_SCOPE_FREEZE_FOR_WAVE_D",
+    "prior_abc": "SINGLE_CUT_A_PLUS_B_PLUS_C_RUNTIME_VERIFIED",
+    "waves_are": "internal_groups_not_separate_releases",
+    "forbid_separate_ship": [
+      "003-A",
+      "003-B",
+      "003-C",
+      "003-D-subwaves",
+      "V65-PROD-004"
+    ],
+    "tt_production_go": "NO_GO",
+    "no_new_batch_for_004_content": true
+  },
+  "owner_next": [
+    "Owner Scope Freeze for PRV Residual Wave D (gates from former 004)",
+    "After freeze: ONE Batch Fix covering Admin IA · UI/UX L5 · functional · perf · ops UX",
+    "Local Full Verify → Single Production Cut → Runtime Evidence",
+    "Owner PRV-3b UAT → OWNER_VALIDATED",
+    "Update V65 Runtime Truth SSOT → sync Final Truth Baseline",
+    "Keep TT_PRODUCTION_GO=NO_GO until acceptance + release certification"
+  ],
+  "next_actions": [
+    "Owner Scope Freeze for PRV Residual Wave D (gates from former 004)",
+    "After freeze: ONE Batch Fix covering Admin IA · UI/UX L5 · functional · perf · ops UX",
+    "Local Full Verify → Single Production Cut → Runtime Evidence",
+    "Owner PRV-3b UAT → OWNER_VALIDATED",
+    "Update V65 Runtime Truth SSOT → sync Final Truth Baseline",
+    "Keep TT_PRODUCTION_GO=NO_GO until acceptance + release certification"
+  ],
+  "prv_residual": {
+    "umbrella_wave": "D",
+    "name": "PRV Residual — Operations Directory / Admin IA / Ops UX (from SUPERSEDED V65-PROD-004)",
+    "source_batch": "V65-PROD-004",
+    "source_stamp": "20260803T151500Z",
+    "status": "OPEN_AWAITING_SCOPE_FREEZE",
+    "gap_id_range": "V65-PROD-003-G021..G049",
+    "id_remap_rule": "V65-PROD-004-G00N → V65-PROD-003-G(20+N)",
+    "totals": {
+      "open": 29,
+      "p0": 0,
+      "p1": 18,
+      "p2": 11,
+      "confirm_design_or_expected_difference": 4,
+      "risk_register": 1,
+      "awaiting_owner_scope_freeze": 29,
+      "subsumed_detail_gaps": 1
+    },
+    "gaps": [
+      {
+        "id": "V65-PROD-003-G021",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Operations nav missing Merchant / Provider directory leaf",
+        "title_zh": "经营侧栏缺「商家目录」叶子",
+        "category": "sidebar_ia_completeness",
+        "repro": "S1: 经营仅 用户/向导目录/订单/争议. Code: adminShellSidebarModel.ts operations.links has no merchant/provider href.",
+        "code_ssot": "frontend/lib/admin/adminShellSidebarModel.ts · operations group",
+        "owner_decision_needed": "CONFIRM route target (/admin/providers vs /admin/merchants) + label 商家目录 + Scope Freeze",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-01",
+        "wave": "D-A",
+        "depends_on": [
+          "V65-PROD-003-G025"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G001",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G022",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Operations nav missing Travel Acquisition directory leaf",
+        "title_zh": "经营侧栏缺「旅行收购目录」叶子",
+        "repro": "S1 missing 旅行收购. Today acquisition ops live under users#admin-acquisition-suspend (adminHomeModel), not a 经营 directory.",
+        "code_ssot": "adminShellSidebarModel.ts; adminHomeModel.ts /admin/users#admin-acquisition-suspend",
+        "category": "sidebar_ia_completeness",
+        "owner_decision_needed": "CONFIRM dedicated /admin/acquisition (or alias) vs keep suspend-only under Users",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-01",
+        "wave": "D-A",
+        "depends_on": [
+          "V65-PROD-003-G025"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G002",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G023",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Operations leaf order not Owner 1..6 sequence",
+        "title_zh": "经营叶子顺序不符合 Owner 1用户→2向导→3商家→4旅行收购→5订单→6争议",
+        "category": "sidebar_ia_order",
+        "repro": "Current order: users → guides → orders → disputes (4 leaves). Target: insert merchants+acquisition before orders.",
+        "code_ssot": "ADMIN_SHELL_SIDEBAR_GROUPS[operations].links array order",
+        "owner_decision_needed": false,
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-01",
+        "wave": "D-A",
+        "depends_on": [
+          "V65-PROD-003-G021",
+          "V65-PROD-003-G022",
+          "V65-PROD-003-G025"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G003",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G024",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Left-nav naming not normalized across six directories",
+        "title_zh": "左侧目录命名不规范（用户 vs 向导目录 等）",
+        "category": "sidebar_naming",
+        "repro": "zh: admin_shell_nav_users_short=用户; admin_shell_nav_guides_short=向导目录; orders/disputes 无「目录」后缀. Owner wants 规范命名 for all six.",
+        "code_ssot": "frontend/locales/zh.ts admin_shell_nav_*_short",
+        "owner_decision_needed": "CONFIRM naming pattern: 用户目录/向导目录/商家目录/旅行收购目录/订单/争议 OR keep 订单/争议 without 目录",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-01",
+        "wave": "D-A",
+        "depends_on": [
+          "GATE-NAMING"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G004",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G025",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Publish sidebar leaf budget 12 blocks +2 operations leaves",
+        "title_zh": "侧栏 Publish 叶子上限 12：经营+2 将变成 14",
+        "category": "sidebar_leaf_budget",
+        "repro": "ADMIN_SHELL_SIDEBAR_PUBLISH_MAX_LEAVES=12; current leafCount=12; +商家+收购 → 14.",
+        "code_ssot": "adminShellSidebarModel.ts ADMIN_SHELL_SIDEBAR_PUBLISH_MAX_LEAVES",
+        "owner_decision_needed": "CONFIRM one of: raise budget to 14 · compress other groups · overflow/More · demote a leaf",
+        "recommended_disposition": "CONFIRM_DESIGN",
+        "modification_proposal_ref": "MP-01",
+        "wave": "D-GATE0",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G005",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G026",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "No production Merchant/Provider catalog list page under /admin",
+        "title_zh": "无经营级商家目录列表页（仅有入驻队列 provider-applications）",
+        "category": "route_surface_gap",
+        "repro": "frontend/app/admin has provider-applications/ (入驻) and guides/ (目录) but no providers/ or merchants/ catalog. 经营「商家目录」cannot deep-link today.",
+        "code_ssot": "frontend/app/admin/* inventory; GET admin provider-applications ≠ directory SSOT",
+        "owner_decision_needed": "CONFIRM: new /admin/providers catalog vs promote/repurpose provider-applications for ops directory",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-02",
+        "wave": "D-B",
+        "depends_on": [
+          "V65-PROD-003-G021",
+          "V65-PROD-003-G025",
+          "V65-PROD-003-G048"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G006",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G027",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Travel Acquisition has no directory surface; only suspend anchor under Users",
+        "title_zh": "旅行收购无独立目录页，仅用户页锚点「收购暂停」",
+        "category": "route_surface_gap",
+        "repro": "adminHomeModel acquisition href=/admin/users#admin-acquisition-suspend. No /admin/acquisition list/filter table.",
+        "code_ssot": "adminHomeModel.ts; AdminUsersPageMain acquisition suspend section",
+        "owner_decision_needed": "CONFIRM directory columns (bond/listing/suspend/KYC) + API readiness",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-02",
+        "wave": "D-B",
+        "depends_on": [
+          "V65-PROD-003-G022",
+          "V65-PROD-003-G025",
+          "V65-PROD-003-G048"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G007",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G028",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Orders parties UI is Guide-only; Merchant bilateral path absent",
+        "title_zh": "订单参与方仅游客+向导，缺商家双边呈现",
+        "category": "orders_bilateral_model",
+        "repro": "S2 + AdminOrdersPageMain: traveler + guide_id only; no provider/merchant party row. Domain: traveler places order to guide OR merchant.",
+        "code_ssot": "AdminOrdersPageMain.tsx parties cell; locales admin_orders_party_*",
+        "owner_decision_needed": "CONFIRM counterparty taxonomy (guide | merchant | acquisition?) + empty-state rules when draft has no guide",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-03",
+        "wave": "D-D",
+        "depends_on": [
+          "V65-PROD-003-G048"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G008",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G029",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Orders filters lack counterparty type / party id / date range",
+        "title_zh": "订单筛选缺对方类型、参与方 ID、时间范围等生产级过滤",
+        "category": "orders_filters",
+        "repro": "S2 filters: 订单 ID · 条数 · 状态 only. No 对方类型(向导/商家) · party id · created_at range.",
+        "code_ssot": "useAdminOrdersPage + AdminOrdersPageMain filter card",
+        "owner_decision_needed": "CONFIRM filter set for Scope Freeze (must stay URL-driven like Users)",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-03",
+        "wave": "D-D",
+        "depends_on": [
+          "V65-PROD-003-G028"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G009",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G030",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Orders list lacks service/product summary; ID-heavy density",
+        "title_zh": "订单列表缺服务/商品摘要，信息密度偏 ID",
+        "category": "orders_list_columns",
+        "repro": "S2 primary column is truncated order id; no itinerary/title/SKU. Industry order ops usually show what was purchased.",
+        "code_ssot": "AdminOrdersPageMain summary column",
+        "owner_decision_needed": "CONFIRM which summary field is API-available (title / city / product_type)",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-03",
+        "wave": "D-D",
+        "depends_on": [
+          "V65-PROD-003-G028"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G010",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G031",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Guides directory presents vertical/tall-row layout vs Users horizontal golden",
+        "title_zh": "向导目录竖版观感（高行/窄列），与用户横板金标不一致",
+        "category": "directory_layout_unify",
+        "repro": "S3 Users horizontal vs S4 Guides tall wrapped UUID rows. Code: Guides renders full UUIDs; Users/Orders use shortAdminId.",
+        "code_ssot": "AdminGuidesPageMain.tsx td row.id/user_id full; AdminUsersPageMain horizontal filter+table",
+        "owner_decision_needed": false,
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-04",
+        "wave": "D-C",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G011",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G032",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Six operations directory pages lack shared layout kit discipline",
+        "title_zh": "经营六项子页未强制同一布局套件（筛选条/宽表/状态横排/操作列）",
+        "category": "directory_style_consistency",
+        "repro": "Owner requires 用户横板 style for 用户·向导·商家·旅行收购·订单·争议. Today tokens shared but column density/ID shortening/filter richness diverge.",
+        "code_ssot": "adminUi ADMIN_FILTER_* / ADMIN_TABLE_*; per-page *PageMain.tsx",
+        "owner_decision_needed": "CONFIRM Users page as golden template for all six",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-04",
+        "wave": "D-C",
+        "depends_on": [
+          "V65-PROD-003-G031"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G012",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G033",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Guides table shows full UUID without shortAdminId (root cause of wrap)",
+        "title_zh": "向导表直接渲染完整 UUID，导致换行竖挤",
+        "category": "directory_layout_unify",
+        "repro": "AdminGuidesPageMain: {row.id} / {row.user_id} raw; Orders uses shortAdminId(o.id).",
+        "code_ssot": "AdminGuidesPageMain.tsx ~244-245; shortAdminId in lib/admin/shortAdminId.ts",
+        "owner_decision_needed": false,
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-04",
+        "wave": "D-C",
+        "depends_on": [
+          "V65-PROD-003-G031"
+        ],
+        "subsumed_by": "V65-PROD-004-G011",
+        "note_zh": "R4：实施以 G011 为主；G013 为根因明细，勿双开 PR。",
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G013",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G034",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Orders / Disputes naming vs directory pages — classification UX unclear",
+        "title_zh": "订单与争议的经营分类/跳转关系未按双边业务讲清",
+        "category": "orders_classification_ux",
+        "repro": "S2 drafts with guide=—; disputed path exists but no counterparty-type tabs (向导单/商家单) or classification chips.",
+        "code_ssot": "AdminOrdersPageMain; AdminOrdersOpsJumpPack; disputes?orderId=",
+        "owner_decision_needed": "CONFIRM: tabs vs filter chips for 向导订单 / 商家订单 / 全部",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-03",
+        "wave": "D-D",
+        "depends_on": [
+          "V65-PROD-003-G028",
+          "V65-PROD-003-G029"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G014",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G035",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Onboarding sidebar group+leaf both labeled 入驻",
+        "title_zh": "侧栏「入驻」组名与叶子同名，信息重复且与页标题「准入费」不对齐",
+        "category": "sidebar_naming",
+        "repro": "S5: group 入驻 + leaf 入驻. Hub title is 准入费·运营枢纽. Keys admin_shell_nav_group_onboarding / admin_shell_nav_onboarding_short both 入驻.",
+        "code_ssot": "adminShellSidebarModel.ts onboarding group; locales zh.ts",
+        "owner_decision_needed": "CONFIRM rename pattern: 组=准入费 / 叶=运营枢纽 OR 组折叠单叶=准入费",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-05",
+        "wave": "D-E",
+        "depends_on": [
+          "V65-PROD-003-G038"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G015",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G036",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Onboarding hub review strip duplicates existing application queues",
+        "title_zh": "枢纽「待审核发现」三卡深链重复既有入驻队列（向导/商家/区域主理人）",
+        "category": "onboarding_hub_dedup",
+        "repro": "S6 cards → guide-applications / provider-applications / steward-applications. Same queues already reachable via inbox/workspace/onboarding nav links.",
+        "code_ssot": "AdminOnboardingHubPageMain ONBOARDING_REVIEW_CARDS; adminInboxQueueHrefs.ts",
+        "owner_decision_needed": "CONFIRM: delete strip entirely vs collapse to one Inbox link",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-05",
+        "note_zh": "此为重复功能；建议删除/折叠。≠删除整页准入费枢纽。",
+        "wave": "D-E",
+        "depends_on": [
+          "V65-PROD-003-G038"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G016",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G037",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Steward review card wrongly labeled 区域管家",
+        "title_zh": "枢纽审核卡误称「区域管家」——应为「区域主理人」",
+        "category": "i18n_copy_defect",
+        "repro": "S6 区域管家审核. Locale admin_onboarding_hub_review_steward=区域管家审核; elsewhere admin_steward_list_title uses 区域主理人.",
+        "code_ssot": "frontend/locales/zh.ts admin_onboarding_hub_review_steward",
+        "owner_decision_needed": false,
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-05",
+        "wave": "D-W0",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G017",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G038",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Owner asked to delete 入驻; fee hub must not be wholesale-deleted",
+        "title_zh": "Owner 感知整块入驻可删——须区分：审核深链可删，准入费台账独有须保留",
+        "category": "confirm_design_ia",
+        "repro": "Owner: 入驻页功能是否基本都有了若是就删除. Code: fee surfaces (entitlements/payment-events/webhook/compliance) unique under /admin/onboarding/*.",
+        "code_ssot": "AdminOnboardingHubPageMain action grid; onboarding subroutes",
+        "owner_decision_needed": "CONFIRM_DESIGN: KEEP fee hub + REMOVE review strip (+ rename 入驻→准入费). REJECT wholesale delete of /admin/onboarding group.",
+        "recommended_disposition": "CONFIRM_DESIGN",
+        "modification_proposal_ref": "MP-05",
+        "wave": "D-GATE0",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G018",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G039",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Inbox workflow chips: pending should be lit, empty should be dim (steward@0 lit on live)",
+        "title_zh": "任务收件箱推荐顺序：有待办应亮、无待办应暗——主理人@0 亮、有数队列暗（Owner 确认）",
+        "category": "inbox_chip_highlight",
+        "repro": "S7: chip「主理人申请」实心暖底且无角标；商家26/审批5/举报13 描边暗。Owner rule: 有请求亮/无请求暗。Worktree AdminInboxWorkflowQuickNav: hasWork=(count>0)→ACTIVE else IDLE — live screenshot contradicts.",
+        "code_ssot": "AdminInboxWorkflowQuickNav.tsx; adminUi ADMIN_INBOX_WORKFLOW_CHIP_ACTIVE_CLASS / IDLE_CLASS; adminInboxWorkflowOrder.ts",
+        "owner_decision_needed": false,
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-06",
+        "note_zh": "可能原因：live tip 逻辑漂移；或 ACTIVE(/16) 对比 IDLE ghost 在深色下视觉倒置。以截图为缺陷真源；实施时须验 count 绑定 + ACTIVE/IDLE 对比度。",
+        "wave": "D-W0",
+        "depends_on": [],
+        "priority_note_zh": "R4：升为 Wave 0 —— 活网可见缺陷，不依赖六叶 IA。",
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G019",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G040",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Guide onboarding queue missing from inbox recommended-order chips",
+        "title_zh": "推荐顺序 chip 缺「向导入驻」——卡片有向导(23)但动线四钮无向导",
+        "category": "inbox_chip_coverage",
+        "repro": "S7 cards include 向导入驻 23; ADMIN_INBOX_WORKFLOW_IDS = provider→steward→approvals→reports only (no guide).",
+        "code_ssot": "adminInboxWorkflowOrder.ts ADMIN_INBOX_WORKFLOW_IDS; adminUnifiedInboxTasks.ts",
+        "owner_decision_needed": "CONFIRM chip order: insert guide after provider? before steward?",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-06",
+        "wave": "D-W0",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G020",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G041",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Task inbox coverage vs six ops dirs: extras + missing (Owner 5-of-6 intent)",
+        "title_zh": "任务收件箱 vs 经营六目录：用户排除 OK；缺旅行收购/争议？；多余主理人/审批/社区举报",
+        "category": "inbox_ia_vs_six_dirs",
+        "repro": "Owner: 收件箱应对齐除用户外的审批面。Cards today: provider+guide+steward+approvals+reports. Six dirs: users|guides|merchants|acquisition|orders|disputes. Missing acquisition+disputes; extras steward/approvals/reports; orders=directory not queue.",
+        "code_ssot": "adminUnifiedInboxTasks.ts; adminShellSidebarModel operations; disputes/acquisition surfaces",
+        "owner_decision_needed": "CONFIRM_DESIGN: (1) keep steward/approvals/reports as inbox extras? (2) add travel-acquisition pending? (3) add disputes open tickets? (4) users stay excluded",
+        "recommended_disposition": "CONFIRM_DESIGN",
+        "modification_proposal_ref": "MP-07",
+        "wave": "D-GATE0",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G021",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G042",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Approvals queue meaning opaque; seed cards show 其它审批动作 + UUID",
+        "title_zh": "审批队列业务语义不清：seed「其它审批动作」+ 申请人 UUID，Owner 看不懂审批什么",
+        "category": "approvals_queue_ux",
+        "repro": "S9: 标题=其它审批动作·seed；摘要 ACRP F approval seed；申请人=UUID。Code: approvals = high-risk ops needing super_admin (role/catalog/official/cold_start…), NOT onboarding. Fallback i18n admin_approvals_action_other.",
+        "code_ssot": "adminApprovalWorkflowModel.ts; AdminApprovalsTableSection.tsx; locales admin_approvals_action_*",
+        "owner_decision_needed": "CONFIRM whether seed rows stay in staging Admin UAT or must be filtered/hidden for ops readability",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-08",
+        "note_zh": "产品说明须写清：审批≠商家/向导入驻；入驻走各自 applications 队列。",
+        "wave": "D-F",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G022",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G043",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Approval detail page mixes Git/build/Idempotency with business approve UI",
+        "title_zh": "审批单详情运维/构建信息与批准驳回混排，业务可读性差",
+        "category": "approvals_detail_ux",
+        "repro": "S10: 发布构建信息(Git)默认可见区 + Idempotency 脚注 + acrp_seed 摘要。Ops reviewer needs action/resource/applicant first.",
+        "code_ssot": "AdminApprovalDetailPageMain.tsx; AdminApprovalDetailWorkflowPanel.tsx",
+        "owner_decision_needed": false,
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-08",
+        "wave": "D-F",
+        "depends_on": [
+          "V65-PROD-003-G042"
+        ],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G023",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G044",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Merchant onboarding queue list: technical email as primary title",
+        "title_zh": "商家入驻队列：列表主键为长测试邮箱，缺可读商家身份，信息密度差",
+        "category": "onboarding_queue_list_ux",
+        "repro": "S8: title=acrp-f-provider-…@traveltrust.test; status+等待天数; 每行技术元数据。Auditor cannot scan who the merchant is.",
+        "code_ssot": "frontend/app/admin/provider-applications/*",
+        "owner_decision_needed": "CONFIRM primary fields (display name / company / city) when API available",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-09",
+        "wave": "D-F",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G024",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G045",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Guide onboarding queue: tall workspace explainer + technical email titles",
+        "title_zh": "向导入驻队列：向导工作区三卡冗长「不是…」推挤列表；主键长邮箱",
+        "category": "onboarding_queue_list_ux",
+        "repro": "S11: Guide Workspace three boxes explain what they are NOT; list titles=acrp-f-guide-…@traveltrust.test. Same readability issue as S8.",
+        "code_ssot": "frontend/app/admin/guide-applications/*",
+        "owner_decision_needed": false,
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-09",
+        "wave": "D-F",
+        "depends_on": [],
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G025",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G046",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Onboarding/approvals queue pages not unified with Users horizontal golden",
+        "title_zh": "入驻/审批队列页未对齐用户横板金标（筛选条/宽表/短 ID/操作列）",
+        "category": "directory_style_consistency",
+        "repro": "S8/S9/S11 card stacks + tech metadata vs S3 Users horizontal filter+table. Extends G012 to inbox-deep queue surfaces.",
+        "code_ssot": "provider-applications; guide-applications; approvals; adminUi directory kit",
+        "owner_decision_needed": "CONFIRM Users golden also applies to inbox queue pages",
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-09",
+        "wave": "D-F",
+        "depends_on": [
+          "V65-PROD-003-G049"
+        ],
+        "overlap_with": [
+          "MP-04",
+          "V65-PROD-004-G012"
+        ],
+        "note_zh": "R4：队列页金标归 MP-09；经营六目录金标归 MP-04。见 G029。",
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G026",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G047",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Recent visits omit guide-applications → inbox href remap",
+        "title_zh": "最近访问：有商家/主理人→收件箱映射，缺向导申请队列映射",
+        "category": "inbox_parity_recent_visits",
+        "repro": "adminRecentVisits.ts ADMIN_RECENT_PATH_TO_INBOX_HREF maps provider/steward/approvals/reports but NOT /admin/guide-applications. Cards include guide queue; recent-visit deep-link parity broken.",
+        "code_ssot": "frontend/lib/admin/adminRecentVisits.ts",
+        "owner_decision_needed": false,
+        "recommended_disposition": "FIX_CANDIDATE_AFTER_SCOPE_FREEZE",
+        "modification_proposal_ref": "MP-06",
+        "wave": "D-W0",
+        "depends_on": [
+          "V65-PROD-003-G040"
+        ],
+        "note_zh": "与 G020 同波：补 guide chip 时一并补 recent visits 映射。",
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G027",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G048",
+        "severity": "P1",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "API tip risk: merchant bilateral + acquisition directory may need backend fields",
+        "title_zh": "API tip 风险：订单商家双边 / 旅行收购目录可能缺后端字段",
+        "category": "api_tip_risk",
+        "repro": "MP-02 acquisition catalog + MP-03 merchant party/filters may require API list fields beyond current web tip. Live API tip already Expected Difference vs web. Risk: FE-only mock or blocked acceptance.",
+        "code_ssot": "AdminOrdersPageMain; potential /admin/acquisition; traveltrust-api admin list endpoints",
+        "owner_decision_needed": "CONFIRM: FE degrade-only in 004 vs open API sub-batch / tip cut",
+        "recommended_disposition": "RISK_REGISTER_OWNER_GATE",
+        "modification_proposal_ref": "MP-02",
+        "wave": "D-GATE0",
+        "depends_on": [],
+        "note_zh": "非 CONFIRM_DESIGN 产品文案；属实施边界风险。未决前 Wave B/D 不得宣称 CLOSED。",
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G028",
+        "umbrella_wave": "D"
+      },
+      {
+        "id": "V65-PROD-003-G049",
+        "severity": "P2",
+        "status": "OPEN_PRV_RESIDUAL",
+        "title": "Layout-kit ownership overlap MP-04 vs MP-09 / G026",
+        "title_zh": "横板金标职责重叠：六目录(MP-04) vs 入驻队列(MP-09/G026) 边界未写死",
+        "category": "repair_scope_overlap",
+        "repro": "G012/G026 both say unify to Users golden. Without ownership matrix, implementers may double-refactor adminUi or leave queues inconsistent.",
+        "code_ssot": "deep_audit.kit_surface_matrix; MP-04; MP-09",
+        "owner_decision_needed": false,
+        "recommended_disposition": "CONFIRM_DESIGN",
+        "modification_proposal_ref": "MP-04",
+        "wave": "D-GATE0",
+        "depends_on": [],
+        "note_zh": "默认拍板建议：经营六叶=MP-04；入驻队列=MP-09；审批=MP-08；共享仅 token/shortAdminId。",
+        "source_batch": "V65-PROD-004",
+        "source_gap_id": "V65-PROD-004-G029",
+        "umbrella_wave": "D"
+      }
+    ],
+    "modification_proposals": {
+      "status": "PROPOSAL_ONLY_AWAITING_SCOPE_FREEZE",
+      "require_owner_scope_freeze_before_implementing": true,
+      "items": [
+        {
+          "id": "MP-01",
+          "title_zh": "经营侧栏 IA：补齐两叶子 + 顺序 + 命名 + 叶子预算",
+          "summary_zh": "在 operations.links 按 Owner 顺序写入六叶；规范 i18n short labels；Owner 拍板 leaf budget（升到 14 / 压缩他组 / More 溢出）。禁止在未 Scope Freeze 前改 Publish 硬闸。",
+          "code_touch": [
+            "frontend/lib/admin/adminShellSidebarModel.ts",
+            "frontend/locales/zh.ts",
+            "frontend/locales/en.ts",
+            "AdminShellNavIcon.tsx (new icons if needed)",
+            "sidebar leaf-count contracts"
+          ],
+          "acceptance_sketch": "侧栏可见顺序=用户→向导→商家→旅行收购→订单→争议；名称规范；leaf gate exit 0 with Owner-chosen budget",
+          "wave": "D-A",
+          "closes_gap_ids": [
+            "V65-PROD-003-G021",
+            "V65-PROD-003-G022",
+            "V65-PROD-003-G023",
+            "V65-PROD-003-G024",
+            "V65-PROD-003-G025"
+          ]
+        },
+        {
+          "id": "MP-02",
+          "title_zh": "新增/提升商家目录与旅行收购目录路由",
+          "summary_zh": "商家：新建 /admin/providers（或 /admin/merchants）生产级目录表，入驻队列 provider-applications 保持入驻轨，不与经营目录混名。收购：新建 /admin/acquisition 目录表（bond/listing/suspend），用户页暂停能力可链入，不再作为唯一入口。",
+          "code_touch": [
+            "frontend/app/admin/providers/** or merchants/**",
+            "frontend/app/admin/acquisition/**",
+            "adminRecentVisits.ts",
+            "API list endpoints if missing (separate API tip policy)"
+          ],
+          "acceptance_sketch": "两目录可从经营直达；筛选+宽表对齐 Users 金标；入驻队列与目录职责分离",
+          "wave": "D-B",
+          "closes_gap_ids": [
+            "V65-PROD-003-G026",
+            "V65-PROD-003-G027",
+            "V65-PROD-003-G048"
+          ]
+        },
+        {
+          "id": "MP-03",
+          "title_zh": "订单页双边模型 + 分类筛选（行业生产级）",
+          "summary_zh": "参与方列改为：旅行者 + 对方(类型芯片: 向导|商家) + 对方 ID 链接。筛选增加：对方类型、对方/旅行者 ID、状态、创建时间范围；URL 驱动同 Users。可选顶部分类：全部 / 向导订单 / 商家订单。列表补服务摘要列（API 有字段才上）。空态：草稿无对方时显示「待指定对方」而非仅向导—。",
+          "code_touch": [
+            "AdminOrdersPageMain.tsx",
+            "useAdminOrdersPage.ts",
+            "adminOrdersLabels.ts",
+            "API order list fields if merchant id missing"
+          ],
+          "acceptance_sketch": "可按向导/商家筛出双边订单；参与方信息可读；与争议深链保留",
+          "wave": "D-D",
+          "closes_gap_ids": [
+            "V65-PROD-003-G028",
+            "V65-PROD-003-G029",
+            "V65-PROD-003-G030",
+            "V65-PROD-003-G034"
+          ]
+        },
+        {
+          "id": "MP-04",
+          "title_zh": "六目录共享布局套件：以用户页为金标统一横板",
+          "summary_zh": "抽取/强化 Admin directory kit：横排筛选栅格、应用/重置、source banner、宽表、shortAdminId+title 全量、状态横排 badge、操作列主按钮。向导优先修：shortAdminId、列宽、状态不竖挤。商家/收购/订单/争议对齐同一套件。",
+          "code_touch": [
+            "AdminGuidesPageMain.tsx (priority)",
+            "shared adminUi / optional AdminDirectoryFilterCard",
+            "users/orders/disputes/providers/acquisition pages"
+          ],
+          "acceptance_sketch": "六页视觉节奏一致；向导不再出现全 UUID 高行竖版观感",
+          "wave": "D-C",
+          "closes_gap_ids": [
+            "V65-PROD-003-G031",
+            "V65-PROD-003-G032",
+            "V65-PROD-003-G033",
+            "V65-PROD-003-G049"
+          ]
+        },
+        {
+          "id": "MP-05",
+          "title_zh": "入驻/准入费枢纽去重：删审核重复条 · 保留费用台账 · 改名纠错",
+          "summary_zh": "1) 删除或折叠枢纽顶栏「待审核发现」三卡（向导/商家/区域主理人）——深链与既有队列重复。2) 保留准入费独有：权益/支付事件/Webhook 作业/合规审计（及 Stripe 台账入口）。3) 侧栏：组/叶「入驻」→「准入费」（叶可用「运营枢纽」避免组叶同名）。4) i18n：区域管家→区域主理人。5) CONFIRM_DESIGN：禁止整组删除 /admin/onboarding。",
+          "code_touch": [
+            "AdminOnboardingHubPageMain.tsx (remove/fold ONBOARDING_REVIEW_CARDS)",
+            "frontend/locales/zh.ts + en.ts (sidebar short + steward label)",
+            "adminShellSidebarModel.ts (optional label keys only)",
+            "contracts/smoke for onboarding hub if strip removed"
+          ],
+          "acceptance_sketch": "枢纽不再展示三审核深链卡（或仅一 Inbox 入口）；费用四入口仍在；侧栏不再组叶同名「入驻」；中文无「区域管家」误称；/admin/onboarding 路由保留",
+          "do_not": [
+            "Do not delete /admin/onboarding route group wholesale",
+            "Do not merge provider-applications into 经营商家目录 (still separate tracks)"
+          ],
+          "wave": "D-E",
+          "closes_gap_ids": [
+            "V65-PROD-003-G035",
+            "V65-PROD-003-G036",
+            "V65-PROD-003-G037",
+            "V65-PROD-003-G038"
+          ]
+        },
+        {
+          "id": "MP-06",
+          "title_zh": "收件箱推荐顺序 chip：有待办亮 / 无待办暗 + 补向导 chip",
+          "summary_zh": "1) 固化语义：count>0 → ACTIVE（高对比暖底+角标）；count=0/null → IDLE（暗 ghost）。对照 S7 修 live 倒置。2) 核对 ACTIVE vs IDLE token 对比度，避免 ghost 看起来更「亮」。3) ADMIN_INBOX_WORKFLOW_IDS 插入 guide（建议 provider→guide→steward→approvals→reports）。4) 角标仅 count>0。",
+          "code_touch": [
+            "AdminInboxWorkflowQuickNav.tsx",
+            "adminInboxWorkflowOrder.ts",
+            "frontend/lib/adminUi.ts CHIP_ACTIVE/IDLE",
+            "inbox chip contracts/tests"
+          ],
+          "acceptance_sketch": "S7 复测：商家/审批/举报/向导有数则亮；主理人0 暗；推荐顺序含向导",
+          "wave": "D-W0",
+          "closes_gap_ids": [
+            "V65-PROD-003-G039",
+            "V65-PROD-003-G040",
+            "V65-PROD-003-G047"
+          ]
+        },
+        {
+          "id": "MP-07",
+          "title_zh": "收件箱覆盖面 Scope Freeze：对齐六目录中的审批/待办面",
+          "summary_zh": "Owner 拍板后实施：用户排除（邮箱自动验证）。建议基线：向导+商家入驻队列必在收件箱。主理人/审批/社区举报=运维扩展队列（可保留但须文案标明非经营六叶）。旅行收购待办、争议待办是否进收件箱由 Owner CONFIRM；订单不进收件箱（目录轨）。产出一张「收件箱卡片清单」机读/文案。",
+          "code_touch": [
+            "adminUnifiedInboxTasks.ts",
+            "AdminInbox* copy/i18n",
+            "optional acquisition/disputes inbox adapters"
+          ],
+          "acceptance_sketch": "收件箱卡片=Owner 冻结清单；无多余无遗漏；与经营六叶职责对照表可见",
+          "do_not": [
+            "Do not invent acquisition/disputes queues without API/Owner CONFIRM",
+            "Do not merge onboarding queues into 经营目录 pages"
+          ],
+          "wave": "D-F",
+          "closes_gap_ids": [
+            "V65-PROD-003-G041"
+          ]
+        },
+        {
+          "id": "MP-08",
+          "title_zh": "审批队列可读化：讲清审批什么 + 降噪 seed/技术壳",
+          "summary_zh": "页头/空态写明：审批=需超级管理员的高危运维动作（角色/Catalog/官方发布/冷启动等），≠入驻审核。列表优先展示动作中文名+资源类型+可读申请人；其它审批动作降级并尽量用 named fallback。详情：构建/Git/Idempotency 默认折叠。Staging seed 行策略：隐藏或标「测试种子」。",
+          "code_touch": [
+            "adminApprovalWorkflowModel.ts",
+            "AdminApprovalsTableSection.tsx",
+            "AdminApprovalDetailPageMain.tsx",
+            "locales admin_approvals_*"
+          ],
+          "acceptance_sketch": "Owner 能一眼回答「这页审批什么」；seed/UUID 不再是主键叙事",
+          "wave": "D-F",
+          "closes_gap_ids": [
+            "V65-PROD-003-G042",
+            "V65-PROD-003-G043"
+          ]
+        },
+        {
+          "id": "MP-09",
+          "title_zh": "商家/向导入驻队列列表 UX 统一（金标横板）",
+          "summary_zh": "主键改为可读身份（姓名/店铺/城市；无则短 ID+邮箱次行）。压缩「技术元数据」默认折叠且非每行强推。向导页：工作区三卡改为短导航或折叠，去掉冗长「不是…」。筛选条/宽表/操作列对齐 Users 金标（与 MP-04 同源）。",
+          "code_touch": [
+            "provider-applications pages",
+            "guide-applications pages",
+            "shared queue row kit if extracted"
+          ],
+          "acceptance_sketch": "两队列扫描可读；风格与用户页横板一致；工作区不再推挤主列表",
+          "wave": "D-F",
+          "closes_gap_ids": [
+            "V65-PROD-003-G044",
+            "V65-PROD-003-G045",
+            "V65-PROD-003-G046"
+          ]
+        }
+      ],
+      "phasing_suggestion": [
+        "GATE0 Owner Scope Freeze: G005 leaf budget · G018 fee hub · G021 inbox map · GATE-ROUTES · GATE-API-TIP · G029 kit boundary (default OK)",
+        "Wave D-W0 quick wins (no six-dir IA): MP-06 G019/G020/G027 chip+guide+recentVisits; optional G017 i18n copy",
+        "Wave D-A sidebar IA (after G005): MP-01 G001–G005 + G004",
+        "Wave D-B new catalogs with kit day-1 (after routes+API gate): MP-02 G006/G007 using MP-04 kit — do NOT ship vertical stub",
+        "Wave D-C existing directory layout: MP-04 G011/G012/G013(subsumed) on Guides→Orders→Disputes polish",
+        "Wave D-D orders bilateral (after API gate): MP-03 G008–G010/G014",
+        "Wave D-E onboarding hub dedup (after G018): MP-05 G015–G018 (+G017 if not in Wave D-W0)",
+        "Wave D-F inbox map + approvals + queue UX (after G021): MP-07 + MP-08 + MP-09 (G022–G026)"
+      ],
+      "phasing_suggestion_previous": [
+        "Wave A (P1 IA+routes): MP-01 + MP-02 after leaf-budget Owner decision",
+        "Wave B (P1 orders bilateral): MP-03",
+        "Wave C (P1/P2 layout unify): MP-04 starting with Guides",
+        "Wave D (P1/P2 onboarding dedup): MP-05 after Owner CONFIRM_DESIGN on keep-fee-hub",
+        "Wave E (P1 inbox chips+coverage): MP-06 + MP-07 after Owner CONFIRM_DESIGN on inbox map",
+        "Wave F (P1/P2 approvals+queue UX): MP-08 + MP-09"
+      ],
+      "phasing_rationale_zh": "原 A→F 把活网 chip 缺陷(G019)放在 IA/订单/布局之后，修复顺序错误。优化：Owner Gate 前置；Wave 0 先修独立 P1 可见缺陷；新目录页禁止无金标先上再返工；API tip 风险显式挡 Wave B/D；金标职责用 G029 切开避免双修。"
+    },
+    "owner_scope_freeze_gates": {
+      "status": "AWAITING_OWNER",
+      "required_before_implementing": true,
+      "gates": [
+        {
+          "gate_id": "GATE-BUDGET",
+          "gap_ids": [
+            "V65-PROD-003-G025"
+          ],
+          "question_zh": "Publish 叶子 12→14：升预算 / 压缩他组 / More 溢出？",
+          "blocks": [
+            "MP-01",
+            "Wave-A"
+          ]
+        },
+        {
+          "gate_id": "GATE-FEE-HUB",
+          "gap_ids": [
+            "V65-PROD-003-G038"
+          ],
+          "question_zh": "同意删审核三卡 · 留准入费枢纽 · 入驻→准入费 · 禁止整组删除？",
+          "blocks": [
+            "MP-05",
+            "Wave-E"
+          ]
+        },
+        {
+          "gate_id": "GATE-INBOX-MAP",
+          "gap_ids": [
+            "V65-PROD-003-G041"
+          ],
+          "question_zh": "收件箱卡片冻结清单：用户排除？保留主理人/审批/举报？加收购/争议？",
+          "blocks": [
+            "MP-07",
+            "Wave-F"
+          ]
+        },
+        {
+          "gate_id": "GATE-ROUTES",
+          "gap_ids": [
+            "V65-PROD-003-G021",
+            "V65-PROD-003-G022",
+            "V65-PROD-003-G026",
+            "V65-PROD-003-G027"
+          ],
+          "question_zh": "商家路由 /admin/providers 还是 /merchants？收购目录列集与 API？",
+          "blocks": [
+            "MP-02",
+            "Wave-B"
+          ]
+        },
+        {
+          "gate_id": "GATE-NAMING",
+          "gap_ids": [
+            "V65-PROD-003-G024",
+            "V65-PROD-003-G035"
+          ],
+          "question_zh": "六叶命名是否统一「×目录」？准入费组/叶文案？",
+          "blocks": [
+            "MP-01",
+            "MP-05"
+          ]
+        },
+        {
+          "gate_id": "GATE-API-TIP",
+          "gap_ids": [
+            "V65-PROD-003-G048"
+          ],
+          "question_zh": "订单双边/收购目录若缺 API 字段：本批仅 FE 降级，还是另开 API tip 子批？",
+          "blocks": [
+            "MP-02",
+            "MP-03",
+            "Wave-B",
+            "Wave-D"
+          ]
+        }
+      ],
+      "must_answer_before_implementing": [
+        {
+          "gate_id": "GATE-BUDGET",
+          "gap_ids": [
+            "V65-PROD-003-G025"
+          ],
+          "question_zh": "Publish 叶子 12→14：升预算 / 压缩他组 / More 溢出？",
+          "blocks": [
+            "MP-01",
+            "Wave-A"
+          ]
+        },
+        {
+          "gate_id": "GATE-FEE-HUB",
+          "gap_ids": [
+            "V65-PROD-003-G038"
+          ],
+          "question_zh": "同意删审核三卡 · 留准入费枢纽 · 入驻→准入费 · 禁止整组删除？",
+          "blocks": [
+            "MP-05",
+            "Wave-E"
+          ]
+        },
+        {
+          "gate_id": "GATE-INBOX-MAP",
+          "gap_ids": [
+            "V65-PROD-003-G041"
+          ],
+          "question_zh": "收件箱卡片冻结清单：用户排除？保留主理人/审批/举报？加收购/争议？",
+          "blocks": [
+            "MP-07",
+            "Wave-F"
+          ]
+        },
+        {
+          "gate_id": "GATE-ROUTES",
+          "gap_ids": [
+            "V65-PROD-003-G021",
+            "V65-PROD-003-G022",
+            "V65-PROD-003-G026",
+            "V65-PROD-003-G027"
+          ],
+          "question_zh": "商家路由 /admin/providers 还是 /merchants？收购目录列集与 API？",
+          "blocks": [
+            "MP-02",
+            "Wave-B"
+          ]
+        },
+        {
+          "gate_id": "GATE-NAMING",
+          "gap_ids": [
+            "V65-PROD-003-G024",
+            "V65-PROD-003-G035"
+          ],
+          "question_zh": "六叶命名是否统一「×目录」？准入费组/叶文案？",
+          "blocks": [
+            "MP-01",
+            "MP-05"
+          ]
+        },
+        {
+          "gate_id": "GATE-API-TIP",
+          "gap_ids": [
+            "V65-PROD-003-G048"
+          ],
+          "question_zh": "订单双边/收购目录若缺 API 字段：本批仅 FE 降级，还是另开 API tip 子批？",
+          "blocks": [
+            "MP-02",
+            "MP-03",
+            "Wave-B",
+            "Wave-D"
+          ]
+        }
+      ]
+    },
+    "code_baseline": {
+      "operations_links_now": [
+        "/admin/users",
+        "/admin/guides",
+        "/admin/orders",
+        "/admin/disputes"
+      ],
+      "missing_operations_links": [
+        "merchant_or_provider_directory",
+        "travel_acquisition_directory"
+      ],
+      "publish_max_leaves": 12,
+      "current_leaf_count": 12,
+      "leaf_count_if_add_two_ops": 14,
+      "existing_near_routes": {
+        "provider_onboarding_queue": "/admin/provider-applications",
+        "acquisition_suspend_anchor": "/admin/users#admin-acquisition-suspend",
+        "no_admin_providers_catalog": true,
+        "no_admin_acquisition_catalog": true
+      },
+      "orders_parties_ui": [
+        "admin_orders_party_traveler",
+        "admin_orders_party_guide"
+      ],
+      "orders_filters_ui": [
+        "order_id",
+        "limit",
+        "state"
+      ],
+      "guides_vertical_root_cause": "AdminGuidesPageMain renders full row.id / row.user_id (no shortAdminId) across many columns → wrap + tall rows; Users/Orders use short IDs",
+      "onboarding_publish_sidebar": {
+        "group_id": "onboarding",
+        "group_label_key": "admin_shell_nav_group_onboarding",
+        "group_label_zh": "入驻",
+        "leaf_href": "/admin/onboarding",
+        "leaf_label_key": "admin_shell_nav_onboarding_short",
+        "leaf_label_zh": "入驻",
+        "note": "Publish sidebar exposes ONE leaf; fuller onboarding queues live in adminShellOnboardingNavLinks (not all in publish sidebar)"
+      },
+      "onboarding_hub": {
+        "page": "AdminOnboardingHubPageMain.tsx",
+        "title_zh": "准入费 · 运营枢纽",
+        "review_cards_ssot": "ONBOARDING_REVIEW_CARDS → ADMIN_INBOX_QUEUE_HREFS",
+        "review_deep_links": {
+          "guide": "/admin/guide-applications?status=pending",
+          "provider": "/admin/provider-applications?status=submitted",
+          "steward": "/admin/steward-applications?status=stake_pending"
+        },
+        "wrong_zh": {
+          "key": "admin_onboarding_hub_review_steward",
+          "current": "区域管家审核",
+          "correct": "区域主理人审核"
+        },
+        "unique_fee_surfaces": [
+          "/admin/onboarding (hub)",
+          "entitlements via users",
+          "payment-events",
+          "webhook-jobs",
+          "compliance-audit"
+        ],
+        "verdict": "STRIP_REVIEW_DUPLICATES_KEEP_FEE_HUB — do not wholesale delete /admin/onboarding"
+      },
+      "task_inbox": {
+        "route": "/admin/inbox",
+        "queues_in_cards": [
+          "provider",
+          "guide",
+          "steward",
+          "approvals",
+          "reports"
+        ],
+        "workflow_chip_ids": [
+          "provider",
+          "steward",
+          "approvals",
+          "reports"
+        ],
+        "guide_in_chips": false,
+        "chip_has_work_rule_worktree": "count !== null && count > 0 → ACTIVE else IDLE",
+        "chip_active_token": "ADMIN_INBOX_WORKFLOW_CHIP_ACTIVE_CLASS (border-2 border-ref-sun/45 bg-ref-sun/16)",
+        "chip_idle_token": "ADMIN_INBOX_WORKFLOW_CHIP_IDLE_CLASS (= ADMIN_BTN_GHOST_DARK)",
+        "live_screenshot_S7": "steward@0 solid warm lit; provider/approvals/reports outlined dim — contradicts Owner rule and worktree hasWork intent",
+        "approvals_meaning": "High-risk admin actions requiring super_admin (role/catalog/official/cold_start/…); NOT merchant/guide onboarding",
+        "approvals_fallback_zh": "其它审批动作",
+        "vs_six_dirs": {
+          "users": "EXCLUDE_OK_auto_email_verify",
+          "guides": "PRESENT_as_guide_onboarding_queue_missing_from_chips",
+          "merchants": "PRESENT_as_provider_onboarding_queue",
+          "travel_acquisition": "MISSING_from_inbox",
+          "orders": "NOT_INBOX_directory_expected",
+          "disputes": "MISSING_from_inbox_owner_decide",
+          "extras_not_in_six_dirs": [
+            "steward_applications",
+            "approvals_queue",
+            "community_reports"
+          ]
+        }
+      }
+    },
+    "surface": {
+      "route_group": "/admin 经营 IA + directories",
+      "focus": "operations_sidebar_and_six_directory_pages_plus_task_inbox",
+      "owner_target_nav_order": [
+        "users",
+        "guides",
+        "merchants_providers",
+        "travel_acquisition",
+        "orders",
+        "disputes"
+      ],
+      "components": [
+        "frontend/lib/admin/adminShellSidebarModel.ts",
+        "frontend/components/admin/AdminShellSidebar.tsx",
+        "frontend/app/admin/users/AdminUsersPageMain.tsx",
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+        "frontend/app/admin/orders/AdminOrdersPageMain.tsx",
+        "frontend/app/admin/disputes/",
+        "frontend/app/admin/provider-applications/",
+        "frontend/lib/admin/adminHomeModel.ts",
+        "frontend/app/admin/inbox/",
+        "frontend/components/admin/AdminInboxWorkflowQuickNav.tsx",
+        "frontend/lib/admin/adminUnifiedInboxTasks.ts",
+        "frontend/lib/admin/adminInboxWorkflowOrder.ts",
+        "frontend/lib/admin/adminInboxQueueHrefs.ts",
+        "frontend/app/admin/guide-applications/",
+        "frontend/app/admin/approvals/"
+      ]
+    },
+    "unified_batch_fix_scope": [
+      "Admin IA (sidebar six directories)",
+      "UI/UX L5 (directory layout kit)",
+      "Functional closure (merchant/acquisition routes, orders bilateral, inbox)",
+      "Performance (list/table density, short IDs)",
+      "Ops UX (onboarding fee hub dedup, approvals readability, chip lit/dim)"
+    ],
+    "ladder": [
+      "Gap Matrix expanded (G021–G049)",
+      "Owner Scope Freeze",
+      "One Batch Fix",
+      "Local Full Verify",
+      "Single Production Cut",
+      "Runtime Evidence",
+      "Owner PRV-3b",
+      "Update V65 Runtime Truth SSOT",
+      "Sync Final Truth Baseline",
+      "TT_PRODUCTION_GO remains NO_GO until acceptance + release certification"
+    ],
+    "frozen_read_tip_sha": "0a53e8029f7577d51f5b7fff8c6545b2e610d507"
+  },
+  "wave_plan": [],
+  "wave_d_status": "RUNTIME_VERIFIED",
+  "lifecycle_status": "WAVE_D_RUNTIME_VERIFIED__WAVE_E_SCOPE_FROZEN_P1_LOCAL_VERIFY_PASS",
+  "tt_production_go": "NO_GO",
+  "wave_e_status": "SCOPE_FROZEN",
+  "wave_e": {
+    "name": "Admin Console Production Reality Closure (KYC/queues/disputes/approvals/reports/users/pay/fee/content/finance/config + machine gates)",
+    "status": "SCOPE_FROZEN",
+    "branch_policy": "BRANCHLESS_ON_LIVING_TIP",
+    "batch_goal": "Admin Console Production Reality Closure",
+    "gap_ids": [
+      "V65-PROD-003-G057",
+      "V65-PROD-003-G058",
+      "V65-PROD-003-G059",
+      "V65-PROD-003-G065",
+      "V65-PROD-003-G073",
+      "V65-PROD-003-G074",
+      "V65-PROD-003-G075",
+      "V65-PROD-003-G050",
+      "V65-PROD-003-G051",
+      "V65-PROD-003-G060",
+      "V65-PROD-003-G061",
+      "V65-PROD-003-G062",
+      "V65-PROD-003-G063",
+      "V65-PROD-003-G064",
+      "V65-PROD-003-G066",
+      "V65-PROD-003-G067",
+      "V65-PROD-003-G068",
+      "V65-PROD-003-G070",
+      "V65-PROD-003-G071",
+      "V65-PROD-003-G072",
+      "V65-PROD-003-G076",
+      "V65-PROD-003-G077",
+      "V65-PROD-003-G078",
+      "V65-PROD-003-G080",
+      "V65-PROD-003-G081",
+      "V65-PROD-003-G082",
+      "V65-PROD-003-G083",
+      "V65-PROD-003-G084",
+      "V65-PROD-003-G085",
+      "V65-PROD-003-G086",
+      "V65-PROD-003-G087",
+      "V65-PROD-003-G088",
+      "V65-PROD-003-G052",
+      "V65-PROD-003-G053",
+      "V65-PROD-003-G054",
+      "V65-PROD-003-G055",
+      "V65-PROD-003-G056",
+      "V65-PROD-003-G069",
+      "V65-PROD-003-G079",
+      "V65-PROD-003-G089"
+    ],
+    "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "stamp": "20260804T002417Z",
+    "owner_r4_issues": 13,
+    "owner_r5": {
+      "machine_gates": [
+        "V65-PROD-003-G070",
+        "V65-PROD-003-G071",
+        "V65-PROD-003-G072"
+      ],
+      "deep_scan_added": [
+        "V65-PROD-003-G070",
+        "V65-PROD-003-G071",
+        "V65-PROD-003-G072",
+        "V65-PROD-003-G073",
+        "V65-PROD-003-G074",
+        "V65-PROD-003-G075",
+        "V65-PROD-003-G076",
+        "V65-PROD-003-G077",
+        "V65-PROD-003-G078",
+        "V65-PROD-003-G079",
+        "V65-PROD-003-G080"
+      ],
+      "ladder": [
+        "Gap inventory (this)",
+        "Unified Batch Fix (branchless living tip)",
+        "Real-net deploy",
+        "PRV-3b human UAT",
+        "Runtime Truth SSOT",
+        "Final Truth Baseline",
+        "Production GO Review (still NO_GO until cert)"
+      ]
+    },
+    "owner_decisions": {
+      "kyc": "DELETE",
+      "entry_fee": "REMOVE",
+      "onboarding_queues": "PRODUCTION_WRITABLE",
+      "admin_production_reality": "WAVE_E_SCOPE",
+      "machine_gates": "G070_G071_G072_REQUIRED",
+      "config_hub_name": "配置中心",
+      "appeals_moderation": "IN_SCOPE",
+      "content_siblings": "KEEP_AND_PRODUCTIONIZE",
+      "community_residual_g084": "KEEP_AND_PRODUCTIONIZE",
+      "community_productionize_bound": "举报/申诉/风控记录/内容处理/用户行为记录/Moderator操作日志/权限控制 · 禁止独立风控系统",
+      "no_new_batch_after_freeze": true
+    },
+    "open_p0": [
+      "V65-PROD-003-G057",
+      "V65-PROD-003-G058",
+      "V65-PROD-003-G059",
+      "V65-PROD-003-G065",
+      "V65-PROD-003-G073",
+      "V65-PROD-003-G074",
+      "V65-PROD-003-G075"
+    ],
+    "open_p1": [
+      "V65-PROD-003-G050",
+      "V65-PROD-003-G051",
+      "V65-PROD-003-G060",
+      "V65-PROD-003-G061",
+      "V65-PROD-003-G062",
+      "V65-PROD-003-G063",
+      "V65-PROD-003-G064",
+      "V65-PROD-003-G066",
+      "V65-PROD-003-G067",
+      "V65-PROD-003-G068",
+      "V65-PROD-003-G070",
+      "V65-PROD-003-G071",
+      "V65-PROD-003-G072",
+      "V65-PROD-003-G076",
+      "V65-PROD-003-G077",
+      "V65-PROD-003-G078",
+      "V65-PROD-003-G080",
+      "V65-PROD-003-G081",
+      "V65-PROD-003-G082",
+      "V65-PROD-003-G083",
+      "V65-PROD-003-G084",
+      "V65-PROD-003-G085",
+      "V65-PROD-003-G086",
+      "V65-PROD-003-G087",
+      "V65-PROD-003-G088"
+    ],
+    "open_p2": [
+      "V65-PROD-003-G052",
+      "V65-PROD-003-G053",
+      "V65-PROD-003-G054",
+      "V65-PROD-003-G055",
+      "V65-PROD-003-G056",
+      "V65-PROD-003-G069",
+      "V65-PROD-003-G079",
+      "V65-PROD-003-G089"
+    ],
+    "gap_range": "G050-G089",
+    "gap_count_open": 40,
+    "r6_note": "Owner CONFIRM locked + enterprise re-audit G081-G085",
+    "scope_frozen": true,
+    "scope_freeze_stamp": "20260804T002417Z",
+    "final_audit": {
+      "ritual": "R7_ENTERPRISE_PRODUCTION_RELEASE_AUDIT",
+      "stamp": "20260804T002417Z",
+      "dimensions": [
+        "code",
+        "routes",
+        "permissions",
+        "api_contract",
+        "data_model",
+        "ui_ux_l5",
+        "performance",
+        "security",
+        "ops_workflow",
+        "empty_shell",
+        "i18n",
+        "error_boundary"
+      ],
+      "new_gaps": [
+        "V65-PROD-003-G086",
+        "V65-PROD-003-G087",
+        "V65-PROD-003-G088",
+        "V65-PROD-003-G089"
+      ],
+      "note_zh": "审计完成后范围冻结；禁止 V65-PROD-004 发现批；仅按 P0→P1→P2 统一修复；TT_PRODUCTION_GO=NO_GO；禁止碎片上线"
+    },
+    "r7_note": "Owner G084 KEEP_AND_PRODUCTIONIZE + final audit G086-G089 + SCOPE_FROZEN",
+    "suggested_p0_code_order": [
+      "V65-PROD-003-G057",
+      "V65-PROD-003-G074",
+      "V65-PROD-003-G076",
+      "V65-PROD-003-G058",
+      "V65-PROD-003-G059",
+      "V65-PROD-003-G073",
+      "V65-PROD-003-G065",
+      "V65-PROD-003-G075"
+    ],
+    "post_freeze_ladder": [
+      "Unified Batch Fix P0→P1→P2 (branchless living tip)",
+      "Local Full Verify",
+      "Single Production Cut",
+      "Runtime Evidence",
+      "PRV-3b Owner UAT",
+      "Runtime Truth SSOT",
+      "Final Truth Baseline align",
+      "Production GO Review (still NO_GO until cert)"
+    ],
+    "r8_note": "R8 20260804T005951Z: P0 local FE strip/honesty notes on G057/G074/G058/G059/G073/G065/G075/G088; G076 BE still OPEN; statuses remain OPEN until runtime; NO_GO; no fragment ship",
+    "p0_local_progress": {
+      "stamp": "20260804T005951Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "fe_strip_noted": [
+        "V65-PROD-003-G057",
+        "V65-PROD-003-G074",
+        "V65-PROD-003-G058",
+        "V65-PROD-003-G059",
+        "V65-PROD-003-G073",
+        "V65-PROD-003-G065",
+        "V65-PROD-003-G075",
+        "V65-PROD-003-G088"
+      ],
+      "still_open_api": [
+        "V65-PROD-003-G076"
+      ],
+      "batch_closed": false
+    },
+    "r9_note": "R9 20260804T023500Z: G076/G084/G086–G089 local product + PASS_LOCAL verify; statuses remain OPEN until runtime; NO_GO; no fragment ship; evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+    "p1_local_progress": {
+      "stamp": "20260804T023500Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "local_verify_verdict": "PASS_LOCAL",
+      "evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+      "gaps_noted": [
+        "V65-PROD-003-G076",
+        "V65-PROD-003-G084",
+        "V65-PROD-003-G086",
+        "V65-PROD-003-G087",
+        "V65-PROD-003-G088",
+        "V65-PROD-003-G089"
+      ],
+      "batch_closed": false,
+      "runtime_verified": false
+    }
+  },
+  "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "gap_count": 89,
+  "open_wave_e": 40,
+  "notes": " | R6 20260804T001500Z: Owner 配置中心 LOCK · G078 IN_SCOPE · G080 KEEP_AND_PRODUCTIONIZE · +G081-G085 enterprise re-audit | R7 20260804T002417Z: G084 KEEP_AND_PRODUCTIONIZE · final audit +G086-G089 · Wave E SCOPE_FROZEN · NO_GO · no fragment ship | R8 20260804T005951Z: P0 local FE strip/honesty fix_notes · wave_e_status=SCOPE_FROZEN reconciled · gap status OPEN until runtime · NO_GO · no fragment ship | R9 20260804T023500Z: Wave E P1 local fix_notes + PASS_LOCAL · status OPEN until runtime · NO_GO · no fragment ship · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+  "owner_r7": {
+    "stamp": "20260804T002417Z",
+    "g084": "KEEP_AND_PRODUCTIONIZE",
+    "final_audit": "COMPLETE",
+    "scope_frozen": true,
+    "new_gaps": [
+      "V65-PROD-003-G086",
+      "V65-PROD-003-G087",
+      "V65-PROD-003-G088",
+      "V65-PROD-003-G089"
+    ]
+  },
+  "owner_r8": {
+    "stamp": "20260804T005951Z",
+    "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "scope_frozen": true,
+    "p0_local_fe_notes": true,
+    "statuses_remain_open_until_runtime": true,
+    "tt_production_go": "NO_GO",
+    "no_fragment_ship": true
+  },
+  "owner_r9": {
+    "stamp": "20260804T023500Z",
+    "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "scope_frozen": true,
+    "p1_local_notes": true,
+    "local_verify_verdict": "PASS_LOCAL",
+    "evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+    "statuses_remain_open_until_runtime": true,
+    "tt_production_go": "NO_GO",
+    "no_fragment_ship": true,
+    "ladder_blocked_on": "Owner commit/bake Wave E before Single Cut"
+  }
+}

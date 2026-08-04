@@ -471,7 +471,6 @@ function StewardRegionWorkbenchInner() {
           {bTrack.bTrackComplete ? (
             <StewardWorkbenchBTrackCompleteStrip
               t={t}
-              amountLabel={bTrack.quote?.amountLabel ?? null}
               bTrackStaked={isStewardChainStakeComplete(chainStakeSummaryKey)}
             />
           ) : (

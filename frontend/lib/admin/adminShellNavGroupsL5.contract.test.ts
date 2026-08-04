@@ -13,46 +13,50 @@ import { ADMIN_SHELL_SIDEBAR_GROUPS } from "./adminShellSidebarModel";
 const __dir = dirname(fileURLToPath(import.meta.url));
 const fe = join(__dir, "..", "..");
 
-/** ① 全分组侧栏 / 顶栏 / 枢纽页并集对拍。 */
-describe("admin shell nav groups SSOT (①)", () => {
+/** ① Inbox Focus：深分组 SSOT 仍在专属模块；发布壳仅 slim groups。 */
+describe("admin shell nav groups SSOT (① · Inbox Focus)", () => {
   const bar = readFileSync(join(fe, "components", "admin", "AdminShellBar.tsx"), "utf8");
 
   function sidebarHrefs(groupId: string): string[] {
     return ADMIN_SHELL_SIDEBAR_GROUPS.find((g) => g.id === groupId)?.links.map((l) => l.href) ?? [];
   }
 
-  it("finance sidebar includes suite supplements missing before", () => {
-    const hrefs = sidebarHrefs("finance");
-    expect(hrefs).toContain("/admin/indexer");
-    expect(hrefs).toContain("/admin/region-vault");
-    expect(hrefs).toContain("/admin/alerts/incidents");
+  it("finance deep SSOT retained · not mounted as persistent sidebar group", () => {
+    expect(sidebarHrefs("finance")).toEqual([]);
+    expect(ADMIN_SHELL_FINANCE_NAV_LINKS.map((l) => l.href)).toContain("/admin/indexer");
+    expect(ADMIN_SHELL_FINANCE_NAV_LINKS.map((l) => l.href)).toContain("/admin/region-vault");
     expect(ADMIN_SHELL_FINANCE_NAV_LINKS.length).toBeGreaterThanOrEqual(8);
+    expect(bar).toContain("/admin/finance-suite");
   });
 
-  it("governance sidebar includes trust-growth", () => {
-    expect(sidebarHrefs("governance")).toContain("/admin/trust-growth");
+  it("governance deep SSOT retained (trust-growth)", () => {
+    expect(ADMIN_SHELL_GOVERNANCE_NAV_LINKS.map((l) => l.href)).toContain("/admin/trust-growth");
     expect(ADMIN_SHELL_GOVERNANCE_NAV_LINKS).toHaveLength(4);
   });
 
-  it("community sidebar includes abuse-policy", () => {
-    expect(sidebarHrefs("community")).toContain("/admin/community/abuse-policy");
+  it("community deep SSOT includes abuse-policy · not a publish sidebar group", () => {
+    expect(sidebarHrefs("community")).toEqual([]);
+    expect(ADMIN_SHELL_COMMUNITY_NAV_LINKS.map((l) => l.href)).toContain(
+      "/admin/community/abuse-policy",
+    );
     expect(ADMIN_SHELL_COMMUNITY_NAV_LINKS.length).toBeGreaterThanOrEqual(9);
   });
 
-  it("more sidebar includes config hub sub-pages and compliance requests", () => {
+  it("more sidebar is hub-trimmed · config hub deep links stay in MORE/config SSOT", () => {
     const hrefs = sidebarHrefs("more");
-    expect(hrefs).toContain("/admin/compliance/requests");
-    for (const { href } of CONFIG_HUB_LINKS) {
-      expect(hrefs).toContain(href);
-    }
+    expect(hrefs).toContain("/admin/config");
+    expect(hrefs).toContain("/admin/finance-suite");
+    expect(hrefs).not.toContain("/admin/observability");
+    expect(CONFIG_HUB_LINKS.length).toBeGreaterThan(0);
+    expect(ADMIN_SHELL_MORE_NAV_LINKS.map((l) => l.href)).toContain("/admin/observability");
     expect(ADMIN_SHELL_MORE_NAV_LINKS.length).toBeGreaterThan(6);
   });
 
-  it("AdminShellBar maps all group SSOT arrays", () => {
-    expect(bar).toContain("ADMIN_SHELL_FINANCE_NAV_LINKS");
-    expect(bar).toContain("ADMIN_SHELL_GOVERNANCE_NAV_LINKS");
-    expect(bar).toContain("ADMIN_SHELL_COMMUNITY_NAV_LINKS");
-    expect(bar).toContain("ADMIN_SHELL_OPERATIONS_NAV_LINKS");
-    expect(bar).toContain("adminShellNavLinkMatch");
+  it("AdminShellBar maps slim ADMIN_SHELL_SIDEBAR_GROUPS only", () => {
+    expect(bar).toContain("ADMIN_SHELL_SIDEBAR_GROUPS");
+    expect(bar).not.toContain("ADMIN_SHELL_FINANCE_NAV_LINKS");
+    expect(bar).not.toContain("ADMIN_SHELL_GOVERNANCE_NAV_LINKS");
+    expect(bar).not.toContain("ADMIN_SHELL_COMMUNITY_NAV_LINKS");
+    expect(bar).not.toContain("ADMIN_SHELL_OPERATIONS_NAV_LINKS");
   });
 });
