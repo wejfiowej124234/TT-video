@@ -1,0 +1,60 @@
+{
+  "schema": "traveltrust.v65_prod_003_b3_r006_reality_audit.v1",
+  "machine_key": "TT_V65_PROD_003_B3_R006_REALITY_AUDIT",
+  "stamp": "20260804T084343Z",
+  "phase": "①_LOCAL_CODE_SSOT_AUDIT_AND_PATCH",
+  "tt_production_go": "NO_GO",
+  "failed_live_tip": "56220d781d1d5b82f7cf8a1d83c493659e7a4ce3",
+  "owner_uat_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z",
+  "layer_separation": {
+    "cms_cos": "display / ops content only — MUST NOT drive review status, approve/reject, RBAC",
+    "application_review": "business DB (role_applications + guides / provider RA detail)",
+    "roles_permissions": "users.role + DB RBAC — not CMS"
+  },
+  "hypotheses": [
+    {
+      "id": "CASE_1_CMS_LIST_VS_DB_DETAIL",
+      "verdict": "RULED_OUT",
+      "evidence": "Admin Guide/Provider list + detail handlers are chain_off → Postgres (role_applications / guides / provider admin detail). No CMS/COS read path on decide surfaces."
+    },
+    {
+      "id": "CASE_2_DUAL_STORE_DUAL_STATUS",
+      "verdict": "PROVEN_PRIMARY_ROOT_CAUSE",
+      "provider": {
+        "symptom": "list ?status=submitted → detail 已通过; decideButtons=[]",
+        "root_cause": "get_provider_application_for_user_impl preferred users.role==provider synthetic approved over role_applications row still submitted",
+        "fix_files": ["crates/api/src/chain_off/provider_application.rs"],
+        "fix_rule": "Admin detail always prefers get_provider_application_admin_detail when RA exists; synthetic approved only when RA is None AND role==provider"
+      },
+      "guide": {
+        "symptom": "list ?status=submitted|pending → detail empty; decideButtons=[]",
+        "root_cause": "list = RA kind=guide (+ optional guides join); detail/review required guides row via select_latest_guide_for_user — orphan RA → application=null",
+        "fix_files": ["crates/api/src/db/role_identity/mod.rs", "crates/api/src/chain_off/guide_profile.rs"],
+        "fix_rule": "resolve_guide_row_for_admin → orphan RA detail via get_guide_orphan_ra_admin_detail_json (display_status_for_admin → pending for FE pendingLike) → ensure_guide_row_for_admin_review before decide"
+      }
+    },
+    {
+      "id": "CASE_3_CMS_DRIVES_REVIEW_STATUS",
+      "verdict": "RULED_OUT",
+      "evidence": "CMS/COS may hold demo/ops content; approve/reject/audit path is DB-only. Keep CMS out of decide loop."
+    }
+  ],
+  "ssot_chains_target": {
+    "guide": "Guide Apply → role_applications(+guides) → API → Admin List → Admin Detail → Approve/Reject → Audit Log",
+    "provider": "Provider Application → role_applications → Review Status → Decision Action → Audit"
+  },
+  "code_patch_status": "CODE_PATCHED_PENDING_DEPLOY",
+  "honesty": {
+    "patch_not_live": true,
+    "failed_tip_not_pass": true,
+    "no_fake_owner_validated": true,
+    "no_fake_frozen": true,
+    "tt_production_go": "NO_GO"
+  },
+  "next_required": [
+    "Owner commit of three API fix files (when asked)",
+    "New product tip (do not claim PASS on 56220d78)",
+    "Single Cut → PRV-3b re-UAT REVIEW_CLOSED_LOOP",
+    "Only then Freeze / Runtime Truth SSOT / FTB / GO Review"
+  ]
+}

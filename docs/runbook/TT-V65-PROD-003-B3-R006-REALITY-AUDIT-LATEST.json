@@ -1,0 +1,17 @@
+{
+  "schema": "traveltrust.v65_prod_003_b3_r006_reality_audit_latest.v1",
+  "machine_key": "TT_V65_PROD_003_B3_R006_REALITY_AUDIT",
+  "stamp": "20260804T084343Z",
+  "tt_production_go": "NO_GO",
+  "verdict": "CASE_2_DUAL_STORE_PROVEN",
+  "cms_cos_drives_review": false,
+  "code_patch_status": "CODE_PATCHED_PENDING_DEPLOY",
+  "failed_live_tip": "56220d781d1d5b82f7cf8a1d83c493659e7a4ce3",
+  "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_b3_r006_reality_audit/20260804T084343Z",
+  "fix_paths": [
+    "crates/api/src/chain_off/provider_application.rs",
+    "crates/api/src/chain_off/guide_profile.rs",
+    "crates/api/src/db/role_identity/mod.rs"
+  ],
+  "next": "Owner commit → new tip → Single Cut → PRV-3b re-UAT; keep NO_GO until all-PASS"
+}

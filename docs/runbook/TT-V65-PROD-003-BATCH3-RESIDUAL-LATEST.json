@@ -1,0 +1,168 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_residual_latest.v1",
+  "machine_key": "TT_V65_PROD_003_BATCH3_RESIDUAL",
+  "stamp": "20260804T084343Z",
+  "phase": "B3_R006_REALITY_AUDIT_CODE_PATCHED_PENDING_DEPLOY",
+  "tt_production_go": "NO_GO",
+  "tip": "56220d781d1d5b82f7cf8a1d83c493659e7a4ce3",
+  "reality_audit_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_b3_r006_reality_audit/20260804T084343Z",
+  "reality_audit_runbook": "docs/runbook/TT-V65-PROD-003-B3-R006-REALITY-AUDIT-LATEST.json",
+  "pre_cut_tip": "31ce39490a35c3038928c0d42bcd8de909388512",
+  "hosts": {
+    "api": "https://api.web3-ttg.com",
+    "web": "https://www.web3-ttg.com"
+  },
+  "residuals": [
+    {
+      "id": "V65-PROD-003-B3-R001",
+      "title": "Runtime Truth hosts face drifted to fly.dev after Alignment PASS",
+      "severity": "P1",
+      "status": "FIXED_IN_SESSION",
+      "fix": "Re-ran Final Truth Alignment with PROD_*=web3-ttg.com",
+      "evidence": "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json hosts=api/www.web3-ttg.com"
+    },
+    {
+      "id": "V65-PROD-003-B3-R002",
+      "title": "Candidate Freeze NOT_FROZEN — CF-05 Release Integrity FAIL",
+      "severity": "P1",
+      "status": "OPEN",
+      "fix": "Clear RI before Freeze Finalization; blocked until UAT all-PASS + RI PASS",
+      "evidence": "docs/runbook/TT-V65-PRODUCTION-CANDIDATE-FREEZE-PIN-LATEST.json freeze_status=NOT_FROZEN"
+    },
+    {
+      "id": "V65-PROD-003-B3-R003",
+      "title": "PRV-3b Admin UAT after Single Cut — FAIL blocker R006",
+      "severity": "P0",
+      "status": "DEPLOYED_REUAT_FAIL",
+      "fix": "Single Cut tip 56220d78 live; re-UAT FAIL REVIEW_CLOSED_LOOP; do not fake OWNER_VALIDATED",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z",
+      "browser_tab": "110619"
+    },
+    {
+      "id": "V65-PROD-003-B3-R004",
+      "title": "Stale Admin Logged-in UAT SSOT pre-tip pins",
+      "severity": "P1",
+      "status": "SUPERSEDED_POINTER_UPDATED",
+      "fix": "LATEST rewritten to post-cut tip + FAIL this stamp",
+      "evidence": "docs/runbook/TT-V65-ADMIN-LOGGED-IN-OPERATIONAL-UAT-LATEST.json"
+    },
+    {
+      "id": "V65-PROD-003-B3-R005",
+      "title": "Users page KYC filter copy residual (G057/G076)",
+      "severity": "P0",
+      "status": "DEPLOYED_REUAT_PASS",
+      "fix": "Live /admin/users: no KYC; subtitle 按角色筛选用户…",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
+      "checklist": "KYC_DELETE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R006",
+      "title": "Provider/Guide list/detail status SSOT drift — closed-loop FAIL",
+      "severity": "P0",
+      "status": "CODE_PATCHED_PENDING_DEPLOY",
+      "fix": "Reality Audit Case 2 proven (dual store/status); CMS Case 1/3 ruled out. Local SSOT patch: provider RA-first detail; guide orphan RA detail + ensure guides before review. Patch ≠ live PASS; failed tip 56220d78 must not be promoted.",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_b3_r006_reality_audit/20260804T084343Z/REALITY-AUDIT.json",
+      "owner_uat_fail_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
+      "checklist": "REVIEW_CLOSED_LOOP",
+      "fix_paths": [
+        "crates/api/src/chain_off/provider_application.rs",
+        "crates/api/src/chain_off/guide_profile.rs",
+        "crates/api/src/db/role_identity/mod.rs"
+      ],
+      "next": "Owner commit → new tip → Single Cut → PRV-3b re-UAT"
+    },
+    {
+      "id": "V65-PROD-003-B3-R007",
+      "title": "Disputes list/detail integrity",
+      "severity": "P0",
+      "status": "DEPLOYED_REUAT_PASS",
+      "fix": "Live dispute detail opens; not-found cleared on scored sample",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
+      "checklist": "DISPUTES"
+    },
+    {
+      "id": "V65-PROD-003-B3-R008",
+      "title": "Disputes list template vars {refund}/{slash}",
+      "severity": "P1",
+      "status": "DEPLOYED_REUAT_PASS",
+      "fix": "Live disputes list: no uninterpolated {refund}/{slash}",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
+      "checklist": "DISPUTES"
+    },
+    {
+      "id": "V65-PROD-003-B3-R009",
+      "title": "Finance suite/reconciliation/summary i18n raw keys",
+      "severity": "P1",
+      "status": "DEPLOYED_REUAT_PASS",
+      "fix": "Live /admin/finance + finance-suite PASS on re-UAT",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
+      "checklist": "FINANCE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R010",
+      "title": "Approvals pending label residual acrp_seed",
+      "severity": "P2",
+      "status": "OPEN",
+      "fix": "Humanize seed approval action labels or hide seed markers in prod UI",
+      "evidence": "/admin/approvals?status=pending acrp_seed",
+      "checklist": "APPROVALS"
+    },
+    {
+      "id": "V65-PROD-003-B3-R011",
+      "title": "Config hub i18n residual admin_config_hub_desc_audit",
+      "severity": "P2",
+      "status": "DEPLOYED_REUAT_PASS",
+      "fix": "Live /admin/config: hasAuditKeyLeak=false; rawKeys=[]",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
+      "checklist": "CONFIG_CENTER"
+    },
+    {
+      "id": "V65-PROD-003-B3-R012",
+      "title": "Shell-wide brand wordmark i18n key leak (UI/UX L5)",
+      "severity": "P1",
+      "status": "DEPLOYED_REUAT_PASS",
+      "fix": "Live Admin shell shows TravelTrust on scored critical paths",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
+      "checklist": "UI_UX_L5"
+    },
+    {
+      "id": "V65-PROD-003-B3-R013",
+      "title": "Onboarding hub LEGACY 准入费 copy (Expected Difference)",
+      "severity": "P2",
+      "status": "CONFIRM_DESIGN",
+      "fix": "Owner accept intentional LEGACY + historical snapshots, or hard zero-mention",
+      "evidence": "/admin/onboarding",
+      "checklist": "KYC_DELETE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R014",
+      "title": "Vacancy ledger Admin ops HTTP 404 + ops_plane_hint raw key",
+      "severity": "P0",
+      "status": "DEPLOYED_REUAT_PASS",
+      "fix": "Live /admin/vacancy-ledger: no 404; rawKeys=[]; brand TravelTrust",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
+      "checklist": "FINANCE"
+    }
+  ],
+  "summary": {
+    "open_or_in_progress_or_reuat_fail": 3,
+    "deployed_reuat_pass": 7,
+    "deployed_reuat_fail": 1,
+    "fixed_superseded_or_confirm_design": 3,
+    "code_patched_pending_deploy": 1,
+    "total": 14,
+    "p0_blocker": "V65-PROD-003-B3-R006",
+    "p0_blocker_note": "R006 CODE_PATCHED_PENDING_DEPLOY — blocks Freeze until new tip + Single Cut + re-UAT PASS; R003 remains DEPLOYED_REUAT_FAIL until that re-UAT"
+  },
+  "honesty": {
+    "alignment_pass_is_not_go": true,
+    "freeze_not_frozen": true,
+    "prv3b_not_owner_validated": true,
+    "single_cut_complete_is_not_uat_pass": true,
+    "uat_fail_blocks_freeze_ladder": true,
+    "code_patch_is_not_live_pass": true,
+    "ssot_refresh_deferred_until_all_pass": true
+  },
+  "owner_uat_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z",
+  "single_cut_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_single_cut/20260804T064334Z"
+}

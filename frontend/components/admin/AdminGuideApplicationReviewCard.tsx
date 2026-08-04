@@ -8,6 +8,7 @@ import {
   type GuideApplicationReviewStatus,
 } from "@/lib/apiClient/adminGuideApplication";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { formatAdminOnboardingApplicationStatus } from "@/lib/admin/adminOnboardingApplicationStatusLabel";
 import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
 import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
 import { AdminAuthDocPreviewLink } from "@/components/admin/AdminAuthDocPreviewLink";
@@ -49,7 +50,18 @@ function applicationFromResponse(body: unknown): GuideApplicationPayload | null 
   return app as GuideApplicationPayload;
 }
 
-export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) {
+type GuideReviewSurface = "embed" | "page";
+
+type GuideReviewCardProps = {
+  userId: string;
+  /** `embed` = user detail (HU-364 silent when none); `page` = dedicated guide-app route (always show empty/error). */
+  surface?: GuideReviewSurface;
+};
+
+export function AdminGuideApplicationReviewCard({
+  userId,
+  surface = "embed",
+}: GuideReviewCardProps) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -108,8 +120,27 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
 
   if (!userId) return null;
 
-  // HU-364 · 无申请时不占用户详情三卡堆叠
-  if (!loading && !error && !app?.status) return null;
+  // HU-364 · embed: 无申请时不占用户详情三卡堆叠
+  // V65-PROD-003-G018 · page: 禁止 silent null（专用详情须诚实空态）
+  if (!loading && !error && !app?.status) {
+    if (surface === "embed") return null;
+    return (
+      <AdminDetailContentPanel
+        as="section"
+        aria-label={t("admin_guide_app_sectionAria")}
+        data-testid="admin-guide-application-review"
+        data-tt-admin-onboarding-review-card="guide"
+        data-tt-admin-guide-app-empty="1"
+      >
+        <h2 className={`text-small font-semibold uppercase tracking-wide ${ADMIN_TEXT_MUTED_CLASS}`}>
+          {t("admin_guide_app_title")}
+        </h2>
+        <p className="mt-3 text-body text-ink-600" role="status">
+          {t("admin_guide_app_none")}
+        </p>
+      </AdminDetailContentPanel>
+    );
+  }
 
   const docLinks = [
     ["admin_guide_app_docIdPhoto", app?.id_photo_url],
@@ -143,8 +174,8 @@ export function AdminGuideApplicationReviewCard({ userId }: { userId: string }) 
         <div className="mt-3 space-y-3 text-body">
           <p>
             <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_guide_app_status")}: </span>
-            <span className="font-mono text-meta">
-              {app?.status === "needs_more_info" ? t("admin_guide_app_status_needs_more_info") : app?.status}
+            <span className="font-mono text-meta" data-tt-admin-onboarding-status={app?.status ?? ""}>
+              {formatAdminOnboardingApplicationStatus(app?.status, t)}
             </span>
           </p>
           {app.submitted_at ? (

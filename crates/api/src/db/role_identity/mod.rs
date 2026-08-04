@@ -14,17 +14,18 @@ fn log_dual_write_err(context: &str, err: &sqlx::Error) {
     eprintln!("[role_identity_dual_write] {context} error={err}");
 }
 
+/// Map `guides.status` → `role_applications.status` (status-first).
+/// B3-R006: `needs_more_info` / pending-with-codes must NOT force `rejected`.
 pub fn map_guides_status_to_application(
     guides_status: &str,
-    rejection_codes: &[String],
-    rejection_message: Option<&str>,
+    _rejection_codes: &[String],
+    _rejection_message: Option<&str>,
 ) -> &'static str {
-    if !rejection_codes.is_empty() || rejection_message.is_some_and(|m| !m.trim().is_empty()) {
-        return "rejected";
-    };
-    match guides_status {
+    match guides_status.trim() {
         "active" => "approved",
         "suspended" => "suspended",
+        "rejected" => "rejected",
+        "needs_more_info" | "pending_review" => "reviewing",
         "pending" => "submitted",
         _ => "submitted",
     }
@@ -142,10 +143,10 @@ async fn upsert_application(
         return Ok(app_id);
     }
 
-    // Steward/provider：同一用户同一 kind 仅保留一条（重启后新 application_id 仍须命中旧行）
+    // Steward/provider/guide：同一用户同一 kind 仅保留一条（orphan RA 补链 guides_id 仍须命中旧行）
     if matches!(
         kind,
-        "region_steward_onboarding" | "provider_onboarding"
+        "region_steward_onboarding" | "provider_onboarding" | "guide"
     ) {
         if let Some(app_id) = sqlx::query_scalar::<_, Uuid>(
             r#"
@@ -263,7 +264,6 @@ async fn replace_guide_documents(
         .execute(pool)
         .await?;
     }
-;
     Ok(())
 }
 
@@ -632,7 +632,6 @@ async fn replace_provider_documents(
         )
         .await?;
     }
-;
     for (_name, id_number, url) in docs.beneficial_owners {
         if url.trim().is_empty() {
             continue;
@@ -651,7 +650,6 @@ async fn replace_provider_documents(
         .execute(pool)
         .await?;
     }
-;
     Ok(())
 }
 
@@ -900,6 +898,42 @@ mod tests {
     use super::*;
 
     #[test]
+    fn map_application_submitted_to_guides_pending() {
+        assert_eq!(
+            map_application_status_to_guides("submitted", None),
+            "pending"
+        );
+        assert_eq!(
+            map_application_status_to_guides("draft", None),
+            "pending"
+        );
+        assert_eq!(
+            map_application_status_to_guides("reviewing", None),
+            "pending_review"
+        );
+        assert_eq!(
+            map_application_status_to_guides("approved", None),
+            "active"
+        );
+        assert_eq!(
+            map_application_status_to_guides("rejected", None),
+            "rejected"
+        );
+    }
+
+    #[test]
+    fn map_application_lifecycle_overrides_pg_status() {
+        assert_eq!(
+            map_application_status_to_guides("submitted", Some("needs_more_info")),
+            "needs_more_info"
+        );
+        assert_eq!(
+            map_application_status_to_guides("submitted", Some("pending_review")),
+            "pending_review"
+        );
+    }
+
+    #[test]
     fn map_guides_pending_to_submitted() {
         assert_eq!(
             map_guides_status_to_application("pending", &[], None),
@@ -908,9 +942,25 @@ mod tests {
     }
 
     #[test]
-    fn map_guides_rejection_overrides_status() {
+    fn map_guides_pending_with_codes_stays_submitted() {
         assert_eq!(
             map_guides_status_to_application("pending", &["KYC".to_string()], None),
+            "submitted"
+        );
+    }
+
+    #[test]
+    fn map_guides_needs_more_info_to_reviewing() {
+        assert_eq!(
+            map_guides_status_to_application("needs_more_info", &["KYC".to_string()], None),
+            "reviewing"
+        );
+    }
+
+    #[test]
+    fn map_guides_rejected_stays_rejected() {
+        assert_eq!(
+            map_guides_status_to_application("rejected", &["KYC".to_string()], None),
             "rejected"
         );
     }
@@ -1091,6 +1141,7 @@ fn admin_filter_matches_pg_row(
     filter: &str,
     pg_status: &str,
     lifecycle_state: Option<&str>,
+    guide_status: Option<&str>,
 ) -> bool {
     let f = filter.trim().to_ascii_lowercase();
     if f.is_empty() {
@@ -1099,18 +1150,39 @@ fn admin_filter_matches_pg_row(
     let pg = pg_status.trim().to_ascii_lowercase();
     let life = lifecycle_state.map(|s| s.trim().to_ascii_lowercase());
     match kind {
-        "guide" => match f.as_str() {
-            "pending" | "pending_review" => {
-                matches!(pg.as_str(), "submitted" | "reviewing" | "draft")
+        // B3-R006 · filter on the same display status the list card shows (guides.status when joined).
+        "guide" => {
+            let display = guide_status
+                .map(str::trim)
+                .filter(|s| !s.is_empty())
+                .map(|s| s.to_ascii_lowercase())
+                .unwrap_or_else(|| {
+                    display_status_for_admin(kind, pg_status, lifecycle_state).to_ascii_lowercase()
+                });
+            match f.as_str() {
+                "pending" | "pending_review" => {
+                    matches!(
+                        display.as_str(),
+                        "pending" | "pending_review" | "reviewing" | "needs_more_info"
+                    ) || matches!(pg.as_str(), "submitted" | "reviewing" | "draft")
+                }
+                "submitted" => {
+                    display == "pending"
+                        || display == "submitted"
+                        || pg == "submitted"
+                }
+                "active" | "approved" => display == "active" || pg == "approved",
+                "rejected" => display == "rejected" || pg == "rejected",
+                "suspended" => display == "suspended" || pg == "suspended",
+                "reviewing" => {
+                    display == "reviewing"
+                        || display == "needs_more_info"
+                        || pg == "reviewing"
+                }
+                "needs_more_info" => display == "needs_more_info",
+                _ => display == f || pg == f || life.as_deref() == Some(f.as_str()),
             }
-            "active" => pg == "approved",
-            "rejected" => pg == "rejected",
-            "suspended" => pg == "suspended",
-            "submitted" => pg == "submitted",
-            "reviewing" => pg == "reviewing",
-            "approved" => pg == "approved",
-            _ => pg == f || life.as_deref() == Some(f.as_str()),
-        },
+        }
         // B3-R006 · filter on the same display status the list card shows (not stale lifecycle).
         "provider_onboarding" => {
             display_status_for_admin(kind, pg_status, lifecycle_state).eq_ignore_ascii_case(&f)
@@ -1191,10 +1263,25 @@ fn application_id_from_legacy(kind: &str, legacy_ref: &serde_json::Value, fallba
         .unwrap_or_else(|| fallback.to_string())
 }
 
-fn is_pending_like(kind: &str, pg_status: &str, lifecycle_state: Option<&str>) -> bool {
+fn is_pending_like(
+    kind: &str,
+    pg_status: &str,
+    lifecycle_state: Option<&str>,
+    guide_status: Option<&str>,
+) -> bool {
     let pg = pg_status.trim().to_ascii_lowercase();
     match kind {
-        "guide" | "provider_onboarding" => matches!(pg.as_str(), "submitted" | "reviewing" | "draft"),
+        "guide" => {
+            if let Some(gs) = guide_status.map(str::trim).filter(|s| !s.is_empty()) {
+                let g = gs.to_ascii_lowercase();
+                return matches!(
+                    g.as_str(),
+                    "pending" | "pending_review" | "reviewing" | "needs_more_info"
+                );
+            }
+            matches!(pg.as_str(), "submitted" | "reviewing" | "draft")
+        }
+        "provider_onboarding" => matches!(pg.as_str(), "submitted" | "reviewing" | "draft"),
         "region_steward_onboarding" => {
             let life = lifecycle_state.map(|s| s.trim().to_ascii_lowercase());
             if matches!(
@@ -1345,11 +1432,22 @@ pub async fn list_role_applications_admin(
             .get("lifecycle_state")
             .and_then(|v| v.as_str())
             .map(str::to_string);
-        if is_pending_like(kind, &row.status, lifecycle.as_deref()) {
+        if is_pending_like(
+            kind,
+            &row.status,
+            lifecycle.as_deref(),
+            row.guide_status.as_deref(),
+        ) {
             pending_count += 1;
         }
         if let Some(ref f) = filter {
-            if !admin_filter_matches_pg_row(kind, f, &row.status, lifecycle.as_deref()) {
+            if !admin_filter_matches_pg_row(
+                kind,
+                f,
+                &row.status,
+                lifecycle.as_deref(),
+                row.guide_status.as_deref(),
+            ) {
                 continue;
             }
         }
@@ -1703,4 +1801,432 @@ pub async fn update_provider_application_review_pg(
         return Ok(None);
     }
     Ok(Some((ra_id, legacy_app_id)))
+}
+
+/// B3-R006 · Map `role_applications.status` (+ optional lifecycle) → `guides.status`
+/// when materializing an orphan RA into a guides row for Admin decide.
+pub fn map_application_status_to_guides(
+    app_status: &str,
+    lifecycle_state: Option<&str>,
+) -> &'static str {
+    if let Some(life) = lifecycle_state.map(str::trim).filter(|s| !s.is_empty()) {
+        match life.to_ascii_lowercase().as_str() {
+            "needs_more_info" => return "needs_more_info",
+            "pending_review" | "reviewing" => return "pending_review",
+            "approved" | "active" => return "active",
+            "rejected" => return "rejected",
+            "suspended" => return "suspended",
+            _ => {}
+        }
+    }
+    match app_status.trim().to_ascii_lowercase().as_str() {
+        "approved" => "active",
+        "rejected" => "rejected",
+        "suspended" => "suspended",
+        "reviewing" => "pending_review",
+        "submitted" | "draft" => "pending",
+        other if other == "pending" || other == "pending_review" || other == "needs_more_info" => {
+            // Already guides-shaped (should be rare on RA.pg_status).
+            match other {
+                "pending_review" => "pending_review",
+                "needs_more_info" => "needs_more_info",
+                _ => "pending",
+            }
+        }
+        _ => "pending",
+    }
+}
+
+/// B3-R006 · Prefer `legacy_ref.guides_id` from latest kind=`guide` RA, else latest guides row.
+pub async fn resolve_guide_row_for_admin(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Option<super::guides::GuideRow>, sqlx::Error> {
+    let ra = sqlx::query_as::<_, (Uuid, Json<serde_json::Value>)>(
+        r#"
+        SELECT id, legacy_ref
+        FROM role_applications
+        WHERE user_id = $1 AND kind = 'guide'
+        ORDER BY updated_at DESC
+        LIMIT 1
+        "#,
+    )
+    .bind(user_id)
+    .fetch_optional(pool)
+    .await?;
+
+    if let Some((_ra_id, legacy_ref)) = ra {
+        if let Some(gid_str) = legacy_ref
+            .0
+            .get("guides_id")
+            .and_then(|v| v.as_str())
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+        {
+            if let Ok(gid) = Uuid::parse_str(gid_str) {
+                if let Some(g) = super::guides::select_guide_by_id(pool, gid).await? {
+                    return Ok(Some(g));
+                }
+            }
+        }
+    }
+    super::guides::select_latest_guide_for_user(pool, user_id).await
+}
+
+/// B3-R006 · Admin detail when RA exists but no `guides` row (orphan) — never return null application.
+/// Returns `None` when there is no kind=`guide` RA (caller may then return empty application).
+pub async fn get_guide_orphan_ra_admin_detail_json(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Option<serde_json::Value>, sqlx::Error> {
+    let row = sqlx::query_as::<
+        _,
+        (
+            Uuid,
+            String,
+            Json<serde_json::Value>,
+            Option<DateTime<Utc>>,
+            Json<serde_json::Value>,
+            Option<String>,
+            Json<serde_json::Value>,
+            DateTime<Utc>,
+            DateTime<Utc>,
+        ),
+    >(
+        r#"
+        SELECT id, status, legacy_ref, submitted_at, rejection_codes, rejection_message,
+               metadata, created_at, updated_at
+        FROM role_applications
+        WHERE user_id = $1 AND kind = 'guide'
+        ORDER BY updated_at DESC
+        LIMIT 1
+        "#,
+    )
+    .bind(user_id)
+    .fetch_optional(pool)
+    .await?;
+
+    let Some((
+        ra_id,
+        status,
+        legacy_ref,
+        submitted_at,
+        rejection_codes,
+        rejection_message,
+        metadata,
+        created_at,
+        updated_at,
+    )) = row
+    else {
+        return Ok(None);
+    };
+
+    // If guides_id points at a live row, caller should use resolve path — not orphan.
+    if let Some(gid_str) = legacy_ref
+        .0
+        .get("guides_id")
+        .and_then(|v| v.as_str())
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+    {
+        if let Ok(gid) = Uuid::parse_str(gid_str) {
+            if super::guides::select_guide_by_id(pool, gid)
+                .await?
+                .is_some()
+            {
+                return Ok(None);
+            }
+        }
+    }
+
+    let meta = metadata.0;
+    let lifecycle = meta
+        .get("lifecycle_state")
+        .and_then(|v| v.as_str())
+        .map(str::to_string);
+    let display_status = display_status_for_admin("guide", &status, lifecycle.as_deref());
+    let app_id_str = application_id_from_legacy("guide", &legacy_ref.0, ra_id);
+    // Prefer Uuid for `application.id` when possible (FE / audit compatibility).
+    let app_id = Uuid::parse_str(&app_id_str).unwrap_or(ra_id);
+
+    let payload = meta
+        .get("payload")
+        .cloned()
+        .unwrap_or_else(|| json!({}));
+    let payload_obj = payload.as_object();
+
+    let str_field = |key: &str| -> Option<String> {
+        payload_obj
+            .and_then(|o| o.get(key))
+            .and_then(|v| v.as_str())
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .map(str::to_string)
+            .or_else(|| {
+                meta.get(key)
+                    .and_then(|v| v.as_str())
+                    .map(str::trim)
+                    .filter(|s| !s.is_empty())
+                    .map(str::to_string)
+            })
+    };
+
+    let city = str_field("city").unwrap_or_default();
+    let country_code = str_field("country_code").unwrap_or_default();
+    let languages = payload_obj
+        .and_then(|o| o.get("languages"))
+        .cloned()
+        .or_else(|| meta.get("languages").cloned())
+        .unwrap_or_else(|| json!([]));
+    let service_types = payload_obj
+        .and_then(|o| o.get("service_types"))
+        .cloned()
+        .or_else(|| meta.get("service_types").cloned())
+        .unwrap_or_else(|| json!([]));
+
+    let docs = sqlx::query_as::<_, (String, String, Option<String>)>(
+        r#"
+        SELECT doc_type, storage_url, content_hash
+        FROM role_documents
+        WHERE application_id = $1
+        ORDER BY created_at ASC
+        "#,
+    )
+    .bind(ra_id)
+    .fetch_all(pool)
+    .await
+    .unwrap_or_default();
+
+    let mut id_photo_url: Option<String> = str_field("id_photo_url");
+    let mut language_cert_url: Option<String> = str_field("language_cert_url");
+    let mut guide_license_url: Option<String> = str_field("guide_license_url");
+    let mut passport_hash_present = str_field("passport_number_hash").is_some()
+        || meta
+            .get("passport_number_hash")
+            .and_then(|v| v.as_str())
+            .map(|s| !s.trim().is_empty())
+            .unwrap_or(false);
+
+    for (doc_type, url, content_hash) in docs {
+        let u = url.trim();
+        if u.is_empty() {
+            continue;
+        }
+        match doc_type.as_str() {
+            "id_photo" => id_photo_url = Some(u.to_string()),
+            "language_cert" => language_cert_url = Some(u.to_string()),
+            "guide_license" => guide_license_url = Some(u.to_string()),
+            "passport_hash" => {
+                passport_hash_present = true;
+                let _ = content_hash;
+            }
+            _ => {}
+        }
+    }
+
+    let submitted_at_s = submitted_at
+        .unwrap_or(created_at)
+        .to_rfc3339();
+    let updated_at_s = updated_at.to_rfc3339();
+
+    Ok(Some(json!({
+        "status": "ok",
+        "application": {
+            "id": app_id,
+            "status": display_status,
+            "city": city,
+            "country_code": country_code,
+            "languages": languages,
+            "service_types": service_types,
+            "bio": str_field("bio"),
+            "wallet_address": str_field("wallet_address"),
+            "real_name": str_field("real_name"),
+            "id_photo_url": id_photo_url,
+            "language_cert_url": language_cert_url,
+            "guide_license_url": guide_license_url,
+            "hourly_rate": str_field("hourly_rate"),
+            "avatar_url": str_field("avatar_url"),
+            "submitted_at": submitted_at_s,
+            "updated_at": updated_at_s,
+            "rejection_codes": rejection_codes.0,
+            "rejection_message": rejection_message,
+            "passport_hash_present": passport_hash_present,
+            "role_application_id": ra_id.to_string(),
+            "pg_status": status,
+        },
+        "meta": {
+            "implementation_status": "guide_application_admin_detail",
+            "source": "postgres_role_applications",
+            "ssot_note": "B3-R006 orphan RA detail (no guides row yet)",
+        }
+    })))
+}
+
+/// B3-R006 · Resolve guides row for Admin review; if only orphan RA exists, materialize a guides row
+/// (dual-write links via user+kind upsert) so approve/reject can proceed on business DB SSOT.
+pub async fn ensure_guide_row_for_admin_review(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Option<super::guides::GuideRow>, sqlx::Error> {
+    if let Some(g) = resolve_guide_row_for_admin(pool, user_id).await? {
+        return Ok(Some(g));
+    }
+
+    let row = sqlx::query_as::<
+        _,
+        (
+            Uuid,
+            String,
+            Json<serde_json::Value>,
+            Option<DateTime<Utc>>,
+            Json<serde_json::Value>,
+            Option<String>,
+            Json<serde_json::Value>,
+            DateTime<Utc>,
+            DateTime<Utc>,
+        ),
+    >(
+        r#"
+        SELECT id, status, legacy_ref, submitted_at, rejection_codes, rejection_message,
+               metadata, created_at, updated_at
+        FROM role_applications
+        WHERE user_id = $1 AND kind = 'guide'
+        ORDER BY updated_at DESC
+        LIMIT 1
+        "#,
+    )
+    .bind(user_id)
+    .fetch_optional(pool)
+    .await?;
+
+    let Some((
+        ra_id,
+        status,
+        _legacy_ref,
+        _submitted_at,
+        _rejection_codes,
+        _rejection_message,
+        metadata,
+        created_at,
+        updated_at,
+    )) = row
+    else {
+        return Ok(None);
+    };
+
+    let meta = metadata.0;
+    let lifecycle = meta
+        .get("lifecycle_state")
+        .and_then(|v| v.as_str());
+    let guides_status = map_application_status_to_guides(&status, lifecycle);
+
+    let payload = meta
+        .get("payload")
+        .cloned()
+        .unwrap_or_else(|| json!({}));
+    let payload_obj = payload.as_object();
+
+    let str_field = |key: &str| -> Option<String> {
+        payload_obj
+            .and_then(|o| o.get(key))
+            .and_then(|v| v.as_str())
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .map(str::to_string)
+            .or_else(|| {
+                meta.get(key)
+                    .and_then(|v| v.as_str())
+                    .map(str::trim)
+                    .filter(|s| !s.is_empty())
+                    .map(str::to_string)
+            })
+    };
+
+    let city = str_field("city").unwrap_or_else(|| "".to_string());
+    let country_code = str_field("country_code").unwrap_or_else(|| "".to_string());
+    let languages: Vec<String> = payload_obj
+        .and_then(|o| o.get("languages"))
+        .or_else(|| meta.get("languages"))
+        .and_then(|v| serde_json::from_value(v.clone()).ok())
+        .unwrap_or_default();
+    let service_types: Vec<String> = payload_obj
+        .and_then(|o| o.get("service_types"))
+        .or_else(|| meta.get("service_types"))
+        .and_then(|v| serde_json::from_value(v.clone()).ok())
+        .unwrap_or_default();
+
+    let docs = sqlx::query_as::<_, (String, String, Option<String>)>(
+        r#"
+        SELECT doc_type, storage_url, content_hash
+        FROM role_documents
+        WHERE application_id = $1
+        ORDER BY created_at ASC
+        "#,
+    )
+    .bind(ra_id)
+    .fetch_all(pool)
+    .await
+    .unwrap_or_default();
+
+    let mut id_photo_url = str_field("id_photo_url");
+    let mut language_cert_url = str_field("language_cert_url");
+    let mut guide_license_url = str_field("guide_license_url");
+    let mut passport_number_hash = str_field("passport_number_hash");
+
+    for (doc_type, url, content_hash) in docs {
+        let u = url.trim();
+        if u.is_empty() && content_hash.as_deref().unwrap_or("").is_empty() {
+            continue;
+        }
+        match doc_type.as_str() {
+            "id_photo" if !u.is_empty() => id_photo_url = Some(u.to_string()),
+            "language_cert" if !u.is_empty() => language_cert_url = Some(u.to_string()),
+            "guide_license" if !u.is_empty() => guide_license_url = Some(u.to_string()),
+            "passport_hash" => {
+                if let Some(h) = content_hash.filter(|s| !s.trim().is_empty()) {
+                    passport_number_hash = Some(h);
+                }
+            }
+            _ => {}
+        }
+    }
+
+    let stake_amount = str_field("stake_amount").unwrap_or_else(|| "0".to_string());
+    let bio = str_field("bio");
+    let wallet_address = str_field("wallet_address");
+    let real_name = str_field("real_name");
+    let hourly_rate = str_field("hourly_rate");
+    let avatar_url = str_field("avatar_url");
+    let guide_id = Uuid::new_v4();
+    let now = updated_at;
+
+    super::guides::insert_guide(
+        pool,
+        guide_id,
+        user_id,
+        &city,
+        &country_code,
+        &languages,
+        &service_types,
+        bio.as_deref(),
+        wallet_address.as_deref(),
+        real_name.as_deref(),
+        passport_number_hash.as_deref(),
+        id_photo_url.as_deref(),
+        language_cert_url.as_deref(),
+        guide_license_url.as_deref(),
+        &stake_amount,
+        hourly_rate.as_deref(),
+        avatar_url.as_deref(),
+        guides_status,
+        created_at,
+        now,
+    )
+    .await?;
+
+    // Prefer the newly linked row (legacy_ref.guides_id set by dual_write upsert).
+    if let Some(g) = resolve_guide_row_for_admin(pool, user_id).await? {
+        return Ok(Some(g));
+    }
+    super::guides::select_guide_by_id(pool, guide_id).await
 }

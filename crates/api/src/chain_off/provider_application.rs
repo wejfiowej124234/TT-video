@@ -165,20 +165,9 @@ pub async fn get_provider_application_for_user_impl(
         .await
         .unwrap_or_else(|_| "traveler".to_string());
 
-        if user_role == "provider" {
-            return Ok(Json(json!({
-                "status": "ok",
-                "application": {
-                    "status": "approved",
-                    "user_role": "provider"
-                },
-                "meta": {
-                    "implementation_status": "provider_application_role_active",
-                    "source": "postgres"
-                }
-            })));
-        }
-
+        // B3-R006 · Admin detail SSOT is always `role_applications` when a row exists.
+        // `users.role == provider` must NOT invent `approved` while RA is still submitted
+        // (that hid decide buttons). Synthetic approved only when RA is absent.
         match crate::db::get_provider_application_admin_detail(pool, target_user_id).await {
             Ok(Some(application)) => {
                 return Ok(Json(json!({
@@ -186,6 +175,19 @@ pub async fn get_provider_application_for_user_impl(
                     "application": application,
                     "meta": {
                         "implementation_status": "provider_application_admin_detail",
+                        "source": "postgres"
+                    }
+                })));
+            }
+            Ok(None) if user_role == "provider" => {
+                return Ok(Json(json!({
+                    "status": "ok",
+                    "application": {
+                        "status": "approved",
+                        "user_role": "provider"
+                    },
+                    "meta": {
+                        "implementation_status": "provider_application_role_active",
                         "source": "postgres"
                     }
                 })));

@@ -603,7 +603,9 @@ pub async fn get_guide_application_for_user_admin_impl(
             Ok(true) => {}
         }
 
-        match crate::db::select_latest_guide_for_user(pool, target_user_id).await {
+        // B3-R006 · Prefer guides via RA.legacy_ref.guides_id; orphan RA → detail from role_applications
+        // (never null when Admin list shows a submitted/pending guide application).
+        match crate::db::resolve_guide_row_for_admin(pool, target_user_id).await {
             Ok(Some(g)) => {
                 let passport_hash_present = g
                     .passport_number_hash
@@ -634,14 +636,28 @@ pub async fn get_guide_application_for_user_admin_impl(
                 )));
             }
             Ok(None) => {
-                return Ok(Json(json!({
-                    "status": "ok",
-                    "application": null,
-                    "meta": {
-                        "implementation_status": "guide_application_none",
-                        "source": "postgres",
+                match crate::db::get_guide_orphan_ra_admin_detail_json(pool, target_user_id).await {
+                    Ok(Some(detail)) => return Ok(Json(detail)),
+                    Ok(None) => {
+                        return Ok(Json(json!({
+                            "status": "ok",
+                            "application": null,
+                            "meta": {
+                                "implementation_status": "guide_application_none",
+                                "source": "postgres",
+                            }
+                        })));
                     }
-                })));
+                    Err(_) => {
+                        return Err((
+                            StatusCode::SERVICE_UNAVAILABLE,
+                            Json(json!({
+                                "error": "guide_application_pg_unavailable",
+                                "message": "guide_application_pg_unavailable",
+                            })),
+                        ));
+                    }
+                }
             }
             Err(_) => {
                 return Err((
@@ -805,12 +821,14 @@ pub async fn admin_review_guide_application_impl(
     };
 
     // Batch-13 HU-491 · Q1-B：有 PG 时先写 SSOT（fail-closed）再同步 memory。
+    // B3-R006 · Materialize guides row from orphan RA so Admin decide is never blocked by dual-store split.
     if let Some(ref pool) = state.db_pool {
-        let pg_guide = match crate::db::select_latest_guide_for_user(pool, target_user_id).await {
+        let pg_guide = match crate::db::ensure_guide_row_for_admin_review(pool, target_user_id).await
+        {
             Ok(g) => g,
             Err(e) => {
                 eprintln!(
-                    "[audit] select_latest_guide_for_user failed user_id={} error={}",
+                    "[audit] ensure_guide_row_for_admin_review failed user_id={} error={}",
                     target_user_id, e
                 );
                 return Err((

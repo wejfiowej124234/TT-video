@@ -10,6 +10,7 @@ import {
 } from "@/lib/apiClient/adminProviderApplication";
 import { providerRejectionCodeLabel } from "@/lib/provider/providerRejectionCodes";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import { formatAdminOnboardingApplicationStatus } from "@/lib/admin/adminOnboardingApplicationStatusLabel";
 
 import { AdminAuthDocPreviewLink } from "@/components/admin/AdminAuthDocPreviewLink";
 import { AdminDetailContentPanel } from "@/components/admin/AdminDetailContentPanel";
@@ -177,12 +178,19 @@ export function AdminProviderApplicationReviewCard({ userId }: { userId: string 
         <div className="mt-3 space-y-3 text-body">
           <p>
             <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_provider_app_status")}: </span>
-            <span className="font-mono text-meta">
-              {app?.status === "needs_more_info"
-                ? t("admin_provider_app_status_needs_more_info")
-                : app?.status}
+            <span className="font-mono text-meta" data-tt-admin-onboarding-status={app?.status ?? ""}>
+              {formatAdminOnboardingApplicationStatus(app?.status, t)}
             </span>
           </p>
+          {!payloadField(payload, "shop_name") ? (
+            <p
+              className="text-small text-amber-800"
+              data-tt-admin-provider-shop-name-missing="1"
+              role="note"
+            >
+              {t("admin_provider_queue_shop_name_missing")}
+            </p>
+          ) : null}
           {app.submitted_at ? (
             <p>
               <span className={`text-meta ${ADMIN_TEXT_MUTED_CLASS}`}>{t("admin_provider_app_submitted")}: </span>
