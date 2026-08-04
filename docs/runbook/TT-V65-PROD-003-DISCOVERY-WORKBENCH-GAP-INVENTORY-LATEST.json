@@ -6,7 +6,7 @@
   "batch_id": "V65-PROD-003",
   "round": "R1_workbench + R2_inbox_onboarding_approvals + R3_community_reports_guide_onboarding_audit_404 + PRV_RESIDUAL_from_V65-PROD-004_R4_SUPERSEDED + R4_owner_13_screenshot_wave_e + R5_owner_wave_e_scope_g070_g080_deep_scan · R6_owner_confirm_config_center_appeals_in_content_keep_plus_enterprise_reaudit_g081_g085",
   "candidate_id": "V65-PROD-CAND-20260802",
-  "live_web_tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "live_web_tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
   "stamp": "20260804T002417Z",
   "phase": "3_public_production",
   "honesty": {
@@ -2046,7 +2046,7 @@
         "V65-PROD-003-G074"
       ],
       "note_zh": "深度扫描：契约层残留会让 KYC「假删」。",
-      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
       "evidence": null,
       "runtime": "NOT_STARTED",
       "updated_at": "2026-08-04T02:35:00Z",
@@ -2285,7 +2285,7 @@
     {
       "id": "V65-PROD-003-G084",
       "stamp": "20260804T002417Z",
-      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
       "priority": "P1",
       "category": "community_core_productionize",
       "title": "Community residual KEEP_AND_PRODUCTIONIZE (Owner locked · bounded)",
@@ -2364,7 +2364,7 @@
     {
       "id": "V65-PROD-003-G086",
       "stamp": "20260804T002417Z",
-      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
       "priority": "P1",
       "status": "OPEN",
       "category": "error_boundary_coverage",
@@ -2412,7 +2412,7 @@
     {
       "id": "V65-PROD-003-G087",
       "stamp": "20260804T002417Z",
-      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
       "priority": "P1",
       "status": "OPEN",
       "category": "community_moderator_audit",
@@ -2462,7 +2462,7 @@
     {
       "id": "V65-PROD-003-G088",
       "stamp": "20260804T002417Z",
-      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
       "priority": "P1",
       "status": "OPEN",
       "category": "entry_fee_workbench_residual",
@@ -2509,7 +2509,7 @@
     {
       "id": "V65-PROD-003-G089",
       "stamp": "20260804T002417Z",
-      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
       "priority": "P2",
       "status": "OPEN",
       "category": "admin_list_pagination_perf",
@@ -4203,7 +4203,7 @@
     "r9_note": "R9 20260804T023500Z: G076/G084/G086–G089 local product + PASS_LOCAL verify; statuses remain OPEN until runtime; NO_GO; no fragment ship; evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
     "p1_local_progress": {
       "stamp": "20260804T023500Z",
-      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
       "local_verify_verdict": "PASS_LOCAL",
       "evidence": "evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
       "gaps_noted": [
@@ -4218,10 +4218,10 @@
       "runtime_verified": false
     }
   },
-  "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
   "gap_count": 89,
   "open_wave_e": 40,
-  "notes": " | R6 20260804T001500Z: Owner 配置中心 LOCK · G078 IN_SCOPE · G080 KEEP_AND_PRODUCTIONIZE · +G081-G085 enterprise re-audit | R7 20260804T002417Z: G084 KEEP_AND_PRODUCTIONIZE · final audit +G086-G089 · Wave E SCOPE_FROZEN · NO_GO · no fragment ship | R8 20260804T005951Z: P0 local FE strip/honesty fix_notes · wave_e_status=SCOPE_FROZEN reconciled · gap status OPEN until runtime · NO_GO · no fragment ship | R9 20260804T023500Z: Wave E P1 local fix_notes + PASS_LOCAL · status OPEN until runtime · NO_GO · no fragment ship · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z",
+  "notes": "| R6 20260804T001500Z: Owner 配置中心 LOCK · G078 IN_SCOPE · G080 KEEP_AND_PRODUCTIONIZE · +G081-G085 enterprise re-audit | R7 20260804T002417Z: G084 KEEP_AND_PRODUCTIONIZE · final audit +G086-G089 · Wave E SCOPE_FROZEN · NO_GO · no fragment ship | R8 20260804T005951Z: P0 local FE strip/honesty fix_notes · wave_e_status=SCOPE_FROZEN reconciled · gap status OPEN until runtime · NO_GO · no fragment ship | R9 20260804T023500Z: Wave E P1 local fix_notes + PASS_LOCAL · status OPEN until runtime · NO_GO · no fragment ship · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z | R9 20260804T023500Z: Wave E P1 local fix_notes + PASS_LOCAL · status OPEN until runtime · NO_GO · no fragment ship · evidence=evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z | post-commit tip sync 2738a68dc816 Wave E on living tip; ladder Single Cut next; NO_GO",
   "owner_r7": {
     "stamp": "20260804T002417Z",
     "g084": "KEEP_AND_PRODUCTIONIZE",
@@ -4245,7 +4245,7 @@
   },
   "owner_r9": {
     "stamp": "20260804T023500Z",
-    "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "tip_sha": "2738a68dc8161722a4ca5cebd2027c143b82ca45",
     "scope_frozen": true,
     "p1_local_notes": true,
     "local_verify_verdict": "PASS_LOCAL",
@@ -4253,6 +4253,9 @@
     "statuses_remain_open_until_runtime": true,
     "tt_production_go": "NO_GO",
     "no_fragment_ship": true,
-    "ladder_blocked_on": "Owner commit/bake Wave E before Single Cut"
-  }
+    "ladder_blocked_on": "Single Cut bake API+Web on tip 2738a68dc816; live www still 3d1cca13b319",
+    "ladder_note": "Wave E committed; tip sync; TT_PRODUCTION_GO=NO_GO until production acceptance"
+  },
+  "live_web_tip_note": "Pre-Single-Cut production www still 3d1cca13; Wave E tip 2738a68d committed locally; bake next",
+  "ladder_blocked_on": "Single Cut bake API+Web on tip 2738a68dc816; live www still 3d1cca13b319"
 }

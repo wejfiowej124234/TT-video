@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const STAMP = '20260804T023500Z';
-const TIP = '35872b406b622d9cc88cb5303222d5e5fedc29d5';
+const TIP = '2738a68dc8161722a4ca5cebd2027c143b82ca45';
 const UPDATED = '2026-08-04T02:35:00Z';
 const EVID =
   'evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z';

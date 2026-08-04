@@ -1,6 +1,6 @@
 # TT-V65-PROD-003 Discovery Workbench Gap Inventory (LATEST)
 
-**Stamp:** 20260804T023500Z · **Tip:** `35872b406b622d9cc88cb5303222d5e5fedc29d5`  
+**Stamp:** 20260804T023500Z · **Tip:** `2738a68dc8161722a4ca5cebd2027c143b82ca45` · **live www (pre-cut):** `3d1cca13b319c7f179817fc91c6033378ade6348`  
 **wave_e_status:** **SCOPE_FROZEN** · **tt_production_go:** **NO_GO**  
 **gap_count:** 89 · **open_wave_e:** 40  
 **Local verify:** **PASS_LOCAL (①)** · evidence `evidence/GO_v65_prod_003_wave_e_p1_local_verify/20260804T023500Z`
@@ -95,8 +95,8 @@ SCOPE_FROZEN ≠ CLOSED ≠ Production GO · ①绿 ≠ ③GO · PASS_LOCAL ≠ 
 
 ## Next Owner gate
 
-1. Commit / bake Wave E (uncommitted working tree ≠ Cut tip)
-2. Single Cut → Runtime Evidence → PRV-3b
+1. ~~Commit Wave E~~ done on tip `2738a68d…`
+2. Single Cut bake (API then Web) → Runtime Evidence → PRV-3b
 3. Update V65 Runtime Truth SSOT + Final Truth Baseline
 4. Keep **TT_PRODUCTION_GO=NO_GO**
 
