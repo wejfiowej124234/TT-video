@@ -34,31 +34,46 @@ export function AdminFinanceSuiteSupplementStrip() {
         {t("admin_fin_suite_supplement_lead", { count: SUPPLEMENT_COUNT })}
       </p>
       <ul className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {FINANCE_SUITE_SUPPLEMENT_MODULES.map((m) => (
-          <li
-            key={m.id}
-            className={ADMIN_FIN_WORKFLOW_STEP_CARD_CLASS}
-            data-tt-admin-fin-suite-supplement-module={m.id}
-          >
-            <h3 className="text-small font-semibold text-slate-100">{t(m.titleKey)}</h3>
-            <p className="mt-1 text-meta text-slate-400">{t(m.descKey)}</p>
-            {"targetSnapshotClaim" in m && m.targetSnapshotClaim ? (
-              <p
-                className="mt-1 text-meta text-warning"
-                data-tt-admin-fin-module-target="snapshot-claim"
-              >
-                {t("admin_fin_module_target_snapshot_claim")}
-              </p>
-            ) : null}
-            <Link
-              href={adminFinancePartialDepthHref(m.href, m.id)}
-              className={`mt-2 inline-block text-small font-medium ${ADMIN_CONSOLE_CALLOUT_LINK_CLASS} ${touchTargetLink44Classes}`}
-              data-tt-admin-fin-suite-supplement-open="partial"
+        {FINANCE_SUITE_SUPPLEMENT_MODULES.map((m) => {
+          /** R032 · TARGET 仅诚实态 · 禁止旁路开入口冒充可开财务操作 */
+          const isTarget = "targetSnapshotClaim" in m && Boolean(m.targetSnapshotClaim);
+          return (
+            <li
+              key={m.id}
+              className={ADMIN_FIN_WORKFLOW_STEP_CARD_CLASS}
+              data-tt-admin-fin-suite-supplement-module={m.id}
+              data-tt-admin-fin-suite-supplement-target={isTarget ? "1" : undefined}
             >
-              {t("admin_fin_suite_hub_depth_open")}
-            </Link>
-          </li>
-        ))}
+              <h3 className="text-small font-semibold text-slate-100">{t(m.titleKey)}</h3>
+              <p className="mt-1 text-meta text-slate-400">{t(m.descKey)}</p>
+              {isTarget ? (
+                <p
+                  className="mt-1 text-meta text-warning"
+                  data-tt-admin-fin-module-target="snapshot-claim"
+                  data-tt-admin-truth-badge="TARGET"
+                >
+                  {t("admin_fin_module_target_snapshot_claim")}
+                </p>
+              ) : null}
+              {isTarget ? (
+                <span
+                  className="mt-2 block text-meta text-slate-400"
+                  data-tt-admin-fin-suite-supplement-blocked="target"
+                >
+                  {t("admin_fin_suite_target_not_open")}
+                </span>
+              ) : (
+                <Link
+                  href={adminFinancePartialDepthHref(m.href, m.id)}
+                  className={`mt-2 inline-block text-small font-medium ${ADMIN_CONSOLE_CALLOUT_LINK_CLASS} ${touchTargetLink44Classes}`}
+                  data-tt-admin-fin-suite-supplement-open="partial"
+                >
+                  {t("admin_fin_suite_hub_depth_open")}
+                </Link>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </details>
   );

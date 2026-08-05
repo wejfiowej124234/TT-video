@@ -62,8 +62,8 @@ export const CONTENT_HUB_SECTIONS: readonly ContentHubSectionDef[] = [
     id: "daily",
     titleKey: "admin_content_hub_section_daily",
     dataAttr: "data-tt-admin-content-hub-section-daily",
+    // R022 · publish-queue 仅留 Hub 专用队列卡 CTA，不入日运分区平行入口
     hrefs: [
-      "/admin/content/publish-queue",
       "/admin/content/announcements",
       "/admin/content/roadmap",
       "/admin/content/landing-ambient",

@@ -91,6 +91,42 @@ describe("admin finance suite L5 (①)", () => {
     expect(badge).toContain("data-tt-admin-truth-badge");
   });
 
+  /** V65-PROD-003-B3-R032 · operator matrix 可用|部分|目标|暂未开放 · TARGET 不进主开 CTA */
+  it("blocks TARGET modules from primary open CTAs (R032)", () => {
+    expect(pageMain).toContain("admin_fin_suite_target_hint");
+    expect(pageMain).toContain("admin_fin_suite_target_not_open");
+    expect(pageMain).toContain('data-tt-admin-fin-suite-target={isTarget ? "1" : undefined}');
+    expect(pageMain).toContain('isTarget ? "target" : hasPerm ? "not-open" : "no-perm"');
+    expect(pageMain).toContain("!isTarget");
+    expect(pageMain).toContain('(m.status === "active" || m.status === "partial")');
+    expect(badge).toContain("targetSnapshotClaim");
+    expect(badge).toContain('t("admin_fin_module_target_snapshot_claim")');
+    const supplement = readFileSync(
+      join(__dir, "..", "..", "..", "components", "admin", "AdminFinanceSuiteSupplementStrip.tsx"),
+      "utf8",
+    );
+    expect(supplement).toContain('data-tt-admin-fin-suite-supplement-blocked="target"');
+    expect(supplement).toContain("admin_fin_suite_target_not_open");
+    const model = readFileSync(join(__dir, "adminFinanceSuitePageModel.ts"), "utf8");
+    expect(model).toContain("targetSnapshotClaim: true");
+    const zh = readFileSync(join(__dir, "..", "..", "..", "locales", "zh.ts"), "utf8");
+    const en = readFileSync(join(__dir, "..", "..", "..", "locales", "en.ts"), "utf8");
+    for (const src of [zh, en]) {
+      expect(src).toContain("admin_fin_suite_status_active:");
+      expect(src).toContain("admin_fin_suite_status_partial:");
+      expect(src).toContain("admin_fin_suite_status_placeholder:");
+      expect(src).toContain("admin_fin_suite_target_hint:");
+      expect(src).toContain("admin_fin_suite_target_not_open:");
+      expect(src).toContain("admin_truth_badge_REAL:");
+      expect(src).toContain("admin_truth_badge_PARTIAL:");
+      expect(src).toContain("admin_truth_badge_TOOL:");
+    }
+    expect(zh).toMatch(/admin_fin_suite_status_active:\s*"可用"/);
+    expect(zh).toMatch(/admin_fin_suite_status_partial:\s*"部分可用"/);
+    expect(zh).toMatch(/admin_fin_suite_status_placeholder:\s*"暂未开放"/);
+    expect(zh).toMatch(/admin_fin_module_target_snapshot_claim:\s*"目标"/);
+  });
+
   it("defines finance suite status token classes", () => {
     expect(adminUi).toContain("ADMIN_FIN_SUITE_STATUS_ACTIVE_CLASS");
     expect(adminUi).toContain("ADMIN_FIN_SUITE_STATUS_PARTIAL_CLASS");

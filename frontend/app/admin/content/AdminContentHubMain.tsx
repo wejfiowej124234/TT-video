@@ -4,6 +4,13 @@ import Link from "next/link";
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
+import {
+  AdminEnterpriseContentSurfaceHonesty,
+  AdminEnterpriseHardeningRoot,
+  AdminEnterpriseHubDataSourceStrip,
+  AdminEnterpriseLifecycleBadge,
+  AdminEnterpriseTipHonestyStrip,
+} from "@/components/admin/AdminEnterpriseHonestyChrome";
 import { AdminContentPageShell } from "@/components/admin/content/AdminContentPageShell";
 import { AdminOpsHubNavTiles } from "@/components/admin/ops/AdminOpsHubNavTiles";
 import { OpsPlaneFetchStates } from "@/components/admin/ops/OpsPlaneFetchStates";
@@ -80,6 +87,12 @@ export function AdminContentHubMain() {
       writePermission={ADMIN_PERM.CONTENT_WRITE}
       mainDataAttrs={{ "data-tt-admin-batch9-l5-sample": "content" }}
     >
+      <AdminEnterpriseHardeningRoot className="mb-3 space-y-2">
+        <AdminEnterpriseLifecycleBadge tone="PARTIAL" />
+        <AdminEnterpriseHubDataSourceStrip tone="declared" surface="content" />
+        <AdminEnterpriseTipHonestyStrip kind="mixed_declared" />
+        <AdminEnterpriseContentSurfaceHonesty />
+      </AdminEnterpriseHardeningRoot>
       <p className={`mb-4 text-body-m ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_content_hub_body_cs1")}</p>
 
       {/* CC4 · 官网视觉首屏条 */}
@@ -104,13 +117,6 @@ export function AdminContentHubMain() {
             data-tt-admin-content-hub-visual-media="1"
           >
             {t("admin_content_hub_visual_media")}
-          </Link>
-          <Link
-            href="/admin/content/publish-queue"
-            className={ADMIN_TABLE_INLINE_LINK_CLASS}
-            data-tt-admin-content-hub-visual-queue="1"
-          >
-            {t("admin_content_hub_visual_queue")}
           </Link>
         </div>
       </section>

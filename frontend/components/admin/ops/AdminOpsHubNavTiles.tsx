@@ -80,7 +80,19 @@ export function AdminOpsHubNavTiles({
   const tiles = selectAdminOpsHubNavTiles(links, selectOpts);
   const overflow = showMoreFold ? selectAdminOpsHubNavOverflow(links, selectOpts) : [];
 
-  if (tiles.length === 0) return null;
+  if (tiles.length === 0) {
+    return (
+      <div
+        className={className}
+        data-tt-admin-ops-hub-nav-tiles-empty="1"
+        data-tt-admin-ops-hub-nav-tiles-state="DISABLED"
+      >
+        <p className="mb-6 text-body-s text-ink-600" data-tt-admin-ops-hub-tiles-empty-honesty="1">
+          {t("admin_ops_hub_tiles_empty_not_open")}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className={className}>

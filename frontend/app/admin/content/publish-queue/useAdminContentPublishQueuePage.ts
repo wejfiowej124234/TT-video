@@ -2,22 +2,66 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { getAdminContentPublishQueue, postAdminCatalogEntityWorkflow, type AdminCatalogPublishQueueRow } from "@/lib/apiClient/content/http";
+import { useTranslation } from "@/components/LocaleProvider";
+import {
+  adminUserFacingErrorFromUnknown,
+  type AdminFetchErrorKind,
+} from "@/lib/adminFetchDisplay";
+import {
+  getAdminContentPublishQueue,
+  postAdminContentPublishQueueItemWorkflow,
+  type AdminContentPublishQueueItem,
+} from "@/lib/apiClient";
 
+/**
+ * R030 — publish-queue write-error isolation (mirror countries R016/R020).
+ * Shell loadError only; publish/workflow failures keep the list mounted (AdminAlertError).
+ */
 export function useAdminContentPublishQueuePage() {
-  const [items, setItems] = useState<AdminCatalogPublishQueueRow[]>([]);
+  const { t } = useTranslation();
+  const [items, setItems] = useState<AdminContentPublishQueueItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+  /** Full-page / shell only — never set from publish workflow. */
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [actionErrorKind, setActionErrorKind] = useState<AdminFetchErrorKind | null>(null);
+  const [busyId, setBusyId] = useState<string | null>(null);
+
+  const setActionErr = (kind: AdminFetchErrorKind, message: string) => {
+    setActionErrorKind(kind);
+    setActionError(message);
+  };
+
+  const clearActionErr = () => {
+    setActionErrorKind(null);
+    setActionError(null);
+  };
+
+  const captureActionErr = (e: unknown) => {
+    const { kind, message } = adminUserFacingErrorFromUnknown(e, t);
+    setActionErr(kind, message);
+  };
+
+  /** Soft reload: refresh rows without wiping shell or clearing successful list. */
+  const softReload = useCallback(async () => {
+    try {
+      const res = await getAdminContentPublishQueue();
+      setItems(res.items ?? []);
+    } catch (e) {
+      const { kind, message } = adminUserFacingErrorFromUnknown(e, t);
+      setActionErr(kind, message);
+    }
+  }, [t]);
 
   const reload = useCallback(async () => {
     setLoading(true);
-    setError(null);
+    setLoadError(null);
+    clearActionErr();
     try {
       const res = await getAdminContentPublishQueue();
       setItems(res.items ?? []);
     } catch {
-      setError("admin_content_publish_queue_load_failed");
+      setLoadError("admin_content_publish_queue_load_failed");
     } finally {
       setLoading(false);
     }
@@ -27,18 +71,30 @@ export function useAdminContentPublishQueuePage() {
     void reload();
   }, [reload]);
 
-  async function publishRow(row: AdminCatalogPublishQueueRow) {
-    setBusy(true);
-    setError(null);
+  async function runPublish(item: AdminContentPublishQueueItem) {
+    setBusyId(item.id);
+    clearActionErr();
     try {
-      await postAdminCatalogEntityWorkflow(row.entity_type, row.entity_id, "publish", { version: row.version });
-      await reload();
-    } catch {
-      setError("admin_content_workflow_failed");
+      await postAdminContentPublishQueueItemWorkflow(item.id, {
+        action: "publish",
+        version: item.version,
+      });
+      await softReload();
+    } catch (e) {
+      captureActionErr(e);
     } finally {
-      setBusy(false);
+      setBusyId(null);
     }
   }
 
-  return { items, loading, error, busy, reload, publishRow };
+  return {
+    items,
+    loading,
+    loadError,
+    actionError,
+    actionErrorKind,
+    busyId,
+    reload,
+    runPublish,
+  };
 }

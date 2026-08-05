@@ -5,6 +5,7 @@ import { useId } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import { useAdminL5ConfirmRequest } from "@/components/admin/AdminL5ConfirmProvider";
+import { AdminAlertError } from "@/components/admin/AdminAlertError";
 import { AdminContentPageShell, AdminContentStatusBadge } from "@/components/admin/content/AdminContentPageShell";
 import {
   AdminContentDataTable,
@@ -23,7 +24,16 @@ export function AdminContentPublishQueuePageMain() {
   const { t } = useTranslation();
   const titleId = useId();
   const requestConfirm = useAdminL5ConfirmRequest();
-  const { items, loading, error, busy, publishRow } = useAdminContentPublishQueuePage();
+  const {
+    items,
+    loading,
+    loadError,
+    actionError,
+    actionErrorKind,
+    busyId,
+    reload,
+    runPublish,
+  } = useAdminContentPublishQueuePage();
 
   return (
     <AdminContentPageShell
@@ -31,9 +41,19 @@ export function AdminContentPublishQueuePageMain() {
       titleKey="admin_content_publish_queue_title"
       subtitleKey="admin_content_publish_queue_subtitle"
       loading={loading}
-      error={error}
+      error={loadError}
+      onRetry={() => void reload()}
+      mainDataAttrs={{ "data-tt-admin-content-publish-queue-page": "1" }}
     >
       <AdminOpsRiskBanner messageKey="admin_ops_risk_banner_catalog_publish" />
+      {actionError ? (
+        <AdminAlertError
+          className="mb-4"
+          message={actionError}
+          errorKind={actionErrorKind}
+          id="admin-content-publish-queue-action-error"
+        />
+      ) : null}
       <p className="mb-4 text-body-s text-ink-600">{t("admin_content_publish_queue_ops_note")}</p>
 
       <div data-tt-admin-content-publish-queue="1">
@@ -77,11 +97,11 @@ export function AdminContentPublishQueuePageMain() {
                       ) : null}
                       <button
                         type="button"
-                        disabled={busy}
+                        disabled={busyId != null}
                         className="underline"
                         data-tt-admin-content-publish-queue-publish="1"
                         onClick={() =>
-                          requestConfirm(adminConfirmCatalogPublish(() => publishRow(row)))
+                          requestConfirm(adminConfirmCatalogPublish(() => runPublish(row)))
                         }
                       >
                         {t("admin_content_action_publish")}

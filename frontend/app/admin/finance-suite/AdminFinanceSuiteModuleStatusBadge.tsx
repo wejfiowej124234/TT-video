@@ -20,6 +20,21 @@ type Props = {
 
 export function AdminFinanceSuiteModuleStatusBadge({ status, targetSnapshotClaim }: Props) {
   const { t } = useTranslation();
+  /** R032 · TARGET 单独成矩阵列 · 不与「部分可用」叠标冒充可开 */
+  if (targetSnapshotClaim) {
+    return (
+      <span className="inline-flex flex-wrap items-center gap-1.5">
+        <span
+          className="inline-flex items-center rounded-[var(--radius-sm)] border border-warning/50 px-2 py-0.5 text-meta font-medium text-warning"
+          data-tt-admin-fin-suite-status-badge={status}
+          data-tt-admin-fin-module-target="snapshot-claim"
+          data-tt-admin-truth-badge="TARGET"
+        >
+          {t("admin_fin_module_target_snapshot_claim")}
+        </span>
+      </span>
+    );
+  }
   const truthBadge = adminFinanceSuiteTruthBadge(status);
   const className =
     truthBadge === "REAL"
@@ -37,15 +52,6 @@ export function AdminFinanceSuiteModuleStatusBadge({ status, targetSnapshotClaim
       >
         {t(adminTruthBadgeLabelKey(truthBadge))}
       </span>
-      {targetSnapshotClaim ? (
-        <span
-          className="inline-flex items-center rounded-[var(--radius-sm)] border border-warning/50 px-2 py-0.5 text-meta font-medium text-warning"
-          data-tt-admin-fin-module-target="snapshot-claim"
-          data-tt-admin-truth-badge="TARGET"
-        >
-          {t("admin_fin_module_target_snapshot_claim")}
-        </span>
-      ) : null}
     </span>
   );
 }

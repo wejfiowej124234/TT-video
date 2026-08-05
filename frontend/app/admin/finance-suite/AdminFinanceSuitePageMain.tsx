@@ -117,7 +117,12 @@ export function AdminFinanceSuitePageMain() {
         >
           {FINANCE_SUITE_MODULES.filter((m) => m.status !== "placeholder").map((m) => {
             const hasPerm = m.perm === ADMIN_PERM.READ || canFinance;
-            const navOpen = hasPerm && (m.status === "active" || m.status === "partial");
+            /** R032 · TARGET 不进主开入口 · 勿冒充可开财务操作 */
+            const isTarget = Boolean(m.targetSnapshotClaim);
+            const navOpen =
+              hasPerm &&
+              !isTarget &&
+              (m.status === "active" || m.status === "partial");
             const href =
               m.status === "partial" ? adminFinancePartialDepthHref(m.href, m.id) : m.href;
             return (
@@ -127,6 +132,7 @@ export function AdminFinanceSuitePageMain() {
                 className="flex min-h-[12rem] flex-col"
                 data-tt-admin-fin-suite-module={m.id}
                 data-tt-admin-fin-suite-status={m.status}
+                data-tt-admin-fin-suite-target={isTarget ? "1" : undefined}
                 data-tt-admin-fin-suite-nav-blocked={navOpen ? undefined : "1"}
               >
                 <h2 className="text-body font-semibold text-ink-900">{t(m.titleKey)}</h2>
@@ -137,7 +143,11 @@ export function AdminFinanceSuitePageMain() {
                     targetSnapshotClaim={m.targetSnapshotClaim}
                   />
                 </p>
-                {m.status === "partial" ? (
+                {isTarget ? (
+                  <p className={`mt-2 text-meta ${ADMIN_TEXT_SECONDARY_CLASS}`}>
+                    {t("admin_fin_suite_target_hint")}
+                  </p>
+                ) : m.status === "partial" ? (
                   <p className={`mt-2 text-meta ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_fin_suite_partial_hint")}</p>
                 ) : null}
                 {navOpen ? (
@@ -151,7 +161,18 @@ export function AdminFinanceSuitePageMain() {
                       : t("admin_fin_suite_open")}
                   </Link>
                 ) : (
-                  <span className={`mt-3 block text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}>{t("admin_permissions_no")}</span>
+                  <span
+                    className={`mt-3 block text-small ${ADMIN_TEXT_SECONDARY_CLASS}`}
+                    data-tt-admin-fin-suite-blocked-reason={
+                      isTarget ? "target" : hasPerm ? "not-open" : "no-perm"
+                    }
+                  >
+                    {isTarget
+                      ? t("admin_fin_suite_target_not_open")
+                      : hasPerm
+                        ? t("admin_fin_suite_status_placeholder")
+                        : t("admin_permissions_no")}
+                  </span>
                 )}
               </AdminWarmL5Surface>
             );
