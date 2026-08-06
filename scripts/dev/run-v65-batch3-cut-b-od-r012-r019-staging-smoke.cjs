@@ -203,8 +203,9 @@ function checkLocalSourceContract() {
       if (!notes.r012_lib) ok = false;
     }
     if (rel.includes('adminHomeL5.contract')) {
-      notes.r012_contract =
-        src.includes('od-r012') && src.includes('od-r019') && !src.includes('focus-companion-todos');
+      // Contract may assert absence via `.not.toContain("…focus-companion-todos")` — substring OK.
+      // Absence of the live marker is enforced on AdminHomeFocusCompanion.tsx above.
+      notes.r012_contract = src.includes('od-r012') && src.includes('od-r019');
       if (!notes.r012_contract) ok = false;
     }
   }

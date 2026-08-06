@@ -217,6 +217,8 @@ describe("admin home L5", () => {
     expect(companion).not.toContain("data-tt-admin-home-ops-kpi-promoted");
     expect(companion).not.toContain("data-tt-admin-home-focus-companion-health");
     expect(companion).not.toContain("admin_home_focus_companion_kpi_links_prefix");
+    // Cut B OD R019 · Overview inbox-pending KPI removed (dedupe with Companion recent-only).
+    expect(src).toContain('data-tt-admin-home-overview-pending-dedupe="od-r019"');
     expect(maintainer).toContain("admin_home_maintainer_fold_summary_focus");
     expect(inboxStrip).toContain("singleQueueFocus");
     expect(inboxStrip).toContain("hideZeroCounts");
