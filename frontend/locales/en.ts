@@ -13235,6 +13235,9 @@ export default {
   admin_home_empty_state_empty: "Empty",
   admin_home_empty_state_loading: "Loading…",
   admin_home_focus_companion_todo_only_hint: "Today’s focus lists todos only — not the full site matrix.",
+  admin_home_focus_companion_recent_only_hint:
+    "Glance keeps recent visits only; pending work stays on Today’s todos — not duplicated here.",
+  admin_home_focus_companion_recent_empty: "No recent visits yet; open any Admin page to populate this list.",
   admin_home_inbox_guide: "Inbox guide",
   admin_home_inbox_guide_desc: "Work queues by priority; empty states stay honest — no fake green.",
   admin_home_kpi_detail_lead: "Metric notes",

@@ -12880,6 +12880,8 @@ export default {
   admin_home_empty_state_empty: "暂无内容",
   admin_home_empty_state_loading: "加载中…",
   admin_home_focus_companion_todo_only_hint: "本日焦点仅列待办，不展开全站矩阵。",
+  admin_home_focus_companion_recent_only_hint: "速览仅保留最近访问；待办以「今日待办」为准，不再复列。",
+  admin_home_focus_companion_recent_empty: "暂无最近访问；打开任一 Admin 页后会出现在此。",
   admin_home_inbox_guide: "收件箱指引",
   admin_home_inbox_guide_desc: "按队列处理待办；空态为诚实空，不伪造绿灯。",
   admin_home_kpi_detail_lead: "指标说明",

@@ -236,8 +236,8 @@ export function AdminHomeSystemOverview(props: {
       value,
     });
 
-  const emphasizeInboxPending =
-    !focusInbox && inboxPendingTotal !== null && inboxPendingTotal > 0;
+  // Cut B OD R019 · pending-count SSOT = 今日待办 only — overview omits duplicate total tile
+  void inboxPendingTotal;
 
   const sourceLabel = t(adminHomeMetricsSourceLabelKey(metrics?.source));
 
@@ -290,8 +290,9 @@ export function AdminHomeSystemOverview(props: {
       </details>
 
       <ul
-        className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+        className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
         data-tt-admin-home-system-overview-metrics="1"
+        data-tt-admin-home-overview-pending-dedupe="od-r019"
       >
         <li>
           <OverviewMetricTile
@@ -311,14 +312,6 @@ export function AdminHomeSystemOverview(props: {
               overview.users?.new7d,
             )}
             emphasize={Boolean(overview.users && overview.users.new7d > 0 && !focusInbox)}
-          />
-        </li>
-        <li>
-          <OverviewMetricTile
-            href="/admin/inbox"
-            label={t("admin_home_system_overview_inbox_pending")}
-            value={metricDisplay(inboxLoading, false, false, inboxPendingTotal)}
-            emphasize={emphasizeInboxPending}
           />
         </li>
         <li>

@@ -210,8 +210,10 @@ describe("admin home L5", () => {
     expect(sidebar).toContain("AdminShellNavIcon");
     expect(sidebar).toContain("ADMIN_SHELL_SIDEBAR_LINK_CLASS");
     expect(companion).toContain("ADMIN_TEXT_FOOTNOTE_CLASS");
-    expect(companion).toContain("data-tt-admin-home-focus-companion-todo-only");
-    expect(companion).toContain("data-tt-admin-home-focus-companion-todos");
+    expect(companion).toContain('data-tt-admin-home-focus-companion-recent-only="od-r012"');
+    expect(companion).toContain("data-tt-admin-home-focus-companion-recent");
+    expect(companion).not.toContain("data-tt-admin-home-focus-companion-todos");
+    expect(companion).not.toContain("buildAdminUnifiedInboxTasks");
     expect(companion).not.toContain("data-tt-admin-home-ops-kpi-promoted");
     expect(companion).not.toContain("data-tt-admin-home-focus-companion-health");
     expect(companion).not.toContain("admin_home_focus_companion_kpi_links_prefix");

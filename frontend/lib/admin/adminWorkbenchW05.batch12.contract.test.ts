@@ -16,7 +16,10 @@ import {
   TT_ADMIN_HOME_EMPTY_STATE_DICT_MARK,
   adminHomeEmptyStateLabelKey,
 } from "@/lib/admin/adminHomeEmptyStateDict";
-import { TT_ADMIN_HOME_FOCUS_COMPANION_TODO_ONLY_MARK } from "@/lib/admin/adminHomeFocusCompanionTodoOnly";
+import {
+  TT_ADMIN_HOME_FOCUS_COMPANION_RECENT_ONLY_MARK,
+  TT_ADMIN_HOME_FOCUS_COMPANION_TODO_ONLY_MARK,
+} from "@/lib/admin/adminHomeFocusCompanionTodoOnly";
 import {
   ADMIN_HOME_I18N_DEAD_KEYS_REMOVED,
   ADMIN_HOME_I18N_SYMMETRY_REQUIRED_KEYS,
@@ -278,24 +281,29 @@ describe("Batch-12 W05 · HU-443 shell brand wordmark (①)", () => {
   });
 });
 
-describe("Batch-12 W05 · HU-444 focus companion todo-only (①)", () => {
-  it("HU-444 · companion drops domain health; overview keeps strip", () => {
+describe("Batch-12 W05 · HU-444 → OD-R012 focus companion recent-only (①)", () => {
+  it("OD-R012 · companion recent-only; no domain health; overview keeps strip + R019 dedupe", () => {
+    expect(TT_ADMIN_HOME_FOCUS_COMPANION_RECENT_ONLY_MARK).toBe(
+      "tt_admin_home_focus_companion_recent_only_od_r012",
+    );
     expect(TT_ADMIN_HOME_FOCUS_COMPANION_TODO_ONLY_MARK).toBe(
-      "tt_admin_home_focus_companion_todo_only_hu444",
+      TT_ADMIN_HOME_FOCUS_COMPANION_RECENT_ONLY_MARK,
     );
     const companion = readFileSync(
       resolve(fe, "components/admin/AdminHomeFocusCompanion.tsx"),
       "utf8",
     );
     expect(companion).toContain("HU-444");
-    expect(companion).toContain('data-tt-admin-home-focus-companion-todo-only="hu444"');
+    expect(companion).toContain('data-tt-admin-home-focus-companion-recent-only="od-r012"');
     expect(companion).not.toContain("buildAdminHomeDomainHealth");
     expect(companion).not.toContain("data-tt-admin-home-focus-companion-health");
+    expect(companion).not.toContain("buildAdminUnifiedInboxTasks");
     const overview = readFileSync(
       resolve(fe, "components/admin/AdminHomeSystemOverview.tsx"),
       "utf8",
     );
     expect(overview).toContain("AdminHomeDomainHealthStrip");
+    expect(overview).toContain('data-tt-admin-home-overview-pending-dedupe="od-r019"');
   });
 });
 
