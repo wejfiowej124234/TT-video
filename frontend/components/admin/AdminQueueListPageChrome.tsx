@@ -90,6 +90,8 @@ export function AdminQueueListPageChrome(props: {
 
       data-tt-admin-queue-list={queue}
 
+      data-tt-admin-workbench-l5="1"
+
     >
 
       <AdminSubpageBreadcrumb />
@@ -101,6 +103,8 @@ export function AdminQueueListPageChrome(props: {
         innerClassName="flex flex-wrap items-start justify-between gap-3"
 
         data-tt-admin-queue-list-header="1"
+
+        data-tt-admin-workbench-ia="L1"
 
       >
 
@@ -175,6 +179,8 @@ export function AdminQueueListPageChrome(props: {
         className={ADMIN_LIST_PAGE_BODY_CANVAS_CLASS}
 
         data-tt-admin-queue-list-body-canvas="1"
+
+        data-tt-admin-workbench-ia="L2"
 
       >
 

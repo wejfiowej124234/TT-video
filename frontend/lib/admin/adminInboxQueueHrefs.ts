@@ -4,6 +4,7 @@ export const ADMIN_INBOX_QUEUE_HREFS = {
   guide: "/admin/guide-applications?status=pending",
   steward: "/admin/steward-applications?status=stake_pending",
   approvals: "/admin/approvals?status=pending",
+  disputes: "/admin/disputes?status=open",
   reports: "/admin/community/reports?status=open",
 } as const;
 

@@ -9,11 +9,13 @@ import {
 } from "./adminShellPendingBadgePolicy";
 
 describe("adminShellPendingBadgePolicy", () => {
-  const counts = { provider: 2, steward: 0, approvals: 1, reports: 78 };
+  const counts = { provider: 2, guide: 0, steward: 0, approvals: 1, disputes: 0, reports: 78 };
   const channels = {
     provider: { permissionDenied: false },
+    guide: { permissionDenied: false },
     steward: { permissionDenied: false },
     approvals: { permissionDenied: false },
+    disputes: { permissionDenied: false },
     reports: { permissionDenied: false },
   } as const;
 

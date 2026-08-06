@@ -1650,18 +1650,18 @@ export default {
   admin_home_focus_companion_kpi_line: "Operations snapshot (list API cap): orders {{orders}} · disputes {{disputes}} —",
   admin_home_focus_companion_hint: "After clearing the queue, expand Operations snapshot and related modules below.",
   admin_home_inbox_lead:
-    "Prioritize queues with pending counts (onboarding trio + community reports). Click a card to open the list.",
+    "Prioritize queues with pending counts (onboarding trio + open disputes + community reports). Click a card to open the list.",
   admin_home_inbox_scope_honesty:
     "Counts reflect each queue’s list API cap, not full-database pending totals.",
   admin_home_inbox_workflow_1:
-    "Provider queue, then steward stake, then approvals, then community reports.",
+    "Provider queue, then steward stake, then approvals, then open disputes, then community reports.",
   admin_home_inbox_workflow_2: "When a count is above zero, use「Go process」on that card.",
   admin_home_inbox_workflow_3:
-    "Disputes live under Operations snapshot; more modules via ⌘K or expand「All modules」below.",
+    "Open disputes are a first-class inbox channel (read-only bench); more modules via ⌘K or expand「All modules」below.",
   admin_home_inbox_workflow_1_ops:
-    "Review merchants first, then stewards, then community reports (approvals are outside your role).",
+    "Review merchants first, then stewards, then open disputes, then community reports (approvals are outside your role).",
   admin_home_inbox_workflow_3_ops:
-    "Elevated approvals need super admin; disputes in KPI strip; more modules via ⌘K or「All modules」.",
+    "Elevated approvals need super admin; open disputes are in the inbox strip (read-only); more modules via ⌘K or「All modules」.",
   admin_home_modules_fold_summary: "All modules ({{count}})",
   admin_home_modules_fold_summary_focus: "Modules linked to pending work ({{shown}} / {{total}})",
   admin_home_modules_expand_all: "Show all {{total}} modules",
@@ -1671,6 +1671,8 @@ export default {
   admin_home_inbox_steward_desc: "Review regional steward stake and eligibility",
   admin_home_inbox_approvals: "Pending approvals",
   admin_home_inbox_approvals_desc: "High-risk actions need Super Admin approval",
+  admin_home_inbox_disputes: "Open disputes",
+  admin_home_inbox_disputes_desc: "Unprocessed dispute tickets (read-only bench)",
   admin_home_inbox_cta_process: "Process",
   admin_home_inbox_cta_view: "Open",
   admin_home_inbox_total_pending: "{{count}} pending total",
@@ -1875,8 +1877,9 @@ export default {
   admin_fin_suite_fee_router_desc: "Platform fee routed events ledger",
   admin_fin_suite_settlement: "Settlement center",
   admin_fin_suite_settlement_desc: "Finance summary (partial — dedicated page in phase 02)",
-  admin_fin_suite_refunds: "Refunds center",
-  admin_fin_suite_refunds_desc: "Disputes/refunds ops entry (partial)",
+  admin_fin_suite_refunds: "Dispute read-only bench",
+  admin_fin_suite_refunds_desc:
+    "Open disputes list (read-only bench) — not a refunds settlement center; fund writes exit the console",
   admin_fin_suite_anomaly: "Anomaly review",
   admin_fin_suite_anomaly_desc: "Cross-check and drift-summary",
   admin_fin_suite_export: "Report export",
@@ -2573,7 +2576,8 @@ export default {
   admin_content_hub_visual_strip_title: "Site visuals",
   admin_disputes_finance_obs_fold: "Finance observability (expand)",
   admin_disputes_id_label: "Dispute ID",
-  admin_disputes_ledger_readonly_note: "Dispute ledger is read-only; adjudication and refund writes are on detail pages with permission.",
+  admin_disputes_ledger_readonly_note:
+    "Dispute Admin is a read-only bench — no fund or Escrow writes from this console. Adjudication and refund execution exit the console (public dispute/order flows) with the right permission.",
   admin_disputes_order_id_filter: "Filtered by order: {{orderId}}",
   admin_disputes_order_id_label: "Order ID",
   admin_disputes_q_label: "Keyword search",
@@ -3447,7 +3451,7 @@ export default {
   admin_home_desc_users: "User list, role-change requests, and acquisition gates (user detail).",
   admin_home_desc_guides: "Guide onboarding ledger; qualification review and status changes.",
   admin_home_desc_orders: "Order list and detail (within list API cap).",
-  admin_home_desc_disputes: "Dispute tickets and admin write actions.",
+  admin_home_desc_disputes: "Dispute tickets (read-only bench) — fund writes exit the console.",
   admin_home_desc_reviews: "Review samples and low-score inspection.",
   admin_home_desc_audit_logs: "Platform audit log search.",
   admin_home_desc_approvals: "Sensitive-change approvals; final approve requires super admin.",

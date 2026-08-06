@@ -46,9 +46,9 @@ export const FINANCE_SUITE_MODULES: {
     titleKey: "admin_fin_suite_refunds",
     descKey: "admin_fin_suite_refunds_desc",
     openCtaKey: "admin_fin_suite_hub_depth_open_refunds",
-    perm: ADMIN_PERM.DISPUTES_WRITE,
-    /** Placeholder: disputes ≠ refunds center — hidden from primary suite grid. */
-    status: "placeholder",
+    /** OD-C-03 · read-only dispute bench · ORDERS_READ (not fund write). */
+    perm: ADMIN_PERM.ORDERS_READ,
+    status: "partial",
   },
   {
     id: "cross-check",

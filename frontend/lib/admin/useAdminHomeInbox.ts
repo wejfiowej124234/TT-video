@@ -107,6 +107,8 @@ const EMPTY_COUNTS: AdminHomeInboxCounts = {
 
   approvals: null,
 
+  disputes: null,
+
   reports: null,
 
 };
@@ -123,25 +125,26 @@ const EMPTY_CHANNELS: AdminHomeInboxChannels = {
 
   approvals: { count: null, errorKind: null },
 
+  disputes: { count: null, errorKind: null },
+
   reports: { count: null, errorKind: null },
 
 };
 
 
 
-function countFromItems(items: unknown[] | undefined, errorKind: AdminFetchErrorKind | null): number | null {
-
+/** Fail-closed: never treat page-sized `items.length` as inventory total. */
+function countFromItems(total: number | null | undefined, errorKind: AdminFetchErrorKind | null): number | null {
   if (errorKind) return null;
-
-  return Array.isArray(items) ? items.length : 0;
-
+  if (typeof total === "number" && Number.isFinite(total) && total >= 0) return Math.floor(total);
+  return null;
 }
 
 
 
 type QueueFetchResult = {
 
-  items?: unknown[];
+  total?: number | null;
 
   errorKind: AdminFetchErrorKind | null;
 
@@ -170,7 +173,7 @@ async function fetchInboxChannel(
 
   const { scope, listUrl } = adminInboxQueueListFetchConfig(key);
   const res = await fetchAdminQueueList<{ items?: unknown[] }>(context, listUrl, { scope });
-  return { items: res.items, errorKind: res.errorKind, rateLimited: res.rateLimited };
+  return { total: res.total, errorKind: res.errorKind, rateLimited: res.rateLimited };
 }
 
 
@@ -249,45 +252,53 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
 
       () => fetchInboxChannel("approvals", "AdminHomeInbox.approvals", can("approvals"), caps.permissionsLoaded),
 
+      () => fetchInboxChannel("disputes", "AdminHomeInbox.disputes", can("disputes"), caps.permissionsLoaded),
+
       () => fetchInboxChannel("reports", "AdminHomeInbox.reports", can("reports"), caps.permissionsLoaded),
 
     ])
 
-      .then(([providerRes, guideRes, stewardRes, approvalsRes, reportsRes]) => {
+      .then(([providerRes, guideRes, stewardRes, approvalsRes, disputesRes, reportsRes]) => {
 
         const provider = providerRes.permissionDenied
 
           ? null
 
-          : countFromItems(providerRes.items, providerRes.errorKind);
+          : countFromItems(providerRes.total, providerRes.errorKind);
 
         const guide = guideRes.permissionDenied
 
           ? null
 
-          : countFromItems(guideRes.items, guideRes.errorKind);
+          : countFromItems(guideRes.total, guideRes.errorKind);
 
         const steward = stewardRes.permissionDenied
 
           ? null
 
-          : countFromItems(stewardRes.items, stewardRes.errorKind);
+          : countFromItems(stewardRes.total, stewardRes.errorKind);
 
         const approvals = approvalsRes.permissionDenied
 
           ? null
 
-          : countFromItems(approvalsRes.items, approvalsRes.errorKind);
+          : countFromItems(approvalsRes.total, approvalsRes.errorKind);
+
+        const disputes = disputesRes.permissionDenied
+
+          ? null
+
+          : countFromItems(disputesRes.total, disputesRes.errorKind);
 
         const reports = reportsRes.permissionDenied
 
           ? null
 
-          : countFromItems(reportsRes.items, reportsRes.errorKind);
+          : countFromItems(reportsRes.total, reportsRes.errorKind);
 
 
 
-        setCounts({ provider, guide, steward, approvals, reports });
+        setCounts({ provider, guide, steward, approvals, disputes, reports });
 
         setChannels({
 
@@ -339,6 +350,18 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
 
           },
 
+          disputes: {
+
+            count: disputes,
+
+            errorKind: disputesRes.errorKind,
+
+            permissionDenied: disputesRes.permissionDenied,
+
+            skipped: disputesRes.skipped,
+
+          },
+
           reports: {
 
             count: reports,
@@ -355,7 +378,7 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
 
 
 
-        const results = [providerRes, guideRes, stewardRes, approvalsRes, reportsRes];
+        const results = [providerRes, guideRes, stewardRes, approvalsRes, disputesRes, reportsRes];
 
         if (results.some((r) => r.rateLimited)) {
 

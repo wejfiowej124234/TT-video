@@ -24,7 +24,7 @@ export function onboardingSectionPending(
 
   if (loading || !permissionsLoaded) return null;
 
-  return (["provider", "guide", "steward", "approvals"] as const).reduce((sum, key) => {
+  return (["provider", "guide", "steward", "approvals", "disputes"] as const).reduce((sum, key) => {
 
     if (!canAccessAdminInboxChannel(key, hasPermission, permissionsLoaded)) return sum;
 

@@ -113,15 +113,19 @@ export function adminHomeSystemOverviewCollapsedSummaryVars(input: {
   inboxPendingTotal: number | null;
   adminActivity7d?: number | null;
 }): Record<string, string | number> {
-  // Batch-13 HU-484 · 空值统一用 0（非 em-dash）；链缺失用「—」仅占位由 i18n 折叠句消化
-  const empty = "0";
+  // Cut C R024 · unavailable ≠ literal 0（OD-C-05: do not reopen R012/R019）
+  const unavailable = "—";
+  const usersUnavailable = input.metrics == null && input.users == null;
+  const new7d =
+    input.users?.new7d ??
+    (input.metrics ? input.metrics.trends.userSignups.reduce((a, b) => a + b, 0) : null);
   return {
-    users: adminHomeSystemOverviewUsersCount(input.metrics, input.users) || empty,
-    new7d: input.users?.new7d ?? input.metrics?.trends.userSignups.reduce((a, b) => a + b, 0) ?? empty,
-    pending: input.inboxPendingTotal ?? empty,
-    chain: input.observability?.chainId ?? empty,
-    lag: input.observability?.indexerLagBlocks ?? empty,
-    activity: input.adminActivity7d ?? empty,
+    users: usersUnavailable ? unavailable : adminHomeSystemOverviewUsersCount(input.metrics, input.users),
+    new7d: new7d ?? unavailable,
+    pending: input.inboxPendingTotal ?? unavailable,
+    chain: input.observability?.chainId ?? unavailable,
+    lag: input.observability?.indexerLagBlocks ?? unavailable,
+    activity: input.adminActivity7d ?? unavailable,
   };
 }
 

@@ -16,7 +16,6 @@ export const ADMIN_SHELL_FINANCE_NAV_LINKS: readonly AdminShellNavLinkDef[] = [
     permission: ADMIN_PERM.FINANCE_READ,
     matchPrefix: "/admin/finance-reconciliation",
   },
-  { href: "/admin/finance", labelKey: "admin_finance_title", permission: ADMIN_PERM.FINANCE_READ },
   { href: "/admin/fee-router", labelKey: "admin_fee_router_title", permission: ADMIN_PERM.FINANCE_READ },
   { href: "/admin/region-vault", labelKey: "admin_region_vault_title", permission: ADMIN_PERM.FINANCE_READ },
   {

@@ -12,12 +12,13 @@ describe("adminHomeDomainHealth", () => {
     guide: { count: null, permissionDenied: false, errorKind: null },
     steward: { count: null, permissionDenied: false, errorKind: null },
     approvals: { count: null, permissionDenied: false, errorKind: null },
+    disputes: { count: null, permissionDenied: false, errorKind: null },
     reports: { count: null, permissionDenied: false, errorKind: null },
   };
 
   it("marks onboarding attention when inbox pending > 0", () => {
     const items = buildAdminHomeDomainHealth({
-      counts: { provider: 2, guide: 0, steward: 0, approvals: 0, reports: 0 },
+      counts: { provider: 2, guide: 0, steward: 0, approvals: 0, disputes: 0, reports: 0 },
       channels,
       kpi: { orders: 0, disputes: 0, guides: null },
       inboxLoading: false,
@@ -32,7 +33,7 @@ describe("adminHomeDomainHealth", () => {
 
   it("exposes W9 domains incl. community + governance with design-empty neutral for content/official/growth", () => {
     const items = buildAdminHomeDomainHealth({
-      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, reports: 2 },
+      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, disputes: 0, reports: 2 },
       channels,
       kpi: { orders: 100, disputes: 1, guides: null },
       inboxLoading: false,
@@ -82,7 +83,7 @@ describe("adminHomeDomainHealth", () => {
 
   it("uses honest dash for community when reports unknown", () => {
     const items = buildAdminHomeDomainHealth({
-      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, reports: null },
+      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, disputes: 0, reports: null },
       channels: {
         ...channels,
         reports: { count: null, permissionDenied: true, errorKind: null },

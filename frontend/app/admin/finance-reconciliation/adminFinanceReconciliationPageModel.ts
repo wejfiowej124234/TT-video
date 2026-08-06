@@ -20,7 +20,7 @@ export function isRecord(v: unknown): v is Record<string, unknown> {
 }
 
 export const FINANCE_RECONCILIATION_NAV_LINKS: readonly { href: string; labelKey: string }[] = [
-  { href: "/admin/finance", labelKey: "admin_finance_reconciliation_link_finance" },
+  { href: "/admin/finance-suite", labelKey: "admin_finance_reconciliation_link_finance" },
   { href: "/admin/cross-check", labelKey: "admin_finance_reconciliation_link_cross_check" },
   { href: "/admin/drift-summary", labelKey: "admin_finance_reconciliation_link_drift" },
   { href: "/admin/indexer", labelKey: "admin_finance_reconciliation_link_indexer" },

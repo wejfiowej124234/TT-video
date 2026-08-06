@@ -9,6 +9,7 @@ import { AdminWarmL5Surface } from "@/components/admin/AdminWarmL5Surface";
 import { disputeStatusLabelKey } from "@/lib/admin/adminDisputesLabels";
 import { shortAdminId } from "@/lib/admin/shortAdminId";
 import { AdminFinanceDepthActionLinks } from "@/components/admin/AdminFinanceDepthActionLinks";
+import { adminFinancePartialDepthHref } from "@/lib/admin/adminFinancePartialDepthHref";
 import { resolveRefundProgressBuckets } from "@/lib/admin/adminFinanceRefundProgress";
 import {
   adminPageNavLinkClass,
@@ -103,7 +104,10 @@ export function AdminFinanceRefundsDepthPanel({ items, loading, error }: Props) 
       <AdminFinanceDepthActionLinks
         links={[
           { href: "/admin/disputes", labelKey: "admin_fin_refunds_depth_all_disputes" },
-          { href: "/admin/finance", labelKey: "admin_fin_refund_progress_title" },
+          {
+            href: adminFinancePartialDepthHref("/admin/finance", "finance-summary"),
+            labelKey: "admin_fin_refund_progress_title",
+          },
           { href: "/admin/finance-suite", labelKey: "admin_fin_drift_depth_link_suite" },
         ]}
       />

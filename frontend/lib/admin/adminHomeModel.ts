@@ -13,6 +13,7 @@ export const ADMIN_HOME_INBOX_KEYS = [
   "guide",
   "steward",
   "approvals",
+  "disputes",
   "reports",
 ] as const;
 
@@ -148,7 +149,13 @@ export const ADMIN_HOME_CARDS: AdminHomeCard[] = [
   { href: "/admin/users", titleKey: "admin_users_title", descKey: "admin_home_desc_users", section: "core" },
   { href: "/admin/guides", titleKey: "admin_guides_title", descKey: "admin_home_desc_guides", section: "core" },
   { href: "/admin/orders", titleKey: "admin_orders_title", descKey: "admin_home_desc_orders", section: "core" },
-  { href: "/admin/disputes", titleKey: "admin_disputes_title", descKey: "admin_home_desc_disputes", section: "core" },
+  {
+    href: "/admin/disputes",
+    titleKey: "admin_disputes_title",
+    descKey: "admin_home_desc_disputes",
+    section: "core",
+    inboxKey: "disputes",
+  },
   { href: "/admin/reviews", titleKey: "admin_reviews_title", descKey: "admin_home_desc_reviews", section: "core" },
   { href: "/admin/audit", titleKey: "admin_audit_list_title", descKey: "admin_home_desc_audit_logs", section: "audit_finance" },
   {
@@ -163,7 +170,6 @@ export const ADMIN_HOME_CARDS: AdminHomeCard[] = [
     descKey: "admin_finance_reconciliation_home_desc",
     section: "audit_finance",
   },
-  { href: "/admin/finance", titleKey: "admin_finance_title", descKey: "admin_home_desc_finance", section: "audit_finance" },
   { href: "/admin/fee-router", titleKey: "admin_fee_router_title", descKey: "admin_home_desc_fee_router", section: "audit_finance" },
   { href: "/admin/region-vault", titleKey: "admin_region_vault_title", descKey: "admin_home_desc_region_vault", section: "audit_finance" },
   { href: "/admin/observability", titleKey: "admin_observability_title", descKey: "admin_home_desc_observability", section: "audit_finance" },

@@ -30,6 +30,11 @@ export function adminInboxQueueListFetchConfig(key: AdminHomeInboxKey): AdminInb
         scope: "approvals",
         listUrl: routes.admin.approvals({ limit: 100, status: "pending" }),
       };
+    case "disputes":
+      return {
+        scope: "disputes",
+        listUrl: routes.admin.disputes({ limit: 50, status: "open" }),
+      };
     case "reports":
       return {
         scope: "community-reports",

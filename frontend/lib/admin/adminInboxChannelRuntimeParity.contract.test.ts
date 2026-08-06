@@ -27,6 +27,7 @@ const EXPECTED_KEYS: readonly AdminHomeInboxKey[] = [
   "guide",
   "steward",
   "approvals",
+  "disputes",
   "reports",
 ];
 

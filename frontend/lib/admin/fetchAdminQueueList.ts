@@ -12,6 +12,8 @@ import {
 } from "@/lib/admin/adminListFetchCache";
 import {
   defaultAdminListFetchSnapshot,
+  parseAdminQueueInventoryTotal,
+  type AdminListFetchSnapshot,
   type AdminStandardListBody,
 } from "@/lib/admin/useAdminStandardListFetch";
 import { apiUrl } from "@/lib/api";
@@ -21,6 +23,8 @@ export type AdminQueueListResult<T extends { items?: unknown[] }> = {
   items: T["items"];
   errorKind: AdminFetchErrorKind | null;
   rateLimited?: boolean;
+  /** Authoritative inventory total when API provided it; null = unknown / fail-closed. */
+  total: number | null;
 };
 
 export type AdminQueueListFetchOptions = {
@@ -36,9 +40,13 @@ export async function fetchAdminQueueList<T extends { items?: unknown[] }>(
   const cacheKey = options?.scope ? adminListFetchCacheKey(options.scope, listUrl) : null;
 
   if (cacheKey) {
-    const warm = readAdminListFetchCache<{ items: unknown[] }>(cacheKey);
+    const warm = readAdminListFetchCache<AdminListFetchSnapshot<unknown>>(cacheKey);
     if (warm?.items) {
-      return { items: warm.items as T["items"], errorKind: null };
+      return {
+        items: warm.items as T["items"],
+        errorKind: null,
+        total: parseAdminQueueInventoryTotal({ total: warm.total }),
+      };
     }
     return dedupeAdminListFetch(cacheKey, () =>
       fetchAdminQueueListOnce<T>(context, listUrl, cacheKey),
@@ -57,29 +65,33 @@ async function fetchAdminQueueListOnce<T extends { items?: unknown[] }>(
   try {
     Object.assign(headers, getAuthHeaders());
   } catch {
-    return { items: [], errorKind: "login_required" };
+    return { items: [] as T["items"], errorKind: "login_required", total: null };
   }
 
   try {
-    const { res, body } = await adminFetchJson<T>(context, apiUrl(listUrl), { headers });
+    const { res, body } = await adminFetchJson<T & { total?: unknown }>(context, apiUrl(listUrl), {
+      headers,
+    });
     if (!res.ok) {
       throw new Error((body as { error?: string })?.error || `request_failed_${res.status}`);
     }
     const items = Array.isArray(body.items) ? body.items : [];
+    const total = parseAdminQueueInventoryTotal(body);
     if (cacheKey) {
       writeAdminListFetchCache(
         cacheKey,
         defaultAdminListFetchSnapshot(body as AdminStandardListBody<never>),
       );
     }
-    return { items, errorKind: null };
+    return { items, errorKind: null, total };
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     logAdminFetch(context, e);
     return {
-      items: [],
+      items: [] as T["items"],
       errorKind: adminFetchErrorKind(e),
       rateLimited: msg === "rate_limit_exceeded",
+      total: null,
     };
   }
 }

@@ -2,9 +2,9 @@
   "schema": "traveltrust.v65_prod_003_batch3_cut_c_design_confirmation.v1",
   "machine_key": "TT_V65_PROD_003_BATCH3_CUT_C_DESIGN_CONFIRMATION",
   "title": "V65 PROD-003 Batch3 Cut C Design Confirmation (docs-only)",
-  "stamp": "20260806T051233Z",
-  "phase": "CUT_C_DESIGN_ONLY",
-  "posture": "DESIGN_CONFIRMATION_READY_NO_ENG",
+  "stamp": "20260806T065245Z",
+  "phase": "LOCAL_VERIFIED",
+  "posture": "OWNER_SIGNED_ENG_GATE_OPEN",
   "tt_production_go": "NO_GO",
   "baseline": {
     "non_web3_production_runtime": "V65-PROD-CAND-20260802",
@@ -27,14 +27,18 @@
     "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
     "fe_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
     "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
-    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json"
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json",
+    "cut_b_final_state_commit": "1b8ebe104d818092257968396cd03630169a86ee"
   },
   "expected_difference_locked": {
     "id": "V65-PROD-003-B3-ED-PAGE-SURFACE-DRIFT",
     "class": "Expected_Difference",
     "disposition": "CONFIRM_DESIGN",
     "blocking": false,
-    "residual_reopen_forbidden": ["R012", "R019"],
+    "residual_reopen_forbidden": [
+      "R012",
+      "R019"
+    ],
     "note": "PAGE_SURFACE_DRIFT remains Expected Difference; do not reopen closed Residual"
   },
   "candidate_scope": {
@@ -54,8 +58,21 @@
       "R039",
       "R041"
     ],
-    "ids_p1": ["R011", "R017", "R018", "R026", "R027", "R028", "R041"],
-    "ids_p2": ["R023", "R024", "R038", "R039"],
+    "ids_p1": [
+      "R011",
+      "R017",
+      "R018",
+      "R026",
+      "R027",
+      "R028",
+      "R041"
+    ],
+    "ids_p2": [
+      "R023",
+      "R024",
+      "R038",
+      "R039"
+    ],
     "items": [
       {
         "id": "R011",
@@ -164,64 +181,89 @@
         "R065",
         "R066"
       ],
-      "closed_must_not_reopen": ["R012", "R019"],
+      "closed_must_not_reopen": [
+        "R012",
+        "R019"
+      ],
       "note": "DEFER remain OPEN outside Cut C eng; closed OD residuals must not reopen for PAGE_SURFACE_DRIFT"
     }
   },
   "owner_decision": {
-    "status": "DESIGN_PHASE_OPEN_AWAITING_OWNER_SIGN",
+    "status": "OWNER_SIGNED",
     "required_decisions": [
       {
         "id": "OD-C-01",
         "topic": "Candidate Scope freeze",
         "question": "Confirm Cut C Candidate Scope = 11 residuals (P1: R011/R017/R018/R026/R027/R028/R041; P2: R023/R024/R038/R039) and no additions from DEFER without new Owner scope?",
         "default_proposal": "ACCEPT_SCOPE_AS_FINAL_STATE",
-        "owner_choice": null,
-        "blocking_for_eng": true
+        "owner_choice": "ACCEPT_SCOPE_AS_FINAL_STATE",
+        "blocking_for_eng": true,
+        "signed": true,
+        "signed_at": "20260806T052445Z",
+        "signed_by": "Sebastian Ward（塞巴斯蒂安·沃德）"
       },
       {
         "id": "OD-C-02",
         "topic": "Finance single entry",
         "question": "For R026/R017: keep /admin/finance-suite as sole operator entry and demote /admin/finance to redirect or legacy-only?",
         "default_proposal": "SUITE_PRIMARY_LEGACY_REDIRECT",
-        "owner_choice": null,
-        "blocking_for_eng": true
+        "owner_choice": "SUITE_PRIMARY_LEGACY_REDIRECT",
+        "blocking_for_eng": true,
+        "signed": true,
+        "signed_at": "20260806T052445Z",
+        "signed_by": "Sebastian Ward（塞巴斯蒂安·沃德）"
       },
       {
         "id": "OD-C-03",
         "topic": "Dispute Admin write boundary",
         "question": "For R041: confirm Dispute Admin remains read-only adjudication bench with no fund/Escrow write from console?",
         "default_proposal": "READ_ONLY_BENCH_NO_FUND_WRITE",
-        "owner_choice": null,
-        "blocking_for_eng": true
+        "owner_choice": "READ_ONLY_BENCH_NO_FUND_WRITE",
+        "blocking_for_eng": true,
+        "signed": true,
+        "signed_at": "20260806T052445Z",
+        "signed_by": "Sebastian Ward（塞巴斯蒂安·沃德）"
       },
       {
         "id": "OD-C-04",
         "topic": "Inbox Dispute channel",
         "question": "For R018/R011: add Dispute as first-class Inbox channel tied to real unreprocessed queue?",
         "default_proposal": "ADD_DISPUTE_CHANNEL_REAL_QUEUE",
-        "owner_choice": null,
-        "blocking_for_eng": true
+        "owner_choice": "ADD_DISPUTE_CHANNEL_REAL_QUEUE",
+        "blocking_for_eng": true,
+        "signed": true,
+        "signed_at": "20260806T052445Z",
+        "signed_by": "Sebastian Ward（塞巴斯蒂安·沃德）"
       },
       {
         "id": "OD-C-05",
         "topic": "PAGE_SURFACE_DRIFT",
         "question": "Keep V65-PROD-003-B3-ED-PAGE-SURFACE-DRIFT as Expected Difference CONFIRM_DESIGN and forbid reopen of R012/R019?",
         "default_proposal": "KEEP_ED_NO_REOPEN",
-        "owner_choice": null,
+        "owner_choice": "KEEP_ED_NO_REOPEN",
         "blocking_for_eng": false,
-        "note": "Already locked by Cut B Final State; Owner reaffirm only"
+        "note": "Already locked by Cut B Final State; Owner reaffirm only",
+        "signed": true,
+        "signed_at": "20260806T052445Z",
+        "signed_by": "Sebastian Ward（塞巴斯蒂安·沃德）"
       }
     ],
     "sign_off": {
-      "owner": null,
-      "signed_at": null,
-      "result": "NOT_SIGNED",
-      "note": "Owner Sign-off on design decisions required before any Cut C engineering start"
+      "owner": "Sebastian Ward（塞巴斯蒂安·沃德）",
+      "signed_at": "20260806T052445Z",
+      "result": "SIGNED",
+      "choices": {
+        "OD-C-01": "ACCEPT_SCOPE_AS_FINAL_STATE",
+        "OD-C-02": "SUITE_PRIMARY_LEGACY_REDIRECT",
+        "OD-C-03": "READ_ONLY_BENCH_NO_FUND_WRITE",
+        "OD-C-04": "ADD_DISPUTE_CHANNEL_REAL_QUEUE",
+        "OD-C-05": "KEEP_ED_NO_REOPEN"
+      },
+      "note": "Owner accepted default proposals for OD-C-01..05; eng gate may open; product implementation not started this stamp"
     }
   },
   "design_confirmation": {
-    "status": "CONFIRMED_AS_DESIGN_PHASE_ENTRY",
+    "status": "OWNER_DESIGN_CONFIRMED",
     "confirmed_at": "20260806T051233Z",
     "confirmed_items": [
       "Cut B Final State FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED is prerequisite",
@@ -229,53 +271,81 @@
       "PAGE_SURFACE_DRIFT remains Expected Difference; R012/R019 reopen forbidden",
       "TT_PRODUCTION_GO remains NO_GO",
       "Web3 freeze PSG-REL-20260720-WEB3-CAND-V2 stays orthogonal",
-      "Engineering / Staging Cut C deploy / Production deploy FORBIDDEN until Owner Sign-off + separate eng gate"
+      "Engineering / Staging Cut C deploy / Production deploy FORBIDDEN until Owner Sign-off + separate eng gate",
+      "Cut B commit 1b8ebe104d818092257968396cd03630169a86ee remains FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+      "OD-C-01 ACCEPT_SCOPE_AS_FINAL_STATE (11 residuals; no DEFER pull)",
+      "OD-C-02 SUITE_PRIMARY_LEGACY_REDIRECT (/admin/finance-suite primary)",
+      "OD-C-03 READ_ONLY_BENCH_NO_FUND_WRITE (Dispute Admin)",
+      "OD-C-04 ADD_DISPUTE_CHANNEL_REAL_QUEUE (Inbox)",
+      "OD-C-05 KEEP_ED_NO_REOPEN (PAGE_SURFACE_DRIFT)",
+      "Cut C Engineering gate OPEN for authorized impl sessions; no product code this stamp",
+      "TT_PRODUCTION_GO remains NO_GO; Production deploy FORBIDDEN"
     ],
     "themes": [
       {
         "theme": "REAL_QUEUE_HONESTY",
-        "residuals": ["R011", "R018"],
+        "residuals": [
+          "R011",
+          "R018"
+        ],
         "design_intent": "Workbench/Inbox surfaces show real unreplied/unreprocessed queues; Dispute channel honesty"
       },
       {
         "theme": "FINANCE_SUITE_REDESIGN",
-        "residuals": ["R017", "R023", "R026", "R027", "R028", "R038", "R039"],
+        "residuals": [
+          "R017",
+          "R023",
+          "R026",
+          "R027",
+          "R028",
+          "R038",
+          "R039"
+        ],
         "design_intent": "Single finance entry, semantic truth (refund≠dispute), export on suite path, empty-state honesty, i18n hygiene"
       },
       {
         "theme": "DISPUTE_READ_ONLY_BENCH",
-        "residuals": ["R041"],
+        "residuals": [
+          "R041"
+        ],
         "design_intent": "Admin dispute = read-only adjudication; fund/Escrow writes stay outside console CTA"
       },
       {
         "theme": "OVERVIEW_UNAVAILABLE_HONESTY",
-        "residuals": ["R024"],
+        "residuals": [
+          "R024"
+        ],
         "design_intent": "Unavailable metrics must not render as zero; reduce KPI wrap clutter"
       }
-    ]
+    ],
+    "owner_signed_at": "20260806T052445Z"
   },
   "gates": {
     "design_phase_entry": "PASS",
-    "owner_decision_complete": "OPEN",
-    "engineering_start": "FORBIDDEN",
-    "staging_cut_c_deploy": "FORBIDDEN",
+    "owner_decision_complete": "PASS",
+    "engineering_start": "AUTHORIZED",
+    "engineering_implementation_this_stamp": "PASS_LOCAL",
+    "local_verify": "PASS",
+    "staging_cut_c_deploy": "ALLOWED_FOR_EVIDENCE_ONLY",
     "production_deploy": "FORBIDDEN",
     "tt_production_go_flip": "FORBIDDEN"
   },
   "prohibitions": [
-    "No Cut C engineering / write-path code this stamp",
-    "No Staging Cut C deploy",
     "No Production modification or deploy",
     "No TT_PRODUCTION_GO flip (stay NO_GO)",
-    "No Web3 pin change or mix into Product design",
+    "No Web3 pin change or mix into Product eng",
     "Do not reopen closed Residual R012/R019 for PAGE_SURFACE_DRIFT",
-    "Do not pull DEFER residuals into Cut C eng without new Owner scope"
+    "Do not pull DEFER residuals into Cut C eng without new Owner scope",
+    "Do not CLOSE Cut C residuals until Staging Runtime Evidence PASS",
+    "Staging Cut C deploy is evidence-only — not Production GO"
   ],
   "honesty": [
-    "Cut B Full CLOSED ≠ Cut C eng start ≠ Production GO",
-    "Design Confirmation entry ≠ Owner Sign-off complete ≠ eng authorized",
+    "Cut B Full CLOSED ≠ Cut C eng impl ≠ Staging Cut C ≠ Production GO",
+    "Owner Sign-off on OD-C ≠ code landed ≠ RUNTIME_VERIFIED",
+    "LOCAL_VERIFIED ≠ Staging VERIFIED ≠ Production GO",
+    "Cut B commit 1b8ebe104d818092257968396cd03630169a86ee remains sole Cut B consolidation cite",
     "Staging OD VERIFIED 20260806T044213Z ≠ Cut C Staging deploy",
-    "Consolidation 20260806T050409Z ≠ this design stamp 20260806T051233Z"
+    "Local evidence 20260806T065245Z ≠ Staging tip-honest runtime until FE deploy + Cut C smoke PASS"
   ],
   "ssot_pointers": {
     "cut_b_final_state": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json",
@@ -285,11 +355,45 @@
     "this_md": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.md"
   },
   "next": {
-    "action": "OWNER_COMPLETE_CUT_C_DESIGN_DECISIONS",
-    "then": "Only after Owner Sign-off may a separate Cut C eng gate be opened",
-    "forbidden_now": "eng · staging_cut_c_deploy · production · GO_flip"
+    "action": "TIP_HONEST_STAGING_DEPLOY_THEN_CUT_C_SMOKE",
+    "then": "Runtime Evidence → Residual Close for 11 R-IDs; keep NO_GO; no Production; no Web3",
+    "forbidden_now": "production · GO_flip · web3_mix · reopen_R012_R019 · DEFER_pull_without_scope · residual_close_before_staging_pass",
+    "tt_production_go": "NO_GO"
   },
   "generated_at": "20260806T051233Z",
-  "updated_at": "20260806T051233Z",
-  "updated_by": "agent_cut_c_design_confirmation"
+  "updated_at": "20260806T065245Z",
+  "updated_by": "owner_od_c_sign_via_agent",
+  "status": "ENG_IMPL_LOCAL_VERIFIED",
+  "local_evidence": {
+    "stamp": "20260806T065245Z",
+    "path": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T065245Z",
+    "report": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T065245Z/report.json",
+    "verdict": "PASS",
+    "phase": "LOCAL_VERIFIED"
+  },
+  "engineering": {
+    "status": "LOCAL_VERIFIED",
+    "local_verified_at": "20260806T065245Z",
+    "scope_residuals": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "od_binding": {
+      "OD-C-01": "ACCEPT_SCOPE_AS_FINAL_STATE",
+      "OD-C-02": "SUITE_PRIMARY_LEGACY_REDIRECT",
+      "OD-C-03": "READ_ONLY_BENCH_NO_FUND_WRITE",
+      "OD-C-04": "ADD_DISPUTE_CHANNEL_REAL_QUEUE",
+      "OD-C-05": "KEEP_ED_NO_REOPEN"
+    },
+    "note": "P1/P2 product paths landed + vitest Cut C set PASS; residuals remain OPEN until Staging PASS"
+  }
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { type FormEvent, useId, useMemo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { type FormEvent, useEffect, useId, useMemo } from "react";
 
 import { useTranslation } from "@/components/LocaleProvider";
 import AdminAuditCompareLinks from "@/components/admin/AdminAuditCompareLinks";
@@ -36,12 +36,29 @@ import {
   ADMIN_SHELL_SECONDARY_BTN_CLASS,
 } from "@/lib/adminUi";
 
+/**
+ * OD-C-02 · SUITE_PRIMARY_LEGACY_REDIRECT
+ * Bare `/admin/finance` soft-redirects to suite; depth leaf only when both
+ * `fin_suite_depth=partial` and `fin_suite_module` are present.
+ */
 export default function AdminFinancePageMain() {
   const { t } = useTranslation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const pageTitleId = useId();
   const financeMetaDlHeadingId = useId();
   const exportCsvFormatHintId = useId();
   const financeExportSubmitFilterHintId = useId();
+  const finSuiteDepth = searchParams.get("fin_suite_depth") ?? "";
+  const finSuiteModule = searchParams.get("fin_suite_module") ?? "";
+  const isSuiteDepthLeaf = finSuiteDepth === "partial" && Boolean(finSuiteModule);
+
+  useEffect(() => {
+    if (!isSuiteDepthLeaf) {
+      router.replace("/admin/finance-suite");
+    }
+  }, [isSuiteDepthLeaf, router]);
+
   const {
     loading,
     refreshing,
@@ -54,8 +71,11 @@ export default function AdminFinancePageMain() {
   } = useAdminFinancePage();
 
   const derived = useMemo(() => resolveAdminFinanceDerived(meta), [meta]);
-  const finSuiteModule = useSearchParams().get("fin_suite_module") ?? "";
   const exportFromSuite = finSuiteModule === "export";
+
+  if (!isSuiteDepthLeaf) {
+    return null;
+  }
 
   return (
     <AdminListPageChrome

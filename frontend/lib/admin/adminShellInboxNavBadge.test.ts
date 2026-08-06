@@ -4,11 +4,13 @@ import { ADMIN_INBOX_QUEUE_HREFS } from "./adminInboxQueueHrefs";
 import { ADMIN_SHELL_INBOX_HUB_HREF, adminShellNavPendingCount } from "./adminShellInboxNavBadge";
 
 describe("adminShellNavPendingCount", () => {
-  const counts = { provider: 2, steward: 1, approvals: 0, reports: 3 };
+  const counts = { provider: 2, guide: 0, steward: 1, approvals: 0, disputes: 0, reports: 3 };
   const channels = {
     provider: { permissionDenied: false },
+    guide: { permissionDenied: false },
     steward: { permissionDenied: false },
     approvals: { permissionDenied: false },
+    disputes: { permissionDenied: false },
     reports: { permissionDenied: false },
   } as const;
 

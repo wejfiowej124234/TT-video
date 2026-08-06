@@ -3,10 +3,9 @@ import { ADMIN_OPS_OBSERVABILITY_RELATED_LINK } from "@/lib/admin/adminOpsListRe
 
 const FINANCE_PEER_LINKS: AdminOpsDetailRelatedLink[] = [
   { href: "/admin/finance-suite", labelKey: "admin_fin_suite_title" },
-  { href: "/admin/finance", labelKey: "admin_finance_title" },
   { href: "/admin/fee-router", labelKey: "admin_fee_router_title" },
   { href: "/admin/region-vault", labelKey: "admin_region_vault_title" },
-  { href: "/admin/disputes", labelKey: "admin_fin_suite_refunds" },
+  { href: "/admin/disputes", labelKey: "admin_disputes_title" },
   { href: "/admin/indexer", labelKey: "admin_indexer_title" },
 ];
 

@@ -1,10 +1,11 @@
 import type { AdminUnifiedInboxTask } from "@/lib/admin/adminUnifiedInboxTasks";
 
-/** ① 经营动线：商家 → 主理人 → 审批 → 社区（与首页 workflow 文案同源）。 */
+/** ① 经营动线：商家 → 主理人 → 审批 → 争议 → 社区（与首页 workflow 文案同源）。 */
 export const ADMIN_INBOX_WORKFLOW_IDS = [
   "provider",
   "steward",
   "approvals",
+  "disputes",
   "reports",
 ] as const;
 
@@ -14,7 +15,8 @@ const WORKFLOW_RANK: Record<AdminInboxWorkflowId, number> = {
   provider: 0,
   steward: 1,
   approvals: 2,
-  reports: 3,
+  disputes: 3,
+  reports: 4,
 };
 
 export function adminInboxWorkflowRank(id: string): number {

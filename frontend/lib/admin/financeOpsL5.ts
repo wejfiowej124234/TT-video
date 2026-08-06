@@ -4,7 +4,10 @@
  * ≠ Production GO · 禁写资金
  */
 import type { AdminShellNavLinkDef } from "@/lib/admin/adminShellNavLinkTypes";
-import { ADMIN_SHELL_FINANCE_PEER_NAV_LINKS } from "@/lib/admin/adminShellFinanceNavLinks";
+import {
+  ADMIN_SHELL_FINANCE_NAV_LINKS,
+  ADMIN_SHELL_FINANCE_PEER_NAV_LINKS,
+} from "@/lib/admin/adminShellFinanceNavLinks";
 import type { FinanceMeta, FinanceSummary } from "@/app/admin/finance/adminFinancePageTypes";
 
 export const FINANCE_OPS_L5_PROBE = "finance-ops-l5-batch11-w07-v1" as const;
@@ -27,7 +30,7 @@ export const FINANCE_THREE_TRACK_LANES: readonly FinanceThreeTrackLane[] = [
     id: "usdc",
     titleKey: "admin_fin_three_track_usdc_title",
     hintKey: "admin_fin_three_track_usdc_hint",
-    primaryHref: "/admin/finance",
+    primaryHref: "/admin/finance-suite",
     secondaryHref: "/admin/finance-reconciliation",
     secondaryLabelKey: "admin_fin_three_track_usdc_secondary",
   },
@@ -55,8 +58,14 @@ export const FINANCE_THREE_TRACK_LANES: readonly FinanceThreeTrackLane[] = [
 export function financeSuiteNavTiles(
   links: readonly AdminShellNavLinkDef[] = ADMIN_SHELL_FINANCE_PEER_NAV_LINKS,
 ): AdminShellNavLinkDef[] {
-  if (links === ADMIN_SHELL_FINANCE_PEER_NAV_LINKS) return [...links];
-  return links.filter((l) => !l.activeExact);
+  // Fail-closed: missing/circular PEER export must not throw `… is not iterable` on /admin/finance-suite.
+  const src = Array.isArray(links)
+    ? links
+    : Array.isArray(ADMIN_SHELL_FINANCE_PEER_NAV_LINKS)
+      ? ADMIN_SHELL_FINANCE_PEER_NAV_LINKS
+      : ADMIN_SHELL_FINANCE_NAV_LINKS.filter((l) => !l.activeExact);
+  if (src === ADMIN_SHELL_FINANCE_PEER_NAV_LINKS) return src.slice();
+  return src.filter((l) => !l.activeExact);
 }
 
 /** HU-401 · Snapshot/Claim 仍为目标态的模块 */

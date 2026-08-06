@@ -70,6 +70,12 @@ const INBOX_LINKS: {
     descKey: "admin_home_inbox_approvals_desc",
   },
   {
+    key: "disputes",
+    href: ADMIN_INBOX_QUEUE_HREFS.disputes,
+    labelKey: "admin_home_inbox_disputes",
+    descKey: "admin_home_inbox_disputes_desc",
+  },
+  {
     key: "reports",
     href: ADMIN_INBOX_QUEUE_HREFS.reports,
     labelKey: "admin_home_inbox_reports_queue",
@@ -150,7 +156,7 @@ export function AdminHomeInboxStrip(props: {
                 ? "max-w-xl grid-cols-1"
                 : visibleLinks.length <= 2
                   ? "sm:grid-cols-2"
-                  : "sm:grid-cols-2 lg:grid-cols-5"
+                  : "sm:grid-cols-2 lg:grid-cols-6"
             }`;
 
     return (

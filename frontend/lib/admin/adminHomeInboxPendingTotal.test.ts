@@ -15,12 +15,13 @@ describe("adminHomeInboxPendingTotal", () => {
     guide: { count: 0, permissionDenied: false, errorKind: null },
     steward: { count: 0, permissionDenied: false, errorKind: null },
     approvals: { count: null, permissionDenied: true, errorKind: null },
+    disputes: { count: 0, permissionDenied: false, errorKind: null },
     reports: { count: 78, permissionDenied: false, errorKind: null },
   };
 
   it("sums visible inbox channels including reports", () => {
     const total = adminHomeInboxPendingTotal(
-      { provider: 0, guide: 0, steward: 0, approvals: null, reports: 78 },
+      { provider: 0, guide: 0, steward: 0, approvals: null, disputes: 0, reports: 78 },
       channels,
       false,
       false,
@@ -32,7 +33,7 @@ describe("adminHomeInboxPendingTotal", () => {
 
   it("returns partial sum while loading when counts are already resolved", () => {
     const total = adminHomeInboxPendingTotal(
-      { provider: 0, guide: 0, steward: 0, approvals: null, reports: 78 },
+      { provider: 0, guide: 0, steward: 0, approvals: null, disputes: 0, reports: 78 },
       channels,
       true,
       false,
@@ -44,7 +45,7 @@ describe("adminHomeInboxPendingTotal", () => {
 
   it("returns null while loading before any channel count resolves", () => {
     const total = adminHomeInboxPendingTotal(
-      { provider: null, guide: null, steward: null, approvals: null, reports: null },
+      { provider: null, guide: null, steward: null, approvals: null, disputes: null, reports: null },
       channels,
       true,
       false,
@@ -60,7 +61,7 @@ describe("adminHomeInboxPendingTotal", () => {
       reports: { count: null, permissionDenied: false, errorKind: "failed" as const },
     };
     const total = adminHomeInboxPendingTotal(
-      { provider: 2, guide: 1, steward: 0, approvals: null, reports: null },
+      { provider: 2, guide: 1, steward: 0, approvals: null, disputes: 0, reports: null },
       errored,
       false,
       false,

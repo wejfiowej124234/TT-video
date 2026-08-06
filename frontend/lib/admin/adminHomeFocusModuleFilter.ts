@@ -9,6 +9,7 @@ const QUEUE_HREF_TO_INBOX_KEY: Record<string, AdminHomeInboxKey> = {
   [ADMIN_INBOX_QUEUE_HREFS.guide]: "guide",
   [ADMIN_INBOX_QUEUE_HREFS.steward]: "steward",
   [ADMIN_INBOX_QUEUE_HREFS.approvals]: "approvals",
+  [ADMIN_INBOX_QUEUE_HREFS.disputes]: "disputes",
   [ADMIN_INBOX_QUEUE_HREFS.reports]: "reports",
 };
 
@@ -66,7 +67,7 @@ export function adminHomeCardVisibleInFocusMode(input: {
   if (card.href.startsWith("/admin/permissions")) return true;
 
   if (card.href === "/admin/inbox") {
-    return (["provider", "guide", "steward", "approvals", "reports"] as const).some((key) =>
+    return (["provider", "guide", "steward", "approvals", "disputes", "reports"] as const).some((key) =>
       channelHasPending(key, counts, channels, loading),
     );
   }

@@ -8,7 +8,7 @@ import { adminHomeCardRequiredPermission } from "./adminHomeCardPermission";
 /** ① 首页卡片带 `?status=` 时 tier/perm 仍按 pathname 解析。 */
 describe("admin home inbox queue cards L5 (①)", () => {
   it("inbox-key cards use ADMIN_INBOX_QUEUE_HREFS", () => {
-    for (const key of ["provider", "steward", "approvals", "reports"] as const) {
+    for (const key of ["provider", "steward", "approvals", "disputes", "reports"] as const) {
       const card = ADMIN_HOME_CARDS.find((c) => c.inboxKey === key);
       expect(card?.href).toBe(ADMIN_INBOX_QUEUE_HREFS[key]);
     }

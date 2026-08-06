@@ -20,6 +20,8 @@ import {
 
 export type AdminStandardListBody<TItem> = {
   items?: TItem[] | unknown;
+  /** Authoritative inventory size when present (not page sample length). */
+  total?: number;
   applied_filters?: Record<string, unknown> | null;
   meta?: Record<string, unknown>;
   error?: string;
@@ -31,11 +33,23 @@ export type AdminListFetchSnapshot<TItem> = {
   appliedFilters: Record<string, unknown> | null;
   meta: Record<string, unknown> | null;
   itemsMalformed?: boolean;
+  /** Authoritative inventory total when API provided it; absent → unknown. */
+  total?: number | null;
 };
+
+/** Finite number ≥ 0 from list JSON `total`; otherwise null (never invent from page length). */
+export function parseAdminQueueInventoryTotal(body: {
+  total?: unknown;
+}): number | null {
+  const raw = body.total;
+  if (typeof raw !== "number" || !Number.isFinite(raw) || raw < 0) return null;
+  return Math.floor(raw);
+}
 
 export function defaultAdminListFetchSnapshot<TItem>(
   body: AdminStandardListBody<TItem>,
 ): AdminListFetchSnapshot<TItem> {
+  const total = parseAdminQueueInventoryTotal(body);
   const rawItems = body.items;
   if (rawItems == null) {
     return {
@@ -43,6 +57,7 @@ export function defaultAdminListFetchSnapshot<TItem>(
       appliedFilters: body.applied_filters ?? null,
       meta: isAdminMetaRecord(body.meta) ? body.meta : null,
       itemsMalformed: false,
+      total,
     };
   }
   if (!Array.isArray(rawItems)) {
@@ -54,6 +69,7 @@ export function defaultAdminListFetchSnapshot<TItem>(
       appliedFilters: body.applied_filters ?? null,
       meta: isAdminMetaRecord(body.meta) ? body.meta : null,
       itemsMalformed: true,
+      total,
     };
   }
   return {
@@ -61,6 +77,7 @@ export function defaultAdminListFetchSnapshot<TItem>(
     appliedFilters: body.applied_filters ?? null,
     meta: isAdminMetaRecord(body.meta) ? body.meta : null,
     itemsMalformed: false,
+    total,
   };
 }
 

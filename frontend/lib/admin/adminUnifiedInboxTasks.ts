@@ -125,6 +125,26 @@ export function buildAdminUnifiedInboxTasks(input: {
 
     {
 
+      id: "disputes",
+
+      labelKey: "admin_home_inbox_disputes",
+
+      descKey: "admin_home_inbox_disputes_desc",
+
+      href: ADMIN_INBOX_QUEUE_HREFS.disputes,
+
+      count: channels.disputes?.permissionDenied ? null : counts.disputes,
+
+      permissionDenied: Boolean(channels.disputes?.permissionDenied),
+
+      errorKind: channels.disputes?.errorKind ?? null,
+
+      priority: counts.disputes ?? 0,
+
+    },
+
+    {
+
       id: "reports",
 
       labelKey: "admin_home_inbox_reports_queue",

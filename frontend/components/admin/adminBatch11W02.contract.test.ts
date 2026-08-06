@@ -30,12 +30,13 @@ describe("Batch-11 W02 workbench (HU-324/325/332)", () => {
 
   it("HU-325 · content/official/growth expose CTA labels + deep hrefs", () => {
     const items = buildAdminHomeDomainHealth({
-      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, reports: 0 },
+      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, disputes: 0, reports: 0 },
       channels: {
         provider: { count: null, permissionDenied: false, errorKind: null },
         guide: { count: null, permissionDenied: false, errorKind: null },
         steward: { count: null, permissionDenied: false, errorKind: null },
         approvals: { count: null, permissionDenied: false, errorKind: null },
+        disputes: { count: null, permissionDenied: false, errorKind: null },
         reports: { count: null, permissionDenied: false, errorKind: null },
       },
       kpi: { orders: 0, disputes: 0, guides: null },
