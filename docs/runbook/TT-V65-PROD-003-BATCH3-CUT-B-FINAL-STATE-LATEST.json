@@ -1,0 +1,472 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_cut_b_final_state.v1",
+  "machine_key": "TT_V65_PROD_003_BATCH3_CUT_B_FINAL_STATE",
+  "title": "V65 PROD-003 Batch3 Cut B Final State Consolidation",
+  "stamp": "20260806T050409Z",
+  "phase": "CUT_B_FINAL_STATE_CONSOLIDATION",
+  "tt_production_go": "NO_GO",
+  "baseline": {
+    "non_web3_production_runtime": "V65-PROD-CAND-20260802",
+    "freeze_status": "FROZEN",
+    "tt_production_go": "NO_GO",
+    "sole_runtime_baseline": true
+  },
+  "web3_freeze": {
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "status": "UNCHANGED_ORTHOGONAL",
+    "note": "Do not modify / migrate / mix with Non-Web3 Cut B / Cut C prep"
+  },
+  "tips": {
+    "fe_od_staging": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+    "api_staging": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "fe_eng_wave_historical": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2"
+  },
+  "cut_b_od_ladder": {
+    "status": "CLOSED",
+    "decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+    "ids": [
+      "R012",
+      "R019"
+    ],
+    "full_ids": [
+      "V65-PROD-003-B3-R012",
+      "V65-PROD-003-B3-R019"
+    ],
+    "local_lock_stamp": "20260806T040236Z",
+    "staging_runtime_evidence": {
+      "verdict": "PASS",
+      "stamp": "20260806T044213Z",
+      "outdir": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+      "artifacts": [
+        "STAGING-SMOKE.json",
+        "README.md",
+        "stamp.txt"
+      ],
+      "fe_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "tt_production_go": "NO_GO"
+    },
+    "do_not_cite_as_staging_success": [
+      {
+        "stamp": "20260806T043922Z",
+        "reason": "BLOCKED"
+      },
+      {
+        "stamp": "20260806T040236Z",
+        "reason": "local-only OD lock ≠ Staging PASS"
+      }
+    ],
+    "note": "Cut B OD ladder CLOSED after Staging Runtime Evidence PASS; do not reopen R012/R019 for PAGE_SURFACE_DRIFT"
+  },
+  "cut_b_full": {
+    "status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+    "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+    "local_verify": "PASS",
+    "staging_rc": "PASS",
+    "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+    "smoke_od_staging": "20260806T044213Z",
+    "smoke_eng_wave_historical": "20260806T032748Z"
+  },
+  "buckets": {
+    "CLOSED": {
+      "cut_a": {
+        "status": "CLOSED",
+        "ids": [
+          "R025",
+          "R050"
+        ],
+        "staging_evidence": "PASS",
+        "smoke_stamp": "20260805T072900Z"
+      },
+      "cut_b_eng_wave": {
+        "status": "CLOSED",
+        "ids": [
+          "R010",
+          "R014",
+          "R021",
+          "R031",
+          "R044",
+          "R057"
+        ],
+        "smoke_stamp": "20260806T032748Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+        "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+        "note": "Historical tip retained; do not overwrite with OD tip"
+      },
+      "cut_b_remaining": {
+        "status": "CLOSED",
+        "ids": [
+          "R022",
+          "R029",
+          "R030",
+          "R032"
+        ]
+      },
+      "cut_b_od": {
+        "status": "CLOSED",
+        "ids": [
+          "R012",
+          "R019"
+        ],
+        "decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+        "staging_rc": "PASS",
+        "stamp": "20260806T044213Z"
+      },
+      "cut_b_full_status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED"
+    },
+    "DEFER": {
+      "note": "Remain OPEN; do not reopen as Cut B OD; Owner-accept / Web3-depth defer only",
+      "items": [
+        {
+          "id": "R013",
+          "full_id": "V65-PROD-003-B3-R013",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "系统概况 production surface; Web3 depth deferred",
+          "disposition": "DEFER_WEB3_DEPTH"
+        },
+        {
+          "id": "R036",
+          "full_id": "V65-PROD-003-B3-R036",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "内容中心/向导首屏 fold 密度过高（卡片推主表到折线外）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R040",
+          "full_id": "V65-PROD-003-B3-R040",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "Admin 感知性能/可访问性抛光（CLS · 骨架不一致 · 概况展开认知负荷）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R045",
+          "full_id": "V65-PROD-003-B3-R045",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "Slim 侧栏 ≤12 叶 vs 深层 Admin 路由孤岛 · IA 可发现性",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R046",
+          "full_id": "V65-PROD-003-B3-R046",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "配置中心控制真值（枢纽导航 + 诚实文案 · 子面写能力未齐）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R047",
+          "full_id": "V65-PROD-003-B3-R047",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "增长中心 CTA 诚实度（analytics/KOL 合同只读 vs 运营暗示）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R048",
+          "full_id": "V65-PROD-003-B3-R048",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "用户台写闸诚实度（advisory-disabled + 收购 suspend 窄写）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R052",
+          "full_id": "V65-PROD-003-B3-R052",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "信息架构 L1/L2/L3 坍塌：业务动作与技术元信息混排主表面",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R053",
+          "full_id": "V65-PROD-003-B3-R053",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "Workbench L5 Design System 非唯一视觉母版：Content/Official/孤岛密度漂移",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R055",
+          "full_id": "V65-PROD-003-B3-R055",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "机读 STRUCTURE_SCAN L5 禁止冒充视觉/运营闭环（Batch3 诚实闸）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R058",
+          "full_id": "V65-PROD-003-B3-R058",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "操作者语言/ops jargon 泄漏面仍广于财务（深化 R039）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R063",
+          "full_id": "V65-PROD-003-B3-R063",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "公网公告 CDN/浏览器 TTL 无 Publish 失效：max-age=60 + SWR=120",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R064",
+          "full_id": "V65-PROD-003-B3-R064",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "Admin 审计写入 best-effort 静默吞失败（资金/权限动作无 fail-closed）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R065",
+          "full_id": "V65-PROD-003-B3-R065",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "审阅/冻结写路径缺乐观并发：steward/acquisition 末写覆盖",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        },
+        {
+          "id": "R066",
+          "full_id": "V65-PROD-003-B3-R066",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "会话过期硬跳登录：长表单未保存丢失（无草稿恢复）",
+          "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT"
+        }
+      ],
+      "ids": [
+        "R013",
+        "R036",
+        "R040",
+        "R045",
+        "R046",
+        "R047",
+        "R048",
+        "R052",
+        "R053",
+        "R055",
+        "R058",
+        "R063",
+        "R064",
+        "R065",
+        "R066"
+      ],
+      "count": 15
+    },
+    "Expected_Difference": {
+      "items": [
+        {
+          "id": "V65-PROD-003-B3-ED-PAGE-SURFACE-DRIFT",
+          "class": "Expected_Difference",
+          "disposition": "CONFIRM_DESIGN",
+          "blocking": false,
+          "title": "Staging FE deploy PAGE_SURFACE_DRIFT (Cut A /admin/ops + Cut B OD ambient/unsplash)",
+          "observations": [
+            {
+              "cut": "CUT_A",
+              "stamp": "20260805T072900Z",
+              "signals": [
+                "/admin/ops 404 vs matrix",
+                "PAGE_SURFACE_DRIFT"
+              ],
+              "note": "Cookie-authed; markers still PASS; not Cut A blocker"
+            },
+            {
+              "cut": "CUT_B_OD",
+              "stamp": "20260806T044213Z",
+              "signals": [
+                "landing_ambient_count_11_ne_10",
+                "page_/_unsplash",
+                "TT_STAGING_PAGE_SURFACES: DRIFT"
+              ],
+              "note": "Non-blocking for OD RC PASS; MUST NOT reopen closed Residual R012/R019"
+            }
+          ],
+          "residual_reopen_forbidden": [
+            "R012",
+            "R019"
+          ],
+          "stamp": "20260806T050409Z",
+          "prior_stamps": [
+            "20260805T073000Z",
+            "20260806T044213Z"
+          ]
+        }
+      ],
+      "count": 1
+    },
+    "Cut_C_Candidate_Scope": {
+      "status": "PREP_READY_DOCS_ONLY_NO_ENG",
+      "engineering_start": "FORBIDDEN_THIS_STAMP",
+      "items": [
+        {
+          "id": "R011",
+          "full_id": "V65-PROD-003-B3-R011",
+          "severity": "P1",
+          "status": "OPEN",
+          "title": "Workbench 今日待办 = real unreplied / unreprocessed queues"
+        },
+        {
+          "id": "R017",
+          "full_id": "V65-PROD-003-B3-R017",
+          "severity": "P1",
+          "status": "OPEN",
+          "title": "财务七件套 redesign: USDC/TTG + grouped orders + export; demote 系统头寸"
+        },
+        {
+          "id": "R018",
+          "full_id": "V65-PROD-003-B3-R018",
+          "severity": "P1",
+          "status": "OPEN",
+          "title": "Inbox channel set missing Dispute (R011 exit-criteria honesty)"
+        },
+        {
+          "id": "R023",
+          "full_id": "V65-PROD-003-B3-R023",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "财务 empty daily-todo stub + Supplement L5 clash"
+        },
+        {
+          "id": "R024",
+          "full_id": "V65-PROD-003-B3-R024",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "系统概况 unavailable rendered as 0 + KPI wrap clutter"
+        },
+        {
+          "id": "R026",
+          "full_id": "V65-PROD-003-B3-R026",
+          "severity": "P1",
+          "status": "OPEN",
+          "title": "财务双主入口：/admin/finance-suite vs /admin/finance 并存"
+        },
+        {
+          "id": "R027",
+          "full_id": "V65-PROD-003-B3-R027",
+          "severity": "P1",
+          "status": "OPEN",
+          "title": "财务「退款」磁贴语义谎言（disputes ≠ refunds）"
+        },
+        {
+          "id": "R028",
+          "full_id": "V65-PROD-003-B3-R028",
+          "severity": "P1",
+          "status": "OPEN",
+          "title": "财务导出/账本面未挂在 suite 主路径（export 仍在 /admin/finance + accounting placeholder）"
+        },
+        {
+          "id": "R038",
+          "full_id": "V65-PROD-003-B3-R038",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "财务空态/占位诚实度（今日待办空墙 · 系统头寸残卡 · partial 入口）"
+        },
+        {
+          "id": "R039",
+          "full_id": "V65-PROD-003-B3-R039",
+          "severity": "P2",
+          "status": "OPEN",
+          "title": "财务/运营文案 i18n 泄漏（partial 进中文 · supplement 键截断）"
+        },
+        {
+          "id": "R041",
+          "full_id": "V65-PROD-003-B3-R041",
+          "severity": "P1",
+          "status": "OPEN",
+          "title": "争议 Admin = 只读裁决台 · 禁写资金/Escrow · 主 CTA 跳出控制台"
+        }
+      ],
+      "ids": [
+        "R011",
+        "R017",
+        "R018",
+        "R023",
+        "R024",
+        "R026",
+        "R027",
+        "R028",
+        "R038",
+        "R039",
+        "R041"
+      ],
+      "ids_p1": [
+        "R011",
+        "R017",
+        "R018",
+        "R026",
+        "R027",
+        "R028",
+        "R041"
+      ],
+      "ids_p2": [
+        "R023",
+        "R024",
+        "R038",
+        "R039"
+      ],
+      "count": 11,
+      "prep": {
+        "allowed": [
+          "docs_inventory",
+          "OD_text_readiness",
+          "staging_evidence_plan",
+          "design_scope_inventory",
+          "candidate_residual_matrix"
+        ],
+        "forbidden": [
+          "write_path_code",
+          "cut_c_engineering",
+          "staging_deploy_cut_c",
+          "production_deploy",
+          "TT_PRODUCTION_GO_flip",
+          "web3_pin_change"
+        ],
+        "note": "Design-scope prep only; no Cut C eng / Staging Cut C deploy / Production / GO flip"
+      }
+    }
+  },
+  "ssot_pointers": {
+    "residual": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+    "engineering_closure": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.json",
+    "owner_uat_expansion": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+    "cut_c_design_confirmation": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.json",
+    "this_json": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json",
+    "this_md": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.md"
+  },
+  "honesty": {
+    "local_od_lock_is_not_staging_pass": true,
+    "staging_runtime_verified_is_not_production_go": true,
+    "cut_b_full_closed_is_not_cut_c_eng": true,
+    "cut_c_prep_docs_only_is_not_eng_start": true,
+    "page_surface_drift_must_not_reopen_closed_residual": true,
+    "baseline_frozen": true,
+    "web3_pin_orthogonal": true,
+    "tt_production_go": "NO_GO",
+    "do_not_cite_blocked_or_local_only_as_staging_success": true
+  },
+  "next": {
+    "action": "CUT_C_DESIGN_OWNER_DECISIONS_AWAIT_SIGN",
+    "cut": "CUT_C",
+    "scope": "Cut C Design Confirmation entered (20260806T051233Z); Owner complete OD-C-01..05 — no eng; no Production; no GO flip",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.json",
+    "honesty": "Cut B Full CLOSED + Staging Runtime VERIFIED ≠ Cut C eng ≠ Production GO",
+    "tt_production_go": "NO_GO"
+  },
+  "prohibitions": [
+    "cut_c_engineering",
+    "staging_deploy_cut_c",
+    "production_modify",
+    "TT_PRODUCTION_GO_flip",
+    "web3_pin_change",
+    "reopen_closed_residual_for_PAGE_SURFACE_DRIFT",
+    "reuse_blocked_or_local_only_as_staging_pass"
+  ],
+  "generated_at": "20260806T050409Z",
+  "updated_at": "20260806T050409Z",
+  "updated_by": "agent_cut_b_final_state_consolidation"
+}

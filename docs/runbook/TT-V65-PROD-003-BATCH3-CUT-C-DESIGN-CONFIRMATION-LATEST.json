@@ -1,0 +1,295 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_cut_c_design_confirmation.v1",
+  "machine_key": "TT_V65_PROD_003_BATCH3_CUT_C_DESIGN_CONFIRMATION",
+  "title": "V65 PROD-003 Batch3 Cut C Design Confirmation (docs-only)",
+  "stamp": "20260806T051233Z",
+  "phase": "CUT_C_DESIGN_ONLY",
+  "posture": "DESIGN_CONFIRMATION_READY_NO_ENG",
+  "tt_production_go": "NO_GO",
+  "baseline": {
+    "non_web3_production_runtime": "V65-PROD-CAND-20260802",
+    "freeze_status": "FROZEN",
+    "tt_production_go": "NO_GO",
+    "sole_runtime_baseline": true,
+    "note": "Unique Non-Web3 Production Runtime Baseline — do not mix Web3 freeze"
+  },
+  "web3_freeze": {
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "status": "UNCHANGED_ORTHOGONAL",
+    "note": "Do not modify / migrate / mix into Cut C Product design or future eng"
+  },
+  "cut_b_prerequisite": {
+    "final_state_stamp": "20260806T050409Z",
+    "cut_b_full_status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+    "od_ladder": "CLOSED",
+    "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+    "staging_od_pass": "20260806T044213Z",
+    "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+    "fe_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+    "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json"
+  },
+  "expected_difference_locked": {
+    "id": "V65-PROD-003-B3-ED-PAGE-SURFACE-DRIFT",
+    "class": "Expected_Difference",
+    "disposition": "CONFIRM_DESIGN",
+    "blocking": false,
+    "residual_reopen_forbidden": ["R012", "R019"],
+    "note": "PAGE_SURFACE_DRIFT remains Expected Difference; do not reopen closed Residual"
+  },
+  "candidate_scope": {
+    "status": "OWNER_SCOPED",
+    "source": "Cut B Final State buckets.Cut_C_Candidate_Scope",
+    "count": 11,
+    "ids": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "ids_p1": ["R011", "R017", "R018", "R026", "R027", "R028", "R041"],
+    "ids_p2": ["R023", "R024", "R038", "R039"],
+    "items": [
+      {
+        "id": "R011",
+        "full_id": "V65-PROD-003-B3-R011",
+        "severity": "P1",
+        "surface": "Workbench / Inbox",
+        "title": "Workbench 今日待办 = real unreplied / unreprocessed queues",
+        "design_theme": "REAL_QUEUE_HONESTY"
+      },
+      {
+        "id": "R017",
+        "full_id": "V65-PROD-003-B3-R017",
+        "severity": "P1",
+        "surface": "Finance Suite",
+        "title": "财务七件套 redesign: USDC/TTG + grouped orders + export; demote 系统头寸",
+        "design_theme": "FINANCE_SUITE_REDESIGN"
+      },
+      {
+        "id": "R018",
+        "full_id": "V65-PROD-003-B3-R018",
+        "severity": "P1",
+        "surface": "Inbox",
+        "title": "Inbox channel set missing Dispute (R011 exit-criteria honesty)",
+        "design_theme": "INBOX_DISPUTE_CHANNEL"
+      },
+      {
+        "id": "R023",
+        "full_id": "V65-PROD-003-B3-R023",
+        "severity": "P2",
+        "surface": "Finance Suite",
+        "title": "财务 empty daily-todo stub + Supplement L5 clash",
+        "design_theme": "FINANCE_EMPTY_STATE_HONESTY"
+      },
+      {
+        "id": "R024",
+        "full_id": "V65-PROD-003-B3-R024",
+        "severity": "P2",
+        "surface": "System Overview",
+        "title": "系统概况 unavailable rendered as 0 + KPI wrap clutter",
+        "design_theme": "OVERVIEW_UNAVAILABLE_HONESTY"
+      },
+      {
+        "id": "R026",
+        "full_id": "V65-PROD-003-B3-R026",
+        "severity": "P1",
+        "surface": "Finance Suite",
+        "title": "财务双主入口：/admin/finance-suite vs /admin/finance 并存",
+        "design_theme": "FINANCE_SINGLE_ENTRY"
+      },
+      {
+        "id": "R027",
+        "full_id": "V65-PROD-003-B3-R027",
+        "severity": "P1",
+        "surface": "Finance Suite",
+        "title": "财务「退款」磁贴语义谎言（disputes ≠ refunds）",
+        "design_theme": "FINANCE_SEMANTIC_TRUTH"
+      },
+      {
+        "id": "R028",
+        "full_id": "V65-PROD-003-B3-R028",
+        "severity": "P1",
+        "surface": "Finance Suite",
+        "title": "财务导出/账本面未挂在 suite 主路径",
+        "design_theme": "FINANCE_EXPORT_ON_SUITE"
+      },
+      {
+        "id": "R038",
+        "full_id": "V65-PROD-003-B3-R038",
+        "severity": "P2",
+        "surface": "Finance Suite",
+        "title": "财务空态/占位诚实度",
+        "design_theme": "FINANCE_EMPTY_STATE_HONESTY"
+      },
+      {
+        "id": "R039",
+        "full_id": "V65-PROD-003-B3-R039",
+        "severity": "P2",
+        "surface": "Finance / Ops copy",
+        "title": "财务/运营文案 i18n 泄漏",
+        "design_theme": "I18N_OPS_LANGUAGE"
+      },
+      {
+        "id": "R041",
+        "full_id": "V65-PROD-003-B3-R041",
+        "severity": "P1",
+        "surface": "Disputes Admin",
+        "title": "争议 Admin = 只读裁决台 · 禁写资金/Escrow · 主 CTA 跳出控制台",
+        "design_theme": "DISPUTE_READ_ONLY_BENCH"
+      }
+    ],
+    "out_of_scope_this_design": {
+      "defer_bucket": [
+        "R013",
+        "R036",
+        "R040",
+        "R045",
+        "R046",
+        "R047",
+        "R048",
+        "R052",
+        "R053",
+        "R055",
+        "R058",
+        "R063",
+        "R064",
+        "R065",
+        "R066"
+      ],
+      "closed_must_not_reopen": ["R012", "R019"],
+      "note": "DEFER remain OPEN outside Cut C eng; closed OD residuals must not reopen for PAGE_SURFACE_DRIFT"
+    }
+  },
+  "owner_decision": {
+    "status": "DESIGN_PHASE_OPEN_AWAITING_OWNER_SIGN",
+    "required_decisions": [
+      {
+        "id": "OD-C-01",
+        "topic": "Candidate Scope freeze",
+        "question": "Confirm Cut C Candidate Scope = 11 residuals (P1: R011/R017/R018/R026/R027/R028/R041; P2: R023/R024/R038/R039) and no additions from DEFER without new Owner scope?",
+        "default_proposal": "ACCEPT_SCOPE_AS_FINAL_STATE",
+        "owner_choice": null,
+        "blocking_for_eng": true
+      },
+      {
+        "id": "OD-C-02",
+        "topic": "Finance single entry",
+        "question": "For R026/R017: keep /admin/finance-suite as sole operator entry and demote /admin/finance to redirect or legacy-only?",
+        "default_proposal": "SUITE_PRIMARY_LEGACY_REDIRECT",
+        "owner_choice": null,
+        "blocking_for_eng": true
+      },
+      {
+        "id": "OD-C-03",
+        "topic": "Dispute Admin write boundary",
+        "question": "For R041: confirm Dispute Admin remains read-only adjudication bench with no fund/Escrow write from console?",
+        "default_proposal": "READ_ONLY_BENCH_NO_FUND_WRITE",
+        "owner_choice": null,
+        "blocking_for_eng": true
+      },
+      {
+        "id": "OD-C-04",
+        "topic": "Inbox Dispute channel",
+        "question": "For R018/R011: add Dispute as first-class Inbox channel tied to real unreprocessed queue?",
+        "default_proposal": "ADD_DISPUTE_CHANNEL_REAL_QUEUE",
+        "owner_choice": null,
+        "blocking_for_eng": true
+      },
+      {
+        "id": "OD-C-05",
+        "topic": "PAGE_SURFACE_DRIFT",
+        "question": "Keep V65-PROD-003-B3-ED-PAGE-SURFACE-DRIFT as Expected Difference CONFIRM_DESIGN and forbid reopen of R012/R019?",
+        "default_proposal": "KEEP_ED_NO_REOPEN",
+        "owner_choice": null,
+        "blocking_for_eng": false,
+        "note": "Already locked by Cut B Final State; Owner reaffirm only"
+      }
+    ],
+    "sign_off": {
+      "owner": null,
+      "signed_at": null,
+      "result": "NOT_SIGNED",
+      "note": "Owner Sign-off on design decisions required before any Cut C engineering start"
+    }
+  },
+  "design_confirmation": {
+    "status": "CONFIRMED_AS_DESIGN_PHASE_ENTRY",
+    "confirmed_at": "20260806T051233Z",
+    "confirmed_items": [
+      "Cut B Final State FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED is prerequisite",
+      "Cut C enters design-only: Candidate Scope + Owner Decision + Design Confirmation",
+      "PAGE_SURFACE_DRIFT remains Expected Difference; R012/R019 reopen forbidden",
+      "TT_PRODUCTION_GO remains NO_GO",
+      "Web3 freeze PSG-REL-20260720-WEB3-CAND-V2 stays orthogonal",
+      "Engineering / Staging Cut C deploy / Production deploy FORBIDDEN until Owner Sign-off + separate eng gate"
+    ],
+    "themes": [
+      {
+        "theme": "REAL_QUEUE_HONESTY",
+        "residuals": ["R011", "R018"],
+        "design_intent": "Workbench/Inbox surfaces show real unreplied/unreprocessed queues; Dispute channel honesty"
+      },
+      {
+        "theme": "FINANCE_SUITE_REDESIGN",
+        "residuals": ["R017", "R023", "R026", "R027", "R028", "R038", "R039"],
+        "design_intent": "Single finance entry, semantic truth (refund≠dispute), export on suite path, empty-state honesty, i18n hygiene"
+      },
+      {
+        "theme": "DISPUTE_READ_ONLY_BENCH",
+        "residuals": ["R041"],
+        "design_intent": "Admin dispute = read-only adjudication; fund/Escrow writes stay outside console CTA"
+      },
+      {
+        "theme": "OVERVIEW_UNAVAILABLE_HONESTY",
+        "residuals": ["R024"],
+        "design_intent": "Unavailable metrics must not render as zero; reduce KPI wrap clutter"
+      }
+    ]
+  },
+  "gates": {
+    "design_phase_entry": "PASS",
+    "owner_decision_complete": "OPEN",
+    "engineering_start": "FORBIDDEN",
+    "staging_cut_c_deploy": "FORBIDDEN",
+    "production_deploy": "FORBIDDEN",
+    "tt_production_go_flip": "FORBIDDEN"
+  },
+  "prohibitions": [
+    "No Cut C engineering / write-path code this stamp",
+    "No Staging Cut C deploy",
+    "No Production modification or deploy",
+    "No TT_PRODUCTION_GO flip (stay NO_GO)",
+    "No Web3 pin change or mix into Product design",
+    "Do not reopen closed Residual R012/R019 for PAGE_SURFACE_DRIFT",
+    "Do not pull DEFER residuals into Cut C eng without new Owner scope"
+  ],
+  "honesty": [
+    "Cut B Full CLOSED ≠ Cut C eng start ≠ Production GO",
+    "Design Confirmation entry ≠ Owner Sign-off complete ≠ eng authorized",
+    "Staging OD VERIFIED 20260806T044213Z ≠ Cut C Staging deploy",
+    "Consolidation 20260806T050409Z ≠ this design stamp 20260806T051233Z"
+  ],
+  "ssot_pointers": {
+    "cut_b_final_state": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json",
+    "residual": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+    "engineering_closure": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.json",
+    "owner_uat": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+    "this_md": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.md"
+  },
+  "next": {
+    "action": "OWNER_COMPLETE_CUT_C_DESIGN_DECISIONS",
+    "then": "Only after Owner Sign-off may a separate Cut C eng gate be opened",
+    "forbidden_now": "eng · staging_cut_c_deploy · production · GO_flip"
+  },
+  "generated_at": "20260806T051233Z",
+  "updated_at": "20260806T051233Z",
+  "updated_by": "agent_cut_c_design_confirmation"
+}

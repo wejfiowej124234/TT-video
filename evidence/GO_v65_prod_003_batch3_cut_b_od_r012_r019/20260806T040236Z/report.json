@@ -1,0 +1,44 @@
+{
+  "schema": "tt.v65.prod_003.batch3.cut_b_od_r012_r019.local_verify.v1",
+  "stamp": "20260806T040236Z",
+  "cut": "CUT_B",
+  "track": "CUT_B_OD_R012_R019",
+  "od_id": "OD-B3-FOCUS-COMPANION",
+  "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+  "od_lock": "LOCKED",
+  "residuals": [
+    "V65-PROD-003-B3-R012",
+    "V65-PROD-003-B3-R019"
+  ],
+  "status": "FULL_CLOSED_OD_LOCKED_LOCAL_VERIFIED",
+  "local_verify": "PASS",
+  "staging_rc": "PENDING",
+  "fe_staging_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+  "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "tt_production_go": "NO_GO",
+  "enterprise_l5_production_ready": false,
+  "paths": [
+    "frontend/components/admin/AdminHomeFocusCompanion.tsx",
+    "frontend/components/admin/AdminHomeSystemOverview.tsx",
+    "frontend/lib/admin/adminHomeFocusCompanionTodoOnly.ts",
+    "frontend/__tests__/adminHomeL5.contract.test.ts"
+  ],
+  "markers": {
+    "r012": "data-tt-admin-home-focus-companion-recent-only=od-r012",
+    "r019": "data-tt-admin-home-overview-pending-dedupe=od-r019",
+    "lib": "tt_admin_home_focus_companion_recent_only_od_r012"
+  },
+  "deferred": {
+    "R013": "DEFER",
+    "misc_p2_owner_accept": "OPEN_DEFERRED"
+  },
+  "cut_c": "PREP_READY_DOCS_ONLY_NO_ENG",
+  "honesty": [
+    "Cut B Full CLOSED != Staging RC != Cut C eng != Production GO",
+    "OD FE LOCAL_VERIFIED; Staging RC pending before Production path",
+    "Web3 Protocol frozen — no migrate/redeploy",
+    "TT_PRODUCTION_GO=NO_GO"
+  ],
+  "verdict": "PASS_LOCAL_OWNER_LOCKED",
+  "prior_eng_wave_smoke": "20260806T032748Z"
+}

@@ -1,0 +1,508 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_engineering_closure_latest.v1",
+  "machine_key": "TT_V65_PROD_003_BATCH3_ENGINEERING_CLOSURE",
+  "stamp": "20260806T050409Z",
+  "phase": "BATCH3_ENGINEERING_CLOSURE_CUT_MODE",
+  "tt_production_go": "NO_GO",
+  "track": "V65_PRODUCTION_BATCH_REPAIR_BRANCHLESS",
+  "strategy": {
+    "mode": "RISK_AGGREGATED_CUT",
+    "supersedes": "W3_TO_W10_SINGLE_RESIDUAL_WAVES",
+    "owner_directive": "Cut A R025/R050 first; Cut B non-OD Enterprise Admin Hardening merge; Cut C OD-bound Inbox/Dispute/Finance; keep NO_GO; no skip Staging Evidence; all P1 clear before Delta Release Certification + Owner GO Review",
+    "hard_gates": [
+      "TT_PRODUCTION_GO_NO_GO",
+      "NO_SKIP_STAGING_EVIDENCE",
+      "ALL_P1_CLEAR_BEFORE_DELTA_CERT_AND_OWNER_GO_REVIEW",
+      "RUNTIME_VERIFIED_NE_OWNER_VALIDATED_NE_CLOSED_NE_PRODUCTION_GO"
+    ]
+  },
+  "tips": {
+    "fe": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+    "api": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "alignment": "ENG_WAVE_TIP_ALIGNED"
+  },
+  "enterprise_l5_production_ready": false,
+  "release_cert_currency": "HISTORICAL_PENDING_RERUN_AFTER_P1_CLEAR",
+  "history_retained": {
+    "W0": {
+      "name": "Owner Decisions",
+      "status": "LOCKED",
+      "note": "5x OD frozen; do not reopen"
+    },
+    "W1": {
+      "name": "R016/R020 Country catalog + Growth Hub",
+      "status": "CLOSED",
+      "note": "Staging Evidence closed"
+    },
+    "W2": {
+      "name": "R059-R062 Write Path",
+      "status": "CLOSED",
+      "staging_runtime": "20260805T054411Z",
+      "residual_close": "20260805T055000Z"
+    },
+    "W3_W10": {
+      "status": "SUPERSEDED",
+      "note": "Single-residual ladder replaced by Cut A/B/C"
+    }
+  },
+  "cuts": {
+    "order": [
+      "CUT_A",
+      "CUT_B",
+      "CUT_C"
+    ],
+    "CUT_A": {
+      "id": "CUT_A",
+      "name": "Runtime Reliability",
+      "status": "CLOSED",
+      "ids": [
+        "R025",
+        "R050"
+      ],
+      "local": "LANDED",
+      "staging_evidence": "PASS",
+      "smoke_stamp": "20260805T072900Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w3_error_isolation/20260805T072900Z",
+      "residual_close": "DONE",
+      "closed_at": "20260805T073000Z",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO",
+      "expected_difference": {
+        "id": "V65-PROD-003-B3-ED-PAGE-SURFACE-DRIFT",
+        "disposition": "CONFIRM_DESIGN",
+        "title": "PAGE_SURFACE_DRIFT /admin/ops 404"
+      }
+    },
+    "CUT_B": {
+      "id": "CUT_B",
+      "title": "Enterprise Admin Hardening (non-OD)",
+      "status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+      "priority": 2,
+      "scope_families": [
+        "Truth Layer",
+        "Chrome",
+        "Table",
+        "Performance",
+        "Content/Orders",
+        "Approvals/misc P2"
+      ],
+      "residual_examples": [
+        "R029",
+        "R049",
+        "R051",
+        "R056",
+        "R032",
+        "R012",
+        "R019",
+        "R014",
+        "R021",
+        "R034",
+        "R035",
+        "R037",
+        "R040",
+        "R054",
+        "R015",
+        "R022",
+        "R030",
+        "R033",
+        "R042",
+        "R043",
+        "R044",
+        "R010",
+        "R045",
+        "R046",
+        "R047",
+        "R048",
+        "R052",
+        "R053",
+        "R055",
+        "R057",
+        "R058",
+        "R063",
+        "R064",
+        "R065",
+        "R066"
+      ],
+      "exclude": [
+        "Inbox/Dispute/Finance OD surfaces",
+        "R013_defer_until_onchain"
+      ],
+      "exit": "Cut B bound OPEN P1/P2 CLOSED with Staging Evidence package",
+      "note": "Unblocked after Cut A Residual Close; no OD write paths",
+      "blocked_on": null,
+      "ids_p1": [],
+      "owner_scope_ids": [
+        "R015",
+        "R033",
+        "R034",
+        "R035",
+        "R037",
+        "R042",
+        "R043",
+        "R049",
+        "R051",
+        "R054",
+        "R056"
+      ],
+      "local": "LANDED",
+      "staging_evidence": "PASS",
+      "smoke_stamp": "20260806T032748Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "residual_close": "FULL_CUT_B_OD_DONE",
+      "closed_at": "20260806T040236Z",
+      "honesty": "Cut B Full CLOSED after OD LOCKED+LOCAL_VERIFIED+STAGING_RUNTIME_VERIFIED; OD FE tip d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7; eng-wave tip retained 241969c0…; R013 DEFER; RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO; TT_PRODUCTION_GO=NO_GO",
+      "tt_production_go": "NO_GO",
+      "fe_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+      "contract_test": "frontend/lib/admin/adminEnterpriseHardening.contract.test.ts",
+      "smoke_script": "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs",
+      "remaining_note": "OD R012/R019 CLOSED 20260806T040236Z `REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY`; Staging Runtime VERIFIED 20260806T044213Z; FE tip d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7; API tip 1915ec4da828e0139e90a85cd321415fdb6e53d9; eng-wave retained 20260806T032748Z; R013 DEFER; Cut C docs-only prep; no Cut C eng; TT_PRODUCTION_GO=NO_GO",
+      "remaining_fe_smoke": {
+        "stamp": "20260806T003800Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z",
+        "script": "scripts/dev/run-v65-batch3-cut-b-remaining-fe-staging-smoke.cjs",
+        "verdict": "PASS",
+        "ids": [
+          "R022",
+          "R030",
+          "R032"
+        ]
+      },
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "eng_wave": {
+        "stamp": "20260806T034500Z",
+        "smoke_stamp": "20260806T032748Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+        "script": "scripts/dev/run-v65-batch3-cut-b-eng-wave-staging-smoke.cjs",
+        "verdict": "PASS",
+        "ids": [
+          "V65-PROD-003-B3-R010",
+          "V65-PROD-003-B3-R014",
+          "V65-PROD-003-B3-R021",
+          "V65-PROD-003-B3-R031",
+          "V65-PROD-003-B3-R044",
+          "V65-PROD-003-B3-R057"
+        ],
+        "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+        "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9"
+      },
+      "od_remaining": [],
+      "defer_remaining": [
+        "R013"
+      ],
+      "od_closed": {
+        "stamp": "20260806T040236Z",
+        "decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+        "ids": [
+          "R012",
+          "R019"
+        ],
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+        "local_verify": "PASS",
+        "staging_status": "STAGING_RUNTIME_VERIFIED",
+        "contracts": [
+          "frontend/components/admin/adminHomeL5.contract.test.ts",
+          "frontend/lib/admin/adminWorkbenchW05.batch12.contract.test.ts"
+        ]
+      },
+      "od_evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+      "final_state_stamp": "20260806T050409Z",
+      "od_ladder": "CLOSED"
+    },
+    "CUT_C": {
+      "id": "CUT_C",
+      "title": "OD-bound Inbox/Dispute/Finance Surfaces",
+      "status": "DESIGN_CONFIRMATION_READY_NO_ENG",
+      "priority": 3,
+      "residuals": [
+        "R011",
+        "R017",
+        "R018",
+        "R023",
+        "R024",
+        "R026",
+        "R027",
+        "R028",
+        "R038",
+        "R039",
+        "R041"
+      ],
+      "od_lock": "W0_LOCKED",
+      "exit": "Cut C surfaces CLOSED under W0 OD text + Staging Evidence",
+      "note": "Cut C Design Confirmation entered 20260806T051233Z (Candidate Scope + Owner Decisions OD-C-01..05 + Design themes). FORBIDDEN: eng / Staging Cut C deploy / Production / GO flip until Owner signs OD-C-* and separately authorizes eng.",
+      "ids_p1": [
+        "R011",
+        "R017",
+        "R018",
+        "R026",
+        "R027",
+        "R028",
+        "R041"
+      ],
+      "prep": {
+        "started_at": "20260806T034500Z",
+        "allowed": [
+          "docs_inventory",
+          "OD_text_readiness",
+          "staging_evidence_plan",
+          "design_scope_inventory",
+          "candidate_residual_matrix",
+          "owner_decision_text",
+          "design_confirmation_docs"
+        ],
+        "forbidden": [
+          "write_path_code",
+          "cut_c_engineering",
+          "staging_deploy_cut_c",
+          "production_deploy",
+          "TT_PRODUCTION_GO_flip",
+          "web3_pin_change"
+        ],
+        "note": "Design Confirmation stamp 20260806T051233Z; Owner OD-C-01..05 NOT_SIGNED; eng remains FORBIDDEN",
+        "unblocked_at": "20260806T040236Z",
+        "blocked_on_cut_b_od": false,
+        "final_state_stamp": "20260806T050409Z",
+        "design_confirmation_stamp": "20260806T051233Z",
+        "design_confirmation_ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.json"
+      },
+      "ids_p2": [
+        "R023",
+        "R024",
+        "R038",
+        "R039"
+      ]
+    }
+  },
+  "post_all_p1_clear": {
+    "steps": [
+      "Delta Release Certification (rerun)",
+      "Owner GO Review (time-separated)",
+      "Owner-only TT_PRODUCTION_GO flip"
+    ],
+    "forbidden_before_p1_clear": [
+      "Delta Release Certification as GO claim",
+      "Owner GO Review as Production GO",
+      "TT_PRODUCTION_GO flip"
+    ]
+  },
+  "hard_gate_order_historical": [
+    "R016",
+    "R020",
+    "R059",
+    "R060",
+    "R061",
+    "R062",
+    "R025",
+    "R050"
+  ],
+  "active_hard_gate": [],
+  "next": {
+    "action": "CUT_C_DESIGN_OWNER_DECISIONS_AWAIT_SIGN",
+    "cut": "CUT_C",
+    "scope": "Cut B Final State CONSOLIDATED 20260806T050409Z; Cut C Design Confirmation 20260806T051233Z READY — Owner OD-C-01～05 NOT_SIGNED; no eng; no Production",
+    "honesty": "Staging Runtime VERIFIED ≠ Cut C eng ≠ Production GO; PAGE_SURFACE_DRIFT must not reopen R012/R019",
+    "tt_production_go": "NO_GO",
+    "note": "OD Staging PASS 20260806T044213Z; consolidation 20260806T050409Z; design 20260806T051233Z; R039 in Cut C residuals; TT_PRODUCTION_GO=NO_GO"
+  },
+  "md": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.md",
+  "residual_ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+  "updated_at": "20260806T051233Z",
+  "updated_by": "agent_cut_c_design_confirmation",
+  "tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+  "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "active_cut": "CUT_C",
+  "summary": {
+    "cut_a": "CLOSED",
+    "cut_b": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+    "cut_c": "DESIGN_CONFIRMATION_READY_NO_ENG",
+    "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+    "od_stamp": "20260806T040236Z",
+    "smoke_eng_wave": "20260806T032748Z",
+    "od_evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+    "note": "Cut B Final State CONSOLIDATED 20260806T050409Z; OD Staging PASS 20260806T044213Z; Cut C Design Confirmation 20260806T051233Z; await Owner OD-C sign; do not eng/Production; TT_PRODUCTION_GO=NO_GO",
+    "tt_production_go": "NO_GO",
+    "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+    "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "staging_rc_od_fe": "PASS",
+    "smoke_od_staging": "20260806T044213Z",
+    "final_state_stamp": "20260806T050409Z",
+    "cut_c_design_stamp": "20260806T051233Z",
+    "cut_c_residuals": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ]
+  },
+  "generated_at": "20260806T051233Z",
+  "CUT_B_ENTERPRISE_ADMIN_HARDENING": {
+    "fe_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+    "status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+    "remaining": {
+      "R029": {
+        "status": "CLOSED",
+        "closed_at": "20260805T120000Z",
+        "smoke_stamp": "20260805T120000Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260805T120000Z"
+      },
+      "R022": {
+        "status": "CLOSED",
+        "closed_at": "20260806T004000Z",
+        "smoke_stamp": "20260806T003800Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z"
+      },
+      "R030": {
+        "status": "CLOSED",
+        "closed_at": "20260806T004000Z",
+        "smoke_stamp": "20260806T003800Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z"
+      },
+      "R032": {
+        "status": "CLOSED",
+        "closed_at": "20260806T004000Z",
+        "smoke_stamp": "20260806T003800Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z"
+      },
+      "ids_p1": [],
+      "next": "CUT_C_PREP_DOCS_ONLY_NO_ENG",
+      "note": "Cut B Full CLOSED; OD R012/R019 Staging VERIFIED 20260806T044213Z; TT_PRODUCTION_GO=NO_GO",
+      "R010": {
+        "status": "CLOSED",
+        "closed_at": "20260806T034500Z",
+        "smoke_stamp": "20260806T032748Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+        "id": "V65-PROD-003-B3-R010"
+      },
+      "R014": {
+        "status": "CLOSED",
+        "closed_at": "20260806T034500Z",
+        "smoke_stamp": "20260806T032748Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+        "id": "V65-PROD-003-B3-R014"
+      },
+      "R021": {
+        "status": "CLOSED",
+        "closed_at": "20260806T034500Z",
+        "smoke_stamp": "20260806T032748Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+        "id": "V65-PROD-003-B3-R021"
+      },
+      "R031": {
+        "status": "CLOSED",
+        "closed_at": "20260806T034500Z",
+        "smoke_stamp": "20260806T034500Z",
+        "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+        "id": "V65-PROD-003-B3-R031"
+      },
+      "R044": {
+        "status": "CLOSED",
+        "closed_at": "20260806T034500Z",
+        "smoke_stamp": "20260806T032748Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+        "id": "V65-PROD-003-B3-R044"
+      },
+      "R057": {
+        "status": "CLOSED",
+        "closed_at": "20260806T034500Z",
+        "smoke_stamp": "20260806T032748Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+        "id": "V65-PROD-003-B3-R057"
+      },
+      "od_open": [],
+      "defer": [
+        "R013"
+      ],
+      "R012": {
+        "status": "CLOSED",
+        "closed_at": "20260806T040236Z",
+        "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+        "local_verify": "PASS",
+        "staging_status": "STAGING_RUNTIME_VERIFIED",
+        "id": "V65-PROD-003-B3-R012",
+        "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7"
+      },
+      "R019": {
+        "status": "CLOSED",
+        "closed_at": "20260806T040236Z",
+        "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+        "local_verify": "PASS",
+        "staging_status": "STAGING_RUNTIME_VERIFIED",
+        "id": "V65-PROD-003-B3-R019",
+        "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7"
+      }
+    },
+    "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "od_ladder": "CLOSED",
+    "final_state_stamp": "20260806T050409Z"
+  },
+  "CUT_C_PRODUCT_DECISIONS": {
+    "status": "DESIGN_CONFIRMATION_READY_NO_ENG",
+    "prep_started_at": "20260806T034500Z",
+    "design_confirmation_stamp": "20260806T051233Z",
+    "design_confirmation_ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.json",
+    "blocked_on": ["owner_od_c_01_to_05_sign"],
+    "cut_b_od_cleared_at": "20260806T040236Z",
+    "note": "Cut B Final State CONSOLIDATED 20260806T050409Z; OD Staging VERIFIED 20260806T044213Z; Cut C Design Confirmation 20260806T051233Z READY — await Owner OD-C-01..05; do not start Cut C engineering",
+    "engineering_start": "FORBIDDEN_THIS_STAMP",
+    "candidate_residuals": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "ids_p1": [
+      "R011",
+      "R017",
+      "R018",
+      "R026",
+      "R027",
+      "R028",
+      "R041"
+    ],
+    "ids_p2": [
+      "R023",
+      "R024",
+      "R038",
+      "R039"
+    ],
+    "final_state_stamp": "20260806T050409Z",
+    "prep_allowed": [
+      "docs_inventory",
+      "OD_text_readiness",
+      "staging_evidence_plan",
+      "design_scope_inventory",
+      "candidate_residual_matrix"
+    ],
+    "prep_forbidden": [
+      "write_path_code",
+      "cut_c_engineering",
+      "staging_deploy_cut_c",
+      "production_deploy",
+      "TT_PRODUCTION_GO_flip",
+      "web3_pin_change"
+    ]
+  },
+  "TT_PRODUCTION_GO": "NO_GO",
+  "final_state_consolidation": {
+    "stamp": "20260806T050409Z",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json",
+    "md": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.md",
+    "cut_b_od_ladder": "CLOSED",
+    "staging_pass_stamp": "20260806T044213Z"
+  }
+}

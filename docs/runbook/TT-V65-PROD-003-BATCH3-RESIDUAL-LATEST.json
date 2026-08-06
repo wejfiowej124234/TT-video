@@ -1,168 +1,2134 @@
 {
   "schema": "traveltrust.v65_prod_003_batch3_residual_latest.v1",
   "machine_key": "TT_V65_PROD_003_BATCH3_RESIDUAL",
-  "stamp": "20260804T084343Z",
-  "phase": "B3_R006_REALITY_AUDIT_CODE_PATCHED_PENDING_DEPLOY",
+  "stamp": "20260806T050409Z",
+  "phase": "BATCH3_ENGINEERING_CLOSURE_CUT_MODE",
   "tt_production_go": "NO_GO",
-  "tip": "56220d781d1d5b82f7cf8a1d83c493659e7a4ce3",
-  "reality_audit_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_b3_r006_reality_audit/20260804T084343Z",
-  "reality_audit_runbook": "docs/runbook/TT-V65-PROD-003-B3-R006-REALITY-AUDIT-LATEST.json",
+  "tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+  "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "engineering_closure": {
+    "stamp": "20260806T050409Z",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.json",
+    "md": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.md",
+    "mode": "RISK_AGGREGATED_CUT",
+    "od_lock": "LOCKED",
+    "active_cut": "CUT_C",
+    "cuts": {
+      "CUT_A": {
+        "status": "CLOSED",
+        "ids": [
+          "R025",
+          "R050"
+        ],
+        "staging_evidence": "PASS",
+        "smoke_stamp": "20260805T072900Z",
+        "evidence": "evidence/GO_v65_prod_003_batch3_w3_error_isolation/20260805T072900Z",
+        "closed_at": "20260805T073000Z",
+        "note": "RUNTIME_VERIFIED Residual CLOSED; OWNER_VALIDATED!=CLOSED!=Production GO; TT_PRODUCTION_GO=NO_GO"
+      },
+      "CUT_B": {
+        "status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+        "ids_p1": [],
+        "note": "Owner-scope + Remaining R022/R030/R032 + Eng-wave + OD R012/R019 CLOSED LOCAL_VERIFIED 20260806T040236Z + Staging Runtime VERIFIED 20260806T044213Z; R013 DEFER + misc P2 Owner-accept may remain OPEN; Full CLOSED != Cut C eng != Production GO; TT_PRODUCTION_GO=NO_GO",
+        "remaining_dual_tip": {
+          "id": "R029",
+          "status": "CLOSED",
+          "smoke_stamp": "20260805T120000Z",
+          "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260805T120000Z"
+        },
+        "remaining_fe": {
+          "ids": [
+            "R022",
+            "R030",
+            "R032"
+          ],
+          "status": "CLOSED",
+          "smoke_stamp": "20260806T003800Z",
+          "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z",
+          "fe_tip": "5e9927bef60d7dc44e6a9f14426bcab0cb075561",
+          "api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+          "patch_id": "PATCH-STG-019"
+        },
+        "od": {
+          "ids": [
+            "R012",
+            "R019"
+          ],
+          "status": "CLOSED",
+          "decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+          "local_verify": "PASS",
+          "staging_rc": "PASS",
+          "closed_at": "20260806T040236Z",
+          "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+          "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7"
+        },
+        "eng_wave": {
+          "status": "CLOSED",
+          "smoke_stamp": "20260806T032748Z",
+          "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+          "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+          "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9"
+        }
+      },
+      "CUT_C": {
+        "status": "PREP_READY_DOCS_ONLY_NO_ENG",
+        "ids_p1": [
+          "R011",
+          "R017",
+          "R018",
+          "R026",
+          "R027",
+          "R028",
+          "R041"
+        ],
+        "note": "Cut B Final State CONSOLIDATED; Cut C docs prep only (residuals incl R039); no eng / no Staging Cut C deploy / no Production; TT_PRODUCTION_GO=NO_GO"
+      }
+    },
+    "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+    "od_stamp": "20260806T040236Z",
+    "final_state_stamp": "20260806T050409Z"
+  },
+  "owner_uat_expansion": {
+    "stamp": "20260806T050409Z",
+    "prior_pass_stamp": "20260805T082200Z",
+    "pass": 7,
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+    "md": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.md",
+    "note": "Cut B Final State CONSOLIDATED 20260806T050409Z; OD LOCKED + Staging VERIFIED 20260806T044213Z; Cut C prep docs-only; TT_PRODUCTION_GO=NO_GO."
+  },
+  "reality_patch_tip": "eb9ed5b8d65a3531d96b29f66d064529b73f178d",
   "pre_cut_tip": "31ce39490a35c3038928c0d42bcd8de909388512",
   "hosts": {
     "api": "https://api.web3-ttg.com",
     "web": "https://www.web3-ttg.com"
   },
+  "owner_uat_stamp": "20260805T031800Z",
+  "owner_uat_evidence": "D:\\TravelTrust-V1.1\\evidence\\GO_v65_prod_003_prv3b_owner_uat\\20260804T230300Z",
+  "owner_validated_stamp": "20260804T230300Z",
+  "single_cut_stamp": "20260804T120534Z",
+  "single_cut_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_single_cut/20260804T120534Z",
   "residuals": [
     {
-      "id": "V65-PROD-003-B3-R001",
-      "title": "Runtime Truth hosts face drifted to fly.dev after Alignment PASS",
+      "id": "V65-PROD-003-RECONCILE-FE-OPS-IA",
+      "title": "Product-line reconcile FE-only Single Cut (Ops IA sidebar)",
       "severity": "P1",
-      "status": "FIXED_IN_SESSION",
-      "fix": "Re-ran Final Truth Alignment with PROD_*=web3-ttg.com",
-      "evidence": "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json hosts=api/www.web3-ttg.com"
+      "status": "RUNTIME_PASS_HISTORICAL",
+      "fix": "FE pin c599a9f9 live (Fly v109); Ops IA markers PASS; API tip 16f29c7e retained; no new OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO; SSOT/FTB not refreshed",
+      "evidence": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-reconcile/evidence/GO_v65_prod_003_reconcile_single_cut/20260804T160814Z",
+      "checklist": "OPS_IA_SIDEBAR",
+      "note": "Ops IA sidebar RUNTIME_PASS on tip c599a9f9 (stamp 20260804T160814Z). Superseded as active residual by ENTRY-FEE-IA cut; live FE tip unchanged until deploy."
     },
     {
       "id": "V65-PROD-003-B3-R002",
-      "title": "Candidate Freeze NOT_FROZEN — CF-05 Release Integrity FAIL",
+      "title": "Candidate Freeze Finalization + Runtime Truth SSOT/FTB",
       "severity": "P1",
-      "status": "OPEN",
-      "fix": "Clear RI before Freeze Finalization; blocked until UAT all-PASS + RI PASS",
-      "evidence": "docs/runbook/TT-V65-PRODUCTION-CANDIDATE-FREEZE-PIN-LATEST.json freeze_status=NOT_FROZEN"
-    },
-    {
-      "id": "V65-PROD-003-B3-R003",
-      "title": "PRV-3b Admin UAT after Single Cut — FAIL blocker R006",
-      "severity": "P0",
-      "status": "DEPLOYED_REUAT_FAIL",
-      "fix": "Single Cut tip 56220d78 live; re-UAT FAIL REVIEW_CLOSED_LOOP; do not fake OWNER_VALIDATED",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z",
-      "browser_tab": "110619"
-    },
-    {
-      "id": "V65-PROD-003-B3-R004",
-      "title": "Stale Admin Logged-in UAT SSOT pre-tip pins",
-      "severity": "P1",
-      "status": "SUPERSEDED_POINTER_UPDATED",
-      "fix": "LATEST rewritten to post-cut tip + FAIL this stamp",
-      "evidence": "docs/runbook/TT-V65-ADMIN-LOGGED-IN-OPERATIONAL-UAT-LATEST.json"
-    },
-    {
-      "id": "V65-PROD-003-B3-R005",
-      "title": "Users page KYC filter copy residual (G057/G076)",
-      "severity": "P0",
-      "status": "DEPLOYED_REUAT_PASS",
-      "fix": "Live /admin/users: no KYC; subtitle 按角色筛选用户…",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
-      "checklist": "KYC_DELETE"
+      "status": "CLOSED",
+      "fix": "Freeze FROZEN 20260804T132141Z; Runtime Truth SSOT + FTB PASS 20260804T132326Z; tip 16f29c7e; TT_PRODUCTION_GO=NO_GO",
+      "evidence": "docs/runbook/TT-V65-PRODUCTION-CANDIDATE-FREEZE-PIN-LATEST.json; docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json; docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json"
     },
     {
       "id": "V65-PROD-003-B3-R006",
-      "title": "Provider/Guide list/detail status SSOT drift — closed-loop FAIL",
+      "title": "Provider/Guide review closed-loop (role_applications SSOT + Idempotency-Key)",
       "severity": "P0",
-      "status": "CODE_PATCHED_PENDING_DEPLOY",
-      "fix": "Reality Audit Case 2 proven (dual store/status); CMS Case 1/3 ruled out. Local SSOT patch: provider RA-first detail; guide orphan RA detail + ensure guides before review. Patch ≠ live PASS; failed tip 56220d78 must not be promoted.",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_b3_r006_reality_audit/20260804T084343Z/REALITY-AUDIT.json",
-      "owner_uat_fail_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
-      "checklist": "REVIEW_CLOSED_LOOP",
-      "fix_paths": [
-        "crates/api/src/chain_off/provider_application.rs",
-        "crates/api/src/chain_off/guide_profile.rs",
-        "crates/api/src/db/role_identity/mod.rs"
-      ],
-      "next": "Owner commit → new tip → Single Cut → PRV-3b re-UAT"
-    },
-    {
-      "id": "V65-PROD-003-B3-R007",
-      "title": "Disputes list/detail integrity",
-      "severity": "P0",
-      "status": "DEPLOYED_REUAT_PASS",
-      "fix": "Live dispute detail opens; not-found cleared on scored sample",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
-      "checklist": "DISPUTES"
-    },
-    {
-      "id": "V65-PROD-003-B3-R008",
-      "title": "Disputes list template vars {refund}/{slash}",
-      "severity": "P1",
-      "status": "DEPLOYED_REUAT_PASS",
-      "fix": "Live disputes list: no uninterpolated {refund}/{slash}",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
-      "checklist": "DISPUTES"
-    },
-    {
-      "id": "V65-PROD-003-B3-R009",
-      "title": "Finance suite/reconciliation/summary i18n raw keys",
-      "severity": "P1",
-      "status": "DEPLOYED_REUAT_PASS",
-      "fix": "Live /admin/finance + finance-suite PASS on re-UAT",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
-      "checklist": "FINANCE"
+      "status": "CLOSED",
+      "fix": "Single Cut tip 16f29c7e + re-UAT PASS; Provider/Guide Approve → role → archive closed-loop verified; owner_validated=true",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T124327Z",
+      "checklist": "REVIEW_CLOSED_LOOP"
     },
     {
       "id": "V65-PROD-003-B3-R010",
       "title": "Approvals pending label residual acrp_seed",
       "severity": "P2",
+      "status": "CLOSED",
+      "fix": "Non-blocking; carried (APPROVALS PARTIAL_PASS)",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "checklist": "APPROVALS",
+      "cut": "CUT_B",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "closure_note": "Cut B eng-wave Staging smoke PASS: Approvals review CTA marker `data-tt-admin-approvals-review-cta` present in Staging FE chunk + local contract. FE tip 241969c0… · API tip 1915ec4d…. Residual CLOSED. OWNER_VALIDATED≠CLOSED≠Production GO; TT_PRODUCTION_GO=NO_GO. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "tt_production_go": "NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO"
+    },
+    {
+      "id": "V65-PROD-003-G-GUIDE-STATUS-LABEL",
+      "title": "Guide detail status raw active vs Chinese approved",
+      "severity": "P3",
       "status": "OPEN",
-      "fix": "Humanize seed approval action labels or hide seed markers in prod UI",
-      "evidence": "/admin/approvals?status=pending acrp_seed",
-      "checklist": "APPROVALS"
+      "fix": "Cosmetic non-blocking residual after closed-loop PASS",
+      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T124327Z"
+    },
+    {
+      "id": "V65-PROD-003-RECONCILE-ENTRY-FEE-IA",
+      "priority": "P1",
+      "status": "CLOSED",
+      "title": "入驻 IA: remove 准入费=平台财务能力; applications-only ops",
+      "owner_decision": "REMOVE_ENTRY_FEE_HUB (G065/G075) -- private wallet != TT ledger",
+      "scope": [
+        "adminShellOnboardingNavLinks applications-only",
+        "onboarding hub + DualLedger LEGACY honesty",
+        "finance Stripe three-track -> finance-suite (not payment-events)",
+        "home/cmd/empty-state/i18n fee demotion"
+      ],
+      "local_tip": "33d94fee6f286d7c99a85958b311af303f866080",
+      "live_fe_tip": "33d94fee6f286d7c99a85958b311af303f866080",
+      "api_live_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+      "evidence_stamp": "20260804T170911Z",
+      "evidence_dir": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-reconcile/evidence/GO_v65_prod_003_reconcile_single_cut/20260804T170911Z",
+      "local_vitest": "7 files / 19 tests PASS (onboarding IA + cmd + sidebar + home)",
+      "tt_production_go": "NO_GO",
+      "next": "Entry-fee IA CLOSED; keep TT_PRODUCTION_GO=NO_GO; release cert still required for GO",
+      "fix": "FE tip 33d94fee Owner PRV-3b UAT PASS 20260804T230300Z; CLOSED; API 16f29c7e; SSOT/FTB refreshed; NO_GO",
+      "owner_validated": true,
+      "owner_uat_stamp": "20260804T230300Z",
+      "owner_uat_evidence": "D:\\TravelTrust-V1.1\\evidence\\GO_v65_prod_003_prv3b_owner_uat\\20260804T230300Z"
+    },
+    {
+      "id": "V65-PROD-003-STEWARD-I18N-RAW-KEY",
+      "title": "Steward queue honesty i18n raw key on FE tip",
+      "severity": "P3",
+      "status": "OPEN",
+      "fix": "Non-blocking cosmetic; FE tip 33d94fee missing zh key admin_steward_queue_private_transfer_honesty while UI t() calls it",
+      "evidence": "evidence/GO_v65_release_certification/20260804T231322Z/OPEN-IMPACT-MATRIX.json"
     },
     {
       "id": "V65-PROD-003-B3-R011",
-      "title": "Config hub i18n residual admin_config_hub_desc_audit",
-      "severity": "P2",
-      "status": "DEPLOYED_REUAT_PASS",
-      "fix": "Live /admin/config: hasAuditKeyLeak=false; rawKeys=[]",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
-      "checklist": "CONFIG_CENTER"
+      "title": "Workbench 今日待办 = real unreplied / unreprocessed queues",
+      "severity": "P1",
+      "status": "OPEN",
+      "fix": "Owner UAT expansion 20260804T234500Z; tip 33d94fee",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
     },
     {
       "id": "V65-PROD-003-B3-R012",
-      "title": "Shell-wide brand wordmark i18n key leak (UI/UX L5)",
-      "severity": "P1",
-      "status": "DEPLOYED_REUAT_PASS",
-      "fix": "Live Admin shell shows TravelTrust on scored critical paths",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
-      "checklist": "UI_UX_L5"
+      "title": "Workbench 速览 dedupe / Owner decision OD-B3-FOCUS-COMPANION",
+      "severity": "P2",
+      "status": "CLOSED",
+      "fix": "Companion duplicates 今日待办; recommend REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+      "cut": "CUT_B",
+      "disposition": "OWNER_DECISION_LOCKED",
+      "cut_b_class": "OWNER_DECISION_CLOSED",
+      "tt_production_go": "NO_GO",
+      "closed_at": "20260806T040236Z",
+      "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+      "od_lock": "LOCKED",
+      "local_verify": "PASS",
+      "contract": [
+        "frontend/components/admin/adminHomeL5.contract.test.ts",
+        "frontend/lib/admin/adminWorkbenchW05.batch12.contract.test.ts"
+      ],
+      "closure_note": "Owner Decision LOCKED `REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY` (20260806T040236Z). AdminHomeFocusCompanion: remove todo UL; keep 最近访问 only (marker `data-tt-admin-home-focus-companion-recent-only=od-r012`). Local contract PASS; Staging Runtime smoke PASS stamp 20260806T044213Z: residual_map R012 true; FE tip d41ddc38… · API tip 1915ec4d…. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z. PAGE_SURFACE_DRIFT (landing ambient 11≠10 / unsplash) = Expected Difference CONFIRM_DESIGN · non-blocking for OD RC. ≠ Production GO; TT_PRODUCTION_GO=NO_GO.",
+      "honesty": "LOCAL_VERIFIED+OWNER_LOCKED+STAGING_RUNTIME_VERIFIED · RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO · TT_PRODUCTION_GO=NO_GO",
+      "staging_status": "STAGING_RUNTIME_VERIFIED",
+      "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "staging_rc": "PASS",
+      "staging_verified_at": "20260806T044213Z"
     },
     {
       "id": "V65-PROD-003-B3-R013",
-      "title": "Onboarding hub LEGACY 准入费 copy (Expected Difference)",
+      "title": "系统概况 production surface; Web3 depth deferred",
       "severity": "P2",
-      "status": "CONFIRM_DESIGN",
-      "fix": "Owner accept intentional LEGACY + historical snapshots, or hard zero-mention",
-      "evidence": "/admin/onboarding",
-      "checklist": "KYC_DELETE"
+      "status": "OPEN",
+      "fix": "Empty/grey domain links + KPI layout; Web3 after on-chain review window",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "cut": "CUT_B",
+      "disposition": "DEFER_WEB3_DEPTH",
+      "cut_b_class": "DEFER",
+      "form": "; Cut B: DEFER Web3 depth until on-chain review",
+      "tt_production_go": "NO_GO"
     },
     {
       "id": "V65-PROD-003-B3-R014",
-      "title": "Vacancy ledger Admin ops HTTP 404 + ops_plane_hint raw key",
+      "title": "向导目录 table L5 nowrap + real filters",
+      "severity": "P2",
+      "status": "CLOSED",
+      "fix": "Header/action/status wrap; thin filter bar",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "cut": "CUT_B",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "closure_note": "Cut B eng-wave Staging smoke PASS: Guides L5 filter bar + table nowrap markers (`guidesFilterBar` / `guidesTableNowrap`) + AdminGuidesListQuery city/country_code/q. FE tip 241969c0… · API tip 1915ec4d…. Residual CLOSED. OWNER_VALIDATED≠CLOSED≠Production GO; TT_PRODUCTION_GO=NO_GO. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "tt_production_go": "NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R015",
+      "title": "内容中心 dedupe + subpage publish audit vs public",
+      "severity": "P1",
+      "status": "CLOSED",
+      "fix": "Hub redundancy + empty child pages vs frontend catalog needs",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "note": "Content subpage publish honesty + audit vs public path (AdminEnterpriseHonestyChrome on Content); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R016",
+      "title": "国家目录 create fix + background edit + public sort_order",
       "severity": "P0",
-      "status": "DEPLOYED_REUAT_PASS",
-      "fix": "Live /admin/vacancy-ledger: no 404; rawKeys=[]; brand TravelTrust",
-      "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z/OWNER-UAT-PROGRESS.json",
-      "checklist": "FINANCE"
+      "status": "CLOSED",
+      "fix": "Live create failed; missing media edit + sort for public country order",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "cut_class": "FE_PLUS_API",
+      "fix_progress": "STAGING_RUNTIME_PASS_RESIDUAL_CLOSED",
+      "local_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T013903Z",
+      "note": "Local FE create/ambient/sort_order + API client contract; Staging BLOCKED (fly auth + three-state + API tip stale). Runtime/Delta pending. Keep OPEN. NO_GO. No prod mutate.",
+      "staging_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z",
+      "runtime_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z/RUNTIME-EVIDENCE.json",
+      "closed_at": "20260805T041800Z",
+      "closure_note": "Staging tip 16f29c7 live; Country Catalog Smoke PASS; create/ambient/sort_order/publish/public render verified; Residual CLOSED."
+    },
+    {
+      "id": "V65-PROD-003-B3-R017",
+      "title": "财务七件套 redesign: USDC/TTG + grouped orders + export; demote 系统头寸",
+      "severity": "P1",
+      "status": "OPEN",
+      "fix": "Owner cannot operate page; IA/jargon; missing finance-grade surfaces",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "depends_on_owner_decision": "OD-B3-FIN-TREASURY-FOLD",
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R018",
+      "title": "Inbox channel set missing Dispute (R011 exit-criteria honesty)",
+      "severity": "P1",
+      "status": "OPEN",
+      "form": "Deep pass 2; tip code has 5 channels only; OD-B3-INBOX-CHANNEL-SET",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R011",
+      "depends_on_owner_decision": "OD-B3-INBOX-CHANNEL-SET",
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R019",
+      "title": "Pending-count surfaces triplicated (todo + companion + overview)",
+      "severity": "P2",
+      "status": "CLOSED",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+      "extends": "V65-PROD-003-B3-R012",
+      "cut": "CUT_B",
+      "disposition": "OWNER_DECISION_LOCKED",
+      "cut_b_class": "OWNER_DECISION_CLOSED",
+      "tt_production_go": "NO_GO",
+      "closed_at": "20260806T040236Z",
+      "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+      "od_lock": "LOCKED",
+      "local_verify": "PASS",
+      "contract": [
+        "frontend/components/admin/adminHomeL5.contract.test.ts",
+        "frontend/lib/admin/adminWorkbenchW05.batch12.contract.test.ts"
+      ],
+      "closure_note": "Owner Decision LOCKED with R012 `REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY` (20260806T040236Z). Overview inbox-pending KPI tile removed (marker `data-tt-admin-home-overview-pending-dedupe=od-r019`); 今日待办 remains sole primary pending surface. Local contract PASS; Staging Runtime smoke PASS stamp 20260806T044213Z: residual_map R019 true; FE tip d41ddc38… · API tip 1915ec4d…. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z. ≠ Production GO; TT_PRODUCTION_GO=NO_GO.",
+      "honesty": "LOCAL_VERIFIED+OWNER_LOCKED+STAGING_RUNTIME_VERIFIED · RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO · TT_PRODUCTION_GO=NO_GO",
+      "staging_status": "STAGING_RUNTIME_VERIFIED",
+      "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "staging_rc": "PASS",
+      "staging_verified_at": "20260806T044213Z"
+    },
+    {
+      "id": "V65-PROD-003-B3-R020",
+      "title": "国家目录 error isolation + FE contract gaps (payload/sort_order/name_en)",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": "Deep pass 2; OpsPlaneFetchStates wipes list; patch lacks payload",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R016",
+      "cut_class": "FE_PLUS_API",
+      "fix_progress": "STAGING_RUNTIME_PASS_RESIDUAL_CLOSED",
+      "local_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T013903Z",
+      "staging_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z",
+      "note": "Local error isolation (actionError vs loadError) + name_en/sort_order/payload FE contract; Staging BLOCKED (fly auth + three-state + API tip stale). Runtime/Delta pending. Keep OPEN. NO_GO. No prod mutate.",
+      "runtime_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z/RUNTIME-EVIDENCE.json",
+      "closed_at": "20260805T041800Z",
+      "closure_note": "Create contract + stale-version 409 isolation PASS without wiping country; FE actionError vs loadError path verified via smoke; Residual CLOSED. Draft to publish allowed by live API (not a reject gate)."
+    },
+    {
+      "id": "V65-PROD-003-B3-R021",
+      "title": "向导目录 dead data_origin + free-text status + column noise",
+      "severity": "P2",
+      "status": "CLOSED",
+      "form": "Deep pass 2; extends R014; HU-418",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "extends": "V65-PROD-003-B3-R014",
+      "cut": "CUT_B",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "closure_note": "Cut B eng-wave Staging smoke PASS: Guides status `<select>` marker `guidesStatusSelect` / `data-tt-admin-enterprise-guides-status-select` via contract. FE tip 241969c0… · API tip 1915ec4d…. Residual CLOSED. OWNER_VALIDATED≠CLOSED≠Production GO; TT_PRODUCTION_GO=NO_GO. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "tt_production_go": "NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R022",
+      "title": "内容中心 publish-queue CTA ×3 + empty tile honesty",
+      "severity": "P2",
+      "status": "CLOSED",
+      "form": "Deep pass 2; extends R015",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z",
+      "extends": "V65-PROD-003-B3-R015",
+      "cut": "CUT_B",
+      "closed_at": "20260806T004000Z",
+      "closure_note": "Cut B Remaining Staging smoke PASS (20260806T003800Z): Content Hub single publish-queue CTA (data-tt-admin-content-hub-queue-link) + daily section excludes parallel publish-queue href + Ops empty-tile honesty marker in chunk. FE tip 5e9927be… · PATCH-STG-019. Residual CLOSED. OWNER_VALIDATED≠CLOSED≠Production GO; TT_PRODUCTION_GO=NO_GO. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z",
+      "smoke_stamp": "20260806T003800Z",
+      "fe_tip": "5e9927bef60d7dc44e6a9f14426bcab0cb075561"
+    },
+    {
+      "id": "V65-PROD-003-B3-R023",
+      "title": "财务 empty daily-todo stub + Supplement L5 clash",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 2; extends R017",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R017",
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R024",
+      "title": "系统概况 unavailable rendered as 0 + KPI wrap clutter",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 2; extends R013",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R013",
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R025",
+      "title": "OpsPlaneFetchStates sitewide error-replace（跨页错误抹内容）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "cut": "CUT_A",
+      "form": "Cut A — Runtime Reliability — STAGING_RUNTIME_PASS_RESIDUAL_CLOSED — smoke 20260805T072900Z — FE tip 33d94fee6f28 — TT_PRODUCTION_GO=NO_GO",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w3_error_isolation/20260805T072900Z; evidence/GO_v65_prod_003_batch3_w3_error_isolation/LATEST.json; frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+      "extends": "V65-PROD-003-B3-R020",
+      "axis": [
+        "Engineer_first",
+        "Empty_error_honesty"
+      ],
+      "note": "Residual Close 20260805T073000Z: Staging smoke PASS 20260805T072900Z; errorPresentation=banner + emptyPresentation=card + staleWhileError verified on Staging FE; Expected Difference PAGE_SURFACE_DRIFT (/admin/ops 404) CONFIRM_DESIGN; RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "closed_at": "20260805T073000Z",
+      "smoke_stamp": "20260805T072900Z"
+    },
+    {
+      "id": "V65-PROD-003-B3-R026",
+      "title": "财务双主入口：/admin/finance-suite vs /admin/finance 并存",
+      "severity": "P1",
+      "status": "OPEN",
+      "form": "Deep pass 3; extends V65-PROD-003-B3-R017",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R017",
+      "axis": [
+        "Finance_realization",
+        "Engineer_first"
+      ],
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R027",
+      "title": "财务「退款」磁贴语义谎言（disputes ≠ refunds）",
+      "severity": "P1",
+      "status": "OPEN",
+      "form": "Deep pass 3; extends V65-PROD-003-B3-R017",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R017",
+      "axis": [
+        "Finance_realization"
+      ],
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R028",
+      "title": "财务导出/账本面未挂在 suite 主路径（export 仍在 /admin/finance + accounting placeholder）",
+      "severity": "P1",
+      "status": "OPEN",
+      "form": "Deep pass 3; extends V65-PROD-003-B3-R017",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R017",
+      "axis": [
+        "Finance_realization",
+        "Production_release"
+      ],
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R029",
+      "title": "生产组合：FE tip ≠ API tip · 无双端 tip 对拍烟测闸",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260805T120000Z",
+        "smoke_stamp": "20260805T120000Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "paths": [
+          "scripts/dev/run-v65-batch3-cut-b-remaining-dual-tip-staging-smoke.cjs",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs",
+          "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260805T120000Z/report.json"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260805T120000Z",
+      "axis": [
+        "Production_release",
+        "Engineer_first"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260805T120000Z",
+      "smoke_stamp": "20260805T120000Z",
+      "note": "Cut B Remaining · dual-tip Staging smoke PASS; FE tip == API build.git_sha == 16f29c7e…; enterprise probeMeta prefers build.git_sha. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R030",
+      "title": "国家/内容工作流：opaque workflow_failed + 无 Publish→Verify→Live 反馈",
+      "severity": "P2",
+      "status": "CLOSED",
+      "form": "Deep pass 3; extends V65-PROD-003-B3-R016",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z",
+      "extends": "V65-PROD-003-B3-R016",
+      "axis": [
+        "Engineer_first",
+        "Publish_path"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260806T004000Z",
+      "closure_note": "Cut B Remaining Staging smoke PASS (20260806T003800Z): publish-queue page markers (…-page/…-open/…-publish) + loadError vs actionError/busyId isolation present. FE tip 5e9927be… · PATCH-STG-019. Residual CLOSED. OWNER_VALIDATED≠CLOSED≠Production GO; TT_PRODUCTION_GO=NO_GO. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z",
+      "smoke_stamp": "20260806T003800Z",
+      "fe_tip": "5e9927bef60d7dc44e6a9f14426bcab0cb075561"
+    },
+    {
+      "id": "V65-PROD-003-B3-R031",
+      "title": "Residual SSOT honesty 字段冲突（cert currency vs still_required_for_go）",
+      "severity": "P2",
+      "status": "CLOSED",
+      "form": "Deep pass 3; new cut",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+      "axis": [
+        "Production_release"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T034500Z",
+      "closure_note": "Honesty applied: `release_certification_still_required_for_go=true` while `release_cert_currency=HISTORICAL_PENDING_RERUN_AFTER_P1_CLEAR`; prior cert 20260804T231322Z is historical only — do NOT treat as current GO currency. Eng-wave Staging tips FE 241969c0… / API 1915ec4d…. Residual CLOSED as SSOT honesty. ≠ Production GO; TT_PRODUCTION_GO=NO_GO.",
+      "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "tt_production_go": "NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R032",
+      "title": "财务七件套模块状态全 partial / TARGET 无中文操作者矩阵",
+      "severity": "P2",
+      "status": "CLOSED",
+      "form": "Deep pass 3; extends V65-PROD-003-B3-R017",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z",
+      "extends": "V65-PROD-003-B3-R017",
+      "axis": [
+        "Finance_realization"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260806T004000Z",
+      "closure_note": "Cut B Remaining Staging smoke PASS (20260806T003800Z): finance-suite page marker + data-tt-admin-truth-badge TARGET present (module badge + supplement strip). FE tip 5e9927be… · PATCH-STG-019. Residual CLOSED. OWNER_VALIDATED≠CLOSED≠Production GO; TT_PRODUCTION_GO=NO_GO. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260806T003800Z",
+      "smoke_stamp": "20260806T003800Z",
+      "fe_tip": "5e9927bef60d7dc44e6a9f14426bcab0cb075561"
+    },
+    {
+      "id": "V65-PROD-003-B3-R033",
+      "title": "内容状态徽章对比度不足（「已发布」近不可见）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "extends": "V65-PROD-003-B3-R016",
+      "axis": [
+        "UI_UX",
+        "A11y"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Publish status contrast via AdminEnterpriseStatusOptions + zh/en labels; Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R034",
+      "title": "向导目录表头/单元格 chrome 碰撞（ID 列字形叠压 · 时间戳噪音）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "extends": "V65-PROD-003-B3-R014",
+      "axis": [
+        "UI_UX",
+        "Table_L5"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Guides header chrome collision + absolute→relative time (tip-surgical Guides page + shortAdminId); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R035",
+      "title": "向导筛选 UX 不诚实（自由文本状态 · Apply 文案 · Last Updated 未知）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "extends": "V65-PROD-003-B3-R021",
+      "axis": [
+        "UI_UX",
+        "Filter_honesty"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Guides filter UX + status options (adminGuidesLabels + AdminEnterpriseStatusOptions); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R036",
+      "title": "内容中心/向导首屏 fold 密度过高（卡片推主表到折线外）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 4; extends V65-PROD-003-B3-R015; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R015",
+      "axis": [
+        "UI_UX",
+        "Information_architecture"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R037",
+      "title": "Admin 列表/工作台性能（多队列拉取 · 无虚拟化 · 筛选 remount · 计数滞后）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "extends": "V65-PROD-003-B3-R011",
+      "axis": [
+        "Performance",
+        "UI_UX"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Admin list remount lag mitigated via AdminEnterpriseListVirtual (div rows) + threshold 32; Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R038",
+      "title": "财务空态/占位诚实度（今日待办空墙 · 系统头寸残卡 · partial 入口）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 4; extends V65-PROD-003-B3-R023",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R023",
+      "axis": [
+        "UI_UX",
+        "Finance_honesty"
+      ],
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R039",
+      "title": "财务/运营文案 i18n 泄漏（partial 进中文 · supplement 键截断）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 4; extends V65-PROD-003-B3-R032",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R032",
+      "axis": [
+        "UI_UX",
+        "I18n"
+      ],
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R040",
+      "title": "Admin 感知性能/可访问性抛光（CLS · 骨架不一致 · 概况展开认知负荷）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 4; extends V65-PROD-003-B3-R013; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "extends": "V65-PROD-003-B3-R013",
+      "axis": [
+        "Performance",
+        "A11y",
+        "UI_UX"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R041",
+      "title": "争议 Admin = 只读裁决台 · 禁写资金/Escrow · 主 CTA 跳出控制台",
+      "severity": "P1",
+      "status": "OPEN",
+      "form": "Deep pass 5; extends V65-PROD-003-B3-R018",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Surface_control_truth",
+        "Dispute_ops",
+        "IA_honesty"
+      ],
+      "extends": "V65-PROD-003-B3-R018",
+      "cut": "CUT_C",
+      "cut_b_class": "EXCLUDED_CUT_C",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R042",
+      "title": "订单 Admin force-readonly · 仅 escrow/pay/dispute 跳转无控制台结算",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "axis": [
+        "Surface_control_truth",
+        "Orders_ops",
+        "IA_honesty"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Orders Admin force-readonly honesty chrome (no false write CTAs); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R043",
+      "title": "内容子模块生产深度不均（城市/POI/定价/酒店档只读薄表 vs 国家可写）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "axis": [
+        "Surface_control_truth",
+        "CMS_catalog_depth",
+        "Publish_bar"
+      ],
+      "extends": "V65-PROD-003-B3-R015",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Content module writeability honesty (Content hub/shell); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R044",
+      "title": "入驻审批写入口可发现性（列表筛选 vs 详情 Approve 卡）— 不重开 R006",
+      "severity": "P2",
+      "status": "CLOSED",
+      "form": "Deep pass 5; extends V65-PROD-003-B3-R006",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "axis": [
+        "Surface_control_truth",
+        "Onboarding_UX",
+        "Discoverability"
+      ],
+      "extends": "V65-PROD-003-B3-R006",
+      "cut": "CUT_B",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "closure_note": "Cut B eng-wave Staging smoke PASS: Onboarding review-strip marker `data-tt-admin-onboarding-review-strip` + locale *_desc keys. FE tip 241969c0… · API tip 1915ec4d…. Residual CLOSED. OWNER_VALIDATED≠CLOSED≠Production GO; TT_PRODUCTION_GO=NO_GO. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "tt_production_go": "NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R045",
+      "title": "Slim 侧栏 ≤12 叶 vs 深层 Admin 路由孤岛 · IA 可发现性",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 5 surface/control truth; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Surface_control_truth",
+        "IA_discoverability"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R046",
+      "title": "配置中心控制真值（枢纽导航 + 诚实文案 · 子面写能力未齐）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 5 surface/control truth; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Surface_control_truth",
+        "Config_ops"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R047",
+      "title": "增长中心 CTA 诚实度（analytics/KOL 合同只读 vs 运营暗示）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 5 surface/control truth; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Surface_control_truth",
+        "Growth_ops"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R048",
+      "title": "用户台写闸诚实度（advisory-disabled + 收购 suspend 窄写）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 5 surface/control truth; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Surface_control_truth",
+        "Users_ops",
+        "RBAC"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R049",
+      "title": "全站数据诚实徽章缺口：ACTIVE/PARTIAL/DISABLED/TARGET/HISTORICAL 仅财务七件套局部有",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "axis": [
+        "Data_truth",
+        "IA_honesty",
+        "Operator_long_term_UX"
+      ],
+      "extends": "V65-PROD-003-B3-R032",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Sitewide data honesty chrome ACTIVE/PARTIAL/DISABLED contract markers; Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R050",
+      "title": "空态/加载双 chrome：AdminListPageEmptyState vs OpsPlaneFetchStates 不一致",
+      "severity": "P1",
+      "status": "CLOSED",
+      "cut": "CUT_A",
+      "form": "Cut A — Runtime Reliability — STAGING_RUNTIME_PASS_RESIDUAL_CLOSED — smoke 20260805T072900Z — FE tip 33d94fee6f28 — TT_PRODUCTION_GO=NO_GO",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w3_error_isolation/20260805T072900Z; evidence/GO_v65_prod_003_batch3_w3_error_isolation/LATEST.json; frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+      "axis": [
+        "Empty_error_honesty",
+        "UI_DS",
+        "Operator_long_term_UX"
+      ],
+      "extends": "V65-PROD-003-B3-R025",
+      "note": "Residual Close 20260805T073000Z: same Cut A Staging Evidence as R025; smoke PASS 20260805T072900Z; dual empty/error chrome honesty on Staging; RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "closed_at": "20260805T073000Z",
+      "smoke_stamp": "20260805T072900Z"
+    },
+    {
+      "id": "V65-PROD-003-B3-R051",
+      "title": "数据源诚实条仅 Ops 四叶：Content/Official/Growth 缺 REAL_DB|memory|mixed 条",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "axis": [
+        "Data_truth",
+        "FE_API_tip_consistency",
+        "Operator_long_term_UX"
+      ],
+      "extends": "V65-PROD-003-B3-R029",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Content/Official/Growth source honesty REAL_DB|memory|mixed chrome; Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R052",
+      "title": "信息架构 L1/L2/L3 坍塌：业务动作与技术元信息混排主表面",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 6 Enterprise L5 Reality Round 2; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "IA",
+        "Single_primary_entry",
+        "Operator_long_term_UX"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R053",
+      "title": "Workbench L5 Design System 非唯一视觉母版：Content/Official/孤岛密度漂移",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 6; extends V65-PROD-003-B3-R040; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "UI_DS",
+        "Table_density",
+        "CLS_skeleton",
+        "Operator_long_term_UX"
+      ],
+      "extends": "V65-PROD-003-B3-R040",
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R054",
+      "title": "大数据列表零虚拟化确认：admin 树无 virtualizer（深化 R037）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "axis": [
+        "Perf",
+        "Large_list_capacity",
+        "Operator_long_term_UX"
+      ],
+      "extends": "V65-PROD-003-B3-R037",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Guides list virtualization confirm (deepens R037); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R055",
+      "title": "机读 STRUCTURE_SCAN L5 禁止冒充视觉/运营闭环（Batch3 诚实闸）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 6 Enterprise L5 Reality Round 2; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Honesty_publish_bar",
+        "Baseline_alignment"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R056",
+      "title": "三层 tip 叙事风险：Web3 ea71c577 vs Product FE 33d94fee / API 16f29c7e",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": {
+        "local": "LANDED",
+        "staging": "PASS",
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+        "smoke_stamp": "20260805T112500Z",
+        "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+        "contract": "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+        "paths": [
+          "frontend/lib/admin/adminEnterpriseHardeningContract.ts",
+          "frontend/components/admin/AdminEnterpriseHonestyChrome.tsx",
+          "frontend/components/admin/AdminEnterpriseListVirtual.tsx",
+          "frontend/lib/admin/shortAdminId.ts",
+          "frontend/lib/admin/adminGuidesLabels.ts",
+          "scripts/dev/run-v65-batch3-cut-b-enterprise-hardening-staging-smoke.cjs"
+        ]
+      },
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "axis": [
+        "FE_API_tip_consistency",
+        "Baseline_alignment",
+        "Operator_long_term_UX"
+      ],
+      "extends": "V65-PROD-003-B3-R029",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "note": "Deploy tip emptiness honesty banner (AdminEnterpriseHonestyChrome); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R057",
+      "title": "RBAC/403 闭环不均：OpsPlaneAuthHints 未覆盖 AdminListPageChrome 主叶",
+      "severity": "P2",
+      "status": "CLOSED",
+      "form": "Deep pass 6 Enterprise L5 Reality Round 2",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "axis": [
+        "RBAC",
+        "Empty_error_honesty",
+        "Operator_long_term_UX"
+      ],
+      "cut": "CUT_B",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "closure_note": "Cut B eng-wave Staging smoke PASS: OpsPlaneAuthHints on AdminListFetchError `data-tt-admin-list-fetch-auth-hints`. FE tip 241969c0… · API tip 1915ec4d…. Residual CLOSED. OWNER_VALIDATED≠CLOSED≠Production GO; TT_PRODUCTION_GO=NO_GO. Evidence: evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "tt_production_go": "NO_GO",
+      "honesty": "RUNTIME_VERIFIED!=OWNER_VALIDATED!=CLOSED!=Production GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R058",
+      "title": "操作者语言/ops jargon 泄漏面仍广于财务（深化 R039）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 6; extends V65-PROD-003-B3-R039; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "I18n",
+        "Operator_long_term_UX"
+      ],
+      "extends": "V65-PROD-003-B3-R039",
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R059",
+      "title": "Steward/acquisition-suspend/guide-registration FE 写路径缺 Idempotency-Key",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": "Deep pass 7 Final Enterprise Production Readiness",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Write_idempotency",
+        "Approvals_adjacent",
+        "Production_hardening"
+      ],
+      "cut_class": "FE_PLUS_API",
+      "fix_progress": "STAGING_RUNTIME_PASS_RESIDUAL_CLOSED",
+      "local_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.json",
+      "staging_evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+      "runtime_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-RUNTIME-LATEST.json",
+      "closed_at": "20260805T055000Z",
+      "closure_note": "Staging tip 16f29c7 live; W2 smoke PASS; missing Idempotency-Key fail-closed on steward/acquisition/guide/provider surfaces; with-key path not missing_idem; Residual CLOSED."
+    },
+    {
+      "id": "V65-PROD-003-B3-R060",
+      "title": "CMS 公告写每次 mint 新 Idempotency-Key（双击≠幂等重放）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": "Deep pass 7 Final Enterprise Production Readiness",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Write_idempotency",
+        "CMS_publish",
+        "Production_hardening"
+      ],
+      "cut_class": "FE_PLUS_API",
+      "fix_progress": "STAGING_RUNTIME_PASS_RESIDUAL_CLOSED",
+      "local_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.json",
+      "staging_evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+      "runtime_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-RUNTIME-LATEST.json",
+      "closed_at": "20260805T055000Z",
+      "closure_note": "CMS create contract (slug/lane/kind/content_tier/title_zh|en) + stable Idempotency-Key replay same id + distinct key new write verified; Residual CLOSED."
+    },
+    {
+      "id": "V65-PROD-003-B3-R061",
+      "title": "Admin critical-write 分类器不全：approve 有、reject/CMS/审阅 PATCH 无严限流+幂等闸",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": "Deep pass 7 Final Enterprise Production Readiness",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Write_idempotency",
+        "Rate_limit",
+        "Production_hardening"
+      ],
+      "cut_class": "API",
+      "fix_progress": "STAGING_RUNTIME_PASS_RESIDUAL_CLOSED",
+      "local_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.json",
+      "staging_evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+      "runtime_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-RUNTIME-LATEST.json",
+      "closed_at": "20260805T055000Z",
+      "closure_note": "W2 critical-write surfaces fail-closed on missing Idempotency-Key; burst 429 observable on classifier path; Residual CLOSED."
+    },
+    {
+      "id": "V65-PROD-003-B3-R062",
+      "title": "角色变更请求创建欠服端写权限闸（任意 admin actor 可 POST）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "form": "Deep pass 7 Final Enterprise Production Readiness",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "RBAC_privilege",
+        "Users_ops",
+        "Production_hardening"
+      ],
+      "cut_class": "API",
+      "fix_progress": "STAGING_RUNTIME_PASS_RESIDUAL_CLOSED",
+      "local_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.json",
+      "staging_evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+      "runtime_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-RUNTIME-LATEST.json",
+      "closed_at": "20260805T055000Z",
+      "closure_note": "Tourist C2 /auth/login → role-change-request {target_role} returns 403 admin_required; admin with perm reaches handler (404 target_user_not_found); public execute 404; Residual CLOSED."
+    },
+    {
+      "id": "V65-PROD-003-B3-R063",
+      "title": "公网公告 CDN/浏览器 TTL 无 Publish 失效：max-age=60 + SWR=120",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 7 Final Enterprise Production Readiness; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Cache_CDN_drift",
+        "CMS_publish",
+        "Data_consistency"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R064",
+      "title": "Admin 审计写入 best-effort 静默吞失败（资金/权限动作无 fail-closed）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 7 Final Enterprise Production Readiness; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Audit_log_integrity",
+        "Production_hardening",
+        "Operator_closed_loop"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R065",
+      "title": "审阅/冻结写路径缺乐观并发：steward/acquisition 末写覆盖",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 7 Final Enterprise Production Readiness; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Data_consistency",
+        "Concurrency",
+        "Production_hardening"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R066",
+      "title": "会话过期硬跳登录：长表单未保存丢失（无草稿恢复）",
+      "severity": "P2",
+      "status": "OPEN",
+      "form": "Deep pass 7 Final Enterprise Production Readiness; Cut B eng exit: Owner-accept defer (not eng-wave scope)",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+      "axis": [
+        "Session_recovery",
+        "Operator_long_term_UX",
+        "Error_recovery"
+      ],
+      "cut": "CUT_B",
+      "disposition": "OWNER_ACCEPT_DEFER_ENG_EXIT",
+      "cut_b_class": "ENG_DEFER_NON_WAVE",
+      "tt_production_go": "NO_GO"
+    }
+  ],
+  "closed_this_stamp": [
+    {
+      "id": "V65-PROD-003-B3-R006",
+      "status": "CLOSED",
+      "note": "Critical-path re-UAT PASS + OWNER_VALIDATED tip 16f29c7e"
+    },
+    {
+      "id": "V65-PROD-003-G058",
+      "status": "CLOSED",
+      "note": "Provider closed-loop PASS"
+    },
+    {
+      "id": "V65-PROD-003-G059",
+      "status": "CLOSED",
+      "note": "Guide closed-loop PASS"
+    },
+    {
+      "id": "V65-PROD-003-G073",
+      "status": "CLOSED",
+      "note": "role_applications SSOT + Idempotency-Key FE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R002",
+      "status": "CLOSED",
+      "note": "Freeze FROZEN 20260804T132141Z + SSOT/FTB PASS 20260804T132326Z; NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-RECONCILE-ENTRY-FEE-IA",
+      "status": "CLOSED",
+      "note": "PRV-3b Owner UAT PASS 20260804T230300Z tip 33d94fee; Batch CLOSED; NO_GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R025",
+      "stamp": "20260805T073000Z",
+      "note": "Cut A Staging smoke PASS; error banner Residual CLOSED",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R050",
+      "stamp": "20260805T073000Z",
+      "note": "Cut A Staging smoke PASS; empty chrome Residual CLOSED",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R015",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Content subpage publish honesty + audit vs public path (AdminEnterpriseHonestyChrome on Content); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PR",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R033",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Publish status contrast via AdminEnterpriseStatusOptions + zh/en labels; Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R034",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Guides header chrome collision + absolute→relative time (tip-surgical Guides page + shortAdminId); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_P",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R035",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Guides filter UX + status options (adminGuidesLabels + AdminEnterpriseStatusOptions); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R037",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Admin list remount lag mitigated via AdminEnterpriseListVirtual (div rows) + threshold 32; Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTIO",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R042",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Orders Admin force-readonly honesty chrome (no false write CTAs); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R043",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Content module writeability honesty (Content hub/shell); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R049",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Sitewide data honesty chrome ACTIVE/PARTIAL/DISABLED contract markers; Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R051",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Content/Official/Growth source honesty REAL_DB|memory|mixed chrome; Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R054",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Guides list virtualization confirm (deepens R037); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R056",
+      "cut": "CUT_B",
+      "closed_at": "20260805T113000Z",
+      "smoke_stamp": "20260805T112500Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_enterprise_hardening/20260805T112500Z",
+      "note": "Deploy tip emptiness honesty banner (AdminEnterpriseHonestyChrome); Staging markers PASS. RUNTIME_VERIFIED!=OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO",
+      "status": "CLOSED"
+    },
+    {
+      "id": "V65-PROD-003-B3-R010",
+      "status": "CLOSED",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "cut": "CUT_B",
+      "wave": "CUT_B_ENG_WAVE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R014",
+      "status": "CLOSED",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "cut": "CUT_B",
+      "wave": "CUT_B_ENG_WAVE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R021",
+      "status": "CLOSED",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "cut": "CUT_B",
+      "wave": "CUT_B_ENG_WAVE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R031",
+      "status": "CLOSED",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T034500Z",
+      "evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+      "cut": "CUT_B",
+      "wave": "CUT_B_ENG_WAVE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R044",
+      "status": "CLOSED",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "cut": "CUT_B",
+      "wave": "CUT_B_ENG_WAVE"
+    },
+    {
+      "id": "V65-PROD-003-B3-R057",
+      "status": "CLOSED",
+      "closed_at": "20260806T034500Z",
+      "smoke_stamp": "20260806T032748Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "cut": "CUT_B",
+      "wave": "CUT_B_ENG_WAVE"
+    }
+  ],
+  "open_non_blocking": [
+    {
+      "id": "V65-PROD-003-G061",
+      "status": "OPEN",
+      "severity": "P2",
+      "note": "APPROVALS / acrp_seed (= B3-R010)"
+    },
+    {
+      "id": "V65-PROD-003-G-GUIDE-STATUS-LABEL",
+      "status": "OPEN",
+      "severity": "P3",
+      "note": "Guide status label cosmetic"
+    },
+    {
+      "id": "V65-PROD-003-STEWARD-I18N-RAW-KEY",
+      "status": "OPEN",
+      "severity": "P3",
+      "note": "admin_steward_queue_private_transfer_honesty raw key (cosmetic)"
+    },
+    {
+      "id": "V65-PROD-003-B3-R013",
+      "status": "OPEN",
+      "severity": "P2",
+      "note": "系统概况 empty links / Web3 defer"
+    },
+    {
+      "id": "V65-PROD-003-B3-R023",
+      "status": "OPEN",
+      "severity": "P2",
+      "note": "Finance empty daily-todo + supplement clash"
+    },
+    {
+      "id": "V65-PROD-003-B3-R024",
+      "status": "OPEN",
+      "severity": "P2",
+      "note": "Overview empty→0 / KPI wrap"
+    },
+    {
+      "id": "V65-PROD-003-B3-R036",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "内容中心/向导首屏 fold 密度过高（卡片推主表到折线外）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R038",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "财务空态/占位诚实度（今日待办空墙 · 系统头寸残卡 · partial 入口）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R039",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "财务/运营文案 i18n 泄漏（partial 进中文 · supplement 键截断）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R040",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "Admin 感知性能/可访问性抛光（CLS · 骨架不一致 · 概况展开认知负荷）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R045",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "Slim 侧栏 ≤12 叶 vs 深层 Admin 路由孤岛 · IA 可发现性"
+    },
+    {
+      "id": "V65-PROD-003-B3-R046",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "配置中心控制真值（枢纽导航 + 诚实文案 · 子面写能力未齐）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R047",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "增长中心 CTA 诚实度（analytics/KOL 合同只读 vs 运营暗示）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R048",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "用户台写闸诚实度（advisory-disabled + 收购 suspend 窄写）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R052",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "信息架构 L1/L2/L3 坍塌：业务动作与技术元信息混排主表面"
+    },
+    {
+      "id": "V65-PROD-003-B3-R053",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "Workbench L5 Design System 非唯一视觉母版：Content/Official/孤岛密度漂移"
+    },
+    {
+      "id": "V65-PROD-003-B3-R055",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "机读 STRUCTURE_SCAN L5 禁止冒充视觉/运营闭环（Batch3 诚实闸）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R058",
+      "severity": "P2",
+      "status": "OPEN",
+      "note": "操作者语言/ops jargon 泄漏面仍广于财务（深化 R039）"
+    }
+  ],
+  "open_blocking_or_p0_p1": [
+    {
+      "id": "V65-PROD-003-B3-R011",
+      "severity": "P1",
+      "status": "OPEN",
+      "note": "Workbench 今日待办 = real unreplied / unreprocessed queues"
+    },
+    {
+      "id": "V65-PROD-003-B3-R017",
+      "severity": "P1",
+      "status": "OPEN",
+      "note": "财务七件套 redesign: USDC/TTG + grouped orders + export; demote 系统头寸"
+    },
+    {
+      "id": "V65-PROD-003-B3-R018",
+      "severity": "P1",
+      "status": "OPEN",
+      "note": "Inbox channel set missing Dispute (R011 exit-criteria honesty)"
+    },
+    {
+      "id": "V65-PROD-003-B3-R026",
+      "severity": "P1",
+      "status": "OPEN",
+      "note": "财务双主入口：/admin/finance-suite vs /admin/finance 并存"
+    },
+    {
+      "id": "V65-PROD-003-B3-R027",
+      "severity": "P1",
+      "status": "OPEN",
+      "note": "财务「退款」磁贴语义谎言（disputes ≠ refunds）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R028",
+      "severity": "P1",
+      "status": "OPEN",
+      "note": "财务导出/账本面未挂在 suite 主路径（export 仍在 /admin/finance + accounting placeholder）"
+    },
+    {
+      "id": "V65-PROD-003-B3-R041",
+      "severity": "P1",
+      "status": "OPEN",
+      "note": "争议 Admin = 只读裁决台 · 禁写资金/Escrow · 主 CTA 跳出控制台"
     }
   ],
   "summary": {
-    "open_or_in_progress_or_reuat_fail": 3,
-    "deployed_reuat_pass": 7,
-    "deployed_reuat_fail": 1,
-    "fixed_superseded_or_confirm_design": 3,
-    "code_patched_pending_deploy": 1,
-    "total": 14,
-    "p0_blocker": "V65-PROD-003-B3-R006",
-    "p0_blocker_note": "R006 CODE_PATCHED_PENDING_DEPLOY — blocks Freeze until new tip + Single Cut + re-UAT PASS; R003 remains DEPLOYED_REUAT_FAIL until that re-UAT"
+    "text": "Cut B Final State CONSOLIDATED 20260806T050409Z; OD Staging PASS 20260806T044213Z; Cut C prep docs-only (incl R039); PAGE_SURFACE_DRIFT=ED; TT_PRODUCTION_GO=NO_GO",
+    "pass3_registered": [
+      "B3-R025",
+      "B3-R026",
+      "B3-R027",
+      "B3-R028",
+      "B3-R029",
+      "B3-R030",
+      "B3-R031",
+      "B3-R032"
+    ],
+    "counts": {
+      "CLOSED": 34,
+      "OPEN": 28,
+      "RUNTIME_PASS_HISTORICAL": 1
+    },
+    "cut_b_remaining_r029": {
+      "status": "CLOSED",
+      "smoke_stamp": "20260805T120000Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_remaining/20260805T120000Z",
+      "fe_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+      "api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5"
+    },
+    "cut_b_eng_wave": {
+      "status": "CLOSED",
+      "smoke_stamp": "20260806T032748Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_eng_wave/20260806T032748Z",
+      "fe_tip": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+      "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "ids": [
+        "V65-PROD-003-B3-R010",
+        "V65-PROD-003-B3-R014",
+        "V65-PROD-003-B3-R021",
+        "V65-PROD-003-B3-R031",
+        "V65-PROD-003-B3-R044",
+        "V65-PROD-003-B3-R057"
+      ],
+      "od_remaining": [],
+      "defer_remaining": [
+        "V65-PROD-003-B3-R013"
+      ],
+      "od_closed": {
+        "stamp": "20260806T040236Z",
+        "decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+        "ids": [
+          "V65-PROD-003-B3-R012",
+          "V65-PROD-003-B3-R019"
+        ],
+        "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+        "local_verify": "PASS",
+        "staging_status": "STAGING_RUNTIME_VERIFIED",
+        "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7"
+      }
+    },
+    "cut_b_full": {
+      "status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+      "stamp": "20260806T040236Z",
+      "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+      "local_verify": "PASS",
+      "staging_rc": "PASS",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+      "note": "OD R012/R019 CLOSED LOCAL_VERIFIED (20260806T040236Z) + Staging Runtime VERIFIED (20260806T044213Z); FE tip d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7; TT_PRODUCTION_GO=NO_GO"
+    },
+    "final_state_stamp": "20260806T050409Z",
+    "cut_c_candidate_ids": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "defer_ids": [
+      "R013",
+      "R036",
+      "R040",
+      "R045",
+      "R046",
+      "R047",
+      "R048",
+      "R052",
+      "R053",
+      "R055",
+      "R058",
+      "R063",
+      "R064",
+      "R065",
+      "R066"
+    ]
   },
   "honesty": {
     "alignment_pass_is_not_go": true,
-    "freeze_not_frozen": true,
-    "prv3b_not_owner_validated": true,
-    "single_cut_complete_is_not_uat_pass": true,
-    "uat_fail_blocks_freeze_ladder": true,
-    "code_patch_is_not_live_pass": true,
-    "ssot_refresh_deferred_until_all_pass": true
+    "owner_validated_is_not_production_go": true,
+    "owner_validated_is_not_batch_closed": false,
+    "candidate_freeze_is_not_production_go": true,
+    "freeze_not_frozen": false,
+    "ssot_refresh_pending": false,
+    "ftb_sync_pending": false,
+    "code_patch_is_not_live_pass": false,
+    "release_certification_still_required_for_go": true,
+    "tt_production_go": "NO_GO",
+    "ssot_ftb_refresh": true,
+    "entry_fee_ia": "CLOSED",
+    "live_fe_matches_local_tip": true,
+    "owner_validated_current_fe_tip": true,
+    "batch_closed_is_not_production_go": true,
+    "release_certification_pass": false,
+    "release_cert_historical_may_need_rerun_after_p0_p1": true,
+    "production_go_review_open": true,
+    "release_cert_is_not_production_go": true,
+    "batch3_engineering_lane_reopened": true,
+    "stale_psg_freeze_blockers_cleared": true,
+    "release_cert_currency": "HISTORICAL_PENDING_RERUN_AFTER_P1_CLEAR",
+    "prior_release_cert_verdict": "PASS_WITH_NON_BLOCKING_OPEN",
+    "prior_release_cert_stamp": "20260804T231322Z",
+    "pass3_note": "R031 CLOSED: still_required_for_go=true while cert currency HISTORICAL_PENDING_RERUN_AFTER_P1_CLEAR; do not treat prior PASS as current GO currency",
+    "pass6_note": "Enterprise L5 Reality Deep Audit Round 2 registered R049–R058; STRUCTURE_SCAN ≠ visual L5 ≠ GO (R055); three-layer tip honesty (R056).",
+    "pass7_note": "Final Enterprise Production Readiness Audit registered R059–R066; W2 R059–R062 CLOSED at Staging Runtime 20260805T054411Z; remaining Pass7 P2 R063–R066 OPEN; Enterprise L5 Production Ready=false; Production GO Review blocked; TT_PRODUCTION_GO=NO_GO.",
+    "enterprise_l5_production_ready": false,
+    "w2_prep_ready": true,
+    "w2_design_confirmed": true,
+    "w2_code_unlocked": true,
+    "w2_code_started": true,
+    "w2_local_code_landed": true,
+    "w2_staging_pass": true,
+    "w2_residual_closed": true,
+    "cut_b_owner_scope_closed_is_not_full_cut_b": true,
+    "runtime_verified_is_not_owner_validated": true,
+    "cut_b_eng_wave_closed_is_not_full_cut_b": false,
+    "cut_b_od_r012_r019_open": false,
+    "r031_honesty_applied": true,
+    "cut_b_full_closed_is_not_staging_rc": false,
+    "cut_b_full_closed_is_not_production_go": true,
+    "local_verified_is_not_staging_closed": true,
+    "cut_b_staging_runtime_verified_is_not_production_go": true,
+    "page_surface_drift_must_not_reopen_closed_residual": true,
+    "cut_b_final_state_consolidated": true,
+    "cut_c_prep_docs_only": true
   },
-  "owner_uat_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T073448Z",
-  "single_cut_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_single_cut/20260804T064334Z"
+  "observed_at": "20260806T044213Z",
+  "freeze_stamp": "20260804T132141Z",
+  "freeze_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_production_candidate_freeze/20260804T132141Z",
+  "alignment_stamp": "20260804T132326Z",
+  "alignment_evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_final_truth_alignment/20260804T132326Z",
+  "fe_live_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+  "api_live_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "api_retained_from_owner_validated": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+  "reconcile_cut": {
+    "class": "FE_ONLY",
+    "focus": "ENTRY_FEE_IA",
+    "deploy_pin": "33d94fee6f286d7c99a85958b311af303f866080",
+    "local_tip": "33d94fee6f286d7c99a85958b311af303f866080",
+    "live_fe_tip": "33d94fee6f286d7c99a85958b311af303f866080",
+    "fly_app": "tt-web-prod",
+    "fly_image": "tt-web-prod:deployment-01KZ6VDMK0DB0DG3FA7VEED1VB",
+    "fly_machine_version": null,
+    "runtime_evidence": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-reconcile/evidence/GO_v65_prod_003_reconcile_single_cut/20260804T170911Z",
+    "runtime_verdict": "PASS",
+    "probe_stamp": "20260804T170911Z",
+    "entry_fee_ia_markers": "PASS",
+    "fly_auth": "PASS",
+    "ssot_ftb": "UPDATED",
+    "note": "Entry-fee IA FE tip 33d94fee Owner UAT PASS + Batch CLOSED; API 16f29c7e; SSOT/FTB updated; NO_GO",
+    "owner_uat_stamp": "20260804T230300Z",
+    "owner_validated": true,
+    "batch_status": "CLOSED"
+  },
+  "ssot_ftb_refresh": true,
+  "prior_owner_validated": {
+    "tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "owner_uat_stamp": "20260804T124327Z",
+    "owner_validated_stamp": "20260804T125555Z",
+    "note": "Historical Batch3 closed-loop OWNER_VALIDATED on API tip; superseded for FE tip by 33d94fee Entry-fee IA UAT"
+  },
+  "owner_validated_current_fe_tip": true,
+  "generated_at": "20260806T050409Z",
+  "source_of_truth": "Cut B FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED 20260806T044213Z; OD `REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY` locked 20260806T040236Z; R012/R019 Staging Runtime VERIFIED; evidence evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z; eng-wave smoke 20260806T032748Z retained historical; Staging FE tip d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7; API tip 1915ec4da828e0139e90a85cd321415fdb6e53d9; PAGE_SURFACE_DRIFT Expected Difference non-blocking for OD; R013 DEFER; misc P2 Owner-accept defer; Cut C PREP_READY_DOCS_ONLY_NO_ENG (no Cut C eng); TT_PRODUCTION_GO=NO_GO",
+  "blocking_for_go": "OPEN Cut C P1 (R011/R017/R018/R026/R027/R028/R041) + R013 DEFER/misc P2 Owner-accept + historical Release Cert rerun + Staging RC for OD FE. Enterprise L5 Ready=false · Production GO Review blocked · TT_PRODUCTION_GO=NO_GO.",
+  "updated_at": "20260806T050409Z",
+  "next": {
+    "action": "CUT_C_PREP_DOCS_ONLY_NO_ENG",
+    "cut": "CUT_C",
+    "scope": "Cut B Final State CONSOLIDATED 20260806T050409Z; Cut C design-scope docs only — no eng; no Production; no GO flip",
+    "honesty": "Cut B Full CLOSED + Staging Runtime VERIFIED ≠ Cut C eng ≠ Production GO; PAGE_SURFACE_DRIFT must not reopen R012/R019",
+    "tt_production_go": "NO_GO",
+    "note": "OD Staging PASS 20260806T044213Z retained; consolidation 20260806T050409Z; include R039 in Cut C scope; TT_PRODUCTION_GO=NO_GO"
+  },
+  "release_cert_stamp": "20260804T231322Z",
+  "release_cert_verdict": "PASS_WITH_NON_BLOCKING_OPEN",
+  "release_cert_currency": "HISTORICAL_PENDING_RERUN_AFTER_EXPANSION",
+  "production_go_review_open": true,
+  "updated_by": "agent_cut_b_final_state_consolidation",
+  "w1_local_fix": {
+    "stamp": "20260805T013903Z",
+    "claim": "LOCAL_FIX_LANDED",
+    "ids": [
+      "V65-PROD-003-B3-R016",
+      "V65-PROD-003-B3-R020"
+    ],
+    "status_remain": "OPEN",
+    "evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T013903Z",
+    "tt_production_go": "NO_GO",
+    "no_new_audit_pass": true
+  },
+  "w1_staging_progress": {
+    "stamp": "20260805T041416Z",
+    "claim": "STAGING_RUNTIME_PASS",
+    "status": "PASS",
+    "residual_close_stamp": "20260805T041800Z",
+    "w1_status": "CLOSED",
+    "evidence_dir": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z",
+    "runtime_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z/RUNTIME-EVIDENCE.json",
+    "worktree": ".tmp-v65-b3-w1-staging",
+    "deploy_ledger_id": "V65-B3-W1-R016",
+    "required_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "staging_api_tip_live": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "staging_api_tip_match": true,
+    "staging_hosts": {
+      "api": "https://tt-api-staging.fly.dev",
+      "web": "https://tt-web-staging.fly.dev"
+    },
+    "fly_auth": "OK",
+    "smoke_verdict": "PASS",
+    "smoke_exit_code": 0,
+    "fe_page_surfaces_gate": "DRIFT — Expected Difference / non-blocking (page_/_unsplash)",
+    "ladder": {
+      "local": "PASS",
+      "staging": "PASS",
+      "runtime_evidence": "STAMPED",
+      "delta_release_cert": "NOT_RUN — not required to close W1 residual; Release Cert rerun still needed before GO"
+    },
+    "residuals_closed": [
+      "V65-PROD-003-B3-R016",
+      "V65-PROD-003-B3-R020"
+    ],
+    "honesty": {
+      "tt_production_go": "NO_GO",
+      "batch3_full_closed": false,
+      "enterprise_l5_production_ready": false,
+      "w2_not_started": false,
+      "w2_staging_pass": true,
+      "w2_residual_closed": true,
+      "production_not_mutated": true
+    }
+  },
+  "updated": "20260805T055000Z",
+  "enterprise_l5_production_ready": false,
+  "closed_historical": [
+    {
+      "id": "V65-PROD-003-B3-R016",
+      "title": "Country catalog create + ambient + sort_order",
+      "status": "CLOSED",
+      "closed_at": "20260805T041800Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z",
+      "staging_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5"
+    },
+    {
+      "id": "V65-PROD-003-B3-R020",
+      "title": "Country catalog error isolation + FE contract",
+      "status": "CLOSED",
+      "closed_at": "20260805T041800Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z",
+      "staging_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5"
+    },
+    {
+      "id": "V65-PROD-003-B3-R059",
+      "title": "Steward/acquisition/guide/provider FE Idempotency-Key write path",
+      "status": "CLOSED",
+      "closed_at": "20260805T055000Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+      "staging_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5"
+    },
+    {
+      "id": "V65-PROD-003-B3-R060",
+      "title": "CMS announcement stable Idempotency-Key write + replay",
+      "status": "CLOSED",
+      "closed_at": "20260805T055000Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+      "staging_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5"
+    },
+    {
+      "id": "V65-PROD-003-B3-R061",
+      "title": "critical-write classifier + burst 429 observability",
+      "status": "CLOSED",
+      "closed_at": "20260805T055000Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+      "staging_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5"
+    },
+    {
+      "id": "V65-PROD-003-B3-R062",
+      "title": "role-change RBAC without-permission fail-closed",
+      "status": "CLOSED",
+      "closed_at": "20260805T055000Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+      "staging_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5"
+    }
+  ],
+  "w2_prep": {
+    "status": "PREP_SUPERSEDED_BY_STAGING_PASS",
+    "stamp": "20260805T043000Z",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-PREP-LATEST.json",
+    "claim": "W2_PREP_SUPERSEDED_STAGING_PASS",
+    "code_started": true,
+    "residuals_status": "CLOSED"
+  },
+  "w2_design_confirm": {
+    "status": "STAGING_PASS_RESIDUAL_CLOSED",
+    "stamp": "20260805T055000Z",
+    "design_confirmed_at": "20260805T043612Z",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.json",
+    "claim": "W2_STAGING_PASS_R059_R062_CLOSED",
+    "dc_items": [
+      "DC-01",
+      "DC-02",
+      "DC-03",
+      "DC-04",
+      "DC-05",
+      "DC-06"
+    ],
+    "code_unlocked": true,
+    "code_started": true,
+    "local_code_landed": true,
+    "staging_pass": true,
+    "current_slice": "R059–R062_CLOSED",
+    "residuals_status": "CLOSED",
+    "tt_production_go": "NO_GO",
+    "enterprise_l5_production_ready": false,
+    "implementation_order": [
+      "R059",
+      "R060",
+      "R061",
+      "R062"
+    ],
+    "first_slice": "R059",
+    "staging_evidence": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z"
+  },
+  "w2_staging_progress": {
+    "stamp": "20260805T054411Z",
+    "claim": "STAGING_RUNTIME_PASS",
+    "status": "PASS",
+    "residual_close_stamp": "20260805T055000Z",
+    "w2_status": "CLOSED",
+    "evidence_dir": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z",
+    "runtime_evidence": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-RUNTIME-LATEST.json",
+    "required_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "staging_api_tip_live": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "staging_api_tip_match": true,
+    "staging_hosts": {
+      "api": "https://tt-api-staging.fly.dev",
+      "web": "https://tt-web-staging.fly.dev"
+    },
+    "smoke_verdict": "PASS",
+    "smoke_exit_code": 0,
+    "ladder": {
+      "local": "PASS",
+      "staging": "PASS",
+      "runtime_evidence": "STAMPED",
+      "residual_close": "CLOSED",
+      "delta_release_cert": "NOT_RUN — not required to close W2 residual; Release Cert rerun still needed before GO"
+    },
+    "residuals_closed": [
+      "V65-PROD-003-B3-R059",
+      "V65-PROD-003-B3-R060",
+      "V65-PROD-003-B3-R061",
+      "V65-PROD-003-B3-R062"
+    ],
+    "honesty": {
+      "tt_production_go": "NO_GO",
+      "batch3_full_closed": false,
+      "enterprise_l5_production_ready": false,
+      "w3_not_started": true,
+      "production_not_mutated": true
+    }
+  },
+  "expected_differences": [
+    {
+      "id": "V65-PROD-003-B3-ED-PAGE-SURFACE-DRIFT",
+      "class": "Expected_Difference",
+      "disposition": "CONFIRM_DESIGN",
+      "title": "Staging FE deploy PAGE_SURFACE_DRIFT (Cut A /admin/ops + Cut B OD ambient/unsplash)",
+      "note": "Cut A: PAGE_SURFACE_DRIFT + /admin/ops 404 (cookie-authed; markers PASS). Cut B OD Staging 20260806T044213Z: landing_ambient_count_11_ne_10 + page_/_unsplash + TT_STAGING_PAGE_SURFACES DRIFT. CONFIRM_DESIGN · non-blocking · MUST NOT reopen closed Residual R012/R019.",
+      "stamp": "20260806T050409Z",
+      "smoke_stamp": "20260806T044213Z",
+      "blocking": false,
+      "residual_reopen_forbidden": [
+        "R012",
+        "R019"
+      ],
+      "observations": [
+        {
+          "cut": "CUT_A",
+          "stamp": "20260805T072900Z",
+          "signals": [
+            "/admin/ops 404 vs matrix",
+            "PAGE_SURFACE_DRIFT"
+          ],
+          "note": "Cookie-authed; markers still PASS; not Cut A blocker"
+        },
+        {
+          "cut": "CUT_B_OD",
+          "stamp": "20260806T044213Z",
+          "signals": [
+            "landing_ambient_count_11_ne_10",
+            "page_/_unsplash",
+            "TT_STAGING_PAGE_SURFACES: DRIFT"
+          ],
+          "note": "Non-blocking for OD RC PASS; MUST NOT reopen closed Residual R012/R019"
+        }
+      ]
+    }
+  ],
+  "status_counts": {
+    "CLOSED": 26,
+    "OPEN": 36
+  },
+  "final_state_consolidation": {
+    "stamp": "20260806T050409Z",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json",
+    "md": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.md",
+    "cut_b_od_ladder": "CLOSED",
+    "staging_pass_stamp": "20260806T044213Z",
+    "note": "Cut B Final State CONSOLIDATED; buckets CLOSED/DEFER/ED/Cut_C_Candidate_Scope; PAGE_SURFACE_DRIFT must not reopen R012/R019"
+  }
 }

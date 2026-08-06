@@ -1,0 +1,2264 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_owner_uat_expansion.v1",
+  "machine_key": "TT_V65_PROD_003_BATCH3_OWNER_UAT_EXPANSION",
+  "stamp": "20260806T050409Z",
+  "phase": "BATCH3_ENGINEERING_CLOSURE_CUT_MODE",
+  "prior_phase": "BATCH3_OWNER_UAT_EXPANSION_OPEN",
+  "engineering_closure": {
+    "stamp": "20260806T044213Z",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.json",
+    "md": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.md",
+    "od_lock": "LOCKED",
+    "runtime_fix_ssot": "Staging eng tip FE 241969c065a2efb43d2872e6135ef4b4ad8dc6f2 / API 1915ec4da828e0139e90a85cd321415fdb6e53d9; OD FE working-tree LOCAL_VERIFIED; Staging Runtime VERIFIED; historical Pass7 live tips retained under deep_pass.live_tips",
+    "note": "OD-B3-FOCUS-COMPANION LOCKED `REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY` (20260806T040236Z); R012/R019 CLOSED + Staging Runtime VERIFIED 20260806T044213Z; TT_PRODUCTION_GO=NO_GO.",
+    "od_focus_companion_stamp": "20260806T040236Z",
+    "od_focus_companion_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+    "cut_b": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+    "cut_c": "PREP_READY_DOCS_ONLY_NO_ENG",
+    "runtime_form_ssot": "Staging OD tip FE d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7 / API 1915ec4da828e0139e90a85cd321415fdb6e53d9; OD Staging Runtime VERIFIED 20260806T044213Z; historical Pass7 live tips retained under deep_pass.live_tips"
+  },
+  "tt_production_go": "NO_GO",
+  "deep_pass": {
+    "stamp": "20260805T084500Z",
+    "pass": 7,
+    "title": "Final Enterprise Production Readiness Audit — hidden risks outside Batch3 R011–R058",
+    "prior_pass_stamp": "20260805T082200Z",
+    "baselines_cited": [
+      "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json",
+      "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json",
+      "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.json"
+    ],
+    "live_tips": {
+      "fe": "33d94fee6f286d7c99a85958b311af303f866080",
+      "api": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+      "web3_orthogonal": "ea71c577ce6f99696df33f9394cf96746edc843b",
+      "note": "Admin Product layer = FE+API; Web3 tip orthogonal — do not mix (R056/R029)"
+    },
+    "dimensions": [
+      "Write_idempotency_all_mutations",
+      "RBAC_privilege_escalation_server",
+      "Audit_log_integrity_fail_closed",
+      "Cache_CDN_drift_after_publish",
+      "Optimistic_concurrency_lost_update",
+      "Session_expiry_mid_form_recovery",
+      "Critical_write_rate_limit_classifier",
+      "Data_consistency_source_honesty"
+    ],
+    "covered_axes_skip": [
+      "Write_error_recovery_UX (largely R025/R050)",
+      "Operator_who_approved_trail_presence (R006/R015; reliability→R064)",
+      "UI_truth_badges_empty_chrome_virtualization_tip_narrative (R049–R058)"
+    ],
+    "note": "Pass 7 does NOT re-mint R011–R058. Registers R059–R066 only for net-new release-grade risks. R006 stays CLOSED. Enterprise L5 Production Ready = NOT YET (P0 R016 CLOSED at W1 Staging Runtime; Pass7 P1 R059–R062 still OPEN). TT_PRODUCTION_GO=NO_GO. Inventory only — 只登记，不广改.",
+    "enterprise_l5_production_ready": false,
+    "production_go_review_gate": "BLOCKED_UNTIL_P0_P1_AND_OWNER_GO_REVIEW"
+  },
+  "source_of_truth": {
+    "live_fe_tip": "33d94fee6f286d7c99a85958b311af303f866080",
+    "live_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "composition_sha": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "hosts": {
+      "web": "https://www.web3-ttg.com",
+      "api": "https://api.web3-ttg.com"
+    },
+    "prior_release_cert": {
+      "stamp": "20260804T231322Z",
+      "verdict": "PASS_WITH_NON_BLOCKING_OPEN",
+      "note": "Historical; Owner UAT expansion reopens Batch3 engineering lane — does not auto-promote TT_PRODUCTION_GO"
+    },
+    "do_not_use": [
+      "pre-33d94fee FE tips as product SSOT",
+      "frozen PSG Archive v1.1.0-psg-go.20260717 mutation",
+      "old finance primary paths outside /admin/finance-suite"
+    ],
+    "pass6_baselines": [
+      "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json",
+      "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json",
+      "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.json",
+      "docs/runbook/TT-V65-ADMIN-CONSOLE-UX-REALITY-GAP-INVENTORY-ROUND2-LATEST.json"
+    ],
+    "product_fe_tip": "33d94fee6f286d7c99a85958b311af303f866080",
+    "product_api_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "web3_tip_orthogonal": "ea71c577ce6f99696df33f9394cf96746edc843b"
+  },
+  "owner_screenshot_refs": [
+    "assets/image-aad3749d… workbench / 今日待办 + 速览",
+    "assets/image-f76719dd… 系统概况",
+    "assets/image-237f4f02… 向导目录 table",
+    "assets/image-ceb18df8… 向导目录 header wrap",
+    "assets/image-9e7a7a4e… 内容中心",
+    "assets/image-990a9264… 国家目录 list",
+    "assets/image-1044ecb7… 国家目录 create failed",
+    "assets/image-5ba5caf9… 财务对账七件套",
+    "assets/image-ab6a6ef8… 财务 suite alt layout",
+    "assets/image-cb80a508… 系统头寸 / 运维旁路"
+  ],
+  "owner_decisions_required": [
+    {
+      "id": "OD-B3-FOCUS-COMPANION",
+      "topic": "工作台「速览」",
+      "recommendation": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+      "options": [
+        "REMOVE_ENTIRE_COMPANION",
+        "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+        "KEEP_AS_IS"
+      ],
+      "rationale": "Owner locked REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY: companion no longer re-lists 今日待办 queues; keeps 最近访问 only. Overview pending KPI removed (R019).",
+      "decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+      "od_lock": "LOCKED",
+      "locked_at": "20260806T040236Z",
+      "locked_by": "owner_session_cut_b_final",
+      "status": "LOCKED",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+      "implementation": {
+        "local_verify": "PASS",
+        "staging_status": "STAGING_RUNTIME_VERIFIED",
+        "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+        "paths": [
+          "frontend/components/admin/AdminHomeFocusCompanion.tsx",
+          "frontend/components/admin/AdminHomeSystemOverview.tsx",
+          "frontend/lib/admin/adminHomeFocusCompanionTodoOnly.ts"
+        ],
+        "staging_rc": "PASS",
+        "staging_verified_at": "20260806T044213Z"
+      }
+    },
+    {
+      "id": "OD-B3-FIN-TREASURY-FOLD",
+      "topic": "财务「系统头寸」折叠（Owner 口述「系统村头」= 系统头寸）",
+      "recommendation": "REMOVE_FROM_PRIMARY_SURFACE",
+      "options": [
+        "REMOVE_FROM_PRIMARY_SURFACE",
+        "DEMOTE_OPS_BYPASS_ONLY",
+        "KEEP"
+      ],
+      "rationale": "Shows partial workbench tiles + raw module keys; duplicates finance workflow / ops bypass. Not finance-operator primary IA."
+    },
+    {
+      "id": "OD-B3-WEB3-OVERVIEW-DEPTH",
+      "topic": "系统概况 Web3 / 链上深度",
+      "recommendation": "DEFER_UNTIL_ONCHAIN_REVIEW_WINDOW",
+      "note": "Keep Sepolia lag tip informational; do not fake mainnet L5 publish until Owner opens chain-review wave."
+    },
+    {
+      "id": "OD-B3-INBOX-CHANNEL-SET",
+      "topic": "今日待办通道集合（是否含 Dispute）",
+      "recommendation": "INCLUDE_DISPUTE_IF_LIVE_QUEUE_EXISTS",
+      "options": [
+        "INCLUDE_DISPUTE",
+        "KEEP_FIVE_CHANNELS_ONLY",
+        "DEFER_DISPUTE_UNTIL_QUEUE_PASS"
+      ],
+      "rationale": "R011 exit_criteria names Dispute, but tip code only loads provider/guide/steward/approvals/reports — no dispute channel. Community = reports queue only."
+    },
+    {
+      "id": "OD-B3-DISPUTE-CONSOLE-WRITE",
+      "topic": "争议 Admin 控制台是否要有写裁决/资金动作",
+      "recommendation": "ACCEPT_READONLY_PUBLIC_ARB",
+      "options": [
+        "ACCEPT_READONLY_PUBLIC_ARB",
+        "BUILD_IN_CONSOLE_WRITE"
+      ],
+      "rationale": "Tip code ships AdminDisputeReadonlyAdjudicationDesk (forbid fund/Escrow writes; public arb SOP). Building console write is a new product cut — do not fake buttons. Ties R041 + R018."
+    }
+  ],
+  "carry_forward_open": [
+    {
+      "id": "V65-PROD-003-B3-R010",
+      "severity": "P2",
+      "title": "Approvals pending label acrp_seed"
+    },
+    {
+      "id": "V65-PROD-003-G-GUIDE-STATUS-LABEL",
+      "severity": "P3",
+      "title": "Guide detail raw active vs Chinese approved"
+    },
+    {
+      "id": "V65-PROD-003-STEWARD-I18N-RAW-KEY",
+      "severity": "P3",
+      "title": "Steward i18n raw key"
+    }
+  ],
+  "new_residuals": [
+    {
+      "id": "V65-PROD-003-B3-R011",
+      "title": "Workbench 今日待办 = real unreplied / unreprocessed queues only",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_THEN_API_IF_COUNT_DRIFT",
+      "phase_lane": "① admin L5 on tip 33d94fee → ② staging spot-check → ③ not Production GO",
+      "code_ssot": [
+        "frontend/components/admin/AdminHomeClient.tsx",
+        "frontend/lib/admin/useAdminHomeInbox.ts",
+        "frontend/lib/admin/adminUnifiedInboxTasks.ts",
+        "frontend/components/admin/AdminHomeInboxFocusSection.tsx"
+      ],
+      "exit_criteria": [
+        "Counts match live admin queue APIs for Guide/Merchant/Dispute/Approvals/Community",
+        "Zero-count queues hidden or clearly empty (no fake pending)",
+        "「去处理」 deep-links land on writable process page with same filter semantics",
+        "Contract/smoke: adminHomeL5 + inbox count probe exit 0"
+      ],
+      "publish_bar": "Must be true for Release Cert re-run if counts lie",
+      "owner_note": "截图显示 22+25+10+5+13=75；须证明是「新的未批复/未处理」而非静态演示数",
+      "deep_pass_note": "Channel-set gap (missing Dispute) tracked as B3-R018; count-surface multiplicity as B3-R019"
+    },
+    {
+      "id": "V65-PROD-003-B3-R012",
+      "title": "工作台速览去重 / Owner 决策落地",
+      "severity": "P2",
+      "status": "CLOSED",
+      "cut_class": "FE_ONLY",
+      "depends_on_owner_decision": "OD-B3-FOCUS-COMPANION",
+      "code_ssot": [
+        "frontend/components/admin/AdminHomeFocusCompanion.tsx",
+        "frontend/lib/admin/adminHomeFocusCompanionTodoOnly.ts",
+        "frontend/components/admin/adminHomeL5.contract.test.ts"
+      ],
+      "recommended_design": {
+        "remove": "Duplicate todo task list mirroring 今日待办",
+        "keep_if_any": "最近访问 chips only (or move into header)",
+        "do_not": "Replicate left nav module matrix in companion"
+      },
+      "exit_criteria": [
+        "No second copy of the five queue counts beside 今日待办",
+        "adminHomeL5 contract updated to match Owner decision",
+        "Layout still L5 on desktop + mobile without empty companion hole"
+      ],
+      "closed_at": "20260806T040236Z",
+      "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+      "od_lock": "LOCKED",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+      "local_verify": "PASS",
+      "staging_status": "STAGING_RUNTIME_VERIFIED",
+      "closure_note": "Owner Decision LOCKED `REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY` (20260806T040236Z); LOCAL_VERIFIED + Staging Runtime VERIFIED 20260806T044213Z; TT_PRODUCTION_GO=NO_GO",
+      "staging_rc": "PASS",
+      "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7"
+    },
+    {
+      "id": "V65-PROD-003-B3-R013",
+      "title": "系统概况生产级概况面（去假空链；Web3 深度延后）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_PRIMARY",
+      "depends_on_owner_decision": "OD-B3-WEB3-OVERVIEW-DEPTH",
+      "code_ssot": [
+        "frontend/components/admin/AdminHomeSystemOverview*.tsx",
+        "frontend/components/admin/AdminHomeDomainHealthStrip.tsx",
+        "frontend/components/admin/AdminHomeKpi*."
+      ],
+      "gaps": [
+        "Domain health grey empty for Content/Official/Growth/Finance/Governance",
+        "向导目录 KPI card layout break (single glyph 「档」)",
+        "Read-only / empty links presented as if actionable",
+        "Chain tip OK as Sepolia informational — not publish-grade Web3 console yet"
+      ],
+      "exit_criteria": [
+        "Every overview CTA either (a) live depth page PASS or (b) honest DISABLED + reason",
+        "向导目录 / 订单 / 争议 cards show real numbers + horizontal L5 typography",
+        "Web3 section: tip/lag only until Owner opens on-chain review wave",
+        "No grey domain chip that navigates to empty shell"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R014",
+      "title": "向导目录表头/状态/操作横向 L5 + 真实筛选搜索",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "code_ssot": [
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+        "frontend/lib/adminUi.ts (table/action classes)",
+        "frontend/locales/zh.ts (admin_guides_* )"
+      ],
+      "gaps": [
+        "前台页 / 钱包 / 国家地区 / 质押(展示值) header wrap 2+1",
+        "监管详情 / 前台页 action buttons stack vertically",
+        "已停用/已启用 status badge wraps inside pill",
+        "Filter bar thin (条数+状态 exact) — not production search (q/city/status/date)"
+      ],
+      "exit_criteria": [
+        "All headers + status + ops actions single-line (whitespace-nowrap + min column widths / horizontal action group)",
+        "Unified filter: keyword + status + city/country + apply/reset with real API/query params",
+        "Timestamps humanized or monospace single-line; no vertical Chinese button stacks",
+        "Vitest/contract for guides table layout markers"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R015",
+      "title": "内容中心去冗 + 子页发布级审计清单（对拍前台）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_THEN_API_PER_MODULE",
+      "code_ssot": [
+        "frontend/app/admin/content/page.tsx",
+        "frontend/app/admin/content/AdminContentHubMain.tsx",
+        "frontend/app/admin/content/*/"
+      ],
+      "dedupe_candidates": [
+        "发布队列 appears in hub card + daily ops button (只读) + official visuals copy — keep ONE primary entry",
+        "社区举报：hub card vs workbench inbox — keep deep-link, avoid third copy"
+      ],
+      "subpage_audit_matrix_required": true,
+      "subpage_audit_vs_public": [
+        {
+          "admin": "landing-ambient",
+          "public": "/ + landing ambient",
+          "need": "publish ambient assets"
+        },
+        {
+          "admin": "media-assets",
+          "public": "CDN/media consumers",
+          "need": "upload/publish/verify"
+        },
+        {
+          "admin": "countries",
+          "public": "country order + bg",
+          "need": "B3-R016"
+        },
+        {
+          "admin": "cities / pois / pricing / hotel-tiers / transport*",
+          "public": "catalog",
+          "need": "CRUD+publish or honest disabled"
+        },
+        {
+          "admin": "announcements / roadmap / seo / translation",
+          "public": "disclosure surfaces",
+          "need": "writable publish path"
+        },
+        {
+          "admin": "publish-queue",
+          "public": "all published lanes",
+          "need": "real queue not read-only stub"
+        },
+        {
+          "admin": "catalog-dashboard / geo-validation / revisions / import",
+          "public": "ops",
+          "need": "ops-grade or demote"
+        }
+      ],
+      "exit_criteria": [
+        "Hub inventory JSON: each button → PASS depth | DISABLED reason | DEFER Owner",
+        "Zero duplicate primary CTAs for same queue",
+        "No empty shell marked 可用/可写"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R016",
+      "title": "国家目录：创建修复 + 背景图修改 + 官网排序",
+      "severity": "P0",
+      "status": "CLOSED",
+      "cut_class": "FE_PLUS_API",
+      "code_ssot": [
+        "frontend/app/admin/content/countries/useAdminContentCountriesPage.ts",
+        "frontend/app/admin/content/countries/AdminContentCountriesPageMain.tsx",
+        "crates/api (admin content countries create/patch/workflow)"
+      ],
+      "gaps": [],
+      "exit_criteria": [
+        "Create succeeds on tip API with clear validation errors (not opaque fail)",
+        "Edit country media (background) → publish → public consumer reads catalog (not fallback)",
+        "Sort controls persist order used by public country rail/list",
+        "Error state never replaces entire list when create fails (inline form error)",
+        "Staging smoke: create → sort → publish → public verify"
+      ],
+      "honesty": "① local API green ≠ ② staging catalog publish ≠ ③ Production GO",
+      "closed_at": "20260805T041800Z",
+      "closure_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z",
+      "closure_note": "Staging runtime PASS + Residual CLOSED — see W1 evidence pack evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z"
+    },
+    {
+      "id": "V65-PROD-003-B3-R017",
+      "title": "财务对账七件套：工作台同风重设计 + 金融级账本能力",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_REDESIGN_THEN_API_EXPORT",
+      "depends_on_owner_decision": "OD-B3-FIN-TREASURY-FOLD",
+      "code_ssot": [
+        "frontend/app/admin/finance-suite/AdminFinanceSuitePageMain.tsx",
+        "frontend/app/admin/finance-suite/adminFinanceSuitePageModel.ts",
+        "frontend/components/admin/AdminFinanceSuiteSupplementStrip.tsx",
+        "frontend/components/admin/AdminHomeTreasuryPoolStrip.tsx"
+      ],
+      "remove_or_demote": [
+        "系统头寸 primary fold with raw keys + empty partial tiles",
+        "Engineer jargon: partial depth / bypass / path ids as user-facing titles"
+      ],
+      "required_product_surfaces": [
+        {
+          "id": "USDC_TTG_CONVERSION",
+          "need": "Clear count/volume of users converting USDC↔TTG (read-first; write gated)"
+        },
+        {
+          "id": "ORDER_LEDGER_GROUPED",
+          "need": "User/order ledger grouped: 旅行 · 旅行收购 · 商家 · (other product lines as shipped)"
+        },
+        {
+          "id": "EXPORT",
+          "need": "CSV/export for ledger + reconciliation slices (finance-grade columns)"
+        },
+        {
+          "id": "IA_ALIGN_WORKBENCH",
+          "need": "Typography/spacing/CTA language match /admin workbench L5; Chinese-first operator copy"
+        }
+      ],
+      "exit_criteria": [
+        "Primary page understandable without reading SSOT path names",
+        "系统头寸 removed from primary or Owner-accepted demotion only",
+        "USDC/TTG + grouped orders + export present with real data or honest empty",
+        "No raw i18n keys / module ids in operator UI",
+        "Finance L5 contracts updated; demo write paths remain fail-closed where required"
+      ],
+      "honesty": "Finance redesign ≠ mainnet PSP GO; Stripe/USDC live reconciliation remains ②/③ gated",
+      "deep_pass_note": "Empty daily-todo stub + supplement L5 clash → B3-R023"
+    },
+    {
+      "id": "V65-PROD-003-B3-R018",
+      "title": "Inbox channel set missing Dispute（R011 exit-criteria honesty）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_PLUS_API_IF_INCLUDE_DISPUTE",
+      "extends": "V65-PROD-003-B3-R011",
+      "depends_on_owner_decision": "OD-B3-INBOX-CHANNEL-SET",
+      "pass": 2,
+      "code_ssot": [
+        "frontend/lib/adminUnifiedInboxTasks.ts",
+        "frontend/hooks/useAdminHomeInbox.ts"
+      ],
+      "gaps": [
+        "Tip channels = provider|guide|steward|approvals|reports only — no dispute fetch",
+        "R011 exit_criteria historically listed Dispute — criteria ≠ tip code",
+        "Community chip ≈ reports queue only (not full community moderation)"
+      ],
+      "optimization": [
+        "Align documented channel matrix with UI chips",
+        "If INCLUDE_DISPUTE: wire unreplied dispute count + deep-link",
+        "Rename Community → 社区举报 if only reports"
+      ],
+      "exit_criteria": [
+        "Channel matrix doc matches UI",
+        "If INCLUDE_DISPUTE: dispute unreplied count + deep-link PASS",
+        "No orphan exit_criteria naming missing channels"
+      ],
+      "publish_bar": true
+    },
+    {
+      "id": "V65-PROD-003-B3-R019",
+      "title": "Pending-count surfaces triplicated（今日待办 + 速览 + Overview KPI/CTA）",
+      "severity": "P2",
+      "status": "CLOSED",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R012",
+      "pass": 2,
+      "code_ssot": [
+        "frontend/components/admin/AdminHomeClient.tsx",
+        "frontend/components/admin/AdminHomeFocusCompanion.tsx"
+      ],
+      "gaps": [
+        "Same inboxPendingTotal on 今日待办, FocusCompanion, and Overview KPI/CTA",
+        "Drift risk if one path fails silently"
+      ],
+      "optimization": [
+        "Single SSOT pending-count surface; companions deep-link only",
+        "Overview omit full chip strip / duplicate total"
+      ],
+      "exit_criteria": [
+        "≤1 primary pending-count surface on workbench",
+        "Overview does not duplicate full inbox chip strip"
+      ],
+      "closed_at": "20260806T040236Z",
+      "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+      "od_lock": "LOCKED",
+      "evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
+      "local_verify": "PASS",
+      "staging_status": "STAGING_RUNTIME_VERIFIED",
+      "closure_note": "Owner Decision LOCKED `REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY` (20260806T040236Z); LOCAL_VERIFIED + Staging Runtime VERIFIED 20260806T044213Z; TT_PRODUCTION_GO=NO_GO",
+      "staging_rc": "PASS",
+      "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7"
+    },
+    {
+      "id": "V65-PROD-003-B3-R020",
+      "title": "国家目录：创建错误隔离 + FE 契约缺口（payload/sort_order/name_en）",
+      "severity": "P1",
+      "status": "CLOSED",
+      "cut_class": "FE_PLUS_API",
+      "extends": "V65-PROD-003-B3-R016",
+      "pass": 2,
+      "code_ssot": [
+        "frontend/components/admin/OpsPlaneFetchStates.tsx",
+        "frontend/lib/apiClient/content/http.ts",
+        "frontend/app/admin/content/countries/AdminContentCountriesPageMain.tsx",
+        "frontend/app/admin/content/countries/useAdminContentCountriesPage.ts"
+      ],
+      "gaps": [],
+      "optimization": [
+        "Inline form error; keep list mounted on create fail",
+        "Surface API validation/duplicate-iso message",
+        "Wire sort_order + payload (bg/hero); allow name_en patch"
+      ],
+      "exit_criteria": [
+        "Create fail keeps list + inline actionable error",
+        "name_en + sort_order editable",
+        "Background/hero editable via payload path PASS"
+      ],
+      "publish_bar": true,
+      "closed_at": "20260805T041800Z",
+      "closure_evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z",
+      "closure_note": "Staging runtime PASS + Residual CLOSED — see W1 evidence pack evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z"
+    },
+    {
+      "id": "V65-PROD-003-B3-R021",
+      "title": "向导目录：data_origin 死过滤 + status 自由文本 + 表列噪声",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R014",
+      "pass": 2,
+      "code_ssot": [
+        "frontend/hooks/useAdminGuidesPage.ts",
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+        "frontend/lib/adminGuidesPageModel.ts"
+      ],
+      "gaps": [
+        "data_origin ignored (HU-418) — dead filter",
+        "Status filter free-text vs Owner chip expectation",
+        "Wide table: wallet / docs boolean / raw ISO updated_at"
+      ],
+      "optimization": [
+        "Enum status select wired to query",
+        "Implement or remove data_origin",
+        "Locale date; collapse wallet/docs into detail drawer"
+      ],
+      "exit_criteria": [
+        "Status chips change result set",
+        "No dead filter controls",
+        "Table readable without destructive wrap on common viewports"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R022",
+      "title": "内容中心：发布队列 CTA 三重 + 空磁贴诚实",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R015",
+      "pass": 2,
+      "code_ssot": [
+        "frontend/app/admin/content/AdminContentHubMain.tsx"
+      ],
+      "gaps": [
+        "publish-queue linked in visual strip + queue card + tiles (3×)",
+        "Empty/DISABLED tiles risk looking like live modules"
+      ],
+      "optimization": [
+        "One primary publish-queue CTA; others text deep-link only",
+        "DISABLED/empty tiles explicit badge; no fake counts"
+      ],
+      "exit_criteria": [
+        "≤1 primary queue CTA above fold",
+        "Empty tiles labeled DISABLED or 暂未开放"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R023",
+      "title": "财务：空今日待办 stub + Supplement 视觉冲突 + 叠层只读注",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R017",
+      "pass": 2,
+      "code_ssot": [
+        "frontend/app/admin/finance-suite/AdminFinanceSuitePageMain.tsx",
+        "frontend/components/admin/AdminFinanceSuiteSupplementStrip.tsx"
+      ],
+      "gaps": [
+        "admin_fin_suite_daily_todo_empty stub while workbench has real queues",
+        "SupplementStrip dark slate vs warm L5; partial modules / jargon",
+        "Stacked readonly badge + no-write footnote clutter"
+      ],
+      "optimization": [
+        "Wire finance daily todo to real finance queues OR remove stub",
+        "Restyle supplement to warm L5 or fold into R017 redesign",
+        "Honor OD-B3-FIN-TREASURY-FOLD"
+      ],
+      "exit_criteria": [
+        "No empty stub pretending to be a queue",
+        "Supplement matches L5 tokens or removed",
+        "Treasury disposition matches Owner OD"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R024",
+      "title": "系统概况：空值渲染为 0 + KPI 排版拥挤",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R013",
+      "pass": 2,
+      "gaps": [
+        "Unavailable overview cells look like zero activity",
+        "KPI row wraps into dense clutter on mid widths"
+      ],
+      "optimization": [
+        "Show — / 暂不可用 instead of 0 when source unavailable",
+        "Reduce KPI count or collapse secondary metrics"
+      ],
+      "exit_criteria": [
+        "Unavailable ≠ 0",
+        "KPI row readable without destructive wrap on 1280px"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R025",
+      "title": "OpsPlaneFetchStates sitewide error-replace（跨页错误抹内容）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_SHARED_COMPONENT",
+      "extends": "V65-PROD-003-B3-R020",
+      "pass": 3,
+      "axis": [
+        "Engineer_first"
+      ],
+      "code_ssot": [
+        "frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+        "frontend/app/admin/content/**",
+        "frontend/app/admin/growth/**",
+        "frontend/app/admin/official/**"
+      ],
+      "gaps": [
+        "if(error) return replaces children — shared by 20+ admin surfaces",
+        "R020 scopes countries only; wipe pattern reappears unless component-level",
+        "Mutation failures look like full-page outage"
+      ],
+      "optimization": [
+        "Add errorPresentation: banner|replace (default banner when children mounted)",
+        "Banner above children + retry; keep list/form mounted",
+        "Contract: OpsPlaneFetchStates + ≥1 consumer per domain"
+      ],
+      "exit_criteria": [
+        "Shared component supports banner-above-children without wiping table/form",
+        "Countries + ≥1 other mutation page prove isolation",
+        "Related admin UX contracts updated"
+      ],
+      "publish_bar": true
+    },
+    {
+      "id": "V65-PROD-003-B3-R026",
+      "title": "财务双主入口：/admin/finance-suite vs /admin/finance 并存",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_IA",
+      "extends": "V65-PROD-003-B3-R017",
+      "pass": 3,
+      "axis": [
+        "Finance_realization",
+        "Engineer_first"
+      ],
+      "code_ssot": [
+        "frontend/lib/admin/adminHomeModel.ts",
+        "frontend/lib/admin/adminShellFinanceNavLinks.ts",
+        "frontend/app/admin/finance-suite/adminFinanceSuitePageModel.ts"
+      ],
+      "gaps": [
+        "Binding: finance primary = finance-suite; home still peers /admin/finance",
+        "Shell finance peers include both suite and summary",
+        "Suite finance-summary deep-links back to /admin/finance — dual homes"
+      ],
+      "optimization": [
+        "Suite = sole primary; /admin/finance = suite child only",
+        "Sidebar/home: single finance CTA → finance-suite",
+        "Update recent-visits + capability maps + contracts"
+      ],
+      "exit_criteria": [
+        "Operator has one finance home (suite)",
+        "/admin/finance reachable only as suite child depth",
+        "Shell/home contracts assert single primary"
+      ],
+      "publish_bar": true
+    },
+    {
+      "id": "V65-PROD-003-B3-R027",
+      "title": "财务「退款」磁贴语义谎言（disputes ≠ refunds）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R017",
+      "pass": 3,
+      "axis": [
+        "Finance_realization"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/finance-suite/adminFinanceSuitePageModel.ts"
+      ],
+      "gaps": [
+        "FINANCE_SUITE_MODULES refunds → /admin/disputes with status placeholder",
+        "Comment admits disputes ≠ refunds but tile still present",
+        "Operator may believe refund ledger exists"
+      ],
+      "optimization": [
+        "Remove refunds tile until real refund center OR rename to 争议处理",
+        "Never label disputes as 退款/refunds in suite primary grid",
+        "TARGET badge if refund center not shipped"
+      ],
+      "exit_criteria": [
+        "No operator-facing refunds label pointing only at disputes",
+        "Suite modules match real capability or TARGET/DISABLED honesty"
+      ],
+      "publish_bar": true
+    },
+    {
+      "id": "V65-PROD-003-B3-R028",
+      "title": "财务导出/账本面未挂在 suite 主路径（export 仍在 /admin/finance + accounting placeholder）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_THEN_API_EXPORT_COLUMNS",
+      "extends": "V65-PROD-003-B3-R017",
+      "pass": 3,
+      "axis": [
+        "Finance_realization",
+        "Production_release"
+      ],
+      "code_ssot": [
+        "frontend/components/admin/AdminFinanceExportDepthPanel.tsx",
+        "frontend/app/admin/finance/AdminFinancePageMain.tsx",
+        "frontend/app/admin/finance-suite/adminFinanceSuitePageModel.ts"
+      ],
+      "gaps": [
+        "CSV export exists but suite primary does not surface it",
+        "Suite audit → /admin/audit ≠ ledger/reconciliation export",
+        "ExportDepthPanel accounting-placeholder — not finance-grade ledger export",
+        "R017 EXPORT surface still unmet on suite home"
+      ],
+      "optimization": [
+        "Suite primary Export CTA → real CSV (summary now; ledger columns later)",
+        "Relabel suite audit to 审计日志 OR replace with 账本导出",
+        "Clarify accounting-placeholder until columns ship"
+      ],
+      "exit_criteria": [
+        "From finance-suite, operator can export without hunting /admin/finance",
+        "Export CTA honesty: shipped columns vs TARGET",
+        "No suite tile claiming audit-export that opens unrelated logs without honesty"
+      ],
+      "publish_bar": true
+    },
+    {
+      "id": "V65-PROD-003-B3-R029",
+      "title": "生产组合：FE tip ≠ API tip（33d94fee vs 16f29c7e）无双端烟测闸",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "PROCESS_PLUS_SMOKE",
+      "pass": 3,
+      "axis": [
+        "Production_release",
+        "Engineer_first"
+      ],
+      "code_ssot": [
+        "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json",
+        "composition_sha 0e5d4389…"
+      ],
+      "gaps": [
+        "Live FE 33d94fee and API 16f29c7e diverge — create fail may be composition",
+        "Release Cert historical; no mandatory dual-tip smoke before content L5 claim",
+        "composition_sha recorded but not enforced after Batch3 expansion"
+      ],
+      "optimization": [
+        "Before claiming R016 closed: smoke create/patch/publish against live API+FE tips",
+        "Gate: FE/API tips + composition pin + critical admin mutations exit 0",
+        "If API lag: pin-compatible deploy or FE fail-closed messaging"
+      ],
+      "exit_criteria": [
+        "Dual-tip smoke PASS for countries + finance summary read/export",
+        "R016 closure evidence cites both tips",
+        "Release Cert re-run includes composition pin check"
+      ],
+      "publish_bar": true
+    },
+    {
+      "id": "V65-PROD-003-B3-R030",
+      "title": "国家/内容工作流：opaque workflow_failed + 无 Publish→Verify→Live 反馈",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_PLUS_API_MESSAGE",
+      "extends": "V65-PROD-003-B3-R016",
+      "pass": 3,
+      "axis": [
+        "Engineer_first",
+        "Publish_path"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/content/countries/useAdminContentCountriesPage.ts",
+        "frontend/lib/apiClient/content/http.ts"
+      ],
+      "gaps": [
+        "submit-review/publish catch → generic admin_content_workflow_failed",
+        "No API reason / version conflict surface",
+        "No post-publish verify or public-consumer readback in UI"
+      ],
+      "optimization": [
+        "Parse/show API error body",
+        "After publish: show publish_status + optional verify deep-link",
+        "Align catalog slice with Publish→Verify→Live honesty"
+      ],
+      "exit_criteria": [
+        "Workflow fail shows actionable message",
+        "Successful publish updates badge without opaque reload-only UX"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R031",
+      "title": "Residual SSOT honesty 字段冲突（cert currency vs still_required_for_go）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "DOCS_SSOT_ONLY",
+      "pass": 3,
+      "axis": [
+        "Production_release"
+      ],
+      "code_ssot": [
+        "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json honesty"
+      ],
+      "gaps": [
+        "release_cert_currency=HISTORICAL_PENDING_RERUN but still_required_for_go=false",
+        "release_certification_pass=true while cert historical — false green for GO reviewers"
+      ],
+      "optimization": [
+        "Set release_certification_still_required_for_go=true while currency HISTORICAL",
+        "Split prior_cert_verdict vs cert_currency_for_go",
+        "Align FTB/SSOT narrative with NO_GO"
+      ],
+      "exit_criteria": [
+        "No honesty field implies GO-ready cert while currency historical",
+        "Residual + Expansion stamps consistent"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R032",
+      "title": "财务七件套模块状态全 partial / TARGET 无中文操作者矩阵",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R017",
+      "pass": 3,
+      "axis": [
+        "Finance_realization"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/finance-suite/adminFinanceSuitePageModel.ts",
+        "frontend/app/admin/finance-suite/AdminFinanceSuitePageMain.tsx"
+      ],
+      "gaps": [
+        "All FINANCE_SUITE_MODULES status=partial; targetSnapshotClaim on some",
+        "Operator cannot distinguish 可用 / 部分 / 目标未交付",
+        "English/partial jargon leaks into Chinese operator surface"
+      ],
+      "optimization": [
+        "Operator status matrix: 可用|部分可用|目标|暂未开放",
+        "Hide TARGET modules from primary grid or fold under 规划中"
+      ],
+      "exit_criteria": [
+        "Every suite tile has Chinese status honesty",
+        "TARGET modules not presented as open finance ops"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R033",
+      "title": "内容状态徽章对比度不足（「已发布」近不可见）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_SHARED_COMPONENT",
+      "extends": "V65-PROD-003-B3-R016",
+      "pass": 4,
+      "axis": [
+        "UI_UX",
+        "A11y"
+      ],
+      "code_ssot": [
+        "frontend/components/admin/content/AdminContentPageShell.tsx",
+        "frontend/app/admin/content/countries/AdminContentCountriesPageMain.tsx",
+        "frontend/app/admin/content/**"
+      ],
+      "gaps": [
+        "AdminContentStatusBadge uses bg-ink-100 + text-ink-700 for all statuses — published chip nearly invisible on light table rows (Owner countries screenshot)",
+        "No tone map by publish_status (draft/published/archived); operators cannot scan status at a glance",
+        "Shared by countries + publish-queue + announcements + media — sitewide a11y debt"
+      ],
+      "optimization": [
+        "Status tone tokens: draft=neutral, published=success (WCAG AA >=4.5:1), archived=muted, failed=danger",
+        "Keep compact chip; add title/aria-label with full status string",
+        "Visual regression contract on AdminContentStatusBadge tones"
+      ],
+      "exit_criteria": [
+        "Published badge contrast >= WCAG AA on default admin table background",
+        "Tone map documented + used by >=3 content consumers",
+        "Countries screenshot re-check: status column scannable without hover"
+      ],
+      "publish_bar": true
+    },
+    {
+      "id": "V65-PROD-003-B3-R034",
+      "title": "向导目录表头/单元格 chrome 碰撞（ID 列字形叠压 · 时间戳噪音）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R014",
+      "pass": 4,
+      "axis": [
+        "UI_UX",
+        "Table_L5"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+        "frontend/components/admin/**"
+      ],
+      "gaps": [
+        "Header ID column collides with sort glyph / wrap — Owner screenshot ceb18df8",
+        "ISO+ms timestamps + truncated UUID without copy affordance — cognitive noise (237f4f02)",
+        "Uneven column wrap breaks L5 table rhythm; extends R014 layout freeze debt"
+      ],
+      "optimization": [
+        "nowrap headers + reserved sort icon slot; ellipsis + title tooltip on long labels",
+        "Display time: local short (YYYY-MM-DD HH:mm); full ISO in title attribute only",
+        "ID column: mono truncated + one-click copy; optional full ID expand"
+      ],
+      "exit_criteria": [
+        "No header glyph/text collision at 1280/1440 widths",
+        "Primary timestamp format short; UUID copy works",
+        "Vitest/contract for guides table chrome if present"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R035",
+      "title": "向导筛选 UX 不诚实（自由文本状态 · Apply 文案 · Last Updated 未知）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R021",
+      "pass": 4,
+      "axis": [
+        "UI_UX",
+        "Filter_honesty"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+        "frontend/locales/zh.ts"
+      ],
+      "gaps": [
+        "Status filter is free-text exact match vs operator expectation of enum select — dead filters (R021) still feel broken",
+        "Apply/Reset copy exposes URL/query prose to operators",
+        "Last Updated unknown placeholder reads as product defect when field empty"
+      ],
+      "optimization": [
+        "Status = select of known guide statuses (+ All); remove free-text exact trap",
+        "Apply/Reset -> Chinese operator verbs; hide query-string jargon",
+        "Empty updated_at -> em-dash or 暂无, not 未知"
+      ],
+      "exit_criteria": [
+        "Status filter is enum select; no silent zero-result from typo exact-match",
+        "No URL/query operator-facing strings in filter chrome",
+        "Empty dates render as —/暂无"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R036",
+      "title": "内容中心/向导首屏 fold 密度过高（卡片推主表到折线外）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_IA",
+      "extends": "V65-PROD-003-B3-R015",
+      "pass": 4,
+      "axis": [
+        "UI_UX",
+        "Information_architecture"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/content/AdminContentHubMain.tsx",
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx"
+      ],
+      "gaps": [
+        "Content hub workbench cards + queue CTAs push primary directory/grid below fold",
+        "Guides: filter+stats cards push table mid-page; search not sticky",
+        "First job (scan/edit list) competes with secondary workbench chrome"
+      ],
+      "optimization": [
+        "One primary job above fold: table/list; collapse secondary cards into compact strip or accordion",
+        "Sticky filter bar; demote duplicate queue CTA (align R022)",
+        "Mobile: cards -> single summary chip row"
+      ],
+      "exit_criteria": [
+        "At 900px height, >=3 table rows visible without scroll on guides + countries entry",
+        "Secondary workbench not taller than primary list chrome"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R037",
+      "title": "Admin 列表/工作台性能（多队列拉取 · 无虚拟化 · 筛选 remount · 计数滞后）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_PERF",
+      "extends": "V65-PROD-003-B3-R011",
+      "pass": 4,
+      "axis": [
+        "Performance",
+        "UI_UX"
+      ],
+      "code_ssot": [
+        "frontend/lib/admin/adminHomeQueuesProvider.tsx",
+        "frontend/components/admin/AdminHomeClient.tsx",
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+        "frontend/components/admin/ops/OpsPlaneFetchStates.tsx"
+      ],
+      "gaps": [
+        "Home still fans out multiple queue fetches / re-renders despite shared provider — perceived lag on 今日待办",
+        "Guides/countries lists lack virtualization; large rows cause scroll jank",
+        "Filter Apply risks full tree remount; pending counts lag behind list truth (R019 related)"
+      ],
+      "optimization": [
+        "Keep single-flight queues provider; debounce filter Apply; avoid remounting table body on every keystroke",
+        "Virtualize long admin tables (windowing) when row count > N",
+        "Skeleton -> content without layout shift; count badges from same query as list"
+      ],
+      "exit_criteria": [
+        "Home queue paint: no N× duplicate list calls on mount (network evidence)",
+        "Guides filter Apply does not remount entire page shell",
+        "Owner-felt lag reduced on tip line; document perf note in evidence"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R038",
+      "title": "财务空态/占位诚实度（今日待办空墙 · 系统头寸残卡 · partial 入口）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "extends": "V65-PROD-003-B3-R023",
+      "pass": 4,
+      "axis": [
+        "UI_UX",
+        "Finance_honesty"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/finance-suite/**",
+        "frontend/lib/admin/adminFinanceSuitePageModel.ts",
+        "frontend/locales/zh.ts"
+      ],
+      "gaps": [
+        "Empty 今日待办 stub wall still dominates finance primary (extends R023)",
+        "系统头寸 incomplete/title-less cards + open-partial CTA — operator jargon wall",
+        "Placeholder density competes with real USDC/TTG / orders / export jobs"
+      ],
+      "optimization": [
+        "Remove empty daily-todo when zero items; or single honest empty line",
+        "Treasury fold per OD-B3-FIN-TREASURY-FOLD; no partial CTA on primary",
+        "Align status language with R032 Chinese matrix"
+      ],
+      "exit_criteria": [
+        "No empty stub wall on finance-suite primary when queue empty",
+        "No partial jargon in operator-facing ZH primary CTAs",
+        "Treasury not on primary after Owner OD"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R039",
+      "title": "财务/运营文案 i18n 泄漏（partial 进中文 · supplement 键截断）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_I18N",
+      "extends": "V65-PROD-003-B3-R032",
+      "pass": 4,
+      "axis": [
+        "UI_UX",
+        "I18n"
+      ],
+      "code_ssot": [
+        "frontend/locales/zh.ts",
+        "frontend/app/admin/finance-suite/**"
+      ],
+      "gaps": [
+        "admin_fin_suite_hub_depth_open exposes English engineering term partial in ZH UI",
+        "Supplement module keys truncated / raw in 系统头寸 surface",
+        "Operator cannot distinguish TARGET vs usable from copy alone"
+      ],
+      "optimization": [
+        "Replace partial/TARGET with 可用|部分可用|目标|暂未开放 in all ZH strings",
+        "Audit admin_fin_suite_* + supplement_* for raw keys",
+        "i18n freeze test: ban substring partial|TARGET in zh operator paths"
+      ],
+      "exit_criteria": [
+        "No English jargon tokens in ZH finance-suite primary copy",
+        "No truncated/raw supplement keys visible",
+        "Locale contract or lint gate for banned tokens"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R040",
+      "title": "Admin 感知性能/可访问性抛光（CLS · 骨架不一致 · 概况展开认知负荷）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_POLISH",
+      "extends": "V65-PROD-003-B3-R013",
+      "pass": 4,
+      "axis": [
+        "Performance",
+        "A11y",
+        "UI_UX"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+        "frontend/components/admin/AdminHomeClient.tsx",
+        "frontend/components/admin/**"
+      ],
+      "gaps": [
+        "Materials/avatar columns cause CLS when images load late",
+        "Skeleton patterns inconsistent across OpsPlane pages — flash of empty then jump",
+        "系统概况 expand stacks many CTAs — high cognitive load (R013/R024 related)"
+      ],
+      "optimization": [
+        "Fixed aspect boxes + reserved row height for media cells",
+        "Shared AdminTableSkeleton; match final column geometry",
+        "Overview: progressive disclosure — top 3 KPIs + more; no expand wall"
+      ],
+      "exit_criteria": [
+        "Guides materials column: no >0.1 CLS on load in local check",
+        "Skeleton geometry matches loaded table",
+        "Overview default view <=1 screen of primary KPIs"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R041",
+      "title": "争议 Admin = 只读裁决台 · 禁写资金/Escrow · 主 CTA 跳出控制台",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_SOP_THEN_API_IF_OWNER_WANTS_WRITE",
+      "extends": "V65-PROD-003-B3-R018",
+      "pass": 5,
+      "axis": [
+        "Surface_control_truth",
+        "Dispute_ops",
+        "IA_honesty"
+      ],
+      "code_ssot": [
+        "frontend/components/admin/AdminDisputeReadonlyAdjudicationDesk.tsx",
+        "frontend/lib/admin/disputeOpsL5.ts",
+        "frontend/app/admin/disputes/[id]/AdminDisputeDetailPageMain.tsx"
+      ],
+      "gaps": [
+        "Admin dispute list/detail explicitly forbid in-console fund/Escrow writes; primary path is public /disputes/[id]",
+        "Operators may expect console adjudication buttons like Approvals approve/reject — surface is SOP + handoff only",
+        "Extends R018 inbox Dispute gap: even with Dispute channel, console remains non-write adjudication"
+      ],
+      "optimization": [
+        "Owner OD: ACCEPT_READONLY_PUBLIC_ARB (document SOP) OR BUILD_IN_CONSOLE_WRITE (new product cut)",
+        "If ACCEPT: banner + sidebar copy honesty; inbox CTA labels 「公开页仲裁」 not 「处理」",
+        "If BUILD: separate FE+API write cut with Idempotency-Key — do not fake buttons on current tip"
+      ],
+      "exit_criteria": [
+        "Owner OD recorded for Dispute console write posture",
+        "Operator-facing ZH never implies in-console fund settle/refund on tip 33d94fee",
+        "If write path approved: closed-loop evidence + not public-page-only"
+      ],
+      "publish_bar": "① tip honesty + OD → ② staging SOP drill → ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R042",
+      "title": "订单 Admin force-readonly · 仅 escrow/pay/dispute 跳转无控制台结算",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_HONESTY_THEN_API_IF_FORCE_OPS",
+      "pass": 5,
+      "axis": [
+        "Surface_control_truth",
+        "Orders_ops",
+        "IA_honesty"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/orders/AdminOrdersPageMain.tsx",
+        "frontend/app/admin/orders/[id]/AdminOrderDetailPageMain.tsx"
+      ],
+      "gaps": [
+        "data-tt-admin-orders-force-readonly-badge + escrow footnote — no force settle/refund/cancel in Admin",
+        "Row ops are navigation (detail/escrow/dispute/pay) not production force actions",
+        "Finance suite refunds placeholder already points to disputes — order force ops also absent"
+      ],
+      "optimization": [
+        "Keep force-readonly unless Owner scopes FORCE_OPS product cut",
+        "ZH copy: 「只读订单台 · 结算在托管/支付面」; hide implied write CTAs",
+        "If force ops needed: new API + RBAC + Idempotency + evidence — separate from list chrome polish"
+      ],
+      "exit_criteria": [
+        "No operator-facing CTA implies Admin can force-release funds on tip",
+        "Detail page lists only verified handoff links",
+        "Any future write action has API contract + smoke — not UI-only"
+      ],
+      "publish_bar": "① honesty on tip → ② staging handoff drill → ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R043",
+      "title": "内容子模块生产深度不均（城市/POI/定价/酒店档只读薄表 vs 国家可写）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_MODULE_MATRIX_THEN_API_PER_MODULE",
+      "extends": "V65-PROD-003-B3-R015",
+      "pass": 5,
+      "axis": [
+        "Surface_control_truth",
+        "CMS_catalog_depth",
+        "Publish_bar"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/content/cities/AdminContentCitiesPageMain.tsx",
+        "frontend/app/admin/content/pois",
+        "frontend/app/admin/content/pricing",
+        "frontend/app/admin/content/hotel-tiers",
+        "frontend/app/admin/content/countries/useAdminContentCountriesPage.ts",
+        "frontend/lib/admin/adminShellContentNavLinks.ts"
+      ],
+      "gaps": [
+        "Countries/publish-queue/roadmap/seo/media/translation/announcements have real post/patch/workflow paths",
+        "Cities/POI/pricing/hotel-tiers surfaces are list/status thin — no create/save/publish parity with countries",
+        "Hub nav presents uniform depth; operators cannot tell which modules are L5-writable"
+      ],
+      "optimization": [
+        "Publish matrix: each content leaf = WRITABLE|READ_LIST|TARGET with ZH badge on hub cards",
+        "Close cities/POI write only after Country R016 P0 path reusable; else mark TARGET",
+        "Forbid claiming content hub L5 complete while matrix has unlabeled thin modules"
+      ],
+      "exit_criteria": [
+        "Hub + nav show writable honesty per module",
+        "No thin module CTA labeled as if countries-complete",
+        "Owner-prioritized modules either write-closed or TARGET"
+      ],
+      "publish_bar": "① matrix honesty → ② per-module staging → ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R044",
+      "title": "入驻审批写入口可发现性（列表筛选 vs 详情 Approve 卡）— 不重开 R006",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_DISCOVERABILITY",
+      "extends": "V65-PROD-003-B3-R006",
+      "pass": 5,
+      "axis": [
+        "Surface_control_truth",
+        "Onboarding_UX",
+        "Discoverability"
+      ],
+      "code_ssot": [
+        "frontend/components/admin/AdminOnboardingApplicationDetailPageMain.tsx",
+        "frontend/components/admin/AdminProviderApplicationReviewCard.tsx",
+        "frontend/components/admin/AdminGuideApplicationReviewCard.tsx",
+        "frontend/app/admin/providers",
+        "frontend/app/admin/guides"
+      ],
+      "gaps": [
+        "R006 CLOSED: detail review cards patchAdmin* with Idempotency-Key — do NOT claim missing approve",
+        "Provider/Guide list pages are filter/browse; write lives on application detail — easy to miss for new operators",
+        "Onboarding hub mostly queue href cards — weak 「下一步点详情批复」 affordance"
+      ],
+      "optimization": [
+        "List row primary CTA → application detail with approve panel in fold",
+        "Hub copy: 「批复在详情页」; never imply list-page approve",
+        "Keep R006 closed; this is discoverability only"
+      ],
+      "exit_criteria": [
+        "List→detail path <2 clicks with visible Approve/Reject",
+        "No residual claims R006 reopen / missing API approve",
+        "Owner UAT spot-check provider+guide detail write still works"
+      ],
+      "publish_bar": "① FE discoverability → ② staging spot → ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R045",
+      "title": "Slim 侧栏 ≤12 叶 vs 深层 Admin 路由孤岛 · IA 可发现性",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_IA",
+      "pass": 5,
+      "axis": [
+        "Surface_control_truth",
+        "IA_discoverability"
+      ],
+      "code_ssot": [
+        "frontend/lib/admin/adminShellSidebarModel.ts",
+        "frontend/lib/admin/adminShellContentNavLinks.ts",
+        "frontend/app/admin"
+      ],
+      "gaps": [
+        "Publish sidebar hard-caps ~12 leaves; many real routes only via hub secondary nav",
+        "Operators can bookmark orphan depths without IA context / honesty badges",
+        "Risk: deep writable surfaces under-discovered; thin surfaces over-visited"
+      ],
+      "optimization": [
+        "Keep slim sidebar; require each hub to list ALL child routes with WRITABLE|READ|TARGET",
+        "Orphan inventory gate: every app/admin page mapped to hub or LEGACY fold",
+        "No new sidebar leaves without removing another (≤12 contract)"
+      ],
+      "exit_criteria": [
+        "Orphan route inventory PASS vs hub maps",
+        "Sidebar still ≤12 leaves",
+        "Writable deep surfaces reachable ≤2 hops from a primary leaf"
+      ],
+      "publish_bar": "① inventory honesty → ② staging nav drill → ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R046",
+      "title": "配置中心控制真值（枢纽导航 + 诚实文案 · 子面写能力未齐）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_HONESTY_THEN_PER_CHILD",
+      "pass": 5,
+      "axis": [
+        "Surface_control_truth",
+        "Config_ops"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/config/AdminConfigHubPageMain.tsx",
+        "frontend/app/admin/config/adminConfigHubPageModel.ts",
+        "frontend/app/admin/config/releases",
+        "frontend/app/admin/config/useAdminConfigHubPage.ts"
+      ],
+      "gaps": [
+        "Hub itself has no postAdmin/save — ops cards + maintainer fold + meta build + writable_honesty note",
+        "Child surfaces need per-route write audit; hub can overpromise 「平台设置」",
+        "Publish approval notice may imply console publish without child write path"
+      ],
+      "optimization": [
+        "Per-child matrix on hub: meta-read / releases / approvals — WRITABLE|READ|TARGET",
+        "Keep honesty note; sync CTA labels to matrix",
+        "Do not add fake save on hub"
+      ],
+      "exit_criteria": [
+        "Hub never shows unlabeled write CTA",
+        "Each CONFIG_HUB child link audited for real control",
+        "Maintainer-only fold not mistaken for ops write"
+      ],
+      "publish_bar": "① hub matrix → ② child staging → ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R047",
+      "title": "增长中心 CTA 诚实度（analytics/KOL 合同只读 vs 运营暗示）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_HONESTY",
+      "pass": 5,
+      "axis": [
+        "Surface_control_truth",
+        "Growth_ops"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/growth",
+        "frontend/app/admin/growth/analytics/adminGrowthAnalytics.contract.test.ts",
+        "frontend/app/admin/growth/kol-center/adminGrowthKolCenter.contract.test.ts"
+      ],
+      "gaps": [
+        "Contracts pin analytics + kol-center as read-only dashboards",
+        "Hub/growth entry may still read as ops center with actionable campaigns",
+        "Contrast: official/public-operations has real publish — growth must not borrow that implication"
+      ],
+      "optimization": [
+        "ZH badges 「只读看板」 on growth hub cards",
+        "CTA vocabulary: 查看 / 导出 — never 发布/批准 unless path exists",
+        "Contract freeze: growth routes stay read-only or open separate write cut"
+      ],
+      "exit_criteria": [
+        "Growth hub ZH shows read-only honesty",
+        "No publish/approve CTA without API",
+        "Contract tests remain green for read-only"
+      ],
+      "publish_bar": "① FE honesty → ② staging → ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R048",
+      "title": "用户台写闸诚实度（advisory-disabled + 收购 suspend 窄写）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_HONESTY",
+      "pass": 5,
+      "axis": [
+        "Surface_control_truth",
+        "Users_ops",
+        "RBAC"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/users/AdminUsersDataSection.tsx",
+        "frontend/app/admin/users"
+      ],
+      "gaps": [
+        "data-tt-admin-users-write-gate=advisory-disabled-v1 — broad user write disabled; acquisition suspend is main write",
+        "Operators may expect role edit / ban / password reset from Users primary",
+        "Narrow write without matrix label looks like broken console"
+      ],
+      "optimization": [
+        "Primary honesty strip: 「本页可写=收购发布暂停；其他用户写关闭」",
+        "Disable/hide unlabeled write affordances",
+        "Document RBAC matrix next to gate"
+      ],
+      "exit_criteria": [
+        "Users page ZH states exact writable set",
+        "No disabled-looking primary that implies future write without TARGET label",
+        "Suspend path remains the only verified write unless new cut"
+      ],
+      "publish_bar": "① FE honesty → ② staging RBAC → ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R049",
+      "title": "全站数据诚实徽章缺口：ACTIVE/PARTIAL/DISABLED/TARGET/HISTORICAL 仅财务七件套局部有",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_HONESTY",
+      "extends": "V65-PROD-003-B3-R032",
+      "pass": 6,
+      "axis": [
+        "Data_truth",
+        "IA_honesty",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "frontend/lib/admin/adminTruthBadge.ts",
+        "frontend/app/admin/finance-suite/AdminFinanceSuiteModuleStatusBadge.tsx",
+        "frontend/app/admin/content/announcements/AdminContentAnnouncementsPageMain.tsx",
+        "frontend/app/admin/official/public-operations/AdminOfficialPublicOperationsPageMain.tsx"
+      ],
+      "gaps": [
+        "adminTruthBadge 仅 REAL|PARTIAL|TOOL|HIDE；finance-suite ModuleStatusBadge 另挂 TARGET；无 DISABLED/HISTORICAL 一等词汇",
+        "data-tt-admin-truth-badge 消费几乎仅 finance-suite；Workbench/Content/Official/Growth/Config 无系统化生命周期徽章",
+        "长期运营无法在主入口一眼区分 ACTIVE 真链路 vs PARTIAL/TARGET/HISTORICAL（冲突 Final Truth / Product Baseline 诚实要求）"
+      ],
+      "optimization": [
+        "扩展 AdminTruthBadge → ACTIVE|PARTIAL|DISABLED|TARGET|HISTORICAL（或 REAL→ACTIVE、TOOL→DISABLED 映射）+ 中文操作者标签",
+        "Slim-12 主叶 + Hub 子叶强制挂徽章；TARGET/HISTORICAL 禁伪开 CTA",
+        "合同：非 finance 至少 3 个域有 data-tt-admin-truth-badge"
+      ],
+      "exit_criteria": [
+        "每个 Slim 主叶首屏可见数据生命周期徽章",
+        "TARGET/HISTORICAL 入口不可伪装为可写 ACTIVE",
+        "中文标签无 partial/placeholder jargon（并入 R039 lint）"
+      ],
+      "publish_bar": "① FE badge SSOT 绿 ≠ ② staging 点验 ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R050",
+      "title": "空态/加载双 chrome：AdminListPageEmptyState vs OpsPlaneFetchStates 不一致",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_HONESTY",
+      "extends": "V65-PROD-003-B3-R025",
+      "pass": 6,
+      "axis": [
+        "Empty_error_honesty",
+        "UI_DS",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "frontend/components/admin/AdminListPageEmptyState.tsx",
+        "frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+        "frontend/components/admin/ops/OpsPlanePageShell.tsx",
+        "frontend/components/admin/AdminListPageChrome.tsx"
+      ],
+      "gaps": [
+        "Ops 四叶走 AdminListPageChrome + AdminListPageEmptyState（WarmL5 + nextLinks）",
+        "Content/Official/Growth 走 OpsPlanePageShell + OpsPlaneFetchStates（另一套 skeleton/empty/error；error replace 子树=R025）",
+        "长期管理员跨域切换需学两套空态/错误/骨架语言，违反单一 Design System 主入口体验"
+      ],
+      "optimization": [
+        "单一 FetchStates 原语：banner|replace 模式（关 R025）+ 共享 EmptyState 槽位",
+        "骨架几何与终态表列宽对齐（关 R040）；空态统一 next CTA 槽",
+        "禁止第三套 ad-hoc 空态文案"
+      ],
+      "exit_criteria": [
+        "跨 Slim 主叶 + Content/Official 空态/错误/骨架视觉与文案同源",
+        "error 默认不抹列表（R025 exit）",
+        "合同覆盖至少 2 套 chrome 消费方"
+      ],
+      "publish_bar": "① FE chrome 统一 ≠ ② staging UAT ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R051",
+      "title": "数据源诚实条仅 Ops 四叶：Content/Official/Growth 缺 REAL_DB|memory|mixed 条",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_HONESTY",
+      "extends": "V65-PROD-003-B3-R029",
+      "pass": 6,
+      "axis": [
+        "Data_truth",
+        "FE_API_tip_consistency",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "frontend/components/admin/AdminOpsLeafDataSourceStrip.tsx",
+        "frontend/lib/admin/opsWorkbenchL5.ts",
+        "frontend/app/admin/users/AdminUsersPageMain.tsx",
+        "frontend/app/admin/content/announcements/AdminContentAnnouncementsPageMain.tsx"
+      ],
+      "gaps": [
+        "AdminOpsLeafDataSourceStrip 仅挂 users/guides/orders/disputes（+ finance meta 局部）",
+        "CMS/Official/Growth 平面无 meta.source → real_db|memory|mixed|unavailable 操作者条",
+        "FE tip 33d94fee / API tip 16f29c7e 组合时，运营商不知当前页读真库还是 demo/memory"
+      ],
+      "optimization": [
+        "OpsPlanePageShell 默认渲染 DataSourceStrip（读 list meta.source）",
+        "unavailable 诚实「数据源未知」非伪绿",
+        "与 R049 分层：源条=引擎诚实；徽章=模块生命周期"
+      ],
+      "exit_criteria": [
+        "Content/Official 至少一主列表展示同源 strip",
+        "memory/demo 源禁显示为「生产数据」",
+        "合同断言 data-tt 探针存在"
+      ],
+      "publish_bar": "① FE strip 绿 ≠ ② staging DB 点验 ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R052",
+      "title": "信息架构 L1/L2/L3 坍塌：业务动作与技术元信息混排主表面",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_HONESTY",
+      "pass": 6,
+      "axis": [
+        "IA",
+        "Single_primary_entry",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "frontend/lib/admin/adminShellSidebarModel.ts",
+        "frontend/app/admin/AdminHomeClient.tsx",
+        "frontend/app/admin/finance-suite/AdminFinanceSuitePageMain.tsx",
+        "docs/runbook/TT-V65-ADMIN-CONSOLE-UX-REALITY-GAP-INVENTORY-ROUND2-LATEST.json"
+      ],
+      "gaps": [
+        "UX-R2-G004：业务层（批复/发布）与技术元（tip SHA、engine id、raw status）同层抢注意力",
+        "Slim ≤12 叶已锁，页内仍多主任务并列（今日待办+速览+概况；财务 workflow+系统头寸）",
+        "违反单一主入口：同域多条并列 CTA（深化 R019/R022/R026 根因在页内层级）"
+      ],
+      "optimization": [
+        "写死层级：L1 业务动作 → L2 筛选/表 → L3 技术元（折叠/旁路）",
+        "主入口一条；次入口降级文字链；技术 tip 仅页脚/诊断",
+        "Owner OD 速览/头寸关闭后验收页内 L1 唯一"
+      ],
+      "exit_criteria": [
+        "每个 Slim 主叶首屏仅一个主任务",
+        "技术元不出现在 L1 主文案",
+        "与 Round2 G004 exit 对拍"
+      ],
+      "publish_bar": "① FE IA 层级 ≠ ② staging 操作者走查 ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R053",
+      "title": "Workbench L5 Design System 非唯一视觉母版：Content/Official/孤岛密度漂移",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_HONESTY",
+      "extends": "V65-PROD-003-B3-R040",
+      "pass": 6,
+      "axis": [
+        "UI_DS",
+        "Table_density",
+        "CLS_skeleton",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "frontend/lib/adminUi.ts",
+        "frontend/components/admin/AdminWarmL5Surface.tsx",
+        "frontend/components/admin/ops/OpsPlanePageShell.tsx",
+        "frontend/app/admin/content/announcements/AdminContentAnnouncementsPageMain.tsx"
+      ],
+      "gaps": [
+        "颜色/间距/排版/表密度在 AdminListPageChrome 与 OpsPlane 两套 token 路径上漂移",
+        "骨架几何与终态列宽不一致（R040）；对比度问题未覆盖全部平面（R033）",
+        "孤岛路由（R045）更易落出 Workbench L5 母版"
+      ],
+      "optimization": [
+        "声明 Workbench L5 = 唯一视觉母版；OpsPlane 仅薄壳复用同一 token",
+        "表行高/密度常量入 adminUi；媒体列固定高防 CLS",
+        "孤岛 inventory 闸：无母版 chrome 不得宣称 L5"
+      ],
+      "exit_criteria": [
+        "Content/Official 主表密度与 Users/Guides 视觉对拍",
+        "骨架→内容 CLS 可测阈值内",
+        "合同：共用 ADMIN_* token 常量"
+      ],
+      "publish_bar": "① FE DS 母版 ≠ ② staging 视觉走查 ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R054",
+      "title": "大数据列表零虚拟化确认：admin 树无 virtualizer（深化 R037）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_PERF",
+      "extends": "V65-PROD-003-B3-R037",
+      "pass": 6,
+      "axis": [
+        "Perf",
+        "Large_list_capacity",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "frontend/app/admin/users/AdminUsersDataSection.tsx",
+        "frontend/app/admin/guides/AdminGuidesPageMain.tsx",
+        "frontend/app/admin/orders/AdminOrdersPageMain.tsx",
+        "frontend/app/admin/content/announcements/AdminContentAnnouncementsPageMain.tsx"
+      ],
+      "gaps": [
+        "Pass6 机读：frontend/**/admin/** 无 react-window / @tanstack/react-virtual / virtualiz* 引用",
+        "分页模型不均；多队列首页并发拉取（R037）在长列表下必卡",
+        "真实运营日积数据后 Users/Orders/Announcements 无法承载长期使用性能条"
+      ],
+      "optimization": [
+        "行窗虚拟化阈值（如 >100 行）+ 服务端分页统一",
+        "Home 队列单飞；筛选 debounce；禁止整页 remount",
+        "性能探针：列表交互 p95 预算入合同"
+      ],
+      "exit_criteria": [
+        "至少 Users+Orders+Guides 达虚拟化或强制分页封顶",
+        "Home 队列单飞合同绿",
+        "staging 用 1k 行夹具点验 snappy"
+      ],
+      "publish_bar": "① FE perf 绿 ≠ ② staging 大数据夹具 ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R055",
+      "title": "机读 STRUCTURE_SCAN L5 禁止冒充视觉/运营闭环（Batch3 诚实闸）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "DOCS_HONESTY",
+      "pass": 6,
+      "axis": [
+        "Honesty_publish_bar",
+        "Baseline_alignment"
+      ],
+      "code_ssot": [
+        "docs/runbook/TT-V65-ADMIN-CONSOLE-UX-REALITY-GAP-INVENTORY-ROUND2-LATEST.json",
+        "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json",
+        "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.json",
+        "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json"
+      ],
+      "gaps": [
+        "Round2 机读曾报 118/118 · 92.4 = STRUCTURE_SCAN_ONLY，≠ 视觉 L5 闭环 ≠ 长期运营体验",
+        "Batch3 若引用历史 machine PASS 会假完成（违 AGENTS / 禁止假完成）",
+        "Final Truth / Engineering Anchor / Product tip 三层并存，易被混引用"
+      ],
+      "optimization": [
+        "Batch3 honesty 写死：STRUCTURE_SCAN ≠ Human UAT ≠ Production GO",
+        "引用矩阵：Web3 tip ea71c577 正交；Product FE/API 以 Runtime Truth SSOT 为准",
+        "任何「Admin L5 已闭」声明必须带 Human UAT 证据戳"
+      ],
+      "exit_criteria": [
+        "LATEST 文无「118/118 已视觉闭环」表述",
+        "三层 tip 引用表固定在 Expansion Runtime SSOT 段",
+        "Owner UAT 截图包存在后方可宣称运营闭环"
+      ],
+      "publish_bar": "文档诚实闸 · 不单独翻 GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R056",
+      "title": "三层 tip 叙事风险：Web3 ea71c577 vs Product FE 33d94fee / API 16f29c7e",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "DOCS_PLUS_SMOKE",
+      "extends": "V65-PROD-003-B3-R029",
+      "pass": 6,
+      "axis": [
+        "FE_API_tip_consistency",
+        "Baseline_alignment",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.json",
+        "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json",
+        "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json"
+      ],
+      "gaps": [
+        "Engineering SSOT Anchor / FTB web3_truth tip = ea71c577…（链上正交层）",
+        "Product runtime live_verified：web 33d94fee… · api 16f29c7e…（Admin 生产写真值）",
+        "R029 已登记双 tip；Pass6 确认第三层 Web3 tip 仍被文档混引用 → 运维/Agent 验错层"
+      ],
+      "optimization": [
+        "Admin 发布验收只认 Product FE+API tip；Web3 tip 仅 Web3 章引用",
+        "双 tip composition 烟测闸（R029）+ 文档 lint 禁混层",
+        "Admin 页脚可显示 FE/API tip，但不得显示为「唯一 tip」掩盖双端差"
+      ],
+      "exit_criteria": [
+        "Expansion Runtime SSOT 表含三行：Web3 / FE / API 且用途标注",
+        "R029 composition smoke exit 仍有效",
+        "Agent/文档抽检无「用 ea71c577 冒充 Admin 已部署 tip」"
+      ],
+      "publish_bar": "① 文档+烟测 ≠ ② staging 双端 ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R057",
+      "title": "RBAC/403 闭环不均：OpsPlaneAuthHints 未覆盖 AdminListPageChrome 主叶",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY_HONESTY",
+      "pass": 6,
+      "axis": [
+        "RBAC",
+        "Empty_error_honesty",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "frontend/components/admin/ops/OpsPlaneFetchStates.tsx",
+        "frontend/app/admin/users/AdminUsersDataSection.tsx",
+        "frontend/app/admin/permissions/AdminPermissionsPageMain.tsx",
+        "frontend/app/admin/finance-suite/AdminFinanceSuitePageMain.tsx"
+      ],
+      "gaps": [
+        "OpsPlane 有 OpsPlaneAuthHints（2FA/403/approval/503 分型提示）",
+        "Users 等 Chrome 叶多用 AdminListFetchError 通用串，缺「下一步：开权限/2FA/换角色」闭环",
+        "长期运营遇 403 易误判为系统坏了而非权限矩阵问题"
+      ],
+      "optimization": [
+        "共享 AdminAuthErrorHints；Chrome + OpsPlane 同用",
+        "与 Permissions 页深链；只读徽章旁注明所需 perm",
+        "合同：403 路径必现 hint + 非单一「加载失败」"
+      ],
+      "exit_criteria": [
+        "Users/Orders/Guides/Disputes 403 夹具显示分型 hint",
+        "无权限时禁显示可写主按钮为可点假态",
+        "Permissions 矩阵文案与 gate 探针对拍"
+      ],
+      "publish_bar": "① FE RBAC honesty ≠ ② staging 角色点验 ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R058",
+      "title": "操作者语言/ops jargon 泄漏面仍广于财务（深化 R039）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_I18N",
+      "extends": "V65-PROD-003-B3-R039",
+      "pass": 6,
+      "axis": [
+        "I18n",
+        "Operator_long_term_UX"
+      ],
+      "code_ssot": [
+        "frontend/lib/admin/opsWorkbenchL5.ts",
+        "frontend/app/admin/finance-suite/AdminFinanceSuitePageMain.tsx",
+        "docs/runbook/TT-V65-ADMIN-CONSOLE-UX-REALITY-GAP-INVENTORY-ROUND2-LATEST.json"
+      ],
+      "gaps": [
+        "UX-R2-G003：主 UI 仍可能露出 engine/meta 词；R039 偏财务 ZH partial",
+        "opsWorkbenchL5 已将 raw metaSource 降为 data-attr（正确方向）但未全站强制",
+        "Content/Official workflow_failed 等 opaque key（R030）对操作者仍不诚实"
+      ],
+      "optimization": [
+        "全站 lint：主文案禁 partial/placeholder/workflow_failed/raw tip",
+        "操作者中文词典：可用|部分|目标|暂未开放|历史",
+        "与 R049 徽章文案同源"
+      ],
+      "exit_criteria": [
+        "主表面抽检无英文 jargon 作主标签",
+        "R039 + 本项 lint 同闸",
+        "Owner 中文走查截图包"
+      ],
+      "publish_bar": "① i18n lint ≠ ② staging 中文 UAT ≠ ③ GO"
+    },
+    {
+      "id": "V65-PROD-003-B3-R059",
+      "title": "Steward/acquisition-suspend/guide-registration FE 写路径缺 Idempotency-Key",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE+API",
+      "pass": 7,
+      "axis": [
+        "Write_idempotency",
+        "Approvals_adjacent",
+        "Production_hardening"
+      ],
+      "code_ssot": [
+        "frontend/lib/apiClient/adminStewardApplication.ts",
+        "frontend/lib/apiClient/adminAcquisitionPublishSuspend.ts",
+        "frontend/lib/apiClient/adminGuideRegistration.ts",
+        "frontend/lib/apiClient/adminProviderApplication.ts"
+      ],
+      "gaps": [
+        "patchAdminStewardApplicationReview 等 headers 仅 Content-Type + auth，无 Idempotency-Key",
+        "R006 CLOSED 覆盖 Provider/Guide application approve 闭环；本项为不同 PATCH 客户端",
+        "双击/重试可能产生重复审阅副作用或审计噪声"
+      ],
+      "optimization": [
+        "统一 writeRequestHeaders(stableKey) 与 approvals 同型（成功前复用同一 key）",
+        "API 对这些 PATCH 要求 Idempotency-Key（STRICT_SSOT 对齐）",
+        "合同测试：缺 key → 400；同 key 重放不二次副作用"
+      ],
+      "exit_criteria": [
+        "三客户端写路径均带稳定 Idempotency-Key",
+        "API 硬闸 + 夹具 PASS",
+        "不重开 R006"
+      ],
+      "publish_bar": "① FE+API idempotency ≠ ② staging 双击烟测 ≠ ③ GO",
+      "not_duplicate_of": [
+        "V65-PROD-003-B3-R006",
+        "V65-PROD-003-B3-R041",
+        "V65-PROD-003-B3-R042"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R060",
+      "title": "CMS 公告写每次 mint 新 Idempotency-Key（双击≠幂等重放）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY→API_gate",
+      "pass": 7,
+      "axis": [
+        "Write_idempotency",
+        "CMS_publish",
+        "Production_hardening"
+      ],
+      "code_ssot": [
+        "frontend/lib/apiClient/content/announcements.ts",
+        "frontend/lib/apiClient/core.ts",
+        "frontend/app/admin/content/announcements/useAdminContentAnnouncementsPage.ts"
+      ],
+      "gaps": [
+        "adminAnnouncementsFetch 调用 writeRequestHeaders() 无参 → 每次 UUID",
+        "≠ R015（发布审计清单）≠ R030（Publish→Live UX）",
+        "双击 Publish/Save 可能产生多条公告副作用而非同一键重放"
+      ],
+      "optimization": [
+        "按操作（create/save/publish）持有稳定 key，成功前复用",
+        "与 locales 中 admin_approvals_idempotency_hint 诚实文案对拍（禁「每次新键」误导）",
+        "Publish 路径纳入 critical-write 分类器（见 R061）"
+      ],
+      "exit_criteria": [
+        "同次操作双击仅一副作用或 409/replay",
+        "夹具证明 key 稳定",
+        "Owner UAT 截图"
+      ],
+      "publish_bar": "① FE stable key ≠ ② staging 双击 ≠ ③ GO",
+      "not_duplicate_of": [
+        "V65-PROD-003-B3-R015",
+        "V65-PROD-003-B3-R030"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R061",
+      "title": "Admin critical-write 分类器不全：approve 有、reject/CMS/审阅 PATCH 无严限流+幂等闸",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "API",
+      "pass": 7,
+      "axis": [
+        "Write_idempotency",
+        "Rate_limit",
+        "Production_hardening"
+      ],
+      "code_ssot": [
+        "crates/api/src/middleware/rate_limit.rs",
+        "crates/api/src/middleware/mod.rs"
+      ],
+      "gaps": [
+        "is_admin_critical_write_path：approvals/*/approve 与若干 publish 在列；reject、CMS announcement 写、steward/acquisition/guide PATCH 不在列",
+        "非关键写仅吃全局 120/min，缺严格窗口闸",
+        "≠ R057（FE 403 UI hint）≠ R037（列表性能）"
+      ],
+      "optimization": [
+        "扩展分类器：reject · CMS announcement 写 · steward/acquisition/guide 审阅 PATCH",
+        "与 Idempotency middleware 同名单对拍",
+        "meta rate_limits 快照可观测"
+      ],
+      "exit_criteria": [
+        "分类器单测覆盖新路径",
+        "staging 突发写触发 429 可观测",
+        "与 R059/R060 同波关闭"
+      ],
+      "publish_bar": "① API classifier ≠ ② staging burst ≠ ③ GO",
+      "not_duplicate_of": [
+        "V65-PROD-003-B3-R057",
+        "V65-PROD-003-B3-R037"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R062",
+      "title": "角色变更请求创建欠服端写权限闸（任意 admin actor 可 POST）",
+      "severity": "P1",
+      "status": "OPEN",
+      "cut_class": "API",
+      "pass": 7,
+      "axis": [
+        "RBAC_privilege",
+        "Users_ops",
+        "Production_hardening"
+      ],
+      "code_ssot": [
+        "crates/api/src/routes/admin/admin_users_http.rs"
+      ],
+      "gaps": [
+        "post_admin_user_role_change_request 仅 require_admin_actor，未见 PERM_USERS_WRITE / approve-class perm",
+        "≠ R048（FE advisory 写闸诚实）≠ R057（403 UI hint）——本项是服端提权面",
+        "低权限运营账号若持任意 admin JWT 即可灌入角色变更请求"
+      ],
+      "optimization": [
+        "创建前强制 PERM_USERS_WRITE（或更严的 role-change create perm）",
+        "批准路径保持独立更高权限",
+        "夹具：缺 perm → 403；有 perm → 201 + audit"
+      ],
+      "exit_criteria": [
+        "RBAC 夹具绿",
+        "Permissions 矩阵文档与 gate 对拍",
+        "不重开 R048 为「缺按钮」"
+      ],
+      "publish_bar": "① API RBAC ≠ ② staging 角色点验 ≠ ③ GO",
+      "not_duplicate_of": [
+        "V65-PROD-003-B3-R048",
+        "V65-PROD-003-B3-R057"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R063",
+      "title": "公网公告 CDN/浏览器 TTL 无 Publish 失效：max-age=60 + SWR=120",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "API+CDN",
+      "pass": 7,
+      "axis": [
+        "Cache_CDN_drift",
+        "CMS_publish",
+        "Data_consistency"
+      ],
+      "code_ssot": [
+        "crates/api/src/routes/public_announcements.rs",
+        "frontend/app/admin/content/announcements/useAdminContentAnnouncementsPage.ts",
+        "frontend/lib/cmsAnnouncementsSharedCache.ts"
+      ],
+      "gaps": [
+        "public_cache_headers：public, max-age=60, stale-while-revalidate=120",
+        "Admin 仅 invalidateCmsAnnouncementsCache()（客户端共享缓存），无边缘/版本化失效",
+        "≠ R030（Publish→Live UX 反馈）——本项是缓存漂移"
+      ],
+      "optimization": [
+        "Publish 后版本化 ETag/URL 或缩短敏感 lane TTL / no-store",
+        "可选 purge hook（CDN）写在 runbook 非假完成",
+        "Live 探针：publish → public GET 在 SLA 内可见"
+      ],
+      "exit_criteria": [
+        "Publish→Public 延迟 SLA 文档化并探针 PASS",
+        "Admin 客户端 cache 与公网 TTL 分层诚实标注",
+        "② staging 验证"
+      ],
+      "publish_bar": "① API headers ≠ ② staging CDN ≠ ③ GO",
+      "not_duplicate_of": [
+        "V65-PROD-003-B3-R030",
+        "V65-PROD-003-B3-R015"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R064",
+      "title": "Admin 审计写入 best-effort 静默吞失败（资金/权限动作无 fail-closed）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "API",
+      "pass": 7,
+      "axis": [
+        "Audit_log_integrity",
+        "Production_hardening",
+        "Operator_closed_loop"
+      ],
+      "code_ssot": [
+        "crates/api/src/routes/admin/mod.rs"
+      ],
+      "gaps": [
+        "write_admin_audit_log_best_effort：let _ = insert…；无 pool 时直接 no-op",
+        "≠ R015（内容中心「有」审计调用）——本项是插入失败不可观测",
+        "权限/角色变更等动作可能成功业务而审计丢失"
+      ],
+      "optimization": [
+        "审计 insert 失败 metric + alert",
+        "资金/角色/权限类动作 fail-closed 或 outbox 重试",
+        "GET audit-logs 探针覆盖关键 action catalog"
+      ],
+      "exit_criteria": [
+        "关键动作审计丢失可告警",
+        "Owner 抽检 audit-logs 与动作对拍",
+        "② staging 注入失败演练"
+      ],
+      "publish_bar": "① API audit reliability ≠ ② staging drill ≠ ③ GO",
+      "not_duplicate_of": [
+        "V65-PROD-003-B3-R015"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R065",
+      "title": "审阅/冻结写路径缺乐观并发：steward/acquisition 末写覆盖",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE+API",
+      "pass": 7,
+      "axis": [
+        "Data_consistency",
+        "Concurrency",
+        "Production_hardening"
+      ],
+      "code_ssot": [
+        "crates/api/src/routes/admin/admin_steward_application_http.rs",
+        "crates/api/src/routes/admin/admin_acquisition_suspend_http.rs",
+        "crates/api/src/routes/admin/mod.rs"
+      ],
+      "gaps": [
+        "steward review / acquisition suspend 无 expected_version；flags/policies/tenants 已有版本闸",
+        "两运营并行审批 → 末写覆盖无 409",
+        "≠ 列表虚拟化/争议只读残差"
+      ],
+      "optimization": [
+        "统一 expected_version 或 If-Match ETag；冲突 409",
+        "FE 展示「他人已更新，请刷新」",
+        "合同测试并发写"
+      ],
+      "exit_criteria": [
+        "冲突夹具 409",
+        "FE 提示可恢复",
+        "与 R059 同波更佳"
+      ],
+      "publish_bar": "① FE+API version ≠ ② staging 并发 ≠ ③ GO",
+      "not_duplicate_of": [
+        "V65-PROD-003-B3-R041",
+        "V65-PROD-003-B3-R054"
+      ]
+    },
+    {
+      "id": "V65-PROD-003-B3-R066",
+      "title": "会话过期硬跳登录：长表单未保存丢失（无草稿恢复）",
+      "severity": "P2",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY",
+      "pass": 7,
+      "axis": [
+        "Session_recovery",
+        "Operator_long_term_UX",
+        "Error_recovery"
+      ],
+      "code_ssot": [
+        "frontend/lib/admin/adminSessionExpiredClient.ts"
+      ],
+      "gaps": [
+        "clear storage + window.location.assign(/auth/login?returnUrl=…) 硬跳",
+        "≠ R057 RBAC chrome；属 auth lifecycle / 写中断恢复",
+        "国家目录/公告长编辑遇 401 丢稿"
+      ],
+      "optimization": [
+        "软模态：保存草稿到 sessionStorage 后再跳",
+        "长表单可选 redirect:false + 重登后续填",
+        "returnUrl 恢复焦点字段（尽力）"
+      ],
+      "exit_criteria": [
+        "401 夹具：草稿可恢复或明确警告",
+        "Owner 长表单 UAT",
+        "① 绿集"
+      ],
+      "publish_bar": "① FE session UX ≠ ② staging 长会话 ≠ ③ GO",
+      "not_duplicate_of": [
+        "V65-PROD-003-B3-R057",
+        "V65-PROD-003-B3-R025"
+      ]
+    }
+  ],
+  "execution_waves": [
+    {
+      "wave": "W1_FAST_FE",
+      "items": [
+        "B3-R012",
+        "B3-R019",
+        "B3-R014",
+        "B3-R021",
+        "B3-R013-layout",
+        "B3-R024",
+        "B3-R034",
+        "B3-R035"
+      ],
+      "note": "Layout/IA FE_ONLY after Owner decisions + table/filter L5 (R034/R035)"
+    },
+    {
+      "wave": "W2_CONTENT_TRUTH",
+      "items": [
+        "B3-R011",
+        "B3-R018",
+        "B3-R015",
+        "B3-R022",
+        "B3-R016",
+        "B3-R020",
+        "B3-R025",
+        "B3-R030",
+        "B3-R033",
+        "B3-R036"
+      ],
+      "note": "Inbox+content+country+OpsPlane + a11y badges (R033) + fold density (R036)"
+    },
+    {
+      "wave": "W3_FINANCE_REDESIGN",
+      "items": [
+        "B3-R017",
+        "B3-R023",
+        "B3-R026",
+        "B3-R027",
+        "B3-R028",
+        "B3-R032",
+        "B3-R038",
+        "B3-R039"
+      ],
+      "note": "Finance IA honesty + export + empty/i18n polish (R038/R039)"
+    },
+    {
+      "wave": "W4_WEB3_AFTER_REVIEW",
+      "items": [
+        "B3-R013-web3-depth"
+      ],
+      "note": "Only after Owner on-chain review window"
+    },
+    {
+      "wave": "W5_PROD_COMPOSITION_CERT",
+      "items": [
+        "B3-R029",
+        "B3-R031"
+      ],
+      "note": "Dual-tip smoke + SSOT honesty before Release Cert re-run / GO review"
+    },
+    {
+      "wave": "W6_UIUX_L5_PERF",
+      "items": [
+        "B3-R033",
+        "B3-R034",
+        "B3-R035",
+        "B3-R036",
+        "B3-R037",
+        "B3-R038",
+        "B3-R039",
+        "B3-R040"
+      ],
+      "note": "Pass 4 UI/UX·Perf track — can parallel W1–W3 FE slices; R037 perf gate before claiming Admin L5 snappy"
+    },
+    {
+      "wave": "W7_SURFACE_CONTROL_TRUTH",
+      "items": [
+        "B3-R041",
+        "B3-R042",
+        "B3-R043",
+        "B3-R044",
+        "B3-R045",
+        "B3-R046",
+        "B3-R047",
+        "B3-R048"
+      ],
+      "note": "Pass 5 surface/control truth - can parallel W1-W3 honesty slices; R041 needs OD-B3-DISPUTE-CONSOLE-WRITE; deepen finance via R032/R027 not new IDs"
+    },
+    {
+      "wave": "W8_ENTERPRISE_L5_REALITY",
+      "items": [
+        "B3-R049",
+        "B3-R050",
+        "B3-R051",
+        "B3-R052",
+        "B3-R053",
+        "B3-R054",
+        "B3-R055",
+        "B3-R056",
+        "B3-R057",
+        "B3-R058"
+      ],
+      "note": "Pass 6 Enterprise L5 Reality Round 2 — parallel W6 UI/UX + W7 Surface; R049/R050/R051/R054/R056 are P1 honesty/perf; deepen finance still via R032/R027"
+    },
+    {
+      "wave": "W9_FINAL_PROD_READINESS",
+      "items": [
+        "B3-R059",
+        "B3-R060",
+        "B3-R061",
+        "B3-R062",
+        "B3-R063",
+        "B3-R064",
+        "B3-R065",
+        "B3-R066"
+      ],
+      "note": "Pass 7 Final Enterprise Production Readiness — idempotency/RBAC/audit/CDN/concurrency/session; P1=R059–R062 before Production GO Review; parallel API cuts with W5 composition"
+    }
+  ],
+  "blocking_for_production_go": [
+    "TT_PRODUCTION_GO remains NO_GO until Owner W5 Sign-off",
+    "P0 B3-R016/B3-R020 CLOSED · remaining P1 B3-R025 sitewide error-isolation before content publish L5 claim",
+    "P1 B3-R018/R041 Dispute channel + console write-posture honesty before claiming dispute ops L5",
+    "P1 B3-R026/R027/R028 finance primary/refunds/export honesty before claiming finance-suite production-ready",
+    "P1 B3-R029 dual-tip composition smoke before re-cert currency claim",
+    "P1 B3-R042 orders force-readonly honesty before claiming Admin order ops",
+    "P1 B3-R043 content module writable matrix before claiming content hub L5 complete",
+    "Release Cert must be re-run if P0/P1 reopen after prior PASS_WITH_NON_BLOCKING_OPEN",
+    "P1 B3-R033/R034/R035/R037 UI/UX·Perf before claiming Admin console L5 operator-ready",
+    "P1 B3-R059/R060/R061 write idempotency + critical-write classifier before claiming Admin write-hardening L5",
+    "P1 B3-R062 role-change create server RBAC before claiming Users privilege L5",
+    "Enterprise L5 Production Ready NOT claimed while Pass7 P1 R059–R062 (and sitewide R025/R050) OPEN — Production GO Review blocked (P0 R016 CLOSED)"
+  ],
+  "next": "Cut B Final State CONSOLIDATED 20260806T050409Z · OD ladder CLOSED · Staging VERIFIED 20260806T044213Z · R012/R019 CLOSED · Next=CUT_C_PREP_DOCS_ONLY_NO_ENG · no Cut C eng · no Production deploy · TT_PRODUCTION_GO=NO_GO · Production updates only via Staging-verified + Release-certified V65 RC.",
+  "updated_at": "20260806T050409Z",
+  "updated_by": "agent_cut_b_final_state_consolidation",
+  "od_focus_companion_lock_stamp": "20260806T040236Z",
+  "generated_at": "20260806T050409Z",
+  "final_state_consolidation": {
+    "stamp": "20260806T050409Z",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json",
+    "md": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.md",
+    "cut_b_od_ladder": "CLOSED",
+    "staging_pass_stamp": "20260806T044213Z",
+    "cut_c_candidate_ids": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "defer_ids": [
+      "R013",
+      "R036",
+      "R040",
+      "R045",
+      "R046",
+      "R047",
+      "R048",
+      "R052",
+      "R053",
+      "R055",
+      "R058",
+      "R063",
+      "R064",
+      "R065",
+      "R066"
+    ]
+  },
+  "TT_PRODUCTION_GO": "NO_GO",
+  "od_staging_verified_stamp": "20260806T044213Z",
+  "cut_c_prep": {
+    "status": "PREP_READY_DOCS_ONLY_NO_ENG",
+    "engineering_start": "FORBIDDEN_THIS_STAMP",
+    "residuals": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "ids_p1": [
+      "R011",
+      "R017",
+      "R018",
+      "R026",
+      "R027",
+      "R028",
+      "R041"
+    ],
+    "ids_p2": [
+      "R023",
+      "R024",
+      "R038",
+      "R039"
+    ],
+    "note": "Design-scope docs only after Cut B Final State; no eng this stamp"
+  }
+}

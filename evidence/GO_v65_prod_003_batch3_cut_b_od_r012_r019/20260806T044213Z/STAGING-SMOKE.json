@@ -1,0 +1,201 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_cut_b_od_r012_r019.staging_smoke.v1",
+  "stamp": "20260806T044213Z",
+  "cut": "B",
+  "track": "OD_R012_R019_STAGING_RUNTIME",
+  "od_id": "OD-B3-FOCUS-COMPANION",
+  "od_decision": "REMOVE_TODO_DUPLICATE_KEEP_RECENT_ONLY",
+  "residuals": [
+    "V65-PROD-003-B3-R012",
+    "V65-PROD-003-B3-R019"
+  ],
+  "verdict": "PASS",
+  "status": "STAGING_RUNTIME_VERIFIED",
+  "staging_rc": "PASS",
+  "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+  "expect_fe_sha": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+  "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "expect_api_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "tt_production_go": "NO_GO",
+  "enterprise_l5_production_ready": false,
+  "web_base": "https://tt-web-staging.fly.dev",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "checks": [
+    {
+      "id": "CUTB-OD-LOCAL-SOURCE-CONTRACT",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "missing": [],
+        "notes": {
+          "frontend/components/admin/AdminHomeFocusCompanion.tsx": {
+            "bytes": 3925
+          },
+          "r012_companion": true,
+          "frontend/components/admin/AdminHomeSystemOverview.tsx": {
+            "bytes": 26151
+          },
+          "r019_overview": true,
+          "frontend/lib/admin/adminHomeFocusCompanionTodoOnly.ts": {
+            "bytes": 499
+          },
+          "r012_lib": true,
+          "frontend/components/admin/adminHomeL5.contract.test.ts": {
+            "bytes": 20485
+          },
+          "r012_contract": true
+        }
+      }
+    },
+    {
+      "id": "CUTB-OD-API-META",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+        "expect_api_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+        "api_tip_match": true
+      }
+    },
+    {
+      "id": "CUTB-OD-WEB-RELEASE-IDENTITY",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "web_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+        "expect_sha": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+        "tip_match": true,
+        "note": "FE tip must equal post-deploy OD bake SHA."
+      }
+    },
+    {
+      "id": "CUTB-OD-ADMIN-SESSION",
+      "pass": true,
+      "detail": {
+        "email": "adm-10x4-20260719143519@traveltrust.test",
+        "role": null,
+        "user_id": "c7950c9f-6698-4a2f-9acf-356b7f308efe",
+        "token_prefix": "tts_9a64ab34"
+      }
+    },
+    {
+      "id": "CUTB-OD-ADMIN-HTML-PROBE",
+      "pass": true,
+      "detail": {
+        "pageHits": [
+          {
+            "path": "/admin",
+            "status": 200,
+            "bytes": 38177,
+            "location": null,
+            "error": null
+          }
+        ],
+        "chunk_count": 39
+      }
+    },
+    {
+      "id": "CUTB-OD-MARKERS-RUNTIME",
+      "pass": true,
+      "detail": {
+        "required": {
+          "r012_recent_only_attr": {
+            "found": true,
+            "samples": [
+              "https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/page-c4f6890e79dde722.js"
+            ],
+            "forms": [
+              "data-tt-admin-home-focus-companion-recent-only=\"od-r012\"",
+              "\"data-tt-admin-home-focus-companion-recent-only\":\"od-r012\"",
+              "\"data-tt-admin-home-focus-companion-recent-only\": \"od-r012\""
+            ]
+          },
+          "r019_pending_dedupe_attr": {
+            "found": true,
+            "samples": [
+              "https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/page-c4f6890e79dde722.js"
+            ],
+            "forms": [
+              "data-tt-admin-home-overview-pending-dedupe=\"od-r019\"",
+              "\"data-tt-admin-home-overview-pending-dedupe\":\"od-r019\"",
+              "\"data-tt-admin-home-overview-pending-dedupe\": \"od-r019\""
+            ]
+          },
+          "r012_lib_mark": {
+            "found": true,
+            "samples": [
+              "https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/page-c4f6890e79dde722.js"
+            ],
+            "forms": [
+              "tt_admin_home_focus_companion_recent_only_od_r012"
+            ]
+          }
+        },
+        "absent_must_not_appear": {
+          "data-tt-admin-home-focus-companion-todos": {
+            "found": false,
+            "samples": []
+          }
+        },
+        "chunks_scanned": 1,
+        "chunks_failed": 0,
+        "chunk_urls_capped": 39
+      }
+    },
+    {
+      "id": "CUTB-OD-RESIDUALS-CLOSED",
+      "pass": true,
+      "detail": {
+        "residual_map": {
+          "V65-PROD-003-B3-R012": true,
+          "V65-PROD-003-B3-R019": true
+        },
+        "residuals": [
+          "V65-PROD-003-B3-R012",
+          "V65-PROD-003-B3-R019"
+        ]
+      }
+    }
+  ],
+  "residual_map": {
+    "V65-PROD-003-B3-R012": true,
+    "V65-PROD-003-B3-R019": true
+  },
+  "markers_required": [
+    {
+      "id": "r012_recent_only_attr",
+      "forms": [
+        "data-tt-admin-home-focus-companion-recent-only=\"od-r012\"",
+        "\"data-tt-admin-home-focus-companion-recent-only\":\"od-r012\"",
+        "\"data-tt-admin-home-focus-companion-recent-only\": \"od-r012\""
+      ]
+    },
+    {
+      "id": "r019_pending_dedupe_attr",
+      "forms": [
+        "data-tt-admin-home-overview-pending-dedupe=\"od-r019\"",
+        "\"data-tt-admin-home-overview-pending-dedupe\":\"od-r019\"",
+        "\"data-tt-admin-home-overview-pending-dedupe\": \"od-r019\""
+      ]
+    },
+    {
+      "id": "r012_lib_mark",
+      "forms": [
+        "tt_admin_home_focus_companion_recent_only_od_r012"
+      ]
+    }
+  ],
+  "markers_absent": [
+    "data-tt-admin-home-focus-companion-todos"
+  ],
+  "honesty": {
+    "local_od_is_not_staging_rc": true,
+    "staging_rc_is_not_production_go": true,
+    "cut_b_full_closed_is_not_cut_c_eng": true,
+    "v65_prod_cand_20260802_frozen": true,
+    "web3_pin_orthogonal": "PSG-REL-20260720-WEB3-CAND-V2",
+    "no_old_artifact_reuse": true,
+    "no_direct_production_edit": true
+  },
+  "cut_c": "PREP_READY_DOCS_ONLY_NO_ENG"
+}
