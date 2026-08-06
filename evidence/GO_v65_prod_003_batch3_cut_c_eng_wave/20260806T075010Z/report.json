@@ -1,0 +1,221 @@
+{
+  "schema": "tt.v65.prod_003.batch3.cut_c_eng_wave.fe.staging_smoke.v1",
+  "stamp": "20260806T075010Z",
+  "hosts": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev"
+  },
+  "residuals": [
+    "V65-PROD-003-B3-R011",
+    "V65-PROD-003-B3-R017",
+    "V65-PROD-003-B3-R018",
+    "V65-PROD-003-B3-R023",
+    "V65-PROD-003-B3-R024",
+    "V65-PROD-003-B3-R026",
+    "V65-PROD-003-B3-R027",
+    "V65-PROD-003-B3-R028",
+    "V65-PROD-003-B3-R038",
+    "V65-PROD-003-B3-R039",
+    "V65-PROD-003-B3-R041"
+  ],
+  "cut": "CUT_C",
+  "track": "CUT_C_ENG_WAVE",
+  "od_c": {
+    "OD-C-01": "ACCEPT_SCOPE_AS_FINAL_STATE",
+    "OD-C-02": "SUITE_PRIMARY_LEGACY_REDIRECT",
+    "OD-C-03": "READ_ONLY_BENCH_NO_FUND_WRITE",
+    "OD-C-04": "ADD_DISPUTE_CHANNEL_REAL_QUEUE",
+    "OD-C-05": "KEEP_ED_NO_REOPEN"
+  },
+  "expect_fe_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
+  "expect_api_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "web_tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
+  "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "tip_match": true,
+  "api_tip_match": true,
+  "tt_production_go": "NO_GO",
+  "enterprise_l5_production_ready": false,
+  "residual_map": {
+    "V65-PROD-003-B3-R011": true,
+    "V65-PROD-003-B3-R017": true,
+    "V65-PROD-003-B3-R018": true,
+    "V65-PROD-003-B3-R023": true,
+    "V65-PROD-003-B3-R024": true,
+    "V65-PROD-003-B3-R026": true,
+    "V65-PROD-003-B3-R027": true,
+    "V65-PROD-003-B3-R028": true,
+    "V65-PROD-003-B3-R038": true,
+    "V65-PROD-003-B3-R039": true,
+    "V65-PROD-003-B3-R041": true
+  },
+  "verdict": "PASS",
+  "checks": [
+    {
+      "id": "CUTC-EWG-LOCAL-SOURCE-CONTRACT",
+      "pass": true,
+      "detail": {
+        "ok": true,
+        "missing": [],
+        "notes": {
+          "od_c02_bare_finance_redirect": true,
+          "od_c02_suite_marker": true,
+          "od_c03_fund_write_forbidden": true,
+          "od_c03_escrow_write_forbidden": true,
+          "od_c03_readonly_badge": true,
+          "od_c04_inbox_channel_attr": true,
+          "od_c04_disputes_orders_read": true,
+          "r024_unavailable_emdash": true,
+          "wp05_total_fail_closed": true
+        }
+      }
+    },
+    {
+      "id": "CUTC-EWG-API-META",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+        "expect_api_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+        "api_tip_match": true
+      }
+    },
+    {
+      "id": "CUTC-EWG-WEB-RELEASE-IDENTITY",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "web_tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
+        "expect_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
+        "tip_match": true,
+        "note": "FE tip must equal post-deploy bake SHA (TT_CUT_C_ENG_WAVE_FE_EXPECT_SHA required)."
+      }
+    },
+    {
+      "id": "CUTC-EWG-WEB-HOME",
+      "pass": true,
+      "detail": {
+        "status": 200,
+        "bytes": 76882,
+        "error": null
+      }
+    },
+    {
+      "id": "CUTC-EWG-ADMIN-SESSION",
+      "pass": true,
+      "detail": {
+        "email": "adm-10x4-20260719143519@traveltrust.test",
+        "role": null,
+        "user_id": "c7950c9f-6698-4a2f-9acf-356b7f308efe",
+        "token_prefix": "tts_7b6c64e9"
+      }
+    },
+    {
+      "id": "CUTC-EWG-ADMIN-HTML-PROBE",
+      "pass": true,
+      "detail": {
+        "pageHits": [
+          {
+            "path": "/admin",
+            "status": 200,
+            "bytes": 38177,
+            "location": null,
+            "error": null
+          },
+          {
+            "path": "/admin/finance",
+            "status": 200,
+            "bytes": 45295,
+            "location": null,
+            "error": null
+          },
+          {
+            "path": "/admin/finance-suite",
+            "status": 200,
+            "bytes": 45179,
+            "location": null,
+            "error": null
+          },
+          {
+            "path": "/admin/disputes",
+            "status": 200,
+            "bytes": 45441,
+            "location": null,
+            "error": null
+          }
+        ],
+        "chunk_count": 52
+      }
+    },
+    {
+      "id": "CUTC-EWG-FINANCE-BARE-SOFT-REDIRECT",
+      "pass": true,
+      "detail": {
+        "finance_status": 200,
+        "finance_location": null,
+        "local_router_replace": true,
+        "note": "OD-C-02: bare /admin/finance → suite; depth leaf (fin_suite_depth=partial + module) exempt."
+      }
+    },
+    {
+      "id": "CUTC-EWG-FE-MARKERS",
+      "pass": true,
+      "residual_map": {
+        "V65-PROD-003-B3-R011": true,
+        "V65-PROD-003-B3-R017": true,
+        "V65-PROD-003-B3-R018": true,
+        "V65-PROD-003-B3-R023": true,
+        "V65-PROD-003-B3-R024": true,
+        "V65-PROD-003-B3-R026": true,
+        "V65-PROD-003-B3-R027": true,
+        "V65-PROD-003-B3-R028": true,
+        "V65-PROD-003-B3-R038": true,
+        "V65-PROD-003-B3-R039": true,
+        "V65-PROD-003-B3-R041": true
+      },
+      "detail": {
+        "markers": {
+          "data-tt-admin-finance-suite": {
+            "found": true,
+            "samples": [
+              "https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/finance-suite/page-437914040b6eb6c5.js"
+            ]
+          },
+          "data-tt-admin-inbox-channel": {
+            "found": true,
+            "samples": [
+              "https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/page-8f2f4ef2354eadce.js"
+            ]
+          },
+          "data-tt-admin-dispute-fund-write-forbidden": {
+            "found": true,
+            "samples": [
+              "https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/disputes/page-8b2ec1f09af448be.js"
+            ]
+          },
+          "data-tt-admin-dispute-escrow-write": {
+            "found": true,
+            "samples": [
+              "https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/disputes/page-8b2ec1f09af448be.js"
+            ]
+          },
+          "data-tt-admin-disputes-readonly-badge": {
+            "found": true,
+            "samples": [
+              "https://tt-web-staging.fly.dev/_next/static/chunks/app/admin/disputes/page-8b2ec1f09af448be.js"
+            ]
+          }
+        },
+        "chunks_scanned": 10,
+        "chunks_failed": 0,
+        "chunk_urls_capped": 52,
+        "finance_suite_ok": true,
+        "inbox_ok": true,
+        "dispute_ok": true,
+        "overview_ok": true
+      }
+    }
+  ],
+  "generated_at": "2026-08-06T07:50:29.128Z",
+  "honesty": "RUNTIME_VERIFIED Staging FE Cut C eng-wave PASS ≠ OWNER_VALIDATED ≠ Production GO. Do not reopen R012/R019. Web3 freeze PSG-REL-20260720-WEB3-CAND-V2 stays orthogonal. Keep TT_PRODUCTION_GO=NO_GO.",
+  "note": "Cut C R011/R017/R018/R023/R024/R026/R027/R028/R038/R039/R041 Staging eng-wave PASS — eligible Residual Close. Keep TT_PRODUCTION_GO=NO_GO. No Production deploy. No Web3 mix."
+}

@@ -2,9 +2,9 @@
   "schema": "traveltrust.v65_prod_003_batch3_cut_c_design_confirmation.v1",
   "machine_key": "TT_V65_PROD_003_BATCH3_CUT_C_DESIGN_CONFIRMATION",
   "title": "V65 PROD-003 Batch3 Cut C Design Confirmation (docs-only)",
-  "stamp": "20260806T065245Z",
-  "phase": "LOCAL_VERIFIED",
-  "posture": "OWNER_SIGNED_ENG_GATE_OPEN",
+  "stamp": "20260806T075500Z",
+  "phase": "STAGING_VERIFIED",
+  "posture": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
   "tt_production_go": "NO_GO",
   "baseline": {
     "non_web3_production_runtime": "V65-PROD-CAND-20260802",
@@ -355,15 +355,13 @@
     "this_md": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.md"
   },
   "next": {
-    "action": "TIP_HONEST_STAGING_DEPLOY_THEN_CUT_C_SMOKE",
-    "then": "Runtime Evidence → Residual Close for 11 R-IDs; keep NO_GO; no Production; no Web3",
-    "forbidden_now": "production · GO_flip · web3_mix · reopen_R012_R019 · DEFER_pull_without_scope · residual_close_before_staging_pass",
-    "tt_production_go": "NO_GO"
+    "action": "AWAITING_OWNER_SIGN_OFF_THEN_RC_EVAL",
+    "note": "Design STAGING_VERIFIED; pack submitted for Owner Review"
   },
   "generated_at": "20260806T051233Z",
-  "updated_at": "20260806T065245Z",
-  "updated_by": "owner_od_c_sign_via_agent",
-  "status": "ENG_IMPL_LOCAL_VERIFIED",
+  "updated_at": "20260806T075500Z",
+  "updated_by": "cut_c_eng_wave_staging_residual_close",
+  "status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
   "local_evidence": {
     "stamp": "20260806T065245Z",
     "path": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T065245Z",
@@ -371,10 +369,39 @@
     "verdict": "PASS",
     "phase": "LOCAL_VERIFIED"
   },
+  "staging_evidence": {
+    "stamp": "20260806T075010Z",
+    "path": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T075010Z",
+    "report": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T075010Z/report.json",
+    "verdict": "PASS",
+    "phase": "STAGING_VERIFIED",
+    "fe_tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "tip_match": true,
+    "residual_close": "DONE",
+    "residual_close_at": "20260806T075500Z",
+    "tt_production_go": "NO_GO",
+    "deploy_exit_note": "DEPLOY_EXIT=2 PAGE_SURFACE_DRIFT = ED (OD-C-05); tip MATCH True"
+  },
   "engineering": {
-    "status": "LOCAL_VERIFIED",
+    "status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
     "local_verified_at": "20260806T065245Z",
+    "staging_verified_at": "20260806T075010Z",
+    "residual_close_at": "20260806T075500Z",
     "scope_residuals": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "closed_ids": [
       "R011",
       "R017",
       "R018",
@@ -394,6 +421,41 @@
       "OD-C-04": "ADD_DISPUTE_CHANNEL_REAL_QUEUE",
       "OD-C-05": "KEEP_ED_NO_REOPEN"
     },
-    "note": "P1/P2 product paths landed + vitest Cut C set PASS; residuals remain OPEN until Staging PASS"
+    "note": "Staging smoke PASS 20260806T075010Z + Residual CLOSED 20260806T075500Z for 11 R-IDs; TT_PRODUCTION_GO=NO_GO; RUNTIME_VERIFIED≠OWNER_VALIDATED≠CLOSED≠Production GO"
+  },
+  "owner_review_pack": {
+    "action": "OWNER_REVIEW_CUT_C_STAGING_PACK",
+    "submitted_at": "20260806T080500Z",
+    "status": "SUBMITTED_AWAITING_OWNER_SIGN_OFF",
+    "baseline_pin": "V65-PROD-CAND-20260802",
+    "web3_freeze_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "product_tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "cut_c_status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+    "smoke_stamp": "20260806T075010Z",
+    "smoke_verdict": "PASS",
+    "residual_close_stamp": "20260806T075500Z",
+    "residuals_closed": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "tt_production_go": "NO_GO",
+    "forbidden": [
+      "no_new_engineering_scope",
+      "no_production_deploy",
+      "no_tt_production_go_flip",
+      "no_web3_mix_track"
+    ],
+    "after_owner_sign_off": "RELEASE_CANDIDATE_EVALUATION",
+    "honesty": "Staging smoke PASS != Owner GO != Production GO; Residual CLOSED != Production GO"
   }
 }

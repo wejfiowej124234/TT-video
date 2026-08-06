@@ -1,76 +1,66 @@
 {
-  "schema": "tt.v65.prod_003.batch3.cut_c_eng_wave.local_verify.v1",
-  "machine_key": "GO_v65_prod_003_batch3_cut_c_eng_wave",
-  "title": "V65 Batch3 Cut C Eng-Wave · Local Verify",
-  "stamp": "20260806T065245Z",
-  "phase": "LOCAL_VERIFIED",
-  "cut": "CUT_C",
-  "track": "CUT_C_ENG_WAVE",
-  "baseline": "V65-PROD-CAND-20260802",
-  "web3_freeze": "PSG-REL-20260720-WEB3-CAND-V2",
-  "tt_production_go": "NO_GO",
-  "owner_od": {
-    "OD-C-01": "ACCEPT_SCOPE_AS_FINAL_STATE",
-    "OD-C-02": "SUITE_PRIMARY_LEGACY_REDIRECT",
-    "OD-C-03": "READ_ONLY_BENCH_NO_FUND_WRITE",
-    "OD-C-04": "ADD_DISPUTE_CHANNEL_REAL_QUEUE",
-    "OD-C-05": "KEEP_ED_NO_REOPEN"
-  },
-  "residuals": [
-    "V65-PROD-003-B3-R011",
-    "V65-PROD-003-B3-R017",
-    "V65-PROD-003-B3-R018",
-    "V65-PROD-003-B3-R023",
-    "V65-PROD-003-B3-R024",
-    "V65-PROD-003-B3-R026",
-    "V65-PROD-003-B3-R027",
-    "V65-PROD-003-B3-R028",
-    "V65-PROD-003-B3-R038",
-    "V65-PROD-003-B3-R039",
-    "V65-PROD-003-B3-R041"
-  ],
-  "residuals_status": "OPEN",
-  "vitest": {
-    "files_passed": 10,
-    "tests_passed": 43,
-    "exit": 0,
-    "log": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T065245Z/vitest-cut-c-local.log"
-  },
-  "local_source_contract": {
-    "ok": true,
-    "notes": {
-      "finance_bare_redirect": true,
-      "finance_suite_marker": true,
-      "dispute_fund_write_forbidden": true,
-      "disputes_readonly_badge": true,
-      "inbox_channel_attr": true,
-      "overview_unavailable_emdash": true,
-      "inbox_permission_disputes": true,
-      "wp05_total_fail_closed": true
-    }
-  },
+  "schema": "tt.v65.prod_003.batch3.cut_c_eng_wave.fe.staging_smoke.latest.v1",
+  "stamp": "20260806T075010Z",
   "verdict": "PASS",
-  "gates": {
-    "local_verify": "PASS",
-    "staging_cut_c_deploy": "ALLOWED_FOR_EVIDENCE_ONLY",
-    "production_deploy": "FORBIDDEN",
-    "tt_production_go_flip": "FORBIDDEN",
-    "web3_mix": "FORBIDDEN",
-    "reopen_R012_R019": "FORBIDDEN",
-    "residual_close": "FORBIDDEN_UNTIL_STAGING_PASS"
-  },
-  "honesty": [
-    "LOCAL_VERIFIED ≠ Staging RUNTIME_VERIFIED ≠ Residual CLOSED ≠ Production GO",
-    "Owner OD-C Sign-off ≠ tip-honest Staging tip",
-    "Do not CLOSE R011/R017/R018/R023/R024/R026/R027/R028/R038/R039/R041 until Staging smoke PASS",
-    "TT_PRODUCTION_GO remains NO_GO",
-    "Web3 freeze PSG-REL-20260720-WEB3-CAND-V2 stays orthogonal"
+  "tt_production_go": "NO_GO",
+  "status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+  "fe_tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
+  "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+  "tip_match": true,
+  "residual_close_at": "20260806T075500Z",
+  "report": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T075010Z/report.json",
+  "residuals": [
+    "R011",
+    "R017",
+    "R018",
+    "R023",
+    "R024",
+    "R026",
+    "R027",
+    "R028",
+    "R038",
+    "R039",
+    "R041"
   ],
   "next": {
-    "action": "CUT_C_STAGING_DEPLOY_EVIDENCE",
-    "then": "Tip-honest FE commit → Staging deploy → Cut C staging smoke → Residual Close",
-    "tt_production_go": "NO_GO"
+    "action": "AWAITING_OWNER_SIGN_OFF_THEN_RC_EVAL",
+    "cut": "CUT_C",
+    "scope": "Owner Review of Cut C Staging pack only; no Production deploy; TT_PRODUCTION_GO=NO_GO"
   },
-  "generated_at": "2026-08-06T07:18:29Z",
-  "updated_by": "cut_c_eng_wave_local_verify"
+  "honesty": "Staging PASS != Owner GO != Production GO; TT_PRODUCTION_GO=NO_GO",
+  "owner_review_pack": {
+    "action": "OWNER_REVIEW_CUT_C_STAGING_PACK",
+    "submitted_at": "20260806T080500Z",
+    "status": "SUBMITTED_AWAITING_OWNER_SIGN_OFF",
+    "baseline_pin": "V65-PROD-CAND-20260802",
+    "web3_freeze_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "product_tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "cut_c_status": "FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED",
+    "smoke_stamp": "20260806T075010Z",
+    "smoke_verdict": "PASS",
+    "residual_close_stamp": "20260806T075500Z",
+    "residuals_closed": [
+      "R011",
+      "R017",
+      "R018",
+      "R023",
+      "R024",
+      "R026",
+      "R027",
+      "R028",
+      "R038",
+      "R039",
+      "R041"
+    ],
+    "tt_production_go": "NO_GO",
+    "forbidden": [
+      "no_new_engineering_scope",
+      "no_production_deploy",
+      "no_tt_production_go_flip",
+      "no_web3_mix_track"
+    ],
+    "after_owner_sign_off": "RELEASE_CANDIDATE_EVALUATION",
+    "honesty": "Staging smoke PASS != Owner GO != Production GO; Residual CLOSED != Production GO"
+  }
 }

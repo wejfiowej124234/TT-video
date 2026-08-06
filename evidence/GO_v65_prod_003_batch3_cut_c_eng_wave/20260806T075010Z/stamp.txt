@@ -1,0 +1,10 @@
+20260806T075010Z
+schema=tt.v65.prod_003.batch3.cut_c_eng_wave.fe.staging_smoke.v1
+verdict=PASS
+tt_production_go=NO_GO
+fe_tip=106feef436f205c7286d789b8ff9704c0fb28f48
+api_tip=1915ec4da828e0139e90a85cd321415fdb6e53d9
+tip_match=true
+residuals=R011,R017,R018,R023,R024,R026,R027,R028,R038,R039,R041
+residual_close_at=20260806T075500Z
+status=FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED
