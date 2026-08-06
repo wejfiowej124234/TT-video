@@ -13,15 +13,23 @@ export const routesAdminCore = {
     totpStatus: "/api/v1/admin/security/totp/status",
     totpEnroll: "/api/v1/admin/security/totp/enroll",
     totpVerify: "/api/v1/admin/security/totp/verify",
-    /** 用户列表；query **`limit`**（1～500，缺省 100）、**`role`**、**`kyc_status`**（精确匹配） */
-    users: (params?: { limit?: number; role?: string; kyc_status?: string }) => {
+    /** 用户列表；query **`limit`**（1～500，缺省 100）、**`offset`**、**`role`**、**`email`**（KYC filter Owner DELETE） */
+    users: (params?: {
+      limit?: number;
+      offset?: number;
+      role?: string;
+      email?: string;
+    }) => {
       const sp = new URLSearchParams();
       if (params?.limit != null) sp.set("limit", String(params.limit));
+      if (params?.offset != null && params.offset > 0) {
+        sp.set("offset", String(params.offset));
+      }
       if (params?.role != null && params.role.trim() !== "") {
         sp.set("role", params.role.trim());
       }
-      if (params?.kyc_status != null && params.kyc_status.trim() !== "") {
-        sp.set("kyc_status", params.kyc_status.trim());
+      if (params?.email != null && params.email.trim() !== "") {
+        sp.set("email", params.email.trim());
       }
       const q = sp.toString();
       return `/api/v1/admin/users${q ? `?${q}` : ""}`;
@@ -31,12 +39,27 @@ export const routesAdminCore = {
     /** 70：用户监管详情；不含 password_hash；须 admin */
     userById: (id: string) =>
       `/api/v1/admin/users/${encodeURIComponent(id)}`,
-    /** 向导入驻台账；query **`limit`**（1～500，缺省 100）、**`status`**（向导状态精确匹配） */
-    guides: (params?: { limit?: number; status?: string }) => {
+    /** 向导入驻台账；query **`limit`**（1～500）、**`status`**、**`city`**、**`country_code`**、**`q`**（Cut B R014） */
+    guides: (params?: {
+      limit?: number;
+      status?: string;
+      city?: string;
+      country_code?: string;
+      q?: string;
+    }) => {
       const sp = new URLSearchParams();
       if (params?.limit != null) sp.set("limit", String(params.limit));
       if (params?.status != null && params.status.trim() !== "") {
         sp.set("status", params.status.trim());
+      }
+      if (params?.city != null && params.city.trim() !== "") {
+        sp.set("city", params.city.trim());
+      }
+      if (params?.country_code != null && params.country_code.trim() !== "") {
+        sp.set("country_code", params.country_code.trim());
+      }
+      if (params?.q != null && params.q.trim() !== "") {
+        sp.set("q", params.q.trim());
       }
       const q = sp.toString();
       return `/api/v1/admin/guides${q ? `?${q}` : ""}`;

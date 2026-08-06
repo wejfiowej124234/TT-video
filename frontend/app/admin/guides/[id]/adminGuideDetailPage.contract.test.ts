@@ -35,4 +35,11 @@ describe("admin guide detail page", () => {
     expect(src).toContain("data-tt-admin-guide-registration-review");
     expect(src).toContain("patchAdminGuideRegistration");
   });
+
+  // V65 Batch3 W2 / R059 — stable Idempotency-Key mint once per confirm intent.
+  it("registration review mints getIdempotencyKey once per patch and passes through", () => {
+    expect(src).toContain("getIdempotencyKey");
+    expect(src).toMatch(/const idem = getIdempotencyKey\(\)/);
+    expect(src).toMatch(/patchAdminGuideRegistration\([\s\S]*?\bidem\s*,?\s*\)/);
+  });
 });

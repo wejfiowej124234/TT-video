@@ -839,9 +839,12 @@ async fn admin_memory_first_gets_not_impl_without_chain_off() {
         get_admin_guides(
             State(state_no_chain_off()),
             Query(AdminGuidesListQuery {
-                limit: None,
-                status: None,
-            }),
+            limit: None,
+            status: None,
+            city: None,
+            country_code: None,
+            q: None,
+        }),
             HeaderMap::new(),
         )
         .await
@@ -1740,6 +1743,9 @@ async fn admin_guides_forbidden_for_non_admin_actor() {
         Query(AdminGuidesListQuery {
             limit: None,
             status: None,
+            city: None,
+            country_code: None,
+            q: None,
         }),
         auth_headers(tourist.id),
     )
@@ -1794,6 +1800,9 @@ async fn admin_guides_ok_for_admin_includes_guide_row() {
         Query(AdminGuidesListQuery {
             limit: None,
             status: None,
+            city: None,
+            country_code: None,
+            q: None,
         }),
         auth_headers(admin.id),
     )

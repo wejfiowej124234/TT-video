@@ -953,11 +953,15 @@ pub struct AdminUsersListQuery {
     pub email: Option<String>,
 }
 
-/// Admin 向导台账：可选 **`limit`**（1～500，缺省 100）、**`status`**（与向导 **`status`** 精确匹配）。
+/// Admin 向导台账：可选 **`limit`**（1～500，缺省 100）、**`status`**（精确）、
+/// **`city`**（包含）、**`country_code`**（忽略大小写等值）、**`q`**（id/user/city/country/bio/name/status 子串）。
 #[derive(Debug, Deserialize)]
 pub struct AdminGuidesListQuery {
     pub limit: Option<i64>,
     pub status: Option<String>,
+    pub city: Option<String>,
+    pub country_code: Option<String>,
+    pub q: Option<String>,
 }
 
 /// **`PATCH /api/v1/admin/guides/:id`**：向导资质审核状态与拒绝信息（B-080）
@@ -1980,6 +1984,56 @@ pub async fn get_admin_guides(
     let mut limit = q.limit.unwrap_or(100);
     limit = limit.clamp(1, 500);
     let status_filter = q.status.as_deref().map(str::trim).filter(|s| !s.is_empty());
+    let city_filter = q.city.as_deref().map(str::trim).filter(|s| !s.is_empty());
+    let country_filter = q
+        .country_code
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty());
+    let q_filter = q.q.as_deref().map(str::trim).filter(|s| !s.is_empty());
+
+    let guide_matches = |status: &str,
+                         city: &str,
+                         country_code: &str,
+                         id: &str,
+                         user_id: &str,
+                         bio: Option<&str>,
+                         real_name: Option<&str>|
+     -> bool {
+        if let Some(sf) = status_filter {
+            if status != sf {
+                return false;
+            }
+        }
+        if let Some(cf) = city_filter {
+            if !city.to_lowercase().contains(&cf.to_lowercase()) {
+                return false;
+            }
+        }
+        if let Some(cc) = country_filter {
+            if !country_code.eq_ignore_ascii_case(cc) {
+                return false;
+            }
+        }
+        if let Some(needle) = q_filter {
+            let ql = needle.to_lowercase();
+            let hay = format!(
+                "{} {} {} {} {} {} {}",
+                id,
+                user_id,
+                city,
+                country_code,
+                bio.unwrap_or(""),
+                real_name.unwrap_or(""),
+                status
+            )
+            .to_lowercase();
+            if !hay.contains(&ql) {
+                return false;
+            }
+        }
+        true
+    };
 
     // Batch-14 HU-491/493 · 有 PG 时正式库清单（禁 memory 与申请详单裂脑）。
     if let Some(pool) = co.db_pool.as_ref() {
@@ -1987,7 +2041,17 @@ pub async fn get_admin_guides(
             Ok(rows) => {
                 let mut items: Vec<_> = rows
                     .into_iter()
-                    .filter(|g| status_filter.is_none_or(|sf| g.status == sf))
+                    .filter(|g| {
+                        guide_matches(
+                            &g.status,
+                            &g.city,
+                            &g.country_code,
+                            &g.id.to_string(),
+                            &g.user_id.to_string(),
+                            g.bio.as_deref(),
+                            g.real_name.as_deref(),
+                        )
+                    })
                     .map(|g| {
                         json!({
                             "id": g.id,
@@ -2037,6 +2101,9 @@ pub async fn get_admin_guides(
                         "result_count": items.len(),
                         "limit": limit,
                         "status": status_filter,
+                        "city": city_filter,
+                        "country_code": country_filter,
+                        "q": q_filter,
                         "matched_before_limit": total_after_filter,
                         "source": "postgres",
                     }),
@@ -2049,6 +2116,9 @@ pub async fn get_admin_guides(
                     "applied_filters": {
                         "limit": limit,
                         "status": status_filter,
+                        "city": city_filter,
+                        "country_code": country_filter,
+                        "q": q_filter,
                         "source": "postgres",
                         "matched_before_limit": total_after_filter,
                     },
@@ -2081,7 +2151,17 @@ pub async fn get_admin_guides(
     let mut items: Vec<_> = store
         .guides
         .values()
-        .filter(|g| status_filter.is_none_or(|sf| g.status == sf))
+        .filter(|g| {
+            guide_matches(
+                &g.status,
+                &g.city,
+                &g.country_code,
+                &g.id.to_string(),
+                &g.user_id.to_string(),
+                g.bio.as_deref(),
+                g.real_name.as_deref(),
+            )
+        })
         .map(chain_off::guide_admin_row_json)
         .collect();
     items.sort_by(|a, b| {
@@ -2108,6 +2188,9 @@ pub async fn get_admin_guides(
             "result_count": items.len(),
             "limit": limit,
             "status": status_filter,
+            "city": city_filter,
+            "country_code": country_filter,
+            "q": q_filter,
             "matched_before_limit": total_after_filter,
             "source": "memory",
         }),
@@ -2121,6 +2204,9 @@ pub async fn get_admin_guides(
         "applied_filters": {
             "limit": limit,
             "status": status_filter,
+            "city": city_filter,
+            "country_code": country_filter,
+            "q": q_filter,
             "source": "memory",
             "matched_before_limit": total_after_filter,
         },

@@ -26,6 +26,9 @@ const FIELD_LABEL_KEYS: Record<string, string> = {
   scope_type: "admin_filter_field_scope_type",
   binding_role: "admin_filter_field_binding_role",
   api_version: "admin_filter_field_api_version",
+  q: "admin_guides_q_label",
+  city: "admin_guides_city_filter_label",
+  country_code: "admin_guides_country_filter_label",
 };
 
 export function adminAppliedFilterFieldLabel(key: string, t: LocaleTranslateFn): string {

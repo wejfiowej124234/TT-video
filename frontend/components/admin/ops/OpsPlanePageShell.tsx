@@ -1,7 +1,11 @@
 "use client";
 
 import { AdminDetailPageChrome } from "@/components/admin/AdminDetailPageChrome";
-import { OpsPlaneFetchStates } from "@/components/admin/ops/OpsPlaneFetchStates";
+import {
+  OpsPlaneFetchStates,
+  type OpsPlaneChromePresentation,
+} from "@/components/admin/ops/OpsPlaneFetchStates";
+import type { AdminEmptyNextLink } from "@/lib/admin/adminListEmptyStateNextLinks";
 import type { AdminPermissionId } from "@/lib/admin/adminPermissionIds";
 
 export type OpsPlanePageShellProps = {
@@ -14,6 +18,12 @@ export type OpsPlanePageShellProps = {
   loadingMessageKey?: string;
   empty?: boolean;
   emptyMessageKey?: string;
+  emptyHintKey?: string;
+  emptyNextLinks?: AdminEmptyNextLink[];
+  /** B3-R025 · default banner (children stay). Opt-in `replace` wipes subtree. */
+  errorPresentation?: OpsPlaneChromePresentation;
+  /** B3-R050 · default banner (children stay). Opt-in `replace` wipes subtree. */
+  emptyPresentation?: OpsPlaneChromePresentation;
   writePermissionId?: AdminPermissionId;
   mainDataAttrs?: Record<string, string>;
   children: React.ReactNode;
@@ -31,6 +41,10 @@ export function OpsPlanePageShell(props: OpsPlanePageShellProps) {
     loadingMessageKey,
     empty,
     emptyMessageKey,
+    emptyHintKey,
+    emptyNextLinks,
+    errorPresentation,
+    emptyPresentation,
     writePermissionId,
     mainDataAttrs,
     children,
@@ -51,6 +65,10 @@ export function OpsPlanePageShell(props: OpsPlanePageShellProps) {
         loadingMessageKey={loadingMessageKey}
         empty={empty}
         emptyMessageKey={emptyMessageKey}
+        emptyHintKey={emptyHintKey}
+        emptyNextLinks={emptyNextLinks}
+        errorPresentation={errorPresentation}
+        emptyPresentation={emptyPresentation}
       >
         {children}
       </OpsPlaneFetchStates>

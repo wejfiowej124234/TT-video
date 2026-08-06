@@ -36,4 +36,17 @@ describe("admin guides page", () => {
     expect(src).toContain("GUIDES_LIST_RELATED_FOLD_LINKS");
     expect(src).not.toContain("headerAside={<AdminOpsQueueBackLinks />}");
   });
+
+  it("wires Cut B eng-wave filters / nowrap / auth-hints (R014/R021/R057)", () => {
+    expect(src).toContain("draftCity");
+    expect(src).toContain("draftCountry");
+    expect(src).toContain("draftQ");
+    expect(src).toContain("guidesFilterBar");
+    expect(src).toContain("guidesTableNowrap");
+    expect(src).toContain("errorKey={error}");
+    expect(src).toContain("ADMIN_GUIDES_CITY_MAX");
+    expect(src).toContain("ADMIN_GUIDES_COUNTRY_MAX");
+    expect(src).toContain("ADMIN_GUIDES_Q_MAX");
+    expect(src).not.toContain("data_origin");
+  });
 });

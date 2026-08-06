@@ -1,17 +1,23 @@
 "use client";
 
-import Link from "next/link";
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminListFetchError } from "@/components/admin/AdminListFetchError";
 import { AdminListLoadingStatus } from "@/components/admin/AdminListLoadingStatus";
 import { AdminListPageEmptyState } from "@/components/admin/AdminListPageEmptyState";
+import { OpsPlaneAuthHints } from "@/components/admin/ops/OpsPlaneAuthHints";
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
+import {
+  ADMIN_EMPTY_NEXT_WORKSPACE,
+  type AdminEmptyNextLink,
+} from "@/lib/admin/adminListEmptyStateNextLinks";
 import {
   ADMIN_BTN_SECONDARY_CLASS,
   ADMIN_CONSOLE_SKELETON_BLOCK_CLASS,
   ADMIN_CONSOLE_SKELETON_LINE_CLASS,
   ADMIN_MOTION_SKELETON_CLASS,
 } from "@/lib/adminUi";
+
+export { OpsPlaneAuthHints } from "@/components/admin/ops/OpsPlaneAuthHints";
 
 /** Batch-10 W14 · HU-266：按错误串区分 403/503/缺表/失败，禁单一「加载失败」。 */
 export function inferErrorKind(errorKey: string | null | undefined): AdminFetchErrorKind {
@@ -39,28 +45,12 @@ export function inferErrorKind(errorKey: string | null | undefined): AdminFetchE
   return "failed";
 }
 
-/** Permission / 2FA / approval hints for ops-plane API errors (157 backend · FE honest). */
-export function OpsPlaneAuthHints(props: { errorKey?: string | null }) {
-  const { t } = useTranslation();
-  const key = props.errorKey ?? "";
-  if (!key) return null;
-  const lower = key.toLowerCase();
-  let hintKey: string | null = null;
-  if (lower.includes("2fa") || lower.includes("totp")) hintKey = "ops_plane_hint_2fa";
-  else if (lower.includes("forbidden") || lower.includes("perm") || lower.includes("denied") || lower.includes("403"))
-    hintKey = "ops_plane_hint_permission";
-  else if (lower.includes("approval")) hintKey = "ops_plane_hint_approval";
-  else if (lower.includes("503") || lower.includes("unavailable") || lower.includes("timeout"))
-    hintKey = "ops_plane_hint_unavailable";
-  else if (lower.includes("missing_table") || lower.includes("undefined_table") || lower.includes("404"))
-    hintKey = "ops_plane_hint_missing_resource";
-  if (!hintKey) return null;
-  return (
-    <p className="mb-2 text-small text-ink-500" data-tt-ops-plane-auth-hint="1" role="note">
-      {t(hintKey)}
-    </p>
-  );
-}
+/**
+ * B3-R025 / B3-R050 · chrome presentation
+ * - `banner` (default): chrome above still-mounted children (no wipe)
+ * - `replace`: early-return wipe of children (opt-in only)
+ */
+export type OpsPlaneChromePresentation = "banner" | "replace";
 
 export type OpsPlaneFetchStatesProps = {
   loading?: boolean;
@@ -71,9 +61,71 @@ export type OpsPlaneFetchStatesProps = {
   empty?: boolean;
   emptyMessageKey?: string;
   emptyHintKey?: string;
+  /** B3-R050 · empty next-step links; default workspace hub. */
+  emptyNextLinks?: AdminEmptyNextLink[];
+  /**
+   * B3-R025 · error chrome. Default `banner` keeps children mounted.
+   * Pass `replace` only when the leaf must wipe the subtree on error.
+   */
+  errorPresentation?: OpsPlaneChromePresentation;
+  /**
+   * B3-R050 · empty chrome. Default `banner` keeps children (e.g. create forms).
+   * Pass `replace` only when empty must wipe the subtree.
+   */
+  emptyPresentation?: OpsPlaneChromePresentation;
   skeleton?: boolean;
   children?: React.ReactNode;
 };
+
+function OpsPlaneErrorChrome(props: {
+  error: string;
+  kind: AdminFetchErrorKind;
+  onRetry?: () => void;
+  presentation: OpsPlaneChromePresentation;
+  staleWhileError: boolean;
+}) {
+  const { t } = useTranslation();
+  const { error, kind, onRetry, presentation, staleWhileError } = props;
+  return (
+    <div
+      data-tt-ops-plane-error="1"
+      data-tt-ops-plane-error-kind={kind}
+      data-tt-ops-plane-error-presentation={presentation}
+    >
+      <OpsPlaneAuthHints errorKey={error} />
+      <AdminListFetchError
+        errorKind={kind}
+        message={t(error)}
+        staleWhileError={staleWhileError}
+        showAuthHints={false}
+      />
+      {onRetry ? (
+        <button
+          type="button"
+          className={`mt-3 ${ADMIN_BTN_SECONDARY_CLASS}`}
+          data-tt-ops-plane-retry="1"
+          onClick={() => void onRetry()}
+        >
+          {t("ops_plane_retry")}
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
+function OpsPlaneEmptyChrome(props: {
+  messageKey: string;
+  hintKey?: string;
+  nextLinks: AdminEmptyNextLink[];
+  presentation: OpsPlaneChromePresentation;
+}) {
+  const { messageKey, hintKey, nextLinks, presentation } = props;
+  return (
+    <div data-tt-ops-plane-empty="1" data-tt-ops-plane-empty-presentation={presentation}>
+      <AdminListPageEmptyState messageKey={messageKey} hintKey={hintKey} nextLinks={nextLinks} />
+    </div>
+  );
+}
 
 /** Unified loading · skeleton · empty · error · retry for CMS / Official / Growth ops planes. */
 export function OpsPlaneFetchStates(props: OpsPlaneFetchStatesProps) {
@@ -87,6 +139,9 @@ export function OpsPlaneFetchStates(props: OpsPlaneFetchStatesProps) {
     empty,
     emptyMessageKey = "ops_plane_empty",
     emptyHintKey,
+    emptyNextLinks = [ADMIN_EMPTY_NEXT_WORKSPACE],
+    errorPresentation = "banner",
+    emptyPresentation = "banner",
     skeleton = true,
     children,
   } = props;
@@ -108,31 +163,54 @@ export function OpsPlaneFetchStates(props: OpsPlaneFetchStatesProps) {
         </div>
       );
     }
-    return <AdminListLoadingStatus message={t(loadingMessageKey)} hint={loadingHintKey ? t(loadingHintKey) : undefined} />;
+    return (
+      <AdminListLoadingStatus
+        message={t(loadingMessageKey)}
+        hint={loadingHintKey ? t(loadingHintKey) : undefined}
+      />
+    );
   }
 
   if (error) {
     const kind = inferErrorKind(error);
+    const chrome = (
+      <OpsPlaneErrorChrome
+        error={error}
+        kind={kind}
+        onRetry={onRetry}
+        presentation={errorPresentation}
+        staleWhileError={errorPresentation === "banner"}
+      />
+    );
+    if (errorPresentation === "replace") {
+      return chrome;
+    }
     return (
-      <div data-tt-ops-plane-error="1" data-tt-ops-plane-error-kind={kind}>
-        <OpsPlaneAuthHints errorKey={error} />
-        <AdminListFetchError errorKind={kind} message={t(error)} />
-        {onRetry ? (
-          <button
-            type="button"
-            className={`mt-3 ${ADMIN_BTN_SECONDARY_CLASS}`}
-            data-tt-ops-plane-retry="1"
-            onClick={() => void onRetry()}
-          >
-            {t("ops_plane_retry")}
-          </button>
-        ) : null}
-      </div>
+      <>
+        {chrome}
+        {children}
+      </>
     );
   }
 
   if (empty) {
-    return <AdminListPageEmptyState messageKey={emptyMessageKey} hintKey={emptyHintKey} />;
+    const chrome = (
+      <OpsPlaneEmptyChrome
+        messageKey={emptyMessageKey}
+        hintKey={emptyHintKey}
+        nextLinks={emptyNextLinks}
+        presentation={emptyPresentation}
+      />
+    );
+    if (emptyPresentation === "replace") {
+      return chrome;
+    }
+    return (
+      <>
+        {chrome}
+        {children}
+      </>
+    );
   }
 
   return <>{children}</>;

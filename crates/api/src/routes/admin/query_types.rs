@@ -101,11 +101,15 @@ pub struct AdminUsersListQuery {
     pub email: Option<String>,
 }
 
-/// Admin 向导台账：可选 **`limit`**（1～500，缺省 100）、**`status`**（与向导 **`status`** 精确匹配）。
+/// Admin 向导台账：可选 **`limit`**（1～500，缺省 100）、**`status`**（精确）、
+/// **`city`**（包含）、**`country_code`**（忽略大小写等值）、**`q`**（id/user/city/country/bio/name/status 子串）。
 #[derive(Debug, Deserialize)]
 pub struct AdminGuidesListQuery {
     pub limit: Option<i64>,
     pub status: Option<String>,
+    pub city: Option<String>,
+    pub country_code: Option<String>,
+    pub q: Option<String>,
 }
 
 /// **`PATCH /api/v1/admin/guides/:id`**：向导资质审核状态与拒绝信息（B-080）

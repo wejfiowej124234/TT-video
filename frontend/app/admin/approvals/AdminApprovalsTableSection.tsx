@@ -185,6 +185,7 @@ export function AdminApprovalsTableSection({ vm }: Props) {
                   href={`/admin/approvals/${encodeURIComponent(id)}`}
                   className={adminTableRowPrimaryActionClass()}
                   aria-label={t("admin_approvals_review_row_aria", { id })}
+                  {...(isPending ? { "data-tt-admin-approvals-review-cta": "1" } : {})}
                 >
                   {isPending ? t("admin_approvals_review_cta") : t("admin_ops_approvalDetailAdmin")}
                 </Link>
