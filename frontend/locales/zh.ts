@@ -191,7 +191,7 @@ export default {
   community_guidelines_meta_description: "社区行为规范说明；正式稿待法务与运营定稿后更新。",
   governance_meta_title: "治理门户 | TravelTrust",
   governance_meta_description:
-    "Sepolia ② 治理门户：池子/激励只读快照、主理人入口、提案与协议参数（04/82/83）。",
+    "官网治理门户：主网 Money Path PARTIAL · Timelock 等待窗；池子/激励只读快照、主理人入口、提案与协议参数（04/82/83）。Sepolia 仅为降级旁路，≠ Production GO。",
   governance_fee_routes_meta_title: "治理 · 费用路由 | TravelTrust",
   governance_fee_routes_meta_description: "FeeRouter 相关只读路由与审计入口摘要。",
   governance_vault_forwards_meta_title: "治理 · Region Vault 转发 | TravelTrust",
@@ -9346,7 +9346,7 @@ export default {
     "建议路径：连接钱包 → 查看下方区域池 → 打开「投票委托」或「治理提案」参与决策。",
   governance_title: "治理",
   governance_desc:
-    "测试网治理门户：区域池只读快照、协议参数，以及下方「投票委托」「治理提案」参与路径。",
+    "官网治理门户（主网 Money Path PARTIAL · Timelock 等待窗）：区域池只读快照、协议参数，以及下方「投票委托」「治理提案」参与路径。Sepolia 仅为降级旁路，≠ Production GO。",
   governance_hub_target_notice:
     "下方数字来自平台只读快照，供了解区域激励概况；具体投票请在「治理提案」进行。",
   governance_hub_params_pointer:

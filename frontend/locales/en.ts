@@ -203,7 +203,7 @@ export default {
     "Community conduct overview; final copy pending legal and ops.",
   governance_meta_title: "Governance | TravelTrust",
   governance_meta_description:
-    "Sepolia ② governance hub: pool/rewards snapshots, steward entry, proposals and protocol params per 04/82/83.",
+    "Official governance hub: Mainnet Money Path PARTIAL · Timelock wait window; pool/rewards snapshots, steward entry, proposals and protocol params per 04/82/83. Sepolia is a demoted side track only — not Production GO.",
   governance_fee_routes_meta_title: "Governance · Fee routes | TravelTrust",
   governance_fee_routes_meta_description: "FeeRouter read-only routes and audit entry summary.",
   governance_vault_forwards_meta_title: "Governance · Region Vault forwards | TravelTrust",
@@ -9619,7 +9619,7 @@ export default {
     "Suggested path: connect your wallet → review regional pools below → open Delegate vote or Governance proposals to participate.",
   governance_title: "Governance",
   governance_desc:
-    "Testnet governance portal: read-only regional pool snapshots, protocol parameters, and paths to Delegate vote or Governance proposals.",
+    "Official governance hub (Mainnet Money Path PARTIAL · Timelock wait window): read-only regional pool snapshots, protocol parameters, and paths to Delegate vote or Governance proposals. Sepolia is a demoted side track only — not Production GO.",
   governance_hub_target_notice:
     "Numbers below are read-only platform snapshots for regional incentives. To vote, open Governance proposals.",
   governance_hub_params_pointer:
