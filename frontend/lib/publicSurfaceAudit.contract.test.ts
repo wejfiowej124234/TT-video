@@ -95,7 +95,7 @@ describe("public surface audit", () => {
     ]);
   });
 
-  it("governance params strip keeps Sepolia ACTIVE kicker in both locales", () => {
+  it("governance params strip keeps Web3 Runtime ACTIVE kicker in both locales", () => {
     for (const file of LOCALES) {
       const src = readFileSync(join(ROOT, "frontend/locales", file), "utf8");
       expect(src).toContain("governance_params_web3_runtime_kicker");
