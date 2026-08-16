@@ -7,7 +7,7 @@ import { MeSettingsLanguagePicker } from "@/components/me/MeSettingsLanguagePick
 import { MeSettingsSubpageHeader } from "@/components/me/MeSettingsSubpageHeader";
 import { TT_ME_SETTINGS_L5 } from "@/lib/me/meSettingsL5";
 
-/** 显示语言（L5）· 与顶栏语言切换同源 `LocaleProvider` */
+/** 显示语言（L5）· 与顶栏语言切换同源 `LocaleProvider` · 内容翻译目标跟随此项 */
 export default function MeSettingsLanguagePage() {
   const { t } = useTranslation();
 
@@ -31,6 +31,9 @@ export default function MeSettingsLanguagePage() {
         <h2 id="me-settings-language-heading" className={TT_ME_SETTINGS_L5.sectionTitle}>
           {t("me_settings_item_language")}
         </h2>
+        <p className="px-1 text-meta leading-relaxed text-slate-400/95">
+          {t("me_settings_content_translation_subtitle")}
+        </p>
         <MeSettingsLanguagePicker />
       </section>
 

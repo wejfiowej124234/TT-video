@@ -11399,6 +11399,13 @@ export default {
   me_settings_language_active: "Current",
   me_settings_language_desc_zh: "Simplified Chinese UI",
   me_settings_language_desc_en: "English UI",
+  me_settings_content_translation_subtitle:
+    "Market listings show a cached translation when one exists. Community posts stay original until you tap Translate. Both follow the language above.",
+  ugc_translate: "Translate",
+  ugc_translate_busy: "Translating…",
+  ugc_translate_show_original: "Show original",
+  ugc_translate_login_to_translate: "Sign in to translate",
+  ugc_translate_failed: "Translation is temporarily unavailable",
   me_settings_desc_coming_soon: "This setting is not available yet.",
   me_settings_siteNav_label: "Quick links",
   me_settings_siteNav_aria: "Related links on settings",

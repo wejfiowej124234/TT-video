@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { TT_COMMUNITY_VIDEO_OVERLAY_L5 } from "@/lib/marketingUi";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 const CAPTION_CLAMP_LINES = 2;
 
@@ -11,11 +12,13 @@ export function CommunityVideoOverlayCaption({
   caption,
   expandLabel,
   collapseLabel,
+  postId,
 }: {
   author?: string;
   caption?: string;
   expandLabel: string;
   collapseLabel: string;
+  postId?: string;
 }) {
   const textRef = useRef<HTMLParagraphElement>(null);
   const [expanded, setExpanded] = useState(false);
@@ -56,7 +59,19 @@ export function CommunityVideoOverlayCaption({
               expanded ? "" : TT_COMMUNITY_VIDEO_OVERLAY_L5.captionClamp
             }`}
           >
-            {caption}
+            {postId ? (
+              <UgcTranslatedText
+                as="span"
+                policy="on_demand"
+                actionSurface="overlay"
+                contentClass="community_post"
+                contentId={postId}
+                field="body"
+                originalText={caption}
+              />
+            ) : (
+              caption
+            )}
           </p>
           {(clampable || expanded) ? (
             <button

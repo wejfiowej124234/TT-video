@@ -19,6 +19,7 @@ import { CONSUMER_TRIP_CURRENCY_LOCALE_KEY } from "@/lib/escrowOrderAmountSsot";
 import { MarketDisplayTestBadge } from "@/components/market/MarketDisplayTestBadge";
 import { shouldShowMarketOrderDisplayTestLabel } from "@/lib/marketDisplayTestLabel";
 import { TT_MARKETING_BTN_MARKET_PRIMARY, TT_MARKETING_MARKET_DARK_PATH, TT_MARKETING_MARKET_L5_LIST_CARD_FRAME, TT_MARKETING_MARKET_L5_LIST_CARD_INNER } from "@/lib/marketingUi";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 /** P29 订单卡片：行程照片 + 收藏 + 抢订单/查看行程；28 玻璃态 + Web3 徽章 */
 export type { OrderCardItem, OrderBreakdown, TransportLeg } from "@/lib/marketTypes";
@@ -71,6 +72,17 @@ export default memo(function OrderCard({
   const statusLabel = statusSlice ? (t(statusKey) || statusSlice) : t("order_status_draft");
   const statusRaw = (item.status ?? item.state ?? "").toLowerCase();
   const isDraftLike = statusRaw === "draft";
+  /** Reality Audit B1-G-005: Draft + Escrow ✓ co-badge reads as already escrowed — hide on draft. */
+  const showEscrowCapabilityBadge =
+    !isDraftLike &&
+    (Boolean(item.escrow_address?.trim()) ||
+      statusRaw === "created" ||
+      statusRaw === "open" ||
+      statusRaw === "accepted" ||
+      statusRaw === "escrowed" ||
+      statusRaw === "funded" ||
+      statusRaw === "in_progress" ||
+      statusRaw === "completed");
   /** 与 OrderDetailDrawer 接单 CTA 同源：created/open 可在市场抢单 */
   const isOpenMarket = statusRaw === "created" || statusRaw === "open";
   const isDevDemoOrder = isMarketDevVarietyOrderId(item.id);
@@ -176,7 +188,7 @@ export default memo(function OrderCard({
                       : t("market_own_binding_order_badge")}
                   </span>
                 ) : null}
-                <EscrowEnabledBadge variant="cover" />
+                {showEscrowCapabilityBadge ? <EscrowEnabledBadge variant="cover" /> : null}
               </div>
             ) : null
           }
@@ -215,9 +227,22 @@ export default memo(function OrderCard({
           </h3>
           <p className={subClass}>
             {isDevDemoOrder ? t("market_dev_demo_teaser") : null}
-            {!isDevDemoOrder &&
-              (teaser ??
-                (days ? t("order_daysItinerary").replace("{{n}}", String(item.days)) : t("order_itinerary")))}
+            {!isDevDemoOrder && isOwnBindingOrder ? teaser : null}
+            {!isDevDemoOrder && !isOwnBindingOrder && teaser ? (
+              <UgcTranslatedText
+                as="span"
+                policy="cache_first"
+                contentClass="itinerary"
+                contentId={item.id}
+                field="teaser"
+                originalText={teaser}
+              />
+            ) : null}
+            {!isDevDemoOrder && !isOwnBindingOrder && !teaser
+              ? days
+                ? t("order_daysItinerary").replace("{{n}}", String(item.days))
+                : t("order_itinerary")
+              : null}
             {item.headcount != null && item.headcount > 0
               ? t("order_headcountUnit").replace("{{n}}", String(item.headcount))
               : ""}

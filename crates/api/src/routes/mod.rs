@@ -48,6 +48,7 @@ mod orders;
 mod redemption;
 mod steward;
 mod traveltrust_page;
+mod ugc_translate;
 mod public_announcements;
 mod public_roadmap;
 mod trust_growth;
@@ -154,6 +155,7 @@ pub fn api_router() -> Router<ApiMetaState> {
         .merge(platform_media::router())
         .merge(intents::router())
         .merge(community::router())
+        .merge(ugc_translate::router())
         .merge(onboarding::router())
         .merge(hooks::router())
         .merge(provider_applications::router())

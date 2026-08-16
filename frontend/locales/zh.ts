@@ -11087,6 +11087,13 @@ export default {
   me_settings_language_active: "当前",
   me_settings_language_desc_zh: "简体中文界面",
   me_settings_language_desc_en: "English UI",
+  me_settings_content_translation_subtitle:
+    "市场列表有缓存则直接显示译文；社区动态默认看原文，点「翻译」后再译。两种用法共用上方这一项语言。",
+  ugc_translate: "翻译",
+  ugc_translate_busy: "翻译中…",
+  ugc_translate_show_original: "查看原文",
+  ugc_translate_login_to_translate: "登录后翻译",
+  ugc_translate_failed: "翻译暂时不可用",
   me_settings_desc_coming_soon: "即将推出",
   me_settings_siteNav_label: "常用入口",
   me_settings_siteNav_aria: "设置页相关入口",

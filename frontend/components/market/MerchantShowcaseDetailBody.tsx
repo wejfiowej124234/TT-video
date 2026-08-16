@@ -14,6 +14,7 @@ import MarketSubsiteComplianceDisclosure from "@/components/market/MarketSubsite
 import type { DemoMerchantListing } from "@/lib/marketSubsiteDemo";
 
 import { pickL10n } from "@/lib/marketSubsiteDemo";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
@@ -89,7 +90,16 @@ export function MerchantShowcaseDetailBody({
 
       <header className="space-y-3">
 
-        <p className="text-body text-slate-100/95">{subtitle}</p>
+        <p className="text-body text-slate-100/95">
+          <UgcTranslatedText
+            as="span"
+            policy="cache_first"
+            contentClass="merchant_listing"
+            contentId={listing.id}
+            field="subtitle"
+            originalText={subtitle}
+          />
+        </p>
 
         <div className="flex flex-wrap gap-2">
 
@@ -162,13 +172,20 @@ export function MerchantShowcaseDetailBody({
         <div className="mt-3 space-y-4 text-body leading-relaxed text-slate-200/95">
 
           {listing.story.map((p, i) => (
-
             <p key={i} className="m-0">
-
-              {pickL10n(p, locale)}
-
+              {i === 0 ? (
+                <UgcTranslatedText
+                  as="span"
+                  policy="cache_first"
+                  contentClass="merchant_listing"
+                  contentId={listing.id}
+                  field="description"
+                  originalText={pickL10n(p, locale)}
+                />
+              ) : (
+                pickL10n(p, locale)
+              )}
             </p>
-
           ))}
 
         </div>

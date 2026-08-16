@@ -6,6 +6,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import MarketRemoteListingImage from "@/components/market/MarketRemoteListingImage";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 export type MarketSubsiteMasonryItem = {
   /** 收购子站：标题旁独立角标（不挤进 h2 文案） */
@@ -112,7 +113,14 @@ function MarketSubsiteMasonry({
                     <span className={`shrink-0 ${D.trustEscrowBadge}`}>{t("market_subsite_acquisition_badge")}</span>
                   ) : null}
                   <h2 className="min-w-0 flex-1 text-body font-semibold leading-snug text-white line-clamp-2">
-                    {item.title}
+                    <UgcTranslatedText
+                      as="span"
+                      policy="cache_first"
+                      contentClass={item.listingKind === "acquisition" ? "acquisition_listing" : "merchant_listing"}
+                      contentId={item.listingId}
+                      field="title"
+                      originalText={item.title}
+                    />
                   </h2>
                 </div>
                 {item.subtitle ? (
@@ -121,7 +129,14 @@ function MarketSubsiteMasonry({
                       itemIdx % 2 === 0 ? "line-clamp-2" : "line-clamp-3"
                     }`}
                   >
-                    {item.subtitle}
+                    <UgcTranslatedText
+                      as="span"
+                      policy="cache_first"
+                      contentClass={item.listingKind === "acquisition" ? "acquisition_listing" : "merchant_listing"}
+                      contentId={item.listingId}
+                      field="subtitle"
+                      originalText={item.subtitle}
+                    />
                   </p>
                 ) : null}
                 <div className="flex items-center justify-between gap-2 pt-1">

@@ -8,6 +8,7 @@ import { TT_COMMUNITY_DRAWER_L5 } from "@/lib/marketingUi";
 import { communityPostTagDisplayLabel, communityPostTagsForDisplay } from "@/components/community/communityPostTagDisplay";
 import { communityCardLinkFocus, communityShellTabFocus } from "@/lib/communityA11yFocus";
 import { useCommunityTopicTagWarm } from "@/lib/useCommunityTopicTagWarm";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 /** 纯文笔记 L5 头图区（小红书式排版） */
 export function PostDetailTextNoteHero({
@@ -31,9 +32,15 @@ export function PostDetailTextNoteHero({
       {post.title ? (
         <h3 className="mt-4 text-h4 font-semibold text-ref-sun/95">{post.title}</h3>
       ) : null}
-      <p className={`${post.title ? "mt-3" : "mt-4"} ${TT_COMMUNITY_DRAWER_L5.postDetailTextNoteBody}`}>
-        {post.content}
-      </p>
+      <UgcTranslatedText
+        as="p"
+        className={`${post.title ? "mt-3" : "mt-4"} ${TT_COMMUNITY_DRAWER_L5.postDetailTextNoteBody}`}
+        policy="on_demand"
+        contentClass="community_post"
+        contentId={post.id}
+        field="body"
+        originalText={post.content}
+      />
       {communityPostTagsForDisplay(post.tags).length > 0 ? (
         <div className={TT_COMMUNITY_DRAWER_L5.postDetailTextNoteTags}>
           {communityPostTagsForDisplay(post.tags).map((tag) => {

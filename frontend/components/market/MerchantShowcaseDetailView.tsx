@@ -11,6 +11,7 @@ import type { MarketListingDetailProvenance } from "@/lib/marketSubsiteDetailPag
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 import { TT_MARKETING_MARKET_DARK_PATH } from "@/lib/marketingUi";
 import { trackMarketEvent } from "@/lib/analytics";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 export function MerchantShowcaseDetailView({
   listing,
@@ -32,7 +33,16 @@ export function MerchantShowcaseDetailView({
       data-testid="market-merchant-showcase-detail"
       subsiteDetailAudit={{ variant: "provider", phase: provenance }}
       showHeroTrustStrip={false}
-      heroTitle={title}
+      heroTitle={
+        <UgcTranslatedText
+          as="span"
+          policy="cache_first"
+          contentClass="merchant_listing"
+          contentId={listing.id}
+          field="title"
+          originalText={title}
+        />
+      }
       heroSubtitle={
         <div className="mx-auto max-w-3xl space-y-3">
           <p className="m-0 text-center text-meta leading-relaxed text-slate-300/95">{t("market_subsite_hero_data_source_note")}</p>

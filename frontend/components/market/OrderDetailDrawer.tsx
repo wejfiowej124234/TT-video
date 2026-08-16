@@ -56,6 +56,7 @@ import {
   resolveMarketOrderCoverUrl,
 } from "@/lib/marketMediaFallback";
 import { communityMediaNextImageUnoptimized } from "@/lib/communityMediaClientUrl";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 import {
   ORDERS_ESCROW_AUTO_SYNC_POLL_MS,
   orderDetailItemWatchesForBackendEscrowSync,
@@ -593,7 +594,20 @@ export default function OrderDetailDrawer({
                 <p className="text-small font-medium text-slate-100 line-clamp-1">
                   {dest !== dash ? dest : t("order_drawerTitle")}
                 </p>
-                <p className={`${marketDetailDrawerHintText} mt-1 line-clamp-2`}>{itineraryTeaserCollapsed}</p>
+                <p className={`${marketDetailDrawerHintText} mt-1 line-clamp-2`}>
+                  {itineraryTeaser ? (
+                    <UgcTranslatedText
+                      as="span"
+                      policy="cache_first"
+                      contentClass="itinerary"
+                      contentId={displayOrder.id}
+                      field="teaser"
+                      originalText={itineraryTeaser}
+                    />
+                  ) : (
+                    itineraryTeaserCollapsed
+                  )}
+                </p>
               </section>
             ) : null}
 

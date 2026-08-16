@@ -15,6 +15,8 @@ import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { communityFollowPillClassName } from "@/components/community/communityFollowPillClassName";
 import { TT_COMMUNITY_DRAWER_L5 } from "@/lib/marketingUi";
 import { isShowcasePostId } from "@/lib/communityShowcase";
+import { COMMUNITY_AUTHOR_WALLET_CLASS } from "@/lib/communityCommentAuthorUi";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 export type CommunityFeedCardContentProps = {
   post: CommunityPost;
@@ -60,7 +62,15 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
     <div className="p-3 sm:p-4">
       <div id={id} className="mb-3">
         {title && <h3 className="text-body font-semibold text-slate-200 mb-1 line-clamp-1">{title}</h3>}
-        <p className="text-small text-slate-300 line-clamp-2">{content}</p>
+        <UgcTranslatedText
+          as="p"
+          className="text-small text-slate-300 line-clamp-2"
+          policy="on_demand"
+          contentClass="community_post"
+          contentId={id}
+          field="body"
+          originalText={content}
+        />
         {onViewFull && (
           <form
             className="contents"
@@ -138,9 +148,13 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
                 {author.avatar_url ? <Image src={author.avatar_url} alt="" fill className="object-cover" sizes="44px" unoptimized /> : <div className={TT_COMMUNITY_DRAWER_L5.avatarFallback} />}
               </div>
               <span className="flex min-w-0 flex-col gap-0.5">
-                <span className="text-small font-medium text-slate-200 truncate group-hover:text-ref-sun/95 motion-sub">{author.nickname ?? dash}</span>
+                <span className="text-small font-medium text-slate-100 truncate group-hover:text-ref-sun/95 motion-sub">{author.nickname ?? dash}</span>
                 {author.wallet ? (
-                  <span className="text-meta font-mono text-slate-400 truncate max-w-[11rem]" aria-hidden>
+                  <span
+                    className={`${COMMUNITY_AUTHOR_WALLET_CLASS} truncate max-w-[11rem] group-hover:text-slate-100`}
+                    aria-hidden
+                    data-testid="community-author-wallet"
+                  >
                     {author.wallet}
                   </span>
                 ) : null}

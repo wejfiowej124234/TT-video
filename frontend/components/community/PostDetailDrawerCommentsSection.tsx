@@ -1,13 +1,10 @@
 "use client";
 
 import type { FormEvent } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import type { CommunityCommentSort } from "@/lib/apiClient/community";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import type { CommunityComment } from "@/lib/communityMockData";
-import { COMMUNITY_BOOK_GUIDE_CTA_CLASS } from "./communityFeedConstants";
-import { marketHrefForCommunityUser } from "@/lib/communityMarketDeepLink";
 import {
   communityCardLinkFocus,
   communityCyanPillFocus,
@@ -17,25 +14,28 @@ import {
   communityCommentModerationPlaceholderI18nKey,
   communityCommentUseModerationPlaceholder,
 } from "@/components/community/communityFeedMappers";
-import {
-  communityMediaAbsoluteUrlForRender,
-  communityMediaNextImageUnoptimized,
-} from "@/lib/communityMediaClientUrl";
 import { communityShowcaseEngagementCountClassName } from "@/lib/communityShowcaseEngagementUi";
 import { TT_COMMUNITY_DRAWER_L5, TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 import {
   CommunityCommentAuthorAvatar,
   CommunityCommentAuthorName,
 } from "@/components/community/CommunityCommentAuthorAvatar";
-import { CommunityCommentSortTabs } from "@/components/community/CommunityCommentSortTabs";
+import { CommunityCommentGuideIdentityBadge } from "@/components/community/CommunityCommentGuideIdentityBadge";
+import { COMMUNITY_AUTHOR_WALLET_CLASS } from "@/lib/communityCommentAuthorUi";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
+import {
+  COMMUNITY_COMMENT_ACTION_DELETE_CLASS,
+  COMMUNITY_COMMENT_ACTION_REPLY_CLASS,
+  COMMUNITY_COMMENT_ACTION_REPORT_CLASS,
+} from "@/lib/communityCommentIdentitySortUi";
 
 export function PostDetailDrawerCommentsSection({
   t,
   isLoggedIn,
   authPending,
   displayCommentCount,
-  commentSort,
-  onCommentSortChange,
+  commentSort: _commentSort,
+  onCommentSortChange: _onCommentSortChange,
   commentsLoadError,
   onRetryCommentsLoad,
   rootComments,
@@ -44,6 +44,8 @@ export function PostDetailDrawerCommentsSection({
   setReplyTarget,
   showReportComment,
   onReportComment,
+  showDeleteComment,
+  onDeleteComment,
   commentsHasMore,
   onLoadMoreComments,
   commentsLoadMoreBusy,
@@ -64,6 +66,8 @@ export function PostDetailDrawerCommentsSection({
   setReplyTarget: (c: CommunityComment | null) => void;
   showReportComment: (c: CommunityComment) => boolean;
   onReportComment?: (comment: CommunityComment) => void;
+  showDeleteComment?: (c: CommunityComment) => boolean;
+  onDeleteComment?: (comment: CommunityComment) => void | Promise<void>;
   commentsHasMore?: boolean;
   onLoadMoreComments?: () => void | Promise<void>;
   commentsLoadMoreBusy?: boolean;
@@ -93,14 +97,7 @@ export function PostDetailDrawerCommentsSection({
       <h4 className="text-meta text-slate-300 mb-3">
         {t("community_comments")} · <span className={commentCountClass}>{displayCommentCount}</span>
       </h4>
-      {commentSort != null && onCommentSortChange && rootComments.length > 0 ? (
-        <CommunityCommentSortTabs
-          t={t}
-          commentSort={commentSort}
-          onCommentSortChange={onCommentSortChange}
-          className="mb-3"
-        />
-      ) : null}
+      {/* R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1: no sort tabs — default hot then chrono via API */}
       {commentsLoadError ? (
         <div className="space-y-2 py-1" role="alert" aria-live="polite">
           <ApiErrorAlert message={commentsLoadError} />
@@ -135,19 +132,10 @@ export function PostDetailDrawerCommentsSection({
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                         <CommunityCommentAuthorName author={c.author} guestLabel={guestLabel} dash={dash} />
-                        {c.author.isEscrowGuide ? (
-                          <span
-                            className="pointer-events-none rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90"
-                            aria-hidden
-                          >
-                            {t("community_badge_escrow_guide")}
-                          </span>
-                        ) : null}
-                        {(c.author.role === "guide" || c.author.isEscrowGuide) && c.author.id ? (
-                          <Link href={marketHrefForCommunityUser(c.author.id)} className={COMMUNITY_BOOK_GUIDE_CTA_CLASS}>
-                            {t("community_book_guide_cta")}
-                          </Link>
-                        ) : null}
+                        <CommunityCommentGuideIdentityBadge
+                          author={c.author}
+                          label={t("community_badge_guide")}
+                        />
                       </div>
                       <div className="flex flex-wrap items-center justify-end gap-1 shrink-0">
                         {canCommentReply ? (
@@ -160,7 +148,7 @@ export function PostDetailDrawerCommentsSection({
                           >
                             <button
                               type="submit"
-                              className={`shrink-0 text-meta text-ref-sun/90 hover:text-ref-sun motion-sub min-h-[44px] px-2 rounded-[var(--radius-md)] inline-flex items-center justify-center ${communityShellTabFocus}`}
+                              className={`${COMMUNITY_COMMENT_ACTION_REPLY_CLASS} ${communityShellTabFocus}`}
                             >
                               {t("community_comment_reply")}
                             </button>
@@ -176,23 +164,53 @@ export function PostDetailDrawerCommentsSection({
                           >
                             <button
                               type="submit"
-                              className={`shrink-0 text-meta text-slate-400 hover:text-slate-300 motion-sub min-h-[44px] min-w-[44px] px-1 rounded-[var(--radius-md)] inline-flex items-center justify-center ${communityShellTabFocus}`}
+                              className={`${COMMUNITY_COMMENT_ACTION_REPORT_CLASS} ${communityShellTabFocus}`}
                             >
                               {t("community_report")}
+                            </button>
+                          </form>
+                        ) : null}
+                        {showDeleteComment?.(c) ? (
+                          <form
+                            className="contents shrink-0"
+                            onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                              e.preventDefault();
+                              void onDeleteComment?.(c);
+                            }}
+                          >
+                            <button
+                              type="submit"
+                              data-testid="community-comment-delete"
+                              className={`${COMMUNITY_COMMENT_ACTION_DELETE_CLASS} ${communityShellTabFocus}`}
+                            >
+                              {t("community_delete_comment")}
                             </button>
                           </form>
                         ) : null}
                       </div>
                     </div>
                     {c.author.wallet ? (
-                      <p className="text-meta font-mono text-slate-400 mt-0.5">{c.author.wallet}</p>
+                      <p
+                        className={`${COMMUNITY_AUTHOR_WALLET_CLASS} mt-0.5`}
+                        data-testid="community-comment-author-wallet"
+                      >
+                        {c.author.wallet}
+                      </p>
                     ) : null}
                     {communityCommentUseModerationPlaceholder(c) ? (
                       <p className="text-small text-slate-500 mt-0.5 italic">
                         {t(communityCommentModerationPlaceholderI18nKey(c))}
                       </p>
                     ) : (
-                      <p className="text-small text-slate-300 mt-0.5">{c.content}</p>
+                      <UgcTranslatedText
+                        as="p"
+                        className="text-small text-slate-300 mt-0.5"
+                        policy="on_demand"
+                        contentClass="community_comment"
+                        contentId={c.id}
+                        field="body"
+                        originalText={c.content}
+                      />
                     )}
                     {getReplies(c.id).map((r) => (
                       <div key={r.id} className="mt-2 pl-2 border-l-2 border-white/10">
@@ -204,19 +222,10 @@ export function PostDetailDrawerCommentsSection({
                               dash={dash}
                               className="text-meta text-slate-100 font-medium"
                             />
-                            {r.author.isEscrowGuide ? (
-                              <span
-                                className="pointer-events-none rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90"
-                                aria-hidden
-                              >
-                                {t("community_badge_escrow_guide")}
-                              </span>
-                            ) : null}
-                            {(r.author.role === "guide" || r.author.isEscrowGuide) && r.author.id ? (
-                              <Link href={marketHrefForCommunityUser(r.author.id)} className={COMMUNITY_BOOK_GUIDE_CTA_CLASS}>
-                                {t("community_book_guide_cta")}
-                              </Link>
-                            ) : null}
+                            <CommunityCommentGuideIdentityBadge
+                              author={r.author}
+                              label={t("community_badge_guide")}
+                            />
                           </div>
                           <div className="flex flex-wrap items-center justify-end gap-1 shrink-0">
                             {canCommentReply ? (
@@ -229,7 +238,7 @@ export function PostDetailDrawerCommentsSection({
                               >
                                 <button
                                   type="submit"
-                                  className={`shrink-0 text-meta text-ref-sun/90 hover:text-ref-sun motion-sub min-h-[44px] px-2 rounded-[var(--radius-md)] inline-flex items-center justify-center ${communityShellTabFocus}`}
+                                  className={`${COMMUNITY_COMMENT_ACTION_REPLY_CLASS} ${communityShellTabFocus}`}
                                 >
                                   {t("community_comment_reply")}
                                 </button>
@@ -245,23 +254,53 @@ export function PostDetailDrawerCommentsSection({
                               >
                                 <button
                                   type="submit"
-                                  className={`shrink-0 text-meta text-slate-400 hover:text-slate-300 motion-sub min-h-[44px] min-w-[44px] px-1 rounded-[var(--radius-md)] inline-flex items-center justify-center ${communityShellTabFocus}`}
+                                  className={`${COMMUNITY_COMMENT_ACTION_REPORT_CLASS} ${communityShellTabFocus}`}
                                 >
                                   {t("community_report")}
+                                </button>
+                              </form>
+                            ) : null}
+                            {showDeleteComment?.(r) ? (
+                              <form
+                                className="contents shrink-0"
+                                onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                                  e.preventDefault();
+                                  void onDeleteComment?.(r);
+                                }}
+                              >
+                                <button
+                                  type="submit"
+                                  data-testid="community-comment-delete"
+                                  className={`${COMMUNITY_COMMENT_ACTION_DELETE_CLASS} ${communityShellTabFocus}`}
+                                >
+                                  {t("community_delete_comment")}
                                 </button>
                               </form>
                             ) : null}
                           </div>
                         </div>
                         {r.author.wallet ? (
-                          <p className="text-meta font-mono text-slate-400 mt-0.5">{r.author.wallet}</p>
+                          <p
+                            className={`${COMMUNITY_AUTHOR_WALLET_CLASS} mt-0.5`}
+                            data-testid="community-comment-author-wallet"
+                          >
+                            {r.author.wallet}
+                          </p>
                         ) : null}
                         {communityCommentUseModerationPlaceholder(r) ? (
                           <p className="text-small text-slate-500 italic">
                             {t(communityCommentModerationPlaceholderI18nKey(r))}
                           </p>
                         ) : (
-                          <p className="text-small text-slate-300">{r.content}</p>
+                          <UgcTranslatedText
+                            as="p"
+                            className="text-small text-slate-300"
+                            policy="on_demand"
+                            contentClass="community_comment"
+                            contentId={r.id}
+                            field="body"
+                            originalText={r.content}
+                          />
                         )}
                       </div>
                     ))}

@@ -38,6 +38,7 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { GuideIdentityStakeTrustBadge } from "@/components/guide/GuideIdentityStakeTrustBadge";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 import { guideDetailHrefForBind } from "@/lib/ordersGuideDeepLink";
 
 function mergeGuideFromApi(base: GuideCardItem, api: unknown): GuideCardItem {
@@ -137,6 +138,7 @@ export default function GuideDetailDrawer({
   const invalidId = !String(guide.id ?? "").trim();
   const shellGuide = displayGuide ?? guide;
   const name = formatGuideDisplayName(t, shellGuide);
+  const bioText = formatGuidePublicBio(shellGuide.bio, 2000);
   const langs = formatGuideLanguages(shellGuide.languages, t, "、");
   const tags = filterGuidePublicServiceTypes(shellGuide.service_types);
   const avatarAlt = t("guide_card_avatarAlt").replace("{{name}}", name);
@@ -326,9 +328,19 @@ export default function GuideDetailDrawer({
               )}
               <div>
                 <p className={`${marketDetailDrawerMeta} mb-0.5`}>{t("guide_detail_bio")}</p>
-                <p className="text-small text-slate-300 whitespace-pre-wrap">
-                  {formatGuidePublicBio(shellGuide.bio, 2000) ?? t("guide_detail_bioEmpty")}
-                </p>
+                {bioText ? (
+                  <UgcTranslatedText
+                    as="p"
+                    className="text-small text-slate-300 whitespace-pre-wrap"
+                    policy="cache_first"
+                    contentClass="guide"
+                    contentId={shellGuide.id}
+                    field="bio"
+                    originalText={bioText}
+                  />
+                ) : (
+                  <p className="text-small text-slate-300 whitespace-pre-wrap">{t("guide_detail_bioEmpty")}</p>
+                )}
               </div>
               <div className="flex flex-col gap-2 pt-2">
                 {onInvite && (

@@ -764,6 +764,35 @@ pub async fn get_user_default_wallet_by_id(
     Ok(row.flatten())
 }
 
+/// **`GET /api/v1/me`** · 内容翻译目标语言（NULL = 跟随界面）。
+pub async fn get_user_translation_target_locale(
+    pool: &PgPool,
+    user_id: Uuid,
+) -> Result<Option<String>, sqlx::Error> {
+    let row: Option<Option<String>> =
+        sqlx::query_scalar("SELECT translation_target_locale FROM users WHERE id = $1")
+            .bind(user_id)
+            .fetch_optional(pool)
+            .await?;
+    Ok(row.flatten())
+}
+
+/// **`PUT /api/v1/me`** · 内容翻译目标语言（`None` = 跟随界面 / SQL NULL）。
+pub async fn update_user_translation_target_locale(
+    pool: &PgPool,
+    user_id: Uuid,
+    locale: Option<&str>,
+) -> Result<(), sqlx::Error> {
+    sqlx::query(
+        "UPDATE users SET translation_target_locale = $1, updated_at = now() WHERE id = $2",
+    )
+    .bind(locale)
+    .bind(user_id)
+    .execute(pool)
+    .await?;
+    Ok(())
+}
+
 /// **`PUT /api/v1/me`** · 昵称（PG 双写，与 chain_off 内存一致）。
 pub async fn update_user_nickname(
     pool: &PgPool,

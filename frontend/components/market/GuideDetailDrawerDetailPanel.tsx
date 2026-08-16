@@ -19,6 +19,7 @@ import { isMarketGuideMockShowcaseId } from "@/lib/marketMockData";
 import { formatGuideHourlyRateLabel } from "@/lib/marketDisplayCopy";
 import { trackMarketEvent } from "@/lib/analytics";
 import { communityMediaNextImageUnoptimized } from "@/lib/communityMediaClientUrl";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 export type GuideDetailDrawerDetailPanelProps = {
   t: (key: string) => string;
@@ -213,9 +214,19 @@ export function GuideDetailDrawerDetailPanel({
           )}
           <div>
             <p className={`${marketDetailDrawerSubtle} mb-0.5`}>{t("guide_detail_bio")}</p>
-            <p className="text-small text-slate-300 whitespace-pre-wrap">
-              {shellGuide.bio || t("guide_detail_bioEmpty")}
-            </p>
+            {shellGuide.bio ? (
+              <UgcTranslatedText
+                as="p"
+                className="text-small text-slate-300 whitespace-pre-wrap"
+                policy="cache_first"
+                contentClass="guide"
+                contentId={shellGuide.id}
+                field="bio"
+                originalText={shellGuide.bio}
+              />
+            ) : (
+              <p className="text-small text-slate-300 whitespace-pre-wrap">{t("guide_detail_bioEmpty")}</p>
+            )}
           </div>
           <div className="flex flex-col gap-2 pt-2">
             {onInvite && (

@@ -39,6 +39,7 @@ mod runtime_identity;
 mod schedule_engine;
 mod source_kind;
 mod ssot;
+mod ugc_translate;
 mod startup;
 mod stripe_onboarding;
 mod state;

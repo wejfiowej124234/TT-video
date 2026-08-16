@@ -28,6 +28,7 @@ import {
 } from "@/lib/marketCatalogAdapter";
 import { getMarketAcquisitionListing, getMarketProviderListing } from "@/lib/apiClient/marketSubsite";
 import { marketSubsiteDemoStudioFallbackEnabled } from "@/lib/marketSubsiteProductionGate";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 import { trackMarketEvent } from "@/lib/analytics";
 import { mapApiReadError } from "@/lib/mapApiReadError";
 import { TT_MARKETING_BTN_MARKET_PRIMARY } from "@/lib/marketingUi";
@@ -306,7 +307,27 @@ export function MarketSubsiteListingDetailDrawer({
         <div className={marketDetailDrawerInnerCol}>
           <div className={marketDetailDrawerHeaderRow}>
             <h2 id={titleId} className={marketDetailDrawerTitle}>
-              {drawerTitle}
+              {merchant != null ? (
+                <UgcTranslatedText
+                  as="span"
+                  policy="cache_first"
+                  contentClass="merchant_listing"
+                  contentId={merchant.id}
+                  field="title"
+                  originalText={drawerTitle}
+                />
+              ) : acquisition != null ? (
+                <UgcTranslatedText
+                  as="span"
+                  policy="cache_first"
+                  contentClass="acquisition_listing"
+                  contentId={acquisition.id}
+                  field="title"
+                  originalText={drawerTitle}
+                />
+              ) : (
+                drawerTitle
+              )}
             </h2>
             <form
               className="inline shrink-0"

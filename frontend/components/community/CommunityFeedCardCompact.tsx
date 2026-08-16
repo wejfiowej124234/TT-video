@@ -23,6 +23,7 @@ import {
   communityShowcaseEngagementCountClassName,
 } from "@/lib/communityShowcaseEngagementUi";
 import { warmCommunityPostDetailDrawer } from "@/lib/communityDrawerPrefetch";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 /** 三列紧凑网格 · 美团式 L5（定位 pill + 标题 + 作者/赞） */
 export function CommunityFeedCardCompact({
@@ -82,10 +83,11 @@ export function CommunityFeedCardCompact({
   };
 
   const handleLikeAction = () => {
+    // Feed like must toggle (like ↔ unlike). Gate `if (!likedState)` left unlike dead on Official.
     if (onLike) {
-      if (!likedState) onLike();
-    } else if (!likedState) {
-      setLocalLiked(true);
+      onLike();
+    } else {
+      setLocalLiked((v) => !v);
     }
     triggerLikeBurst();
   };
@@ -204,7 +206,15 @@ export function CommunityFeedCardCompact({
               <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink-900 via-ink-800/95 to-ink-800/80 p-2">
                 <span className="mb-1 text-[0.65rem] font-medium text-ref-sun">{t("community_type_text")}</span>
                 <p className="line-clamp-4 whitespace-pre-wrap text-[0.68rem] leading-snug text-slate-300">
-                  {(post.content || post.title || t("ui_em_dash")).slice(0, 160)}
+                  <UgcTranslatedText
+                    as="span"
+                    policy="on_demand"
+                    showAction={false}
+                    contentClass="community_post"
+                    contentId={post.id}
+                    field="body"
+                    originalText={(post.content || post.title || t("ui_em_dash")).slice(0, 160)}
+                  />
                 </p>
               </div>
             ) : null}
@@ -247,7 +257,19 @@ export function CommunityFeedCardCompact({
 
           <div className={TT_COMMUNITY_FEED_L5.masonryCardBody}>
             <p id={`${post.id}-compact-title`} className={TT_COMMUNITY_FEED_ACTION.masonryCardTitle}>
-              {displayTitle}
+              {isTextOnly ? (
+                displayTitle
+              ) : (
+                <UgcTranslatedText
+                  as="span"
+                  policy="on_demand"
+                  showAction={false}
+                  contentClass="community_post"
+                  contentId={post.id}
+                  field="body"
+                  originalText={displayTitle}
+                />
+              )}
             </p>
             {vm.commerceListingHref ? (
               <Link

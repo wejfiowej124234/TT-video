@@ -14,6 +14,7 @@ import MarketSubsiteComplianceDisclosure from "@/components/market/MarketSubsite
 import type { DemoAcquisitionListing } from "@/lib/marketSubsiteDemo";
 
 import { pickL10n } from "@/lib/marketSubsiteDemo";
+import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
@@ -87,7 +88,16 @@ export function AcquisitionListingDetailBody({
 
         <p className={`inline-flex ${D.trustEscrowBadge}`}>{t("market_subsite_acquisition_badge")}</p>
 
-        <p className="text-body leading-relaxed text-slate-100/95">{pickL10n(listing.summary, locale)}</p>
+        <p className="text-body leading-relaxed text-slate-100/95">
+          <UgcTranslatedText
+            as="span"
+            policy="cache_first"
+            contentClass="acquisition_listing"
+            contentId={listing.id}
+            field="summary"
+            originalText={pickL10n(listing.summary, locale)}
+          />
+        </p>
 
         <div className="flex flex-wrap gap-2">
 
