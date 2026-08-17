@@ -3,7 +3,7 @@
   "issued_at_utc": "2026-08-17T16:40:25Z",
   "unique_pin_id": "TTG-V8-FUSION-CANDIDATE-20260818",
   "candidate_id": "TTG-25T-BPS-SEAT-FIXED-SUPPLY-CANDIDATE-V8",
-  "candidate_commit_sha": "PENDING_STAMP",
+  "candidate_commit_sha": "8b09d2974804dd20817bff25690a1035055ce3f2",
   "human_ssot": "docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md",
   "machine_ssot": "docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.json",
   "tt_production_go": "NO_GO",

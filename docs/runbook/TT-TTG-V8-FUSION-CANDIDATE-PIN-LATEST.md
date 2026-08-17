@@ -22,7 +22,7 @@
 | Foundry profile | `ttg_v8` |
 | ① 复跑 | `bash scripts/dev/run-ttg-v8-forge.sh` → **25/25 PASS** |
 
-`git commit SHA` 见 JSON `candidate_commit_sha`（首提交后 stamp）。
+`git commit SHA`（源码 + 哈希冻结提交，stamp 提交不改 Solidity）：`8b09d2974804dd20817bff25690a1035055ce3f2`
 
 ---
 

@@ -8,7 +8,7 @@
   "status": "DESIGN_ONLY",
   "phase": "candidate_pinned_stop",
   "tt_production_go": "NO_GO",
-  "candidate_commit_sha": "PENDING_STAMP",
+  "candidate_commit_sha": "8b09d2974804dd20817bff25690a1035055ce3f2",
   "unique_candidate": "fusion_source_that_passed_local_25_25_and_fusion_sepolia_pass_stop_etherscan_verified_sourcify_exact_match",
   "fusion_aligned": true,
   "o1_o4": "NOT_IN_CUTOVER",

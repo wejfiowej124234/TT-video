@@ -12,6 +12,7 @@ candidate_pin:
   stop_stamp: docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PINNED-STOP.json
   evidence_stop_stamp: evidence/GO_ttg_v8_sepolia_rehearsal/TTG_V8_FUSION_CANDIDATE_PINNED_STOP.json
   freeze_status: FROZEN
+  candidate_commit_sha: "8b09d2974804dd20817bff25690a1035055ce3f2"
   sepolia_token_never_mainnet: "0x9924007BC7f8D5B937cBf1636fB913fc676B0A3D"
 local_forge:
   command: "bash scripts/dev/run-ttg-v8-forge.sh"
