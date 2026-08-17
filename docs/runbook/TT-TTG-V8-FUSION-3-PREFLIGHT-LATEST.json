@@ -1,0 +1,150 @@
+{
+  "schema": "traveltrust.ttg_v8_fusion_3_preflight.v1",
+  "stamp": "TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP",
+  "issued_at_utc": "2026-08-17T16:57:55Z",
+  "unique_pin_id": "TTG-V8-FUSION-CANDIDATE-20260818",
+  "candidate_id": "TTG-25T-BPS-SEAT-FIXED-SUPPLY-CANDIDATE-V8",
+  "candidate_commit_sha": "8b09d2974804dd20817bff25690a1035055ce3f2",
+  "stamp_commit_sha": "83cdf8ddfaabfb2b7e4ac23907fd45a8504447d0",
+  "head_at_preflight": "83cdf8ddfaabfb2b7e4ac23907fd45a8504447d0",
+  "status": "DESIGN_ONLY",
+  "phase": "preflight_pass_stop",
+  "tt_production_go": "NO_GO",
+  "mode": "read_only",
+  "mainnet_broadcast": false,
+  "rpc": "https://ethereum.publicnode.com",
+  "pin_integrity": {
+    "solidity_drift_vs_8b09d297": false,
+    "source_sha256_match": true,
+    "bytecode_and_abi_match": true,
+    "solc": "0.8.26+commit.8a97fa7a.Windows.msvc",
+    "foundry_profile": "ttg_v8",
+    "optimizer_runs": 200,
+    "via_ir": true,
+    "evm_version": "paris",
+    "local_forge": "25/25 PASS",
+    "force_rebuild": "FOUNDRY_PROFILE=ttg_v8 forge build --use $SOLC --skip script --force"
+  },
+  "constructor_allowlist_frozen": {
+    "TtgMemeDenomGovernanceToken": {
+      "team_": "OWNER_FILLS_UNSET",
+      "daoTreasury_": "OWNER_FILLS_UNSET",
+      "publicSaleHolder_": "OWNER_FILLS_UNSET",
+      "do_not_invent_wallets": true
+    },
+    "TtgMemeDenomPrimaryMarket": {
+      "usdc_": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "usdc_live_symbol": "USDC",
+      "usdc_live_decimals": 6,
+      "usdc_codesize": 2186,
+      "ttg_": "NEW_TTG_ADDRESS_FROM_THIS_PIN_DEPLOY",
+      "usdcTreasury_": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+      "usdcTreasury_codesize": 1052,
+      "ttgPerUsdcUnit_": "100000 ether",
+      "min_purchase_usdc": "1e6",
+      "rounds_ttg": ["2000000000000 ether", "3000000000000 ether", "7500000000000 ether"],
+      "per_wallet_cap_ttg": 0,
+      "entity_cap_bps": 400
+    },
+    "TtgMemeDenomGovernor": {
+      "token_": "NEW_TTG_ADDRESS_FROM_THIS_PIN_DEPLOY",
+      "timelock_": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+      "votingDelayBlocks_": 1,
+      "votingPeriodBlocks_": 50400,
+      "proposalThresholdVotes_": "2500000 ether",
+      "quorumNumeratorBps_": 400,
+      "maxVotingPowerPerAddressBps_": 0,
+      "orderRatingReviewWindowDays_": 14
+    }
+  },
+  "live_eth_call": {
+    "timelock": {
+      "address": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+      "codesize": 2776,
+      "admin": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+      "governor": "0x46Ce671b04d21760e496646bb370ADEbC374ea4d",
+      "delay_seconds": 172800,
+      "setGovernor": "onlyAdmin_not_48h_queue"
+    },
+    "governor_proxy": {
+      "address": "0x46Ce671b04d21760e496646bb370ADEbC374ea4d",
+      "codesize": 1052,
+      "votingDelayBlocks": 1,
+      "votingPeriodBlocks": 50400,
+      "proposalThresholdVotes": "1 ether",
+      "quorumNumeratorBps": 400,
+      "maxVotingPowerPerAddressBps": 0,
+      "orderRatingReviewWindowDays": 0,
+      "token": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",
+      "timelock": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7"
+    },
+    "pm_proxy": {
+      "address": "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce",
+      "codesize": 1052,
+      "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "ttg": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",
+      "usdcTreasury": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+      "ttgPerUsdcUnit": "40000000000000000",
+      "minPurchaseUsdc": "10000000",
+      "perWalletCapTtg": 0,
+      "roundCapTtg": ["800000 ether", "1200000 ether", "3000000 ether"]
+    },
+    "legacy_ttg": {
+      "address": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",
+      "codesize": 2215,
+      "totalSupply": "10000000 ether",
+      "name": "TravelTrust Governance",
+      "pm_balance": "4999990000000000000000000",
+      "role": "LEGACY_DO_NOT_MIGRATE_THIS_WAVE"
+    }
+  },
+  "expected_difference_confirmed": [
+    "new_ttg_address",
+    "total_supply_25t",
+    "allocation_15_35_50",
+    "quote_1_usdc_eq_100000_ttg_vs_live_4e16",
+    "absolute_ttg_qty_x_2500000_rounds_2t_3t_7_5t_vs_live_800k_1_2m_3m",
+    "min_purchase_1_usdc_vs_live_10_usdc",
+    "proposal_threshold_2500000_ether_vs_live_1_ether"
+  ],
+  "keep_verified": [
+    "pm_state_machine_and_purchase_ledger",
+    "three_round_shape",
+    "per_wallet_cap_none",
+    "governor_propose_vote_quorum_400_bps",
+    "maxVotingPowerPerAddressBps_0",
+    "live_timelock_instance_48h",
+    "live_timelock_admin_safe",
+    "live_usdc_and_p4cap_treasury",
+    "money_path_not_touched"
+  ],
+  "not_in_cutover_confirmed": [
+    "new_timelock",
+    "new_money_path",
+    "migrator_as_default_genesis",
+    "genesis_seat_gate",
+    "vote_escrow",
+    "o1_o4",
+    "sepolia_0x9924_as_mainnet_address"
+  ],
+  "forbidden_this_wave": {
+    "mainnet_broadcast": false,
+    "safe_setGovernor": false,
+    "timelock_schedule_or_execute": false,
+    "ci_02": false,
+    "money_path_touch": false,
+    "live_10m_ttg_migrate": false,
+    "ftb_mutate": false,
+    "meta_cutover": false,
+    "official_www_bake": false
+  },
+  "this_audit_event": "TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP",
+  "stop": true,
+  "not_equal_to": [
+    "official_live",
+    "mainnet_cutover",
+    "deployed_not_wired",
+    "production_go",
+    "owner_authorization"
+  ]
+}

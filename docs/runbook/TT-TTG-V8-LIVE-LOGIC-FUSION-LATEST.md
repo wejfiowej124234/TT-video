@@ -118,6 +118,14 @@ PM 状态机 · 购买账 `walletPurchasedTtg` · 三轮 · Governor 提案/投�
 - Pin 后改 Solidity 或 constructor 参数 → ② 证据失效，须重新 rehearsal。
 - **本波未做** Mainnet broadcast / Safe `setGovernor` / Timelock / CI-02 / Money Path / 10M 迁移 / FTB / `/meta` / Official www bake。
 
-`TT_PRODUCTION_GO` = **NO_GO**。③ Preflight 另闸。
+`TT_PRODUCTION_GO` = **NO_GO**。
 
-③ cutover 另闸：Owner 书面授权 + Timelock `setGovernor` + 不得动 Money Path / CI-02 / 不得重复 1 USDC 真金。
+### 3.4 ③ Preflight（2026-08-18 · `TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP`）
+
+只读核对已过：[TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.md](./TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.md)。
+
+- Pin `8b09d297` 源码/字节码未漂 · ① **25/25** · 活网 Timelock / USDC / P4Cap KEEP 已 eth_call。
+- 三个创世地址仍 **OWNER_FILLS_UNSET**（不发明钱包）。
+- **本波未做** Mainnet broadcast / Safe `setGovernor` / Timelock op / CI-02 / Money Path / 10M 迁移 / FTB / `/meta` / Official www bake。
+
+本事件到此结束。`TT_PRODUCTION_GO` 仍 **NO_GO**。

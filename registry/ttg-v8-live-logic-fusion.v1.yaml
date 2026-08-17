@@ -4,7 +4,17 @@
 schema_id: ttg-v8-live-logic-fusion.v1
 status: DESIGN_ONLY
 tt_production_go: NO_GO
-phase: "candidate_pinned_stop"
+phase: "preflight_pass_stop"
+preflight:
+  human: docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.md
+  machine: docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.json
+  stop_stamp: docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-PASS-STOP.json
+  issued_at_utc: "2026-08-17T16:57:55Z"
+  result: PASS_STOP
+  mode: read_only
+  owner_fills_unset: [team_, daoTreasury_, publicSaleHolder_]
+  this_audit_event: TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP
+  not_equal_to: [official_live, mainnet_cutover, production_go, owner_authorization]
 candidate_pin:
   unique_pin_id: TTG-V8-FUSION-CANDIDATE-20260818
   human: docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md

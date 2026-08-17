@@ -1,0 +1,33 @@
+{
+  "stamp": "TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP",
+  "issued_at_utc": "2026-08-17T16:57:55Z",
+  "unique_pin_id": "TTG-V8-FUSION-CANDIDATE-20260818",
+  "candidate_commit_sha": "8b09d2974804dd20817bff25690a1035055ce3f2",
+  "human_ssot": "docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.md",
+  "machine_ssot": "docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.json",
+  "tt_production_go": "NO_GO",
+  "status": "DESIGN_ONLY",
+  "mode": "read_only",
+  "local_forge": "25/25 PASS",
+  "bytecode_match_pin": true,
+  "live_timelock_keep": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+  "live_usdc_keep": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+  "owner_fills_unset": ["team_", "daoTreasury_", "publicSaleHolder_"],
+  "mainnet_broadcast": false,
+  "safe_setGovernor": false,
+  "timelock_ops": false,
+  "ci_02": false,
+  "money_path_touched": false,
+  "live_10m_migrated": false,
+  "ftb_mutated": false,
+  "meta_cutover": false,
+  "official_www_baked": false,
+  "this_audit_event": "TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP",
+  "stop": true,
+  "not_equal_to": [
+    "official_live",
+    "mainnet_cutover",
+    "production_go",
+    "owner_authorization"
+  ]
+}
