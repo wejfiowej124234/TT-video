@@ -1,0 +1,84 @@
+# TTG V8 · live-logic fusion (25T denomination)
+# STATUS: DESIGN_ONLY · NOT Official live · NOT Production GO · NOT mainnet broadcast
+# Human SSOT: docs/runbook/TT-TTG-V8-LIVE-LOGIC-FUSION-LATEST.md
+schema_id: ttg-v8-live-logic-fusion.v1
+status: DESIGN_ONLY
+tt_production_go: NO_GO
+phase: "candidate_pinned_stop"
+candidate_pin:
+  unique_pin_id: TTG-V8-FUSION-CANDIDATE-20260818
+  human: docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md
+  machine: docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.json
+  stop_stamp: docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PINNED-STOP.json
+  evidence_stop_stamp: evidence/GO_ttg_v8_sepolia_rehearsal/TTG_V8_FUSION_CANDIDATE_PINNED_STOP.json
+  freeze_status: FROZEN
+  sepolia_token_never_mainnet: "0x9924007BC7f8D5B937cBf1636fB913fc676B0A3D"
+local_forge:
+  command: "bash scripts/dev/run-ttg-v8-forge.sh"
+  stamp: "2026-08-18"
+  result: PASS
+  tests_passed: 25
+  solc: "0.8.26"
+  not_equal_to: ["mainnet_cutover", "production_go"]
+sepolia_fusion_rehearsal:
+  command: "bash scripts/dev/run-ttg-v8-sepolia-genesis-rehearsal.sh"
+  stamp: "2026-08-18"
+  result: PASS_STOP
+  chain_id: 11155111
+  token: "0x9924007BC7f8D5B937cBf1636fB913fc676B0A3D"
+  etherscan_verified: true
+  sourcify_v2: exact_match
+  o1_o4: NOT_IN_CUTOVER
+  historical_throwaway_not_fusion: "0x7dA9… / 0xA6a7… / 0x8512…"
+  not_equal_to: ["official_live", "mainnet_cutover", "production_go"]
+closed_expected_difference:
+  - new_ttg_address
+  - total_supply_25t
+  - allocation_15_35_50
+  - quote_1_usdc_eq_100000_ttg
+  - absolute_ttg_qty_recalibrated_x_2500000
+  - min_purchase_1_usdc
+keep_identical_to_live:
+  - pm_state_machine
+  - purchase_ledger
+  - three_round_caps_shape
+  - governor_propose_vote_quorum
+  - timelock_live_instance
+  - money_path_live_instance
+  - permission_semantics_bps
+replace_new_instance:
+  - ttg
+  - primary_market
+  - governor
+keep_live_instance:
+  - timelock
+  - money_path
+  - ci01_seat_routing_table
+not_in_cutover_drift:
+  - kyc
+  - o2_community_bucket
+  - o3_extra
+  - o5_extra
+  - o1_genesis_seat_type_machine
+  - o4_non_seat_quorum_floor
+  - token_lock_module
+  - vote_escrow_instead_of_live_stake_transfer
+  - new_timelock
+  - new_money_path
+  - migrator_as_default_genesis
+live_pins:
+  ttg: "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A"
+  pm_proxy: "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce"
+  governor_proxy: "0x46Ce671b04d21760e496646bb370ADEbC374ea4d"
+  timelock: "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7"
+recalibration:
+  merge_ratio: 2500000
+  live_min_purchase_usdc: "10e6"
+  v8_min_purchase_usdc: "1e6"
+  live_ttg_per_usdc_unit: "4e16"
+  v8_ttg_per_usdc_unit: "100000 ether"
+  live_rounds_ttg: ["800000", "1200000", "3000000"]
+  v8_rounds_ttg: ["2000000000000", "3000000000000", "7500000000000"]
+  proposal_clamp_scale: MERGE_RATIO
+  entity_cap_bps: 400
+  quorum_bps: 400

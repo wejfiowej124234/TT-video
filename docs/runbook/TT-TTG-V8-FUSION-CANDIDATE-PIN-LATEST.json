@@ -1,0 +1,180 @@
+{
+  "schema": "traveltrust.ttg_v8_fusion_candidate_pin.v1",
+  "stamp": "TTG_V8_FUSION_CANDIDATE_PINNED",
+  "issued_at_utc": "2026-08-17T16:40:25Z",
+  "candidate_id": "TTG-25T-BPS-SEAT-FIXED-SUPPLY-CANDIDATE-V8",
+  "unique_pin_id": "TTG-V8-FUSION-CANDIDATE-20260818",
+  "freeze_status": "FROZEN",
+  "status": "DESIGN_ONLY",
+  "phase": "candidate_pinned_stop",
+  "tt_production_go": "NO_GO",
+  "candidate_commit_sha": "PENDING_STAMP",
+  "unique_candidate": "fusion_source_that_passed_local_25_25_and_fusion_sepolia_pass_stop_etherscan_verified_sourcify_exact_match",
+  "fusion_aligned": true,
+  "o1_o4": "NOT_IN_CUTOVER",
+  "compiler": {
+    "solc": "0.8.26",
+    "solc_full": "0.8.26+commit.8a97fa7a",
+    "solc_cli_observed": "0.8.26+commit.8a97fa7a.Windows.msvc",
+    "optimizer": true,
+    "optimizer_runs": 200,
+    "via_ir": true,
+    "evm_version": "paris",
+    "foundry_profile": "ttg_v8",
+    "build_command": "FOUNDRY_PROFILE=ttg_v8 forge build --use $SOLC --skip script --force",
+    "test_command": "bash scripts/dev/run-ttg-v8-forge.sh",
+    "test_result": "25/25 PASS",
+    "test_stamp_utc": "2026-08-17T16:40:25Z"
+  },
+  "bytecode_and_abi": {
+    "hash_alg_bytecode": "keccak256 of foundry artifact hex (creation = bytecode.object, runtime = deployedBytecode.object)",
+    "hash_alg_abi": "sha256 of canonical JSON ABI (sort_keys, separators comma-colon)",
+    "TtgMemeDenomGovernanceToken": {
+      "creation_bytecode_keccak256": "0xe4362302cf3486dd5430e6c99af3ceb7e0aa7febabefd5a15cc8039bdb1b1337",
+      "deployed_bytecode_keccak256": "0x0fea44364ac77a5b2137f12fb5500a2081a58b4020bf9de457b06d6fed8e0f4a",
+      "abi_sha256": "0xa39513ae226c7b1aebe6268509d7ff14f5c2c2072395f81e780999eabaa46751",
+      "creation_bytecode_len": 4069,
+      "deployed_bytecode_len": 2873
+    },
+    "TtgMemeDenomPrimaryMarket": {
+      "creation_bytecode_keccak256": "0x9c590f42e01182b6b1763cac57716d12fd6018cf61a22a533e70d9c32b3e3b89",
+      "deployed_bytecode_keccak256": "0xa6a5023342821805221d7f3672f0fd904defd133e1a7406f365dd7e67945dcfb",
+      "abi_sha256": "0x4c2b198fe6fda8a18ba2468d8880c7218dbb9fe814057c53419d8d98307cd02c",
+      "creation_bytecode_len": 2286,
+      "deployed_bytecode_len": 1874
+    },
+    "TtgMemeDenomGovernor": {
+      "creation_bytecode_keccak256": "0x7e190d5c4e0a609cdce40972039a7ea627b575b14b43c5fbe474f2d9832da17a",
+      "deployed_bytecode_keccak256": "0x09b957382a0153c3983362eb096974b61d858779e92af3b6bb51192010ffa023",
+      "abi_sha256": "0x9729d3ef7ac6d6ac2c87aefe963ee51b0b7a16213fced309680b76a35e21dfd7",
+      "creation_bytecode_len": 11656,
+      "deployed_bytecode_len": 11158
+    }
+  },
+  "pinned_source_sha256": {
+    "contracts/src/ttg-meme-denom/TtgMemeDenomGovernanceToken.sol": "0x07fc988c5c12d00db2951609043df185b7e551b7fa540d2c8edcad6dcb65ef6f",
+    "contracts/src/ttg-meme-denom/TtgMemeDenomPrimaryMarket.sol": "0x4bca4c6abb61992103013be17cbcfc38caaff7973b659e267579cf0f604dee92",
+    "contracts/src/ttg-meme-denom/TtgMemeDenomGovernor.sol": "0x817f6808ffcff1bd450609fb46dcf8d20d1a9130e75b95fe74a9c7c1100776fd",
+    "contracts/src/ttg-meme-denom/TtgMemeDenomConstants.sol": "0x29b8ecd8a4ffc11f059536c9f01f4d9495ab65bac3fb2aa21b97e4adfb8ec5bf",
+    "contracts/src/ttg-meme-denom/TtgMemeDenomProposalThresholds.sol": "0x7a612e687f448ee3de56ebb92713d89f0e6c4b3e396ca4f3810d61ec6d3e0212",
+    "bundle_sha256": "0xea8bff52443106d29ef8d0c6bc8bd2751225797063c4c8c13ac382810f57962b"
+  },
+  "mainnet_only_constructor_allowlist": {
+    "note": "These are the ONLY constructor arguments allowed on Ethereum mainnet for this pin. Sepolia rehearsal values MUST NOT be copied.",
+    "TtgMemeDenomGovernanceToken": {
+      "signature": "constructor(address team_, address daoTreasury_, address publicSaleHolder_)",
+      "genesis_from_constants": {
+        "total_supply": "25000000000000 ether",
+        "split_bps": "1500/3500/5000"
+      },
+      "team_": "OWNER_FILLS_AT_3_PREFLIGHT",
+      "daoTreasury_": "OWNER_FILLS_AT_3_PREFLIGHT",
+      "publicSaleHolder_": "OWNER_FILLS_AT_3_PREFLIGHT"
+    },
+    "TtgMemeDenomPrimaryMarket": {
+      "signature": "constructor(address usdc_, address ttg_, address usdcTreasury_, uint256 ttgPerUsdcUnit_)",
+      "usdc_": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "ttg_": "NEW_TTG_ADDRESS_FROM_THIS_PIN_DEPLOY",
+      "usdcTreasury_": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+      "ttgPerUsdcUnit_": "100000 ether",
+      "constants_not_constructor_but_pinned": {
+        "min_purchase_usdc": "1e6",
+        "round_1_cap_ttg": "2000000000000 ether",
+        "round_2_cap_ttg": "3000000000000 ether",
+        "round_3_cap_ttg": "7500000000000 ether",
+        "per_wallet_cap_ttg": 0,
+        "entity_cap_bps": 400
+      }
+    },
+    "TtgMemeDenomGovernor": {
+      "signature": "constructor(token_, timelock_, votingDelayBlocks_, votingPeriodBlocks_, proposalThresholdVotes_, quorumNumeratorBps_, maxVotingPowerPerAddressBps_, orderRatingReviewWindowDays_)",
+      "token_": "NEW_TTG_ADDRESS_FROM_THIS_PIN_DEPLOY",
+      "timelock_": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+      "timelock_note": "MUST be live Official Timelock. Throwaway TtgMemeDenomTimelock is rehearsal-only.",
+      "votingDelayBlocks_": 1,
+      "votingPeriodBlocks_": 50400,
+      "proposalThresholdVotes_": "2500000 ether",
+      "proposalThresholdVotes_note": "Live Governor 0x46Ce… reads 1 ether (1 TTG). Absolute-qty ED × MERGE_RATIO 2500000.",
+      "quorumNumeratorBps_": 400,
+      "maxVotingPowerPerAddressBps_": 0,
+      "maxVotingPowerPerAddressBps_note": "KEEP live GOV-03 cap disabled. Do not pin 400 — that is entity seat aggregate, not Governor vote-weight cap.",
+      "orderRatingReviewWindowDays_": 14,
+      "orderRatingReviewWindowDays_note": "Live eth_call 2026-08-17 returned 0 (likely uninitialized proxy storage). V8 constructor forbids 0. Pin 14 = fusion rehearsal + TT-B110 default."
+    }
+  },
+  "live_eth_call_20260817T1640Z": {
+    "rpc": "https://ethereum.publicnode.com",
+    "governor": "0x46Ce671b04d21760e496646bb370ADEbC374ea4d",
+    "votingDelayBlocks": 1,
+    "votingPeriodBlocks": 50400,
+    "proposalThresholdVotes": "1 ether",
+    "quorumNumeratorBps": 400,
+    "maxVotingPowerPerAddressBps": 0,
+    "orderRatingReviewWindowDays": 0,
+    "pm": "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce",
+    "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "usdcTreasury": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "ttg_live_legacy": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A"
+  },
+  "sepolia_rehearsal": {
+    "chain_id": 11155111,
+    "role": "REHEARSAL_ONLY_NEVER_MAINNET_ADDRESS",
+    "token": "0x9924007BC7f8D5B937cBf1636fB913fc676B0A3D",
+    "primary_market": "0xAa5953192653d665A95f1F6E78b496152a4FED65",
+    "governor": "0x08263820760938dF4a9918E2Ad37AdF7bCa6E6F1",
+    "timelock_throwaway": "0x2573da832598aAB7F64FD930e0a55A66568c7518",
+    "etherscan": "Pass - Verified",
+    "sourcify_v2": "exact_match",
+    "stamp": "evidence/GO_ttg_v8_sepolia_rehearsal/TTG_V8_FUSION_SEPOLIA_REHEARSAL_PASS_STOP.json",
+    "do_not_use_as_mainnet_address": true,
+    "historical_throwaway_not_this_pin": ["0x7dA9…", "0xA6a7…", "0x8512…"]
+  },
+  "source_classification": {
+    "pinned_mainnet_deployable": [
+      "TtgMemeDenomGovernanceToken.sol",
+      "TtgMemeDenomPrimaryMarket.sol",
+      "TtgMemeDenomGovernor.sol",
+      "TtgMemeDenomConstants.sol",
+      "TtgMemeDenomProposalThresholds.sol"
+    ],
+    "rehearsal_only": [
+      "TtgMemeDenomTimelock.sol",
+      "TtgMemeDenomRehearsalUsdc.sol",
+      "TtgMemeDenomOpsWallet.sol",
+      "TtgV8SepoliaGenesisRehearsal.s.sol",
+      "TtgMemeDenomStewardMinimums.sol"
+    ],
+    "not_in_cutover_leftover": [
+      "TtgMemeDenomGenesisSeatGate.sol",
+      "TtgMemeDenomVoteEscrowStakePool.sol",
+      "TtgMemeDenomMigrator.sol",
+      "TtgMemeDenomSeatConcentrationRegistry.sol"
+    ]
+  },
+  "invalidation": {
+    "rule": "Any Solidity change under contracts/src/ttg-meme-denom/ OR any constructor-allowlist change OR any ttg_v8 compile-setting change INVALIDATES this pin AND ② fusion Sepolia evidence. Re-rehearsal required.",
+    "does_not_survive": [
+      "bytecode_hash_mismatch",
+      "abi_hash_mismatch",
+      "solc_or_optimizer_or_via_ir_or_evm_version_change",
+      "constructor_allowlist_change"
+    ]
+  },
+  "forbidden_until_separate_owner_auth": [
+    "mainnet_broadcast",
+    "safe_setGovernor",
+    "any_timelock_schedule_or_execute",
+    "ci_02",
+    "money_path_touch",
+    "live_10m_ttg_migrate",
+    "ftb_mutate",
+    "meta_cutover",
+    "official_www_bake"
+  ],
+  "not_equal_to": [
+    "official_live",
+    "mainnet_cutover",
+    "production_go",
+    "sepolia_address_as_mainnet"
+  ]
+}

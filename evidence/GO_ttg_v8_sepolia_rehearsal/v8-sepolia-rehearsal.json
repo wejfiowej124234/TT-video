@@ -1,0 +1,22 @@
+{
+  "chainId": 11155111,
+  "candidateId": "TTG-25T-BPS-SEAT-FIXED-SUPPLY-CANDIDATE-V8",
+  "compilerTarget": "0.8.26",
+  "fusionAligned": true,
+  "minPurchaseUsdc": "1e6",
+  "migratorDeployed": false,
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "teamWallet": "0x5B90CDaCE5Ae519C78BA433f49F8E44E6839bB7C",
+  "daoWallet": "0xb63F421De46600D92F677b49548b99c3A2B39930",
+  "usdc": "0x5428b31E5A6dc9F0e41F71aE9Cc245838A08E1C9",
+  "token": "0x9924007BC7f8D5B937cBf1636fB913fc676B0A3D",
+  "primaryMarket": "0xAa5953192653d665A95f1F6E78b496152a4FED65",
+  "timelock": "0x2573da832598aAB7F64FD930e0a55A66568c7518",
+  "governor": "0x08263820760938dF4a9918E2Ad37AdF7bCa6E6F1",
+  "france": "0x8dA7622BF14F9872Ba786BAD59D989dd8D0382d2",
+  "retail": "0x621C547fA94273af5e396a8E2a29a9A781284852",
+  "liveProposalId": 1,
+  "liveVoteStart": 11509181,
+  "liveVoteEnd": 11509189,
+  "liveQueuedOpId": "0xc566a31a8864bd5db6bae135635b28242ed26f2b05ec82daee96f4a3604dbdb9"
+}

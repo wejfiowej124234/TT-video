@@ -1,0 +1,31 @@
+{
+  "stamp": "TTG_V8_FUSION_CANDIDATE_PINNED_STOP",
+  "issued_at_utc": "2026-08-17T16:40:25Z",
+  "unique_pin_id": "TTG-V8-FUSION-CANDIDATE-20260818",
+  "candidate_id": "TTG-25T-BPS-SEAT-FIXED-SUPPLY-CANDIDATE-V8",
+  "candidate_commit_sha": "PENDING_STAMP",
+  "human_ssot": "docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md",
+  "machine_ssot": "docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.json",
+  "tt_production_go": "NO_GO",
+  "status": "DESIGN_ONLY",
+  "local_forge": "25/25 PASS",
+  "solc": "0.8.26+commit.8a97fa7a",
+  "fusion_sepolia_token_rehearsal_only": "0x9924007BC7f8D5B937cBf1636fB913fc676B0A3D",
+  "sepolia_never_mainnet_address": true,
+  "mainnet_broadcast": false,
+  "safe_setGovernor": false,
+  "timelock_ops": false,
+  "ci_02": false,
+  "money_path_touched": false,
+  "live_10m_migrated": false,
+  "ftb_mutated": false,
+  "meta_cutover": false,
+  "official_www_baked": false,
+  "next_gate": "TTG_V8_FUSION_3_PREFLIGHT_OWNER_AUTH_REQUIRED",
+  "stop": true,
+  "not_equal_to": [
+    "official_live",
+    "mainnet_cutover",
+    "production_go"
+  ]
+}
