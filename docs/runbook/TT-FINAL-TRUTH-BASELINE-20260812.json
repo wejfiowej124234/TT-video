@@ -1,0 +1,325 @@
+{
+  "schema": "traveltrust.final_truth_baseline.v1",
+  "machine_key": "TT_FINAL_TRUTH_BASELINE",
+  "status": "IMMUTABLE_HISTORICAL_PARENT",
+  "lock_status": "IMMUTABLE",
+  "was_active_unique_ssot": true,
+  "do_not_mutate": true,
+  "historical_alignment_stamp": "20260812T101500Z",
+  "superseded_as_active_by": "TT_FINAL_TRUTH_BASELINE_V8_CYCLE_20260818",
+  "living_successor": {
+    "human": "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md",
+    "machine": "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json",
+    "cycle": "20260818T031500Z"
+  },
+  "recorded_utc": "2026-08-12T10:15:00Z",
+  "alignment_stamp": "20260812T101500Z",
+  "workspace_head_cite": "dd72da52c1920189cfb79f8ad49e288ee3e9e764",
+  "tt_production_go": "NO_GO",
+  "phase_now": "DUAL_WAIT_TRACK2_GOV04_FROZEN",
+  "umbrella_name": "TravelTrust Final Truth Baseline",
+  "identity_rule": "FTB is sole system SSOT. Web3 Active Truth = mainnet chain facts (Wired Money Path). Product Truth = official website runtime aligned to that set. Historical FactoryV2 0x0520 = lineage only — never Official create. Sepolia/Local align architecture/ABI/flow with independent addresses. Reality Evidence before any GO reassessment.",
+  "owner_lock": {
+    "sole_system_ssot": "TT_FINAL_TRUTH_BASELINE",
+    "web3_active_truth": "mainnet_deployed_money_path",
+    "product_truth": "official_website_runtime",
+    "candidate_status": "DEMOTED_TESTNET",
+    "user_funds_enabled": false,
+    "primary_market_trading_enabled": false,
+    "tt_production_go": "NO_GO",
+    "production_ready_claim": "FORBIDDEN",
+    "hard_gate": "REEVAL_STILL_REFUSED_NO_GO_OPEN_AXIS_05_07_08_09_11_12_14",
+    "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+    "dual_wait": "WAITING_TRACK2_TIMELOCK_ETA+WAITING_GOV04_TIMELOCK_ETA"
+  },
+  "web3": {
+    "role": "SOLE_LIVE_OFFICIAL_WEB3",
+    "status": "MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED",
+    "sole_live_role": "mainnet_deployed_official",
+    "chain_id": 1,
+    "chain_name": "ethereum_mainnet",
+    "abi_official_factory": "frontend/dapp/abis/EscrowFactoryV2Wired.json",
+    "abi_factory_lineage": "frontend/dapp/abis/EscrowFactoryV2.lineage.json",
+    "addresses": {
+      "escrow_factory_v2_wired": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+      "factory_v2": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+      "escrow_factory_v2_lineage": "0x052052f06bfc15cbd63606252db68b4b445aa4f7",
+      "settlement_router": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+      "fee_router": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+      "timelock": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+      "timelock_admin_safe": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+      "governor": "0x46Ce671b04d21760e496646bb370ADEbC374ea4d",
+      "governance_token": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",
+      "treasury_p4cap": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+      "primary_market": "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce",
+      "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "settlement_router_official_live": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+      "settlement_router_factory_trust": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "primary_market_live_implementation": "0xDf9eF9278aF4E49449e87c54D45Fb975F8204346",
+      "primary_market_gov04_implementation_pending": "0xB3bCBc8F90b66E88961C2E8F178924F3200D6aA1"
+    },
+    "deploy_txs": {
+      "fee_router": "0x15f8b0566978158829104b7dacb3da9a50186f11b8372efb16f048b84527f118",
+      "settlement_router": "0xeb74f6afa687e52aa709ee47fc97efce0f2c96898459a6024b009d15c428fdf4",
+      "escrow_factory_v2_wired": "0x0fbbc579e4fcac18bbb37b861fcf6be4b8c9b13c6a247b2d7c6363723d4e6bdd",
+      "settlement_router_factory_trust": "0xfc7a505a978538a85081010e812269e6856ae55b34df8de2fef0ce06a1d5bef8",
+      "primary_market_gov04_impl": "0x775263bccf69415cedecb86ed878580edd9b24fa0500303f435f4c1948909a66"
+    },
+    "money_path": "MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED",
+    "inventory_verdict": "MONEY_PATH_ON_CHAIN_CODE_YES",
+    "official_create_factory": "escrow_factory_v2_wired",
+    "forbidden_create_factory": "escrow_factory_v2_lineage",
+    "candidate_status": "DEMOTED_TESTNET",
+    "candidate_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "human": [
+      "docs/runbook/TT-FINAL-TRUTH-BASELINE-20260812.md"
+    ],
+    "machine": [
+      "registry/mainnet-address-registry.v1.yaml",
+      "registry/web3-mainline.v1.yaml",
+      "frontend/.env.mainnet.local",
+      "deploy/fly/tt-web-prod/build.env.local",
+      "evidence/GO_mainnet_money_path/MAINNET-CONTRACT-INVENTORY-LATEST.json",
+      "evidence/GO_mainnet_money_path/OWNER-FILL-BROADCAST-TXS-LATEST.json"
+    ],
+    "track1_reality": {
+      "status": "REALITY_EVIDENCE_SEALED",
+      "execute_tx": "0xe5754054c90d04a2f6b5f1de9c44180a5899cf13a0c0c0c3ba08d0fdd1e88e04",
+      "release_tx": "0x271ed4ec6ab6d061f982f9921098ca16bcbae184f5178be6f481dcee6170f796",
+      "escrow": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+      "escrow_status": 3,
+      "escrow_usdc": "0",
+      "isEscrow": true,
+      "conservation": "10000000=9500000+500000+0",
+      "events": [
+        "Released",
+        "FeeLegReceived"
+      ],
+      "cite": "docs/runbook/TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.json"
+    },
+    "settlement_router_factory_trust_status": "DEPLOYED_UNWIRED_NOT_OFFICIAL_LIVE",
+    "wired_still_points_to_track1_sr": true,
+    "gov04_rules_live_on_proxy": false,
+    "primary_market_live_min_purchase_usdc": 100,
+    "primary_market_pending_min_purchase_usdc_after_gov04": 10
+  },
+  "product_runtime": {
+    "api_base": "https://api.web3-ttg.com",
+    "web_base": "https://www.web3-ttg.com",
+    "must_match_web3_addresses": true,
+    "web_git_sha_cite": "dd72da52c1920189cfb79f8ad49e288ee3e9e764",
+    "alignment_gate": "scripts/gates/check-official-mainnet-web3-alignment.sh"
+  },
+  "three_env": {
+    "official": {
+      "role": "product_and_web3_live",
+      "align_to": "mainnet_deployed_money_path",
+      "chain_id": 1,
+      "address_policy": "mainnet_ftb_wired_fee_settlement",
+      "equals_production_go": false
+    },
+    "sepolia": {
+      "role": "verification",
+      "align_to": "mainnet_architecture_abi_flow",
+      "address_policy": "independent_sepolia_set",
+      "must_not_copy_mainnet_addresses": true,
+      "must_not_claim_official_live": true,
+      "chain_id": 11155111
+    },
+    "local": "architecture_aligned_own_addresses_never_copy_mainnet",
+    "doctrine": "architecture_aligned_address_independent",
+    "forbidden": [
+      "copy_mainnet_addrs_to_testnet_or_local",
+      "rebind_official_to_factory_v2_lineage_0520",
+      "forge_reality_PASS",
+      "auto_flip_TT_PRODUCTION_GO"
+    ]
+  },
+  "reality_wave": {
+    "matrix": "docs/runbook/TT-MAINNET-REALITY-FUNDS-TEST-MATRIX-LATEST.json",
+    "status": "TRACK1_REALITY_SEALED",
+    "budget_usdc": "10",
+    "owner_fill_checklist": "docs/runbook/TT-MAINNET-OWNER-MONEY-PATH-FILL-CHECKLIST-LATEST.md",
+    "tt_production_go": "NO_GO",
+    "blocker": "NONE_FOR_TRACK1_SETESCROW_RELEASE",
+    "escrow": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+    "setEscrow_opId": "0xe1d51e09d8c5df11bc83330d5d6c545d3431b3107d6de7652f2c5d840890c116",
+    "setEscrow_eta_utc": "2026-08-11T23:45:35.000Z",
+    "wallets": {
+      "A_deploy_traveler": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+      "B_ttg_guide": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
+    },
+    "recorded_utc": "2026-08-09T23:46:43Z",
+    "sealed_execute_tx": "0xe5754054c90d04a2f6b5f1de9c44180a5899cf13a0c0c0c3ba08d0fdd1e88e04",
+    "sealed_release_tx": "0x271ed4ec6ab6d061f982f9921098ca16bcbae184f5178be6f481dcee6170f796"
+  },
+  "wait_gate": {
+    "primary": "TRACK1_SETESCROW_EXECUTE_AND_RELEASE",
+    "primary_status": "EXECUTED_RELEASED_SEALED",
+    "money_path": "MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED",
+    "hard_gate": "REEVAL_STILL_REFUSED_NO_GO",
+    "tt_production_go": "NO_GO",
+    "reassess_go_after": "owner_separate_go_ladder_not_track1_seal"
+  },
+  "forbidden": [
+    "claim_83_regional_final_from_money_path_reality",
+    "copy_mainnet_addresses_to_testnet_or_local",
+    "forge_state_or_mix_testnet_mainnet_evidence",
+    "official_live_sepolia",
+    "production_ready_mislabel",
+    "read_Settlement_Fee_UNSET_as_living_truth",
+    "read_stale_MISSING_OWNER_FILL_as_living_truth",
+    "rebind_official_fe_api_to_lineage_factory_0520",
+    "tt_production_go_flip_before_reality_evidence"
+  ],
+  "cites": {
+    "human": "docs/runbook/TT-FINAL-TRUTH-BASELINE-20260812.md",
+    "inventory": "evidence/GO_mainnet_money_path/MAINNET-CONTRACT-INVENTORY-LATEST.json",
+    "reality_matrix": "docs/runbook/TT-MAINNET-REALITY-FUNDS-TEST-MATRIX-LATEST.md",
+    "fill_txs": "evidence/GO_mainnet_money_path/OWNER-FILL-BROADCAST-TXS-LATEST.json",
+    "bilateral": "evidence/GO_mainnet_money_path/MAINNET-REALITY-BILATERAL-LATEST.json",
+    "candidate_demoted": "docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md",
+    "alignment_gate": "scripts/gates/check-official-mainnet-web3-alignment.sh",
+    "design_spec_83": "docs/spec/83-区域治理与收益分配-协议白皮书.md",
+    "design_spec_84": "docs/spec/84-第一阶段10国Country-Pool发行参数总表.md",
+    "fee_flow_diagram": "docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md",
+    "protocol_ssot": "docs/spec/governance-token/protocol-ssot.v1.md",
+    "design_consistency_83_grounded": "evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-83-GROUNDED-LATEST.json",
+    "design_consistency_audit": "evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-AUDIT-LATEST.json",
+    "living_truth_priority": "evidence/GO_mainnet_money_path/WEB3-LIVING-TRUTH-PRIORITY-LATEST.json",
+    "design_audit_backlog_classified": "evidence/GO_mainnet_money_path/WEB3-DESIGN-AUDIT-BACKLOG-CLASSIFIED-LATEST.json",
+    "track1_finalize_template": "docs/runbook/templates/mainnet-money-path/OWNER-TRACK1-REALITY-FINALIZE-EVIDENCE.md",
+    "roadmap_83_commercial_final": "evidence/GO_mainnet_money_path/TT-83-COMMERCIAL-FINAL-GAP-ROADMAP-LATEST.json"
+  },
+  "next": [
+    "Maintain_DUAL_WAIT_FROZEN_until_Track2_ETA",
+    "Track2_preempt_2026-08-14T09:03:11Z",
+    "Then_GOV04_after_Track2_at_2026-08-14T09:59:23Z",
+    "AXIS_05_07_08_09_11_12_evidence_prep_readonly",
+    "Hard_Gate_PASS_then_Owner_GO_Decision_only",
+    "FeeRouter_distribute_83_require_separate_Owner_auth"
+  ],
+  "dual_track": {
+    "doctrine": "governance_slow_business_fast",
+    "human": "docs/runbook/TT-MAINNET-REALITY-AND-FAST-CHECKOUT-DUAL-TRACK-LATEST.md",
+    "track1_mainnet_reality_baseline": {
+      "status": "TRACK1_REALITY_SEALED",
+      "escrow": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+      "settlement_router_live": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+      "model": "per_escrow_setEscrow_timelock",
+      "forbid": [
+        "rerun_track1",
+        "forge_pass",
+        "claim_commercial_immediate_release_on_official"
+      ]
+    },
+    "track2_fast_checkout_factory_trust": {
+      "status": "WAITING_TRACK2_TIMELOCK_ETA",
+      "contract": "contracts/src/SettlementRouterFactoryTrust.sol",
+      "mainnet_sr_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "mainnet_deploy": "DEPLOYED_UNWIRED_SCHEDULED",
+      "official_live": false,
+      "trustedFactory": "0x0000000000000000000000000000000000000000",
+      "ssot": "docs/runbook/TT-TRACK2-FACTORY-TRUST-OFFICIAL-PROMOTION-1-LOCAL-PREP-LATEST.md",
+      "next": [
+        "at_2026-08-14T09:03:11Z_fresh_preflight_then_T1_T2_Official_1USDC"
+      ]
+    },
+    "recorded_utc": "2026-08-12T10:15:00Z"
+  },
+  "dual_track_parallel_prep": {
+    "evidence": "evidence/GO_mainnet_money_path/DUAL-TRACK-PARALLEL-PREP-LATEST.json",
+    "track1": "TRACK1_REALITY_SEALED",
+    "track2_mainnet_cutover": "WAITING_TRACK2_TIMELOCK_ETA",
+    "tt_production_go": "NO_GO",
+    "superseded_by": "docs/runbook/TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md",
+    "recorded_utc": "2026-08-12T10:15:00Z"
+  },
+  "fee_router_living": {
+    "address": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+    "owner": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "bps_default": {
+      "country": 4500,
+      "stakers": 3575,
+      "reserve": 1100,
+      "ops": 825
+    },
+    "bps_vs_83": "MATCH",
+    "legs": {
+      "countryBucket": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+      "globalStakers": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+      "globalReserve": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+      "globalOps": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+    },
+    "legs_status": "INTERIM_CUSTODY_SAFE_AND_TREASURY",
+    "region_vault_official": "TBD_NOT_ON_MONEY_PATH",
+    "equals_83_regional_final": false,
+    "forbid_ai_claim": "FeeRouter_deployed_equals_83_steward_split_GO",
+    "design_truth": "docs/spec/83-区域治理与收益分配-协议白皮书.md",
+    "gap_evidence": "evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-83-GROUNDED-LATEST.json"
+  },
+  "design_spec_living": {
+    "chinese_primary": "docs/spec/83-区域治理与收益分配-协议白皮书.md",
+    "status": "TARGET_DESIGN_FROZEN",
+    "mainnet_progress": "FEE_ROUTER_BPS_MATCH_LEGS_INTERIM_REGION_PATH_NOT_OFFICIAL",
+    "recorded_utc": "2026-08-10T02:08:00Z"
+  },
+  "living_truth_priority": {
+    "evidence": "evidence/GO_mainnet_money_path/WEB3-LIVING-TRUTH-PRIORITY-LATEST.json",
+    "tt_production_go": "NO_GO",
+    "recorded_utc": "2026-08-10T02:15:21Z"
+  },
+  "independent_tracks_not_auto": [
+    "FeeRouter_four_bucket_Timelock_distribute",
+    "Track2_T1_T2_execute_and_Official_cutover",
+    "GOV04_upgrade_execute_and_PM_purchase",
+    "83_RegionVault_Vacancy",
+    "TT_PRODUCTION_GO"
+  ],
+  "cleared_living_narratives": [
+    "WAITING_ETA_for_Track1_setEscrow",
+    "MAINNET_MONEY_PATH_INCOMPLETE_as_living",
+    "Settlement_Fee_UNSET_as_living",
+    "done_false_isEscrow_false_as_living_for_sealed_escrow",
+    "Track1_still_WAITING_ETA_as_living",
+    "Track2_still_LOCAL_ONLY_or_BLOCKED_UNTIL_SEAL_as_living",
+    "SR_FT_deployed_equals_Official_FactoryTrust_live",
+    "GOV04_impl_deployed_equals_public_sale_rules_live"
+  ],
+  "deploy_txs": {
+    "fee_router": "0x15f8b0566978158829104b7dacb3da9a50186f11b8372efb16f048b84527f118",
+    "settlement_router": "0xeb74f6afa687e52aa709ee47fc97efce0f2c96898459a6024b009d15c428fdf4",
+    "escrow_factory_v2_wired": "0x0fbbc579e4fcac18bbb37b861fcf6be4b8c9b13c6a247b2d7c6363723d4e6bdd",
+    "settlement_router_factory_trust": "0xfc7a505a978538a85081010e812269e6856ae55b34df8de2fef0ce06a1d5bef8",
+    "primary_market_gov04_impl": "0x775263bccf69415cedecb86ed878580edd9b24fa0500303f435f4c1948909a66"
+  },
+  "dual_wait": {
+    "status": "DUAL_WAIT_FROZEN",
+    "ssot": "docs/runbook/TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md",
+    "prep_board": "docs/runbook/TT-DUAL-WAIT-OFFICIAL-WEB3-AXIS-PREP-BOARD-LATEST.md",
+    "track2": {
+      "status": "WAITING_TRACK2_TIMELOCK_ETA",
+      "sr_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "T1_opId": "0x35f54aa1bd6eb0f3349ebf3c01cb376d012fbb82cc391090c66dc9b8e58a9ebe",
+      "T1_eta_utc": "2026-08-14T09:02:59Z",
+      "T2_opId": "0xbdc82edb7d3ff299b12d46c01d50f3610147ee8d735d29dea87c0500ccf4e21a",
+      "T2_eta_utc": "2026-08-14T09:03:11Z",
+      "preempt_at_utc": "2026-08-14T09:03:11Z",
+      "execute_authorized": false,
+      "official_cutover_done": false
+    },
+    "gov04": {
+      "status": "WAITING_GOV04_TIMELOCK_ETA",
+      "opId": "0xb33dfdf23ffcfc0ad05ebe68d0a44a836bc856dc75a34d2101ed6eabb25703bc",
+      "eta_utc": "2026-08-14T09:59:23Z",
+      "new_implementation": "0xB3bCBc8F90b66E88961C2E8F178924F3200D6aA1",
+      "upgrade_executed": false,
+      "rules_live": false,
+      "waits_for_track2_first": true,
+      "purchase_auth_env": "TRAVELTRUST_OWNER_PM_PURCHASE_OK=1"
+    },
+    "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+    "pin_recheck_utc": "2026-08-12T10:07:06Z"
+  },
+  "evidence_cites": {}
+}

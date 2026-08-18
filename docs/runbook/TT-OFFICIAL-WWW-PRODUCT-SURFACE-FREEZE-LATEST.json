@@ -1,0 +1,149 @@
+{
+  "schema": "traveltrust.official_www_product_surface_freeze.v1",
+  "status": "OFFICIAL_WWW_PRODUCT_SURFACE_FROZEN",
+  "stamp_utc": "2026-08-17T02:36:00Z",
+  "tt_production_go": "NO_GO",
+  "live": {
+    "web": "https://www.web3-ttg.com",
+    "release_identity_url": "https://www.web3-ttg.com/api/release-identity",
+    "git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "artifact_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "build_time": "2026-08-16T15:15:49Z",
+    "identity_source": "docker-bake",
+    "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+    "fly_image": "registry.fly.io/tt-web-prod:deployment-01M05JAAXJPTRZJAQEJ4JJWQMK",
+    "note": "Identity SHA != clean git checkout. Live image is the 2026-08-16T15:15:49Z Official pin (uncommitted product bytes after daa5ae87). Do not treat later ABI bakes 01:11:08Z / 02:11:29Z as live."
+  },
+  "identity_sha_is_not_product_bytes": true,
+  "restore": {
+    "handle": "registry.fly.io/tt-web-prod:deployment-01M05JAAXJPTRZJAQEJ4JJWQMK",
+    "command": "TT_OFFICIAL_WWW_RESTORE_PIN=1 bash scripts/dev/restore-tt-web-production-product-pin.sh",
+    "check_only": "bash scripts/dev/restore-tt-web-production-product-pin.sh --check-only",
+    "must_not": [
+      "git checkout daa5ae87",
+      "deploy-tt-web-production.sh",
+      "rebuild Next from any git tree"
+    ],
+    "restore_verified": {
+      "verdict": "OFFICIAL_WWW_PRODUCT_PIN_RESTORED_STOP",
+      "stamp_utc": "2026-08-17T04:12:55Z",
+      "tt_production_go": "NO_GO",
+      "www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "www_build_time": "2026-08-16T15:15:49Z",
+      "apex_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "apex_build_time": "2026-08-16T15:15:49Z",
+      "announcement_chips": ["all", "product", "campaign", "governance", "protocol_status"],
+      "home_pulse_ticker": true,
+      "five_main_http_200": true,
+      "evidence": "evidence/GO_official_www_product_surface/OFFICIAL-WWW-PRODUCT-PIN-RESTORED-STOP.json",
+      "stop": true
+    }
+  },
+  "bake_isolation": {
+    "isolation_stamp_utc": "2026-08-17T04:00:00Z",
+    "gate": "scripts/gates/check-official-www-product-surface-frozen.sh",
+    "tt_skip_official_baseline_pin_cannot_bypass": true,
+    "classes": {
+      "full": {
+        "script": "scripts/dev/deploy-tt-web-production.sh",
+        "frozen_default": "FORBIDDEN",
+        "unlock": "TT_OFFICIAL_PRODUCT_SURFACE_UNLOCK=1 + Owner-named real error"
+      },
+      "web3_overlay": {
+        "script": "scripts/dev/deploy-tt-web-production-web3-overlay.sh",
+        "frozen_default": "FORBIDDEN (Docker COPY . ./ replaces live image bytes)",
+        "unlock": "TT_OFFICIAL_WEB3_OVERLAY_FROM_GIT=1 + TT_OFFICIAL_WEB3_OVERLAY_UNLOCK=1 + TT_OFFICIAL_WEB3_OVERLAY_DEPLOY=1"
+      },
+      "restore_image": {
+        "script": "scripts/dev/restore-tt-web-production-product-pin.sh",
+        "frozen_default": "allowed with TT_OFFICIAL_WWW_RESTORE_PIN=1",
+        "method": "fly deploy --image"
+      }
+    },
+    "allowlist": [
+      "contracts/abi/",
+      "frontend/dapp/abis/",
+      "frontend/lib/escrowFactoryEnv.ts",
+      "frontend/lib/governance/primaryMarketRuntimePriceSsot.ts",
+      "deploy/fly/tt-web-prod/build.env.local",
+      "frontend/.env.mainnet.local",
+      "frontend/public/tt-release-identity.bake.json"
+    ],
+    "forbidden_worktrees": [
+      "ugc-translate",
+      "batch-a-session",
+      "r-comm-identity",
+      ".worktrees/* except official-www-web3-overlay"
+    ],
+    "web3_default": "chain + API /meta — not www bake"
+  },
+  "product_fingerprint": {
+    "live_image": "5 announcement chips including 活动; pulse ticker; Admin workbench",
+    "committed_daa5ae87_tree": "4 chips (全部 / 产品 / 治理 / 协议) — checkout strips live product",
+    "verify": "GET /api/release-identity git_sha + build_time must match live pin"
+  },
+  "hops_unchanged": {
+    "escrow_factory_v2_wired": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+    "fee_router_official": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+    "settlement_router_bake_pin": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "new_fee_router_forbidden_until_ci02_cutover": "0xb6bfEDA39D242395a132AB9340bA4A17ce757655"
+  },
+  "api_untouched": {
+    "meta_build_url": "https://api.web3-ttg.com/meta/build",
+    "git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "deployed_at": "2026-08-12T23:44:18Z"
+  },
+  "already_frozen_surfaces": [
+    "FIVE-MAIN structure",
+    "/traveltrust/announcements",
+    "homepage pulse ticker",
+    "admin workbench bake (inbox + on-chain fund rings + Official addresses)"
+  ],
+  "forbidden": [
+    "deploy-tt-web-production.sh",
+    "fly tt-web-prod bake",
+    "FIVE-MAIN structure/visual/layout change",
+    "announcements/ticker change",
+    "reopen BATCH-A Session/BFF/WalletConnect bake",
+    "overwrite pin from living tree",
+    "checkout daa5ae87 as rollback (strips live 5-chip hub)",
+    "TT_SKIP_OFFICIAL_BASELINE_PIN=1 as product-surface bypass",
+    "stamp TRAVELTRUST_GIT_SHA=daa5ae87 over dirty/overlay bytes",
+    "claim Production GO",
+    "switch Official hop to NEW FeeRouter"
+  ],
+  "web3_ladder": {
+    "do_not_redeploy": [
+      "Wired 0xEE0BE3",
+      "SR-FT 0xD1DA",
+      "OLD FeeRouter 0x2aF47C",
+      "T1 done=true",
+      "T2 done=true",
+      "GOV-04 PM impl 0xB3bC live 10-to-10",
+      "1 USDC L7 PASS escrow 0x45B28A",
+      "CI-02 A setSeatRoutingConfig EXECUTED"
+    ],
+    "remaining_independent": [
+      {
+        "id": "CI-02-B",
+        "op": "SR-FT.setFeeRouter(NEW)",
+        "status": "ABORTED_NOT_SCHEDULED",
+        "done": false,
+        "action": "Owner-auth Safe → Timelock.schedule then 48h then separate execute"
+      },
+      {
+        "id": "PM25",
+        "opId": "0xb7d2a7c37a6f8aca08d41a1f0c54ded6d83429a918cda89b9271aaad0b551b12",
+        "eta_utc": "2026-08-16T16:20:23Z",
+        "done": false,
+        "action": "Owner-auth execute; do not merge with CI-02"
+      },
+      {
+        "id": "GAP-1USDC-HANDOFF",
+        "status": "L7_PASS_L8_CHECKPOINT_CAUGHT_UI_UNVERIFIED",
+        "action": "Projection/UI verify only; no second real-money tx"
+      }
+    ],
+    "not_this_wave": ["Seat", "RegionVault", "Proposal #3"]
+  }
+}

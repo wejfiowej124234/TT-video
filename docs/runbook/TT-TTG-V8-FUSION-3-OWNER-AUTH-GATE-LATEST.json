@@ -1,0 +1,116 @@
+{
+  "schema": "traveltrust.ttg_v8_fusion_3_owner_auth_gate.v1",
+  "stamp": "TTG_V8_FUSION_3_DEPLOY_AND_SETGOVERNOR_OWNER_AUTH_REQUIRED",
+  "issued_at_utc": "2026-08-17T17:50:00Z",
+  "status": "AUTH_2A_RUNTIME_PASS_VERIFICATION_1_PASS_SETGOVERNOR_RUNTIME_PASS",
+  "current_allowed_work": "TTG_V8_FINAL_REALITY_RELEASE_CERT_PASS_WAIT_PRODUCTION_GO_REASSESSMENT",
+  "tt_production_go": "NO_GO",
+  "independent_of": "TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP",
+  "do_not_rerun_preflight": true,
+  "do_not_mutate_preflight": true,
+  "preflight_closed_git_sha": "1a2f1e183e94cd7400be356979be7acab5d94b4e",
+  "candidate_commit_sha": "8b09d2974804dd20817bff25690a1035055ce3f2",
+  "unique_pin_id": "TTG-V8-FUSION-CANDIDATE-20260818",
+  "this_turn_owner_asked_whether_formally_authorized": false,
+  "this_turn_is_written_go": true,
+  "whether_question_is_not_authorization": true,
+  "owner_2a_sentence": "Owner 正式授权 ③ Mainnet Deploy NEW TTG / NEW PM / NEW Governor，并允许 Safe 做 NEW_TTG allowlist。本授权不含 Verification-1 与 setGovernor。",
+  "step_1": {
+    "id": "OWNER_FILLS",
+    "status": "CONVERGED_MUST_1_7",
+    "ssot": "docs/runbook/TT-TTG-V8-FUSION-3-GENESIS-ADDRESS-FILLS-LATEST.md",
+    "must_1_7_nodded": true,
+    "not_equal_to_auth_2b": true
+  },
+  "auth_2a": {
+    "id": "MAINNET_DEPLOY_AND_ALLOWLIST",
+    "status": "RUNTIME_PASS",
+    "written_at_utc": "2026-08-17T17:43:00Z",
+    "runtime_pass_at_utc": "2026-08-17T18:09:00Z",
+    "scope": [
+      "deploy_new_ttg",
+      "deploy_new_pm",
+      "same_script_public_12_5T_to_pm",
+      "safe_setAllowedExecutionTarget_new_ttg_true",
+      "deploy_new_governor_live_timelock"
+    ],
+    "safe_allowlist_class": "admin_config_not_timelock_48h",
+    "same_session_etherscan_sourcify": "deploy_hygiene_not_verification_1",
+    "excludes": [
+      "verification_1",
+      "setGovernor",
+      "ftb_mutate",
+      "meta_cutover",
+      "official_www_bake",
+      "money_path_redeploy",
+      "migrate_live_10m_ttg",
+      "production_go"
+    ]
+  },
+  "auth_2b": {
+    "id": "VERIFICATION_1_AND_SETGOVERNOR",
+    "status": "VERIFICATION_1_PASS_SETGOVERNOR_RUNTIME_PASS",
+    "independent_of": "auth_2a",
+    "auth_2a_pass_does_not_open_setGovernor": true,
+    "verification_1_must_precede_cutover": true,
+    "verification_1": {
+      "status": "PASS_STOP",
+      "pass_at_utc": "2026-08-17T20:02:00Z",
+      "evidence": "evidence/GO_ttg_v8_mainnet_2a/TTG_V8_FUSION_3_VERIFICATION_1_PASS_STOP.json",
+      "owner_this_turn": "Verification-1 must precede any cutover; clean PM/Governor Sourcify before governance cut"
+    },
+    "setGovernor": {
+      "status": "RUNTIME_PASS",
+      "called": true,
+      "written_at_utc": "2026-08-17T21:49:00Z",
+      "runtime_pass_at_utc": "2026-08-17T21:54:59Z",
+      "owner_sentence": "Safe → 活 Timelock → setGovernor(0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F). 授权你了",
+      "tx": "0x94f61c618486cdf31957030ad042e1838f0ac5f3fce550409d92356044122d16",
+      "evidence": "evidence/GO_ttg_v8_mainnet_2a/TTG_V8_FUSION_3_SETGOVERNOR_PASS_STOP.json"
+    },
+    "scope": ["verification_1", "safe_setGovernor_NEW"],
+    "excludes": ["redeploy_ttg_pm_governor_unless_2a_voided"]
+  },
+  "legacy_step_2_blob": {
+    "id": "WRITTEN_DEPLOY_AND_SETGOVERNOR_AUTH",
+    "status": "SUPERSEDED_SPLIT_INTO_2A_AND_2B",
+    "reason": "owner_forbids_bundling_deploy_with_setGovernor_in_one_auth"
+  },
+  "mainnet_broadcast": true,
+  "safe_setGovernor": true,
+  "safe_allowlist_authorized": true,
+  "safe_allowlist_runtime": true,
+  "live_timelock_governor": "0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F",
+  "legacy_governor": "0x46Ce671b04d21760e496646bb370ADEbC374ea4d",
+  "deployed": {
+    "token": "0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602",
+    "primaryMarket": "0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2",
+    "governor": "0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F"
+  },
+  "official_product_runtime_cutover_precheck": "PASS_STOP",
+  "next_session_starts_at": "FINAL_REALITY_RELEASE_CERTIFICATION_PASS_WAIT_PRODUCTION_GO_REASSESSMENT_TOKEN_RISK_INDEPENDENT",
+  "api_runtime_decoupling": {
+    "stamp": "TTG_V8_API_RUNTIME_DECOUPLING_NO_WEB_TOUCH",
+    "status": "PASS_STOP",
+    "ssot": "docs/runbook/TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.md",
+    "do_not_checkout_old_tip": true,
+    "do_not_bake_www": true,
+    "do_not_mutate_ftb": true,
+    "official_meta_still_old_until_owner_api_only_deploy": false,
+    "official_api_runtime_aligned": true
+  },
+  "registry_runtime_mainnet_reality_consistency_cert": {
+    "stamp": "TTG_V8_REGISTRY_RUNTIME_MAINNET_REALITY_CONSISTENCY_CERT",
+    "status": "PASS_STOP",
+    "ssot": "docs/runbook/TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md"
+  },
+  "stop": true,
+  "not_equal_to": [
+    "preflight_rerun",
+    "ftb_mutate",
+    "meta_cutover",
+    "official_www_bake",
+    "official_live",
+    "production_go"
+  ]
+}
