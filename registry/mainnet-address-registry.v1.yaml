@@ -1,29 +1,61 @@
-# Mainnet Address Registry · Planning SSOT (P3-03)
+# Mainnet Address Registry · Official live Web3 slots (FTB)
 #
-# Human: docs/spec/governance-token/MAINNET-ADDRESS-PLANNING-v1.md
+# Human: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+# Env SSOT: frontend/.env.mainnet.local
 # Gate:  bash scripts/gates/check-mainnet-address-planning-gate.sh
 #
 # RULE-DEPLOY-001: Sepolia addresses are lineage reference ONLY — never copy as mainnet deploy.
+# LIVING Official TARGET Money Path (Owner fill 2026-08-09):
+#   EscrowFactoryV2Wired + SettlementRouter + FeeRouter (DEPLOYED_VERIFIED)
+# Historical EscrowFactoryV2 0x0520… = lineage only (no settlementRouter).
+# Money path: MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED · USER_FUNDS=0 · TT_PRODUCTION_GO=NO_GO
+# Dual wait (historical 2026-08-12): Track2+GOV-04 EXECUTED 2026-08-14 (see recon overlay).
+# Living remaining (this batch): GAP-E2E-JOURNEY + AXIS-14. CI-02 hop B / www bake FORBIDDEN.
+# Owner A 1 USDC money-path PASS (do not replay). Track1 SR KEEP listed. SR-FT = create hop /meta. ≠ GO
 
 schema: traveltrust.mainnet_address_registry.v1
 version: 1
 planning_item: P3-03
-effective_utc: "2026-07-09"
+effective_utc: "2026-08-12"
 machine_key: TT_MAINNET_ADDRESS_REGISTRY
-verdict: MAINNET_ADDRESS_PLANNING_READY
+verdict: MAINNET_MONEY_PATH_DEPLOYED_OFFICIAL_LIVE
 verdict_status: PASS
+living_overlay_utc: "2026-08-17T03:00:00Z"
+living_note: >
+  Official create path (L7 Wired.settlementRouter + L8 /meta) = SR-FT 0xD1DA….
+  Track1 SR 0xe5C3… is SUPERSEDED as Official create target (Track1 CLOSED_REALITY remains).
+  FTB stamp 20260812 table still lists Track1 as official_live — LOCKED, do not rewrite from /meta.
+  Living overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml.
+  GOV-04 PM impl was live (1e18). L7 EIP-1967 is now $25 0x53d0 / 4e16 (execute 2026-08-17).
+  Official www still discloses 10→10. $25 Official FE bake remains SCHEDULED_WAITING_ETA.
+  CI-02 A setSeatRoutingConfig executed 2026-08-17; Official hop B not scheduled;
+  SR-FT.feeRouter still OLD 0x2aF47C. CI-01 Seat 0x68e55d DEPLOYED_NOT_WIRED (not Official).
+  Dual-wait Track2/GOV-04 freeze pack is historically stale. ≠ Production GO.
+  TTG V8 Official runtime cutover NO_UI_BAKE: living TTG/PM/Governor = NEW V8;
+  OLD three = LEGACY siblings. Quote 1 USDC = 100,000 TTG · min 1 USDC.
+  Official www bake/first-paint still compiled OLD. FTB 20260812 LOCKED.
 
 network:
   id: ethereum_mainnet
   chain_id: 1
   eip155: "eip155:1"
-  deploy_status: NOT_STARTED
+  deploy_status: MONEY_PATH_DEPLOYED_OFFICIAL_LIVE
   broadcast_authorized: false
+  money_path: MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED
+  # living: Track2 T1/T2 executed · Wired → SR-FT · Owner A 1 USDC money-path PASS
+  # Official book remainder GAP-E2E-JOURNEY. Parent FTB 20260812 immutable.
+  # FTB 20260812 table lag EXPLAINED — do not rewrite FTB bytes from /meta
+  # FORBIDDEN living reads: MAINNET_MONEY_PATH_INCOMPLETE · Settlement/Fee UNSET · Track1 WAITING_ETA
+  # FORBIDDEN claims: Official www 1e18 = $25 live bake · CI-02 NEW FR = Official fee_router · 1 USDC PASS
+  dual_wait: SCHEDULED_WAITING_ETA_CI02_PM25
+  dual_wait_ssot: docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
+  P0_COMMERCIAL_MONEY_PATH_BLOCKER: false
 
 address_status_enum:
   - TBD
   - PLANNED
   - NOT_DEPLOYED
+  - DEPLOYED_VERIFIED
   - EXTERNAL_REFERENCE
   - FORBIDDEN
 
@@ -33,7 +65,9 @@ anti_patterns:
     ssot: registry/mainnet-deployment-package.v1.yaml
   - id: RULE-ADDR-001
     forbidden: placeholder_mainnet_addresses
-    note: All TravelTrust-deployed mainnet slots remain TBD until broadcast evidence fills them.
+    note: >
+      Official Money Path slots (Wired/Fee/Settlement) use DEPLOYED_VERIFIED addresses
+      matching FTB + frontend/.env.mainnet.local. Never invent · never copy Sepolia.
 
 sepolia_lineage_reference:
   purpose: planning_lineage_only
@@ -79,62 +113,160 @@ contracts:
       source: contracts/src/GovernanceVotesToken.sol
       category: governance_controlled
       posture: PARAMETER_OWNER
-      address_status: TBD
-      address: TBD
-      env_keys: [GOVERNANCE_TOKEN_ADDRESS]
+      address_status: DEPLOYED_VERIFIED
+      address: "0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602"
+      env_keys: [GOVERNANCE_TOKEN_ADDRESS, GOVERNANCE_VOTES_TOKEN_ADDRESS]
       owner_planned: GovernanceTimelock
       sepolia_lineage_key: governance_token_address
+      living_cite: frontend/.env.mainnet.local
+      note: >
+        TTG_V8_OFFICIAL_RUNTIME_CONTRACT_CUTOVER_NO_UI_BAKE: Official living TTG = NEW V8 25T.
+        Predecessor OLD 10M is governance_votes_token_legacy_10m. FTB 20260812 bytes not mutated.
+        Official www first-paint / bake env still OLD until a later Owner bake. ≠ Production GO.
+
+    governance_votes_token_legacy_10m:
+      contract: GovernanceVotesToken
+      category: governance_controlled
+      posture: PARAMETER_OWNER
+      address_status: LEGACY
+      address: "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A"
+      note: >
+        OLD 10M TTG · LEGACY after V8 Official runtime cutover · KEEP for history · do not promote.
+        Live 10M supply remains here until a later Owner custody move (FORBIDDEN this stamp).
 
     timelock:
       contract: GovernanceTimelock
       source: contracts/src/GovernanceTimelock.sol
       category: governance_controlled
       posture: CONTROLLER_NON_UPGRADEABLE
-      address_status: TBD
-      address: TBD
+      address_status: DEPLOYED_VERIFIED
+      address: "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7"
       env_keys: [TIMELOCK_ADDRESS]
       admin_planned: TIMELOCK_ADMIN_MULTISIG
       delay_hours_planned: 48
-      note: Fresh deploy only — not a user-facing proxy address
+      note: Official live Timelock · admin Safe 0x96491aa894658ff7946506318c49F3c76b8f40e7
       sepolia_lineage_key: timelock_address
+      living_cite: frontend/.env.mainnet.local
 
     governor:
       contract: TravelTrustGovernor
       source: contracts/src/TravelTrustGovernor.sol
       category: governance_controlled
       posture: PROXY_REQUIRED
-      address_status: TBD
-      proxy_address: TBD
+      address_status: DEPLOYED_VERIFIED
+      proxy_address: "0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F"
+      address: "0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F"
       implementation_address: TBD
       proxy_admin_planned: GovernanceTimelock
       env_keys: [GOVERNOR_ADDRESS]
       upgrade_path: Timelock.schedule → Timelock.execute → proxy.upgradeTo
       sepolia_lineage_key: governor_address
+      living_cite: frontend/.env.mainnet.local
+      note: >
+        TTG_V8_OFFICIAL_RUNTIME_CONTRACT_CUTOVER_NO_UI_BAKE: Official living Governor = NEW V8.
+        Live Timelock.governor() already this address (do not resend setGovernor).
+        Predecessor OLD Governor is governor_legacy. FTB 20260812 bytes not mutated. ≠ Production GO.
+
+    governor_legacy:
+      contract: TravelTrustGovernor
+      category: governance_controlled
+      posture: PROXY_REQUIRED
+      address_status: LEGACY
+      proxy_address: "0x46Ce671b04d21760e496646bb370ADEbC374ea4d"
+      address: "0x46Ce671b04d21760e496646bb370ADEbC374ea4d"
+      implementation_address: TBD
+      note: >
+        OLD Governor · LEGACY after V8 Official runtime cutover · KEEP for history · do not promote.
 
     treasury_p4cap:
       contract: GovernanceTreasuryP4Cap
       source: contracts/src/GovernanceTreasuryP4Cap.sol
       category: governance_controlled
       posture: PROXY_REQUIRED
-      address_status: TBD
-      proxy_address: TBD
+      address_status: DEPLOYED_VERIFIED
+      proxy_address: "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+      address: "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
       implementation_address: TBD
       proxy_admin_planned: GovernanceTimelock
       env_keys: [GOVERNANCE_TREASURY_P4CAP_ADDRESS]
       aliases: [TREASURY_P4_CAP_ADDRESS]
       sepolia_lineage_key: treasury_p4_cap_address
+      living_cite: frontend/.env.mainnet.local
 
     primary_market:
       contract: TtgPrimaryMarketV1
       source: contracts/src/TtgPrimaryMarketV1.sol
       category: governance_controlled
       posture: PROXY_REQUIRED
-      address_status: TBD
-      proxy_address: TBD
+      address_status: DEPLOYED_VERIFIED
+      proxy_address: "0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2"
+      address: "0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2"
       implementation_address: TBD
+      implementation_live_rules:
+        min_purchase_usdc: 1000000
+        per_wallet_cap_ttg: 0
+        version: ttg_v8_1_usdc_eq_100000_ttg
+        ttg_per_usdc_unit: "100000000000000000000000"
+        ttg_per_usdc_unit_class: L7_LIVE_OFFICIAL_RUNTIME_QUOTE
       proxy_admin_planned: GovernanceTimelock
       env_keys: [PRIMARY_MARKET_ADDRESS]
       sepolia_lineage_key: primary_market_address
+      trading_enabled: false
+      living_cite: frontend/.env.mainnet.local
+      note: >
+        TTG_V8_OFFICIAL_RUNTIME_CONTRACT_CUTOVER_NO_UI_BAKE: Official living PM = NEW V8 proxy.
+        Quote SSOT 1 USDC = 100,000 TTG · min 1 USDC. Predecessor OLD PM is primary_market_legacy.
+        Official www first-paint still compiled 1e18 until a later Owner bake. ≠ Production GO.
+        FTB 20260812 bytes not mutated by this stamp.
+
+    primary_market_legacy:
+      contract: TtgPrimaryMarketV1
+      source: contracts/src/TtgPrimaryMarketV1.sol
+      category: governance_controlled
+      posture: PROXY_REQUIRED
+      address_status: LEGACY
+      proxy_address: "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce"
+      address: "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce"
+      implementation_address: "0x53d0dA76BC618eC90D2FF497D400b1F9af5AFc6b"
+      implementation_live_rules:
+        min_purchase_usdc: 10000000
+        per_wallet_cap_ttg: 0
+        version: ttg_primary_market_v1_acquisition_price_25usdc
+        ttg_per_usdc_unit: "40000000000000000"
+        ttg_per_usdc_unit_class: L7_EXECUTED_LEGACY_AFTER_V8_RUNTIME_CUTOVER
+      gov04_amendment_1:
+        status: EXECUTED_LIVE
+        new_implementation: "0xB3bCBc8F90b66E88961C2E8F178924F3200D6aA1"
+        opId: "0xb33dfdf23ffcfc0ad05ebe68d0a44a836bc856dc75a34d2101ed6eabb25703bc"
+        rules_live_yet: true
+        pending_min_purchase_usdc: 10000000
+        pending_per_wallet_cap_ttg: 0
+        ssot: docs/runbook/TT-GOV-04-PUBLIC-SALE-AMENDMENT-1-WAITING-ETA-LATEST.md
+      primary_acquisition_25usdc:
+        status: L7_EXECUTED_LEGACY_AFTER_V8_RUNTIME_CUTOVER
+        target_ttg_per_usdc_unit: "40000000000000000"
+        path: upgradeTo_only_storage_compatible_impl
+        impl_source: contracts/src/TtgPrimaryMarketV1AcquisitionPrice25Usdc.sol
+        impl_address: "0x53d0dA76BC618eC90D2FF497D400b1F9af5AFc6b"
+        impl_deploy_tx: "0xa7680500b6bfae4bcdf346b251b0470a8d6dccd23e8ddc3be1f7383e92c9fc4a"
+        impl_codehash: "0xd6fb615856a472e8a80aab2128e8b8e2761506d172114dadeaafa282525e0a3c"
+        timelock_salt: "0x305a8f1c56ac5606fafbf6fcee021148d4bd5cb511043ef3c11b04d652326331"
+        upgrade_calldata: "0x3659cfe600000000000000000000000053d0da76bc618ec90d2ff497d400b1f9af5afc6b"
+        opId: "0xb7d2a7c37a6f8aca08d41a1f0c54ded6d83429a918cda89b9271aaad0b551b12"
+        opId_scheduled: true
+        execute_tx: "0x132909b178c5b4c49b50a026fc1e39a0a18c8c38d4d60daefbf6262d6a6454d2"
+        execute_utc: "2026-08-17T03:22:27Z"
+        prior_package_fingerprint: "0xc678df89630fbdb06f74e611646d1f2ddaf64b47e7caed150cdb0df3ef119522"
+        package_fingerprint_bound: "0xfb4e95a7ef94203605b7317e42f73923603b4bd0dca727323ffc8b953f5eb00c"
+        ssot: docs/runbook/TT-PM25USDC-EXECUTE-VERIFIED-LATEST.md
+        schedule_forbidden_until_owner_auth: false
+        execute_forbidden_until_owner_auth: false
+        official_www_bake_forbidden_until_owner_auth: true
+        reality_forbidden_until_owner_auth: true
+      trading_enabled: false
+      note: >
+        OLD PM + GOV-04 / $25 impl 0x53d0…Fc6b · LEGACY after V8 Official runtime cutover.
+        Do not promote. Do not treat as Official living PM.
 
     seat_registry:
       contract: TtgSeatConcentrationRegistry
@@ -147,6 +279,23 @@ contracts:
       proxy_admin_planned: GovernanceTimelock
       env_keys: [SEAT_REGISTRY_ADDRESS]
       sepolia_lineage_key: seat_registry_address
+      note: >
+        GOV-03 concentration registry · NOT the CI-01 Active Seat SSOT.
+        Living CI-01 = active_region_steward_seat_registry below.
+
+    active_region_steward_seat_registry:
+      contract: ActiveRegionStewardSeatRegistry
+      source: contracts/src/ActiveRegionStewardSeatRegistry.sol
+      category: governance_controlled
+      posture: IMMUTABLE_EXEMPT
+      address_status: DEPLOYED_VERIFIED
+      address: "0x68e55dE891256D20e59e2d3484918392186980bd"
+      official_live: false
+      wiring_status: DEPLOYED_NOT_WIRED
+      note: >
+        CI-01 L7 deployed (codesize 5010 · Wave 0 bytecode full match).
+        Wired into NEW FeeRouter seatRegistry via CI-02 A. Official hop still OLD FR.
+        /meta seat_registry_address remains null. Do not treat as Official live.
 
     region_steward_stake_pool:
       contract: RegionStewardStakePool
@@ -224,33 +373,145 @@ contracts:
       contract: EscrowFactoryV2
       source: contracts/src/EscrowFactoryV2.sol
       deploy_script: contracts/script/DeployEscrowFactoryV2.s.sol
+      category: lineage_historical
+      posture: GUARDIAN_OWNED
+      address_status: DEPLOYED_VERIFIED
+      address: "0x052052f06bfc15cbd63606252db68b4b445aa4f7"
+      env_keys: []
+      guardian_planned: GovernanceTimelock
+      mainnet_path: LINEAGE_ONLY_NOT_OFFICIAL_CREATE
+      abi_002_status: DEPLOYED_VERIFIED_ON_CHAIN
+      preparation_artifacts:
+        - contracts/abi/EscrowV2.json
+        - contracts/abi/EscrowFactoryV2.json
+        - frontend/dapp/abis/EscrowFactoryV2.lineage.json
+        - contracts/script/DeployEscrowFactoryV2.s.sol
+      note: >
+        HISTORICAL lineage only · code=yes · eth_call settlementRouter() reverts.
+        Official Product createEscrow MUST use escrow_factory_v2_wired (env ESCROW_FACTORY_V2_*).
+        Do not rebind Official FE/API to this address.
+      living_cite: lineage_only
+
+    escrow_factory_v2_wired:
+      contract: EscrowFactoryV2Wired
+      source: contracts/src/EscrowFactoryV2Wired.sol
+      deploy_script: contracts/script/DeployMainnetMoneyPathFill.s.sol
       category: user_facing
       posture: GUARDIAN_OWNED
-      address_status: TBD
-      address: TBD
+      address_status: DEPLOYED_VERIFIED
+      address: "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6"
+      deploy_tx: "0x0fbbc579e4fcac18bbb37b861fcf6be4b8c9b13c6a247b2d7c6363723d4e6bdd"
       env_keys:
         - ESCROW_FACTORY_V2_ADDRESS
         - NEXT_PUBLIC_ESCROW_FACTORY_V2_ADDRESS
       guardian_planned: GovernanceTimelock
-      mainnet_path: REQUIRED
-      abi_002_status: DEPLOYMENT_PREPARATION_READY
-      preparation_artifacts:
-        - contracts/abi/EscrowV2.json
-        - contracts/abi/EscrowFactoryV2.json
-        - contracts/script/DeployEscrowFactoryV2.s.sol
-      note: P3-04 prep ready — address TBD until broadcast · not MAINNET_READY
+      guardian_onchain: "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7"
+      mainnet_path: TARGET_MONEY_PATH_FACTORY
+      note: >
+        Owner fill 2026-08-09 · createEscrow wires setSettlementRouter.
+        Historical FactoryV2 0x052052f0… retained as lineage (no settlementRouter).
+        Official Product bake must bind this Wired factory for TARGET Escrow→Settlement.
+        TT_PRODUCTION_GO remains NO_GO until Reality Evidence sealed.
+      prep_track: registry/mainnet-money-path-closure-prep.v1.yaml
+      living_cite: evidence/GO_mainnet_money_path/OWNER-FILL-BROADCAST-TXS-LATEST.json
+
+    settlement_router:
+      contract: SettlementRouter
+      source: contracts/src/SettlementRouter.sol
+      category: user_facing
+      posture: OWNER_TIMELOCK
+      address_status: DEPLOYED_VERIFIED
+      address: "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372"
+      deploy_tx: "0xeb74f6afa687e52aa709ee47fc97efce0f2c96898459a6024b009d15c428fdf4"
+      env_keys:
+        - SETTLEMENT_ROUTER_ADDRESS
+        - NEXT_PUBLIC_SETTLEMENT_ROUTER_ADDRESS
+      owner_planned: GovernanceTimelock
+      owner_onchain: "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7"
+      fee_router_onchain: "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72"
+      sepolia_lineage_key: settlement_router_address
+      prep_track: registry/mainnet-money-path-closure-prep.v1.yaml
+      official_live: false
+      superseded_as_official_create_path: true
+      note: >
+        Track1 SettlementRouter. Track1 10 USDC CLOSED_REALITY remains on this address.
+        After Track2 T2 (2026-08-14) Wired no longer points here. Official create path = SR-FT.
+        FTB 20260812 table still labels this Official live (LOCKED stamp lag). Do not rewrite FTB.
+        TT_PRODUCTION_GO=NO_GO. P0_COMMERCIAL_MONEY_PATH_BLOCKER=false after Owner A 1 USDC money-path PASS.
+        KEEP listing remains Track1 SR for alignment pin. Official book remainder = GAP-E2E-JOURNEY.
+      living_cite: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+
+    settlement_router_factory_trust:
+      contract: SettlementRouterFactoryTrust
+      source: contracts/src/SettlementRouterFactoryTrust.sol
+      category: user_facing
+      posture: OWNER_TIMELOCK
+      address_status: DEPLOYED_VERIFIED
+      address: "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147"
+      deploy_tx: "0xfc7a505a978538a85081010e812269e6856ae55b34df8de2fef0ce06a1d5bef8"
+      env_keys: []
+      owner_onchain: "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7"
+      fee_router_onchain: "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72"
+      trusted_factory_onchain: "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6"
+      official_live: true
+      wiring_status: WIRED
+      track2_status: TRACK2_T1_T2_EXECUTE_PASS
+      T1_opId: "0x35f54aa1bd6eb0f3349ebf3c01cb376d012fbb82cc391090c66dc9b8e58a9ebe"
+      T2_opId: "0xbdc82edb7d3ff299b12d46c01d50f3610147ee8d735d29dea87c0500ccf4e21a"
+      wait_until_utc: "2026-08-14T09:03:11Z"
+      note: >
+        WIRED Official create path (L7+L8). T1/T2 done=true. Owner A 1 USDC money-path PASS.
+        Official book remainder = GAP-E2E-JOURNEY. FTB parent 20260812 immutable. Do not rewrite parent bytes.
+        SSOT overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      living_cite: docs/runbook/TT-TRACK2-SAME-WAVE-OFFICIAL-CUT-RESULT-LATEST.md
+      dual_wait_ssot: docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
 
     fee_router:
       contract: FeeRouter
       source: contracts/src/FeeRouter.sol
       category: governance_controlled
       posture: OWNER_CONFIGURABLE
-      address_status: TBD
-      address: TBD
-      env_keys: [FEE_ROUTER_ADDRESS]
+      address_status: DEPLOYED_VERIFIED
+      address: "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72"
+      deploy_tx: "0x15f8b0566978158829104b7dacb3da9a50186f11b8372efb16f048b84527f118"
+      env_keys:
+        - FEE_ROUTER_ADDRESS
+        - NEXT_PUBLIC_FEE_ROUTER_ADDRESS
       owner_planned: GovernanceTimelock
+      owner_onchain: "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7"
       emergency: distributePaused via onlyOwner
       sepolia_lineage_key: fee_router_address
+      prep_track: registry/mainnet-money-path-closure-prep.v1.yaml
+      note: >
+        Owner fill 2026-08-09 · Reality-partial fee legs (Safe/Safe/P4Cap/P4Cap).
+        BPS defaults 4500/3575/1100/825 MATCH docs/spec/83 §3 / 84 — but destinations are
+        INTERIM CUSTODY, NOT 83 RegionVault→Snapshot→Claim final.
+        region_vault Official = TBD. No-steward (83 appendix B.5 / vacancy) NOT on Official Money Path.
+        Do not copy Sepolia. Do not claim 83 steward-split GO from Money Path Reality.
+        CI-02 NEW FeeRouter 0xb6bf… A executed 2026-08-17; Official hop B not scheduled. Official still this address.
+        TT_PRODUCTION_GO=NO_GO until Reality Evidence. Living gap:
+        evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-83-GROUNDED-LATEST.json
+      living_cite: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      design_cite: docs/spec/83-区域治理与收益分配-协议白皮书.md
+      gap_cite: evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-83-GROUNDED-LATEST.json
+
+    fee_router_ci02_new:
+      contract: FeeRouter
+      source: contracts/src/FeeRouter.sol
+      category: governance_controlled
+      address_status: DEPLOYED_VERIFIED
+      address: "0xb6bfEDA39D242395a132AB9340bA4A17ce757655"
+      official_live: false
+      wiring_status: CONFIG_EXECUTED_HOP_NOT_CUTOVER
+      opId: "0xa26f09da1309c85b128ea343aa7aa0ebe806025fc34a9857fcd3c2e4481d2479"
+      eta_utc: "2026-08-16T13:42:11Z"
+      execute_tx: "0x69e6363b87760756ba153b7f7e6af661b5bbf80822fce95a0b49442e0e66c065"
+      note: >
+        CI-02 A setSeatRoutingConfig executed 2026-08-17 (done=true).
+        Official hop B SR-FT.setFeeRouter(NEW) never scheduled.
+        Official /meta and SR-FT.feeRouter still OLD 0x2aF47C.
+        Wave 0: source bytecode full match. Forbidden cutover / www bake this wave.
+      living_cite: docs/runbook/TT-CI02-EXECUTE-VERIFIED-LATEST.md
 
   fund_stack_legacy:
     legacy_treasury:
@@ -269,6 +530,11 @@ contracts:
       address: TBD
       env_keys: [REGION_VAULT_ADDRESS]
       sepolia_lineage_key: region_vault_address
+      note: >
+        83 Target destination for FeeRouter countryBucket (45%). NOT Official on Mainnet Money Path yet.
+        Current Mainnet countryBucket = Timelock admin Safe (interim). Do not invent address.
+        After Track1 Reality seal, Owner may Timelock setRoutingConfig → RegionVault.
+        CI-03 JP vault is NOT_DEPLOYED (no address). Do not label DEPLOYED.
 
     reserve_vault:
       contract: ReserveVault
@@ -292,11 +558,17 @@ operational_wallets:
   timelock_admin_multisig:
     role: TIMELOCK_ADMIN_ADDRESS
     category: operational
-    address_status: PLANNED
-    address: TBD
+    address_status: DEPLOYED_VERIFIED
+    address: "0x96491aa894658ff7946506318c49F3c76b8f40e7"
     holder_planned: Gnosis_Safe_multisig
+    sole_owner_eoa: "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+    threshold: "1/1"
+    roles_matrix_verified: true
+    roles_matrix_verified_stamp_utc: "2026-08-12T10:38:03Z"
+    roles_matrix_evidence: docs/runbook/TT-AXIS05-ROLES-MATRIX-REALITY-VERIFY-LATEST.md
     controls: [GovernanceTimelock.admin, schedule, cancel]
-    note: Created at mainnet deploy prep (P3-06) — not in P3-03
+    note: Official live Timelock admin Safe · AXIS-05 roles matrix cast PASS · living cite frontend/.env.mainnet.local
+    living_cite: frontend/.env.mainnet.local
 
   deployer_eoa:
     role: broadcast_deployer

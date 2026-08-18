@@ -9,12 +9,12 @@
 **Final Reality / Release Certification:** [`TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST`](./TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md) · `FINAL_REALITY_RELEASE_CERTIFICATION_PASS` · `blocking_p0_p1=0` · `2026-08-18T03:20:00Z` · **≠** Production GO  
 **Production GO 重评（只读 · **FROZEN unique Final Closure entry**）：** [`TT-PRODUCTION-GO-REASSESSMENT-LATEST`](./TT-PRODUCTION-GO-REASSESSMENT-LATEST.md) · `TT_PRODUCTION_GO_REASSESSMENT_STOP` · `required_before_go=8` · `hard_gate=REFUSED` · Owner 裁决 **NOT_THIS_TURN** · successor `TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH` · FE `FROZEN_LATEST_PRODUCT_BASELINE` · **≠** Production GO  
 **Web3 Active Truth:** Ethereum mainnet · **NEW TTG / NEW PM / NEW Governor ACTIVE** · **KEEP** Wired + Official SR + Official OLD FeeRouter + Timelock（同一身份）  
-**Product Truth:** Official **API** 必须对齐下表 ACTIVE 地址；Official **www** = 冻结 OLD bake（Expected Difference · 禁止 bake）  
+**Product Truth:** Official **API** 必须对齐下表 ACTIVE 地址；Official **www** = `FROZEN_LATEST_PRODUCT_BASELINE`（`daa5ae87` · `2026-08-16T15:15:49Z` · **禁止 bake / checkout 旧 FE**）  
 **Sepolia / Local:** 架构/ABI/流程对齐 · **独立地址** · **≠** Official  
 **Reality Wave:** `TRACK1_REALITY_SEALED` · execute `0xe575…e88e04` · release `0x271e…0f796` · Escrow status=3 / USDC=0 · `isEscrow=true` · conservation `10e6=9.5e6+0.5e6+0` · [`Seal`](./TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.md)  
 **money_path 活真源：** `MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED`（**禁止**再读 `WAITING_ETA` / `MAINNET_MONEY_PATH_INCOMPLETE` / Settlement·Fee **UNSET** 当活叙事）  
-**双等待冻结（Money Path 独立轨 · 未因 V8 自动消失）：** `WAITING_TRACK2_TIMELOCK_ETA` + `WAITING_GOV04_TIMELOCK_ETA` · [`DUAL-WAIT FREEZE`](./TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md) · GOV-04 pending impl 在 **OLD PM proxy** = **LEGACY for Official TTG sale**  
-**`P0_COMMERCIAL_MONEY_PATH_BLOCKER`:** **TRUE**（Official 仍每单 Timelock allowlist · 等 Track2 Reality PASS）  
+**双等待冻结（Money Path 独立轨 · 未因 V8 自动消失）：** Track2 = `TRACK2_1USDC_CLOSED_REALITY_OWNER_A`（ETA elapsed · live `/meta` create hop SR-FT · KEEP SR listing `0xe5C3…` 未换针）+ `WAITING_GOV04_TIMELOCK_ETA`（DEFERRED_POST_GO） · [`DUAL-WAIT FREEZE`](./TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md) · GOV-04 pending impl 在 **OLD PM proxy** = **LEGACY for Official TTG sale**  
+**`P0_COMMERCIAL_MONEY_PATH_BLOCKER`:** **FALSE**（living · cite Owner A 2026-08-17 Track2 L7+L8；FTB 旧 stamp TRUE = EXPLAINED_FTB_STAMP_LAG）  
 **独立未自动轨：** FeeRouter 四桶 Timelock distribute · Track2 execute/切流 · GOV-04 on OLD proxy · 83 RegionVault · Bitget HOLD · **`TT_PRODUCTION_GO`**  
 **`TT_PRODUCTION_GO: NO_GO`** · Hard Gate **REEVAL 仍 REFUSED/NO_GO** · ≠ Production Ready · Final Reality / Release Certification **已 PASS** · Production GO 重评 **STOP**（`required_before_go=8` · Owner 裁决未开）  
 **区域分账设计真源（中文 · Target）：** [`83`](../spec/83-区域治理与收益分配-协议白皮书.md) · Living gap：[`83-GROUNDED`](../../evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-83-GROUNDED-LATEST.md)
@@ -31,7 +31,7 @@ Web3 Active Truth     = NEW TTG / NEW PM / NEW Governor + KEEP Money Path
 Official createEscrow = EscrowFactoryV2Wired 0xEE0BE3…  （ABI: frontend/dapp/abis/EscrowFactoryV2Wired.json）
 FactoryV2 0x0520…     = LINEAGE ONLY · 无 settlementRouter · 禁止重新绑到官网 FE/API
 Official API          = 必须对齐下表 ACTIVE
-Official www          = FROZEN OLD bake daa5ae87 · Expected Difference · 禁止 bake
+Official www          = FROZEN_LATEST_PRODUCT_BASELINE daa5ae87 · 禁止 bake / checkout
 Bitget HOLD           = 独立轨 · 不得 unwind V8 针
 TT_PRODUCTION_GO      = NO_GO · Final Reality / Release Certification = PASS · Production GO 重评 = STOP · required_before_go=8 · Owner 裁决 NOT_THIS_TURN
 ```
@@ -102,9 +102,9 @@ SSOT：[`TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST`](./TT-DUAL-WAIT-TRACK2-GOV04-F
 
 | 轨 | 状态 | 关键 pin |
 |----|------|---------|
-| **Track2** | `WAITING_TRACK2_TIMELOCK_ETA` | T1 `0x35f54aa1…9ebe` · T2 `0xbdc82edb…e21a` · ETA **`2026-08-14T09:03:11Z`** |
+| **Track2** | `TRACK2_1USDC_CLOSED_REALITY_OWNER_A` | T1 `0x35f54aa1…9ebe` · T2 `0xbdc82edb…e21a` · ETA elapsed · live `/meta` create hop SR-FT `0xD1DA…` · KEEP SR listing `0xe5C3…` · KEEP identity not swapped |
 | **GOV-04（OLD proxy）** | `WAITING_GOV04_TIMELOCK_ETA` | opId `0xb33dfdf2…03bc` · newImpl `0xB3bC…` · **LEGACY for Official TTG sale** |
-| 商业 P0 | **TRUE** | 新单仍须逐单 Timelock allowlist |
+| 商业 P0 | **FALSE** | living · Owner A money-path PASS；Official book 仍 GAP-E2E-JOURNEY |
 | 禁止 | — | 提前 execute · Track1 重跑 · FeeRouter 四桶 / 83 / Stake 插队 · 翻 GO · 用 Bitget unwind V8 |
 
 ## 2 · 产品 / ABI 对齐
@@ -138,14 +138,14 @@ SSOT：[`TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST`](./TT-DUAL-WAIT-TRACK2-GOV04-F
 |----|------|
 | Owner fill Wired/Fee/Settlement | **PASS** |
 | Official API Runtime NEW V8 | **PASS** · cite consistency cert |
-| Official www bake | **FROZEN OLD** · Expected Difference |
+| Official www bake | **FROZEN_LATEST_PRODUCT_BASELINE** · `daa5ae87` / `2026-08-16T15:15:49Z` · 禁止 bake / checkout |
 | Track1 10 USDC + dual confirm + setEscrow execute + release | **SEALED** · escrow `0x9996FBD5…B8d6` |
 | V8 Registry/Runtime/L7 consistency | **PASS_STOP** · 引用不重证 |
 | FTB Cycle absorb V8 | **THIS FILE** · parent 20260812 immutable |
-| Track2 SR-FT deploy + T1/T2 schedule | **WAITING_TRACK2_TIMELOCK_ETA** · ETA **`2026-08-14T09:03:11Z`** |
+| Track2 SR-FT deploy + T1/T2 schedule | **TRACK2_1USDC_CLOSED_REALITY_OWNER_A** · live `/meta` create hop SR-FT · KEEP SR listing 未换针 |
 | GOV-04 on OLD PM proxy | **LEGACY for Official TTG sale** |
 | Final Reality / Release Certification | **PASS** · `blocking_p0_p1=0` · 引用不重证 |
-| `P0_COMMERCIAL_MONEY_PATH_BLOCKER` | **TRUE** |
+| `P0_COMMERCIAL_MONEY_PATH_BLOCKER` | **FALSE**（living） |
 | `TT_PRODUCTION_GO` | **NO_GO** |
 
 Wallets：A deploy/traveler `0xe1e732…` · B TTG/guide `0xF34804…`
@@ -158,11 +158,11 @@ Wallets：A deploy/traveler `0xe1e732…` · B TTG/guide `0xF34804…`
 - 把本 Cycle 或 Final Reality cert PASS 写成 Production GO  
 - 重跑已闭合 L7/`/meta`/Registry 来再证明一遍 V8  
 - 用 Bitget HOLD unwind V8 针或把 living FTB 退回 OLD TTG/PM/Governor  
-- Official www bake · 再发 `setGovernor` · CI-02 hop B · Money Path 再部署 · 重复 1 USDC 真金  
+- Official www bake · checkout 旧 FE · 再发 `setGovernor` · CI-02 hop B · Money Path 再部署 · 重复 1 USDC 真金  
 - 把 NEW PM 写成仍用 OLD live impl `0xDf9e…`（min=100）  
 - 阅读本 SSOT 时仍采用「Fee/Settlement UNSET / MISSING_OWNER_FILL / Track1 仍 WAITING_ETA」旧叙事  
 - 官网 FE/API 重新绑定 lineage FactoryV2 `0x0520…`  
-- 把 SR-FT 写成 Official 已切 Factory-Trust  
+- 把 KEEP SR 对齐针改写成 SR-FT，或为对齐 bake www  
 - 测试网/本地复制主网地址  
 - 把 FeeRouter 已部署 / Track1 Reality 写成 [`83`](../spec/83-区域治理与收益分配-协议白皮书.md) 区域主理人分账商业终局 GO  
 

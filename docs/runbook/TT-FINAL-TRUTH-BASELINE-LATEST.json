@@ -54,19 +54,20 @@
   "tt_production_go": "NO_GO",
   "phase_now": "FTB_V8_CYCLE_ACTIVE_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN",
   "umbrella_name": "TravelTrust Final Truth Baseline",
-  "identity_rule": "FTB LATEST is sole living system SSOT (this V8 Cycle). Parent 20260812 is immutable historical fact and must not be overwritten. Web3 Active Truth = NEW TTG / NEW PM / NEW Governor + KEEP Wired Money Path identity. Product Truth = Official API must match ACTIVE addresses; Official www remains frozen OLD bake (Expected Difference). Historical FactoryV2 0x0520 = lineage only. Sepolia/Local align architecture/ABI/flow with independent addresses. Cite V8 consistency cert; do not recast closed L7. Final Reality / Release Certification = PASS. Production GO reassessment = STOP required_before_go=8 hard_gate=REFUSED Owner verdict NOT_THIS_TURN. Bitget HOLD is independent and must not unwind this pin.",
+  "identity_rule": "FTB LATEST is sole living system SSOT (this V8 Cycle). Parent 20260812 is immutable historical fact and must not be overwritten. Web3 Active Truth = NEW TTG / NEW PM / NEW Governor + KEEP Wired Money Path identity. Product Truth = Official API must match ACTIVE addresses; Official www = FROZEN_LATEST_PRODUCT_BASELINE daa5ae87 / 2026-08-16T15:15:49Z (forbid bake/checkout). Historical FactoryV2 0x0520 = lineage only. Sepolia/Local align architecture/ABI/flow with independent addresses. Cite V8 consistency cert; do not recast closed L7. Final Reality / Release Certification = PASS. Production GO reassessment = STOP required_before_go=8 hard_gate=REFUSED Owner verdict NOT_THIS_TURN. Bitget HOLD is independent and must not unwind this pin.",
   "owner_lock": {
     "sole_system_ssot": "TT_FINAL_TRUTH_BASELINE",
     "web3_active_truth": "new_ttg_new_pm_new_governor_keep_wired_money_path",
-    "product_truth": "official_api_must_match_active_www_frozen_old_bake_expected_difference",
+    "product_truth": "official_api_must_match_active_www_frozen_latest_product_baseline",
     "candidate_status": "DEMOTED_TESTNET",
     "user_funds_enabled": false,
     "primary_market_trading_enabled": false,
     "tt_production_go": "NO_GO",
     "production_ready_claim": "FORBIDDEN",
-    "hard_gate": "REEVAL_STILL_REFUSED_NO_GO_OPEN_AXIS_05_07_08_09_11_12_14",
-    "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
-    "dual_wait": "WAITING_TRACK2_TIMELOCK_ETA+WAITING_GOV04_TIMELOCK_ETA"
+    "hard_gate": "REEVAL_STILL_REFUSED_NO_GO_REMAINING_GAP_E2E_THEN_AXIS_14",
+    "P0_COMMERCIAL_MONEY_PATH_BLOCKER": false,
+    "dual_wait": "TRACK2_1USDC_CLOSED_REALITY_OWNER_A+WAITING_GOV04_TIMELOCK_ETA_DEFERRED_POST_GO",
+    "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE"
   },
   "web3": {
     "role": "SOLE_LIVE_OFFICIAL_WEB3",
@@ -139,17 +140,26 @@
       ],
       "cite": "docs/runbook/TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.json"
     },
-    "settlement_router_factory_trust_status": "DEPLOYED_UNWIRED_NOT_OFFICIAL_LIVE",
-    "wired_still_points_to_track1_sr": true,
+    "settlement_router_factory_trust_status": "WIRED_OFFICIAL_CREATE_HOP",
+    "wired_still_points_to_track1_sr": false,
     "gov04_rules_live_on_proxy": false,
     "gov04_on_old_proxy_class": "LEGACY_FOR_OFFICIAL_TTG_SALE",
     "primary_market_live_min_purchase_usdc": 1.0,
     "primary_market_quote_class": "TTG_V8_OFFICIAL_RUNTIME_QUOTE",
     "primary_market_quote_cited_do_not_recast": {
-      "usdc_per_ttg": 0.00001,
+      "usdc_per_ttg": 1e-05,
       "ttg_per_usdc_unit": "100000000000000000000000",
       "min_purchase_usdc": 1.0,
       "receive_amount": "100000.0000"
+    },
+    "settlement_router_live_meta_overlay": {
+      "address": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "role": "SR_FT_OFFICIAL_CREATE_HOP_LIVE_META",
+      "not_official_factory_trust_create_hop": false,
+      "keep_track1_sr_listed": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+      "alignment_pin_settlement_router": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+      "cite": "GET https://api.web3-ttg.com/meta + Owner A Track2 T1/T2",
+      "confirm_design": true
     }
   },
   "product_runtime": {
@@ -157,13 +167,15 @@
     "web_base": "https://www.web3-ttg.com",
     "must_match_web3_addresses": true,
     "official_api": "MUST_MATCH_ACTIVE_ADDRESSES",
-    "official_www": "FROZEN_OLD_BAKE_EXPECTED_DIFFERENCE",
+    "official_www": "FROZEN_LATEST_PRODUCT_BASELINE",
     "www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
     "www_build_time": "2026-08-16T15:15:49Z",
     "web_git_sha_cite": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
     "alignment_gate": "scripts/gates/check-official-mainnet-web3-alignment.sh",
     "absorb_gate": "scripts/dev/run-ftb-v8-cycle-absorb-gate.sh",
-    "final_reality_release_cert_gate": "scripts/dev/run-final-reality-release-certification.sh"
+    "final_reality_release_cert_gate": "scripts/dev/run-final-reality-release-certification.sh",
+    "forbid_www_bake": true,
+    "forbid_checkout_old_fe": true
   },
   "three_env": {
     "official": {
@@ -264,7 +276,11 @@
     "Then_Production_GO_reassessment_not_this_cycle_stamp",
     "Money_Path_KEEP_identity_Track2_dual_wait_independent",
     "Bitget_HOLD_independent_must_not_unwind_v8_pin",
-    "FeeRouter_distribute_83_require_separate_Owner_auth"
+    "FeeRouter_distribute_83_require_separate_Owner_auth",
+    "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH_remaining_GAP_E2E_then_AXIS_14",
+    "Do_not_reopen_TT_PRODUCTION_GO_REASSESSMENT_this_turn",
+    "Do_not_flip_TT_PRODUCTION_GO",
+    "Do_not_rewrite_STOP_required_before_go_8"
   ],
   "dual_track": {
     "doctrine": "governance_slow_business_fast",
@@ -281,23 +297,23 @@
       ]
     },
     "track2_fast_checkout_factory_trust": {
-      "status": "WAITING_TRACK2_TIMELOCK_ETA",
+      "status": "TRACK2_1USDC_CLOSED_REALITY_OWNER_A",
       "contract": "contracts/src/SettlementRouterFactoryTrust.sol",
       "mainnet_sr_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
-      "mainnet_deploy": "DEPLOYED_UNWIRED_SCHEDULED",
-      "official_live": false,
+      "mainnet_deploy": "WIRED",
+      "official_live": true,
       "trustedFactory": "0x0000000000000000000000000000000000000000",
       "ssot": "docs/runbook/TT-TRACK2-FACTORY-TRUST-OFFICIAL-PROMOTION-1-LOCAL-PREP-LATEST.md",
-      "next": [
-        "at_2026-08-14T09:03:11Z_fresh_preflight_then_T1_T2_Official_1USDC"
-      ]
+      "next": [],
+      "official_live_meaning": "create_hop_sr_ft_live_meta_dual_listed_keep_track1_sr",
+      "keep_identity_not_swapped": true
     },
     "recorded_utc": "2026-08-12T10:15:00Z"
   },
   "dual_track_parallel_prep": {
     "evidence": "evidence/GO_mainnet_money_path/DUAL-TRACK-PARALLEL-PREP-LATEST.json",
     "track1": "TRACK1_REALITY_SEALED",
-    "track2_mainnet_cutover": "WAITING_TRACK2_TIMELOCK_ETA",
+    "track2_mainnet_cutover": "TRACK2_T1_T2_EXECUTE_PASS",
     "tt_production_go": "NO_GO",
     "superseded_by": "docs/runbook/TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md",
     "recorded_utc": "2026-08-12T10:15:00Z"
@@ -366,7 +382,7 @@
     "ssot": "docs/runbook/TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md",
     "prep_board": "docs/runbook/TT-DUAL-WAIT-OFFICIAL-WEB3-AXIS-PREP-BOARD-LATEST.md",
     "track2": {
-      "status": "WAITING_TRACK2_TIMELOCK_ETA",
+      "status": "TRACK2_1USDC_CLOSED_REALITY_OWNER_A",
       "sr_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
       "T1_opId": "0x35f54aa1bd6eb0f3349ebf3c01cb376d012fbb82cc391090c66dc9b8e58a9ebe",
       "T1_eta_utc": "2026-08-14T09:02:59Z",
@@ -374,7 +390,14 @@
       "T2_eta_utc": "2026-08-14T09:03:11Z",
       "preempt_at_utc": "2026-08-14T09:03:11Z",
       "execute_authorized": false,
-      "official_cutover_done": false
+      "official_cutover_done": false,
+      "eta_elapsed": true,
+      "cite_owner_a": "docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.json",
+      "closed_utc": "2026-08-17T04:50:00Z",
+      "official_create_hop": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "keep_sr": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+      "official_create_hop_live_meta": true,
+      "keep_identity_not_swapped": true
     },
     "gov04": {
       "status": "WAITING_GOV04_TIMELOCK_ETA",
@@ -383,11 +406,34 @@
       "new_implementation": "0xB3bCBc8F90b66E88961C2E8F178924F3200D6aA1",
       "upgrade_executed": false,
       "rules_live": false,
-      "waits_for_track2_first": true,
-      "purchase_auth_env": "TRAVELTRUST_OWNER_PM_PURCHASE_OK=1"
+      "waits_for_track2_first": false,
+      "purchase_auth_env": "TRAVELTRUST_OWNER_PM_PURCHASE_OK=1",
+      "class": "DEFERRED_POST_GO_LEGACY_OLD_PM_PROXY"
     },
-    "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+    "P0_COMMERCIAL_MONEY_PATH_BLOCKER": false,
     "pin_recheck_utc": "2026-08-12T10:07:06Z"
   },
-  "evidence_cites": {}
+  "evidence_cites": {},
+  "production_go_final_closure_batch": {
+    "human": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.md",
+    "machine": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.json",
+    "status": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH_OPEN",
+    "cite_stop_required_before_go": 8,
+    "tt_production_go": "NO_GO",
+    "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE",
+    "remaining_before_axis14": [
+      "GAP-E2E-JOURNEY",
+      "AXIS-14"
+    ]
+  },
+  "stamp_lag_cluster": {
+    "status": "CLOSED_THIS_BATCH",
+    "p0_commercial_money_path_blocker_living": false,
+    "p0_commercial_money_path_blocker_prior_stamp": true,
+    "cite": "docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.json",
+    "do_not_recast_l7": true,
+    "do_not_change_keep_sr": true,
+    "keep_sr": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "closed_utc": "2026-08-18T06:00:00Z"
+  }
 }

@@ -1,0 +1,143 @@
+{
+  "schema": "traveltrust.production_go_final_closure_batch.v1",
+  "machine_key": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH",
+  "status": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH_STOP_AND_REPORT",
+  "issued_at_utc": "2026-08-18T05:00:00Z",
+  "stopped_at_utc": "2026-08-18T06:00:00Z",
+  "stop_item": "GAP-E2E-JOURNEY",
+  "cite_stop_pack": {
+    "human": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.md",
+    "machine": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.json",
+    "status": "TT_PRODUCTION_GO_REASSESSMENT_STOP",
+    "frozen_at_utc": "2026-08-18T04:00:00Z",
+    "freeze_sha": "94785a66",
+    "required_before_go": 8,
+    "do_not_rewrite_stop_counts": true
+  },
+  "tt_production_go": "NO_GO",
+  "owner_production_go_verdict": "NOT_THIS_TURN",
+  "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE",
+  "frontend_lock": {
+    "status": "FROZEN_LATEST_PRODUCT_BASELINE",
+    "forbid_frontend_page_component_layout_css_font_color_interaction_i18n_asset_or_product_logic": true,
+    "forbid_checkout_rollback_reset_to_old_fe_tip": true,
+    "forbid_web_rebuild_bake_deploy": true,
+    "copy_text_in_docs_registry_backend_allowed": true,
+    "copy_that_requires_official_www_bake": false,
+    "if_task_requires_frontend_change_or_reship": "STOP_AND_REPORT"
+  },
+  "order": [
+    "AXIS-09",
+    "FTB_STAMP_LAG_CLUSTER",
+    "TT_PSG_PRODUCTION_CERT",
+    "AXIS-08",
+    "AXIS-11",
+    "AXIS-12",
+    "GAP-E2E-JOURNEY",
+    "AXIS-14"
+  ],
+  "reuse_existing_runtime_evidence": true,
+  "forbidden": [
+    "claim_production_go",
+    "auto_flip_tt_production_go",
+    "rewrite_stop_required_before_go",
+    "reopen_tt_production_go_reassessment_before_entry",
+    "repeat_1_usdc_real_money",
+    "rerun_closed_v8_or_2b_or_ci02",
+    "money_path_redeploy",
+    "www_bake",
+    "frontend_ui_ux_change",
+    "bind_track2_escrow_to_official_orders",
+    "seat_vault_deploy",
+    "bitget_unwind_v8_pin",
+    "accept_blocking_risk_via_axis08_path_b"
+  ],
+  "items": [
+    {
+      "id": "AXIS-09",
+      "stop_residual_id": "HG_AXIS_09_READINESS_P0_STAMP",
+      "status": "CLOSED",
+      "close_by": "restamp_existing_owner_a_evidence_not_rebuy",
+      "evidence": "evidence/GO_production_readiness/web3-mainnet-audit/WEB3-MAINNET-PRODUCTION-READINESS-LATEST.json",
+      "verdict": "WEB3_MAINNET_READINESS_P0_CLEARED",
+      "p0": 0,
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "FTB_STAMP_LAG_CLUSTER",
+      "stop_residual_id": "FTB_STAMP_LAG_CLUSTER",
+      "status": "CLOSED",
+      "close_by": "docs_ssot_only_cite_owner_a_and_live_meta",
+      "keep_sr": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+      "p0_commercial_money_path_blocker_living": false,
+      "create_hop_live_meta": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "keep_identity_not_swapped": true,
+      "www": "FROZEN_LATEST_PRODUCT_BASELINE"
+    },
+    {
+      "id": "TT_PSG_PRODUCTION_CERT",
+      "stop_residual_id": "TT_PSG_PRODUCTION_CERT",
+      "status": "CLOSED",
+      "close_by": "existing_psg_ladder_do_not_refresh_frozen_archive",
+      "evidence": "evidence/GO_psg_foundation/production_cert/PSG-PRODUCTION-CERT-LATEST.json",
+      "registry": "registry/psg-phase-b-production-cert.v1.yaml",
+      "production_go": "NO_GO"
+    },
+    {
+      "id": "AXIS-08",
+      "stop_residual_id": "HG_AXIS_08_R01_OR_OWNER_RESIDUAL",
+      "status": "CLOSED",
+      "close_by": "path_b_non_blocking_r01_paperwork_residual_not_fund_loss",
+      "evidence": "evidence/GO_production_readiness/mainnet-cutover-hard-gate/OWNER-RESIDUAL-RISK-SIGNOFF.json",
+      "verdict": "OWNER_RESIDUAL_ACCEPTED",
+      "blocking_risks_accepted": false
+    },
+    {
+      "id": "AXIS-11",
+      "stop_residual_id": "HG_AXIS_11_DEPLOYMENT_PACKAGE",
+      "status": "CLOSED",
+      "close_by": "contracts_abi_freeze_then_package_no_seat_vault_no_www",
+      "freeze": "evidence/GO_production_readiness/web3-freeze/WEB3-FREEZE-MANIFEST-LATEST.json",
+      "package": "evidence/GO_production_readiness/mainnet-deployment-package/MAINNET-DEPLOYMENT-PACKAGE-LATEST.json"
+    },
+    {
+      "id": "AXIS-12",
+      "stop_residual_id": "HG_AXIS_12_SHADOW_LAUNCH_GO",
+      "status": "CLOSED",
+      "close_by": "shadow_harness_cite_existing_indexer_not_1usdc_real_money",
+      "run": "evidence/mainnet_shadow_launch/run_20260818T051800Z",
+      "shadow_launch_verdict": "GO",
+      "chain_id": 1
+    },
+    {
+      "id": "GAP-E2E-JOURNEY",
+      "stop_residual_id": "GAP_E2E_JOURNEY",
+      "status": "STOP_AND_REPORT",
+      "close_by": "official_traveler_book_ui_without_frontend_change",
+      "reason": "Official C2 login/me/guides/market 200 on frozen www, but GET /api/v1/orders items=0 so escrow UI hop has no Official UUID. New order POST, Track2 bind, FE change/www bake, and paper-close are all forbidden this batch. Breakpoint=C2_OFFICIAL_ORDERS_EMPTY.",
+      "report": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-GAP-E2E-STOP-LATEST.md"
+    },
+    {
+      "id": "AXIS-14",
+      "stop_residual_id": "HG_AXIS_14_OWNER_CUTOVER_AUTH",
+      "status": "BLOCKED_UNTIL_PRIOR",
+      "close_by": "signed_auth_json_not_auto_production_go",
+      "depends_on": ["AXIS-09", "FTB_STAMP_LAG_CLUSTER", "TT_PSG_PRODUCTION_CERT", "AXIS-08", "AXIS-11", "AXIS-12", "GAP-E2E-JOURNEY"],
+      "blocked_by": "GAP-E2E-JOURNEY"
+    }
+  ],
+  "entry_to_reopen_reassessment": {
+    "required": {
+      "required_before_go": 0,
+      "unexplained_drift": 0,
+      "hard_gate": "PASS",
+      "tt_psg_production_cert": "PASS",
+      "gap_e2e_journey": "CLOSED"
+    },
+    "this_turn_meets_entry": false
+  },
+  "token_risk_bitget": {
+    "independent_track": true,
+    "must_not_unwind_v8_pin": true
+  }
+}
