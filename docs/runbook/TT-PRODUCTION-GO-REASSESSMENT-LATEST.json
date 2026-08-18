@@ -1,0 +1,345 @@
+{
+  "schema": "traveltrust.production_go_reassessment.v1",
+  "machine_key": "TT_PRODUCTION_GO_REASSESSMENT",
+  "stamp": "TT_PRODUCTION_GO_REASSESSMENT_STOP",
+  "status": "TT_PRODUCTION_GO_REASSESSMENT_STOP",
+  "stop": true,
+  "read_only": true,
+  "frozen_as_final_closure_unique_entry": true,
+  "immutable_after_freeze": true,
+  "do_not_rewrite_counts_to_look_greener": true,
+  "issued_at_utc": "2026-08-18T03:45:00Z",
+  "frozen_at_utc": "2026-08-18T04:00:00Z",
+  "successor_batch": {
+    "machine_key": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH",
+    "opens_after_this_freeze": true,
+    "order": [
+      "AXIS-09",
+      "FTB_STAMP_LAG_CLUSTER",
+      "TT_PSG_PRODUCTION_CERT",
+      "AXIS-08",
+      "AXIS-11",
+      "AXIS-12",
+      "GAP-E2E-JOURNEY",
+      "AXIS-14"
+    ]
+  },
+  "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE",
+  "frontend_lock": {
+    "status": "FROZEN_LATEST_PRODUCT_BASELINE",
+    "forbid_frontend_page_component_layout_css_font_color_interaction_i18n_asset_or_product_logic": true,
+    "forbid_checkout_rollback_reset_to_old_fe_tip": true,
+    "forbid_web_rebuild_bake_deploy": true,
+    "copy_text_in_docs_registry_backend_allowed": true,
+    "copy_that_requires_official_www_bake": false,
+    "if_task_requires_frontend_change_or_reship": "STOP_AND_REPORT"
+  },
+  "tt_production_go": "NO_GO",
+  "owner_production_go_verdict": "NOT_THIS_TURN",
+  "hard_gate": "REFUSED",
+  "hard_gate_live": {
+    "script": "bash scripts/gates/check-mainnet-cutover-hard-gate.sh",
+    "exit": 1,
+    "verdict": "EVIDENCE_INCOMPLETE",
+    "cutover": "CUTOVER_REFUSED",
+    "open_axes": ["AXIS-08", "AXIS-09", "AXIS-11", "AXIS-12", "AXIS-14"],
+    "open_axis_count": 5,
+    "cited_do_not_rerun": true,
+    "note": "Live file-evidence gate this session. Do not recast L7, do not repeat 1 USDC, do not bake Frozen Web, do not execute CI-02 B to green axes."
+  },
+  "unexplained_drift": 0,
+  "required_before_go": 8,
+  "owner_accepted_ed": 6,
+  "deferred_post_go": 8,
+  "already_closed": 12,
+  "cite_do_not_recast": {
+    "final_reality_release_certification": {
+      "human": "docs/runbook/TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md",
+      "machine": "docs/runbook/TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.json",
+      "status": "FINAL_REALITY_RELEASE_CERTIFICATION_PASS",
+      "issued_at_utc": "2026-08-18T03:20:00Z",
+      "blocking_p0_p1": 0,
+      "unexplained_drift": 0
+    },
+    "v8_mainnet_reality_consistency": {
+      "status": "PASS_STOP",
+      "issued_at_utc": "2026-08-18T03:00:00Z"
+    },
+    "gap_1usdc_owner_a": {
+      "human": "docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.md",
+      "status": "CLOSED_REALITY",
+      "do_not_repeat_real_money": true
+    }
+  },
+  "do_not_rerun_closed": [
+    "v8_mainnet_reality_consistency",
+    "money_path_redeploy",
+    "repeat_1_usdc_real_money",
+    "ci02_hop_b",
+    "frozen_web_bake",
+    "resend_setGovernor",
+    "overwrite_ftb_20260812",
+    "recast_consistency_issued_at"
+  ],
+  "token_risk_bitget": {
+    "class": "DEFERRED_POST_GO",
+    "independent_track": true,
+    "must_not_unwind_v8_pin": true,
+    "must_not_become_v8_rollback_condition": true
+  },
+  "residuals": [
+    {
+      "id": "V8_CONSISTENCY_CERT",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "Registry/Runtime/L7 consistency PASS_STOP issued_at_utc=2026-08-18T03:00:00Z. Cite, do not recast."
+    },
+    {
+      "id": "FTB_V8_CYCLE_ABSORB",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "Living FTB V8 Cycle 20260818 ACTIVE_UNIQUE_SSOT. Parent 20260812 immutable."
+    },
+    {
+      "id": "FINAL_REALITY_RELEASE_CERT",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "FINAL_REALITY_RELEASE_CERTIFICATION_PASS blocking_p0_p1=0 unexplained_drift=0 issued_at_utc=2026-08-18T03:20:00Z."
+    },
+    {
+      "id": "TRACK1_MONEY_PATH_SEAL",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "Living FTB web3.status=MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED. Do not rerun Track1."
+    },
+    {
+      "id": "TRACK2_1USDC_OWNER_A",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "GAP-1USDC-HANDOFF CLOSED_REALITY Owner A Track2 L7+L8. Do not repeat 1 USDC real money."
+    },
+    {
+      "id": "CI02_HOP_A",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "CI-02 A setSeatRoutingConfig on NEW FR already PASS_STOP. Do not recast."
+    },
+    {
+      "id": "SETGOVERNOR_RUNTIME",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "Live Timelock governor is NEW 0xD5819a…. Do not resend setGovernor."
+    },
+    {
+      "id": "LOGIN_405_BATCH_A",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "GAP-LOGIN-WWW-405 CLOSED_REALITY. Do not reset Production accounts to green."
+    },
+    {
+      "id": "GAP_SEC_TOKEN_LOCALSTORAGE",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "HttpOnly cookie path CLOSED_REALITY with Login batch."
+    },
+    {
+      "id": "GAP_FE_BFF_BYPASS",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "Official www same-origin BFF CLOSED_REALITY. Do not reopen BATCH-A Session."
+    },
+    {
+      "id": "API_RUNTIME_NEW_KEYS",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "Official API /meta NEW TTG/PM/Governor aligned. Proof is NEW keys, not git_sha."
+    },
+    {
+      "id": "WALLETCONNECT_OFFICIAL_BAKE_FORWARD",
+      "class": "ALREADY_CLOSED",
+      "repair_this_round": false,
+      "fact": "WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY. Not a 16th gap. Do not rebake Frozen Web."
+    },
+    {
+      "id": "FROZEN_WWW_PRODUCT_SURFACE",
+      "class": "OWNER_ACCEPTED_ED",
+      "repair_this_round": false,
+      "disposition": "CONFIRM_DESIGN",
+      "fact": "Owner freeze pin www git_sha=daa5ae87 build_time=2026-08-16T15:15:49Z vs NEW API. Living FTB Product Truth already splits API vs www. Do not bake to look green."
+    },
+    {
+      "id": "API_GIT_SHA_8DF2AB21",
+      "class": "OWNER_ACCEPTED_ED",
+      "repair_this_round": false,
+      "disposition": "CONFIRM_DESIGN",
+      "fact": "TRAVELTRUST_GIT_SHA still stamps 8df2ab21. Proof of new binary is NEW /meta contract keys."
+    },
+    {
+      "id": "ESCROW_FACTORY_V2_LINEAGE_KEY",
+      "class": "OWNER_ACCEPTED_ED",
+      "repair_this_round": false,
+      "disposition": "CONFIRM_DESIGN",
+      "fact": "/meta escrow_factory_v2_address may remain lineage 0x0520. Official create is escrow_factory_address Wired 0xEE0BE3."
+    },
+    {
+      "id": "DUAL_SETTLEMENT_ROUTER_PATHS",
+      "class": "OWNER_ACCEPTED_ED",
+      "repair_this_round": false,
+      "disposition": "CONFIRM_DESIGN",
+      "fact": "Track1 SR 0xe5C3 and SR-FT 0xD1DA both exist. Live /meta settlement may be SR-FT. Not unexplained drift vs living FTB KEEP dual listing. Docs stamp lag of which is Official-live create hop is clustered under FTB_STAMP_LAG_CLUSTER."
+    },
+    {
+      "id": "FTB_HARD_GATE_AXIS_05_07_STAMP",
+      "class": "OWNER_ACCEPTED_ED",
+      "repair_this_round": false,
+      "disposition": "CONFIRM_DESIGN",
+      "fact": "Living FTB owner_lock.hard_gate still names AXIS-05/07. Live hard-gate script this session did not list them OPEN. Cite live script; do not rewrite FTB bytes this round; do not recast L7."
+    },
+    {
+      "id": "USER_FUNDS_AND_PM_TRADING_SWITCH",
+      "class": "OWNER_ACCEPTED_ED",
+      "repair_this_round": false,
+      "disposition": "CONFIRM_DESIGN",
+      "fact": "user_funds_enabled=false and primary_market_trading_enabled=false are the Owner GO switch, not a Defect to 'fix' before reassessment. Stay false until Owner Production GO 裁决."
+    },
+    {
+      "id": "CI02_HOP_B_OFFICIAL_FR_CUTOVER",
+      "class": "DEFERRED_POST_GO",
+      "repair_this_round": false,
+      "fact": "Abort pack: never scheduled. Live Official FR = FTB KEEP OLD 0x2aF47C. Independent future hop. Do not execute B to look green."
+    },
+    {
+      "id": "PM_25_IMPL",
+      "class": "DEFERRED_POST_GO",
+      "repair_this_round": false,
+      "fact": "Independent GOV-04/$25 ladder on OLD proxy. Not V8 identity. Do not bundle with this reassessment."
+    },
+    {
+      "id": "REGION_VAULT_83",
+      "class": "DEFERRED_POST_GO",
+      "repair_this_round": false,
+      "fact": "FeeRouter BPS match 83. RegionVault/Snapshot/Claim/steward split is Target ≠ Live. Do not claim 83 final from money-path."
+    },
+    {
+      "id": "SEAT_VAULT_PROPOSAL_3",
+      "class": "DEFERRED_POST_GO",
+      "repair_this_round": false,
+      "fact": "GAP-STEWARD-SEAT-VAULT NOT_DEPLOYED. AXIS-11 new deploy NOT_THIS_WAVE. Do not deploy Seat/Vault this round."
+    },
+    {
+      "id": "BITGET_HOLD",
+      "class": "DEFERRED_POST_GO",
+      "repair_this_round": false,
+      "fact": "Independent bypass. Must not unwind V8 pin. Must not become V8 rollback. Not a GO repair item."
+    },
+    {
+      "id": "GAP_LEGAL_404",
+      "class": "DEFERRED_POST_GO",
+      "repair_this_round": false,
+      "fact": "P2 alias 404. Alignment GO Gate lists OPEN_P0/P1 only. Not REQUIRED_BEFORE_GO this round."
+    },
+    {
+      "id": "GAP_FE_SCREEN_PARTIAL_ADMIN_RESPONSIVE",
+      "class": "DEFERRED_POST_GO",
+      "repair_this_round": false,
+      "fact": "P2 product/architecture debt. Do not change FIVE-MAIN structure. Not this GO blocker set."
+    },
+    {
+      "id": "GLOBAL_CLOSED_REALITY_PLANE",
+      "class": "DEFERRED_POST_GO",
+      "repair_this_round": false,
+      "fact": "Pack 01 global CLOSED_REALITY/REALITY_VERIFIED planes remain false. Map-complete ≠ Production GO. Do not paper-green the plane."
+    },
+    {
+      "id": "HG_AXIS_08_R01_OR_OWNER_RESIDUAL",
+      "class": "REQUIRED_BEFORE_GO",
+      "repair_this_round": false,
+      "later_repair_class": "evidence_or_owner_signoff_not_recast_l7",
+      "fact": "Hard Gate OPEN AXIS-08: need R01-THIRD-PARTY-AUDIT-PASS.json OR OWNER-RESIDUAL-RISK-SIGNOFF.json. Do not recast V8/1 USDC/Frozen Web."
+    },
+    {
+      "id": "HG_AXIS_09_READINESS_P0_STAMP",
+      "class": "REQUIRED_BEFORE_GO",
+      "repair_this_round": false,
+      "later_repair_class": "restamp_existing_owner_a_evidence_not_rebuy",
+      "fact": "Hard Gate OPEN AXIS-09: WEB3-MAINNET-PRODUCTION-READINESS still p0=1 verdict=BLOCKED. Later Owner A 1 USDC hop closed commercial money-path Reality. Later repair is evidence restamp citing Owner A, not a new 1 USDC buy."
+    },
+    {
+      "id": "HG_AXIS_11_DEPLOYMENT_PACKAGE",
+      "class": "REQUIRED_BEFORE_GO",
+      "repair_this_round": false,
+      "later_repair_class": "deployment_package_evidence_not_new_money_path",
+      "fact": "Hard Gate OPEN AXIS-11: check-mainnet-deployment-package-gate FAIL RULE-DEPLOY-001. Do not deploy Seat/Vault or rebake www to close it."
+    },
+    {
+      "id": "HG_AXIS_12_SHADOW_LAUNCH_GO",
+      "class": "REQUIRED_BEFORE_GO",
+      "repair_this_round": false,
+      "later_repair_class": "shadow_harness_not_1usdc_real_money",
+      "fact": "Hard Gate OPEN AXIS-12: no Shadow run with GO + chain_id=1 + four JSON. Independent of Track2 1 USDC real money. Do not repeat 1 USDC to green Shadow."
+    },
+    {
+      "id": "HG_AXIS_14_OWNER_CUTOVER_AUTH",
+      "class": "REQUIRED_BEFORE_GO",
+      "repair_this_round": false,
+      "later_repair_class": "signed_auth_json_not_auto_production_go",
+      "fact": "Hard Gate OPEN AXIS-14: mainnet_cutover_authorized=false; missing OWNER-CUTOVER-AUTH-LATEST.json. This is Hard Gate Owner auth, not an auto TT_PRODUCTION_GO flip."
+    },
+    {
+      "id": "TT_PSG_PRODUCTION_CERT",
+      "class": "REQUIRED_BEFORE_GO",
+      "repair_this_round": false,
+      "later_repair_class": "existing_psg_ladder_do_not_refresh_frozen_archive",
+      "fact": "registry/psg-phase-b-production-cert.v1.yaml status=ACTIVE_WAITING_CERT. AGENTS.md still requires TT_PSG_PRODUCTION_CERT=PASS for Production GO. Do not re-run PASS Gates only to refresh frozen PSG Archive v1.1.0-psg-go.20260717."
+    },
+    {
+      "id": "GAP_E2E_JOURNEY",
+      "class": "REQUIRED_BEFORE_GO",
+      "repair_this_round": false,
+      "later_repair_class": "official_traveler_book_ui_not_1usdc_replay",
+      "severity_cited": "P1",
+      "gap_class": "PRODUCT_DEBT",
+      "fact": "Official traveler book/UI remainder after Owner A closed Track2 1 USDC hop. Alignment OPEN_P1_DEFECTS: 0. No Owner ACCEPT_WITH_OWNER as Non-blocking. Do not close by repeating 1 USDC or baking www."
+    },
+    {
+      "id": "FTB_STAMP_LAG_CLUSTER",
+      "class": "REQUIRED_BEFORE_GO",
+      "repair_this_round": false,
+      "later_repair_class": "docs_ssot_only_cite_owner_a_and_live_meta",
+      "fact": "Living FTB still stamps P0_COMMERCIAL_MONEY_PATH_BLOCKER=true, nested dual_wait Track2 WAITING_*, and Track1 SR as settlement_router_official_live while later Owner A + live /meta exist. Classified EXPLAINED_FTB_STAMP_LAG by Final Reality cert. GO policy still requires Conflict convergence. Later repair is living FTB stamp only. Do not recast L7, do not execute Track2 again, do not flip TT_PRODUCTION_GO here."
+    }
+  ],
+  "entry_to_owner_go_verdict": {
+    "required": {
+      "required_before_go": 0,
+      "unexplained_drift": 0,
+      "hard_gate": "PASS"
+    },
+    "this_turn_meets_entry": false,
+    "reason": "required_before_go=8 hard_gate=REFUSED. Frozen unique Final Closure entry. Reopen TT_PRODUCTION_GO_REASSESSMENT only after FINAL_CLOSURE_BATCH meets required_before_go=0 + unexplained_drift=0 + Hard Gate=PASS + TT_PSG_PRODUCTION_CERT=PASS + GAP-E2E-JOURNEY=CLOSED."
+  },
+  "forbidden": [
+    "claim_production_go",
+    "auto_flip_tt_production_go",
+    "hard_gate_pass_paper",
+    "www_bake",
+    "resend_setGovernor",
+    "ci02_hop_b_execute",
+    "money_path_redeploy",
+    "repeat_1_usdc_real_money",
+    "overwrite_ftb_20260812",
+    "recast_consistency_issued_at",
+    "bitget_unwind_v8_pin",
+    "rewrite_ftb_p0_boolean_this_round",
+    "rerun_closed_v8_for_green",
+    "rerun_closed_v8_2b_1usdc_ci02",
+    "frontend_ui_ux_change",
+    "web_rebuild_bake_deploy",
+    "checkout_old_fe_tip",
+    "money_split_or_relocate",
+    "repeat_deploy"
+  ],
+  "next": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH",
+  "next_session_starts_at": "TT_PRODUCTION_GO_REASSESSMENT_STOP_FROZEN_WAIT_FINAL_CLOSURE_BATCH",
+  "machine_line": "TT_PRODUCTION_GO_REASSESSMENT: STOP FROZEN_UNIQUE_FINAL_CLOSURE_ENTRY required_before_go=8 unexplained_drift=0 hard_gate=REFUSED tt_production_go=NO_GO owner_go_verdict=NOT_THIS_TURN successor=TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH fe=FROZEN_LATEST_PRODUCT_BASELINE"
+}

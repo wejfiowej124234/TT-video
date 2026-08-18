@@ -192,5 +192,19 @@
   ],
   "next": "PRODUCTION_GO_REASSESSMENT_NOT_THIS_TURN",
   "next_session_starts_at": "FINAL_REALITY_RELEASE_CERTIFICATION_PASS_WAIT_PRODUCTION_GO_REASSESSMENT_TOKEN_RISK_INDEPENDENT",
+  "successor_go_reassessment": {
+    "human": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.md",
+    "machine": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.json",
+    "status": "TT_PRODUCTION_GO_REASSESSMENT_STOP",
+    "issued_at_utc": "2026-08-18T03:45:00Z",
+    "required_before_go": 8,
+    "unexplained_drift": 0,
+    "hard_gate": "REFUSED",
+    "owner_production_go_verdict": "NOT_THIS_TURN",
+    "tt_production_go": "NO_GO",
+    "do_not_recast_this_cert": true,
+    "frozen_as_final_closure_unique_entry": true,
+    "successor_batch": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH"
+  },
   "machine_line": "FINAL_REALITY_RELEASE_CERTIFICATION_PASS blocking_p0_p1=0 unexplained_drift=0 TT_PRODUCTION_GO=NO_GO next=PRODUCTION_GO_REASSESSMENT Bitget=HOLD_INDEPENDENT"
 }

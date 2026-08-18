@@ -76,6 +76,7 @@ def main() -> int:
     allowed_phase = {
         "FTB_V8_CYCLE_ACTIVE_WAIT_FINAL_REALITY_RELEASE_CERT",
         "FTB_V8_CYCLE_ACTIVE_FINAL_REALITY_RELEASE_CERT_PASS_WAIT_PRODUCTION_GO_REASSESSMENT",
+        "FTB_V8_CYCLE_ACTIVE_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN",
     }
     if latest.get("phase_now") not in allowed_phase:
         failed.append(f"living phase_now={latest.get('phase_now')}")

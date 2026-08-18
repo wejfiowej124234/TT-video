@@ -37,7 +37,10 @@ KEEP = {
     "fee_router": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
     "timelock": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
 }
-PHASE_NOW = "FTB_V8_CYCLE_ACTIVE_FINAL_REALITY_RELEASE_CERT_PASS_WAIT_PRODUCTION_GO_REASSESSMENT"
+ALLOWED_PHASE_NOW = {
+    "FTB_V8_CYCLE_ACTIVE_FINAL_REALITY_RELEASE_CERT_PASS_WAIT_PRODUCTION_GO_REASSESSMENT",
+    "FTB_V8_CYCLE_ACTIVE_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN",
+}
 WWW_SHA = "daa5ae87b8c1af548c6beff6dd3451e5d386acf2"
 WWW_BUILD = "2026-08-16T15:15:49Z"
 CONSIST_ISSUED = "2026-08-18T03:00:00Z"
@@ -93,7 +96,7 @@ def main() -> int:
         failed.append(f"living status={latest.get('status')}")
     if latest.get("tt_production_go") != "NO_GO":
         failed.append(f"living tt_production_go={latest.get('tt_production_go')}")
-    if latest.get("phase_now") != PHASE_NOW:
+    if latest.get("phase_now") not in ALLOWED_PHASE_NOW:
         failed.append(f"living phase_now={latest.get('phase_now')}")
     if latest.get("owner_choice") != "NEW_FTB_CYCLE_ABSORB_V8_DO_NOT_OVERWRITE_20260812":
         failed.append("living missing Owner choice")

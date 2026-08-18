@@ -15,7 +15,9 @@ FTB 20260812（历史事实，immutable）
 → V8 Mainnet Reality Certification          ← PASS_STOP（引用，不重证）
 → NEW FTB Cycle / Amendment（本文件 · Active Truth）
 → Final Reality / Release Certification     ← PASS · blocking_p0_p1=0
-→ Production GO 重评                        ← 下一闸 · 本轮未做
+→ Production GO 重评                        ← STOP · **FROZEN unique Final Closure entry** · required_before_go=8 · hard_gate=REFUSED
+→ TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH      ← 八项窄闭环（冻结之后）
+→ Owner Production GO 裁决                  ← 未开
 ```
 
 ## ACTIVE（本 Cycle）

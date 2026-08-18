@@ -104,7 +104,7 @@ registry_runtime_mainnet_reality_consistency_cert:
     ftb_living: V8_CYCLE_ABSORBED
     token_risk_bitget: HOLD_INDEPENDENT
   token_risk_must_not_unwind_v8_pin: true
-  next_session_starts_at: FINAL_REALITY_RELEASE_CERTIFICATION_PASS_WAIT_PRODUCTION_GO_REASSESSMENT_TOKEN_RISK_INDEPENDENT
+  next_session_starts_at: TT_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN_HARD_GATE_NOT_PASS_TOKEN_RISK_INDEPENDENT
   not_equal_to: [ftb_mutated, production_go, www_bake, setGovernor, bitget_unwind_v8_pin, ci02_hop, money_path_redeploy]
 phase: "verification_1_pass_stop_setgovernor_runtime_pass_do_not_resend"
 preflight:
@@ -124,7 +124,7 @@ owner_auth_gate:
   human: docs/runbook/TT-TTG-V8-FUSION-3-OWNER-AUTH-GATE-LATEST.md
   machine: docs/runbook/TT-TTG-V8-FUSION-3-OWNER-AUTH-GATE-LATEST.json
   status: AUTH_2A_RUNTIME_PASS_VERIFICATION_1_PASS_SETGOVERNOR_RUNTIME_PASS
-  current_allowed_work: TTG_V8_FINAL_REALITY_RELEASE_CERT_PASS_WAIT_PRODUCTION_GO_REASSESSMENT
+  current_allowed_work: TTG_V8_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN
   independent_of: TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP
   step_1_ssot: docs/runbook/TT-TTG-V8-FUSION-3-GENESIS-ADDRESS-FILLS-LATEST.md
   step_1_owner_fills: MUST_1_7_CONVERGED

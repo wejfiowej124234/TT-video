@@ -15,8 +15,10 @@ FTB 20260812（immutable parent）
 → V8 Mainnet Reality Certification          ← PASS_STOP · 引用，不重证
 → NEW FTB Cycle / Amendment                 ← 已 ACTIVE
 → Final Reality / Release Certification     ← 本文件 · PASS
-→ Production GO 重评                        ← 下一闸 · 本轮未做
+→ Production GO 重评                        ← 本证签发时未做 · successor = STOP **FROZEN unique entry**（另文件，不改本证 next）
 ```
+
+**Successor（不改本证 `issued_at` / `next`）：** [`TT-PRODUCTION-GO-REASSESSMENT-LATEST`](./TT-PRODUCTION-GO-REASSESSMENT-LATEST.md) · `STOP` · **FROZEN unique Final Closure entry** · `required_before_go=8` · `hard_gate=REFUSED` · Owner 裁决 **NOT_THIS_TURN** · next batch `TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH`。
 
 **闸：** `bash scripts/dev/run-final-reality-release-certification.sh`
 
@@ -131,6 +133,8 @@ Living FTB 仍印 `P0_COMMERCIAL_MONEY_PATH_BLOCKER: true` 与 nested Track2 `WA
 **已闭：** Final Reality / Release Certification `PASS` · `blocking_p0_p1=0` · `unexplained_drift=0`。
 
 **下一闸（另会话 · Owner）：** `TT_PRODUCTION_GO` 重评。
+
+**Successor（引用，不改本证 `issued_at` / `next`）：** [`TT-PRODUCTION-GO-REASSESSMENT-LATEST`](./TT-PRODUCTION-GO-REASSESSMENT-LATEST.md) · `TT_PRODUCTION_GO_REASSESSMENT_STOP` · `required_before_go=8` · `unexplained_drift=0` · `hard_gate=REFUSED` · Owner 裁决 **NOT_THIS_TURN**。本证 `next` 仍冻结为 `PRODUCTION_GO_REASSESSMENT_NOT_THIS_TURN`。
 
 ```text
 FINAL_REALITY_RELEASE_CERTIFICATION_PASS

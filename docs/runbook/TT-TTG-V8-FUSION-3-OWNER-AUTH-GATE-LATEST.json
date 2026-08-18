@@ -3,7 +3,7 @@
   "stamp": "TTG_V8_FUSION_3_DEPLOY_AND_SETGOVERNOR_OWNER_AUTH_REQUIRED",
   "issued_at_utc": "2026-08-17T17:50:00Z",
   "status": "AUTH_2A_RUNTIME_PASS_VERIFICATION_1_PASS_SETGOVERNOR_RUNTIME_PASS",
-  "current_allowed_work": "TTG_V8_FINAL_REALITY_RELEASE_CERT_PASS_WAIT_PRODUCTION_GO_REASSESSMENT",
+  "current_allowed_work": "TTG_V8_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN",
   "tt_production_go": "NO_GO",
   "independent_of": "TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP",
   "do_not_rerun_preflight": true,
@@ -88,7 +88,7 @@
     "governor": "0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F"
   },
   "official_product_runtime_cutover_precheck": "PASS_STOP",
-  "next_session_starts_at": "FINAL_REALITY_RELEASE_CERTIFICATION_PASS_WAIT_PRODUCTION_GO_REASSESSMENT_TOKEN_RISK_INDEPENDENT",
+  "next_session_starts_at": "TT_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN_HARD_GATE_NOT_PASS_TOKEN_RISK_INDEPENDENT",
   "api_runtime_decoupling": {
     "stamp": "TTG_V8_API_RUNTIME_DECOUPLING_NO_WEB_TOUCH",
     "status": "PASS_STOP",

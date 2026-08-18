@@ -7,6 +7,7 @@
 **Immutable parent:** [`TT-FINAL-TRUTH-BASELINE-20260812`](./TT-FINAL-TRUTH-BASELINE-20260812.md) · **禁止覆盖**  
 **V8 Reality cited (do not recast):** [`Registry/Runtime/L7 Consistency Cert`](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md) · `PASS_STOP` · `2026-08-18T03:00:00Z`  
 **Final Reality / Release Certification:** [`TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST`](./TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md) · `FINAL_REALITY_RELEASE_CERTIFICATION_PASS` · `blocking_p0_p1=0` · `2026-08-18T03:20:00Z` · **≠** Production GO  
+**Production GO 重评（只读 · **FROZEN unique Final Closure entry**）：** [`TT-PRODUCTION-GO-REASSESSMENT-LATEST`](./TT-PRODUCTION-GO-REASSESSMENT-LATEST.md) · `TT_PRODUCTION_GO_REASSESSMENT_STOP` · `required_before_go=8` · `hard_gate=REFUSED` · Owner 裁决 **NOT_THIS_TURN** · successor `TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH` · FE `FROZEN_LATEST_PRODUCT_BASELINE` · **≠** Production GO  
 **Web3 Active Truth:** Ethereum mainnet · **NEW TTG / NEW PM / NEW Governor ACTIVE** · **KEEP** Wired + Official SR + Official OLD FeeRouter + Timelock（同一身份）  
 **Product Truth:** Official **API** 必须对齐下表 ACTIVE 地址；Official **www** = 冻结 OLD bake（Expected Difference · 禁止 bake）  
 **Sepolia / Local:** 架构/ABI/流程对齐 · **独立地址** · **≠** Official  
@@ -15,7 +16,7 @@
 **双等待冻结（Money Path 独立轨 · 未因 V8 自动消失）：** `WAITING_TRACK2_TIMELOCK_ETA` + `WAITING_GOV04_TIMELOCK_ETA` · [`DUAL-WAIT FREEZE`](./TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md) · GOV-04 pending impl 在 **OLD PM proxy** = **LEGACY for Official TTG sale**  
 **`P0_COMMERCIAL_MONEY_PATH_BLOCKER`:** **TRUE**（Official 仍每单 Timelock allowlist · 等 Track2 Reality PASS）  
 **独立未自动轨：** FeeRouter 四桶 Timelock distribute · Track2 execute/切流 · GOV-04 on OLD proxy · 83 RegionVault · Bitget HOLD · **`TT_PRODUCTION_GO`**  
-**`TT_PRODUCTION_GO: NO_GO`** · Hard Gate **REEVAL 仍 REFUSED/NO_GO** · ≠ Production Ready · Final Reality / Release Certification **已 PASS** · 下一闸 = Production GO 重评  
+**`TT_PRODUCTION_GO: NO_GO`** · Hard Gate **REEVAL 仍 REFUSED/NO_GO** · ≠ Production Ready · Final Reality / Release Certification **已 PASS** · Production GO 重评 **STOP**（`required_before_go=8` · Owner 裁决未开）  
 **区域分账设计真源（中文 · Target）：** [`83`](../spec/83-区域治理与收益分配-协议白皮书.md) · Living gap：[`83-GROUNDED`](../../evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-83-GROUNDED-LATEST.md)
 
 ---
@@ -32,12 +33,13 @@ FactoryV2 0x0520…     = LINEAGE ONLY · 无 settlementRouter · 禁止重新�
 Official API          = 必须对齐下表 ACTIVE
 Official www          = FROZEN OLD bake daa5ae87 · Expected Difference · 禁止 bake
 Bitget HOLD           = 独立轨 · 不得 unwind V8 针
-TT_PRODUCTION_GO      = NO_GO · Final Reality / Release Certification = PASS · 下一闸 = Production GO 重评
+TT_PRODUCTION_GO      = NO_GO · Final Reality / Release Certification = PASS · Production GO 重评 = STOP · required_before_go=8 · Owner 裁决 NOT_THIS_TURN
 ```
 
 **对齐闸：** `bash scripts/gates/check-official-mainnet-web3-alignment.sh`  
 **Absorb 闸：** `bash scripts/dev/run-ftb-v8-cycle-absorb-gate.sh`  
-**Final Reality / Release Certification 闸：** `bash scripts/dev/run-final-reality-release-certification.sh`
+**Final Reality / Release Certification 闸：** `bash scripts/dev/run-final-reality-release-certification.sh`  
+**Production GO 重评闸（只读）：** `bash scripts/dev/run-production-go-reassessment.sh`
 
 ---
 
@@ -168,9 +170,9 @@ Wallets：A deploy/traveler `0xe1e732…` · B TTG/guide `0xF34804…`
 
 ## 6 · 下一动作（勿混）
 
-**已闭：** FTB `20260812` 冻结为历史父本 · V8 Mainnet Reality Certification `PASS_STOP` · 本 Cycle 吸收为 Active Truth · Final Reality / Release Certification `PASS`（`blocking_p0_p1=0`）。
+**已闭：** FTB `20260812` 冻结为历史父本 · V8 Mainnet Reality Certification `PASS_STOP` · 本 Cycle 吸收为 Active Truth · Final Reality / Release Certification `PASS`（`blocking_p0_p1=0`）· Production GO 重评只读 `STOP`（`required_before_go=8` · `hard_gate=REFUSED`）。
 
-**下一闸（另会话 · Owner）：** Production GO 重评。本文件 **未**翻 `TT_PRODUCTION_GO`。
+**下一闸（另会话 · Owner 书面授权后）：** 仅修 `REQUIRED_BEFORE_GO` 八项。本文件 **未**翻 `TT_PRODUCTION_GO`。**未**开 Owner Production GO 裁决。
 
 Money Path KEEP 身份不变。Bitget HOLD 继续完全独立。Track2 / 83 / FeeRouter 四桶仍是独立未自动轨。
 
