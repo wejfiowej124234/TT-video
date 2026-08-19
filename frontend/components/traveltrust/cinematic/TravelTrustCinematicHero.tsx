@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
-import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
+import { useMemo, useRef, useState, type RefObject } from "react";
 import { useTraveltrustHeroGlobeOpticalAlign } from "@/hooks/useTraveltrustHeroGlobeOpticalAlign";
 import { TT_TRAVELTRUST_SECTION_A11Y } from "./traveltrustSectionA11yIds";
 import { useTranslation } from "@/components/LocaleProvider";
@@ -24,6 +24,7 @@ import { resolveTraveltrustPlanTripHref } from "@/lib/traveltrustPlanTripHref";
 import { useTravelTrustHeroScrollProgress } from "./TravelTrustHeroScrollContext";
 import { TRAVELTRUST_HERO_TRUST_CHIPS } from "@/lib/traveltrustHeroTrustChips";
 import { TrustChipIcon } from "./TrustChipIcon";
+import { TravelTrustAppDownloadDialog } from "./TravelTrustAppDownloadDialog";
 import { TravelTrustHeroChainHud } from "./TravelTrustHeroChainHud";
 import { TravelTrustHeroGuidance } from "./TravelTrustHeroGuidance";
 import { TT_CINEMATIC_EASE, TT_HERO_ENTRANCE } from "./traveltrustCinematicMotion";
@@ -34,10 +35,6 @@ import {
   TT_HERO_COPY_UI_L5,
   TT_HERO_PRIMARY_CTA_L5,
   TT_HERO_CTA_L5,
-  TT_SCROLL_HINT_ARROW_L5,
-  TT_SCROLL_HINT_L5,
-  TT_SCROLL_HINT_L5_CLASS,
-  TT_SCROLL_PROGRESS_L5,
   TT_PAGE_LAYOUT_L5,
   TT_PAGE_SCROLL_SNAP_L5,
   traveltrustChapterBeatDataAttrs,
@@ -65,7 +62,9 @@ import {
 import { TT_HERO_KICKER_CLASS } from "@/lib/traveltrustHeroKicker";
 import {
   TT_HERO_CTA_ROW_CLASS,
+  TT_HERO_TITLE_BRAND_CLASS,
   TT_HERO_TITLE_CLASS,
+  TT_HERO_TITLE_SUFFIX_CLASS,
   TT_HERO_TRUST_CHIPS_ROW_CLASS,
 } from "@/lib/traveltrustHeroTypography";
 import { UNIFIED_PAGE_3D } from "./traveltrustPageCinematicConfig";
@@ -111,6 +110,7 @@ type Props = {
 
 export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
   const { t } = useTranslation();
+  const [appDownloadOpen, setAppDownloadOpen] = useState(false);
   const { brief } = useTravelTrustPageBriefContext();
   const reduceMotion = useReducedMotion();
   const planHref = resolveTraveltrustPlanTripHref(brief?.cta_contract.primary_target);
@@ -131,24 +131,6 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
   const scrollYProgress = useTravelTrustHeroScrollProgress() ?? scrollFallback;
   const contentY = useTransform(scrollYProgress, [0, 0.5, 1], [0, -24, -24]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.75, 1], [1, 1, 0.25]);
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mql = window.matchMedia("(max-width: 768px)");
-    const update = () => setIsMobile(mql.matches);
-    update();
-    mql.addEventListener("change", update);
-    return () => mql.removeEventListener("change", update);
-  }, []);
-  const scrollHintY = useTransform(
-    scrollYProgress,
-    [0, 0.22, 0.5],
-    isMobile ? [...TT_HERO_CTA_L5.mobileScrollHintY] : [...TT_HERO_CTA_L5.desktopScrollHintY],
-  );
-  const scrollHintOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.18, 0.42],
-    isMobile ? [...TT_HERO_CTA_L5.mobileScrollHintOpacity] : [...TT_HERO_CTA_L5.desktopScrollHintOpacity],
-  );
   /** 首屏蓝紫横条根因已移除：`hero-loop` 全幅 `<video mix-blend-screen>`（无对应 `backgroundColor: rgb(8,7,77)` 节点） */
   const showHeroStaticPoster = Boolean(heroPoster) && UNIFIED_PAGE_3D && reduceMotion;
   return (
@@ -324,8 +306,8 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: TT_HERO_ENTRANCE.title.duration, delay: TT_HERO_ENTRANCE.title.delay, ease: TT_CINEMATIC_EASE }}
             >
-              <span>{t("traveltrust_hero_title_brand")}</span>
-              <span>{t("traveltrust_hero_title_suffix")}</span>
+              <span className={TT_HERO_TITLE_BRAND_CLASS}>{t("traveltrust_hero_title_brand")}</span>
+              <span className={TT_HERO_TITLE_SUFFIX_CLASS}>{t("traveltrust_hero_title_suffix")}</span>
             </motion.h1>
             <TravelTrustHeroNetworkNarrative />
 
@@ -399,84 +381,71 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
                     />
                   ) : null}
                   <Link
-                    href={planHrefWithRegion}
-                    data-tt-traveltrust-plan-href={planHrefWithRegion}
-                    onClick={() => {
-                      setHeroGlobeP1StartPrefill(ctaRegionId);
-                      setHeroGlobeP1FocusedRegion(ctaRegionId);
-                      trackTravelTrustEvent("traveltrust_plan_trip_click", {
+                    href="#liquidity"
+                    aria-label={t("traveltrust_hero_cta_ttg_aria")}
+                    onClick={() =>
+                      trackTravelTrustEvent("traveltrust_secondary_cta_click", {
                         source: "hero",
-                        target: planHrefWithRegion,
-                        region_id: ctaRegionId,
-                        corridor: routeBias,
-                      });
-                    }}
+                        target: "#liquidity",
+                        role: "get_ttg",
+                      })
+                    }
                     className={`${TT_HERO_PRIMARY_CTA_L5} ${TT_HERO_COPY_UI_L5.ctaGlowClass}`}
-                    data-tt-traveltrust-hero-cta-plan-warm="1"
                     data-tt-traveltrust-hero-cta-l5="1"
+                    data-tt-traveltrust-hero-cta-ttg="1"
                   >
-                    {t("traveltrust_hero_cta_plan")}
+                    {t("traveltrust_hero_cta_ttg")}
                   </Link>
                 </motion.div>
+                <Link
+                  href={planHrefWithRegion}
+                  data-tt-traveltrust-plan-href={planHrefWithRegion}
+                  onClick={() => {
+                    setHeroGlobeP1StartPrefill(ctaRegionId);
+                    setHeroGlobeP1FocusedRegion(ctaRegionId);
+                    trackTravelTrustEvent("traveltrust_plan_trip_click", {
+                      source: "hero",
+                      target: planHrefWithRegion,
+                      region_id: ctaRegionId,
+                      corridor: routeBias,
+                    });
+                  }}
+                  className={TT_HERO_BTN_GHOST_LINK}
+                  data-tt-traveltrust-hero-cta-plan-warm="1"
+                  data-tt-traveltrust-hero-cta-plan="1"
+                >
+                  {t("traveltrust_hero_cta_plan")}
+                </Link>
+                <button
+                  type="button"
+                  className={TT_HERO_BTN_GHOST_LINK}
+                  aria-label={t("traveltrust_hero_cta_app_aria")}
+                  data-tt-traveltrust-hero-cta-app="1"
+                  onClick={() => {
+                    trackTravelTrustEvent("traveltrust_secondary_cta_click", {
+                      source: "hero",
+                      target: "app_download_coming_soon",
+                    });
+                    setAppDownloadOpen(true);
+                  }}
+                >
+                  {t("traveltrust_hero_cta_app")}
+                </button>
               </motion.div>
             </motion.div>
+            <TravelTrustAppDownloadDialog
+              open={appDownloadOpen}
+              onClose={() => setAppDownloadOpen(false)}
+            />
 
             <Link
-              href="#start"
+              href="#liquidity"
               className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-[calc(100%-3rem)] focus:z-20 focus:rounded-lg focus:bg-ink-900 focus:px-3 focus:py-2 focus:text-meta focus:text-white"
               data-tt-traveltrust-hero-cta-skip-start="1"
             >
               {t("traveltrust_scroll_to_start")}
             </Link>
           </motion.div>
-          <motion.a
-            key={isMobile ? "scroll-hint-mobile" : "scroll-hint-desktop"}
-            href="#roles"
-            className={`${TT_SCROLL_HINT_L5_CLASS} ${TT_SCROLL_HINT_L5.outsideCardClass}`}
-            style={reduceMotion ? undefined : { y: scrollHintY, opacity: scrollHintOpacity }}
-            initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={reduceMotion ? undefined : TT_HERO_CTA_L5.scrollHintHover}
-            transition={{ duration: TT_HERO_ENTRANCE.scrollHint.duration, delay: TT_HERO_ENTRANCE.scrollHint.delay, ease: TT_CINEMATIC_EASE }}
-            onClick={() =>
-              trackTravelTrustEvent("traveltrust_scroll_to_roles", { source: "hero", target: "#roles" })
-            }
-            data-tt-traveltrust-hero-scroll-hint="outside-card"
-            data-tt-traveltrust-hero-scroll-hint-l5="1"
-            data-tt-traveltrust-scroll-handoff-anchor={TT_SCROLL_PROGRESS_L5.handoffAnchorSection}
-            data-tt-traveltrust-scroll-chapter-sync="theater"
-            data-tt-traveltrust-hero-scroll-handoff-mobile={isMobile ? "1" : "0"}
-            data-tt-traveltrust-scroll-hint-mobile-pulse-l5={isMobile ? "1" : "0"}
-            data-tt-traveltrust-cinematic-non-globe-l5={TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID}
-          >
-            {isMobile && !reduceMotion ? (
-              <motion.span
-                className={TT_SCROLL_HINT_L5.mobileBorderPulseClass}
-                aria-hidden
-                animate={{ opacity: [...TT_SCROLL_HINT_L5.mobileBorderPulse.opacity] }}
-                transition={{
-                  duration: TT_SCROLL_HINT_L5.mobileBorderPulse.duration,
-                  repeat: TT_SCROLL_HINT_L5.mobileBorderPulseRepeat,
-                  ease: "easeInOut",
-                }}
-              />
-            ) : null}
-            <span className="relative">{t("traveltrust_scroll_hint")}</span>
-            {!reduceMotion ? (
-              <motion.span
-                aria-hidden
-                animate={{
-                  y: [...TT_SCROLL_HINT_ARROW_L5.animate.y],
-                  opacity: [...TT_SCROLL_HINT_ARROW_L5.animate.opacity],
-                }}
-                transition={TT_SCROLL_HINT_ARROW_L5.transition}
-              >
-                ↓
-              </motion.span>
-            ) : (
-              <span aria-hidden>↓</span>
-            )}
-          </motion.a>
         </motion.div>
       </motion.div>
 

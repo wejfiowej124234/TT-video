@@ -8,30 +8,33 @@
  */
 
 export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
-    lockId: "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-05-v10-absolute-modular",
-    lockedAt: "2026-05-21",
-    label: "traveltrust-home-approved-seamless-v10-absolute-modular",
+  lockId: "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v16-economy-breathing",
+  lockedAt: "2026-08-19",
+  label: "traveltrust-home-economy-breathing-v16-local",
   route: "/traveltrust",
   /** 全页 scroll-snap 与滚轮切章关闭 */
   scrollSnapEnabled: false,
   /** `TravelTrustBelowFoldSections` 内 Film 占位条数（仅 margin，无压暗渐变） */
   filmDividerCount: 2,
-  /** 叙事节顺序（与页内 nav 一致） */
-  sectionOrder: ["hero", "roles", "liquidity", "trust", "settlement", "faq", "start"] as const,
+  /** 叙事节顺序（Owner 截图流 · 本地活页；不含 FAQ / 启程） */
+  sectionOrder: ["hero", "trust", "settlement", "unlock", "liquidity", "roles"] as const,
+  /** 源文件仍保留，不挂活页 */
+  archivedSectionIds: ["faq", "start"] as const,
   belowFold: {
     economyCluster: true,
-    economyClusterIds: ["liquidity", "trust", "settlement"] as const,
-    snapChapters: ["theater", "faq", "close"] as const,
+    economyClusterIds: ["trust", "settlement", "unlock", "liquidity"] as const,
+    snapChapters: ["theater", "close"] as const,
     faqStartDivider: false,
     footerGrouped: true,
   },
   /** `TT_PAGE_VERTICAL_RHYTHM_L5` 冻结子集 */
   rhythm: {
-    sectionClusterFirst: "pt-6 sm:pt-7 pb-4 sm:pb-5",
-    sectionClusterMid: "py-4 sm:py-5",
-    sectionClusterLast: "pt-4 sm:pt-5 pb-6 sm:pb-8",
-    sectionAfterMajorBreak: "pt-6 sm:pt-8 pb-6 sm:pb-8",
-    sectionBottomTheater: "pb-6 sm:pb-8",
+    sectionClusterFirst: "pt-8 sm:pt-10 pb-8 sm:pb-10",
+    sectionClusterMid: "py-8 sm:py-10",
+    sectionClusterUnlock: "pt-8 sm:pt-10 pb-12 sm:pb-14",
+    sectionClusterLast: "pt-10 sm:pt-12 pb-8 sm:pb-10",
+    sectionAfterMajorBreak: "pt-5 sm:pt-6 pb-5 sm:pb-6",
+    sectionBottomTheater: "pb-5 sm:pb-6",
     sectionTopStart: "pt-6 sm:pt-8",
     complianceShell: "relative mt-8 w-full border-t-0 pt-0 pb-4 sm:mt-10 sm:pb-5",
   },
@@ -69,6 +72,7 @@ export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
       "TravelTrustHomeRolesSection",
       "TravelTrustHomeEconomyClusterSection",
       "TravelTrustHomeLiquiditySection",
+      "TravelTrustHomeUnlockSection",
       "TravelTrustHomeTrustSection",
       "TravelTrustHomeSettlementSection",
       "TravelTrustHomeFaqSection",
@@ -100,7 +104,7 @@ export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
     filmDividerUsesMarginOnly: true,
     groupedFooterAmbience: false,
     complianceTopBorder: false,
-    filmDividerWrapper: "pointer-events-none relative z-[0] my-7 sm:my-8 h-0 w-full",
+    filmDividerWrapper: "pointer-events-none relative z-[0] my-4 sm:my-5 h-0 w-full",
     scrollPlateBackdrop: "pointer-events-none absolute inset-0 z-0 bg-[#0c0a09]/38",
     economyClusterAtmosphere:
       "pointer-events-none absolute inset-x-0 top-0 z-0 h-[min(26rem,52vh)] bg-[radial-gradient(ellipse_72%_58%_at_50%_0%,rgba(252,164,124,0.07),transparent_72%)]",
@@ -113,7 +117,13 @@ export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
     pairGapPxIdeal: 40,
   },
   liquidityCta: {
-    stack: "grid w-full grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3",
+    stack: "flex w-full flex-col items-stretch gap-3",
+  },
+  /** 外层：报价轨 + 左右分栏（左事实 / 右现有兑换网关 · 不改 gateway 内部） */
+  liquiditySplit: {
+    stack:
+      "relative z-[1] mx-auto flex w-full max-w-5xl flex-col gap-8 px-0.5 pt-10 sm:px-0 sm:pt-12 lg:max-w-6xl lg:gap-10",
+    wrap: "grid w-full grid-cols-1 gap-6 lg:grid-cols-2 lg:items-start lg:gap-8",
   },
   theaterIntro: {
     headlineBlock: "mt-5 space-y-4 sm:mt-6 sm:space-y-5",

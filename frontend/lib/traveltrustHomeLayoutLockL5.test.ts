@@ -11,6 +11,7 @@ import {
   TT_STABLECOIN_GATEWAY_L5,
   TT_SECTION_CONTENT_L5,
   TT_THEATER_SECTION_L5,
+  TT_TTG_UNLOCK_L5,
 } from "@/lib/traveltrust/l5";
 import { TRAVELTRUST_HOME_LAYOUT_LOCK_L5 } from "./traveltrustHomeLayoutLockL5";
 import { TT_SPACING_DEBUG_GAP_TARGETS_PX } from "./traveltrustSpacingDebug";
@@ -31,8 +32,13 @@ describe("traveltrustHomeLayoutLockL5", () => {
   const lock = TRAVELTRUST_HOME_LAYOUT_LOCK_L5;
 
   it("exports frozen lock metadata", () => {
-    expect(lock.lockId).toBe("TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-05-v10-absolute-modular");
-    expect(lock.label).toBe("traveltrust-home-approved-seamless-v10-absolute-modular");
+    expect(lock.lockId).toBe("TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v16-economy-breathing");
+    expect(lock.label).toBe("traveltrust-home-economy-breathing-v16-local");
+    expect(lock.sectionOrder).toEqual(["hero", "trust", "settlement", "unlock", "liquidity", "roles"]);
+    expect(lock.liquiditySplit.stack).toContain("flex-col");
+    expect(lock.liquiditySplit.stack).toContain("pt-10");
+    expect(lock.liquiditySplit.stack).toContain("gap-8");
+    expect(lock.liquiditySplit.wrap).toContain("lg:grid-cols-2");
     expect(lock.modularity.composerShellPath).toContain("TravelTrustHomeComposerShell");
     expect(lock.modularity.composerLifecycleHookPath).toContain("useTraveltrustComposerPage");
     expect(lock.modularity.cinematicBridgePath).toContain("lib/traveltrust/home/cinematic-bridge");
@@ -54,7 +60,10 @@ describe("traveltrustHomeLayoutLockL5", () => {
     const r = lock.rhythm;
     expect(TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterFirst).toBe(r.sectionClusterFirst);
     expect(TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterMid).toBe(r.sectionClusterMid);
+    expect(TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterUnlock).toBe(r.sectionClusterUnlock);
     expect(TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterLast).toBe(r.sectionClusterLast);
+    expect(TT_TTG_UNLOCK_L5.listClass).toContain("gap-5");
+    expect(TT_TTG_UNLOCK_L5.listClass).toContain("sm:gap-6");
     expect(TT_PAGE_VERTICAL_RHYTHM_L5.sectionAfterMajorBreak).toBe(r.sectionAfterMajorBreak);
     expect(TT_PAGE_VERTICAL_RHYTHM_L5.sectionBottomTheater).toBe(r.sectionBottomTheater);
     expect(TT_PAGE_VERTICAL_RHYTHM_L5.sectionTopStart).toBe(r.sectionTopStart);
@@ -92,10 +101,19 @@ describe("traveltrustHomeLayoutLockL5", () => {
     );
     expect(below).toContain("TravelTrustHomeRolesSection");
     expect(below).toContain("TravelTrustHomeEconomyClusterSection");
-    expect(below).toContain("TravelTrustHomeFaqSection");
+    expect(below.indexOf("<TravelTrustHomeEconomyClusterSection")).toBeLessThan(
+      below.indexOf("<TravelTrustHomeRolesSection"),
+    );
+    expect(below).not.toContain("TravelTrustHomeFaqSection");
     expect(below).toContain("TravelTrustHomeStartCloseSection");
-    expect(economy).toContain("TravelTrustHomeLiquiditySection");
-    expect(economy).toContain("TravelTrustHomeTrustSection");
+    const trustIdx = economy.indexOf("<TravelTrustHomeTrustSection");
+    const settlementIdx = economy.indexOf("<TravelTrustHomeSettlementSection");
+    const unlockIdx = economy.indexOf("<TravelTrustHomeUnlockSection");
+    const liquidityIdx = economy.indexOf("<TravelTrustHomeLiquiditySection");
+    expect(trustIdx).toBeGreaterThan(-1);
+    expect(trustIdx).toBeLessThan(settlementIdx);
+    expect(settlementIdx).toBeLessThan(unlockIdx);
+    expect(unlockIdx).toBeLessThan(liquidityIdx);
     const roles = readFileSync(
       join(REPO, "modules/traveltrust-home/sections/TravelTrustHomeRolesSection.tsx"),
       "utf8",
@@ -114,11 +132,11 @@ describe("traveltrustHomeLayoutLockL5", () => {
     expect(below).not.toContain('chapterId="liquidity"');
     const dividers = below.match(/<TravelTrustSectionFilmDivider/g) ?? [];
     expect(dividers.length).toBe(lock.filmDividerCount);
-    const faqChapterIdx = below.indexOf("<TravelTrustHomeFaqSection");
+    const rolesIdx = below.indexOf("<TravelTrustHomeRolesSection");
     const lastFilmDivider = below.lastIndexOf("<TravelTrustSectionFilmDivider");
     expect(lastFilmDivider).toBeGreaterThan(-1);
-    expect(lastFilmDivider).toBeLessThan(faqChapterIdx);
-    expect(below.indexOf("<TravelTrustSectionFilmDivider", faqChapterIdx)).toBe(-1);
+    expect(lastFilmDivider).toBeGreaterThan(rolesIdx);
+    expect(below.indexOf("<TravelTrustSectionFilmDivider", lastFilmDivider + 1)).toBe(-1);
   });
 
   it("does not mount scroll-snap on network page main", () => {
@@ -129,8 +147,8 @@ describe("traveltrustHomeLayoutLockL5", () => {
   });
 
   it("keeps spacing debug targets aligned with L5 audit", () => {
-    expect(TT_SPACING_DEBUG_GAP_TARGETS_PX["liquidity→trust"]).toBe(
-      TT_PAGE_SPACING_AUDIT_L5.sectionGapTargetsPx["liquidity→trust"].ideal,
+    expect(TT_SPACING_DEBUG_GAP_TARGETS_PX["hero→trust"]).toBe(
+      TT_PAGE_SPACING_AUDIT_L5.sectionGapTargetsPx["hero→trust"].ideal,
     );
     expect(TT_SPACING_DEBUG_GAP_TARGETS_PX["faq→start"]).toBe(
       TT_PAGE_SPACING_AUDIT_L5.sectionGapTargetsPx["faq→start"].ideal,

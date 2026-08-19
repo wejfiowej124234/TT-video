@@ -17,9 +17,9 @@ export const TRAVELTRUST_HOME_CRITICAL_CHUNK_LOADERS = [
   () => import("../presentation/TravelTrustHomeComposerDynamics"),
   () => import("./TravelTrustHomeRolesSection"),
   () => import("./TravelTrustHomeLiquiditySection"),
+  () => import("./TravelTrustHomeUnlockSection"),
   () => import("./TravelTrustHomeTrustSection"),
   () => import("./TravelTrustHomeSettlementSection"),
-  () => import("./TravelTrustHomeFaqSection"),
   () => import("./TravelTrustHomeStartCloseSection"),
 ] as const;
 
@@ -30,10 +30,9 @@ export const TRAVELTRUST_HOME_SECTION_CHUNK_LOADERS: Record<
 > = {
   roles: () => import("./TravelTrustHomeRolesSection"),
   liquidity: () => import("./TravelTrustHomeLiquiditySection"),
+  unlock: () => import("./TravelTrustHomeUnlockSection"),
   trust: () => import("./TravelTrustHomeTrustSection"),
   settlement: () => import("./TravelTrustHomeSettlementSection"),
-  faq: () => import("./TravelTrustHomeFaqSection"),
-  start: () => import("./TravelTrustHomeStartCloseSection"),
 };
 
 export const TRAVELTRUST_HOME_DEFERRED_BELOW_FOLD_LOADER = () =>

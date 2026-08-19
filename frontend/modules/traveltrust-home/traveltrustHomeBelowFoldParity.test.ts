@@ -30,8 +30,8 @@ describe("traveltrust-home below-fold narrative parity", () => {
   const moduleSrc = readFileSync(moduleBelow, "utf8");
 
   it("exports frozen narrative beats", () => {
-    expect(TRAVELTRUST_HOME_BELOW_FOLD_NARRATIVE_BEATS.length).toBe(6);
-    expect(TRAVELTRUST_HOME_BELOW_FOLD_CHAPTER_SEQUENCE).toEqual(["theater", "faq", "close"]);
+    expect(TRAVELTRUST_HOME_BELOW_FOLD_NARRATIVE_BEATS.length).toBe(5);
+    expect(TRAVELTRUST_HOME_BELOW_FOLD_CHAPTER_SEQUENCE).toEqual(["theater", "close"]);
   });
 
   it("module and cinematic share chapter sequence from SSOT", () => {

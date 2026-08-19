@@ -39,8 +39,8 @@ export const TT_SECTION_FILM_DIVIDER_L5 =
 /** 区块间竖向压暗带（避免固定 Canvas 在缝处露底；与 sectionY 叠成标准节间距） */
 export const TT_SECTION_FILM_DIVIDER_HANDOFF_L5 = {
   /** 大转折仅留白，不叠竖向压暗带（避免接缝色带） */
-  wrapperClass: "pointer-events-none relative z-[0] my-7 sm:my-8 h-0 w-full",
-  lineClass: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 opacity-0",
+  wrapperClass: "pointer-events-none relative z-[0] my-4 sm:my-5 h-0 w-full",
+  lineClass: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 opacity-80",
 } as const;
 
 export const TT_BELOW_FOLD_SCROLL_PLATE_L5 = {
@@ -48,17 +48,17 @@ export const TT_BELOW_FOLD_SCROLL_PLATE_L5 = {
 } as const;
 
 export const TT_SECTION_FILM_DIVIDER_MOTION_L5 = {
-  duration: 0.5,
+  duration: 0.55,
   ease: [0.22, 1, 0.36, 1] as const,
-  shimmerDuration: 1.2,
+  shimmerDuration: 1.35,
   shimmerRepeat: 0 as const,
 } as const;
 
 export const TT_FAQ_ACCORDION_L5 = {
   warmPlateClass:
-    "relative rounded-2xl bg-[#0c0a09]/72 p-0.5 shadow-[0_16px_48px_-24px_rgba(252,164,124,0.28)] ring-1 ring-ref-sun/14",
+    "relative rounded-2xl bg-[#0c0a09]/82 p-0.5 shadow-[0_16px_48px_-24px_rgba(252,164,124,0.3)] ring-1 ring-ref-sun/16",
   listClass:
-    "overflow-hidden rounded-[0.9rem] border border-ref-sun/20 divide-y divide-ref-sun/14 bg-ink-950/58 shadow-[0_12px_40px_-18px_rgba(252,164,124,0.26)] ring-1 ring-inset ring-ref-sun/12 backdrop-blur-md",
+    "overflow-hidden rounded-[0.9rem] border border-ref-sun/20 divide-y divide-ref-sun/14 bg-ink-950/68 shadow-[0_12px_40px_-18px_rgba(252,164,124,0.28)] ring-1 ring-inset ring-ref-sun/14 backdrop-blur-xl",
   itemShellClass: "overflow-hidden rounded-none border-0 bg-transparent transition-colors",
   triggerClass:
     "grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-6 py-4 text-left text-small font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/45 sm:min-h-[4rem] sm:gap-4 sm:px-7 sm:py-5 min-h-[3.75rem]",
@@ -87,7 +87,7 @@ export const TT_SETTLEMENT_L5 = {
   /** @deprecated 经济簇顶光见 `TT_PAGE_SECTION_FLOW_L5.economyClusterAtmosphereClass` */
   atmosphereClass: "hidden",
   protocolShellClass:
-    "mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-ref-sun/14 bg-ink-900/28 backdrop-blur-sm transition-colors",
+    "mx-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-ref-sun/18 bg-ink-900/48 backdrop-blur-md transition-colors",
   protocolShellOpenClass: "border-ref-sun/28 bg-ref-sun/6 shadow-[0_0_24px_-12px_rgba(252,164,124,0.18)]",
   protocolPanelClass: "border-t border-ref-sun/12 bg-ref-sun/[0.02] px-6 py-4 text-meta leading-relaxed text-slate-300/92 sm:px-7 sm:py-5",
   protocolPanelMotion: {
@@ -109,13 +109,22 @@ export const TT_SETTLEMENT_L5 = {
     "inline-flex min-h-[3rem] min-w-[10.5rem] flex-1 items-center justify-center rounded-lg border border-ref-sun/16 px-6 py-3 text-small font-medium text-slate-200 transition hover:-translate-y-0.5 hover:border-ref-sun/35 hover:bg-ref-sun/6 hover:shadow-[0_0_20px_-8px_rgba(252,164,124,0.28)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 motion-sub motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:flex-none",
   ctaRowClass: TT_PAGE_VERTICAL_RHYTHM_L5.settlementCtaRow,
   ctaStackEntrance: { duration: 0.38, ease: TT_L5_MOTION_EASE },
+  noticeListClass: "mt-4 space-y-2.5",
+  noticeItemClass: "flex gap-3 text-meta leading-relaxed text-slate-200/90",
+  noticeIndexClass: "mt-0.5 font-mono text-ref-sun/80",
+  timelineClass: "relative mt-5 border-l border-ref-sun/22 pl-5",
+  timelineItemClass: "relative pb-5 last:pb-0",
+  timelineDotClass:
+    "absolute -left-[1.45rem] top-1.5 h-2.5 w-2.5 rounded-full bg-ref-sun/85 ring-4 ring-[#0c0a09]",
+  timelineIndexClass: "font-mono text-meta text-ref-sun/70",
+  timelineBodyClass: "mt-0.5 text-small font-medium leading-snug text-slate-100",
 } as const;
 
 export const TT_TRUST_FACTS_L5 = {
   warmPlateClass:
-    "relative rounded-2xl bg-[#0c0a09]/68 p-0.5 shadow-[0_12px_40px_-22px_rgba(252,164,124,0.22)] ring-1 ring-ref-sun/12",
+    "relative rounded-2xl bg-[#0c0a09]/82 p-0.5 shadow-[0_14px_44px_-20px_rgba(252,164,124,0.26)] ring-1 ring-ref-sun/16",
   cardHoverClass:
-    "group relative flex min-h-[6rem] h-full flex-col justify-start gap-3.5 rounded-xl border border-ref-sun/20 bg-ink-950/48 px-5 py-5 shadow-[0_10px_32px_-16px_rgba(252,164,124,0.18),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-ref-sun/40 hover:bg-ink-950/62 hover:shadow-[0_0_32px_-10px_rgba(252,164,124,0.34)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] motion-sub motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:min-h-[6.75rem] sm:gap-4 sm:px-6 sm:py-6",
+    "group relative flex min-h-[6rem] h-full flex-col justify-start gap-3.5 rounded-xl border border-ref-sun/22 bg-ink-950/62 px-5 py-5 shadow-[0_10px_32px_-16px_rgba(252,164,124,0.2),inset_0_1px_0_rgba(255,220,180,0.06)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-ref-sun/40 hover:bg-ink-950/72 hover:shadow-[0_0_32px_-10px_rgba(252,164,124,0.36)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] motion-sub motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:min-h-[6.75rem] sm:gap-4 sm:px-6 sm:py-6",
   cardSummaryClass: "text-meta leading-relaxed text-slate-200/90 group-hover:text-slate-100",
   cardTitleRowClass: "flex items-start gap-3.5",
   cardIconWrapClass:
@@ -193,11 +202,11 @@ export const TT_HERO_COPY_UI_L5 = {
   legacyPosterScaleDuration: 18,
   legacyPosterScaleRepeat: 0 as const,
   cardL5EnhanceClass:
-    "before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:bg-[linear-gradient(135deg,rgba(252,164,124,0.12)_0%,transparent_48%)] after:pointer-events-none after:absolute after:inset-0 after:rounded-2xl after:shadow-[inset_0_0_0_1px_rgba(252,164,124,0.22)]",
-  disclaimerClass: "mt-4 mb-6 max-w-xl text-slate-100/90 text-meta sm:mb-7",
-  chipsRowClass: "mt-2 sm:mt-2.5",
-  cardBreathingClass: "!gap-4 sm:!gap-4 lg:!gap-5",
-  ctaDockClass: "mt-5 flex w-full flex-col gap-4 sm:gap-5",
+    "before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:bg-[linear-gradient(135deg,rgba(255,255,255,0.06)_0%,transparent_46%)] after:pointer-events-none after:absolute after:inset-0 after:rounded-2xl after:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]",
+  disclaimerClass: "mt-4 mb-2 max-w-xl text-slate-100/90 text-meta sm:mb-2",
+  chipsRowClass: "mt-2.5 sm:mt-3",
+  cardBreathingClass: "!gap-4 sm:!gap-5",
+  ctaDockClass: "mt-5 flex w-full flex-col gap-3 sm:gap-4",
   ctaGlowClass:
     "shadow-[0_0_32px_-6px_rgba(252,164,124,0.55)] transition-shadow hover:shadow-[0_0_40px_-4px_rgba(252,164,124,0.65)]",
 } as const;
@@ -234,12 +243,13 @@ export const TT_BELOW_FOLD_ATMOSPHERE_UNIFIED_L5 = {
 
 /** 章节入场（非地球区块 · 与 traveltrustSectionMotion 同值） */
 export const TT_SECTION_MOTION_L5 = {
-  theater: { duration: 0.72 },
-  liquidity: { duration: 0.58 },
-  trust: { duration: 0.55 },
-  settlement: { duration: 0.42 },
+  theater: { duration: 0.62 },
+  liquidity: { duration: 0.52 },
+  trust: { duration: 0.52 },
+  settlement: { duration: 0.48 },
+  unlock: { duration: 0.5 },
   faq: { duration: 0.4 },
   start: { duration: 0.62 },
-  childStaggerDuration: 0.38,
-  childStaggerBase: 0.06,
+  childStaggerDuration: 0.36,
+  childStaggerBase: 0.05,
 } as const;

@@ -32,6 +32,7 @@ export function TravelTrustHeroChainHud() {
   useEffect(() => setMounted(true), []);
 
   if (!mounted || !isConnected) return null;
+  if (chainId === 31337 || chainId === 1337) return null;
 
   const expected = getExpectedChainId();
   const wrongNetwork = chainId !== expected;
@@ -122,7 +123,7 @@ export function TravelTrustHeroChainHud() {
         >
           {t("traveltrust_hero_wallet_next_step")}{" "}
           <motion.span className="inline-block" whileHover={TT_HERO_CHAIN_HUD_L5.linkHover}>
-            <Link href="#start" className={TT_HERO_CHAIN_HUD_L5.startLinkClass}>
+            <Link href="#liquidity" className={TT_HERO_CHAIN_HUD_L5.startLinkClass}>
               {t("traveltrust_start_cta")}
             </Link>
           </motion.span>

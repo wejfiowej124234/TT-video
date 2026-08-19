@@ -2,7 +2,7 @@
 
 **① 本地 UI 壳：已冻结（2026-05-25）** · 路由 `app/traveltrust/page.tsx` · 五主路由：[FIVE-MAIN-ROUTES-PHASE1-FREEZE.md](../../evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md)
 
-**IA（layout lock · 勿静默改序）：** `hero → roles → liquidity → trust → settlement → faq → start`。**角色剧场**（「选择您的旅行角色」）**上方不**再加独立 TT 产品介绍长文块 — Hero + `traveltrust_theater_handoff_line` 已承担；**不**恢复 85 文档 `#overview` 四卡整节（2026-05-25 产品决策）。
+**IA（layout lock · 勿静默改序）：** `hero → liquidity → trust → settlement → roles → faq → start`。**顶栏目录与公告不动。** 角色剧场（「选择您的旅行角色」）**上方不**再加独立 TT 产品介绍长文块 — Hero + `traveltrust_theater_handoff_line` 已承担；**不**恢复 85 文档 `#overview` 四卡整节（2026-05-25 产品决策）。
 
 企业级满分分层：**编排 / 节边界 / 入口闸在模块内**；**叙事 UI 在 `cinematic`**；**样式 SSOT 按域拆分在 `lib/traveltrust/l5`**。
 
@@ -41,7 +41,7 @@ modules/traveltrust-home → lib/traveltrust/l5
 | 质量 | visual-qa-code-evidence、visual-qa-e2e-manifest |
 | UI 归属 | section-ui-slot（`sections/ui`） |
 
-布局锁：`TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-05-v10-absolute-modular`
+布局锁：`TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v12-ttg-l5-craft`
 
 P1 e2e：`npm run e2e:traveltrust-home-modular-qa`（需 `:3012`）
 

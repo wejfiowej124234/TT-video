@@ -243,6 +243,12 @@ export function TravelTrustIdentityTheater({ onViewportChange }: Props = {}) {
           <h2 className={TT_THEATER_SECTION_L5.introHeadlineClass}>{t("traveltrust_roles_headline")}</h2>
           <p className={TT_THEATER_SECTION_L5.introSublineClass}>{t("traveltrust_roles_subline")}</p>
           <p
+            className="mt-2 text-meta leading-relaxed text-slate-300/92"
+            data-tt-traveltrust-roles-ttg-bridge="1"
+          >
+            {t("traveltrust_roles_ttg_bridge")}
+          </p>
+          <p
             className="mt-2 text-meta leading-snug text-slate-300/90"
             data-tt-traveltrust-theater-corridor-narrative-l5="1"
           >

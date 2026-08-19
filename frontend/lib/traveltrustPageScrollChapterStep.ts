@@ -5,11 +5,10 @@ export const TT_PAGE_SCROLL_CHAPTER_STEP_L5 = {
   /** 与 `TRAVELTRUST_SECTION_NAV_ITEMS` 叙事顺序一致（一滚轮一屏 · 不跳过 trust 等） */
   chapterSelectors: [
     "#hero",
-    '[data-tt-traveltrust-snap-chapter="theater"]',
     '[data-tt-traveltrust-snap-chapter="liquidity"]',
     '[data-tt-traveltrust-snap-chapter="trust"]',
     '[data-tt-traveltrust-snap-chapter="settlement"]',
-    '[data-tt-traveltrust-snap-chapter="faq"]',
+    '[data-tt-traveltrust-snap-chapter="theater"]',
     '[data-tt-traveltrust-snap-chapter="close"]',
   ],
   /** 单次滚轮事件最小 delta，过滤触控板碎抖 */

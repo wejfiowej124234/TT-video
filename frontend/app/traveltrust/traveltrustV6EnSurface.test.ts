@@ -9,7 +9,7 @@ import {
 
 describe("traveltrust v6 en surface copy (TT-PH1-156)", () => {
   it("hero title is a single localized string", () => {
-    expect(en.traveltrust_hero_title).toBe("TravelTrust Custom travel");
+    expect(en.traveltrust_hero_title).toBe("TravelTrust Web3 Network");
     expect(en.traveltrust_title_suffix).toBe("Network");
   });
 

@@ -357,7 +357,7 @@ describe("traveltrustCinematicNonGlobeL5", () => {
     expect(TT_ROLE_VIDEO_L5.playCtaPulseDuration).toBe(0.85);
     expect(TT_ROLE_VIDEO_L5.playCtaPulseRepeat).toBe(0);
     expect(TT_ROLE_VIDEO_L5.flashPeakOpacity).toBe(0.14);
-    expect(TT_SCROLL_PROGRESS_L5.handoffAnchorSection).toBe("roles");
+    expect(TT_SCROLL_PROGRESS_L5.handoffAnchorSection).toBe("liquidity");
     expect(TT_PULSE_TICKER_L5.inlineMarqueeDuration).toBe(72);
     expect(TT_ROLE_VIDEO_L5.frameBorderPulse.duration).toBe(3.2);
     expect(TT_HORIZON_ARC_L5.ambientShimmerDuration).toBe(5.6);

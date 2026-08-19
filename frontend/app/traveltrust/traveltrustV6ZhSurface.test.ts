@@ -8,7 +8,7 @@ import {
 
 describe("traveltrust v6 zh surface copy (TT-PH1-156)", () => {
   it("hero title is a single localized string", () => {
-    expect(zh.traveltrust_hero_title).toBe("TravelTrust 定制旅行");
+    expect(zh.traveltrust_hero_title).toBe("TravelTrust Web3 网络");
   });
 
   it("avoids banned English fragments on hero-facing keys", () => {

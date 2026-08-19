@@ -12,8 +12,9 @@ describe("traveltrust v6 FAQ copy", () => {
     expect(zh.traveltrust_faq_a1.length).toBeLessThan(140);
   });
 
-  it("en FAQ q1 is v6 ICO disclaimer", () => {
-    expect(en.traveltrust_faq_q1).toMatch(/ICO|token sale/i);
+  it("en FAQ q1 matches zh disclaimer framing without ICO", () => {
+    expect(en.traveltrust_faq_q1).toMatch(/token|securities/i);
+    expect(en.traveltrust_faq_q1).not.toMatch(/ICO/i);
     expect(en.traveltrust_faq_a1).toMatch(/Escrow/i);
   });
 

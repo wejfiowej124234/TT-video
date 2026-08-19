@@ -26,7 +26,7 @@ export const TT_HERO_HORIZON_ENTRANCE_L5 = {
 } as const;
 
 /** Hero 文案区滚动提示（非地球 UI · L5-3） */
-/** Hero 卡内「向下·角色剧场」— 与左下 scroll chrome 同 pill，无嵌套 border-t（H·O3） */
+/** Hero 卡内「向下·获取 TTG」— 与左下 scroll chrome 同 pill，无嵌套 border-t（H·O3） */
 export const TT_SCROLL_HINT_L5_CLASS =
   `relative inline-flex w-full flex-col items-center gap-1.5 ${TT_SCROLL_CHROME_PILL_L5} px-2.5 py-2.5 text-meta font-semibold text-ref-sun/92 transition hover:border-ref-sun/32 hover:text-ref-sun motion-sub motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 lg:items-start lg:text-left`;
 

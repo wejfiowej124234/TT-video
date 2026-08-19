@@ -153,7 +153,7 @@ export const TRAVELTRUST_ROLES: readonly TravelTrustRoleConfig[] = [
     enterKey: "traveltrust_role_enter",
     href: "/governance",
     defaultMp4: ROLE_DEFAULT_MP4.region_steward,
-    defaultPoster: "/media/traveltrust/roles/region_steward.poster.svg",
+    defaultPoster: "/media/traveltrust/roles/region_steward.poster.jpg",
     envMp4: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_VIDEO_REGION_STEWARD?.trim(),
     envPoster: e?.NEXT_PUBLIC_TRAVELTRUST_ROLE_POSTER_REGION_STEWARD?.trim(),
     accent: {

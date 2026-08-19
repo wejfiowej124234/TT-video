@@ -7,6 +7,7 @@
  * V1 只读：`frontend/archive/ui-v1/`
  */
 
+import { isListingDocDarkL5HeaderPath } from "@/lib/traveltrustListingDisclosure";
 import {
   TT_MARKETING_DARK_ROUTE_PAGE_SHELL,
   TT_MARKETING_HEADER_BAR_COMMUNITY_PREMIUM,
@@ -66,12 +67,20 @@ export function isGovernanceDarkL5HeaderPath(pathname: string | null | undefined
   return p === "/governance" || p.startsWith("/governance/");
 }
 
+/** `/protocol` · 白皮书官方阅读占位（金黑 cinematic · 同源治理链顶栏） */
+/** `/brand` · `/assurance` · `/contact` · `/protocol` 送审占位阅读页同顶栏 */
+export function isProtocolPaperDarkL5HeaderPath(pathname: string | null | undefined): boolean {
+  const p = pathname ?? "";
+  return p === "/protocol" || p.startsWith("/protocol/");
+}
+
 /** `/orders*` · `/escrow*` · `/pay*` · `/itinerary*` · `/governance*` — 订单/治理主链 + 顶栏 cinematic 同族 */
 export function isOrderChainDarkL5HeaderPath(pathname: string | null | undefined): boolean {
   return (
     isOrdersDarkL5HeaderPath(pathname) ||
     isProductConsoleL5UtilityPath(pathname) ||
-    isGovernanceDarkL5HeaderPath(pathname)
+    isGovernanceDarkL5HeaderPath(pathname) ||
+    isListingDocDarkL5HeaderPath(pathname)
   );
 }
 

@@ -22,8 +22,8 @@ describe("traveltrustCinematicPageL5", () => {
   });
 
   it("attenuates canvas cyan scrim on scroll", () => {
-    expect(resolveCinematicCanvasCyanMul(0, 0)).toBeCloseTo(0.12, 2);
-    expect(resolveCinematicCanvasCyanMul(0.5, 0.4)).toBeLessThan(0.35);
+    expect(resolveCinematicCanvasCyanMul(0, 0)).toBe(0);
+    expect(resolveCinematicCanvasCyanMul(0.5, 0.4)).toBe(0);
   });
 
   it("fades globe decor on hero scroll", () => {
@@ -44,7 +44,7 @@ describe("traveltrustCinematicPageL5", () => {
     expect(TT_CINEMATIC_PAGE_L5.routeArcSvg.labels).toHaveLength(3);
     expect(TT_CINEMATIC_PAGE_L5.routeArcSvg.stop100).not.toContain("110, 105");
     expect(TT_CINEMATIC_PAGE_L5.bloom.intensity).toBeGreaterThan(0);
-    expect(TT_CINEMATIC_PAGE_L5.heroTrustChip.itemClass).toContain("ref-sun");
+    expect(TT_CINEMATIC_PAGE_L5.heroTrustChip.iconWrapClass).toContain("ref-sun");
     expect(TT_CINEMATIC_PAGE_L5.horizonArc.gradStop0).toContain("252");
     expect(TT_CINEMATIC_PAGE_L5.heroGlobe.tierGlow.S).toBe("#fca47c");
     expect(TT_CINEMATIC_PAGE_L5.heroGlobe.arc.pulseAccent).toContain("ffd");

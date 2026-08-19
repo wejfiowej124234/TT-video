@@ -74,7 +74,9 @@ export function TravelTrustTtgRoundPanel() {
                 <div className="flex justify-between gap-3">
                   <dt className="shrink-0 text-slate-400/90">{t("traveltrust_ttg_round_wallet_cap")}</dt>
                   <dd className="font-mono tabular-nums text-right text-slate-100">
-                    {formatTraveltrustTtgAmount(round.perWalletCapTtg, locale ?? "en")} TTG
+                    {round.perWalletCapTtg === 0
+                      ? t("traveltrust_ttg_round_wallet_cap_none")
+                      : `${formatTraveltrustTtgAmount(round.perWalletCapTtg, locale ?? "en")} TTG`}
                   </dd>
                 </div>
                 <div className="border-t border-white/6 pt-2.5">

@@ -15,6 +15,7 @@ export const TT_TRAVELTRUST_SECTION_A11Y = {
     list: "tt-traveltrust-faq-list",
   },
   start: { title: "tt-traveltrust-start-title" },
+  unlock: { title: "tt-traveltrust-unlock-title" },
   regionRoster: {
     heading: "tt-traveltrust-region-roster-heading",
     hint: "tt-traveltrust-region-roster-hint",

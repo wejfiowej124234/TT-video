@@ -10,6 +10,7 @@ import {
   TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID,
 } from "@/lib/traveltrust/l5";
 import { TravelTrustFooterCrossNav } from "./TravelTrustFooterCrossNav";
+import { TravelTrustFooterDisclosureNav } from "./TravelTrustFooterDisclosureNav";
 import { TravelTrustFooterSocial } from "./TravelTrustFooterSocial";
 
 type Props = {
@@ -86,7 +87,7 @@ export function TravelTrustNetworkFooter({ grouped = false }: Props) {
             },
           },
         }}
-        data-tt-traveltrust-network-footer-grid-stagger-l5="1"
+        data-tt-traveltrust-network-footer-center-l5="1"
       >
         <motion.div
           className={TT_NETWORK_FOOTER_L5.socialWrapClass}
@@ -124,8 +125,8 @@ export function TravelTrustNetworkFooter({ grouped = false }: Props) {
         >
           <TravelTrustFooterCrossNav />
         </motion.div>
-        <motion.p
-          className={`col-span-full mt-8 border-t border-ref-sun/12 pt-6 sm:mt-9 sm:pt-6 ${TT_SECTION_META_L5.copyrightClass}`}
+        <motion.div
+        className="order-3 mt-2 w-full border-t border-ref-sun/12 pt-6 text-center sm:mt-3 sm:pt-6"
           data-tt-traveltrust-footer-copyright-full="1"
           variants={
             reduceMotion
@@ -141,8 +142,14 @@ export function TravelTrustNetworkFooter({ grouped = false }: Props) {
           }
           data-tt-traveltrust-network-footer-wave-l5="copyright"
         >
-          {t("traveltrust_footer_copyright", { year: String(year) })}
-        </motion.p>
+          <p className={`${TT_SECTION_META_L5.copyrightClass} text-center`}>
+            {t("traveltrust_footer_copyright", { year: String(year) })}
+          </p>
+          <p className="mx-auto mt-2 max-w-[40rem] text-center text-[12px] leading-[1.65] text-[#f4d39a]/80">
+            {t("traveltrust_footer_legal_note")}
+          </p>
+          <TravelTrustFooterDisclosureNav />
+        </motion.div>
       </motion.div>
     </motion.footer>
   );

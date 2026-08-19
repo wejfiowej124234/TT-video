@@ -24,6 +24,8 @@ export { TravelTrustHomeRolesSection } from "./TravelTrustHomeRolesSection";
 
 export { TravelTrustHomeLiquiditySection } from "./TravelTrustHomeLiquiditySection";
 
+export { TravelTrustHomeUnlockSection } from "./TravelTrustHomeUnlockSection";
+
 export { TravelTrustHomeTrustSection } from "./TravelTrustHomeTrustSection";
 
 export { TravelTrustHomeSettlementSection } from "./TravelTrustHomeSettlementSection";

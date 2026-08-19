@@ -8,6 +8,7 @@ import {
 describe("traveltrustFundraisingLinkPolicy (TT-PH1-111/112)", () => {
   it("allows internal product routes", () => {
     expect(isTraveltrustV6AllowedHref("/governance")).toBe(true);
+    expect(isTraveltrustV6AllowedHref("/protocol")).toBe(true);
     expect(isTraveltrustV6AllowedHref("/help#disclosure")).toBe(true);
     expect(isTraveltrustV6AllowedHref("#start")).toBe(true);
   });

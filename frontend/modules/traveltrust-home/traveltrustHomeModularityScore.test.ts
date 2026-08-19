@@ -118,7 +118,7 @@ const DIMENSIONS = [
     label: "布局锁 v3-modular 元数据",
     score: () => {
       expect(TRAVELTRUST_HOME_LAYOUT_LOCK_L5.lockId).toBe(
-        "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-05-v10-absolute-modular",
+        "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v16-economy-breathing",
       );
       expect(TRAVELTRUST_HOME_LAYOUT_LOCK_L5.modularity.cinematicBridgeImport).toBe(
         "@/lib/traveltrust/home/cinematic-bridge",
@@ -200,6 +200,7 @@ const DIMENSIONS = [
         const altNames: Record<string, string> = {
           roles: "TravelTrustHomeRolesSection.tsx",
           liquidity: "TravelTrustHomeLiquiditySection.tsx",
+          unlock: "TravelTrustHomeUnlockSection.tsx",
           trust: "TravelTrustHomeTrustSection.tsx",
           settlement: "TravelTrustHomeSettlementSection.tsx",
           faq: "TravelTrustHomeFaqSection.tsx",
@@ -230,14 +231,14 @@ const DIMENSIONS = [
     score: () => {
       const slot = join(mod, "sections/ui/TravelTrustHomeSectionSlot.tsx");
       expect(existsSync(slot)).toBe(true);
-      for (const id of ["roles", "liquidity", "trust", "settlement", "faq", "start"] as const) {
+      for (const id of ["roles", "liquidity", "unlock", "trust", "settlement", "faq"] as const) {
         const names: Record<string, string> = {
           roles: "TravelTrustHomeRolesSection.tsx",
           liquidity: "TravelTrustHomeLiquiditySection.tsx",
+          unlock: "TravelTrustHomeUnlockSection.tsx",
           trust: "TravelTrustHomeTrustSection.tsx",
           settlement: "TravelTrustHomeSettlementSection.tsx",
           faq: "TravelTrustHomeFaqSection.tsx",
-          start: "TravelTrustHomeStartCloseSection.tsx",
         };
         expect(readFileSync(join(mod, "sections", names[id]), "utf8")).toContain(
           "TravelTrustHomeSectionSlot",

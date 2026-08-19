@@ -46,6 +46,7 @@ export const TRAVELTRUST_TRUST_FUNNEL_ROUTES = {
   feeRoutes: "/governance/fee-routes",
   disputes: "/disputes",
   traveltrustFeeRouter: "/traveltrust#fee-router",
+  protocolPaper: "/protocol",
 } as const;
 
 /** page-brief ① 默认 CTA */
@@ -54,7 +55,7 @@ export const TRAVELTRUST_PAGE_BRIEF_CTA_DEFAULTS = {
   secondary: TRAVELTRUST_PAGE_BRIEF_DEV_FALLBACK.cta_contract.secondary_target,
 } as const;
 
-/** 页脚「产品与订单」+ 信任组（与 TravelTrustFooterCrossNav 同源路径） */
+/** 页脚导流路径库存（slim footer 不再渲染 sitemap；路径仍须存在） */
 export const TRAVELTRUST_FOOTER_PRODUCT_ROUTES = [
   "/traveltrust",
   "/",
@@ -74,6 +75,10 @@ export const TRAVELTRUST_FOOTER_TRUST_ROUTES = [
   "/governance/fee-routes",
   "/privacy",
   "/terms",
+  "/protocol",
+  "/brand",
+  "/assurance",
+  "/contact",
 ] as const;
 
 /** Pulse 归档页 + 公告内「查看详情」链（① 静态） */

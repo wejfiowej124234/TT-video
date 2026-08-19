@@ -22,17 +22,17 @@ export const TT_THEATER_SECTION_L5 = {
   /** 眉题「角色剧场」与主标题之间：显式分线 + 企业级留白（勿贴标题） */
   introKickerClass: "mb-0",
   introHeadlineBlockClass: "mt-5 space-y-4 sm:mt-6 sm:space-y-5",
-  introHeadlineClass: "max-w-3xl text-h3 font-bold text-white sm:text-h2",
+  introHeadlineClass: "max-w-3xl text-h3 font-bold text-white",
   introSublineClass: "max-w-3xl text-small leading-relaxed text-slate-300",
   theaterPanelFrameClass:
     "relative min-w-0 overflow-hidden rounded-2xl border border-ref-sun/20 bg-gradient-to-b from-[#1c1612]/92 to-ink-950/96 shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_12px_40px_-16px_rgba(252,164,124,0.22)]",
-  stageShellClass: "relative z-[3] mt-5 overflow-hidden [perspective:1600px] sm:mt-6 lg:mt-7",
+  stageShellClass: "relative z-[3] mt-4 overflow-hidden [perspective:1600px] sm:mt-5 lg:mt-6",
   stageGridClass: "relative grid gap-5 lg:grid-cols-[minmax(0,12.5rem)_minmax(0,1fr)] lg:items-start lg:gap-6 xl:gap-7",
   panelStackClass: "relative z-[1] flex min-w-0 flex-col gap-4 lg:gap-5",
   roleMetaStackClass: "flex flex-col gap-3.5",
   roleCtaStackClass: "flex w-full flex-col gap-2.5 pt-0.5 sm:max-w-[22rem]",
   /** 吸附由外层 `TravelTrustSnapChapter` 承担；本节仅保留内容与 Hero 接缝 */
-  sectionSurfaceClass: `relative isolate overflow-hidden -mt-[clamp(0.5rem,1.5vh,1.25rem)] pt-[clamp(1.75rem,4.5vh,2.75rem)] sm:pt-[clamp(2rem,5vh,3.25rem)] max-lg:[&_[data-tt-traveltrust-role-video]]:aspect-video ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionBottomTheater}`,
+  sectionSurfaceClass: `relative isolate overflow-hidden -mt-[clamp(0.25rem,1vh,0.75rem)] pt-[clamp(1.25rem,3.2vh,2rem)] sm:pt-[clamp(1.5rem,3.6vh,2.25rem)] max-lg:[&_[data-tt-traveltrust-role-video]]:aspect-video ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionBottomTheater}`,
   /** @deprecated 用 introHeadlineBlockClass */
   introBlockGap: "space-y-4 sm:space-y-5",
   videoPlaceholderHintClass: "mt-1 text-meta leading-relaxed text-slate-300/88",

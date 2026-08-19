@@ -78,6 +78,12 @@ export function loadTravelTrustSettlementStrip() {
   }));
 }
 
+export function loadTravelTrustTtgUnlockSchedule() {
+  return import("@/components/traveltrust/cinematic/TravelTrustTtgUnlockSchedule").then((m) => ({
+    default: m.TravelTrustTtgUnlockSchedule,
+  }));
+}
+
 export function loadTravelTrustFaqStrip() {
   return import("@/components/traveltrust/cinematic/TravelTrustFaqStrip").then((m) => ({
     default: m.TravelTrustFaqStrip,

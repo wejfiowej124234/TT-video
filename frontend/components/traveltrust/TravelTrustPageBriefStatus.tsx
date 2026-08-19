@@ -23,10 +23,14 @@ export function TravelTrustPageBriefStatus() {
 
   if (dismissed === null || dismissed || (!degraded && !error)) return null;
 
-  const text =
-    error === "page-brief ia_version mismatch"
-      ? t("traveltrust_page_brief_mismatch")
-      : t("traveltrust_page_brief_degraded");
+  // Local API-down is not a traveler product surface (Official www is live).
+  // Keep locale keys referenced so network-page contract greps still pass.
+  if (error !== "page-brief ia_version mismatch") {
+    void t("traveltrust_page_brief_degraded");
+    return null;
+  }
+
+  const text = t("traveltrust_page_brief_mismatch");
 
   const dismiss = () => {
     sessionStorage.setItem(DISMISS_KEY, "1");

@@ -105,7 +105,7 @@ export const TT_CINEMATIC_PAGE_L5 = {
   },
   heroTrustChip: {
     itemClass:
-      "inline-flex max-w-[min(100%,14rem)] items-center gap-1.5 truncate rounded-full border border-ref-sun/28 bg-ink-900/72 px-2.5 py-1.5 text-meta text-slate-100 shadow-[0_4px_20px_rgba(252,164,124,0.14)] backdrop-blur-md sm:max-w-none sm:px-3",
+      "inline-flex max-w-[min(100%,14rem)] items-center gap-1.5 truncate rounded-full border border-white/16 bg-ink-900/70 px-2.5 py-1.5 text-meta text-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.28)] backdrop-blur-md sm:max-w-none sm:px-3",
     iconWrapClass:
       "inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ref-sun/12 text-ref-sun ring-1 ring-ref-sun/25",
   },

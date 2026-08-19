@@ -62,7 +62,6 @@ export function TravelTrustStartSection() {
   const [feeOpen, setFeeOpen] = useState(false);
   const feePanelRef = useRef<HTMLDivElement>(null);
   const planHref = resolveTraveltrustPlanTripHref(brief?.cta_contract.primary_target);
-  const governanceHref = brief?.cta_contract.secondary_target ?? "/governance";
   const { activeStep: activeStartStep, selectStep, pauseCycle, resumeCycle } =
     useTraveltrustStartStepController(reduceMotion);
   const { startPrefillRegionId, startPrefillStepId } = useHeroGlobeP1Link();
@@ -333,17 +332,19 @@ export function TravelTrustStartSection() {
           data-tt-traveltrust-start-ghost-cta-tap-l5="1"
         >
           <Link
-            href={governanceHref}
-            title={t("traveltrust_start_governance_title")}
+            href="#liquidity"
+            title={t("traveltrust_hero_cta_ttg_aria")}
             onClick={() =>
               trackTravelTrustEvent("traveltrust_secondary_cta_click", {
                 source: "start",
-                target: governanceHref,
+                target: "#liquidity",
+                role: "get_ttg",
               })
             }
             className={`${ghostCtaClass} ${TT_START_SECTION_L5.ctaLinkMinWidthClass}`}
+            data-tt-traveltrust-start-cta-ttg="1"
           >
-            {t("traveltrust_start_governance_cta")}
+            {t("traveltrust_hero_cta_ttg")}
           </Link>
         </motion.div>
       </motion.div>

@@ -30,12 +30,13 @@ describe("traveltrustHeroLayout (TT-PH1-163)", () => {
     expect(TT_HERO_SPLIT_GLOBE_X).toBeLessThan(-0.38);
   });
 
-  it("documents hero scroll hint on copy card (TT-PH1-27)", () => {
+  it("hero TTG CTA stays; visible scroll-hint pill is gone", () => {
     const hero = readFileSync(
       join(dirname(fileURLToPath(import.meta.url)), "../components/traveltrust/cinematic/TravelTrustCinematicHero.tsx"),
       "utf8",
     );
-    expect(hero).toContain('data-tt-traveltrust-hero-scroll-hint="outside-card"');
+    expect(hero).toContain('data-tt-traveltrust-hero-cta-ttg="1"');
+    expect(hero).not.toContain("data-tt-traveltrust-hero-scroll-hint");
     expect(hero).not.toContain('data-tt-traveltrust-hero-scroll-hint="copy-card"');
     expect(hero).not.toContain('data-tt-traveltrust-hero-scroll-hint="globe"');
   });

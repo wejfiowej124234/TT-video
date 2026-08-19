@@ -44,15 +44,10 @@ const TravelTrustSettlementStrip = dynamic(
   { ssr: true, loading: () => <BelowFoldPlaceholder /> },
 );
 
-const TravelTrustFaqStrip = dynamic(
-  () => import("./TravelTrustFaqStrip").then((m) => ({ default: m.TravelTrustFaqStrip })),
-  { ssr: true, loading: () => <BelowFoldPlaceholder /> },
-);
-
-const TravelTrustStartSection = dynamic(
+const TravelTrustTtgUnlockSchedule = dynamic(
   () =>
-    import("./TravelTrustStartSection").then((m) => ({
-      default: m.TravelTrustStartSection,
+    import("./TravelTrustTtgUnlockSchedule").then((m) => ({
+      default: m.TravelTrustTtgUnlockSchedule,
     })),
   { ssr: true, loading: () => <BelowFoldPlaceholder /> },
 );
@@ -127,10 +122,6 @@ type Props = {
 export function TravelTrustBelowFoldSections({ onTheaterViewportChange }: Props) {
   return (
     <TravelTrustHomeBelowFoldShell>
-      <TravelTrustSnapChapter chapterId="theater" align="center">
-        <TravelTrustIdentityTheater onViewportChange={onTheaterViewportChange} />
-      </TravelTrustSnapChapter>
-      <TravelTrustSectionFilmDivider />
       <div
         className={TT_PAGE_SECTION_FLOW_L5.economyClusterClass}
         data-tt-traveltrust-economy-cluster="1"
@@ -141,17 +132,18 @@ export function TravelTrustBelowFoldSections({ onTheaterViewportChange }: Props)
           aria-hidden
           data-tt-traveltrust-economy-cluster-atmosphere-l5="1"
         />
-        <TravelTrustStablecoinGateway />
         <TravelTrustTrustFactsStrip />
         <TravelTrustSettlementStrip />
+        <TravelTrustTtgUnlockSchedule />
+        <TravelTrustStablecoinGateway />
       </div>
       <TravelTrustSectionFilmDivider />
-      <TravelTrustSnapChapter chapterId="faq" align="start">
-        <TravelTrustFaqStrip />
+      <TravelTrustSnapChapter chapterId="theater" align="center">
+        <TravelTrustIdentityTheater onViewportChange={onTheaterViewportChange} />
       </TravelTrustSnapChapter>
+      <TravelTrustSectionFilmDivider />
       <TravelTrustSnapChapter chapterId="close" align="start">
         <div className={TT_SNAP_CHAPTER_GROUP_L5.innerStackClass}>
-          <TravelTrustStartSection />
           <TravelTrustNetworkFooter grouped />
         </div>
       </TravelTrustSnapChapter>

@@ -11,6 +11,7 @@ describe("traveltrustSectionNavItems", () => {
     expect(TRAVELTRUST_HERO_COMPACT_SECTIONS.has("liquidity")).toBe(true);
     expect(TRAVELTRUST_HERO_COMPACT_SECTIONS.has("trust")).toBe(true);
     expect(TRAVELTRUST_HERO_COMPACT_SECTIONS.has("start")).toBe(true);
+    expect(TRAVELTRUST_HERO_COMPACT_SECTIONS.has("unlock")).toBe(false);
     expect(TRAVELTRUST_HERO_COMPACT_SECTIONS.has("stats")).toBe(false);
   });
 
@@ -19,7 +20,16 @@ describe("traveltrustSectionNavItems", () => {
     expect(traveltrustSectionLabelKey("hero")).toBe("traveltrust_nav_pulse");
   });
 
-  it("keeps nine in-page nav entries", () => {
-    expect(TRAVELTRUST_SECTION_NAV_ITEMS).toHaveLength(9);
+  it("keeps in-page nav entries including start", () => {
+    expect(TRAVELTRUST_SECTION_NAV_ITEMS).toHaveLength(7);
+    expect(TRAVELTRUST_SECTION_NAV_ITEMS.map((item) => item.sectionId)).toEqual([
+      "pulse",
+      "trust",
+      "settlement",
+      "unlock",
+      "liquidity",
+      "roles",
+      "start",
+    ]);
   });
 });

@@ -15,8 +15,9 @@ import {
 import { TravelTrustFaqAnswerBody, TravelTrustFaqIntro } from "./TravelTrustFaqRichContent";
 
 const FAQ_ITEMS = [
-  { q: "traveltrust_faq_q1", a: "traveltrust_faq_a1" },
+  { q: "traveltrust_faq_q_get_ttg", a: "traveltrust_faq_a_get_ttg" },
   { q: "traveltrust_faq_q6", a: "traveltrust_faq_a6" },
+  { q: "traveltrust_faq_q1", a: "traveltrust_faq_a1" },
   { q: "traveltrust_faq_q7", a: "traveltrust_faq_a7" },
   { q: "traveltrust_faq_q8", a: "traveltrust_faq_a8" },
   { q: "traveltrust_faq_q2", a: "traveltrust_faq_a2" },

@@ -61,6 +61,7 @@ const L5_COMPONENT_FILES = [
   "TravelTrustStartSection.tsx",
   "TravelTrustStartRoutePreview.tsx",
   "TravelTrustTrustFactsStrip.tsx",
+  "TravelTrustTtgAllocationDashboard.tsx",
   "TravelTrustFaqStrip.tsx",
   "TravelTrustSettlementStrip.tsx",
   "TravelTrustScrollProgress.tsx",
@@ -141,10 +142,11 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(src).toContain("data-tt-traveltrust-start-preview-col-entrance-l5");
   });
 
-  it("hero scroll hint sits outside copy card", () => {
+  it("hero uses TTG CTA without a visible scroll-hint pill", () => {
     const hero = readFileSync(join(CINEMATIC, "TravelTrustCinematicHero.tsx"), "utf8");
-    expect(hero).toContain("data-tt-traveltrust-hero-scroll-hint=\"outside-card\"");
-    expect(hero).toContain("TT_SCROLL_HINT_L5.outsideCardClass");
+    expect(hero).not.toContain("data-tt-traveltrust-hero-scroll-hint");
+    expect(hero).not.toContain("TT_SCROLL_HINT_L5.outsideCardClass");
+    expect(hero).toContain("data-tt-traveltrust-hero-cta-ttg");
     expect(hero).toContain("data-tt-traveltrust-hero-cta-primary-pulse-l5");
     expect(hero).toContain("TT_HERO_CTA_L5.primaryPulseClass");
   });
@@ -180,12 +182,12 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(navSlot).toContain("TT_MARKETING_SITE_HEADER_STICKY_OFFSET_TRAVELTRUST_L1_CLASS");
   });
 
-  it("scroll chrome pill is shared with hero scroll hint", () => {
+  it("scroll chrome pill token remains available for landing chrome", () => {
     const lib = readL5SourceBundle();
     expect(lib).toContain("TT_SCROLL_CHROME_PILL_L5");
     expect(lib).toMatch(/TT_SCROLL_HINT_L5_CLASS[\s\S]*TT_SCROLL_CHROME_PILL_L5/);
     const hero = readFileSync(join(CINEMATIC, "TravelTrustCinematicHero.tsx"), "utf8");
-    expect(hero).toContain("TT_SCROLL_HINT_L5_CLASS");
+    expect(hero).not.toContain("TT_SCROLL_HINT_L5_CLASS");
   });
 
   it("hero-theater handoff uses ink bridge and theater top scrim (no cold border-t)", () => {
@@ -282,13 +284,21 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     const footer = readFileSync(join(CINEMATIC, "TravelTrustFooterCrossNav.tsx"), "utf8");
     const network = readFileSync(join(CINEMATIC, "TravelTrustNetworkFooter.tsx"), "utf8");
     const notice = readFileSync(join(CINEMATIC, "TravelTrustReducedMotionNotice.tsx"), "utf8");
-    expect(footer).toContain("traveltrust_footer_plan");
-    expect(footer).toContain("/traveltrust#start");
+    expect(footer).toContain("traveltrust_footer_supervision_title");
+    expect(footer).toContain("/governance");
+    expect(footer).toContain("TRAVELTRUST_PROTOCOL_PAPER_HREF");
+    expect(footer).not.toContain("/whitepaper");
+    expect(footer).toContain("data-tt-traveltrust-footer-supervision-nav");
     expect(footer).not.toContain("data-tt-traveltrust-footer-site-map-panel-l5");
     expect(footer).not.toContain("traveltrust_footer_network");
     expect(footer).not.toContain("MARKETING_SITE_FOOTER_ID");
     expect(footer).toContain("traveltrust_footer_governance_hub");
+    expect(footer).toContain("traveltrust_footer_protocol_paper");
+    expect(footer).toContain("TravelTrustOfficialTeamDialog");
+    expect(footer).toContain("data-tt-traveltrust-official-team-open");
+    expect(footer).toContain("traveltrust_footer_official_team");
     expect(network).toContain("data-tt-traveltrust-network-footer-ambience-l5");
+    expect(network).toContain("TravelTrustFooterDisclosureNav");
     expect(notice).toContain("TT_REDUCED_MOTION_NOTICE_L5.dismissButtonClass");
   });
 
@@ -303,8 +313,9 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     const settlement = readFileSync(join(CINEMATIC, "TravelTrustSettlementStrip.tsx"), "utf8");
     const footer = readFileSync(join(CINEMATIC, "TravelTrustFooterCrossNav.tsx"), "utf8");
     expect(theater).toContain("TT_THEATER_ROLE_CTA_L5.primaryHover");
-    expect(settlement).toContain("data-tt-traveltrust-settlement-protocol-open-glow-l5");
-    expect(footer).toContain("data-tt-traveltrust-footer-trust-details-warm-l5");
+    expect(settlement).toContain("data-tt-traveltrust-settlement-compact-l5");
+    expect(footer).toContain("data-tt-traveltrust-footer-supervision");
+    expect(footer).toContain("TT_FOOTER_SUPERVISION_L5.itemHover");
     const theaterRole = readFileSync(join(CINEMATIC, "TravelTrustIdentityTheater.tsx"), "utf8");
     expect(theaterRole).not.toMatch(/border-white\/15/);
   });
@@ -316,7 +327,7 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     const canvas = readFileSync(join(CINEMATIC, "TravelTrustPageCinematicCanvas.tsx"), "utf8");
     expect(horizon).toContain("data-tt-traveltrust-horizon-ground-glow-l5");
     expect(placeholder).toContain("data-tt-traveltrust-below-fold-placeholder-warm-core-l5");
-    expect(hero).toContain("data-tt-traveltrust-scroll-hint-mobile-pulse-l5");
+    expect(hero).not.toContain("data-tt-traveltrust-scroll-hint-mobile-pulse-l5");
     expect(canvas).toContain("data-tt-traveltrust-canvas-hero-bridge-shimmer-l5");
   });
 

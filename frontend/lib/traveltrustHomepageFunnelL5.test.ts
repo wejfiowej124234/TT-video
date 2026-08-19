@@ -53,6 +53,7 @@ describe("traveltrustHomepageFunnelL5 · wave 0", () => {
       TRAVELTRUST_TRUST_FUNNEL_ROUTES.pay,
       TRAVELTRUST_TRUST_FUNNEL_ROUTES.feeRoutes,
       TRAVELTRUST_TRUST_FUNNEL_ROUTES.disputes,
+      TRAVELTRUST_TRUST_FUNNEL_ROUTES.protocolPaper,
     ];
     for (const path of check) {
       expect(appPageExists(path), `missing page for ${path}`).toBe(true);

@@ -3,10 +3,11 @@ import { TT_PAGE_VERTICAL_RHYTHM_L5 } from "./rhythm";
 
 export const TT_SECTION_CONTENT_L5 = {
   bodyClass: "relative z-[1] mx-auto w-full max-w-3xl px-0.5 sm:px-0",
+  bodyWideClass: "relative z-[1] mx-auto w-full max-w-5xl px-0.5 sm:px-0",
   kickerToHeadingClass: TT_PAGE_VERTICAL_RHYTHM_L5.headerStackGap,
-  headingClass: "max-w-3xl text-h4 font-bold text-white sm:text-h3",
-  headingCompactClass: "text-h4 font-bold text-white",
-  introClass: `${TT_PAGE_VERTICAL_RHYTHM_L5.headingToIntro} text-meta leading-relaxed text-slate-300/92`,
+  headingClass: "max-w-3xl text-h3 font-bold tracking-tight text-white",
+  headingCompactClass: "text-h3 font-bold tracking-tight text-white",
+  introClass: `${TT_PAGE_VERTICAL_RHYTHM_L5.headingToIntro} text-small leading-relaxed text-slate-300/92`,
   stackAfterHeadingClass: TT_PAGE_VERTICAL_RHYTHM_L5.contentStackGap,
   disclaimerClass: `${TT_PAGE_VERTICAL_RHYTHM_L5.disclaimerAfterGrid} max-w-3xl text-meta leading-relaxed text-slate-300/90`,
   cardGridClass: `${TT_PAGE_VERTICAL_RHYTHM_L5.contentStackGap} mx-auto grid w-full max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:max-w-5xl`,
@@ -27,9 +28,10 @@ export const TT_SECTION_KICKER_L5 =
 
 const _flowSectionBase = "relative isolate overflow-hidden flex flex-col";
 export const TT_SECTION_SURFACE_L5 = {
-  liquidity: `${_flowSectionBase} justify-center opacity-[0.97] ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterFirst}`,
-  trust: `${_flowSectionBase} justify-center ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterMid}`,
-  settlement: `${_flowSectionBase} justify-center ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterLast}`,
+  liquidity: `${_flowSectionBase} justify-center opacity-[0.97] ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterLast}`,
+  unlock: `${_flowSectionBase} justify-center ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterUnlock}`,
+  trust: `${_flowSectionBase} justify-center ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterFirst}`,
+  settlement: `${_flowSectionBase} justify-center ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionClusterMid}`,
   faq: `${_flowSectionBase} justify-start overflow-visible ${TT_PAGE_VERTICAL_RHYTHM_L5.sectionAfterMajorBreak}`,
   /** @deprecated 经济簇顶光见 `TT_PAGE_SECTION_FLOW_L5.economyClusterAtmosphereClass` */
   trustAtmosphere: "hidden",
@@ -60,8 +62,8 @@ export const TT_SCROLL_PROGRESS_L5 = {
   chapterTitleClass: "truncate text-[10px] font-semibold uppercase tracking-[0.14em] text-ref-sun/90",
   narrativeClass:
     "mt-0.5 line-clamp-2 text-[10px] font-medium leading-snug tracking-wide text-ref-sun/80",
-  /** 与 Hero「向下 · 角色剧场」锚点同键（L5-3 · B4） */
-  handoffAnchorSection: "roles" as const,
+  /** 与 Hero「向下 · 获取 TTG」锚点同键（TTG-first IA） */
+  handoffAnchorSection: "liquidity" as const,
   handoffPillClass: TT_SCROLL_CHROME_PILL_L5,
   chapterGlowDuration: 0.85,
   chapterGlowRepeat: 0,

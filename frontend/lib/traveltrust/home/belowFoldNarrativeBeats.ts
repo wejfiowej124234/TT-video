@@ -2,15 +2,14 @@ import { TRAVELTRUST_HOME_LAYOUT_LOCK_L5 } from "@/lib/traveltrustHomeLayoutLock
 
 /** Below-fold 叙事节拍 SSOT（module 线上 · cinematic 契约锚点须对拍） */
 export const TRAVELTRUST_HOME_BELOW_FOLD_NARRATIVE_BEATS = [
-  { kind: "snap", chapterId: "theater", align: "center", sectionIds: ["roles"] as const },
-  { kind: "film-divider" },
   {
     kind: "economy-cluster",
     sectionIds: TRAVELTRUST_HOME_LAYOUT_LOCK_L5.belowFold.economyClusterIds,
     scrollChapterBeat: "economy",
   },
   { kind: "film-divider" },
-  { kind: "snap", chapterId: "faq", align: "start", sectionIds: ["faq"] as const },
+  { kind: "snap", chapterId: "theater", align: "center", sectionIds: ["roles"] as const },
+  { kind: "film-divider" },
   { kind: "snap", chapterId: "close", align: "start", sectionIds: ["start"] as const, groupedFooter: true },
 ] as const;
 

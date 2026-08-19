@@ -69,6 +69,7 @@ export const TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_MODULES = [
   "role-video-frame-pulse",
   "faq-trigger-tap",
   "trust-facts-card-tap",
+  "ttg-allocation",
   "settlement-cta-tap",
   "horizon-ambient-shimmer",
   "illustrative-badge-all-variants",
@@ -134,8 +135,8 @@ export const TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_MODULES = [
   "hero-stars-twinkle",
   "illustrative-badge-ring-pulse",
   "theater-cta-motion-tokens",
-  "settlement-protocol-open-glow",
-  "footer-trust-details-warm",
+  "settlement-compact",
+  "footer-supervision",
   "interaction-hover-tap-unified",
 ] as const;
 

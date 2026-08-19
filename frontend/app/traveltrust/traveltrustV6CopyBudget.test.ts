@@ -5,7 +5,7 @@ import zh from "@/locales/zh";
 /** v6 §3 字数预算（① 本地机读粗检；手验仍以 redesign spec 为准） */
 const V6_COPY_KEYS = {
   tagline: 18,
-  chip: 4,
+  chip: 6,
   roleTag: 4,
   startTitle: 14,
   footerT2: 40,

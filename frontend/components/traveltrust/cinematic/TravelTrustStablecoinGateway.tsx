@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { useId, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { TT_TRAVELTRUST_SECTION_A11Y } from "./traveltrustSectionA11yIds";
 import { useAccount } from "wagmi";
 import { useTranslation } from "@/components/LocaleProvider";
@@ -16,7 +16,6 @@ import {
   TT_STABLECOIN_GATEWAY_L5,
   traveltrustSectionL5DataAttrs,
 } from "@/lib/traveltrust/l5";
-import { getTtgExchangeQuote } from "@/lib/apiClient/governance/ttgExchange";
 import {
   TRAVELTRUST_DEFAULT_SETTLEMENT_STABLECOIN,
   traveltrustCyclePayStablecoin,
@@ -26,36 +25,13 @@ import {
 import { traveltrustLiquidityContractFromBrief } from "@/lib/traveltrustLiquidityContract";
 import { useTravelTrustPageBriefContext } from "@/app/traveltrust/TravelTrustPageBriefContext";
 import { allowChainOffMockPayUi } from "@/lib/travelTrustUiGuards";
-import { TRAVELTRUST_HEADER_WALLET_ID } from "@/lib/traveltrustHeroTrustChips";
-import { useFocusTrap } from "@/hooks/useFocusTrap";
-import { travelFocusRingCoreOffset1Classes } from "@/lib/travelLinkFocus";
-import { TT_MARKETING_BTN_PRIMARY_WARM_HERO, TT_MARKETING_BTN_GHOST_WARM_DARK } from "@/lib/marketingUi";
+import { quoteTtgPublicSaleFromUsdc, resolveTtgPublicSaleFocus, formatUnlockUnitPrice } from "@/lib/governance/ttgPublicUnlockScheduleLocal";
 
-import {
-  quoteTtgMockSwapFromUsdc,
-  TTG_MOCK_USDC_PER_TTG,
-  TTG_REFERENCE_PRICE_V1,
-  formatUsdcRate,
-} from "@/lib/governance/ttgReferencePriceV1";
-
-const MOCK_SWAP_STORAGE_KEY = "traveltrust_mock_ttg_swap_v1_last";
-
-function openHeaderWalletConnect() {
-  if (typeof document === "undefined") return;
-  const root = document.getElementById(TRAVELTRUST_HEADER_WALLET_ID);
-  if (!root) return;
-  root.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  const btn = root.querySelector("button");
-  btn?.click();
-}
-
-/** 治理币（TTG）兑换入口 — ① 固定价 Mock Swap；真链路径见 96-18 / 治理中心（非 USDC↔USDT） */
+/** 治理币（TTG）规则预览 — 窗口未开放，不发起兑换 */
 export function TravelTrustStablecoinGateway() {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const titleId = TT_TRAVELTRUST_SECTION_A11Y.liquidity.title;
-  const walletPromptTitleId = useId();
-  const walletPromptDescId = useId();
   const { brief } = useTravelTrustPageBriefContext();
   const liquidityContract = useMemo(() => traveltrustLiquidityContractFromBrief(brief), [brief]);
   const [payStable, setPayStable] = useState<TraveltrustEscrowSettlementStablecoin>(
@@ -63,96 +39,22 @@ export function TravelTrustStablecoinGateway() {
   );
   const [payAmount, setPayAmount] = useState("100");
   const [previewNote, setPreviewNote] = useState<string | null>(null);
-  const [quoteLoading, setQuoteLoading] = useState(false);
-  const [mockSwapping, setMockSwapping] = useState(false);
-  const [walletPromptOpen, setWalletPromptOpen] = useState(false);
-  const walletPromptTrapRef = useFocusTrap(walletPromptOpen, () => setWalletPromptOpen(false));
-  const localQuote = useMemo(() => quoteTtgMockSwapFromUsdc(payAmount), [payAmount]);
+  const saleFocus = useMemo(() => resolveTtgPublicSaleFocus(), []);
+  const localQuote = useMemo(
+    () => quoteTtgPublicSaleFromUsdc(payAmount, saleFocus.batch.unitPriceUsdc),
+    [payAmount, saleFocus.batch.unitPriceUsdc],
+  );
   const { isConnected } = useAccount();
   const pair = traveltrustTtgAcquirePreviewPair(payStable);
   const showMockSwapUi = allowChainOffMockPayUi();
 
-  const onRefreshQuote = async () => {
-    if (!localQuote) {
-      setPreviewNote(t("traveltrust_liquidity_amount_invalid"));
-      return;
-    }
-    setQuoteLoading(true);
-    trackTravelTrustEvent("traveltrust_secondary_cta_click", {
-      source: "liquidity_ttg_quote",
-      target: `${pair.from}->${pair.to}`,
-    });
-    try {
-      const apiQuote = await getTtgExchangeQuote(payStable, payAmount);
-      setPreviewNote(
-        t("traveltrust_liquidity_quote_line", {
-          pay: apiQuote.pay_amount ?? payAmount,
-          receive: apiQuote.receive_amount ?? localQuote.receiveTtg,
-          rate: apiQuote.rate ?? formatUsdcRate(TTG_MOCK_USDC_PER_TTG),
-          cny: TTG_REFERENCE_PRICE_V1.referencePriceCnyPerTtg,
-        }),
-      );
-    } catch {
-      setPreviewNote(t("traveltrust_liquidity_quote_unavailable"));
-    } finally {
-      setQuoteLoading(false);
-    }
-  };
-
-  const onMockSwap = async () => {
-    if (!localQuote) {
-      setPreviewNote(t("traveltrust_liquidity_amount_invalid"));
-      return;
-    }
-    setMockSwapping(true);
-    trackTravelTrustEvent("traveltrust_secondary_cta_click", {
-      source: "liquidity_ttg_mock_swap",
-      target: `${pair.from}->${pair.to}`,
-    });
-    try {
-      const apiQuote = await getTtgExchangeQuote(payStable, payAmount);
-      const payload = {
-        at: new Date().toISOString(),
-        payStable: apiQuote.pay_stable,
-        payAmount: apiQuote.pay_amount ?? payAmount,
-        receiveTtg: apiQuote.receive_amount ?? localQuote.receiveTtg,
-        rate: apiQuote.rate,
-        valuationAnchorId: apiQuote.meta.valuation_anchor_id ?? TTG_REFERENCE_PRICE_V1.id,
-      };
-      if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(MOCK_SWAP_STORAGE_KEY, JSON.stringify(payload));
-      }
-      setPreviewNote(
-        t("traveltrust_liquidity_mock_swap_success", {
-          pay: payload.payAmount,
-          receive: payload.receiveTtg,
-        }),
-      );
-    } catch {
-      setPreviewNote(t("traveltrust_liquidity_quote_unavailable"));
-    } finally {
-      setMockSwapping(false);
-    }
-  };
-
-  /** HU-022: single「兑换」— disconnected → wallet prompt modal (not parallel connect CTA) */
   const onExchangeClick = () => {
     trackTravelTrustEvent("traveltrust_secondary_cta_click", {
       source: "liquidity_ttg_exchange",
-      target: isConnected ? "exchange" : "wallet_prompt",
+      target: "rules_preview",
     });
-    if (!isConnected) {
-      setWalletPromptOpen(true);
-      return;
-    }
-    if (showMockSwapUi) {
-      void onMockSwap();
-      return;
-    }
-    void onRefreshQuote();
+    setPreviewNote(t("traveltrust_liquidity_exchange_window_closed"));
   };
-
-  const exchangeBusy = quoteLoading || mockSwapping;
 
   return (
     <section
@@ -187,6 +89,25 @@ export function TravelTrustStablecoinGateway() {
           {t("traveltrust_liquidity_title")}
         </h2>
         <p className={TT_STABLECOIN_GATEWAY_L5.taglineClass}>{t("traveltrust_liquidity_tagline")}</p>
+        <p
+          className="mt-2.5 font-mono text-meta text-[#f4d39a]"
+          data-tt-traveltrust-liquidity-batch-focus="1"
+        >
+          {t("traveltrust_liquidity_batch_badge", {
+            n: String(saleFocus.batch.id),
+            status: t(
+              saleFocus.kind === "upcoming"
+                ? "traveltrust_unlock_status_upcoming"
+                : saleFocus.kind === "open"
+                  ? "traveltrust_unlock_status_open"
+                  : "traveltrust_unlock_status_complete",
+            ),
+          })}
+          {" · "}
+          {t("traveltrust_unlock_unit_price", {
+            rate: formatUnlockUnitPrice(saleFocus.batch.unitPriceUsdc),
+          })}
+        </p>
       </motion.div>
       <motion.div className={TT_STABLECOIN_GATEWAY_L5.cardWrapClass}>
       <motion.div
@@ -336,7 +257,7 @@ export function TravelTrustStablecoinGateway() {
 
         <p
           id="traveltrust-liquidity-amount-hint"
-          className={TT_STABLECOIN_GATEWAY_L5.amountLockedHintClass}
+          className={TT_STABLECOIN_GATEWAY_L5.amountRateHintClass}
           data-tt-traveltrust-liquidity-rate-hint="1"
         >
           {localQuote
@@ -344,7 +265,6 @@ export function TravelTrustStablecoinGateway() {
                 pay: payAmount,
                 receive: localQuote.receiveTtg,
                 rate: localQuote.rateUsdcPerTtg,
-                cny: localQuote.referencePriceCnyPerTtg,
               })
             : t("traveltrust_liquidity_amount_invalid")}
         </p>
@@ -368,7 +288,7 @@ export function TravelTrustStablecoinGateway() {
         >
           <motion.button
             type="button"
-            disabled={exchangeBusy || !localQuote}
+            disabled={!localQuote}
             whileHover={reduceMotion ? undefined : { y: -2 }}
             whileTap={reduceMotion ? undefined : { scale: 0.98 }}
             onClick={onExchangeClick}
@@ -378,7 +298,7 @@ export function TravelTrustStablecoinGateway() {
             data-tt-traveltrust-ttg-quote-refresh={isConnected && !showMockSwapUi ? "1" : undefined}
             aria-describedby="traveltrust-liquidity-preview-note"
           >
-            {exchangeBusy ? t("traveltrust_liquidity_quote_loading") : t("traveltrust_liquidity_exchange_cta")}
+            {t("traveltrust_liquidity_exchange_cta")}
           </motion.button>
 
           <div className={TT_STABLECOIN_GATEWAY_L5.ctaSecondaryRowClass}>
@@ -410,51 +330,6 @@ export function TravelTrustStablecoinGateway() {
       </motion.div>
       </motion.div>
       </div>
-
-      {walletPromptOpen ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
-          aria-modal="true"
-          role="dialog"
-          aria-labelledby={walletPromptTitleId}
-          aria-describedby={walletPromptDescId}
-          data-tt-traveltrust-liquidity-wallet-prompt="1"
-          onClick={(e) => e.target === e.currentTarget && setWalletPromptOpen(false)}
-        >
-          <div
-            ref={walletPromptTrapRef}
-            className="w-full max-w-sm rounded-[var(--radius-lg)] border border-white/20 bg-ink-950/95 p-6 text-white shadow-strong backdrop-blur-md"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 id={walletPromptTitleId} className="mb-2 text-h4 font-semibold text-white">
-              {t("traveltrust_liquidity_wallet_prompt_title")}
-            </h3>
-            <p id={walletPromptDescId} className="mb-5 text-body text-white/85">
-              {t("traveltrust_liquidity_wallet_prompt_body")}
-            </p>
-            <div className="flex gap-3">
-              <button
-                type="button"
-                onClick={() => setWalletPromptOpen(false)}
-                className={`${TT_MARKETING_BTN_GHOST_WARM_DARK} flex-1 ${travelFocusRingCoreOffset1Classes} focus-visible:ring-offset-ink-950`}
-              >
-                {t("common_cancel")}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setWalletPromptOpen(false);
-                  openHeaderWalletConnect();
-                }}
-                className={`${TT_MARKETING_BTN_PRIMARY_WARM_HERO} flex-1 ${travelFocusRingCoreOffset1Classes}`}
-                data-tt-traveltrust-liquidity-wallet-prompt-cta="1"
-              >
-                {t("traveltrust_liquidity_wallet_prompt_cta")}
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
     </section>
   );
 }

@@ -6,6 +6,7 @@ import { useTranslation } from "@/components/LocaleProvider";
 import { trackTravelTrustEvent } from "@/lib/analytics";
 import { truncateTraveltrustNavLabel } from "@/lib/traveltrustLocaleLayout";
 import {
+  TRAVELTRUST_HERO_COMPACT_NAV_ORDER,
   TRAVELTRUST_HERO_COMPACT_SECTIONS,
   TRAVELTRUST_SECTION_NAV_ITEMS,
 } from "@/lib/traveltrustSectionNavItems";
@@ -147,7 +148,9 @@ export function TravelTrustLandingNav({ embedded = false, compactOnHero = false 
     activeSection === "hero" ? sectionId === "pulse" : activeSection === sectionId;
 
   const visibleItems = heroCompact
-    ? NAV_ITEMS.filter((item) => TRAVELTRUST_HERO_COMPACT_SECTIONS.has(item.sectionId))
+    ? TRAVELTRUST_HERO_COMPACT_NAV_ORDER.flatMap((sectionId) =>
+        NAV_ITEMS.filter((item) => item.sectionId === sectionId),
+      )
     : NAV_ITEMS;
   const overflowItems = heroCompact
     ? NAV_ITEMS.filter((item) => !TRAVELTRUST_HERO_COMPACT_SECTIONS.has(item.sectionId))

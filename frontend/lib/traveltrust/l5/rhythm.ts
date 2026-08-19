@@ -2,7 +2,9 @@
 
 /**
  * 长页垂直节奏 SSOT（企业叙事流 · 8px 网格）
- * 同主题簇（兑换·信任·结算）用 cluster*；大转折仅用 padding（全页 ≤2 处 Film 软过渡 · 见 `TT_PAGE_SPACING_AUDIT_L5`）。
+ * 同主题簇用 cluster*；大转折仅用 padding（全页 ≤2 处 Film 软过渡 · 见 `TT_PAGE_SPACING_AUDIT_L5`）。
+ * 比例阶：copy 16/20 · stack 24/32 · 经济簇节间 64–80 · 释放→兑换 80–96 · 大转折 56–72。
+ * 经济簇（分配→核对→释放→兑换）必须有可感知负空间；勿再收到 py-5。
  * **首页布局已锁定** · 变更须同步 `TRAVELTRUST_HOME_LAYOUT_LOCK_L5` + `traveltrustHomeLayoutLockL5.test.ts`。
  */
 export const TT_PAGE_VERTICAL_RHYTHM_L5 = {
@@ -10,35 +12,37 @@ export const TT_PAGE_VERTICAL_RHYTHM_L5 = {
   sectionY: "py-8 sm:py-9",
   /** 紧凑节（单节默认） */
   sectionYCompact: "py-6 sm:py-8",
-  /** 经济簇首段：兑换网关（与剧场底 + Film 缝叠层，勿再大 pt） */
-  sectionClusterFirst: "pt-6 sm:pt-7 pb-4 sm:pb-5",
-  /** 经济簇中段：可核对的事实 */
-  sectionClusterMid: "py-4 sm:py-5",
-  /** 经济簇末段：结算 */
-  sectionClusterLast: "pt-4 sm:pt-5 pb-6 sm:pb-8",
+  /** 经济簇首段：创世分配 */
+  sectionClusterFirst: "pt-8 sm:pt-10 pb-8 sm:pb-10",
+  /** 经济簇中段：合约核对 */
+  sectionClusterMid: "py-8 sm:py-10",
+  /** 经济簇释放档：底距加大，避免贴上兑换轨 */
+  sectionClusterUnlock: "pt-8 sm:pt-10 pb-12 sm:pb-14",
+  /** 经济簇末段：兑换网关（顶距加大，与释放列表分开） */
+  sectionClusterLast: "pt-10 sm:pt-12 pb-8 sm:pb-10",
   /** 大转折后首段（FAQ） */
-  sectionAfterMajorBreak: "pt-6 sm:pt-8 pb-6 sm:pb-8",
-  /** 剧场节底：与兑换簇衔接 */
-  sectionBottomTheater: "pb-6 sm:pb-8",
+  sectionAfterMajorBreak: "pt-5 sm:pt-6 pb-5 sm:pb-6",
+  /** 剧场节底 */
+  sectionBottomTheater: "pb-5 sm:pb-6",
   /** @deprecated 用 sectionCluster* */
   sectionBottomLiquidity: "pb-5 sm:pb-6",
   sectionTopTrust: "py-5 sm:py-6",
-  sectionBottomSettlement: "pb-8 sm:pb-9",
-  sectionTopFaq: "pt-7 sm:pt-8",
-  sectionBottomFaq: "pb-7 sm:pb-8",
+  sectionBottomSettlement: "pb-6 sm:pb-8",
+  sectionTopFaq: "pt-6 sm:pt-8",
+  sectionBottomFaq: "pb-6 sm:pb-8",
   sectionTopStart: "pt-6 sm:pt-8",
   sectionYStart: "scroll-mt-28 pb-6 sm:pb-8",
-  headerStackGap: "mt-4 sm:mt-5",
-  headingToIntro: "mt-3 max-w-3xl",
-  contentStackGap: "mt-5 sm:mt-6",
-  contentStackGapTight: "mt-4 sm:mt-5",
+  headerStackGap: "mt-5",
+  headingToIntro: "mt-4 max-w-3xl sm:mt-5",
+  contentStackGap: "mt-6 sm:mt-8",
+  contentStackGapTight: "mt-5 sm:mt-6",
   faqListGap: "space-y-3.5 sm:space-y-4",
   settlementCtaRow:
-    "mt-5 flex w-full flex-wrap items-stretch justify-center gap-4 sm:mt-6 sm:gap-5 lg:max-w-3xl lg:justify-center lg:mx-auto [&_a]:flex-1 [&_a]:sm:flex-none [&_a]:sm:min-w-[11rem]",
+    "mt-5 flex w-full flex-wrap items-stretch justify-start gap-4 sm:mt-6 sm:gap-5 lg:max-w-3xl lg:mx-0 [&_a]:flex-1 [&_a]:sm:flex-none [&_a]:sm:min-w-[11rem]",
   heroChromeMinH: "min-h-[2.5rem] sm:min-h-[2.625rem]",
   liquidityMaxWidth: "max-w-3xl",
-  disclaimerAfterGrid: "mt-6 sm:mt-7",
-  startStepsToPreview: "mt-7 sm:mt-8",
+  disclaimerAfterGrid: "mt-6 sm:mt-8",
+  startStepsToPreview: "mt-6 sm:mt-7",
   complianceShell: "relative mt-8 w-full border-t-0 pt-0 pb-4 sm:mt-10 sm:pb-5",
   complianceContent: "relative mx-auto w-full max-w-3xl px-0.5 sm:px-0 xl:max-w-5xl",
 } as const;

@@ -6,7 +6,7 @@
 |------|------|
 | 路由薄层 | `page.tsx` → **`TravelTrustHomePageShell`** → **`TravelTrustNetworkPageMain`** · `layout.tsx` |
 | 模块编排 | [`modules/traveltrust-home/README.md`](../../modules/traveltrust-home/README.md) |
-| 布局锁 | `lib/traveltrustHomeLayoutLockL5.ts` — **`hero → roles → liquidity → trust → settlement → faq → start`** |
+| 布局锁 | `lib/traveltrustHomeLayoutLockL5.ts` — **`hero → liquidity → trust → settlement → roles → faq → start`**（① Local TTG-first L5 craft v12 · **≠** Official www pin） |
 | L1 槽位 | `TravelTrustHomeLandingNavSlot` → `TravelTrustLandingChrome`（**portal → `document.body`** · `TT_Z.LANDING_CHROME` **280** · 低于 Header **300**） |
 | L1 公告 | `TravelTrustPulseTicker` **`variant="inline"`** · **CSS** 跑马灯 **`globals.css`** **`.tt-traveltrust-pulse-inline-marquee-track`**（48s · 双份列表 **-50%**；`prefers-reduced-motion` → 手滑静态列表） |
 | L1 公告标签对比度 | **closed ①（2026-06-03）** — 「**项目动态 · 全部 ›**」· **`TT_PULSE_TICKER_L5`** 显式 **`rgba(249,215,121,…)`** + **`globals.css`** **`[data-tt-traveltrust-pulse-label-cluster-l5]`** · **[`L1-PULSE-LABEL-CONTRAST-FREEZE`](../../evidence/GO_local_cinematic_l5_closure/L1-PULSE-LABEL-CONTRAST-FREEZE.md)** |

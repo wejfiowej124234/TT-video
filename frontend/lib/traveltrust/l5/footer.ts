@@ -36,10 +36,9 @@ export const TT_NETWORK_FOOTER_L5 = {
     "pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(ellipse_80%_90%_at_50%_0%,rgba(252,164,124,0.08),transparent_72%)]",
   ambiencePulse: { duration: 6.5, opacity: [0.4, 0.75, 0.4] as const, repeat: 0 as const },
   contentGridClass:
-    "mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-8 px-4 pb-2 sm:gap-9 sm:px-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-6 lg:px-8 xl:grid-cols-[minmax(0,22rem)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] xl:gap-x-10 xl:gap-y-0 xl:px-12",
-  socialWrapClass: "min-w-0 lg:col-start-1 lg:row-start-1",
-  crossNavWrapClass:
-    "min-w-0 lg:col-span-2 lg:col-start-2 lg:row-start-1 xl:col-span-3 xl:col-start-2",
+    "mx-auto flex w-full max-w-3xl flex-col items-center gap-8 px-4 pb-2 text-center sm:gap-10 sm:px-6 lg:px-0",
+  socialWrapClass: "flex min-w-0 w-full order-2 justify-center",
+  crossNavWrapClass: "flex min-w-0 w-full order-1 justify-center",
   shellClass:
     `relative ${ttZClass(TT_Z.HERO_SKY)} mt-0 w-full overflow-visible border-t border-ref-sun/18 bg-ink-950/80 px-4 pt-7 pb-[max(2.5rem,env(safe-area-inset-bottom))] pr-[max(1rem,env(safe-area-inset-right))] sm:px-6 sm:pt-8 sm:pb-11`,
   /** grouped 时不叠顶氛围（与合规块无缝衔接） */
@@ -49,39 +48,45 @@ export const TT_NETWORK_FOOTER_L5 = {
     `relative ${ttZClass(TT_Z.HERO_SKY)} mt-0 w-full overflow-visible border-t-0 bg-transparent px-4 pt-4 pb-[max(2rem,env(safe-area-inset-bottom))] pr-[max(1rem,env(safe-area-inset-right))] sm:px-6 sm:pt-5 sm:pb-8`,
 } as const;
 
-/** 页脚栏目标题（关注我们 / 产品与订单 / 信任… 同阶） */
+/** 页脚栏目标题（监督 / 社区 同阶） */
 export const TT_FOOTER_NAV_GROUP_TITLE_L5 = {
-  titleClass: "text-small font-semibold leading-snug tracking-normal text-slate-200",
-  titleSpacingClass: "mb-3.5 sm:mb-4",
+  titleClass: "text-[1.35rem] font-semibold leading-snug tracking-normal text-[#f4d39a] sm:text-[1.5rem]",
+  titleSpacingClass: "mb-3 sm:mb-4",
   captionClass: "text-[13px] leading-[1.6] text-slate-400/92",
-  captionSpacingClass: "mt-5 sm:mt-6",
+  captionSpacingClass: "mt-4 sm:mt-5",
   captionStackClass: "flex max-w-[17.5rem] flex-col gap-2.5 sm:max-w-[18rem] sm:gap-3",
 } as const;
 
-export const TT_FOOTER_CROSS_NAV_L5 = {
-  shellClass:
-    "mb-2 grid w-full min-w-0 grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-6 lg:grid-cols-2 lg:gap-x-10 xl:grid-cols-3 xl:gap-x-10",
-  groupTitleClass: `${TT_FOOTER_NAV_GROUP_TITLE_L5.titleSpacingClass} ${TT_FOOTER_NAV_GROUP_TITLE_L5.titleClass}`,
-  productNavClass: "min-w-0 sm:col-span-2 lg:col-span-1 xl:col-span-1",
-  trustNavDesktopClass:
-    "hidden min-w-0 border-t border-ref-sun/10 pt-7 sm:col-span-2 md:block md:border-t-0 md:pt-0 lg:col-span-1 xl:col-span-1",
-  linkGridClass:
-    "grid w-full grid-cols-1 gap-x-8 gap-y-1.5 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-2 [&_li]:min-w-0 [&_a]:min-h-[36px] sm:[&_a]:min-h-[34px]",
-  siteMapDividerClass: "mt-4 w-full border-t border-ref-sun/12 pt-4 sm:mt-5 sm:pt-5",
-  crossLinkClass:
-    "inline-flex max-w-full items-center justify-start px-0.5 py-1 text-small font-medium text-slate-300 underline-offset-2 transition-colors duration-200 hover:text-ref-sun hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950",
-  siteMapLinkClass:
-    "inline-flex min-h-[40px] w-full items-center text-small font-normal text-slate-300/95 underline-offset-2 transition-colors duration-200 hover:text-ref-sun hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45",
-  secondaryLinkClass: "text-slate-400/90",
-  siteMapKickerClass: "mb-1 text-meta font-medium text-slate-400",
-  linkHoverClass:
-    "transition-colors duration-200 hover:text-ref-sun/95 motion-reduce:transition-none",
-  linkTap: { scale: 0.99 },
-  groupEntrance: { duration: 0.4, ease: TT_L5_MOTION_EASE },
-  trustSummaryHover: "transition hover:text-ref-sun/90",
-  trustDetailsOpenClass:
-    "rounded-lg border border-transparent transition-[border-color,box-shadow] open:border-ref-sun/18 open:shadow-[0_0_20px_-14px_rgba(252,164,124,0.16)]",
-  trustDetailsMobileClass: "mt-1 md:mt-0",
+/** 官方白皮书阅读入口（占位页）。href 禁止含 `whitepaper` 片段。 */
+export const TRAVELTRUST_PROTOCOL_PAPER_HREF = "/protocol" as const;
+
+export const TT_FOOTER_SUPERVISION_L5 = {
+  shellClass: "mb-1 flex min-w-0 w-full flex-col items-center text-center",
+  titleClass: `${TT_FOOTER_NAV_GROUP_TITLE_L5.titleSpacingClass} ${TT_FOOTER_NAV_GROUP_TITLE_L5.titleClass}`,
+  bodyClass: "max-w-[36rem] text-[13px] leading-[1.7] text-slate-300/92",
+  navClass:
+    "mt-5 flex w-full max-w-[38rem] flex-wrap items-center justify-center gap-x-1 gap-y-1 rounded-full border border-[#f4d39a]/20 bg-[#f4d39a]/[0.045] px-2 py-1 shadow-[0_0_28px_-16px_rgba(244,211,154,0.55)] sm:mt-6 sm:gap-x-1.5 sm:px-3 sm:py-1.5",
+  itemClass: "inline-flex",
+  itemHover: { y: -1, scale: 1.03 },
+  itemTap: { scale: 0.97 },
+  itemTransition: { duration: 0.2, ease: TT_L5_MOTION_EASE },
+  sepClass: "select-none px-1 text-[12px] leading-none text-[#f4d39a]/40 sm:px-1.5",
+  linkClass:
+    "group relative inline-flex min-h-[44px] items-center justify-center px-3 text-small font-semibold tracking-wide text-[#f4d39a] transition hover:text-[#ffe8b8] focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45",
+  underlineClass:
+    "pointer-events-none absolute inset-x-3 bottom-2 h-px origin-center scale-x-0 bg-[#f4d39a]/80 transition-transform duration-300 ease-out group-hover:scale-x-100 motion-reduce:scale-x-0 motion-reduce:transition-none",
+} as const;
+
+export const TT_FOOTER_CROSS_NAV_L5 = TT_FOOTER_SUPERVISION_L5;
+
+/** 版权行下送审占位链（条款 / 隐私 / 品牌 / 审计说明 / 联系） */
+export const TT_FOOTER_DISCLOSURE_L5 = {
+  navClass:
+    "mx-auto mt-4 flex w-full max-w-[40rem] flex-wrap items-center justify-center gap-y-1 text-center",
+  itemClass: "inline-flex items-center",
+  sepClass: "select-none px-1.5 text-[12px] leading-none text-[#f4d39a]/35",
+  linkClass:
+    "inline-flex min-h-[44px] items-center px-1 text-[12px] font-medium leading-none text-slate-300/90 underline-offset-4 transition hover:text-[#f4d39a] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45",
 } as const;
 
 /** `/traveltrust` 费路由 / 页脚链（暖色 focus · ①） */
@@ -97,14 +102,14 @@ export const TT_TRAVELTRUST_MARKETING_WARM_L5 = {
 } as const;
 
 export const TT_FOOTER_SOCIAL_L5 = {
-  shellClass: "mb-4 flex min-w-0 flex-col sm:mb-5 lg:mb-0 lg:max-w-none lg:self-start",
+  shellClass: "mb-4 flex min-w-0 w-full flex-col items-center text-center sm:mb-5",
   headingClass: `${TT_FOOTER_NAV_GROUP_TITLE_L5.titleSpacingClass} ${TT_FOOTER_NAV_GROUP_TITLE_L5.titleClass}`,
   brandTaglineClass:
     "max-w-[22rem] text-[13px] leading-[1.55] text-slate-400/95",
   rowClass:
-    "flex w-full max-w-[22rem] flex-wrap items-center gap-x-2.5 gap-y-2 sm:gap-x-3",
+    "flex w-full max-w-[36rem] flex-wrap items-center justify-center gap-x-2.5 gap-y-2 sm:gap-x-3",
   glyphClass: "h-6 w-6 shrink-0 text-[#f9d779] fill-[#f9d779]",
-  notesStackClass: "mt-4 flex max-w-[22rem] flex-col gap-2 sm:mt-5",
+  notesStackClass: "mt-4 flex max-w-[22rem] flex-col items-center gap-2 text-center sm:mt-5",
   pendingNoteClass: "sr-only",
   disclaimerClass: "text-[12px] leading-[1.55] text-slate-400/92",
   iconLinkClass:

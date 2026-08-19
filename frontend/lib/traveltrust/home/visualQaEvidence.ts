@@ -38,7 +38,7 @@ export const TRAVELTRUST_HOME_VISUAL_QA_CODE_EVIDENCE: Record<
     "onTheaterViewportChange",
     "data-tt-traveltrust-theater-entered",
   ],
-  "hash-scroll": ["useTraveltrustHashScroll", "scrollTraveltrustHashIntoView", 'href="#roles"'],
+  "hash-scroll": ["useTraveltrustHashScroll", "scrollTraveltrustHashIntoView", 'href="#liquidity"', 'href="#roles"'],
   "entry-gate": [
     "HomeEntryGateProvider",
     "TRAVELTRUST_HOME_ENTRY_GATE_L5",

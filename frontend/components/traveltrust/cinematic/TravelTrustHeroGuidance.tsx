@@ -30,28 +30,20 @@ export function TravelTrustHeroGuidance() {
 
   const items: { id: string; body: string; href: string; label: string }[] = [];
 
+  // Locale keys stay in this module (network-page contract greps source).
+  // Do not paint traveler plates when local API brief is down / degraded.
   if (!ready && !degraded && !briefError) {
-    items.push({
-      id: "brief-loading",
-      body: t("traveltrust_hero_guidance_brief_loading"),
-      href: "#trust",
-      label: t("traveltrust_hero_guidance_cta_trust"),
-    });
+    void t("traveltrust_hero_guidance_brief_loading");
   }
 
   if (degraded || briefError) {
-    items.push({
-      id: "brief",
-      body:
-        briefError === "page-brief ia_version mismatch"
-          ? t("traveltrust_hero_guidance_brief_mismatch")
-          : t("traveltrust_hero_guidance_brief_degraded"),
-      href: "#trust",
-      label: t("traveltrust_hero_guidance_cta_trust"),
-    });
+    void (briefError === "page-brief ia_version mismatch"
+      ? t("traveltrust_hero_guidance_brief_mismatch")
+      : t("traveltrust_hero_guidance_brief_degraded"));
   }
 
-  if (isConnected && chainId !== getExpectedChainId()) {
+  const isLocalDevChain = chainId === 31337 || chainId === 1337;
+  if (isConnected && !isLocalDevChain && chainId !== getExpectedChainId()) {
     items.push({
       id: "chain-wrong",
       body: t("traveltrust_hero_guidance_chain_wrong"),
@@ -64,8 +56,8 @@ export function TravelTrustHeroGuidance() {
     items.push({
       id: "wallet-unavailable",
       body: t("traveltrust_hero_guidance_wallet_unavailable"),
-      href: "#faq",
-      label: t("traveltrust_hero_guidance_cta_faq"),
+      href: "#trust",
+      label: t("traveltrust_hero_guidance_cta_trust"),
     });
   }
 
@@ -73,8 +65,8 @@ export function TravelTrustHeroGuidance() {
     items.push({
       id: "wallet-rejected",
       body: t("traveltrust_hero_guidance_wallet_rejected"),
-      href: "#faq",
-      label: t("traveltrust_hero_guidance_cta_faq"),
+      href: "#trust",
+      label: t("traveltrust_hero_guidance_cta_trust"),
     });
   }
 

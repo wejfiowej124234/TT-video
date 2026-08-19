@@ -9,11 +9,10 @@ describe("traveltrustPageScrollChapterStep", () => {
   it("lists narrative chapters aligned with in-page nav anchors", () => {
     expect(TT_PAGE_SCROLL_CHAPTER_STEP_L5.chapterSelectors).toEqual([
       "#hero",
-      '[data-tt-traveltrust-snap-chapter="theater"]',
       '[data-tt-traveltrust-snap-chapter="liquidity"]',
       '[data-tt-traveltrust-snap-chapter="trust"]',
       '[data-tt-traveltrust-snap-chapter="settlement"]',
-      '[data-tt-traveltrust-snap-chapter="faq"]',
+      '[data-tt-traveltrust-snap-chapter="theater"]',
       '[data-tt-traveltrust-snap-chapter="close"]',
     ]);
     expect(TT_PAGE_SCROLL_CHAPTER_STEP_L5.scrollBehavior).toBe("smooth");

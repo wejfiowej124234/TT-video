@@ -58,6 +58,7 @@ export function resolveTravelTrustCinematicChapterFromSection(
     case "roles":
       return "theater";
     case "liquidity":
+    case "unlock":
       return "liquidity";
     case "trust":
     case "settlement":

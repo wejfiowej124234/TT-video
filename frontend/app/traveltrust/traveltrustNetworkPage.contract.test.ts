@@ -98,6 +98,7 @@ function readTravelTrustNetworkPageModuleSources(): string {
     "TravelTrustPhase1RegionRoster.tsx",
     "TravelTrustTourismGlobe.tsx",
     "TravelTrustTrustFactsStrip.tsx",
+    "TravelTrustTtgAllocationDashboard.tsx",
     "TravelTrustHeroChainHud.tsx",
     "TravelTrustFaqStrip.tsx",
     "TravelTrustSettlementStrip.tsx",
@@ -289,7 +290,7 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8")).toContain(
       'data-tt-traveltrust-hero-dom-video="0"',
     );
-    expect(src).toContain("TravelTrustCinematicLowQualityToggle");
+    expect(src).not.toContain("TravelTrustCinematicLowQualityToggle");
     expect(src).toContain("scheduleTraveltrustWebGLMount");
     expect(src).toContain("TravelTrustHeroGuidance");
     expect(src).toContain("TravelTrustIllustrativeBadge");
@@ -365,10 +366,10 @@ describe("traveltrust network page (contract)", () => {
       "TravelTrustFooterCrossNav",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
-      "data-tt-traveltrust-footer-cross-nav-grouped",
+      "data-tt-traveltrust-footer-supervision",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
-      "traveltrust_footer_cross_nav_group_product",
+      "traveltrust_footer_supervision_title",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustPageComplianceBlock.tsx"), "utf8")).not.toMatch(
       /traveltrust_footer_t2[\s\S]*traveltrust_footer_t2/,
@@ -394,18 +395,36 @@ describe("traveltrust network page (contract)", () => {
       "MARKETING_SITE_FOOTER_ID",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
-      "traveltrust_footer_plan",
+      "traveltrust_footer_supervision_body",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
-      "/traveltrust#start",
+      "/governance",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+      "TRAVELTRUST_PROTOCOL_PAPER_HREF",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
+      "/whitepaper",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
       "traveltrust_footer_network",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
-      "traveltrust_footer_merchant",
+      "traveltrust_footer_governance_hub",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+      "traveltrust_footer_protocol_paper",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+      "data-tt-traveltrust-footer-supervision-nav",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+      "traveltrust_footer_official_team",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+      "data-tt-traveltrust-official-team-open",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
       "footer_link_privacy",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustStartSection.tsx"), "utf8")).toContain(
@@ -422,22 +441,25 @@ describe("traveltrust network page (contract)", () => {
     expect(feeRouterLinkClasses).not.toContain("justify-between");
     expect(feeRouterLinkClasses).not.toContain("w-full");
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
-      "TT_FOOTER_CROSS_NAV_L5.groupTitleClass",
+      "TT_FOOTER_SUPERVISION_L5.titleClass",
     );
-    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
       "traveltrust_footer_web3_home",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
       "data-tt-traveltrust-footer-site-map-panel-l5",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustStartSection.tsx"), "utf8")).toContain(
-      "traveltrust_start_governance_cta",
+      "traveltrust_hero_cta_ttg",
+    );
+    expect(readFileSync(join(cinematicDir, "TravelTrustStartSection.tsx"), "utf8")).toContain(
+      'href="#liquidity"',
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustFaqStrip.tsx"), "utf8")).toContain(
       "traveltrust_faq_q6",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustNetworkFooter.tsx"), "utf8")).toContain(
-      "col-span-full",
+      "traveltrust_footer_legal_note",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustStartSection.tsx"), "utf8")).not.toContain(
       "help_title",
@@ -502,7 +524,7 @@ describe("traveltrust network page (contract)", () => {
     );
     expect(marketingSocialSrc).toContain('"data-tt-traveltrust-footer-social": "1"');
     expect(marketingSocialSrc).toContain('"data-tt-traveltrust-footer-social-slots": "1"');
-    expect(marketingSocialSrc).toContain("traveltrust_footer_brand_tagline");
+    expect(marketingSocialSrc).toContain("traveltrust_footer_community_title");
     expect(marketingSocialSrc).toContain('"data-tt-traveltrust-footer-social-pending": "1"');
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterSocial.tsx"), "utf8")).toContain(
       "MarketingFooterSocial",
@@ -532,10 +554,10 @@ describe("traveltrust network page (contract)", () => {
     expect(readFileSync(join(cinematicDir, "TravelTrustNetworkFooter.tsx"), "utf8")).not.toContain(
       "data-tt-traveltrust-footer-motion-hint",
     );
-    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
       "help_title",
     );
-    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
+    expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).not.toContain(
       "data-tt-traveltrust-footer-cross-nav-trust-collapsible",
     );
     expect(
@@ -543,7 +565,7 @@ describe("traveltrust network page (contract)", () => {
     ).toContain("traveltrust_footer_social_pending_line");
     expect(marketingUiSrc).toContain("sm:grid-cols-2");
     expect(readFileSync(join(cinematicDir, "TravelTrustFooterCrossNav.tsx"), "utf8")).toContain(
-      "footer_cross_nav",
+      "footer_supervision",
     );
     expect(readFileSync(join(cinematicDir, "TravelTrustIdentityTheater.tsx"), "utf8")).toContain(
       "TT_HERO_PRIMARY_CTA_L5",
@@ -609,7 +631,9 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain("data-tt-traveltrust-cinematic-grain");
     expect(src).toContain("data-tt-traveltrust-below-hero-fade");
     expect(src).toContain("data-tt-traveltrust-pulse-anchor");
-    expect(src).toContain('data-tt-traveltrust-hero-scroll-hint="outside-card"');
+    expect(readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8")).not.toContain(
+      "data-tt-traveltrust-hero-scroll-hint",
+    );
     expect(src).toContain("data-tt-traveltrust-liquidity-section-header-l5");
     expect(src).not.toContain('data-tt-traveltrust-hero-scroll-hint="copy-card"');
     expect(src).not.toContain('data-tt-traveltrust-hero-scroll-hint="globe"');
@@ -720,6 +744,7 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain('id="roles"');
     expect(src).toContain('id="start"');
     expect(src).toContain('href="#roles"');
+    expect(src).toContain('href="#liquidity"');
     expect(src).toContain('id="fee-router"');
     expect(readFileSync(join(cinematicDir, "TravelTrustPageComplianceBlock.tsx"), "utf8")).toContain(
       "traveltrust_footer_t2",

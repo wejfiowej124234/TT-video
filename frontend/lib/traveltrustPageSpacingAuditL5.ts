@@ -4,21 +4,23 @@
  * 原则（与 `TT_PAGE_VERTICAL_RHYTHM_L5` 一致）：
  * - 8px 基准网格；Tailwind spacing 须为 4 的倍数（rem×16）
  * - 节间用 padding/gap，**不用**额外 border-t / Film 缝堆叠（全页 ≤2 处软过渡即可）
- * - 同主题簇（兑换·信任·结算）节间目标 40–48px；大转折 56–72px
+ * - 经济簇（分配→核对→释放→兑换）节间 64–80px；释放→兑换 80–96px
+ * - 大转折 56–72px
  * - 并排 CTA 目标 32–40px（gap-8 ~ gap-10）
  */
 
 export const TT_PAGE_SPACING_AUDIT_L5 = {
   gridUnitPx: 8,
   /** 允许的节奏台阶（px） */
-  rhythmStepsPx: [16, 20, 24, 32, 40, 48, 56, 64, 72, 80] as const,
+  rhythmStepsPx: [16, 20, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96] as const,
   /** 节与节外缘间距目标（测量：上一节 bottom → 下一节 top） */
   sectionGapTargetsPx: {
-    "theater→liquidity": { min: 56, ideal: 64, max: 80 },
-    "liquidity→trust": { min: 36, ideal: 44, max: 56 },
-    "trust→settlement": { min: 36, ideal: 44, max: 56 },
-    "settlement→faq": { min: 56, ideal: 64, max: 80 },
-    "faq→start": { min: 56, ideal: 64, max: 80 },
+    "hero→trust": { min: 40, ideal: 48, max: 64 },
+    "trust→settlement": { min: 56, ideal: 72, max: 88 },
+    "settlement→unlock": { min: 56, ideal: 72, max: 88 },
+    "unlock→liquidity": { min: 72, ideal: 88, max: 112 },
+    "liquidity→roles": { min: 48, ideal: 56, max: 72 },
+    "faq→start": { min: 48, ideal: 56, max: 72 },
   },
   /** 同排主/次 CTA 水平间距 */
   ctaPairGapPx: { min: 32, ideal: 40, max: 48 },
@@ -58,12 +60,13 @@ export function auditTraveltrustSectionGapPx(
 /** 代码侧： rhythm token 与 L5 台阶对齐（静态审计） */
 export const TT_PAGE_VERTICAL_RHYTHM_L5_AUDIT = [
   { token: "sectionY", classes: "py-8 sm:py-9", nominalPx: 32 },
-  { token: "sectionClusterMid", classes: "py-5 sm:py-6", nominalPx: 20 },
-  { token: "sectionClusterFirst pb", classes: "pb-5 sm:pb-6", nominalPx: 20 },
-  { token: "sectionTopStart", classes: "pt-8 sm:pt-10", nominalPx: 32 },
+  { token: "sectionClusterMid", classes: "py-8 sm:py-10", nominalPx: 32 },
+  { token: "sectionClusterFirst pb", classes: "pb-8 sm:pb-10", nominalPx: 32 },
+  { token: "sectionClusterUnlock pb", classes: "pb-12 sm:pb-14", nominalPx: 48 },
+  { token: "sectionTopStart", classes: "pt-6 sm:pt-8", nominalPx: 24 },
   { token: "start cta gap-x", classes: "gap-x-8 sm:gap-x-10", nominalPx: 32 },
-  { token: "headerStackGap", classes: "mt-4 sm:mt-5", nominalPx: 16 },
-  { token: "contentStackGap", classes: "mt-5 sm:mt-6", nominalPx: 20 },
+  { token: "headerStackGap", classes: "mt-5", nominalPx: 20 },
+  { token: "contentStackGap", classes: "mt-6 sm:mt-8", nominalPx: 24 },
 ] as const;
 
 export function runTraveltrustVerticalRhythmTokenAudit(): { ok: boolean; failures: string[] } {
