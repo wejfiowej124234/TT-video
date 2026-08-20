@@ -6,7 +6,12 @@
 **`blocking_p0_p1`:** `0`（本闸未解释 Defect / Drift / Conflict / Blocking Risk）  
 **`TT_PRODUCTION_GO`:** `NO_GO` · Hard Gate 仍 REFUSED · **本文件不是 Production GO 重评**
 
-阶段口径：**① 本地 → ② 测试网 → ③ 公网/生产**。本闸是对 **当前 Official 生产现实** 的最后一次发布认证，**不是**继续开发 V8。
+> **Living Product Truth overlay（证后活面 · 禁止把本证冻结观察误读为今天活面）：**  
+> Official www = **TravelTrust Official · OPS-2026.08.20-v9** · `3e356617…` / `2026-08-20T00:51:57Z` / `hybrid-…-v9-20260820` · bootstrap **v8**。  
+> 下文表内 `daa5ae87` / `2026-08-16T15:15:49Z` = **本证签发时（2026-08-18）冻结观察** · **SUPERSEDED as living** · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)。  
+> **交付：** 个人独立开发 · **不开任何 PR**。
+
+阶段口径：**① 本地 → ② 测试网 → ③ 公网/生产**。本闸是对 **当时 Official 生产现实** 的发布认证快照，**不是**继续开发 V8；**活面以 OPS-v9 为准**。
 
 梯子（禁止塌缩）：
 
@@ -38,7 +43,7 @@ FTB 20260812（immutable parent）
 |----|------|
 | [V8 Registry/Runtime/L7 Consistency](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md) | `PASS_STOP` · `2026-08-18T03:00:00Z` |
 | [Living FTB V8 Cycle](./TT-FINAL-TRUTH-BASELINE-LATEST.md) | `ACTIVE_UNIQUE_SSOT` · stamp `20260818T031500Z` |
-| [Official www freeze](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.md) | `daa5ae87` / `2026-08-16T15:15:49Z` |
+| [Official www freeze](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.md) | **活面 = OPS-2026.08.20-v9**（`3e356617`）· 本证签发时观察 `daa5ae87` / `2026-08-16T15:15:49Z` = **stamp only · SUPERSEDED** |
 | [GAP-1USDC Owner A](./TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.md) | money-path hop `CLOSED_REALITY` |
 | [CI-02 B abort](./TT-CI02-OFFICIAL-FEE-ROUTER-CUTOVER-PREFLIGHT-ABORT-LATEST.md) | 未 schedule · Official hop 仍 OLD FR |
 

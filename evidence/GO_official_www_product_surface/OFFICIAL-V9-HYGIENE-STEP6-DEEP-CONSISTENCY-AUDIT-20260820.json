@@ -1,0 +1,74 @@
+{
+  "stamp_utc": "2026-08-20T10:24:30Z",
+  "step": "HYGIENE_STEP6_DEEP_CONSISTENCY_AUDIT",
+  "product_truth": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "aka": [
+      "OPS-v9",
+      "OPS-2026.08.20-v9",
+      "TT-OFFICIAL-OPS-20260820-V9"
+    ],
+    "identity_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "delivery": "personal_independent_solo_no_pr"
+  },
+  "dimensions": {
+    "workspace_topology": {
+      "status": "PASS",
+      "branches_kept": 3,
+      "worktrees": 2,
+      "stash": 0
+    },
+    "physical_clean": {
+      "status": "PASS_AFTER_CLEAN",
+      "removed": [
+        ".rc1-quarantine/",
+        "evidence/.tmp-diff/"
+      ]
+    },
+    "living_docs_misread": {
+      "status": "PARTIAL_FIXED",
+      "fixed_this_wave": [
+        "TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md/json living overlay → V9",
+        "TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.json overlay",
+        "OFFICIAL-OPS-20260820-LOCK.md/json SUPERSEDED"
+      ]
+    },
+    "local_vs_official": {
+      "status": "EXPECTED_DIFFERENCE"
+    },
+    "staging_testnet_vs_official": {
+      "status": "EXPECTED_DIFFERENCE_DOCUMENTED"
+    },
+    "repo_main_pointer": {
+      "status": "OPEN_GAP_NON_BLOCKING",
+      "main_sha": "877a1e77b",
+      "tip_sha": "pending_commit",
+      "note": "main != product-ssot tip; Solo Owner decide"
+    },
+    "web3_plane": {
+      "status": "DEFERRED_SEPARATE_GATE"
+    }
+  },
+  "gaps_open": [
+    {
+      "id": "GAP-MAIN-POINTER",
+      "severity": "P2"
+    },
+    {
+      "id": "GAP-HISTORICAL-LATEST-CITES",
+      "severity": "P2"
+    },
+    {
+      "id": "GAP-RELEASE-WT-TRACKED-TMP",
+      "severity": "P3"
+    },
+    {
+      "id": "GAP-WEB3-ALIGN",
+      "severity": "P1_DEFERRED"
+    }
+  ],
+  "verdict": "OFFICIAL_V9_DEEP_CONSISTENCY_AUDIT_PASS_WITH_OPEN_GAPS",
+  "tt_production_go": "NO_GO"
+}

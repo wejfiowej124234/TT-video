@@ -39,7 +39,7 @@
     "note": "TRAVELTRUST_GIT_SHA secret still stamps 8df2ab21; proof of new binary is NEW /meta contract keys, not git_sha."
   },
   "v8_pricing_after": {
-    "usdc_per_ttg": 0.00001,
+    "usdc_per_ttg": 1e-05,
     "ttg_per_usdc_unit": "100000000000000000000000",
     "min_purchase_usdc": 1.0,
     "pay_amount_1_usdc_receive_ttg": "100000.0000",
@@ -54,7 +54,17 @@
     "css_count": 1,
     "js_chunk_count": 55,
     "asset_sha256": "236006c266774e315a7a6a422a719883a20fd72c277f88a824cfcd38c341ebd6",
-    "before_equals_after": true
+    "before_equals_after": true,
+    "stamp_observation_status": "SUPERSEDED_AS_LIVING",
+    "living_overlay": {
+      "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+      "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+      "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "build_time": "2026-08-20T00:51:57Z",
+      "fly_image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+      "session_bootstrap": "v8",
+      "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+    }
   },
   "frontend_files_changed_this_round": 0,
   "ftb_20260812_mutated": false,
@@ -66,5 +76,14 @@
   "evidence": "evidence/GO_ttg_v8_api_runtime_decoupling/",
   "successor_cert": "docs/runbook/TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md",
   "next": "TT_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN_HARD_GATE_NOT_PASS_TOKEN_RISK_INDEPENDENT",
-  "stop": true
+  "stop": true,
+  "living_product_truth_overlay": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "session_bootstrap": "v8",
+    "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  }
 }

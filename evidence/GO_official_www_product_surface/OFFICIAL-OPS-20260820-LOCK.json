@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.official_ops_lock.v1",
-  "status": "OFFICIAL_PRODUCT_BASELINE_LOCKED",
+  "status": "SUPERSEDED_AS_LIVING_OFFICIAL",
   "baseline_id": "TT-OFFICIAL-OPS-20260820",
   "external_name": "TravelTrust Official · OPS-2026.08.20",
   "owner_lock_wall_clock": "2026-08-20T12:00:00+09:00",
@@ -15,9 +15,22 @@
     "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v8-20260820",
     "fly_image_digest": "sha256:c55a953b355d981c28171a15c06f617c1176771e15599be2f5dc7da41bcd84d2",
     "session_bootstrap": "v8",
-    "machines_bootstrap_v8": ["d8d0d71ce67718", "683d613c295458"]
+    "machines_bootstrap_v8": [
+      "d8d0d71ce67718",
+      "683d613c295458"
+    ]
   },
   "api_untouched_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
   "supersedes_living_pin": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
-  "human_ssot": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-LATEST.md"
+  "human_ssot": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-LATEST.md",
+  "living_successor": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "session_bootstrap": "v8",
+    "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "note": "Historical day lock. Misnamed v8 image handle. Living Official = OPS-v9 only."
 }

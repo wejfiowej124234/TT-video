@@ -51,7 +51,17 @@
       "build_time": "2026-08-16T15:15:49Z",
       "fly_image": "registry.fly.io/tt-web-prod:deployment-01M05JAAXJPTRZJAQEJ4JJWQMK",
       "living_status": "SUPERSEDED_AS_LIVING_OFFICIAL_BY_OPS_20260820_V9",
-      "living_git_sha": "3e356617a498b0faac42e4ae457343d36294a770"
+      "living_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "living_overlay": {
+        "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+        "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+        "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+        "build_time": "2026-08-20T00:51:57Z",
+        "fly_image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+        "session_bootstrap": "v8",
+        "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+      },
+      "stamp_observation_status": "SUPERSEDED_AS_LIVING"
     },
     "track2_1usdc_owner_a": {
       "human": "docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.md",
@@ -83,7 +93,17 @@
     "fee_router_address": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
     "settlement_router_address": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
     "timelock_address": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
-    "treasury_address": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+    "treasury_address": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "living_overlay": {
+      "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+      "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+      "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "build_time": "2026-08-20T00:51:57Z",
+      "fly_image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+      "session_bootstrap": "v8",
+      "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+    },
+    "stamp_observation_status": "SUPERSEDED_AS_LIVING"
   },
   "judgments": [
     {
@@ -222,5 +242,17 @@
     "m07": "NOT_THIS_WAVE",
     "note": "Does not rewrite cert PASS, freeze observation, or issued_at_utc. Living Official www only.",
     "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "living_product_truth_overlay": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "session_bootstrap": "v8",
+    "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md",
+    "note": "Post-cert living Official Product Truth. Stamp-time www observations below remain immutable history and are SUPERSEDED as living.",
+    "stamp_time_www_observation": "daa5ae87 / 2026-08-16T15:15:49Z",
+    "stamp_time_www_status": "SUPERSEDED_AS_LIVING"
   }
 }

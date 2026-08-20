@@ -1,3 +1,13 @@
+# Official OPS-2026.08.20 · LOCK（历史 · SUPERSEDED）
+
+**STATUS:** `SUPERSEDED_AS_LIVING_OFFICIAL`
+**继任活面：** **TravelTrust Official · OPS-2026.08.20-v9**
+**继任 SSOT：** `docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md`
+
+> 本文件保留误名 `…-v8` restore 句柄旁证。**今天活面只认 v9 镜像。**
+
+---
+
 # Official OPS-2026.08.20 · LOCK
 
 **STATUS:** `OFFICIAL_PRODUCT_BASELINE_LOCKED`  
