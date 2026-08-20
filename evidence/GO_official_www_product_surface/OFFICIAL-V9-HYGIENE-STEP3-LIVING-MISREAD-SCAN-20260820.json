@@ -1,0 +1,45 @@
+{
+  "stamp_utc": "2026-08-20T10:05:41Z",
+  "step": 3,
+  "files_scanned": 1487,
+  "living_misread_hits": [],
+  "hit_count": 0,
+  "core_ssot": [
+    {
+      "file": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md",
+      "exists": true,
+      "has_v9_identity": true
+    },
+    {
+      "file": "docs/runbook/TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json",
+      "exists": true,
+      "has_v9_identity": true
+    },
+    {
+      "file": "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md",
+      "exists": true,
+      "has_v9_identity": true
+    },
+    {
+      "file": "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md",
+      "exists": true,
+      "has_v9_identity": true
+    },
+    {
+      "file": "registry/traveltrust-home-module-registry.v1.yaml",
+      "exists": true,
+      "has_v9_identity": true
+    },
+    {
+      "file": "scripts/dev/lib/official-www-product-surface.py",
+      "exists": true,
+      "has_v9_identity": true
+    }
+  ],
+  "core_all_have_v9": true,
+  "verdict": "PASS",
+  "fixed_this_turn": [
+    "docs/runbook/TT-GAP-1USDC-HANDOFF-OFFICIAL-READONLY-STOP-LATEST.md",
+    "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-GAP-E2E-STOP-LATEST.md"
+  ]
+}

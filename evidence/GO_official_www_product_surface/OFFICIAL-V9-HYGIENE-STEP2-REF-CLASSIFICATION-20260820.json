@@ -1,0 +1,520 @@
+{
+  "stamp_utc": "2026-08-20T10:04:14Z",
+  "step": 2,
+  "mode": "LIST_ONLY_NO_DELETE",
+  "current_branch": "release/inbox-focus-product-truth-1ff71858",
+  "head": "c05fb1bb1bfef687ad80f3774c7cb2d8c7592c91",
+  "ssot_commit": "c05fb1bb1bfef687ad80f3774c7cb2d8c7592c91",
+  "product_truth": "TravelTrust Official · OPS-2026.08.20-v9",
+  "branches": [
+    {
+      "name": "archive/dirty-wip-pre-official-v9-workspace-clean",
+      "sha": "e7da7bf596213fd0ec39bcee73a08c10f8cc7be1",
+      "subject": "ARCHIVE: dirty WIP before Official V9 workspace clean (do not deploy)",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "archive/pre-official-v9-workspace-clean-f73e40c1",
+      "sha": "f73e40c140f0cf6ee2259dcb3aea586bc742ea6d",
+      "subject": "feat(frontend): pin /traveltrust chrome and land TTG body copy",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "backup/traveltrust-home-body-232524ae",
+      "sha": "232524ae99a19c97b0d3fd4e0554486057cd09fa",
+      "subject": "Ship Official HOME_BODY on / with unlock, no FAQ, and market catalog locale.",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "batch-a-session-staging",
+      "sha": "d5303513f465572bc78db76396b0dfb336b0e6cd",
+      "subject": "fix(frontend): BATCH-A www Session BFF — HttpOnly traveltrust_session, no LS secret",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/axis07-attestation-clean-1",
+      "sha": "18671cd370a09a3e7baf618ccdd0f6c2b06d8fcf",
+      "subject": "fix(api): AXIS-07 clean-cut — include Official governed community/OCS",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/community-crash-hotfix-1",
+      "sha": "6d8859c9db57d9ae93e0ae8c11cf4daa2f3adf78",
+      "subject": "fix(fe): build deleteComment URL from postComments path",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/r-comm-comment-actions-1",
+      "sha": "6add87584d4678d7eb58dfb32d5d66d4c4fe7011",
+      "subject": "fix(fe): wire setApiCommentsByPostId into community feed delete path",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/r-comm-comment-delete-api-1",
+      "sha": "80eed10fd21959ae03f65bb446ee2a4598a010f7",
+      "subject": "fix(api): wire DELETE community comment by id (R-COMM-COMMENT-DELETE-1)",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/r-comm-comment-identity-fe-1",
+      "sha": "f854041318dfbd45b744aec49ebd02d7c4b79bcc",
+      "subject": "fix(frontend): R-COMM comment identity/sort/contrast FE-only Cut",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/r-comm-comment-identity-sort-contrast-1",
+      "sha": "2b8d846a7f32a551a8c434acc3137eb1dc6579ae",
+      "subject": "docs(community): R-COMM-IDENTITY Official Cut STOP — API rolled back",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/r-comm-comment-sort-api-1",
+      "sha": "7a53d3c7740d7994d350f644778519fadb0950e6",
+      "subject": "fix(api): R-COMM comment sort — default hot + ASC tie-break",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/r-comm-cors-outermost-1",
+      "sha": "15cfe52dc09735c0198656d861ccdd8ee3db0852",
+      "subject": "fix(api): CORS outermost so auth 401 keeps ACAO on Official",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/r-comm-fe-cdn-remotepattern-1",
+      "sha": "27e209eabcb5d1348d70093e65748a4b09003f42",
+      "subject": "fix(fe): allow Official cdn.web3-ttg.com in next/image remotePatterns",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/r-comm-ocs-identity-fe-1",
+      "sha": "3e600076eab6613b55484852197921cb5c622f7e",
+      "subject": "fix(fe): remap homepage Cold Start OCS covers via durable-media normalizer",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/v65-admin-batch-ux-unified",
+      "sha": "0cc49f0b78d23de16a1ba48b118d015f562b734c",
+      "subject": "fix(admin): V65-PROD-003 Wave A Single Cut (G001/G011/G016/G017/G018/G020)",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/v65-prod-003-product-line-reconcile",
+      "sha": "33d94fee6f286d7c99a85958b311af303f866080",
+      "subject": "fix(admin): remove entry-fee finance IA from onboarding residual",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "cut/v65-prod-003-wave-b-workbench",
+      "sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "subject": "fix(admin): V65-PROD-003 residual G021–G049 Batch Fix (ops IA · L5 · FE tip)",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "feature/country-pool-net-profit-ledger",
+      "sha": "a2c6dbe75b01d634f0ce87cc51750f2d6bfd3a0c",
+      "subject": "feat(g23-03): finalize Pilot funding path A with T-FND-05/06 (① local).",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "feature/g23-01-record-accrual-batch",
+      "sha": "2112d47554e566680d58155def194aa270c277f6",
+      "subject": "feat(g23-01): add recordAccrualBatch with T-BATCH-01～06 (① local).",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "feature/g23-02-fuzz-invariant",
+      "sha": "d6b87d0349aac9446f3641b2fada63e712a3bd45",
+      "subject": "test(g23-02): add CountryPoolNetProfit fuzz and invariant suite (① local).",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "feature/g23-03-funding-path",
+      "sha": "16506853e6a97f48e0d2a9a0c9eb2718fb877ed2",
+      "subject": "docs(g23-03): product/finance signoff and FIN-FND-01 mapping FINAL.",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "feature/g23-04-abi-event-freeze",
+      "sha": "74dad45c90981c6a6bfc3cbbfeb041c0889d0626",
+      "subject": "[ahead 72] release(eng): Payment→Settlement Testnet money-path closure @ ea71c577",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "feature/w1-auth-production-harden",
+      "sha": "31e846106795432cfc46e0df980d9b5b1fad2642",
+      "subject": "fix(api): wire real forgot/reset + Resend OTP for W1 Auth",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "fix/acq-public-surface-minimal",
+      "sha": "e00b80672047b798eb882135ea69dd60385af597",
+      "subject": "feat(psg): Guest contract DTO + full public-surface matrix gate",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "fix/local-anvil-stack-phase1",
+      "sha": "cd98714a5158ef3ab25c7a28d5229645fada36fb",
+      "subject": "fix(phase1): reset stale indexer runtime on Anvil chain-id drift (BL-③-008).",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "fix/official-fe-lineage-regression-bff-fwd-1",
+      "sha": "c5ac3339b6a3fca496bd6a5775e0d286a9517a3c",
+      "subject": "fix(fe): highlight TravelTrust on `/`; send 定制旅行 to `/plan`",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "hotfix/finance-peer-nav-a994db63",
+      "sha": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "subject": "fix(admin): restore finance PEER nav SSOT to stop finance-suite iterable crash",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "hotfix/ugc-translate-official-api",
+      "sha": "25049e4c951f6b1147e0b521e8ef003e840baa56",
+      "subject": "fix(api): allow anonymous UGC translation cache and status on Official",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "hotfix/ugc-translate-official-fe",
+      "sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "subject": "fix(frontend): unify Official announcements tabs on one list layout",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "hotfix/wallet-connect-sheet-l5",
+      "sha": "a00622b5ac516920d378b1de8f8ed8853cfe0cc8",
+      "subject": "fix(wallet): restore L5 connect sheet and connector catalog on Tag",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "main",
+      "sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f",
+      "subject": "[ahead 34] fix(phase2): local-first audit path quoting and frontend/evidence exempt",
+      "is_current": false,
+      "class": "ACTIVE"
+    },
+    {
+      "name": "ofr/h106-comment-dup-parent",
+      "sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "subject": "fix(api): scope comment_duplicate by parent_id (OFR-H1-06)",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "patch/perf-meta-runtime-staging",
+      "sha": "5482271207b3533efa26e7ffc44cabf677f997bc",
+      "subject": "[ahead 36] fix(admin): close ACRP E/C runtime gaps for Staging→Prod parity",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "rc2/platform-financial-step4-staging",
+      "sha": "231ceb211753891909e4a2b49028a870f1f68310",
+      "subject": "fix(api): restore missing sqlx migration 20260713180000 (LF)",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "recon/official-runtime-baseline-1",
+      "sha": "6d7a6ce365d325f09518df9d77a840cd7edc046b",
+      "subject": "docs: freeze FDM P1-1 CLOSED; Hard Gate switch STOP too-early Track2",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "release/home-only-from-pin-daa5ae87",
+      "sha": "a3601957a0d68ec82b2e73fcd36d8435df512fdb",
+      "subject": "fix(frontend): include /traveltrust body compile deps on pin worktree",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "release/inbox-focus-product-truth-1ff71858",
+      "sha": "c05fb1bb1bfef687ad80f3774c7cb2d8c7592c91",
+      "subject": "docs(official): freeze Official V9 product SSOT restore baseline",
+      "is_current": true,
+      "class": "ACTIVE"
+    },
+    {
+      "name": "release/m07-unlock-ops-v9-pin-overlay",
+      "sha": "1a00cfbb3aa54b2cf094548c3bf68d5e55c98528",
+      "subject": "release(m07): stamp CANONICAL_ACTIVE after OPS-v9 pin-overlay Runtime PASS",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "release/m07-unlock-ops-v9-ready",
+      "sha": "4495d68ebf1447e1575d0fa2699732dd310d581c",
+      "subject": "fix(build): add tip-imported modules missing from M07 bake tree",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "+",
+      "sha": null,
+      "subject": "release/official-ops-v9-workspace-baseline        3e356617a498b0faac42e4ae457343d36294a770 Evidence: Official announcements glow UI bake 17b84cce.",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "release/official-traveltrust-body-only-20260820",
+      "sha": "ed09ace0a143bf2c159bf2a8b93dc6e2aa0cbc53",
+      "subject": "Restore Official body-bake evidence deleted by mistake.",
+      "is_current": false,
+      "class": "ARCHIVE"
+    },
+    {
+      "name": "release/traveltrust-home-body-extract-20260819",
+      "sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "subject": "fix(frontend): unify Official announcements tabs on one list layout",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "release/traveltrust-scoped-body-20260819",
+      "sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "subject": "fix(frontend): unify Official announcements tabs on one list layout",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "release/www-body-from-pin-daa5ae87",
+      "sha": "143b78dbe6e2731404d1f562e5fadc5c7acdfe1d",
+      "subject": "fix(frontend): bake Official homepage first screen only.",
+      "is_current": false,
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "name": "release/official-ops-v9-workspace-baseline",
+      "sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "subject": "unique Official V9 Release Worktree cite",
+      "is_current": false,
+      "class": "ACTIVE",
+      "note": "listed via worktree; git branch -v uses + prefix"
+    }
+  ],
+  "branch_counts": {
+    "ARCHIVE": 10,
+    "DELETE_CANDIDATE": 32,
+    "ACTIVE": 3
+  },
+  "stashes": [
+    {
+      "ref": "stash@{0}",
+      "message": "WIP on release/www-body-from-pin-daa5ae87: 6f46ade4 fix(frontend): lock live fifth campaign chip as Official www overlay",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{1}",
+      "message": "WIP on hotfix/ugc-translate-official-fe: daa5ae87 fix(frontend): unify Official announcements tabs on one list layout",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{2}",
+      "message": "WIP on hotfix/ugc-translate-official-fe: daa5ae87 fix(frontend): unify Official announcements tabs on one list layout",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{3}",
+      "message": "WIP on hotfix/ugc-translate-official-fe: daa5ae87 fix(frontend): unify Official announcements tabs on one list layout",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{4}",
+      "message": "WIP on hotfix/ugc-translate-official-fe: daa5ae87 fix(frontend): unify Official announcements tabs on one list layout",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{5}",
+      "message": "WIP on hotfix/ugc-translate-official-fe: daa5ae87 fix(frontend): unify Official announcements tabs on one list layout",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{6}",
+      "message": "WIP on hotfix/ugc-translate-official-fe: daa5ae87 fix(frontend): unify Official announcements tabs on one list layout",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{7}",
+      "message": "WIP on hotfix/ugc-translate-official-fe: daa5ae87 fix(frontend): unify Official announcements tabs on one list layout",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{8}",
+      "message": "WIP on fix/official-fe-lineage-regression-bff-fwd-1: 5c56e6b2 fix(fe): keep Nearby chip, restore Official accounts helpers, enable avatar upload, replace role videos",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{9}",
+      "message": "WIP on fix/official-fe-lineage-regression-bff-fwd-1: 64787295 fix(fe): L5 comment-delete confirm, stay chips, single identity pill",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{10}",
+      "message": "WIP on fix/official-fe-lineage-regression-bff-fwd-1: 64787295 fix(fe): L5 comment-delete confirm, stay chips, single identity pill",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{11}",
+      "message": "WIP on fix/official-fe-lineage-regression-bff-fwd-1: 64787295 fix(fe): L5 comment-delete confirm, stay chips, single identity pill",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{12}",
+      "message": "WIP on fix/official-fe-lineage-regression-bff-fwd-1: 2ba08bd4 fix(fe): bake WalletConnect Project ID into Official Docker image",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{13}",
+      "message": "WIP on fix/official-fe-lineage-regression-bff-fwd-1: a6efa351 fix(fe): restore header session chrome, self me/posts, OA-01 WC inline",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{14}",
+      "message": "WIP on fix/official-fe-lineage-regression-bff-fwd-1: 9959ae50 fix(fe): overlay CLOSED Session/BFF onto 3e600076 product tree",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{15}",
+      "message": "WIP on recon/official-runtime-baseline-1: d6eec818 docs(recon): close OFR-H2 media CLOSED_RUNTIME after Official Cut2",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{16}",
+      "message": "WIP on recon/official-runtime-baseline-1: d6eec818 docs(recon): close OFR-H2 media CLOSED_RUNTIME after Official Cut2",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{17}",
+      "message": "WIP on cut/community-crash-hotfix-1: ef67d08c test(fe): contract guard for setApiCommentsByPostId community crash wiring",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{18}",
+      "message": "WIP on cut/community-crash-hotfix-1: ef67d08c test(fe): contract guard for setApiCommentsByPostId community crash wiring",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{19}",
+      "message": "WIP on cut/community-crash-hotfix-1: 0b79a686 fix(fe): wire setApiCommentsByPostId into community feed delete path",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{20}",
+      "message": "On release/inbox-focus-product-truth-1ff71858: wip-pre-cms-reality-closure-deploy-20260802T120959Z",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{21}",
+      "message": "On feature/g23-04-abi-event-freeze: reality-closure-blocker-pre-detach-20260722T131625Z",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{22}",
+      "message": "On feature/g23-04-abi-event-freeze: TT-PRE-DEPLOY-TRACK-B-DIRT-20260722-cinema",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{23}",
+      "message": "On feature/g23-04-abi-event-freeze: TT-PRE-FREEZE-TRACK-B-DIRT-20260722",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{24}",
+      "message": "On feature/g23-04-abi-event-freeze: wip/recon: non-PSG worktree after GO pack (evidence/CMS/code/docs/scripts)",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{25}",
+      "message": "On feature/g23-04-abi-event-freeze: fpc-b03-wip-isolate",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{26}",
+      "message": "On feature/g23-04-abi-event-freeze: parity-20260630: runtime drift isolated off fc9266ce baseline",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{27}",
+      "message": "On main: backup-before-reapply-stash-wip-followup",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{28}",
+      "message": "On pd-remove-spec-00-nonum-map-20260430: wip-followup",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{29}",
+      "message": "On main: tmp6",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{30}",
+      "message": "On dev: wip: non-batch workspace changes",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{31}",
+      "message": "On main: audit-fix",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{32}",
+      "message": "On main: workspace-organize-20260307-2",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "ref": "stash@{33}",
+      "message": "On main: workspace-organize-20260307",
+      "class": "DELETE_CANDIDATE"
+    }
+  ],
+  "stash_counts": {
+    "DELETE_CANDIDATE": 34
+  },
+  "active_worktrees": [
+    {
+      "path": "D:/TravelTrust-V1.1",
+      "branch": "release/inbox-focus-product-truth-1ff71858",
+      "class": "ACTIVE"
+    },
+    {
+      "path": "D:/TravelTrust-official-ops-v9-release",
+      "branch": "release/official-ops-v9-workspace-baseline",
+      "class": "ACTIVE"
+    }
+  ],
+  "next_action": "Owner confirm DELETE_CANDIDATE list, then Step2b delete refs"
+}

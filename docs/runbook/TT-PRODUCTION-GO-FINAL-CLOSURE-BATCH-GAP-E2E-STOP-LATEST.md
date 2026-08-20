@@ -14,7 +14,7 @@ Do not reuse this STOP as living status.
 **Stamp:** `2026-08-18T06:00:00Z`  
 **`TT_PRODUCTION_GO`:** `NO_GO`  
 **AXIS-14:** not started (dependency order)  
-**FE:** `FROZEN_LATEST_PRODUCT_BASELINE` untouched
+**FE:** hop-time pin untouched · living Product Truth = **OPS-2026.08.20-v9** (`3e356617`) · `daa5ae87` **SUPERSEDED**
 
 ## Runtime（只读 · Official C2）
 
@@ -22,7 +22,7 @@ Evidence: `evidence/GO_final_closure_batch/GAP-E2E-JOURNEY-OFFICIAL-BOOK-UI-READ
 
 | Hop | Result |
 |-----|--------|
-| Official www pin | `daa5ae87` / `2026-08-16T15:15:49Z` match |
+| Official www pin | hop-time `daa5ae87` / `2026-08-16T15:15:49Z` match · **SUPERSEDED** as living · living = OPS-v9 |
 | C2 `POST {API}/auth/login` | 200 · role `tourist` |
 | C2 `GET /api/v1/me` | 200 |
 | Public `/` `/market` `/auth/login` | 200 on frozen www |
@@ -41,7 +41,7 @@ Closing this item this turn would require one of:
 
 1. `POST` a new Official order (production mutation; may become money) — **not authorized this batch**
 2. Bind Track2 escrow `0x45B28A…09C4` to Official orders — **forbidden**
-3. Change Official www / `frontend/` or bake — **forbidden** (`FROZEN_LATEST_PRODUCT_BASELINE`)
+3. Change Official www / `frontend/` or bake — **forbidden** without Owner unlock (living pin = OPS-v9; do not restore `daa5ae87`)
 4. Paper-close the Gap Register — **forbidden**
 
 Breakpoint: `C2_OFFICIAL_ORDERS_EMPTY`. This is **not** unexplained drift. Money-path 1 USDC remains CLOSED_REALITY (Owner A). Do not replay it.

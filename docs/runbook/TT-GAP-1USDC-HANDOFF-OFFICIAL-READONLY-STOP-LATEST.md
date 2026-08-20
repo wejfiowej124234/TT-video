@@ -8,7 +8,7 @@
 **Gap:** `GAP-1USDC-HANDOFF` remains **OPEN** in this historical STOP（mapping still absent）  
 **Superseded as close criterion by:** Owner A `2026-08-17T04:50:00Z` — money-path hop **CLOSED_REALITY**. Subsequent Official book hop `GAP-E2E-JOURNEY` **CLOSED_REALITY** (C2 非资金 Draft). GO remaining = Owner 书面 **GO** 或 **继续 NO_GO**. Historical `verdict` unchanged.
 
-This hop was read-only. Frozen inputs: completed mainnet 1 USDC L7 receipt · Official www pin `daa5ae87…` / `2026-08-16T15:15:49Z` · Official API/Indexer as-is.
+This hop was read-only. Frozen inputs: completed mainnet 1 USDC L7 receipt · Official www pin **at hop time** `daa5ae87…` / `2026-08-16T15:15:49Z` (**SUPERSEDED** as living · living = OPS-v9 `3e356617`) · Official API/Indexer as-is.
 
 ## First real breakpoint
 
@@ -22,7 +22,7 @@ This 1 USDC path was a Track2 forge-script Reality tx, not an Official traveler 
 
 | Layer | Result |
 |-------|--------|
-| www + apex identity | **PASS** `git_sha=daa5ae87…` · `build_time=2026-08-16T15:15:49Z` (t0, t1, STOP write) |
+| www + apex identity | **PASS** hop-time `git_sha=daa5ae87…` · `build_time=2026-08-16T15:15:49Z` (t0, t1, STOP write) · **SUPERSEDED** as living Official |
 | API identity | **untouched** `8df2ab21…` · `2026-08-12T23:44:18Z` |
 | L7 live reconfirm | **PASS** escrow status **3 Completed** · USDC **0** · receipt `0x2139ea58…` block **25759423** · conservation **1e6 = 950000 + 50000** |
 | L8 checkpoint | **PASS** `block_number=25759530` ≥ 25759423 · `lag_blocks=0` |
