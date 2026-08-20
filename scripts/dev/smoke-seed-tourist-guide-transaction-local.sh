@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # ① 本地 · Chain B 种子账号全链交易（tourist@test.com + guide@test.com）
 #
-# API 链：seed → 释放档期 → POST /orders → accept → mock-pay → confirm-completion → review
+# API 链：seed → 释放档期 → POST /orders → accept → mock-pay → confirm-completion（单方 → completed）→ review
+# 注：双边 service_completion_pending 在 confirm-service-completion；本烟测对齐 living confirm-completion。
 # 供 start-api-with-seed Step 6o / 人工审核：API 先跑通一笔 completed 订单，再在 UI 核对。
 #
 # 用法（仓库根 · API 已起）：
@@ -213,15 +214,12 @@ fi
 [[ "$(json_nested "$pay_body" "order.status")" == "escrowed" ]] || fail "expected escrowed after mock-pay"
 ok "mock-pay → escrowed (① sandbox)"
 
+# Living chain_off: POST …/confirm-completion is single-party → Completed
+# (bilateral service_completion_pending lives on confirm-service-completion — not this smoke).
 complete_resp="$(curl_json POST "${API_BASE}/api/v1/orders/${ORDER_ID}/confirm-completion" "{}" "$GUIDE_TOKEN")"
 [[ "${complete_resp%%|*}" == "200" ]] || fail "guide confirm-completion HTTP ${complete_resp%%|*} body=${complete_resp#*|}"
-[[ "$(json_nested "${complete_resp#*|}" "order.sub_status")" == "service_completion_pending" ]] || fail "expected service_completion_pending after guide confirm"
-ok "guide confirm-completion → service_completion_pending"
-
-tourist_complete_resp="$(curl_json POST "${API_BASE}/api/v1/orders/${ORDER_ID}/confirm-completion" "{}" "$TOURIST_TOKEN")"
-[[ "${tourist_complete_resp%%|*}" == "200" ]] || fail "tourist confirm-completion HTTP ${tourist_complete_resp%%|*} body=${tourist_complete_resp#*|}"
-[[ "$(json_nested "${tourist_complete_resp#*|}" "order.status")" == "completed" ]] || fail "expected completed after bilateral confirm"
-ok "tourist confirm-completion → completed"
+[[ "$(json_nested "${complete_resp#*|}" "order.status")" == "completed" ]] || fail "expected completed after guide confirm-completion"
+ok "guide confirm-completion → completed"
 
 REVIEW_IDEM="$(idem_key)"
 REVIEW_TMP="$(mktemp)"

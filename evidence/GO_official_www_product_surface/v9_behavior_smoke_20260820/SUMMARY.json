@@ -12,13 +12,24 @@
     "identity_p2": "PASS",
     "login_matrix_C1_C2_C3_C4_E2": "PASS",
     "page_surfaces": "PAGE_SURFACE_DRIFT",
-    "expected_difference": ["landing_ambient_count_11_ne_10"]
+    "expected_difference": [
+      "landing_ambient_count_11_ne_10"
+    ]
   },
   "local": {
     "identity_p2": "PASS",
     "login_matrix_C1_C2_C3_C4_E2": "PASS",
     "database": "traveltrust_v9_beh",
-    "e1_admin_login": "401_optional"
+    "e1_admin_login": "401_optional",
+    "landing_itinerary_flow": "PASS",
+    "seed_tourist_guide_transaction": "PASS",
+    "journey_note": "confirm-completion single-party\u2192completed (AS-IS); bilateral path is confirm-service-completion"
   },
-  "verdict": "BEHAVIOR_SMOKE_PASS_WEB3_DEFERRED"
+  "verdict": "BEHAVIOR_SMOKE_PASS_JOURNEY_PASS_WEB3_DEFERRED",
+  "hygiene": {
+    "indexer_audit_discarded": true,
+    "traveltrust_db_recreated_empty": true,
+    "active_smoke_db": "traveltrust_v9_beh",
+    "solo_push_release": "5dfd4cd18"
+  }
 }

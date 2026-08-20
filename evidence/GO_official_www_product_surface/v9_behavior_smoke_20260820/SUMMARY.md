@@ -47,3 +47,17 @@
 ## Honest boundary
 
 ① local PASS + ② Staging smoke PASS ≠ Official bake ≠ Production GO ≠ Web3 upgrade.
+
+## ① Main journey (non-Web3 · this wave)
+
+| Check | Result |
+|-------|--------|
+| Landing itinerary flow | PASS |
+| Seed tourist↔guide transaction | PASS (smoke aligned to living `confirm-completion` → completed) |
+
+## Hygiene
+
+- Discarded dirty `data/indexer_audit.jsonl`
+- Recreated empty local DB `traveltrust` (kept `traveltrust_v9_beh`)
+- Solo push: `origin/release/official-ops-v9-product-ssot` @ `5dfd4cd18`
+
