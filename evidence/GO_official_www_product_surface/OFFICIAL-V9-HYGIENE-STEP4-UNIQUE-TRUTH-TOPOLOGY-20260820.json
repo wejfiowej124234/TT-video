@@ -1,0 +1,74 @@
+{
+  "stamp_utc": "2026-08-20T10:12:02Z",
+  "step": "HYGIENE_STEP4_UNIQUE_TRUTH_TOPOLOGY",
+  "product_truth": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline": "TT-OFFICIAL-OPS-20260820-V9",
+    "identity_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "plane": "PRODUCT_TRUTH_ONLY",
+    "tt_production_go": "NO_GO"
+  },
+  "not_living": [
+    "daa5ae87 SUPERSEDED",
+    "M07 2551fafd / …-v9-m07-unlock ROLLED_BACK",
+    "4495d68e M07 bake-tree tip only"
+  ],
+  "topology_keep": {
+    "engineering_tip_branch": "release/official-ops-v9-product-ssot",
+    "engineering_tip_sha": "fc984707e16dec2a49f299fd058ce22a9c9a19c7",
+    "release_worktree_branch": "release/official-ops-v9-workspace-baseline",
+    "release_worktree_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "release_worktree_path": "D:/TravelTrust-official-ops-v9-release",
+    "main_kept": true,
+    "main_note": "local main retained as remote default pointer only — NOT living Official Product Truth",
+    "main_sha": "877a1e77bf05cf1d4d5141aedac404a23d219e5f"
+  },
+  "renamed": {
+    "from": "release/inbox-focus-product-truth-1ff71858",
+    "to": "release/official-ops-v9-product-ssot",
+    "reason": "stable Official V9 product SSOT engineering tip name"
+  },
+  "deleted_local_branches": [
+    "archive/dirty-wip-pre-official-v9-workspace-clean",
+    "archive/pre-official-v9-workspace-clean-f73e40c1",
+    "feature/country-pool-net-profit-ledger",
+    "feature/g23-01-record-accrual-batch",
+    "feature/g23-02-fuzz-invariant",
+    "feature/g23-03-funding-path",
+    "feature/g23-04-abi-event-freeze",
+    "hotfix/finance-peer-nav-a994db63",
+    "hotfix/wallet-connect-sheet-l5",
+    "release/official-traveltrust-body-only-20260820"
+  ],
+  "deleted_count": 10,
+  "failed_deletes": [],
+  "worktrees": [
+    {
+      "path": "D:/TravelTrust-V1.1",
+      "branch": "release/official-ops-v9-product-ssot",
+      "sha": "fc984707e"
+    },
+    {
+      "path": "D:/TravelTrust-official-ops-v9-release",
+      "branch": "release/official-ops-v9-workspace-baseline",
+      "sha": "3e356617a"
+    }
+  ],
+  "stash_count": 0,
+  "local_branch_count_after": 3,
+  "consistency_rules": [
+    "OPS-v9 is unique living Official Product Truth",
+    "Do not restore from dirty/old tip or daa5/M07",
+    "Do not mutate FTB Web3 addresses this wave",
+    "Do not flip TT_PRODUCTION_GO",
+    "Do not bake Official from Local without Owner unlock"
+  ],
+  "verdict": "OFFICIAL_V9_UNIQUE_TRUTH_TOPOLOGY_PASS",
+  "next_optional": [
+    "push release/official-ops-v9-product-ssot (and drop old remote inbox-focus name)",
+    "Owner gate: Web3 align-to-V9 (separate; no address mutation yet)"
+  ]
+}
