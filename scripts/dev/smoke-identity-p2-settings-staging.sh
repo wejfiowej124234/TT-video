@@ -15,12 +15,18 @@ ok() { echo "smoke-identity-p2-settings-staging: OK $*"; }
 login() {
   local email="$1"
   local resp code
-  curl -sS -X POST "$API_BASE/auth/seed-test-accounts" -H "Content-Type: application/json" -d '{}' >/dev/null 2>&1 || true
+  # Staging write path requires Idempotency-Key (STRICT write gate).
   curl -sS -X POST "$API_BASE/auth/seed-test-accounts" \
     -H "Content-Type: application/json" \
+    -H "Idempotency-Key: smoke-stg-seed-$(date +%s)-$$" \
+    -d '{}' >/dev/null 2>&1 || true
+  curl -sS -X POST "$API_BASE/auth/seed-test-accounts" \
+    -H "Content-Type: application/json" \
+    -H "Idempotency-Key: smoke-stg-seed-promote-$(date +%s)-$$" \
     -d '{"promote_admin_email":"tourist@test.com"}' >/dev/null 2>&1 || true
   resp="$(curl -sS -w '\n%{http_code}' -X POST "$API_BASE/auth/login" \
     -H "Content-Type: application/json" \
+    -H "Idempotency-Key: smoke-stg-login-$(echo -n "$email" | tr -c 'a-z0-9' '-')-$(date +%s)-$$" \
     -d "{\"email\":\"$email\",\"password\":\"$PASSWORD\"}")"
   code="${resp##*$'\n'}"
   resp="${resp%$'\n'*}"
@@ -51,12 +57,41 @@ probe_get "guide" "$GUIDE_TOKEN" "/api/v1/me/guide-profile" 0
 CANONICAL_C3_BIO='测试向导账号，用于联调'
 patch_body='{"bio":"Staging P2 smoke"}'
 pg_code="$(curl -sS -o /dev/null -w '%{http_code}' -X PATCH "$API_BASE/api/v1/me/guide-profile" \
-  -H "Authorization: Bearer $GUIDE_TOKEN" -H "Content-Type: application/json" -d "$patch_body")"
+  -H "Authorization: Bearer $GUIDE_TOKEN" -H "Content-Type: application/json" \
+  -H "Idempotency-Key: smoke-stg-patch-guide-$(date +%s)-$$" \
+  -d "$patch_body")"
 [[ "$pg_code" == "200" ]] || fail "PATCH guide-profile HTTP $pg_code"
 ok "PATCH /api/v1/me/guide-profile"
-restore_body="$(node -e "process.stdout.write(JSON.stringify({bio:process.argv[1]}))" "$CANONICAL_C3_BIO")"
-pr_code="$(curl -sS -o /dev/null -w '%{http_code}' -X PATCH "$API_BASE/api/v1/me/guide-profile" \
-  -H "Authorization: Bearer $GUIDE_TOKEN" -H "Content-Type: application/json" -d "$restore_body")"
+# UTF-8 restore via node (Windows shells mangle Chinese in curl -d → invalid unicode → HTTP 400).
+pr_code="$(
+  GUIDE_TOKEN="$GUIDE_TOKEN" API_BASE="$API_BASE" CANONICAL_C3_BIO="$CANONICAL_C3_BIO" node <<'NODE'
+const crypto = require('crypto');
+const body = Buffer.from(JSON.stringify({ bio: process.env.CANONICAL_C3_BIO }), 'utf8');
+const u = new URL(process.env.API_BASE + '/api/v1/me/guide-profile');
+const lib = u.protocol === 'https:' ? require('https') : require('http');
+const req = lib.request(
+  {
+    hostname: u.hostname,
+    port: u.port || (u.protocol === 'https:' ? 443 : 80),
+    path: u.pathname,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Bearer ' + process.env.GUIDE_TOKEN,
+      'Content-Type': 'application/json; charset=utf-8',
+      'Content-Length': body.length,
+      'Idempotency-Key': 'smoke-stg-restore-guide-' + Date.now() + '-' + crypto.randomUUID(),
+    },
+  },
+  (res) => {
+    res.resume();
+    res.on('end', () => process.stdout.write(String(res.statusCode)));
+  }
+);
+req.on('error', (e) => { console.error(e); process.exit(2); });
+req.write(body);
+req.end();
+NODE
+)"
 [[ "$pr_code" == "200" ]] || fail "PATCH guide-profile restore canonical C3 bio HTTP $pr_code"
 ok "PATCH /api/v1/me/guide-profile — restored canonical C3 bio"
 

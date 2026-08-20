@@ -1,0 +1,41 @@
+{
+  "accounts": [
+    {
+      "id": "C1",
+      "email": "multi-demo@test.com",
+      "login": 200,
+      "me": 200
+    },
+    {
+      "id": "C2",
+      "email": "tourist@test.com",
+      "login": 200,
+      "me": 200
+    },
+    {
+      "id": "C3",
+      "email": "guide@test.com",
+      "login": 200,
+      "me": 200
+    },
+    {
+      "id": "C4",
+      "email": "merchant@test.com",
+      "login": 200,
+      "me": 200
+    },
+    {
+      "id": "E1",
+      "email": "admin@test.com",
+      "login": 401,
+      "me": null
+    },
+    {
+      "id": "E2",
+      "email": "provider-did-rank-demo@test.com",
+      "login": 200,
+      "me": 200
+    }
+  ],
+  "note": "E1 Local-only optional"
+}

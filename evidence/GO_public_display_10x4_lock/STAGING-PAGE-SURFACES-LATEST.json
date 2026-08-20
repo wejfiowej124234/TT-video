@@ -1,17 +1,18 @@
 {
   "schema": "traveltrust.staging_public_page_surfaces.v1",
-  "recorded_utc": "2026-07-22T08:07:03.032Z",
+  "recorded_utc": "2026-08-20T12:00:41.049Z",
   "api": "https://tt-api-staging.fly.dev",
   "web": "https://tt-web-staging.fly.dev",
-  "ocs_runtime_state": "D:\\dev\\temp\\tt-web-acl-tip-6b85bde9\\evidence\\GO_official_cold_start_dataset\\20260708T121151Z\\state.json",
+  "ocs_runtime_state": "D:\\TravelTrust-V1.1\\evidence\\GO_official_cold_start_dataset\\20260708T121151Z\\state.json",
   "surfaces": {
     "identity": {
-      "web_sha": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
-      "api_sha": "f9c227de14abf1aca0a3b0649dd4c7bf379c6b5a",
+      "web_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "api_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
       "identity_source": "docker-bake",
       "cms_baseline": "public_display_10x4 + catalog_bake=1",
       "web_api_match": false,
-      "expect": "6b85bde9773788638c4d8cf031dfe48ef56d1706"
+      "expect": null,
+      "note": "web_api_tip_mismatch_without_EXPECT (allowed for FE-only); set EXPECT_GIT_SHA to enforce"
     },
     "guides": {
       "http": 200,
@@ -47,7 +48,7 @@
     },
     "announcements": {
       "http": 200,
-      "count": 10,
+      "count": 7,
       "unsplash": false,
       "non_ocs": 0,
       "mojibake": 0,
@@ -55,7 +56,7 @@
     },
     "announcements_pulse": {
       "http": 200,
-      "count": 4,
+      "count": 3,
       "unsplash": false,
       "non_ocs": 0,
       "mojibake": 0,
@@ -63,7 +64,7 @@
     },
     "landing_ambient": {
       "http": 200,
-      "count": 10,
+      "count": 11,
       "unsplash": false,
       "non_ocs": 0,
       "mojibake": 0,
@@ -116,51 +117,51 @@
     "pages": {
       "/": {
         "http": 200,
-        "unsplash": 4,
-        "cos": 15,
-        "len": 76890
+        "unsplash": 0,
+        "cos": 0,
+        "len": 188490
       },
       "/market": {
         "http": 200,
         "unsplash": 0,
-        "cos": 0,
-        "len": 135115
+        "cos": 46,
+        "len": 142126
       },
       "/market/provider": {
         "http": 200,
         "unsplash": 0,
         "cos": 0,
-        "len": 33593
+        "len": 33615
       },
       "/market/acquisition": {
         "http": 200,
         "unsplash": 0,
         "cos": 0,
-        "len": 33631
+        "len": 33707
       },
       "/did-rank": {
         "http": 200,
         "unsplash": 0,
         "cos": 0,
-        "len": 103864
+        "len": 108237
       },
       "/community": {
         "http": 200,
         "unsplash": 0,
         "cos": 40,
-        "len": 90330
+        "len": 86535
       },
       "/traveltrust": {
         "http": 200,
         "unsplash": 0,
         "cos": 0,
-        "len": 188389
+        "len": 190077
       }
     },
     "wallet_dropdown_in_js": true
   },
   "fails": [
-    "page_/_unsplash"
+    "landing_ambient_count_11_ne_10"
   ],
   "verdict": "PAGE_SURFACE_DRIFT",
   "honest_boundary": "PAGE_SURFACE_OK ≠ Reality Closure PASS ≠ Production GO"
