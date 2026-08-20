@@ -1,0 +1,123 @@
+{
+  "schema": "traveltrust.official_v9_deep_alignment_gap_register.v1",
+  "recorded_utc": "2026-08-20T11:55:00Z",
+  "re_audit_wave": "20260820-T3-FIX-ALL-REAUDIT",
+  "machine_key": "TT_OFFICIAL_V9_DEEP_ALIGNMENT_GAP",
+  "product_truth": "TravelTrust Official \u00b7 OPS-2026.08.20-v9",
+  "pin_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "web3_plane": "OUT_OF_SCOPE_THIS_WAVE",
+  "workspace": {
+    "d_drive_traveltrust_roots": [
+      "D:/TravelTrust-V1.1",
+      "D:/TravelTrust-official-ops-v9-release"
+    ],
+    "worktrees": 2,
+    "stash": 0,
+    "orphan_roots_found": 0,
+    "deleted_this_wave": [
+      "D:/Wbe3-TravelTrust-clean-main",
+      "D:/.cargo-target-wbe3-traveltrust"
+    ]
+  },
+  "closed_this_wave": [
+    {
+      "id": "GAP-STG-HOME-REG-2BA08",
+      "severity": "P0",
+      "fix": "Staging observation \u2192 3e356617"
+    },
+    {
+      "id": "GAP-OFFICIAL-HOME-FAQ-ABSENT",
+      "severity": "P0",
+      "fix": "Official faq ABSENT"
+    },
+    {
+      "id": "GAP-HOME-MODULAR-FAQ-UNLOCK",
+      "severity": "P0",
+      "fix": "M10 presence absent + modular LATEST"
+    },
+    {
+      "id": "GAP-WAVE0-STAGING-2BA08",
+      "severity": "P0",
+      "fix": "WAVE-0 SUPERSEDED overlay"
+    },
+    {
+      "id": "GAP-M07-DOM-VS-MODULE",
+      "severity": "P1",
+      "fix": "dom mounted + module_canonical_presence absent"
+    },
+    {
+      "id": "GAP-FUSION-OLD-BAKE-HEADER",
+      "severity": "P1",
+      "fix": "OPS_V9_PRODUCT_TRUTH dual-key"
+    },
+    {
+      "id": "GAP-P2A-OFFICIAL-LIVE-FE-KEY",
+      "severity": "P1",
+      "fix": "living_official_fe"
+    },
+    {
+      "id": "GAP-LATEST-V9-BANNER-COVERAGE",
+      "severity": "P2",
+      "fix": "OPS-v9 banners on high-traffic LATEST"
+    },
+    {
+      "id": "GAP-STAMP-DAA5-SUPERSEDED",
+      "severity": "P2",
+      "fix": "stamp-table daa5 SUPERSEDED annotations"
+    },
+    {
+      "id": "GAP-PUBLIC-SURFACE-FAQ",
+      "severity": "P2",
+      "fix": "public-surface FAQ ABSENT_ON_OPS_V9_LIVE"
+    },
+    {
+      "id": "GAP-STAGING-API-FRESHNESS",
+      "severity": "P2",
+      "fix": "CONFIRM_DESIGN Sepolia ED in Living Pin"
+    },
+    {
+      "id": "GAP-PAGE-SURFACE-AMBIENT-11",
+      "severity": "P2",
+      "fix": "CONFIRM_DESIGN in Living Pin"
+    },
+    {
+      "id": "GAP-D-WBE3-ORPHAN-2G",
+      "severity": "P2",
+      "fix": "deleted Wbe3 + cargo target"
+    },
+    {
+      "id": "GAP-LATEST-V9-BANNER-RESIDUAL-3",
+      "severity": "P2",
+      "fix": "home modular + API decoupling + contract registry cutover banners"
+    }
+  ],
+  "remaining_open": [
+    {
+      "id": "GAP-WEB3-FTB-ALIGN",
+      "severity": "DEFERRED",
+      "note": "Owner later upgrade \u00b7 intentionally out of scope"
+    }
+  ],
+  "expected_differences_confirm_design": [
+    "Staging www build_time wall-clock",
+    "Staging API sha\u2260pin Sepolia",
+    "PAGE_SURFACE ambient 11\u226010"
+  ],
+  "gates": {
+    "TT_OFFICIAL_V9_1TO1_MAP": "PASS",
+    "TT_OFFICIAL_V9_PLANE_MAP": "PASS"
+  },
+  "tt_production_go": "NO_GO",
+  "verdict": "FIX_ALL_CLOSED_ONLY_WEB3_DEFERRED",
+  "post_fix_reaudit": {
+    "P0": 0,
+    "P1": 0,
+    "P2_residual_closed": 3,
+    "gates": {
+      "TT_OFFICIAL_V9_1TO1_MAP": "PASS",
+      "TT_OFFICIAL_V9_PLANE_MAP": "PASS"
+    },
+    "live_sections": "unlock YES faq NO Official=Staging",
+    "verdict": "FIX_ALL_CLOSED_ONLY_WEB3_DEFERRED"
+  }
+}

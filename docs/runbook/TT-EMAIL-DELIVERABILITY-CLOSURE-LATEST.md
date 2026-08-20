@@ -1,5 +1,8 @@
 # TT Email Deliverability Closure · LATEST
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **STATUS:** ACTIVE · **② 邮件信誉收口**（≠ ③ Production GO · ≠ Mainnet Hard Gate）  
 **Checked:** 2026-07-24 · DNS machine twin [`TT-EMAIL-DELIVERABILITY-DNS-CHECK-LATEST.json`](./TT-EMAIL-DELIVERABILITY-DNS-CHECK-LATEST.json)  
 **Domain:** `web3-ttg.com` · **FROM:** `TravelTrust <noreply@web3-ttg.com>`（Resend）  

@@ -1,5 +1,8 @@
 # TT · PSG · Staging Public Page Surfaces（LATEST）
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **阶段：** ② Staging · **≠** Reality Closure PASS · **≠** Production GO  
 **Machine：** `TT_STAGING_PAGE_SURFACES`  
 **Gate：** `node scripts/dev/check-staging-public-page-surfaces.cjs`（已挂 `deploy-tt-web-staging.sh` post-deploy）  

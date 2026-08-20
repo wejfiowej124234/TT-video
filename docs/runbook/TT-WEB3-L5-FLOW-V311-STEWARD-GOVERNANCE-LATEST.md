@@ -1,5 +1,8 @@
 # TravelTrust Web3 · 中文分步流程图 L5（V3.1.1）
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **Machine:** `TT_WEB3_L5_FLOW_V311`  
 **SSOT 宪章:** [TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md](../spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md) · **LOCKED**  
 **Visual:** `assets/traveltrust-web3-l5-flow-v311.png`（相对仓库：可复制至 `docs/spec/governance-token/` 存档）  

@@ -1,5 +1,8 @@
 # Pre-Mainnet Human UI/UX · Defect Register
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **Session:** `20260724T065700Z-pre-mainnet-human-uiux`  
 **Phase:** ①/② 真人手测（主网真网前）· ≠ Production GO · ≠ Mainnet Cutover  
 **Round-1:** HU-001～010 **FIXED**（2026-07-24 · Staging bake `2db694ae`）  

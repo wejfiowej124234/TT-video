@@ -1,3 +1,5 @@
+> **Official Product Truth（活面 · 本闸不改 Web3）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
 # TT · TTG V8 fusion · 独立闸 `TTG_V8_FUSION_3_DEPLOY_AND_SETGOVERNOR_OWNER_AUTH_REQUIRED`
 
 当前工作 SSOT：**第一步 MUST 1–7 已收敛** · [TT-TTG-V8-FUSION-3-GENESIS-ADDRESS-FILLS-LATEST.md](./TT-TTG-V8-FUSION-3-GENESIS-ADDRESS-FILLS-LATEST.md)  
@@ -68,6 +70,6 @@ Owner 写出（不含「是否」）：
 
 NEW TTG `0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602` · NEW PM `0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2` · NEW Governor `0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F`（已 `setGovernor`）。
 
-`TT_PRODUCTION_GO` 仍 **NO_GO**。**不是** Official www product surface live（www 仍冻 OLD bake）。**不是**覆盖 FTB `20260812`。Living FTB = V8 Cycle `20260818` Active Truth。Official **API Runtime** 已 NEW。不得再部署 TTG/PM。不得 bake www。不得用 Bitget HOLD unwind V8 针。
+`TT_PRODUCTION_GO` 仍 **NO_GO**。**不是**用本闸改 Official www 产品字节（活面已是 OPS-v9；cert-era OLD bake `daa5ae87` = SUPERSEDED）。**不是**覆盖 FTB `20260812`。Living FTB = V8 Cycle `20260818` Active Truth。Official **API Runtime** 已 NEW。不得再部署 TTG/PM。不得 bake www。不得用 Bitget HOLD unwind V8 针。
 
 **Official Product Runtime Cutover Precheck** 已 `PASS_STOP`（只读 · 生产写入 0）。[API Runtime Decoupling](./TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.md) 已 `PASS_STOP` 且 **API-only Official deploy 已执行**。[Registry/Runtime/L7 Consistency Cert](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md) **`PASS_STOP`**（引用，不重证）。FTB 吸收已闭：**另立 NEW Cycle，不覆盖 `20260812`**。[Final Reality / Release Certification](./TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md) **`PASS`**（`blocking_p0_p1=0`）。[Production GO 重评](./TT-PRODUCTION-GO-REASSESSMENT-LATEST.md) **`STOP`**（`required_before_go=8` · `hard_gate=REFUSED` · Owner 裁决 **NOT_THIS_TURN**）。Token Risk · Bitget HOLD 继续独立。禁止迁币 / 拆仓 / 再发 `setGovernor` / 改写父本 `20260812`。HOLD_RESCAN 仍绑定、**不得 unwind V8 针**。

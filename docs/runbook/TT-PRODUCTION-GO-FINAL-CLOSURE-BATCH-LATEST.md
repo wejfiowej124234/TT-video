@@ -1,5 +1,8 @@
 # TT · Production GO Final Closure Batch
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **Machine:** [`TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.json`](./TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.json)  
 **STATUS:** `TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH_STOP_AND_REPORT`（停在 `GAP-E2E-JOURNEY`）  
 **Stamp:** `2026-08-18T05:00:00Z`  

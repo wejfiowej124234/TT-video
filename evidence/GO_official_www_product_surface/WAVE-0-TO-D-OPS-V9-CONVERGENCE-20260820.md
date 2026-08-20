@@ -38,7 +38,7 @@ No prune / no discard / no Official bake from dirty tip.
 | Item | Value |
 |------|-------|
 | Official contrast | OPS-v9 |
-| Staging identity | `2ba08bd4…` / `2026-08-15T12:30:19Z` / Candidate v2 |
+| Staging identity | living `3e356617…` / `2026-08-20T10:50:46Z` · historical Wave-D2 `2ba08bd4…` / `2026-08-15T12:30:19Z` = **SUPERSEDED as living Staging www** |
 | Staging home/traveltrust | 200 |
 | Staging bootstrap | **not** v8 (Expected Difference) |
 | Isomorphic deploy | **NOT done** (needs Owner D4) |

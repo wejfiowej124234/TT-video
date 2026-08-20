@@ -1,5 +1,8 @@
 # TT · V3.1.1 Final Release Engineering（当前正式发版实例）
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **Machine:** `TT_V311_FINAL_RELEASE_ENGINEERING`  
 **Instance Registry:** [`registry/v311-final-release-engineering.v1.yaml`](../../registry/v311-final-release-engineering.v1.yaml)  
 **唯一梯子（全版本）：** [`TT-TRAVELTRUST-RELEASE-ENGINEERING-LADDER-LATEST.md`](./TT-TRAVELTRUST-RELEASE-ENGINEERING-LADDER-LATEST.md) · [`registry/traveltrust-release-engineering-ladder.v1.yaml`](../../registry/traveltrust-release-engineering-ladder.v1.yaml)  

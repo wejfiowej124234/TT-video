@@ -15,7 +15,7 @@
 
 允许说的一句（签发时）：
 
-> Registry Official 槽、Official API Runtime、当前 Mainnet L7 已经对 NEW V8 最终一致；FTB `20260812` 当时尚未吸收；Official www 冻结原样；Bitget HOLD 是独立轨。
+> Registry Official 槽、Official API Runtime、当前 Mainnet L7 已经对 NEW V8 最终一致；FTB `20260812` 当时尚未吸收；Official www 签发时冻结原样 (stamp-time · living=OPS-v9)；Bitget HOLD 是独立轨。
 
 允许说的一句（absorb 后）：
 
@@ -28,7 +28,7 @@
 | Living Registry Official TTG / PM / Governor | **NEW V8** · 与 overlay 一致 |
 | Official API Runtime `/meta` + quote | **NEW V8** · 1 USDC = 100,000 TTG · min 1 USDC |
 | Mainnet L7 | **NEW V8** · Timelock.governor = NEW · 25T · 15/35/50 |
-| Official www product surface | **FROZEN OLD bake** · Expected Difference |
+| Official www product surface | **OPS-v9 living** (cert-era OLD bake SUPERSEDED) · Expected Difference |
 | FTB `20260812` | **NOT_ABSORBED**（签发时）· successor = immutable parent · 仍列 OLD TTG `0x3cB1…512A` |
 | Token Risk · Bitget HOLD | **INDEPENDENT** · 不得 unwind V8 针 |
 
@@ -50,7 +50,7 @@ L7 本轮：`Timelock.governor()=NEW` · `admin()=Safe 0x9649…40e7` · NEW PM 
 
 | 项 | 类 | 处置 |
 |----|----|------|
-| Official www `daa5ae87` / OLD first-paint | **Expected Difference** | CONFIRM_DESIGN · 禁止 bake |
+| Official www `daa5ae87` SUPERSEDED / OLD first-paint (living OPS-v9) | **Expected Difference** | CONFIRM_DESIGN · 禁止 bake |
 | FTB `20260812` 仍 OLD TTG/PM/Gov | **WAIT_OWNER_SEPARATE_FTB_ABSORB**（签发时）→ successor **NEW cycle 已吸收** | 禁止覆盖 20260812；living = V8 Cycle |
 | API `TRAVELTRUST_GIT_SHA` 仍可能印 `8df2ab21` | **Expected Difference** | 证明看 NEW `/meta` 键 |
 | Bitget HOLD / 复检 | **INDEPENDENT_TRACK** | 不得回滚 NEW L7 或 Official API Runtime |

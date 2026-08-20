@@ -100,7 +100,7 @@ Living FTB `owner_lock.hard_gate` 仍印 `REEVAL_STILL_REFUSED_NO_GO_OPEN_AXIS_0
 
 | ID | 设计差 |
 |----|--------|
-| Frozen www `daa5ae87` | Owner freeze pin vs NEW API |
+| Historical freeze pin `daa5ae87` (SUPERSEDED as living · living OPS-v9) | Owner freeze pin vs NEW API |
 | API `git_sha` `8df2ab21` | 证明是 NEW `/meta` 键，不是 SHA |
 | `escrow_factory_v2_address=0x0520` | lineage 键；create = Wired |
 | Track1 SR 与 SR-FT 双路径 | 两地址都 KEEP；哪条是 Official-live create 的印记滞后进 stamp cluster |

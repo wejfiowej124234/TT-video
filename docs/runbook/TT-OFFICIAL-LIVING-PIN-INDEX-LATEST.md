@@ -101,7 +101,15 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 **机读闸：**  
 - `bash scripts/gates/check-official-v9-local-staging-repo-1to1.sh` → `TT_OFFICIAL_V9_1TO1_MAP: PASS`  
 - `bash scripts/gates/check-official-v9-plane-map.sh` → `TT_OFFICIAL_V9_PLANE_MAP: PASS`  
-**证据：** `OFFICIAL-V9-LOCAL-STAGING-REPO-1TO1-MAP-20260820` · `OFFICIAL-V9-PLANE-MAP-20260820`  
-**Hygiene（2026-08-20）：** worktree=2 · stash=0 · main=tip=origin · Staging `2ba08bd4` living misread cleared · PAGE_SURFACE ambient 11≠10 = **ED CONFIRM_DESIGN**。  
+**证据：** `OFFICIAL-V9-LOCAL-STAGING-REPO-1TO1-MAP-20260820` · `OFFICIAL-V9-PLANE-MAP-20260820` · `OFFICIAL-V9-DEEP-ALIGNMENT-GAP-REGISTER-20260820`  
+**Hygiene（2026-08-20 re-audit）：** worktree=2 · stash=0 · main=tip=origin · Staging `2ba08bd4` living misread cleared · D: deleted `Wbe3-TravelTrust-clean-main` + `.cargo-target-wbe3-traveltrust` · PAGE_SURFACE ambient 11≠10 = **ED CONFIRM_DESIGN**。  
 **Staging www 对齐：** `TRAVELTRUST_STAGING_V9_ALIGN_OK=1 FLY_WEB_REMOTE_BUILD=1 bash scripts/dev/align-staging-www-official-v9.sh`
+
+## Expected Differences · CONFIRM_DESIGN（非缺陷）
+
+| ED | Living | Rule |
+|----|--------|------|
+| Staging www `build_time` | ≠ Official `2026-08-20T00:51:57Z` | same `git_sha` pin · wall-clock ED |
+| Staging API sha | `1915ec4…` · chain `11155111` | **must NOT** equal product pin · Sepolia ED under V9 map |
+| PAGE_SURFACE ambient | 11 ≠ 10 | **CONFIRM_DESIGN** · not identity knife |
 

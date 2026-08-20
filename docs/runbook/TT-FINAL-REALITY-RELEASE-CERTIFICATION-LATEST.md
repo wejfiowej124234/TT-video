@@ -92,7 +92,7 @@ Living FTB 仍印 `P0_COMMERCIAL_MONEY_PATH_BLOCKER: true` 与 nested Track2 `WA
 | Official OLD FR | `0x2aF47C…` | KEEP | **ALIGNED** |
 | `escrow_factory_v2_address=0x0520…` | lineage key | FTB 已写 lineage only | **EXPECTED_DIFFERENCE** |
 | `settlement_router_address=SR-FT 0xD1DA…` | Track2 Official create path | FTB 表仍标 Track1 SR Official live | **EXPLAINED_FTB_STAMP_LAG**（registry 已注；禁止本证改 FTB） |
-| www pin | `daa5ae87` / `2026-08-16T15:15:49Z` | freeze | **EXPECTED_DIFFERENCE** |
+| www pin | historical `daa5ae87` SUPERSEDED · living OPS-v9 `3e356617` / `2026-08-16T15:15:49Z` | freeze | **EXPECTED_DIFFERENCE** |
 | API `build.git_sha` | `8df2ab21…` | overlay 证明是 NEW keys | **EXPECTED_DIFFERENCE** |
 
 若本闸看到 `/meta` TTG/PM/Governor 退回 OLD，或 `escrow_factory_address` 变成 lineage `0x0520`，或 `fee_router` 在 FTB 未改时切到 NEW FR，才会记 **未解释 Drift** 并 **拒绝 PASS**。本次未发生。

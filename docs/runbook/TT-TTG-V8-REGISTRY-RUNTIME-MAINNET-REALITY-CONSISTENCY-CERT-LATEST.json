@@ -13,7 +13,9 @@
     "overlay": "NEW_V8",
     "official_api_runtime_meta_quote": "NEW_V8",
     "mainnet_l7": "NEW_V8",
-    "official_www": "FROZEN_OLD_BAKE",
+    "official_www": "OPS_V9_PRODUCT_TRUTH",
+    "official_www_cert_era_superseded": "FROZEN_OLD_BAKE",
+    "official_www_living_pin": "3e356617a498b0faac42e4ae457343d36294a770",
     "ftb_20260812": "NOT_ABSORBED",
     "token_risk_bitget": "HOLD_INDEPENDENT"
   },

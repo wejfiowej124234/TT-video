@@ -1,5 +1,8 @@
 # TT · TTG V8 · Official Contract Registry Cutover Precheck
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **STATUS:** `TTG_V8_OFFICIAL_CONTRACT_REGISTRY_CUTOVER_PRECHECK` · `PASS_STOP` · **`/meta` 段已 SUPERSEDED**  
 **Living successor:** [TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md)（Registry Official + Official API Runtime + L7 已 NEW 对齐）。下文「Official `/meta` 仍 OLD」是 **2026-08-17 23:58Z 只读快照**，不是当前 Runtime。**不得**用本快照回滚已完成的 V8 主网切针。  
 **Machine:** [TT-TTG-V8-OFFICIAL-CONTRACT-REGISTRY-CUTOVER-PRECHECK-LATEST.json](./TT-TTG-V8-OFFICIAL-CONTRACT-REGISTRY-CUTOVER-PRECHECK-LATEST.json)  

@@ -114,13 +114,14 @@ surface_audit:
     class: WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX
     status: CLOSED_REALITY
     finding_kind: MISSING_WIRING
-    official_live_fe: 2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8
+    historical_hop_fe: 2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8
+    living_official_fe: 3e356617a498b0faac42e4ae457343d36294a770
     prior_official_fe: a6efa351
     product_baseline_fe: 3e600076eab6613b55484852197921cb5c622f7e
     api_kept: 80eed10fd21959ae03f65bb446ee2a4598a010f7
     closed_utc: "2026-08-15T12:50:00Z"
     evidence: evidence/GO_oa01_walletconnect_official_bake/WALLETCONNECT-OFFICIAL-BAKE-FORWARD-FIX-LATEST.json
-    note: Dockerfile ARG/ENV hole only. Source still process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID. Do not reopen Header/Community/CMS/Session/BFF. OA-01 9/9 mobile seal remains Owner-only. official_live_fe hop SUPERSEDED; living Official product = OPS-2026.08.20-v9 (`3e356617`); historical www pin daa5ae87 SUPERSEDED.
+    note: Dockerfile ARG/ENV hole only. Source still process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID. Do not reopen Header/Community/CMS/Session/BFF. OA-01 9/9 mobile seal remains Owner-only. historical_hop_fe SUPERSEDED; living Official product = OPS-2026.08.20-v9 (`3e356617`); historical www pin daa5ae87 SUPERSEDED.
 current_focus:
   gap_id: GAP-E2E-JOURNEY
   finding_kind: FUNCTION_GAP
@@ -243,7 +244,7 @@ findings:
     breakpoint: DOCKERFILE_UNDECLARED_WC_ARG
     note: >
       Official a6efa351 dropped undeclared NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID.
-      Forward-fix FE 2ba08bd4 ARG/ENV + Official CHAIN_ID=1 bake gate.
+      Forward-fix historical hop FE 2ba08bd4 (SUPERSEDED as living · living=3e356617) ARG/ENV + Official CHAIN_ID=1 bake gate.
       Bundle inlined masked 2b29…8926; wagmi WalletConnect connector; Sheet no 未配置; real QR.
       Not a 16th Gap Register row. Do not reopen Header/Community/CMS/Session/BFF/1USDC.
 

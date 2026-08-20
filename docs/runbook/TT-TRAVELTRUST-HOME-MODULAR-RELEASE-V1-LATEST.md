@@ -1,5 +1,8 @@
 # TRAVELTRUST_HOME_MODULAR_RELEASE_V1
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **STATUS:** `REGISTRY_SAMPLED_THREE_ENV`  
 **`TT_PRODUCTION_GO`:** `NO_GO`  
 **Route:** `/traveltrust` only（`/` 定制旅行不在本册）  
@@ -90,9 +93,9 @@ python scripts/dev/record-traveltrust-home-module-lifecycle.py \
 
 ## 当前映射（2026-08-19 · Staging 已只读采样）
 
-Official live `https://www.web3-ttg.com/traveltrust`（OPS-2026.08.20-v9 `3e356617` / `2026-08-20T00:51:57Z`）：tip may include `id=unlock` with pre-windows titles; **M07 module** production = absent.
+Official live `https://www.web3-ttg.com/traveltrust`（OPS-2026.08.20-v9 `3e356617` / `2026-08-20T00:51:57Z`）：section ids = `hero,trust,settlement,unlock,liquidity,roles,start`（**无 FAQ**）；`id=unlock` = OPS-v9 字节 · **≠ M07 CANONICAL**；**M07 module** 仍 LOCAL_ONLY_PENDING。
 
-Staging live `https://tt-web-staging.fly.dev/traveltrust`（**产品身份** `git_sha=3e356617…` / `build_time=2026-08-20T10:50:46Z`；历史采样 `2ba08bd4` / `2026-08-15T12:30:19Z` = **SUPERSEDED as living Staging www**）：**同一套存在性** — 有 FAQ/Start，没有 Unlock。产品身份已与 Official V9 对齐（staging env 重编 · ≠ Official prod image）。
+Staging live `https://tt-web-staging.fly.dev/traveltrust`（**产品身份** `git_sha=3e356617…` / `build_time=2026-08-20T10:50:46Z`；历史采样 `2ba08bd4` / `2026-08-15T12:30:19Z` = **SUPERSEDED as living Staging www**）：section ids = Official V9 同源 — 有 Unlock/Start，**无 FAQ**（Wave-D2「有 FAQ、无 Unlock」已 SUPERSEDED）。产品身份已与 Official V9 对齐（staging env 重编 · ≠ Official prod image）。
 
 Local living layout lock `v17-prod-rebase-m10-m11`：回挂 M10/M11；**保留** M07 Unlock（Pending）。
 
@@ -104,10 +107,10 @@ Local living layout lock `v17-prod-rebase-m10-m11`：回挂 M10/M11；**保留**
 | M04 | Hero | mounted | mounted | mounted | CANONICAL_ACTIVE |
 | M05 | Trust | mounted | mounted | mounted | CANONICAL_ACTIVE |
 | M06 | Settlement | mounted | mounted | mounted | CANONICAL_ACTIVE |
-| M07 | Unlock | mounted | **absent** | **absent**（M07 模块） | **LOCAL_ONLY_PENDING** |
+| M07 | Unlock | mounted | **mounted**（OPS-v9 `id=unlock` · ≠ M07 CANONICAL） | **mounted**（同上 · ≠ M07） | **LOCAL_ONLY_PENDING**（模块仍 Pending；DOM 已有） |
 | M08 | Liquidity | mounted | mounted | mounted | CANONICAL_ACTIVE |
 | M09 | Roles | mounted | mounted | mounted | CANONICAL_ACTIVE |
-| M10 | FAQ | **archived** | mounted | mounted | **DEPRECATED**（截图序列无 FAQ；删官网须单独删除 Release） |
+| M10 | FAQ | **archived** | **absent** | **absent** | **DEPRECATED**（V9 活面无 FAQ） |
 | M11 | Start/CTA | mounted | mounted | mounted | CANONICAL_ACTIVE（同上） |
 
 > **OPS-v9 真源说明：** Official 活面 = `3e356617` / `…-v9-20260820`。Tip 可能仍挂 `id="unlock"` 且文案为旧版「Unlock schedule / TTG public unlock」——那是 **OPS-v9 字节**，**不是** M07「公开窗口」CANONICAL。M07 overlay（`2551fafd` / `…-m07-unlock`）已回滚；**禁止**把 M07 写成 OPS-v9。
@@ -120,7 +123,7 @@ M07                     LOCAL_ONLY_PENDING（禁止自动 bake · ≠ OPS-v9 改
 M10                     DEPRECATED · Local archived（截图无 FAQ）
 ```
 
-数量仍然可以不同：Local 比 Staging/Production 多一个 M07。禁止按数量抹平。将来首页更新只声明 `RELEASE_SCOPE=M07_UNLOCK`：机器检查只有 M07 变、M01–M06 与 M08–M11 0-drift、Build PASS、Runtime PASS，再由 Owner 授权 Production 更新。禁止整页覆盖。本闸 **不** 自动 Fly-deploy。
+数量仍然可以不同：Local 比 Staging/Production 多的是 **M07 模块生命周期 Pending**（DOM `id=unlock` 三面均已有 · ≠ 模块 CANONICAL）。禁止按数量抹平。将来首页更新只声明 `RELEASE_SCOPE=M07_UNLOCK`：机器检查只有 M07 变、M01–M06 与 M08–M11 0-drift、Build PASS、Runtime PASS，再由 Owner 授权 Production 更新。禁止整页覆盖。本闸 **不** 自动 Fly-deploy。
 
 ---
 

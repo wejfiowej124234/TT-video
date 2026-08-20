@@ -1,5 +1,8 @@
 # Public Surface Regression · Enterprise Full-Link Audit（LATEST）
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **Status:** `AUDIT_COMPLETE_NO_DATA_MUTATION`  
 **Stamp:** `20260715T174800Z`  
 **Phase:** ② Staging readonly · **≠** ③ Production GO  

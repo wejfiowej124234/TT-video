@@ -1,4 +1,6 @@
 # TravelTrust Public Surface Audit · machine SSOT (all user-facing disclosure routes)
+# OPS-v9 live overlay (2026-08-20): Official+Staging /traveltrust id=faq ABSENT; id=unlock PRESENT.
+# FAQ strip checks below = local disclosure archaeology only · ABSENT_ON_OPS_V9_LIVE.
 #
 # Human closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PUBLIC-SURFACE-AUDIT-CLOSEOUT.md
 # Extends: registry/traveltrust-public-disclosure.v1.yaml
@@ -100,7 +102,7 @@ surfaces:
     ssot: GET /api/v1/public/roadmap (CMS) · fallback frontend/lib/traveltrustRoadmap2026.ts
   - route: faq
     label: Network FAQ strip
-    status: ALIGNED
+    status: ABSENT_ON_OPS_V9_LIVE
     checks: [no_testnet_preview, params_pointer]
 
 closeout: docs/spec/governance-token/evidence/phase3-production-entry-baseline/PUBLIC-SURFACE-AUDIT-CLOSEOUT.md

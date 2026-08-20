@@ -6,13 +6,13 @@
 
 > **Official 产品真源（FTB Product Truth · OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **≠** git checkout · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` SUPERSEDED · M07 overlay ROLLED_BACK · **≠** Candidate v2 · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
 > **GO 资格（Cycle2 overlay · 不改 freeze 8）：** `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · freeze unique entry `STOP` `required_before_go=8` · `current_required_before_go=0` · 下一步 = Owner 书面 **GO** 或 **继续 NO_GO**（`NOT_THIS_TURN`）· `TT_PRODUCTION_GO=NO_GO` · **禁止自动签发** · **禁止 bake www**  
-> **本 hop 身份（历史 · 不改写）：** Official live FE `2ba08bd4` / API `80eed10f` = WC bake CLOSED_REALITY hop。活面真源是上方 www pin。
+> **本 hop 身份（历史 · 不改写）：** Historical hop Official FE `2ba08bd4` (SUPERSEDED as living · living = OPS-v9 `3e356617`)` / API `80eed10f` = WC bake CLOSED_REALITY hop。活面真源是上方 www pin。
 
 ## Machine
 
 | Item | Value |
 |------|-------|
-| Official live FE (hop identity) | `2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8` · `build_time=2026-08-15T12:39:51Z` · **SUPERSEDED as living Official product** by **OPS-2026.08.20-v9** (`3e356617`; historical www pin `daa5ae87` SUPERSEDED) |
+| Historical hop Official FE (SUPERSEDED as living) | `2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8` · `build_time=2026-08-15T12:39:51Z` · **SUPERSEDED as living Official product** by **OPS-2026.08.20-v9** (`3e356617`; historical www pin `daa5ae87` SUPERSEDED) |
 | Prior Official FE | `a6efa351` (ARG hole) |
 | Official build.env.local | `KEY_PRESENT` · masked `2b29…8926` |
 | Bundle / wagmi / Sheet / QR | Project ID inlined · WalletConnect connector · **no**「未配置」· **real QR** |

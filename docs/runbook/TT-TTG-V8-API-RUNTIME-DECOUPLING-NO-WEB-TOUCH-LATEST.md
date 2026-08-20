@@ -1,5 +1,8 @@
 # TT · TTG V8 · API Runtime Decoupling · No Web Touch
 
+> **Official Product Truth（活面）：** TravelTrust Official · **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9`) · API `8df2ab21…` · historical `daa5ae87` SUPERSEDED · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
+
 **STATUS:** `TTG_V8_API_RUNTIME_DECOUPLING_NO_WEB_TOUCH` · `PASS_STOP`  
 **Machine:** [TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.json](./TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.json)  
 **Overlay:** [`registry/ttg-v8-api-runtime-contract-overlay.v1.json`](../../registry/ttg-v8-api-runtime-contract-overlay.v1.json)  
@@ -48,7 +51,7 @@
 ## Official www fingerprint
 
 **本闸观察（API-only cutover · www 未动 · 不可改写）：**  
-`git_sha=daa5ae87b8c1af548c6beff6dd3451e5d386acf2` · `build_time=2026-08-16T15:15:49Z` · **assets=56**（1 CSS + 55 JS）· `asset_sha256=236006c266774e315a7a6a422a719883a20fd72c277f88a824cfcd38c341ebd6` · **BEFORE == AFTER**.
+`git_sha=daa5ae87b8c1 (stamp SUPERSEDED · living OPS-v9)af548c6beff6dd3451e5d386acf2` · `build_time=2026-08-16T15:15:49Z` · **assets=56**（1 CSS + 55 JS）· `asset_sha256=236006c266774e315a7a6a422a719883a20fd72c277f88a824cfcd38c341ebd6` · **BEFORE == AFTER**.
 
 **Living Product Truth（后置）：** www = **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-live-auth-pin-nontarget-v9-20260820`); historical `daa5ae87` SUPERSEDED as living Official.
 
