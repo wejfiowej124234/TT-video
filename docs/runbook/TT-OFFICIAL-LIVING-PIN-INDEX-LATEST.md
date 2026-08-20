@@ -83,11 +83,25 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 | **Official www** | Fly 镜像 `hybrid-…-v9-20260820` · `build_time=2026-08-20T00:51:57Z` | 无解锁 bake / M07 冒充 |
 
 **Expected Difference：** Staging 新 bake 的 `build_time` / image tag 可 ≠ 官网冻结墙钟。  
-**本波实测（2026-08-20）：** Official `build_time=2026-08-20T00:51:57Z` · Staging `build_time=2026-08-20T10:50:46Z` · 双方 `git_sha=3e356617…`。  
-**本波不并入：** Staging API · Candidate Web3 · FTB 地址对齐（另闸）。
+**本波实测（2026-08-20）：** Official `build_time=2026-08-20T00:51:57Z` · Staging `build_time=2026-08-20T10:50:46Z` · 双方 `git_sha=3e356617…`。
 
-**机读闸：** `bash scripts/gates/check-official-v9-local-staging-repo-1to1.sh` → `TT_OFFICIAL_V9_1TO1_MAP: PASS`  
-**证据：** `evidence/GO_official_www_product_surface/OFFICIAL-V9-LOCAL-STAGING-REPO-1TO1-MAP-20260820.{json,md}`  
-**Hygiene（2026-08-20）：** worktree=2（tip+Release WT）· stash=0 · main=tip=origin · Staging `2ba08bd4` living misread cleared · PAGE_SURFACE ambient 11≠10 = **ED CONFIRM_DESIGN**（非身份失败）。  
-**Staging 对齐：** `TRAVELTRUST_STAGING_V9_ALIGN_OK=1 FLY_WEB_REMOTE_BUILD=1 bash scripts/dev/align-staging-www-official-v9.sh`
+### V9 全平面映射（写死 · 禁止平面坍塌）
+
+| 平面 | 活面值 | 在 V9 下的角色 |
+|------|--------|----------------|
+| Official www | `3e356617…` / `2026-08-20T00:51:57Z` | Product Truth |
+| Staging www | `3e356617…` / `2026-08-20T10:50:46Z` | 产品身份 1:1 |
+| Official API | `8df2ab21…` / chain=`1` | **V9 配对**（≠ 产品 pin） |
+| Staging API | `1915ec4d…` / chain=`11155111` | **V9 映射 ED**（sha≠pin · Sepolia · CONFIRM_DESIGN） |
+| Staging www→API | `tt-api-staging.fly.dev` | 禁止指向 Official API |
+| Web3 FTB 地址 | FTB Active Truth | **另闸**（本页不改链） |
+
+**禁止：** 把 Staging API 强制改成 `3e356617` · Staging API 上主网 · 官网镜像硬钉 Staging。
+
+**机读闸：**  
+- `bash scripts/gates/check-official-v9-local-staging-repo-1to1.sh` → `TT_OFFICIAL_V9_1TO1_MAP: PASS`  
+- `bash scripts/gates/check-official-v9-plane-map.sh` → `TT_OFFICIAL_V9_PLANE_MAP: PASS`  
+**证据：** `OFFICIAL-V9-LOCAL-STAGING-REPO-1TO1-MAP-20260820` · `OFFICIAL-V9-PLANE-MAP-20260820`  
+**Hygiene（2026-08-20）：** worktree=2 · stash=0 · main=tip=origin · Staging `2ba08bd4` living misread cleared · PAGE_SURFACE ambient 11≠10 = **ED CONFIRM_DESIGN**。  
+**Staging www 对齐：** `TRAVELTRUST_STAGING_V9_ALIGN_OK=1 FLY_WEB_REMOTE_BUILD=1 bash scripts/dev/align-staging-www-official-v9.sh`
 

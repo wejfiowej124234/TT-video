@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.official_v9_plane_map.v1",
+  "recorded_utc": "2026-08-20T11:20:00Z",
+  "machine_key": "TT_OFFICIAL_V9_PLANE_MAP",
+  "product_truth": "TravelTrust Official \u00b7 OPS-2026.08.20-v9",
+  "pin_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "planes": {
+    "official_www": {
+      "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "build_time": "2026-08-20T00:51:57Z",
+      "role": "PRODUCT_TRUTH",
+      "must_match_pin": true
+    },
+    "staging_www": {
+      "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "build_time": "2026-08-20T10:50:46Z",
+      "role": "PRODUCT_IDENTITY_1TO1",
+      "must_match_pin": true,
+      "ed": "build_time / Candidate contract_profile"
+    },
+    "official_api": {
+      "git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "chain_id": "1",
+      "role": "V9_PAIRED_OFFICIAL_API",
+      "must_match_pin": false
+    },
+    "staging_api": {
+      "git_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "chain_id": "11155111",
+      "role": "V9_MAPPED_STAGING_API_ED",
+      "must_match_pin": false,
+      "ed": "sha\u2260pin \u00b7 Sepolia Candidate \u00b7 CONFIRM_DESIGN"
+    },
+    "repo_tip": {
+      "sha": "33e7c67ae8989a2e69e15c999e7192ee9ece5f04",
+      "branch": "release/official-ops-v9-product-ssot"
+    },
+    "repo_main": {
+      "sha": "33e7c67ae8989a2e69e15c999e7192ee9ece5f04"
+    }
+  },
+  "wiring": {
+    "staging_www_api_base": "https://tt-api-staging.fly.dev",
+    "forbidden_collapse": [
+      "Staging API git_sha == product pin",
+      "Staging API chain_id == 1",
+      "fly deploy Official prod image onto Staging"
+    ]
+  },
+  "gate": "bash scripts/gates/check-official-v9-plane-map.sh",
+  "tt_production_go": "NO_GO",
+  "verdict": "PASS"
+}
