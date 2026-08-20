@@ -3,8 +3,10 @@
 > **Official living contrast (Wave-D1 · 2026-08-20):** Track A Official www = **OPS-2026.08.20-v9**  
 > (`3e356617…` / `hybrid-live-auth-pin-nontarget-v9-20260820` / bootstrap v8) —  
 > SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md).  
-> **This Ledger = Track B only.** Staging ≠ Official. Do not claim Staging isomorphic to V9 without Owner D4 deploy auth.  
-> Wave-D2 probe: Staging `git_sha=2ba08bd4…` · `build_time=2026-08-15T12:30:19Z` · pin `PSG-REL-20260720-WEB3-CAND-V2` · home/traveltrust HTTP 200 · bootstrap **not** v8.
+> **This Ledger = Track B only.** Staging ≠ Official.  
+> **Staging www product identity (2026-08-20):** `git_sha=3e356617…` · `build_time=2026-08-20T10:50:46Z` (cite rebuild · staging env · Expected Difference vs Official wall-clock) — SSOT [`OFFICIAL-V9-LOCAL-STAGING-REPO-1TO1-MAP-20260820`](../../evidence/GO_official_www_product_surface/OFFICIAL-V9-LOCAL-STAGING-REPO-1TO1-MAP-20260820.md).  
+> Historical Wave-D2 probe `2ba08bd4…` / `2026-08-15T12:30:19Z` = **SUPERSEDED as living Staging www**.  
+> Candidate Web3 pin `PSG-REL-20260720-WEB3-CAND-V2` / Staging API = **separate plane · not this identity knife**.
 
 > **ARCHIVED_OR_SUPERSEDED under FINAL RELEASE** · Active = Candidate v2 @ `97289a71` · pin `PSG-REL-20260720-WEB3-CAND-V2` · FG-15-B **ELAPSED** · not release mainline.  
 > tip `652bbab5` / RUNNING / wait-window wording below = **SUPERSEDED_SNAPSHOT** · cert **FORBIDDEN** until FINAL RELEASE `freeze_status=FROZEN`.

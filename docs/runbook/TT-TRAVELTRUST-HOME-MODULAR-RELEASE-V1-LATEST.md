@@ -92,7 +92,7 @@ python scripts/dev/record-traveltrust-home-module-lifecycle.py \
 
 Official live `https://www.web3-ttg.com/traveltrust`（OPS-2026.08.20-v9 `3e356617` / `2026-08-20T00:51:57Z`）：tip may include `id=unlock` with pre-windows titles; **M07 module** production = absent.
 
-Staging live `https://tt-web-staging.fly.dev/traveltrust`（`git_sha=2ba08bd4` / `2026-08-15T12:30:19Z`，只读）：**同一套存在性** — 有 FAQ/Start，没有 Unlock。本波 **没有** bake Staging。
+Staging live `https://tt-web-staging.fly.dev/traveltrust`（**产品身份** `git_sha=3e356617…` / `build_time=2026-08-20T10:50:46Z`；历史采样 `2ba08bd4` / `2026-08-15T12:30:19Z` = **SUPERSEDED as living Staging www**）：**同一套存在性** — 有 FAQ/Start，没有 Unlock。产品身份已与 Official V9 对齐（staging env 重编 · ≠ Official prod image）。
 
 Local living layout lock `v17-prod-rebase-m10-m11`：回挂 M10/M11；**保留** M07 Unlock（Pending）。
 

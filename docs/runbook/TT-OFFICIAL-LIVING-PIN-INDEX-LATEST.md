@@ -88,5 +88,6 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 
 **机读闸：** `bash scripts/gates/check-official-v9-local-staging-repo-1to1.sh` → `TT_OFFICIAL_V9_1TO1_MAP: PASS`  
 **证据：** `evidence/GO_official_www_product_surface/OFFICIAL-V9-LOCAL-STAGING-REPO-1TO1-MAP-20260820.{json,md}`  
+**Hygiene（2026-08-20）：** worktree=2（tip+Release WT）· stash=0 · main=tip=origin · Staging `2ba08bd4` living misread cleared · PAGE_SURFACE ambient 11≠10 = **ED CONFIRM_DESIGN**（非身份失败）。  
 **Staging 对齐：** `TRAVELTRUST_STAGING_V9_ALIGN_OK=1 FLY_WEB_REMOTE_BUILD=1 bash scripts/dev/align-staging-www-official-v9.sh`
 

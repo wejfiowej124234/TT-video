@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.official_v9_local_staging_repo_1to1_map.v1",
-  "recorded_utc": "2026-08-20T11:05:00Z",
+  "recorded_utc": "2026-08-20T11:10:00Z",
   "machine_key": "TT_OFFICIAL_V9_1TO1_MAP",
   "product_truth": "TravelTrust Official \u00b7 OPS-2026.08.20-v9",
   "pin_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
@@ -9,8 +9,8 @@
   "official_build_time": "2026-08-20T00:51:57Z",
   "staging_sha": "3e356617a498b0faac42e4ae457343d36294a770",
   "staging_build_time": "2026-08-20T10:50:46Z",
-  "main_sha": "46977bee5aa8714d64b2b41590b2fec2918a3936",
-  "tip_sha": "46977bee5aa8714d64b2b41590b2fec2918a3936",
+  "main_sha": "13bf6e2c4595b43aade26e4b2c3ddce276086f2b",
+  "tip_sha": "13bf6e2c4595b43aade26e4b2c3ddce276086f2b",
   "tip_branch": "release/official-ops-v9-product-ssot",
   "release_wt_sha": "3e356617a498b0faac42e4ae457343d36294a770",
   "release_wt_path": "D:/TravelTrust-official-ops-v9-release",
@@ -29,5 +29,12 @@
   "align_script": "TRAVELTRUST_STAGING_V9_ALIGN_OK=1 bash scripts/dev/align-staging-www-official-v9.sh",
   "tt_production_go": "NO_GO",
   "verdict": "PASS",
-  "probe_source": "check-official-v9-local-staging-repo-1to1.sh PASS 2026-08-20"
+  "probe_source": "check-official-v9-local-staging-repo-1to1.sh PASS 2026-08-20",
+  "engineering_tip_note": "tip/main = product-ssot engineering SSOT after 1:1 close; product identity pin remains 3e356617",
+  "hygiene": {
+    "worktrees": 2,
+    "stash": 0,
+    "staging_2ba08_living_misread": "CLEARED",
+    "page_surface_ambient_11_ne_10": "EXPECTED_DIFFERENCE_CONFIRM_DESIGN"
+  }
 }
