@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.official_v9_local_staging_repo_1to1_map.v1",
+  "recorded_utc": "2026-08-20T11:05:00Z",
+  "machine_key": "TT_OFFICIAL_V9_1TO1_MAP",
+  "product_truth": "TravelTrust Official \u00b7 OPS-2026.08.20-v9",
+  "pin_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "pin_official_build_time": "2026-08-20T00:51:57Z",
+  "official_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "official_build_time": "2026-08-20T00:51:57Z",
+  "staging_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "staging_build_time": "2026-08-20T10:50:46Z",
+  "main_sha": "46977bee5aa8714d64b2b41590b2fec2918a3936",
+  "tip_sha": "46977bee5aa8714d64b2b41590b2fec2918a3936",
+  "tip_branch": "release/official-ops-v9-product-ssot",
+  "release_wt_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "release_wt_path": "D:/TravelTrust-official-ops-v9-release",
+  "expected_differences": [
+    "Staging build_time / image tag may differ from Official freeze wall-clock (env-separated rebuild)",
+    "Staging API / Candidate Web3 not in this map knife",
+    "PAGE_SURFACE_DRIFT landing_ambient_count_11_ne_10 = ED \u00b7 not identity failure"
+  ],
+  "forbidden": [
+    "fly deploy --image Official prod image onto Staging",
+    "claim Local checkout bytes == Official pixels",
+    "flip TT_PRODUCTION_GO",
+    "open PR"
+  ],
+  "gate": "bash scripts/gates/check-official-v9-local-staging-repo-1to1.sh",
+  "align_script": "TRAVELTRUST_STAGING_V9_ALIGN_OK=1 bash scripts/dev/align-staging-www-official-v9.sh",
+  "tt_production_go": "NO_GO",
+  "verdict": "PASS",
+  "probe_source": "check-official-v9-local-staging-repo-1to1.sh PASS 2026-08-20"
+}

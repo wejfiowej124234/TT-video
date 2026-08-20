@@ -71,3 +71,22 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 | 人控 / 质量 | Owner Self Review · Evidence · Gate · Archive · Sign-off |
 | SSOT | [`TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST`](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md) |
 
+## Local / Staging / Repo 一比一映射（写死）
+
+**产品身份必须一致：** `git_sha=3e356617a498b0faac42e4ae457343d36294a770`（对外名 = 本页 OPS-v9）。
+
+| 平面 | 映射 | 禁止 |
+|------|------|------|
+| **Repo** | `main` == `release/official-ops-v9-product-ssot` tip（工程 SSOT） | 旧 tip / `2ba08bd4` / `daa5` 当活工程线 |
+| **Local** | Release WT cite = `3e356617…`；本地开发对照本 pin | 用 Staging 旧针反推 Official；声称 checkout = 官网像素 |
+| **Staging www** | `release-identity.git_sha` = `3e356617…`（cite 重编 · staging env） | 把官网生产镜像原样钉进 Staging；`2ba08bd4` 当活面 |
+| **Official www** | Fly 镜像 `hybrid-…-v9-20260820` · `build_time=2026-08-20T00:51:57Z` | 无解锁 bake / M07 冒充 |
+
+**Expected Difference：** Staging 新 bake 的 `build_time` / image tag 可 ≠ 官网冻结墙钟。  
+**本波实测（2026-08-20）：** Official `build_time=2026-08-20T00:51:57Z` · Staging `build_time=2026-08-20T10:50:46Z` · 双方 `git_sha=3e356617…`。  
+**本波不并入：** Staging API · Candidate Web3 · FTB 地址对齐（另闸）。
+
+**机读闸：** `bash scripts/gates/check-official-v9-local-staging-repo-1to1.sh` → `TT_OFFICIAL_V9_1TO1_MAP: PASS`  
+**证据：** `evidence/GO_official_www_product_surface/OFFICIAL-V9-LOCAL-STAGING-REPO-1TO1-MAP-20260820.{json,md}`  
+**Staging 对齐：** `TRAVELTRUST_STAGING_V9_ALIGN_OK=1 FLY_WEB_REMOTE_BUILD=1 bash scripts/dev/align-staging-www-official-v9.sh`
+

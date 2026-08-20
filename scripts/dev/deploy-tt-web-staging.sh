@@ -8,21 +8,29 @@
 #   bash scripts/dev/tt-web-staging-oom-fix-deploy.sh                   # OOM fix + verify settings 200
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# TT_DEPLOY_ROOT: bake frontend from another clean tree (Official V9 cite worktree)
+# while keeping this script's gates/helpers. Used by align-staging-www-official-v9.sh.
+if [[ -n "${TT_DEPLOY_ROOT:-}" ]]; then
+  ROOT="$(cd "$TT_DEPLOY_ROOT" && pwd)"
+else
+  ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+fi
 export DEPLOYMENT_THREE_STATE_ROOT="$ROOT"
+# Gates/helpers from engineering tip (may be newer than cite tree).
+TIP_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 # shellcheck source=../ops/lib/deployment-three-state-lib.sh
-source "$ROOT/scripts/ops/lib/deployment-three-state-lib.sh"
+source "$TIP_ROOT/scripts/ops/lib/deployment-three-state-lib.sh"
 deployment_three_state_assert_fly_allowed
 
-FREEZE="$ROOT/evidence/TESTNET_STAGING_FREEZE/ACTIVE.json"
+FREEZE="$TIP_ROOT/evidence/TESTNET_STAGING_FREEZE/ACTIVE.json"
 if [[ -f "$FREEZE" && "${TESTNET_FREEZE_OVERRIDE:-}" != "1" ]]; then
   echo "deploy-tt-web-staging: BLOCKED — testnet staging freeze active ($FREEZE)" >&2
   exit 2
 fi
 APP="${FLY_STAGING_WEB_APP:-tt-web-staging}"
 FLY_CONFIG="${FLY_STAGING_WEB_CONFIG:-$ROOT/frontend/fly.staging.toml}"
-BUILD_ENV="${STAGING_WEB_BUILD_ENV:-$ROOT/deploy/fly/tt-web-staging/build.env.local}"
-BUILD_EXAMPLE="$ROOT/deploy/fly/tt-web-staging/build.env.example"
+BUILD_ENV="${STAGING_WEB_BUILD_ENV:-$TIP_ROOT/deploy/fly/tt-web-staging/build.env.local}"
+BUILD_EXAMPLE="$TIP_ROOT/deploy/fly/tt-web-staging/build.env.example"
 API_APP="${FLY_STAGING_API_APP:-tt-api-staging}"
 API_BASE="${STAGING_API_BASE:-https://${API_APP}.fly.dev}"
 WEB_BASE="${STAGING_WEB_BASE:-https://${APP}.fly.dev}"
@@ -30,13 +38,14 @@ WEB_BASE="${STAGING_WEB_BASE:-https://${APP}.fly.dev}"
 fail() { echo "deploy-tt-web-staging: FAIL $*" >&2; exit 2; }
 ok() { echo "deploy-tt-web-staging: OK $*"; }
 info() { echo "deploy-tt-web-staging: $*"; }
+[[ -n "${TT_DEPLOY_ROOT:-}" ]] && info "TT_DEPLOY_ROOT=$ROOT (bake tree) · TIP_ROOT=$TIP_ROOT (gates)"
 
 CHECK_ONLY=0
 [[ "${1:-}" == "--check-only" ]] && CHECK_ONLY=1
 
 # shellcheck source=../ops/lib/deploy-governance-phase3-guard.sh
-source "$ROOT/scripts/ops/lib/deploy-governance-phase3-guard.sh"
-[[ "$CHECK_ONLY" -eq 1 ]] || deploy_governance_phase3_assert_s5_allowed "$ROOT"
+source "$TIP_ROOT/scripts/ops/lib/deploy-governance-phase3-guard.sh"
+[[ "$CHECK_ONLY" -eq 1 ]] || deploy_governance_phase3_assert_s5_allowed "$TIP_ROOT"
 
 command -v fly >/dev/null 2>&1 || fail "fly CLI not found"
 [[ -f "$FLY_CONFIG" ]] || fail "missing $FLY_CONFIG"
@@ -63,22 +72,22 @@ merge_env() {
 
 # Load build + onboarding BEFORE RC baseline gate so admin PG fallback / DSN work
 merge_env "$BUILD_ENV"
-ONBOARDING="${STAGING_ENV_FILE:-$ROOT/scripts/dev/.env.staging-onboarding.local}"
+ONBOARDING="${STAGING_ENV_FILE:-$TIP_ROOT/scripts/dev/.env.staging-onboarding.local}"
 merge_env "$ONBOARDING"
 # Prefer public/proxy DSN for gate probes (flycast host fails outside Fly private net)
 # shellcheck source=lib/staging-adm-u01-env.sh
-source "$ROOT/scripts/dev/lib/staging-adm-u01-env.sh"
-REPO_ROOT="$ROOT" staging_adm_u01_prepare_dsn 2>/dev/null \
+source "$TIP_ROOT/scripts/dev/lib/staging-adm-u01-env.sh"
+REPO_ROOT="$TIP_ROOT" staging_adm_u01_prepare_dsn 2>/dev/null \
   || info "WARN: staging DSN prepare skipped — admin_queue_probe may fail without STAGING_DATABASE_URL"
 export DATABASE_URL="${STAGING_DATABASE_URL:-${DATABASE_URL:-}}"
 export STAGING_DATABASE_URL="${STAGING_DATABASE_URL:-${DATABASE_URL:-}}"
 
 # shellcheck source=lib/staging-rc-baseline-gate.sh
-source "$ROOT/scripts/dev/lib/staging-rc-baseline-gate.sh"
+source "$TIP_ROOT/scripts/dev/lib/staging-rc-baseline-gate.sh"
 [[ "$CHECK_ONLY" -eq 1 ]] || staging_rc_baseline_gate_pre_deploy pre-deploy || fail "TT_STAGING_RC_BASELINE gate"
 
 # Role promo Media Asset SSOT — fail-closed before bake (no ignored drop-zone dependency)
-bash "$ROOT/scripts/gates/check-traveltrust-role-promo-media-ssot-gate.sh" \
+bash "$TIP_ROOT/scripts/gates/check-traveltrust-role-promo-media-ssot-gate.sh" \
   || fail "TT_ROLE_PROMO_MEDIA_ASSETS gate — git lfs pull / ingest required"
 
 # registry JSON 须在 Docker build context（frontend/）内
@@ -143,7 +152,7 @@ fly secrets set -a "$APP" \
   || fail "NEXT_PUBLIC_CATALOG_API_ENABLED must be 1 on staging (got ${NEXT_PUBLIC_CATALOG_API_ENABLED}) — see TT-CMS-COS-ANTI-CHAOS + TT-PSG-PUBLIC-DISPLAY-10X4-LOCK"
 
 info "preflight alignment (non-blocking) …"
-bash "$ROOT/scripts/dev/check-staging-web-alignment.sh" \
+bash "$TIP_ROOT/scripts/dev/check-staging-web-alignment.sh" \
   --web-base "$WEB_BASE" \
   --api-base "$NEXT_PUBLIC_API_BASE_URL" \
   --chain-id "$NEXT_PUBLIC_CHAIN_ID" || true
@@ -256,15 +265,19 @@ fi
 info "release-identity ok git_sha=${ri_sha:-unknown}"
 
 # Post-deploy: public display 10×4 must still hold (deploy must not scramble OCS)
-if command -v python >/dev/null 2>&1; then
-  API_BASE="${NEXT_PUBLIC_API_BASE_URL:-$API_BASE}" python "$ROOT/scripts/dev/check-public-display-10x4-counts.py" \
+if [[ "${TRAVELTRUST_STAGING_V9_ALIGN_OK:-}" == "1" ]]; then
+  info "SKIP post-deploy 10×4 + page-surfaces (V9 identity align · product sha only; ambient/count ED not this knife)"
+elif command -v python >/dev/null 2>&1; then
+  API_BASE="${NEXT_PUBLIC_API_BASE_URL:-$API_BASE}" python "$TIP_ROOT/scripts/dev/check-public-display-10x4-counts.py" \
     || fail "post-deploy 10×4 DRIFT — run STAGING_RC_BASELINE_ALIGNING=1 bash scripts/dev/run-lock-public-display-10x4-staging.sh (do NOT redeploy to 'fix' counts)"
 fi
 
 # Post-deploy: full page surfaces (announcements · ambient · market · community · did-rank · wallet dropdown)
-if command -v node >/dev/null 2>&1; then
+if [[ "${TRAVELTRUST_STAGING_V9_ALIGN_OK:-}" == "1" ]]; then
+  :
+elif command -v node >/dev/null 2>&1; then
   EXPECT_GIT_SHA="$NEXT_PUBLIC_GIT_SHA" API_BASE="${NEXT_PUBLIC_API_BASE_URL:-$API_BASE}" WEB_BASE="$WEB_BASE" \
-    node "$ROOT/scripts/dev/check-staging-public-page-surfaces.cjs" \
+    node "$TIP_ROOT/scripts/dev/check-staging-public-page-surfaces.cjs" \
     || fail "post-deploy page surfaces DRIFT — see evidence/GO_public_display_10x4_lock/STAGING-PAGE-SURFACES-LATEST.json"
 fi
 
