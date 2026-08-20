@@ -317,7 +317,11 @@
       "owner_review_pack": {
         "action": "OWNER_REVIEW_CUT_C_STAGING_PACK",
         "submitted_at": "20260806T080500Z",
-        "status": "SUBMITTED_AWAITING_OWNER_SIGN_OFF",
+        "status": "OWNER_SIGNED",
+        "signed_at": "20260806T081200Z",
+        "signed_by": "Sebastian Ward（塞巴斯蒂安·沃德）",
+        "sign_off_mode": "SOLO_OWNER_SELF_APPROVAL",
+        "result": "SIGNED_ENTER_RC_EVAL",
         "baseline_pin": "V65-PROD-CAND-20260802",
         "web3_freeze_pin": "PSG-REL-20260720-WEB3-CAND-V2",
         "product_tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
@@ -342,12 +346,32 @@
         "tt_production_go": "NO_GO",
         "forbidden": [
           "no_new_engineering_scope",
-          "no_production_deploy",
+          "no_production_deploy_until_unique_rc",
+          "no_staging_tip_or_old_artifact_prod_deploy",
           "no_tt_production_go_flip",
-          "no_web3_mix_track"
+          "no_web3_mix_track",
+          "no_web3_pin_change"
         ],
         "after_owner_sign_off": "RELEASE_CANDIDATE_EVALUATION",
-        "honesty": "Staging smoke PASS != Owner GO != Production GO; Residual CLOSED != Production GO"
+        "solo_ladder": [
+          "CUT_C_OWNER_SIGN_OFF",
+          "V65_RELEASE_CANDIDATE_EVALUATION",
+          "UNIQUE_PRODUCTION_RELEASE_CANDIDATE",
+          "PRODUCTION_DEPLOY_RC_ONLY",
+          "PRODUCTION_HUMAN_UAT",
+          "TT_PRODUCTION_GO_DECISION"
+        ],
+        "honesty": "Owner Sign-off != Production GO; Staging PASS != Production GO; Residual CLOSED != Production GO; unique RC required before Production deploy",
+        "evidence_stamp": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T081200Z",
+        "rc_eval_ssot": "docs/runbook/TT-V65-RELEASE-CANDIDATE-EVALUATION-LATEST.json"
+      },
+      "staging_owner_sign_off": {
+        "status": "SIGNED",
+        "signed_at": "20260806T081200Z",
+        "owner": "Sebastian Ward（塞巴斯蒂安·沃德）",
+        "mode": "SOLO_OWNER_SELF_APPROVAL",
+        "result": "ENTER_RELEASE_CANDIDATE_EVALUATION",
+        "tt_production_go": "NO_GO"
       }
     }
   },
@@ -375,14 +399,17 @@
   ],
   "active_hard_gate": [],
   "next": {
-    "action": "AWAITING_OWNER_SIGN_OFF_THEN_RC_EVAL",
+    "action": "RELEASE_CANDIDATE_EVALUATION",
     "cut": "CUT_C",
-    "scope": "Owner Review of Cut C Staging pack only; no Production deploy; TT_PRODUCTION_GO=NO_GO"
+    "scope": "Cut C Owner Sign-off recorded; enter V65 RC Evaluation; mint unique Production RC only after RC PASS; Production deploy forbidden until unique RC; TT_PRODUCTION_GO=NO_GO",
+    "honesty": "Owner Sign-off != Production GO; unique RC != Staging tip; Production Human UAT required before TT_PRODUCTION_GO",
+    "tt_production_go": "NO_GO",
+    "note": "Sign-off 20260806T081200Z · smoke 20260806T075010Z · tip 106feef4… · Web3 freeze orthogonal · NO_GO"
   },
   "md": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.md",
   "residual_ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
-  "updated_at": "20260806T075500Z",
-  "updated_by": "cut_c_eng_wave_staging_residual_close",
+  "updated_at": "20260806T081200Z",
+  "updated_by": "cut_c_owner_sign_off_solo_enter_rc_eval",
   "tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
   "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
   "active_cut": "CUT_C",
@@ -394,7 +421,7 @@
     "od_stamp": "20260806T040236Z",
     "smoke_eng_wave": "20260806T032748Z",
     "od_evidence": "evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z",
-    "note": "Cut B 1b8ebe104d818092257968396cd03630169a86ee FULL_CLOSED; Cut C OD-C signed 20260806T052445Z; eng LOCAL_VERIFIED 20260806T065245Z; Staging evidence-only next; residuals OPEN until Staging PASS; NO_GO",
+    "note": "Cut C Staging Owner Sign-off 20260806T081200Z; enter RELEASE_CANDIDATE_EVALUATION; unique Production RC only after RC PASS; NO_GO; Web3 freeze orthogonal",
     "tt_production_go": "NO_GO",
     "fe_staging_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
     "api_tip": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
@@ -417,7 +444,8 @@
     ],
     "od_c_signed_at": "20260806T052445Z",
     "cut_c_local_verify_stamp": "20260806T065245Z",
-    "cut_c_local_evidence": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T065245Z"
+    "cut_c_local_evidence": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T065245Z",
+    "cut_c_owner_sign_off": "20260806T081200Z"
   },
   "generated_at": "20260806T051233Z",
   "CUT_B_ENTERPRISE_ADMIN_HARDENING": {
@@ -606,5 +634,22 @@
     "md": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.md",
     "cut_b_od_ladder": "CLOSED",
     "staging_pass_stamp": "20260806T044213Z"
-  }
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

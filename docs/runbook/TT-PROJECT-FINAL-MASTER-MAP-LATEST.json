@@ -1,0 +1,462 @@
+{
+  "schema": "traveltrust.project_final_master_map.v1.json",
+  "recorded_utc": "2026-08-18T07:55:28Z",
+  "status": "PHASE_1_AS_IS_ARCHITECTURE_FROZEN",
+  "tt_production_go": "NO_GO",
+  "coverage_percent": "NOT_COMPUTED",
+  "reality_percent": "NOT_COMPUTED",
+  "planes": {
+    "ARCHITECTURE_MAP_COMPLETE": true,
+    "ARCHITECTURE_MAP_COMPLETE_SCOPE": "packs_01_13_deep_partial_only",
+    "OFFICIAL_LIVE": "PARTIAL",
+    "REALITY_VERIFIED": false,
+    "CLOSED_REALITY": false,
+    "PRODUCTION_GO": "NO_GO"
+  },
+  "professional_architecture": [
+    {
+      "pack": "01",
+      "matrix": "M1",
+      "name": "Product / Business",
+      "join": "cap_id"
+    },
+    {
+      "pack": "02",
+      "matrix": "M2",
+      "name": "Frontend",
+      "join": "fe_id"
+    },
+    {
+      "pack": "03",
+      "matrix": "M3",
+      "name": "Backend",
+      "join": "node_id"
+    },
+    {
+      "pack": "04",
+      "matrix": "M4",
+      "name": "Data",
+      "join": "data_id"
+    },
+    {
+      "pack": "05",
+      "matrix": "M5",
+      "name": "Web3",
+      "join": "w3_id"
+    },
+    {
+      "pack": "06",
+      "matrix": "M6",
+      "name": "Money",
+      "join": "flow_id"
+    },
+    {
+      "pack": "07",
+      "matrix": "M7",
+      "name": "Authority",
+      "join": "auth_id"
+    },
+    {
+      "pack": "08",
+      "matrix": "M8",
+      "name": "Security",
+      "join": "sec_id"
+    },
+    {
+      "pack": "09",
+      "matrix": "M9",
+      "name": "Release",
+      "join": "rel_id"
+    }
+  ],
+  "cross_maps": [
+    {
+      "pack": "10",
+      "matrix": "X10",
+      "name": "Capability join",
+      "join": "cap_id"
+    },
+    {
+      "pack": "11",
+      "matrix": "X11",
+      "name": "E2E Journey",
+      "join": "jny_id"
+    },
+    {
+      "pack": "12",
+      "matrix": "X12",
+      "name": "Dependency / Gate",
+      "join": "node_id"
+    },
+    {
+      "pack": "13",
+      "matrix": "P13",
+      "name": "Incident / Diagnostic",
+      "join": "inc_id"
+    },
+    {
+      "pack": "14",
+      "matrix": "P14",
+      "name": "Coverage Dashboard",
+      "join": "planes"
+    }
+  ],
+  "join_key": "cap_id",
+  "required_as_is": [
+    {
+      "id": "LOGIN_405",
+      "pointers": [
+        "DEP-LOGIN-WWW-405",
+        "FE-AUTH-LOGIN",
+        "INC-LOGIN",
+        "CAP-AUTH-SESSION"
+      ],
+      "status": "CLOSED_REALITY"
+    },
+    {
+      "id": "CI-02",
+      "pointers": [
+        "GATE-CI02-ETA",
+        "W3-FR-NEW"
+      ],
+      "status": "SCHEDULED_WAITING_ETA"
+    },
+    {
+      "id": "PM25",
+      "pointers": [
+        "GATE-PM25-ETA",
+        "W3-PM-IMPL-25"
+      ],
+      "status": "LEGACY"
+    },
+    {
+      "id": "1_USDC_REALITY",
+      "pointers": [
+        "GATE-1USDC-REALITY",
+        "CAP-ESCROW-USDC"
+      ],
+      "status": "HANDOFF"
+    },
+    {
+      "id": "REGION_STEWARD",
+      "pointers": [
+        "CAP-REGION-STEWARD",
+        "FE-STEWARD",
+        "GATE-SEAT-CI01",
+        "INC-STEWARD-NOT-DEPLOYED"
+      ],
+      "status": "TARGET_NOT_LIVE"
+    },
+    {
+      "id": "SEAT_VAULT",
+      "pointers": [
+        "W3-SEAT-REGISTRY",
+        "W3-REGION-VAULT",
+        "GATE-VAULT-CI03"
+      ],
+      "status": "NOT_DEPLOYED"
+    },
+    {
+      "id": "HARD_GATE",
+      "pointers": [
+        "GATE-HARD-GO"
+      ],
+      "status": "NO_GO"
+    }
+  ],
+  "explained_trace_gaps": [
+    {
+      "id": "CAP-MESSAGES",
+      "class": "SHARED_SCREEN",
+      "via": "FE-COMMUNITY-MESSAGES (capability CAP-COMMUNITY) · JNY-GUIDE-FULFILL"
+    },
+    {
+      "id": "CAP-GROWTH",
+      "class": "NO_DEDICATED_JNY",
+      "via": "FE-ME FE-GROWTH · Pack 10 join"
+    },
+    {
+      "id": "CAP-LEGAL-TRUST",
+      "class": "NO_DEDICATED_JNY",
+      "via": "FE-LEGAL · Pack 10 join"
+    },
+    {
+      "id": "CAP-I18N",
+      "class": "NO_DEDICATED_JNY",
+      "via": "FE-I18N · Pack 10 join"
+    },
+    {
+      "id": "CAP-ESCROW-SETTLEMENT",
+      "class": "PACK10_MONEY_SPLIT",
+      "via": "Pack 10 only · FE-ESCROW / JNY-ESCROW-RELEASE-REFUND"
+    }
+  ],
+  "reverse_nav": {
+    "CAP-ADMIN-FOUR-CENTERS": {
+      "frontend": [
+        "FE-MARKET-ACQUISITION~cite",
+        "FE-ADMIN-CMS~cite",
+        "FE-ADMIN-OPS",
+        "FE-ADMIN-FINANCE",
+        "FE-ADMIN-118-FAMILY"
+      ],
+      "journeys": [
+        "JNY-ADMIN-CMS"
+      ],
+      "pack10": true
+    },
+    "CAP-AI-ITINERARY": {
+      "frontend": [
+        "FE-HOME",
+        "FE-ITINERARY"
+      ],
+      "journeys": [
+        "JNY-TRAVELER-AI-ITINERARY"
+      ],
+      "pack10": true
+    },
+    "CAP-AUTH-SESSION": {
+      "frontend": [
+        "FE-HOME~cite",
+        "FE-MARKET~cite",
+        "FE-COMMUNITY~cite",
+        "FE-COMMUNITY-MESSAGES~cite",
+        "FE-AUTH-LOGIN",
+        "FE-AUTH-REGISTER",
+        "FE-ITINERARY~cite",
+        "FE-ME~cite",
+        "FE-GUIDE-DASH~cite",
+        "FE-PROVIDER-REGISTER~cite",
+        "FE-MARKET-PROVIDER~cite",
+        "FE-MARKET-ACQUISITION~cite",
+        "FE-ME-IDENTITIES~cite",
+        "FE-ESCROW~cite",
+        "FE-ORDERS~cite",
+        "FE-DISPUTES~cite",
+        "FE-PAY~cite",
+        "FE-GROWTH~cite"
+      ],
+      "journeys": [
+        "JNY-TRAVELER-LOGIN"
+      ],
+      "pack10": true
+    },
+    "CAP-CMS-ANNOUNCE": {
+      "frontend": [
+        "FE-HOME~cite",
+        "FE-ADMIN-CMS",
+        "FE-CMS-ANNOUNCE"
+      ],
+      "journeys": [
+        "JNY-ADMIN-CMS"
+      ],
+      "pack10": true
+    },
+    "CAP-COMMUNITY": {
+      "frontend": [
+        "FE-COMMUNITY",
+        "FE-COMMUNITY-MESSAGES"
+      ],
+      "journeys": [
+        "JNY-COMMUNITY-POST"
+      ],
+      "pack10": true
+    },
+    "CAP-DID-RANK": {
+      "frontend": [
+        "FE-DID-RANK"
+      ],
+      "journeys": [
+        "JNY-DID-RANK-PUBLIC"
+      ],
+      "pack10": true
+    },
+    "CAP-DISPUTES": {
+      "frontend": [
+        "FE-DISPUTES"
+      ],
+      "journeys": [
+        "JNY-ESCROW-RELEASE-REFUND"
+      ],
+      "pack10": true
+    },
+    "CAP-ESCROW-SETTLEMENT": {
+      "frontend": [],
+      "journeys": [
+        "JNY-ESCROW-RELEASE-REFUND",
+        "JNY-INDEXER-L8-PROJECT"
+      ],
+      "pack10": true
+    },
+    "CAP-ESCROW-USDC": {
+      "frontend": [
+        "FE-ESCROW",
+        "FE-ORDERS",
+        "FE-DISPUTES~cite",
+        "FE-PAY",
+        "FE-ADMIN-OPS~cite",
+        "FE-ADMIN-FINANCE~cite"
+      ],
+      "journeys": [
+        "JNY-TRAVELER-GUIDE-BOOK",
+        "JNY-ESCROW-RELEASE-REFUND"
+      ],
+      "pack10": true
+    },
+    "CAP-GOVERNANCE-PORTAL": {
+      "frontend": [
+        "FE-GOVERNANCE"
+      ],
+      "journeys": [
+        "JNY-GOVERNANCE-QUEUE"
+      ],
+      "pack10": true
+    },
+    "CAP-GROWTH": {
+      "frontend": [
+        "FE-ME",
+        "FE-GROWTH"
+      ],
+      "journeys": [],
+      "pack10": true
+    },
+    "CAP-I18N": {
+      "frontend": [
+        "FE-HOME~cite",
+        "FE-I18N",
+        "FE-FUTURE-APP~cite"
+      ],
+      "journeys": [],
+      "pack10": true
+    },
+    "CAP-LEGAL-TRUST": {
+      "frontend": [
+        "FE-LEGAL"
+      ],
+      "journeys": [],
+      "pack10": true
+    },
+    "CAP-MARKET-ACQUISITION": {
+      "frontend": [
+        "FE-MARKET-ACQUISITION",
+        "FE-ME-IDENTITIES"
+      ],
+      "journeys": [
+        "JNY-ACQUISITION-PUBLISH"
+      ],
+      "pack10": true
+    },
+    "CAP-MARKET-GUIDE-BOOK": {
+      "frontend": [
+        "FE-MARKET",
+        "FE-GUIDES",
+        "FE-GUIDE-DASH"
+      ],
+      "journeys": [
+        "JNY-TRAVELER-GUIDE-BOOK",
+        "JNY-GUIDE-FULFILL"
+      ],
+      "pack10": true
+    },
+    "CAP-MARKET-PROVIDER": {
+      "frontend": [
+        "FE-PROVIDER-REGISTER",
+        "FE-MARKET-PROVIDER"
+      ],
+      "journeys": [
+        "JNY-PROVIDER-ONBOARD"
+      ],
+      "pack10": true
+    },
+    "CAP-MESSAGES": {
+      "frontend": [],
+      "journeys": [
+        "JNY-GUIDE-FULFILL"
+      ],
+      "pack10": true
+    },
+    "CAP-ONBOARDING-FIAT": {
+      "frontend": [
+        "FE-AUTH-REGISTER~cite",
+        "FE-PROVIDER-REGISTER~cite"
+      ],
+      "journeys": [
+        "JNY-PROVIDER-ONBOARD"
+      ],
+      "pack10": true
+    },
+    "CAP-REGION-STEWARD": {
+      "frontend": [
+        "FE-STEWARD"
+      ],
+      "journeys": [
+        "JNY-REGION-STEWARD-CLAIM"
+      ],
+      "pack10": true
+    },
+    "CAP-TTG-GATEWAY": {
+      "frontend": [
+        "FE-TRAVELTRUST"
+      ],
+      "journeys": [
+        "JNY-TTG-PURCHASE"
+      ],
+      "pack10": true
+    }
+  },
+  "catalog_counts": {
+    "CAP": 19,
+    "CAP10": 20,
+    "FE": 31,
+    "N": 51,
+    "DATA": 23,
+    "W3": 20,
+    "S": 14,
+    "AUTH": 24,
+    "SEC": 24,
+    "REL": 24,
+    "JNY": 14,
+    "GATEDEP": 16,
+    "INC": 16
+  },
+  "machine_keys": {
+    "M00_UNRESOLVED_PACK": 0,
+    "M00_UNRESOLVED_POINTER": 0,
+    "M00_ORPHAN_ID": 0,
+    "M00_DEPENDENCY_CYCLE": 0,
+    "M00_STATUS_DRIFT": 0,
+    "UNEXPLAINED_TRUTH_CONFLICT": 0,
+    "PHASE_1_AS_IS_ARCHITECTURE_FROZEN": "ISSUED",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "machine_key_detail": {
+    "unresolved_pack": [],
+    "unresolved_pointer": [],
+    "orphan_id": [],
+    "dependency_cycle": [],
+    "status_drift": [],
+    "unexplained_truth_conflict": []
+  },
+  "stop_after": "PACK00",
+  "next_pack_forbidden_this_wave": [
+    "PHASE2_EXECUTE"
+  ],
+  "gate": "python scripts/dev/check-project-final-master-map.py",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

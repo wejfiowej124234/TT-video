@@ -1,0 +1,695 @@
+{
+  "schema": "traveltrust.v65_product_surface_reality.v1",
+  "key": "V65_PRODUCT_SURFACE_REALITY",
+  "title": "V65 Product Surface Reality Audit",
+  "stamp": "20260802T153252Z",
+  "verdict": "PASS",
+  "closure_status": "PRODUCT_SURFACE_REALITY_MACHINE_PASS",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "legacy_baseline_forbidden": true,
+    "force_ui_on_internal_tables_forbidden": true
+  },
+  "identity": {
+    "api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "checks": {
+      "api_v65": true,
+      "web_v65": true,
+      "production": true,
+      "web3_pin": true
+    },
+    "status": "PASS"
+  },
+  "surfaces": [
+    {
+      "id": "home",
+      "route": "/",
+      "domain": "cms",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": true,
+        "success": false
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "market",
+      "route": "/market",
+      "domain": "market",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": true,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "guides",
+      "route": "/guides",
+      "domain": "guide",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": true,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "guide_register",
+      "route": "/guide/register",
+      "domain": "guide",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": false,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "provider_register",
+      "route": "/provider/register",
+      "domain": "provider",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": false,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "auth_login",
+      "route": "/auth/login",
+      "domain": "identity",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": false,
+        "success": false
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "auth_register",
+      "route": "/auth/register",
+      "domain": "identity",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": true,
+        "success": false
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "orders",
+      "route": "/orders",
+      "domain": "order",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": true,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "disputes",
+      "route": "/disputes",
+      "domain": "dispute",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": true,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "escrow",
+      "route": "/escrow",
+      "domain": "order",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": false,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "community",
+      "route": "/community",
+      "domain": "community",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": false,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "did_rank",
+      "route": "/did-rank",
+      "domain": "rank",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": false,
+        "permission": false,
+        "success": false
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "traveltrust",
+      "route": "/traveltrust",
+      "domain": "cms",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": false,
+        "success": false
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "me",
+      "route": "/me",
+      "domain": "identity",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": true,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    },
+    {
+      "id": "governance",
+      "route": "/governance",
+      "domain": "governance",
+      "fe": true,
+      "api": true,
+      "db": true,
+      "admin": true,
+      "rbac": true,
+      "audit": true,
+      "notify": true,
+      "visibility": true,
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": true,
+        "success": true
+      },
+      "i18n": true,
+      "a11y": true,
+      "l5_signal": true,
+      "fake": [],
+      "status": "PASS"
+    }
+  ],
+  "lifecycles": [
+    {
+      "id": "guide",
+      "verbs": {
+        "create": true,
+        "review": true,
+        "approve": true,
+        "publish": true,
+        "suspend": true,
+        "archive": true,
+        "restore": true
+      },
+      "missing_required": [],
+      "status": "PASS"
+    },
+    {
+      "id": "provider",
+      "verbs": {
+        "create": true,
+        "review": true,
+        "approve": true,
+        "publish": true,
+        "suspend": true
+      },
+      "missing_required": [],
+      "status": "PASS"
+    },
+    {
+      "id": "announcement",
+      "verbs": {
+        "create": true,
+        "publish": true,
+        "suspend": true,
+        "archive": true
+      },
+      "missing_required": [],
+      "status": "PASS"
+    },
+    {
+      "id": "cms",
+      "verbs": {
+        "create": true,
+        "publish": true,
+        "consume": true
+      },
+      "missing_required": [],
+      "status": "PASS"
+    },
+    {
+      "id": "community",
+      "verbs": {
+        "create": true,
+        "report": true,
+        "moderate": true,
+        "penalty": true
+      },
+      "missing_required": [],
+      "status": "PASS"
+    },
+    {
+      "id": "order",
+      "verbs": {
+        "create": true,
+        "update": true,
+        "admin": true,
+        "complete": true
+      },
+      "missing_required": [],
+      "status": "PASS"
+    },
+    {
+      "id": "dispute",
+      "verbs": {
+        "create": true,
+        "resolve": true
+      },
+      "missing_required": [],
+      "status": "PASS"
+    },
+    {
+      "id": "user_identity",
+      "verbs": {
+        "register": true,
+        "login": true,
+        "me": true,
+        "admin": true
+      },
+      "missing_required": [],
+      "status": "PASS"
+    }
+  ],
+  "live": {
+    "web": [
+      {
+        "path": "/",
+        "http": 200,
+        "ttfb_ms": 3889.0,
+        "pass": true
+      },
+      {
+        "path": "/market",
+        "http": 200,
+        "ttfb_ms": 6110.1,
+        "pass": true
+      },
+      {
+        "path": "/guides",
+        "http": 200,
+        "ttfb_ms": 4826.8,
+        "pass": true
+      },
+      {
+        "path": "/community",
+        "http": 200,
+        "ttfb_ms": 2852.0,
+        "pass": true
+      },
+      {
+        "path": "/orders",
+        "http": 200,
+        "ttfb_ms": 15742.0,
+        "pass": true
+      },
+      {
+        "path": "/disputes",
+        "http": 200,
+        "ttfb_ms": 6545.5,
+        "pass": true
+      },
+      {
+        "path": "/guide/register",
+        "http": 200,
+        "ttfb_ms": 4799.6,
+        "pass": true
+      },
+      {
+        "path": "/provider/register",
+        "http": 200,
+        "ttfb_ms": 4889.9,
+        "pass": true
+      },
+      {
+        "path": "/auth/login",
+        "http": 200,
+        "ttfb_ms": 5184.4,
+        "pass": true
+      },
+      {
+        "path": "/auth/register",
+        "http": 200,
+        "ttfb_ms": 4362.6,
+        "pass": true
+      },
+      {
+        "path": "/me",
+        "http": 200,
+        "ttfb_ms": 8020.5,
+        "pass": true
+      },
+      {
+        "path": "/did-rank",
+        "http": 200,
+        "ttfb_ms": 3180.1,
+        "pass": true
+      },
+      {
+        "path": "/traveltrust",
+        "http": 200,
+        "ttfb_ms": 5058.4,
+        "pass": true
+      }
+    ],
+    "api": [
+      {
+        "path": "/api/v1/guides",
+        "http": 200,
+        "pass": true,
+        "ttfb_ms": 6679.3
+      },
+      {
+        "path": "/api/v1/discover/orders",
+        "http": 200,
+        "pass": true,
+        "ttfb_ms": 4581.5
+      },
+      {
+        "path": "/api/v1/public/announcements?for_home=1",
+        "http": 200,
+        "pass": true,
+        "ttfb_ms": 2816.7
+      },
+      {
+        "path": "/api/v1/community/feed",
+        "http": 200,
+        "pass": true,
+        "ttfb_ms": 2419.9
+      },
+      {
+        "path": "/api/v1/me",
+        "http": 401,
+        "pass": true,
+        "ttfb_ms": 2139.0
+      },
+      {
+        "path": "/api/v1/disputes",
+        "http": 401,
+        "pass": true,
+        "ttfb_ms": 10377.8
+      },
+      {
+        "path": "/api/v1/did-rank/travelers",
+        "http": 200,
+        "pass": true,
+        "ttfb_ms": 9035.0
+      }
+    ],
+    "fail_count": 0,
+    "status": "PASS"
+  },
+  "table_classification": {
+    "counts": {
+      "BACKEND_VIA_API": 35,
+      "INTERNAL_ANALYTICS": 11,
+      "INTERNAL_AUDIT": 8,
+      "INTERNAL_JOB_SCHEDULER": 6,
+      "INTERNAL_MIGRATION": 7,
+      "INTERNAL_OR_REVIEW": 30,
+      "INTERNAL_SECURITY": 9,
+      "PRODUCT_DATA": 20,
+      "WEB3_BRIDGE_ORTHOGONAL": 24,
+      "WEB3_OR_INTERNAL": 5
+    },
+    "policy": {
+      "force_ui_on_internal_forbidden": true
+    }
+  },
+  "summary": {
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "p2_gaps": 0,
+    "surfaces": 15,
+    "surfaces_pass": 15,
+    "lifecycles_pass": 8,
+    "lifecycles": 8,
+    "live_fail_count": 0,
+    "table_buckets": {
+      "BACKEND_VIA_API": 35,
+      "INTERNAL_ANALYTICS": 11,
+      "INTERNAL_AUDIT": 8,
+      "INTERNAL_JOB_SCHEDULER": 6,
+      "INTERNAL_MIGRATION": 7,
+      "INTERNAL_OR_REVIEW": 30,
+      "INTERNAL_SECURITY": 9,
+      "PRODUCT_DATA": 20,
+      "WEB3_BRIDGE_ORTHOGONAL": 24,
+      "WEB3_OR_INTERNAL": 5
+    }
+  },
+  "autofix_applied": [
+    "wrote_product_surface_inventory",
+    "wrote_product_surface_table_classification"
+  ],
+  "honesty": {
+    "machine_pass_not_human_uat": true,
+    "not_production_go": true,
+    "internal_tables_must_not_force_ui": true
+  },
+  "report_sha256": "60b17a04d7718d79a126499b4818b99e4fa19f0573879d724c04307589ebb2b4",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

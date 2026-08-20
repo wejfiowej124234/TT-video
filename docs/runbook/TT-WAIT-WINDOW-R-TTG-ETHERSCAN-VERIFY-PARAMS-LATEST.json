@@ -1,0 +1,77 @@
+{
+  "schema": "traveltrust.r_ttg_etherscan_verify_params.v1",
+  "recorded_utc": "2026-08-12T00:43:00Z",
+  "last_verify_fail": {
+    "class": "standard_json_schema",
+    "detail": "Unknown key compilationTarget — Foundry metadata leaked into Etherscan Standard-JSON; solc produced no bytecode",
+    "not": [
+      "compiler_version_mismatch",
+      "optimizer_mismatch",
+      "constructor_mismatch_confirmed",
+      "redeploy"
+    ],
+    "fix": "regenerated JSON without compilationTarget; re-upload only"
+  },
+  "address": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",
+  "contract": "GovernanceVotesToken",
+  "source": "contracts/src/GovernanceVotesToken.sol",
+  "compiler": "0.8.19+commit.7dd6d404",
+  "optimizer": true,
+  "optimizer_runs": 200,
+  "via_ir": true,
+  "evm_version": "paris",
+  "license": "MIT",
+  "constructor_args_abi": "0x000000000000000000000000000000000000000000084595161401484a000000000000000000000000000000e1e732efbf9b010a9204054467256d3d93f3cdd4",
+  "constructor_args_abi_ui_no0x": "000000000000000000000000000000000000000000084595161401484a000000000000000000000000000000e1e732efbf9b010a9204054467256d3d93f3cdd4",
+  "constructor_decoded": {
+    "initialSupply": "10000000000000000000000000",
+    "initialHolder": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+  },
+  "etherscan_com": "VERIFIED_PASS",
+  "verified_utc": "2026-08-12T00:54:00Z",
+  "standard_json_path": "evidence/GO_mainnet_money_path/R-TTG-ETHERSCAN-STANDARD-JSON-INPUT-LATEST.json",
+  "ui_handoff": {
+    "step1": "DONE",
+    "step2_url": "https://etherscan.io/verifyContract-solc-json?a=0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A&c=v0.8.19%2bcommit.7dd6d404&lictype=3",
+    "standard_json_path": "evidence/GO_mainnet_money_path/R-TTG-ETHERSCAN-STANDARD-JSON-INPUT-LATEST.json",
+    "blocked_automation": [
+      "DOM.setFileInputFiles_denied",
+      "cloudflare_turnstile_owner"
+    ]
+  },
+  "sourcify": {
+    "match": "exact_match",
+    "creationMatch": "exact_match",
+    "runtimeMatch": "exact_match",
+    "verifiedAt": "2026-07-28T06:50:01Z"
+  },
+  "blockscout": {
+    "is_verified": true,
+    "is_fully_verified": true,
+    "compiler_version": "v0.8.19+commit.7dd6d404",
+    "optimization_enabled": true,
+    "optimization_runs": 200,
+    "evm_version": "paris"
+  },
+  "bytecode_full_match": true,
+  "forbid_redeploy": true,
+  "token_trust_gate_pass_ne_production_go": true,
+  "tt_production_go": "NO_GO",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

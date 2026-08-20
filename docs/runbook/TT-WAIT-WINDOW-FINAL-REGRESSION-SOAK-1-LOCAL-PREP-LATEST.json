@@ -1,0 +1,180 @@
+{
+  "schema": "traveltrust.final_regression_soak_1.v1",
+  "pack": "FINAL-REGRESSION-SOAK-1",
+  "stamp_utc": "2026-08-12T08:09:26.232Z",
+  "status": "FINAL_REGRESSION_SOAK_CLOSED",
+  "web": "https://www.web3-ttg.com",
+  "api": "https://api.web3-ttg.com",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "hard_gate": "NOT_AUTO_PASSED",
+  "opened_by": "LEGAL_PAY_PRE_GO_CLOSED",
+  "soak_class": "OFFICIAL_SHORT_REGRESSION_SOAK",
+  "isolation": {
+    "community_comments": "DEFERRED_SEPARATE",
+    "fee_router_track2_83": "UNAUTHORIZED",
+    "p2fc_72h_staging_soak": "NOT_THIS_PACK"
+  },
+  "rows": [
+    {
+      "id": "REG-OFFICIAL-PUBLIC-GATES",
+      "ok": true,
+      "exit": 0,
+      "tail": [
+        "    }",
+        "  ],",
+        "  \"missing_ocs_chains_in_feed\": [],",
+        "  \"fails\": [],",
+        "  \"verdict\": \"PASS_OCS_10X4_REALITY\",",
+        "  \"honest_boundary\": \"PASS �� Seal �� TT_PRODUCTION_GO; organic UGC may make feed>10\"",
+        "}",
+        "TT_OFFICIAL_OCS_10X4_REALITY: PASS"
+      ]
+    },
+    {
+      "id": "REG-MEDIA-DURABILITY",
+      "ok": true,
+      "exit": 0,
+      "tail": [
+        "PASS: cdn_head_ca438fb3-ea0b-4bde-8fcc-a5d25a947e5a.jpg=200",
+        "PASS: cdn_head_16e8fc19-f0c7-4d80-a3e9-a51e12722c25.jpg=200",
+        "PASS: cdn_head_2441880f-d4dc-485f-9b99-f15625dbce10.jpg=200",
+        "capabilities {'multipart_enabled': True, 'public_video_publish_ready': True}",
+        "PASS: capabilities_object_storage_ready",
+        "R-MEDIA-DURABILITY-1_GATE: PASS"
+      ]
+    },
+    {
+      "id": "REG-FE-RELEASE-IDENTITY",
+      "ok": true,
+      "http": 200,
+      "git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "build_time": "2026-08-12T07:47:26Z",
+      "attestation_status": "ok"
+    },
+    {
+      "id": "SOAK-SHORT-HEALTH-META",
+      "ok": true,
+      "samples": 5,
+      "gap_ms": 8000,
+      "results": [
+        {
+          "i": 1,
+          "ms": 7017,
+          "healthOk": true,
+          "metaOk": true,
+          "chainId": "1",
+          "err": null
+        },
+        {
+          "i": 2,
+          "ms": 8509,
+          "healthOk": true,
+          "metaOk": true,
+          "chainId": "1",
+          "err": null
+        },
+        {
+          "i": 3,
+          "ms": 6578,
+          "healthOk": true,
+          "metaOk": true,
+          "chainId": "1",
+          "err": null
+        },
+        {
+          "i": 4,
+          "ms": 6276,
+          "healthOk": true,
+          "metaOk": true,
+          "chainId": "1",
+          "err": null
+        },
+        {
+          "i": 5,
+          "ms": 6283,
+          "healthOk": true,
+          "metaOk": true,
+          "chainId": "1",
+          "err": null
+        }
+      ],
+      "note": "SHORT Official soak — not 72h P2FC staging soak"
+    },
+    {
+      "id": "REG-WC-PROJECT-ID-BAKED",
+      "ok": true,
+      "masked": "2b29…8926"
+    },
+    {
+      "id": "PRIOR-INDEXER-REALITY-CLOSED",
+      "ok": true,
+      "cite": "INDEXER_REALITY_CLOSED"
+    },
+    {
+      "id": "PRIOR-CERT-OWNER-UAT-CLOSED",
+      "ok": true,
+      "cite": "CERT_OWNER_UAT_CLOSED"
+    },
+    {
+      "id": "PRIOR-WC-REAL-DEVICE-CLOSED",
+      "ok": true,
+      "cite": "WC_REAL_DEVICE_CLOSED"
+    },
+    {
+      "id": "PRIOR-LEGAL-PAY-PRE-GO-CLOSED",
+      "ok": true,
+      "cite": "LEGAL_PAY_PRE_GO_CLOSED"
+    }
+  ],
+  "coverage_gaps": [
+    {
+      "id": "CONTINUOUS_72H_SOAK",
+      "class": "NOT_THIS_PACK",
+      "note": "本包为 Official SHORT soak + regression；≠ P2FC 72h staging soak"
+    },
+    {
+      "id": "COMMUNITY_COMMENT_REVERIFY",
+      "class": "DEFERRED_SEPARATE",
+      "note": "评论 create/delete/count/refresh/权限/UX 另轨"
+    },
+    {
+      "id": "COUNSEL_SIGNOFF_08_4",
+      "class": "DEFERRED_POST_GO_QUEUE",
+      "note": "持牌法务签字仍 deferred（Legal PRE_GO 已登记）"
+    },
+    {
+      "id": "FRESH_HARD_GATE_AUTO_PASS",
+      "class": "FORBIDDEN",
+      "note": "本包 CLOSED ≠ Hard Gate PASS ≠ TT_PRODUCTION_GO；Hard Gate 须另开且默认 REFUSED/NO_GO"
+    }
+  ],
+  "blockers": [],
+  "next_if_closed": [
+    "FRESH_HARD_GATE_OWNER_REEVAL",
+    "COMMUNITY_COMMENT_REVERIFY_SEPARATE"
+  ],
+  "forbidden": [
+    "auto_flip_TT_PRODUCTION_GO",
+    "claim_Hard_Gate_PASS",
+    "claim_72h_soak",
+    "FeeRouter_Track2_83",
+    "cover_community_comment_residuals"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

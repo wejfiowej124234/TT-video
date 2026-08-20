@@ -1,15 +1,21 @@
-# TT · Engineering SSOT Anchor（工程实体绑定 · 在 PSG 之下）
+# TT · Engineering SSOT Anchor（工程实体绑定 · 在 Final Truth Baseline 之下）
 
+> **System SSOT（全系统唯一）:** [`TT-FINAL-TRUTH-BASELINE-LATEST`](./TT-FINAL-TRUTH-BASELINE-LATEST.md) · `ACTIVE_UNIQUE_SSOT` · living = V8 Cycle `20260818` · parent [`20260812`](./TT-FINAL-TRUTH-BASELINE-20260812.md) immutable  
+> **Official live Web3:** Ethereum mainnet (`chain_id=1`) 已部署合约 · [`mainnet-address-registry`](../../registry/mainnet-address-registry.v1.yaml) · money path `MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED`  
+> **双等待（历史 2026-08-12 · 不得再当活真源）：** `WAITING_TRACK2_TIMELOCK_ETA` + `WAITING_GOV04_TIMELOCK_ETA` · Track2 1 USDC **CLOSED_REALITY** Owner A · GOV-04 PM impl **live 10-to-10** · AXIS-11 **CLOSED**（Final Closure batch）  
+> **Official 产品真源（FTB Product Truth · OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617…` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab21` · **≠** git checkout · historical `daa5ae87` SUPERSEDED · M07 overlay ROLLED_BACK · **≠** Candidate v2 · [`Living Pin Index`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)  
+> **GO 资格：** Cycle2 `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · 下一步 = Owner 书面 **GO** 或 **继续 NO_GO** · **禁止自动签发**  
+> **Sepolia Candidate:** Pin `PSG-REL-20260720-WEB3-CAND-V2` = **DEMOTED_TESTNET**（Local/Staging only · **禁止**官网=Candidate）  
+> **≠** Production GO · Archive/GO Pack 保留 · Ancestry SHAs = historical lineage only
 
-
-> **ACTIVE tip (machine SSOT · Hygiene Final Hardening 2026-07-23):** `ea71c577` (`ea71c577ce6f99696df33f9394cf96746edc843b`) · Pin `PSG-REL-20260720-WEB3-CAND-V2` — ancestry SHAs in body = historical lineage only.
-
-> **ACTIVE tip (machine SSOT · 2026-07-23 Hygiene Final):** `ea71c577` · Pin `PSG-REL-20260720-WEB3-CAND-V2` — older SHA lines below = ancestry / SUPERSEDED snapshot, not living tip.
-**STATUS:** `ACTIVE_UNDER_PSG` · **≠** FREEZE · **≠** GO  
+**STATUS:** `ACTIVE_UNDER_FTB` · **≠** FREEZE · **≠** GO · **`TT_PRODUCTION_GO: NO_GO`**  
 **Machine key:** `TT_ENGINEERING_SSOT_ANCHOR`  
-**Machine:** [`registry/engineering-ssot-anchor.v1.yaml`](../../registry/engineering-ssot-anchor.v1.yaml)  
-**Parent:** PSG Release SSOT · [`TT-PSG-RELEASE-SOURCE-OF-TRUTH-LATEST`](./TT-PSG-RELEASE-SOURCE-OF-TRUTH-LATEST.md)  
-**Unique system:** [`TT-FINAL-RELEASE-BASELINE-LATEST`](./TT-FINAL-RELEASE-BASELINE-LATEST.md)  
+**Machine:** [`registry/engineering-ssot-anchor.v1.yaml`](../../registry/engineering-ssot-anchor.v1.yaml) · [`TT-ENGINEERING-SSOT-ANCHOR-LATEST.json`](./TT-ENGINEERING-SSOT-ANCHOR-LATEST.json)  
+**Parent system SSOT:** [`TT-FINAL-TRUTH-BASELINE-LATEST`](./TT-FINAL-TRUTH-BASELINE-LATEST.md)  
+**Reality Wave:** `TRACK1_REALITY_SEALED` · [`Seal`](./TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.md) · [`S0`](./TT-AFTER-SEAL-S0-CHAIN-REALITY-MACHINE-CHECK-LATEST.json)  
+**Stale cleared:** `MAINNET_MONEY_PATH_INCOMPLETE` / Settlement·Fee **UNSET** / Track1 `WAITING_ETA` / `MISSING_OWNER_FILL` /「Track2 仍仅 Local」**不得**再当活真源  
+**Three-env:** Official=mainnet addresses · Sepolia/Local=architecture-aligned · **independent addresses** · ≠ Official  
+**Web3 Candidate:** [`TT-WEB3-CANDIDATE-V2-LATEST`](./TT-WEB3-CANDIDATE-V2-LATEST.md) · **DEMOTED**  
 **Gate:** `bash scripts/gates/check-engineering-ssot-anchor-gate.sh`
 
 ---
@@ -19,27 +25,36 @@
 ```text
 Architecture Constitution / L0 / PGC
         ↓
-   PSG = unique Release SSOT + Version Gate
+   Final Truth Baseline = 全系统唯一 SSOT（ACTIVE_UNIQUE_SSOT）
         ↓
-   FINAL RELEASE BASELINE（唯一体系 · 认证前冻结）
+   Official live Web3 = mainnet deployed (chain_id=1)
         ↓
-   Engineering SSOT Anchor（绑定全部工程实体）
+   Candidate Sepolia = DEMOTED_TESTNET (Local/Staging side track)
+        ↓
+   Engineering SSOT Anchor（工程实体绑定 · Official→mainnet）
 ```
 
-**禁止**用 handbook / 窄切片 GO / Reality W0–W7 / FG-15-A 活文档冒充本锚。
+**禁止**用 handbook / 窄切片 GO / Reality W0–W7 / FG-15-A 活文档 / Candidate 冒充 Official live。  
+**禁止**用 Product Unique RC 冒充第二套 live Web3。
 
 ---
 
-## 2 · 唯一身份（写死）
+## 2 · 唯一身份（写死 · Official = mainnet）
 
 | 键 | 值 |
 |----|-----|
-| Pin | `PSG-REL-20260720-WEB3-CAND-V2` |
-| Tip SHA | `ea71c577ce6f99696df33f9394cf96746edc843b` · **living** |
-| Tip (SUPERSEDED ancestry) | `3b310ca856ce…` · `1ed03a9a…` · `6b85bde9…` — cite only, not living tip |
-| Contract profile | `v311_fund_safety_candidate_v2` |
+| System SSOT | Final Truth Baseline · `ACTIVE_UNIQUE_SSOT` |
+| Official live Web3 | mainnet deployed · `chain_id=1` · **SOLE_LIVE** |
+| Official release | `MAINNET-OFFICIAL-LIVE-PARTIAL` |
+| Official contract profile | `mainnet_deployed_official_partial` |
+| Money path | `MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED`（Track1 已封印；FeeRouter distribute / Track2 execute / GOV-04 / 83 = 独立轨 · 双等待冻结） |
+| Candidate pin（demoted） | `PSG-REL-20260720-WEB3-CAND-V2` · `DEMOTED_TESTNET` · **非活真源** |
+| Tip SHA（demoted ancestry cite） | `ea71c577ce6f99696df33f9394cf96746edc843b` |
+| Tip (SUPERSEDED ancestry) | `3b310ca856ce…` · `1ed03a9a…` · `6b85bde9…` — cite only |
+| Testnet profile（demoted） | `v311_fund_safety_candidate_v2` · Sepolia `11155111` |
 | Economic | **V3.1.1 Final** |
 | EGM | **PSG-EGM Final** · `CLOSED_AS_FRAMEWORK_DESIGN` |
+| AXIS-11 / Production GO | **UNBROADCAST** / **NO_GO** · **禁止** Production Ready |
 
 ---
 
@@ -51,12 +66,12 @@ Architecture Constitution / L0 / PGC
 | Web | web_image | tip + pin + profile | `STAGING-ALIGN-W0` Dockerfile/fallback |
 | API | api_image | tip + pin + profile | `DEFAULT_PSG=STAGING-ALIGN` |
 | Runtime | runtime_meta | attestation `ok` | unknown |
-| Contract | bytecode pin | Candidate v2 | `gov_freeze_v2_clean_baseline` 当 ACTIVE |
+| Contract | bytecode pin | Official→mainnet partial · Candidate demoted | 用 Candidate 冒充 Official live |
 | DB | database_baseline | Staging RC SSOT | 平行 ledger |
 | Migration | checksum | LF · 与已应用一致 | CRLF drift |
-| Registry | ACTIVE | Candidate pin | 平行 ACTIVE |
-| Evidence | bundle | `GO_web3_candidate_v2` | 写 FG-15-A 根 |
-| Docs | cites | FINAL + Cand + V3.1.1 + EGM | 活体称 FG15-A ACTIVE |
+| Registry | Official ACTIVE | mainnet address registry | Candidate 再标 ACTIVE 活真源 |
+| Evidence | bundle | Official mainnet align + demoted `GO_web3_candidate_v2` | 写 FG-15-A 根 / 假 GO |
+| Docs | cites | FTB + mainnet + demoted Cand + V3.1.1 + EGM | 活体称 Candidate/FG15-A ACTIVE |
 | Media | role_promo | Git LFS + registry checksum | ignored drop-zone bake |
 
 ---
@@ -233,3 +248,14 @@ CQ-02 后须先过 Compatibility Revalidation，再进 Human Product Acceptance�
 | Hard Gate / Cutover / GO | **未因本批关闭或 PASS** |
 
 **禁止**把 Track B bake SHA 写成 tip；**禁止**用本批冒充正式 Delta Recertify / Production GO。
+
+## V65 Non-Web3 Production Runtime (overlay)
+
+**ACTIVE Non-Web3 Runtime SSOT:** V65 `V65-PROD-CAND-20260802`  
+- Composition `106feef436f205c7286d789b8ff9704c0fb28f48`  
+- API `1915ec4da828e0139e90a85cd321415fdb6e53d9`  
+- Web `106feef436f205c7286d789b8ff9704c0fb28f48`  
+- Machine: [`TT-ENGINEERING-SSOT-ANCHOR-V65-RUNTIME-LATEST.json`](./TT-ENGINEERING-SSOT-ANCHOR-V65-RUNTIME-LATEST.json)  
+- Web3 tip remains `ea71c577ce6f…` · **orthogonal · untouched**  
+- `TT_PRODUCTION_GO: NO_GO`
+

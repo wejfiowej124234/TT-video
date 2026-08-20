@@ -1,0 +1,50 @@
+{
+  "schema": "traveltrust.official_ops_v9_wave0_closure.v1",
+  "status": "WAVE_0_FULLY_CLOSED",
+  "stamp_utc": "2026-08-20T06:38:00Z",
+  "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+  "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+  "header_login": "OWNER_CONFIRMED",
+  "header_login_account": "C2",
+  "live": {
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "session_bootstrap": "v8"
+  },
+  "gates": {
+    "citations_exit": 0,
+    "product_surface_self_test_exit": 0,
+    "restore_check_only_exit": 0
+  },
+  "gate_tails": {
+    "citations": [
+      "OK: restore_handle=registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+      "OK: home module registry production pin = OPS-v9",
+      "TT_OFFICIAL_LIVING_PIN_CITATIONS: PASS"
+    ],
+    "product_surface_self_test": [
+      "PASS: official-www-product-surface self-test",
+      "NOTE: TT_SKIP_OFFICIAL_BASELINE_PIN=1 is ignored by the product-surface gate"
+    ],
+    "restore_check_only": [
+      "restore-tt-web-production-product-pin: MUST NOT: git checkout daa5ae87 路 MUST NOT: deploy-tt-web-production.sh",
+      "PASS: official-www-product-surface: class=restore_image root=D:\\TravelTrust-V1.1",
+      "restore-tt-web-production-product-pin: OK check-only 路 no fly 路 no rebuild"
+    ]
+  },
+  "untouched_this_stamp": [
+    "M07_TTG_public_window_bake",
+    "staging_isomorphic_deploy",
+    "TT_PRODUCTION_GO",
+    "dirty_tree_cleanup",
+    "worktree_prune"
+  ],
+  "pointers": {
+    "freeze_json": "docs/runbook/TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json",
+    "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md",
+    "human_ssot": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md",
+    "convergence_evidence": "evidence/GO_official_www_product_surface/WAVE-0-TO-D-OPS-V9-CONVERGENCE-20260820.md"
+  },
+  "all_gates_pass": true
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "traveltrust.wait_window_ux_b6_cms_gap.v1",
+  "batch": "B6-CMS",
+  "recorded_utc": "2026-08-10T11:36:00Z",
+  "phase": "CLOSED",
+  "official_runtime_verify": "PASS",
+  "batch_closed": true,
+  "tt_production_go": "NO_GO",
+  "prior_batch": "B5-ADMIN CLOSED",
+  "runtime_verify": "TT-WAIT-WINDOW-UX-B6-CMS-RUNTIME-VERIFY-LATEST",
+  "checked_urls": [
+    "https://www.web3-ttg.com/admin/content",
+    "https://www.web3-ttg.com/"
+  ],
+  "local_fix": {
+    "id": "B6-C-001",
+    "paths": [
+      "frontend/components/landing/LandingHeroForm.tsx",
+      "frontend/lib/landing/b6HomepageCountryChipI18n.test.ts"
+    ],
+    "helper": "marketCountryChipLabel"
+  },
+  "gaps": [
+    {
+      "id": "B6-C-001",
+      "priority": "P1",
+      "decision": "FIX_NOW",
+      "status": "CLOSED",
+      "summary": "EN homepage country chips still Chinese labels"
+    },
+    {
+      "id": "B6-C-002",
+      "priority": "P2",
+      "decision": "DEFER",
+      "summary": "Announcements / POI Content Accuracy deep check deferred"
+    }
+  ],
+  "next": "P0 complete (B1–B6). Open B7+ P1 domains one-at-a-time per SOP",
+  "honesty": [
+    "B6 CLOSED ≠ Seal ≠ GO",
+    "B6 CLOSED ≠ CMS Content QA Country CLOSED",
+    "No Mainnet Web3 / FTB / Registry / Wired / Track1 mutation · FIVE-MAIN structure freeze intact"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

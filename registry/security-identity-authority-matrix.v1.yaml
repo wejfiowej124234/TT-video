@@ -1,0 +1,599 @@
+# Pack 08 · Security / Identity / Access Architecture Matrix
+# Distinct from pack 07 mutation authority (who may change) — this pack is how identity is proven and bounded.
+# Solo Owner architecture: Safe 1/1 is AS-IS, not a missing second Approver.
+# Phase 1 AS-IS inventory. Gaps → phase2_backlog only. Do not refactor RBAC/auth/runtime.
+# Gate: python scripts/dev/check-security-identity-authority-matrix.py
+# Human: docs/runbook/TT-SECURITY-IDENTITY-ACCESS-MATRIX-LATEST.md
+#
+# Forbidden this wave: FTB rewrite, account reset, RBAC change, Safe/Governor/Timelock/secrets/runtime mutate,
+# deploy/schedule/execute/cutover/real money, CI-02 / PM $25 execute, Pack 09.
+
+schema: traveltrust.security_identity_access_matrix.v1
+version: 1
+effective_utc: "2026-08-15"
+status: PACK08_SECURITY_IDENTITY_DEEPENED
+pack_id: "08"
+depth_grade: DEEP_PARTIAL
+tt_production_go: NO_GO
+mutation: READ_ONLY_INVENTORY
+phase: PHASE1_AS_IS
+human_doc: docs/runbook/TT-SECURITY-IDENTITY-ACCESS-MATRIX-LATEST.md
+living_ssot:
+  - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  - registry/governance-economic-matrix.v1.yaml
+  - registry/backend-truth-architecture.v1.yaml
+  - registry/admin-rbac-permissions.v1.yaml
+  - crates/api/src/routes/admin/admin_rbac.rs
+  - crates/api/src/middleware/timeout_cors.rs
+  - crates/api/src/middleware/auth_pause_metrics/mod.rs
+  - docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+  - frontend/lib/server/proxyTraveltrustApi.ts
+  - docs/runbook/TT-AXIS05-ROLES-MATRIX-REALITY-VERIFY-LATEST.json
+ftb_lock: READ_ONLY_20260812
+note: >
+  Pack 03–07 CLOSED. Session identity ≠ Wallet identity.
+  RBAC capability ≠ L7 contract authority. Safe 1/1 ≠ team approval.
+  Admin publish ≠ Web3 execute. INC-LOGIN www POST 405 is L3 Next page, not credential fail.
+  Pause is 503 api_paused, not 418.   WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY
+  (historical hop Official 2ba08bd4 QR; Dockerfile ARG only; living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED)). TT_PRODUCTION_GO=NO_GO.
+
+machine_keys:
+  M8_SHALLOW_SECURITY: 0
+  M8_UNRESOLVED_IDENTITY_PATH: 0
+  M8_AMBIGUOUS_SECURITY_AUTHORITY: 0
+  UNEXPLAINED_TRUST_BOUNDARY: 0
+  TT_PRODUCTION_GO: NO_GO
+
+node_fields:
+  - sec_id
+  - identity
+  - authentication
+  - session
+  - authorization
+  - capability
+  - resource
+  - security_boundary
+  - trust_boundary
+  - secret_credential
+  - attack_surface
+  - failure_class
+  - probe
+  - evidence
+  - runtime_status
+
+status_enum:
+  - CURRENT_OFFICIAL_LIVE
+  - SCHEDULED_WAITING_ETA
+  - TARGET_NOT_LIVE
+  - SUPERSEDED
+  - LEGACY
+  - CLOSED_REALITY
+
+pack08_security_field:
+  overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  pack03: CLOSED
+  pack04: CLOSED
+  pack05: CLOSED
+  pack06: CLOSED
+  pack07: CLOSED
+  m8_shallow_security: 0
+  m8_unresolved_identity_path: 0
+  m8_ambiguous_security_authority: 0
+  unexplained_trust_boundary: 0
+  stop_after: PACK08
+  next_pack_forbidden_this_wave: []
+  ci02_pm25_merge: FORBIDDEN
+  required_nodes:
+    - SEC-ANON-PUBLIC
+    - SEC-TRAVELER-SESSION
+    - SEC-GUIDE-SESSION
+    - SEC-PROVIDER-SESSION
+    - SEC-STEWARD-SESSION
+    - SEC-MODERATOR-RBAC
+    - SEC-ADMIN-OPS
+    - SEC-SUPERADMIN
+    - SEC-WALLET-EOA
+    - SEC-SESSION-BEARER
+    - SEC-STRICT-SESSION-GATE
+    - SEC-API-MIDDLEWARE
+    - SEC-CORS-CSRF
+    - SEC-PROXY-TRUST
+    - SEC-CMS-OCS
+    - SEC-POSTGRES-ROW
+    - SEC-INDEXER-READONLY
+    - SEC-RUNTIME-SECRETS
+    - SEC-SAFE-1OF1
+    - SEC-GOVERNOR-VOTE
+    - SEC-TIMELOCK-EXECUTE
+    - SEC-CONTRACT-OWNERSHIP
+    - SEC-CROSS-USER
+    - SEC-REPLAY-IDEMPOTENCY
+
+hard_split: >
+  Session identity ≠ Wallet identity.
+  RBAC capability ≠ L7 contract authority.
+  Safe 1/1 ≠ team approval (Solo Owner AS-IS).
+  Admin publish ≠ Web3 execute.
+
+trust_boundary_graph: |
+  L0 Official www/apex browser  (HttpOnly traveltrust_session · localStorage.traveltrust_session_token not authoritative)
+    --proxy L2--> Next rewrite / Fly  (skip *.example.com after ME_PROXY_503 CLOSED)
+    --L3--> API origin https://api.web3-ttg.com  OR Next Session/BFF (historical POST /auth/login 405 SUPERSEDED)
+    --L4--> CORS · pause · rate · Idempotency-Key · STRICT_SESSION_GATE
+    --L5--> users.role + console_role 70 RBAC  (NOT L7 owner)
+    --L6--> PostgreSQL row ACL / CMS / disputes
+    --L7--> wallet msg.sender / Safe 1/1 / Governor / Timelock owner
+    --L8--> Indexer projection + GET /meta  (observe only)
+  Forbidden crossings: L5 Admin → L7 owner; L6 CMS publish → Timelock execute; L8 Indexer → L7 write; Session token → wallet signature.
+
+living_trust_edges:
+  - { from: SEC-ANON-PUBLIC, to: SEC-PROXY-TRUST, via: public_GET, proven: Official 200 guides/feed/did-rank }
+  - { from: SEC-SESSION-BEARER, to: SEC-STRICT-SESSION-GATE, via: Bearer_required, proven: AUTH TRACE /me and quote 401 }
+  - { from: SEC-SESSION-BEARER, to: SEC-TRAVELER-SESSION, via: users.role, proven: Pack 07 AUTH-TRAVELER-SELF }
+  - { from: SEC-ADMIN-OPS, to: SEC-MODERATOR-RBAC, via: admin.community.moderate, proven: OPS_PERMS }
+  - { from: SEC-SUPERADMIN, to: SEC-CMS-OCS, via: publish_L6, proven: Pack 07 AUTH-CMS-PUBLISH }
+  - { from: SEC-API-MIDDLEWARE, to: SEC-REPLAY-IDEMPOTENCY, via: Idempotency-Key, proven: N-L4-MW }
+  - { from: SEC-PROXY-TRUST, to: SEC-API-MIDDLEWARE, via: L2_to_L4, proven: proxyTraveltrustApi }
+  - { from: SEC-SAFE-1OF1, to: SEC-TIMELOCK-EXECUTE, via: timelock_admin, proven: Pack 07 AUTH-SAFE-TIMELOCK-ADMIN }
+  - { from: SEC-GOVERNOR-VOTE, to: SEC-TIMELOCK-EXECUTE, via: proposer, proven: Pack 07 AUTH-GOVERNOR-PROPOSE }
+  - { from: SEC-TIMELOCK-EXECUTE, to: SEC-CONTRACT-OWNERSHIP, via: owner, proven: Pack 07 AUTH-CONTRACT-OWNER-TIMELOCK }
+  - { from: SEC-INDEXER-READONLY, to: DATA-ESCROW-PROJECTION, via: L8_observe, proven: Pack 04/06/07 }
+  - { from: SEC-CROSS-USER, to: SEC-POSTGRES-ROW, via: order_ACL, proven: order_forbidden_json }
+
+forbidden_trust_edges:
+  - { from: SEC-ADMIN-OPS, to: SEC-CONTRACT-OWNERSHIP, why: "RBAC capability is not L7 owner" }
+  - { from: SEC-CMS-OCS, to: SEC-TIMELOCK-EXECUTE, why: "Admin publish is not Web3 execute" }
+  - { from: SEC-INDEXER-READONLY, to: SEC-CONTRACT-OWNERSHIP, why: "Indexer cannot mutate L7" }
+  - { from: SEC-SESSION-BEARER, to: SEC-WALLET-EOA, why: "Session identity is not wallet identity" }
+  - { from: SEC-STEWARD-SESSION, to: SEC-CONTRACT-OWNERSHIP, why: "PG steward ≠ Seat/Vault L7" }
+  - { from: SEC-SUPERADMIN, to: SEC-TIMELOCK-EXECUTE, why: "SuperAdmin session cannot execute Timelock" }
+  - { from: SEC-SAFE-1OF1, to: SEC-ADMIN-OPS, why: "Safe 1/1 is not Admin RBAC" }
+
+phase2_backlog:
+  - id: P2-TOKEN-LOCALSTORAGE
+    class: OBSERVED_GAP
+    fact: Historical JSON token + localStorage SUPERSEDED; Official www HttpOnly traveltrust_session; JSON token=null; GAP-SEC CLOSED_REALITY
+    do_not_fix_this_wave: true
+  - id: P2-ADMIN-2FA
+    class: OBSERVED_GAP
+    fact: admin_2fa_policy_storage exists; enforce_2fa_totp_wiring phase2_not_started
+    do_not_fix_this_wave: true
+  - id: P2-SAFE-1OF1-SOLO
+    class: EXPECTED_SOLO
+    fact: Safe threshold 1 owners [0xe1e732]; Solo Owner AS-IS; not a missing team Approver
+    do_not_fix_this_wave: true
+  - id: P2-CONSOLE-ROLE-OVERRIDE
+    class: OBSERVED_GAP
+    fact: TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE can remap console role locally
+    do_not_fix_this_wave: true
+  - id: P2-CORS-UNSET-PERMISSIVE
+    class: OBSERVED_GAP
+    fact: CORS_ORIGINS unset → very_permissive(); Official must keep CORS_ORIGINS set
+    do_not_fix_this_wave: true
+  - id: P2-STEWARD-L7
+    class: TARGET_NOT_LIVE
+    fact: Seat/Vault NOT_DEPLOYED; session steward must not be treated as L7 claim authority
+    do_not_fix_this_wave: true
+
+nodes:
+  - sec_id: SEC-ANON-PUBLIC
+    identity: none
+    authentication: none
+    session: none
+    authorization: public GET only
+    capability: read_public
+    resource: / /market /community/feed /did-rank GET /api/v1/guides
+    security_boundary: public
+    trust_boundary: L0
+    secret_credential: none
+    attack_surface: scrape · unauthenticated write attempts
+    failure_class: [401_on_write, wallet_button_disabled]
+    probe: Official public 200; anonymous wallet connect disabled
+    evidence: registry/backend-truth-architecture.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [N-L0-WEB]
+    pack07: []
+
+  - sec_id: SEC-TRAVELER-SESSION
+    identity: users.role tourist|traveler (DATA-USER-ACCOUNT)
+    authentication: POST api /auth/login JSON token (not www page POST)
+    session: Bearer + localStorage.traveltrust_session_token
+    authorization: self itinerary/order/community write
+    capability: user self MUTATE (Pack 07 AUTH-TRAVELER-SELF)
+    resource: orders itineraries
+    security_boundary: session_self
+    trust_boundary: L5/L6
+    secret_credential: session token (not wallet key)
+    attack_surface: stolen localStorage token · forged role in body (server must ignore)
+    failure_class: [401, INC-LOGIN, STRICT_SESSION_GATE]
+    probe: Official C2 tourist PASS; GET /me 200 with Bearer
+    evidence: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [GP-01]
+    pack07: [AUTH-TRAVELER-SELF]
+
+  - sec_id: SEC-GUIDE-SESSION
+    identity: guide profile + users.role (guide not self-serve register)
+    authentication: Session Bearer
+    session: same session model as traveler
+    authorization: owner on /api/v1/guides/:id
+    capability: MUTATE own profile; L7 stake NOT_DEPLOYED
+    resource: guides
+    security_boundary: session_self
+    trust_boundary: L5/L6
+    secret_credential: session token
+    attack_surface: IDOR on :id
+    failure_class: [401, 403, false_l7_stake]
+    probe: Pack 04 DATA-GUIDE-STAKE-DB is PG not L7
+    evidence: registry/data-truth-matrix.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-GUIDE-SELF]
+
+  - sec_id: SEC-PROVIDER-SESSION
+    identity: applicant until admin review writes role
+    authentication: Session
+    session: Bearer
+    authorization: POST provider-applications; listings after approve
+    capability: MUTATE application
+    resource: role_applications / role_documents
+    security_boundary: session_then_admin
+    trust_boundary: L5/L6
+    secret_credential: session token
+    attack_surface: self-promote users.role=provider in JSON
+    failure_class: [401, review_pending]
+    probe: registration_role_stored traveler until review
+    evidence: crates/api/src/chain_off/auth.rs
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-PROVIDER-APPLY]
+
+  - sec_id: SEC-STEWARD-SESSION
+    identity: region_steward_onboarding then users.role after review
+    authentication: Session (+ wallet for TARGET L7)
+    session: Bearer
+    authorization: steward APIs L3/L6; L7 Seat TARGET_NOT_LIVE
+    capability: Pack 07 AUTH-STEWARD-APPLY live; AUTH-STEWARD-CLAIM not live
+    resource: steward applications; not RegionVault
+    security_boundary: session_then_admin
+    trust_boundary: L5/L6 (L7 blocked)
+    secret_credential: session token
+    attack_surface: claiming Seat authority from PG role
+    failure_class: [seat_not_deployed, premature_official_claim]
+    probe: /meta.registry_address=null
+    evidence: registry/governance-economic-matrix.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-STEWARD-APPLY, AUTH-STEWARD-CLAIM]
+    note: Session identity CURRENT_OFFICIAL_LIVE. L7 claim remains TARGET_NOT_LIVE.
+
+  - sec_id: SEC-MODERATOR-RBAC
+    identity: console Risk or Ops — not a users.role=moderator
+    authentication: Admin session
+    session: Bearer admin
+    authorization: admin.community.moderate
+    capability: ADMIN moderate; appeals = SuperAdmin
+    resource: /api/v1/admin/community/moderation/:id
+    security_boundary: admin_rbac
+    trust_boundary: L3/L5/L6
+    secret_credential: admin session
+    attack_surface: Ops forging SuperAdmin publish
+    failure_class: [403, INC-403]
+    probe: Auditor cannot moderate
+    evidence: crates/api/src/routes/admin/admin_rbac.rs
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-MODERATOR-COMMUNITY]
+
+  - sec_id: SEC-ADMIN-OPS
+    identity: users.role=admin → console Ops
+    authentication: Session (no wallet required)
+    session: Bearer
+    authorization: OPS_PERMS (write/review/moderate; not approve/publish)
+    capability: ADMIN L3/L6 — not L7 owner
+    resource: /api/v1/admin/*
+    security_boundary: admin_rbac
+    trust_boundary: L5
+    secret_credential: session; optional TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE (local)
+    attack_surface: env override · missing 2FA
+    failure_class: [403, env_override_misuse]
+    probe: Ops cannot admin.approve or admin.content.publish
+    evidence: registry/admin-rbac-permissions.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-ADMIN-OPS]
+
+  - sec_id: SEC-SUPERADMIN
+    identity: users.role=super_admin → console SuperAdmin
+    authentication: Session
+    session: Bearer
+    authorization: SUPER_ADMIN_PERMS including publish/approve
+    capability: ADMIN publish L6 — not Timelock EXECUTE
+    resource: CMS/OCS/growth publish
+    security_boundary: admin_rbac
+    trust_boundary: L5/L6
+    secret_credential: session
+    attack_surface: stolen SuperAdmin token publishing announcements
+    failure_class: [403, false_l7_admin]
+    probe: Official SuperAdmin login PASS (AUTH TRACE)
+    evidence: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-SUPERADMIN, AUTH-CMS-PUBLISH]
+
+  - sec_id: SEC-WALLET-EOA
+    identity: connected EOA address (not users.role)
+    authentication: wallet signature / msg.sender
+    session: independent of Bearer; anonymous wallet button disabled
+    authorization: L7 createEscrow / PM buy / Governor vote
+    capability: key holder — not RBAC
+    resource: Escrow Factory / PM / Governor
+    security_boundary: mainnet
+    trust_boundary: L7
+    secret_credential: private key (never in API session)
+    attack_surface: phishing signature · mixing session user_id with msg.sender
+    failure_class: [wrong_signer, session_as_wallet]
+    probe: Pack 06 S01 wallet USDC; Pack 07 AUTH-GOVERNOR-PROPOSE votes; Official www WalletConnect QR PASS on historical hop FE 2ba08bd4 (WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY; living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED); not Session)
+    evidence: evidence/GO_oa01_walletconnect_official_bake/WALLETCONNECT-OFFICIAL-BAKE-FORWARD-FIX-LATEST.json
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-GOVERNOR-PROPOSE]
+    note: Session identity ≠ Wallet identity.
+
+  - sec_id: SEC-SESSION-BEARER
+    identity: traveltrust_session_token holder
+    authentication: Authorization Bearer on API origin
+    session: "HttpOnly cookie traveltrust_session; JSON token=null; localStorage.traveltrust_session_token not authoritative; Set-Cookie HttpOnly+Secure+SameSite=Lax"
+    authorization: L4 then L5
+    capability: proves session, not wallet
+    resource: non-public /api/v1/*
+    security_boundary: api_session
+    trust_boundary: L0/L4
+    secret_credential: opaque session token in HttpOnly cookie
+    attack_surface: XSS cannot read HttpOnly cookie; leftover localStorage is non-authoritative
+    failure_class: [SESSION_401, COOKIE_CLEARED_ON_LOGOUT]
+    probe: AUTH TRACE www login 200 Set-Cookie HttpOnly; token=null; GAP-FE-BFF-BYPASS CLOSED_REALITY — authenticated /me bookmarks orders on www /api/v1
+    evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.md
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [GP-01]
+
+  - sec_id: SEC-STRICT-SESSION-GATE
+    identity: any API caller
+    authentication: STRICT_SESSION_GATE=1 requires Bearer on non-public /api/v1
+    session: missing Bearer → 401
+    authorization: L4 gate before RBAC
+    capability: none without session
+    resource: GET /api/v1/me · /governance/ttg-exchange/quote
+    security_boundary: L4
+    trust_boundary: L4
+    secret_credential: Bearer
+    attack_surface: calling quote without session to scrape price
+    failure_class: [401, STRICT_SESSION_GATE]
+    probe: Official quote 401 STRICT_SESSION_GATE=1; /me 401 without Bearer
+    evidence: crates/api/src/routes/health_meta/handlers.rs
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [N-L4-MW]
+
+  - sec_id: SEC-API-MIDDLEWARE
+    identity: API process
+    authentication: n/a (layer)
+    session: inspects Bearer / Idempotency-Key
+    authorization: pause_gate · rate_limit · body limit · timeout
+    capability: reject before handler
+    resource: all /api/v1
+    security_boundary: api
+    trust_boundary: L4
+    secret_credential: none
+    attack_surface: flood · pause bypass · 418 confusion
+    failure_class: [api_paused, 429, INC-418_not_observed]
+    probe: /meta pause.enabled=false; PAUSE_MODE=1 → 503 api_paused not 418
+    evidence: crates/api/src/middleware/auth_pause_metrics/mod.rs
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [N-L4-MW]
+
+  - sec_id: SEC-CORS-CSRF
+    identity: browser origin
+    authentication: CORS preflight
+    session: SameSite=Lax client cookies are UX flags not API auth
+    authorization: CORS_ORIGINS allowlist in production
+    capability: credentialed browser calls from www
+    resource: API CORS
+    security_boundary: origin
+    trust_boundary: L1/L4
+    secret_credential: none
+    attack_surface: CSRF (mitigated because API auth is Bearer not cookie); CORS unset → very_permissive dev-only
+    failure_class: [cors_preflight, csrf_cookie_auth_n_a]
+    probe: crates/api/src/middleware/timeout_cors.rs production does not append localhost by default
+    evidence: crates/api/src/middleware/timeout_cors.rs
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [N-L2-EDGE]
+
+  - sec_id: SEC-PROXY-TRUST
+    identity: Next App Router proxy on www/apex
+    authentication: forwards Bearer + Idempotency-Key
+    session: must not invent session
+    authorization: rewrite to API origin; skip *.example.com
+    capability: L2 transport only
+    resource: /api/v1/* on www
+    security_boundary: proxy
+    trust_boundary: L2
+    secret_credential: TRAVELTRUST_API_BASE_URL / API_REWRITE_TARGET (ops secret)
+    attack_surface: placeholder api.example.com (ME_PROXY_503 CLOSED)
+    failure_class: [api_unavailable, 503]
+    probe: GET www /api/v1/me 401 without Bearer / 200 with Bearer after fix
+    evidence: frontend/lib/server/proxyTraveltrustApi.ts
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [INC-LOGIN]
+
+  - sec_id: SEC-CMS-OCS
+    identity: SuperAdmin publisher
+    authentication: Admin session
+    session: Bearer
+    authorization: admin.content.publish / admin.official.publish
+    capability: ADMIN L6 — not L7 execute
+    resource: cms_public_announcements
+    security_boundary: admin_cms
+    trust_boundary: L6
+    secret_credential: admin session
+    attack_surface: unpublished_draft leakage · FE hardcoded copy (forbidden)
+    failure_class: [403, unpublished_draft]
+    probe: Pack 04 DATA-CMS-ANNOUNCEMENT PG_AUTHORITATIVE
+    evidence: registry/data-truth-matrix.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-CMS-PUBLISH, AUTH-OCS-PUBLISH]
+    note: Admin publish ≠ Web3 execute.
+
+  - sec_id: SEC-POSTGRES-ROW
+    identity: row owner user_id / participant
+    authentication: session mapped to user_id
+    session: Bearer
+    authorization: SQL via handlers; not raw Admin SQL
+    capability: MUTATE own rows
+    resource: itineraries orders disputes cms tables
+    security_boundary: session_write
+    trust_boundary: L6
+    secret_credential: DATABASE_URL (runtime secret, not user)
+    attack_surface: IDOR · PG-as-chain
+    failure_class: [pg_as_chain, cache_as_table]
+    probe: Pack 04 L7≠L8≠PG
+    evidence: registry/data-truth-matrix.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack04: [DATA-ORDER]
+    pack07: [AUTH-DB-RUNTIME-WRITER]
+
+  - sec_id: SEC-INDEXER-READONLY
+    identity: indexer service
+    authentication: internal
+    session: none
+    authorization: READ L7 WRITE L8 only
+    capability: READ
+    resource: event_log checkpoints_sharded projections
+    security_boundary: indexer_readonly
+    trust_boundary: L8
+    secret_credential: CHAIN_RPC_URL
+    attack_surface: poisoned RPC · writing L7
+    failure_class: [checkpoint_stall, l8_writes_l7]
+    probe: /meta indexer.lag_blocks=0
+    evidence: registry/web3-contract-architecture-matrix.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-INDEXER-READONLY]
+
+  - sec_id: SEC-RUNTIME-SECRETS
+    identity: Fly/ops secrets
+    authentication: platform secret store
+    session: n/a
+    authorization: process env
+    capability: configure runtime — not user RBAC
+    resource: INTERNAL_API_SECRET DATABASE_URL TRAVELTRUST_API_BASE_URL STRIPE keys
+    security_boundary: ops_secrets
+    trust_boundary: L2/L4 deploy
+    secret_credential: "INTERNAL_API_SECRET configured=true on Official /meta (boolean only; value not exposed)"
+    attack_surface: secret dump in /meta · placeholder URL
+    failure_class: [secret_exposure, placeholder_base]
+    probe: /meta.strict_mode.internal_api_secret_configured
+    evidence: crates/api/src/routes/health_meta/handlers.rs
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [N-L8-META]
+    note: This wave does not rotate or print secrets.
+
+  - sec_id: SEC-SAFE-1OF1
+    identity: Safe 0x96491aa894658ff7946506318c49F3c76b8f40e7
+    authentication: Safe tx from owner 0xe1e732EfBf9B010a9204054467256d3d93f3CdD4
+    session: none (not web session)
+    authorization: Timelock.admin
+    capability: ADMIN L7 — Solo 1/1, not team dual-control
+    resource: Timelock admin
+    security_boundary: mainnet_ops
+    trust_boundary: L7
+    secret_credential: Safe owner key
+    attack_surface: single-key compromise (EXPECTED_SOLO this architecture)
+    failure_class: [single_key, false_team_approver]
+    probe: AXIS-05 threshold=1 owners=[0xe1e732] owner_accepts_threshold_1_of_1=true
+    evidence: docs/runbook/TT-AXIS05-ROLES-MATRIX-REALITY-VERIFY-LATEST.json
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-SAFE-TIMELOCK-ADMIN]
+    note: Safe 1/1 ≠ team approval. Do not invent a second Approver this wave.
+
+  - sec_id: SEC-GOVERNOR-VOTE
+    identity: TTG 25T voting power at NEW Governor 0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F (LEGACY Governor 0x46Ce671)
+    authentication: on-chain vote
+    session: wallet, not Bearer
+    authorization: propose/queue into Timelock
+    capability: GOVERN
+    resource: Timelock operations
+    security_boundary: mainnet
+    trust_boundary: L7
+    secret_credential: voter key + TTG
+    attack_surface: "Proposal #3 treated as live spend (it is TARGET)"
+    failure_class: [proposal_not_queued, proposal3_as_official]
+    probe: Pack 07 AUTH-PROPOSAL-3-ORTHOGONAL TARGET_NOT_LIVE
+    evidence: registry/governance-economic-matrix.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-GOVERNOR-PROPOSE]
+
+  - sec_id: SEC-TIMELOCK-EXECUTE
+    identity: caller after eta (permissionless execute)
+    authentication: none beyond readyAt
+    session: none
+    authorization: queued payload only
+    capability: EXECUTE after 172800s
+    resource: CI-02 / PM25 remaining ops
+    security_boundary: mainnet
+    trust_boundary: L7
+    secret_credential: none for execute
+    attack_surface: premature execute before ETA
+    failure_class: [WAITING_ETA, premature_execute]
+    probe: CI-02 hop B done=false; PM25 OLD proxy LEGACY done=true; Official www bake FORBIDDEN; T1/T2/GOV-04 done=true
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-TIMELOCK-EXECUTE]
+    note: Capability live. Remaining ops SCHEDULED_WAITING_ETA. This wave does not execute.
+
+  - sec_id: SEC-CONTRACT-OWNERSHIP
+    identity: Timelock 0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7 as owner / EIP-1967 admin
+    authentication: Timelock execute
+    session: none
+    authorization: onlyOwner / upgradeTo
+    capability: GOVERN L7
+    resource: OLD FR / SR-FT / Wired / P4Cap / PM proxy
+    security_boundary: mainnet
+    trust_boundary: L7
+    secret_credential: none at user layer
+    attack_surface: Admin RBAC pretending to own contracts
+    failure_class: [admin_rbac_as_owner]
+    probe: recon FR-OLD.owner=Timelock; PM L7 impl $25; Official www still GOV-04 1e18
+    evidence: registry/web3-contract-architecture-matrix.v1.yaml
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack07: [AUTH-CONTRACT-OWNER-TIMELOCK, AUTH-PM-PROXY-UPGRADE]
+
+  - sec_id: SEC-CROSS-USER
+    identity: session user_id vs resource owner
+    authentication: Bearer
+    session: must match participant
+    authorization: order_forbidden_json / ACL 404
+    capability: deny cross-user mutate
+    resource: orders disputes messages
+    security_boundary: resource_acl
+    trust_boundary: L5/L6
+    secret_credential: session
+    attack_surface: IDOR /id enumeration
+    failure_class: [403, ACL_404]
+    probe: crates/api/src/chain_off/order_participant_hints.rs order_forbidden_json
+    evidence: crates/api/src/chain_off/order_participant_hints.rs
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [N-L6-DISPUTES]
+    pack04: [DATA-ORDER]
+
+  - sec_id: SEC-REPLAY-IDEMPOTENCY
+    identity: request Idempotency-Key
+    authentication: header on mutating API
+    session: bound to caller
+    authorization: replay cache memory + optional PG idempotency_keys
+    capability: same key same result; conflict on different body
+    resource: login / onboarding payment-intent / admin writes
+    security_boundary: api
+    trust_boundary: L4
+    secret_credential: none
+    attack_surface: replay with same key · missing key when REQUIRE_IDEMPOTENCY_KEY=1
+    failure_class: [missing_idempotency, idempotencyConflict]
+    probe: /meta.require_idempotency_key; AUTH TRACE login uses Idempotency-Key
+    evidence: crates/api/src/routes/health_meta/handlers.rs
+    runtime_status: CURRENT_OFFICIAL_LIVE
+    pack03: [N-L4-MW]
+
+hard_rule: >
+  Do not treat Session as Wallet, RBAC as L7 owner, Safe 1/1 as team approval, or Admin publish as Timelock execute.
+  Pack 09 is forbidden this wave. Do not execute CI-02 or PM $25. TT_PRODUCTION_GO=NO_GO.

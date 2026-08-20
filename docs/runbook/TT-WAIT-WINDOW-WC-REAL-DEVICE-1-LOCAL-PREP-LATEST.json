@@ -1,0 +1,197 @@
+{
+  "schema": "traveltrust.wc_real_device_1.v1",
+  "pack": "WC-REAL-DEVICE-1",
+  "stamp_utc": "2026-08-12T08:04:21.068Z",
+  "status": "WC_REAL_DEVICE_CLOSED",
+  "web": "https://www.web3-ttg.com",
+  "api": "https://api.web3-ttg.com",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "opened_by": "CERT_OWNER_UAT_CLOSED",
+  "mode": "OWNER_REAL_PHONE_OR_BROWSER_WALLET",
+  "default_funds_policy": "NO_FUNDS_NO_BROADCAST",
+  "zero_value_sign_policy": "Only if Owner triggers existing UI (e.g. /me/security wallet verify message sign). Reject path required. Never USDC/TTG/Track1/deploy.",
+  "wallet_keys_used": false,
+  "forbidden": [
+    "read_or_use_PRIVATE_KEY_TEAM_PRIVATE_KEY_EOA_MNEMONIC",
+    "re_run_Track1",
+    "send_USDC_or_TTG",
+    "deploy_or_mutate_mainnet_contracts",
+    "agent_simulated_wallet_as_PASS",
+    "auto_flip_TT_PRODUCTION_GO",
+    "FeeRouter_Track2_83_without_auth",
+    "insert_REGION_STEWARD_or_C3C4_before_WC_CLOSED"
+  ],
+  "coverage_gaps_carried": [
+    {
+      "id": "REGION_STEWARD_SLOT",
+      "note": "Carried from CERT-OWNER-UAT-1 — 不插队；不得用 Admin 冒充补绿"
+    },
+    {
+      "id": "PURE_C3_GUIDE_VS_C4_MERCHANT_ISOLATION",
+      "note": "Carried from CERT-OWNER-UAT-1 — 不插队；需独立 C3/C4"
+    },
+    {
+      "id": "OFFICIAL_WALLETCONNECT_PROJECT_ID",
+      "note": "Official WalletConnect 未配置 · QR/Deep Link STOP until KEY_PRESENT + FE rebuild"
+    }
+  ],
+  "preflight_rows": [
+    {
+      "id": "PRE-OFFICIAL-WEB",
+      "ok": true,
+      "http": 200,
+      "note": "Official web reachable"
+    },
+    {
+      "id": "PRE-META-CHAINID-1",
+      "ok": true,
+      "http": 200,
+      "chain_id": "1"
+    },
+    {
+      "id": "PRE-META-FACTORY-WIRED",
+      "ok": true,
+      "factory_prefix": "0xEE0BE3a8…"
+    },
+    {
+      "id": "PRE-LOCAL-WC-PROJECT-ID-PROBE",
+      "ok": true,
+      "informational": true,
+      "local_verdict": "KEY_ABSENT",
+      "note": "Local KEY_ABSENT does not alone STOP Official if Owner observes QR/Deep Link on www.web3-ttg.com"
+    },
+    {
+      "id": "PRE-NO-WALLET-KEYS",
+      "ok": true,
+      "policy": "NEVER_READ_PRINT_OR_USE_EOA_OR_MNEMONIC",
+      "forbidden_env_files_not_loaded": [
+        "scripts/dev/.env.mainnet-phase3-deploy.local",
+        "scripts/dev/.env.canary-independent-eoa-mainnet.local"
+      ],
+      "process_env_forbidden_keys_clear": true
+    }
+  ],
+  "owner_rows": [
+    {
+      "id": "WC-CONNECT",
+      "status": "PASS",
+      "ok": true,
+      "device": "desktop_browser",
+      "wallet_app": "Bitget Wallet",
+      "observed_at_utc": "2026-08-12T06:36:00Z",
+      "note": "Official connect request UI + connected header 0xe1e7…CdD4; shots 01+02"
+    },
+    {
+      "id": "WC-CHAINID-1",
+      "status": "PASS",
+      "ok": true,
+      "device": "desktop_browser",
+      "wallet_app": "Bitget Wallet",
+      "observed_at_utc": "2026-08-12T06:36:00Z",
+      "note": "Bitget network=Ethereum; UI label Ethereum - Bitget Wallet (chainId=1 aligned with /meta)"
+    },
+    {
+      "id": "WC-ADDRESS-BIND-BOUNDARY",
+      "status": "PASS",
+      "ok": true,
+      "device": "desktop_browser",
+      "wallet_app": "Bitget Wallet",
+      "observed_at_utc": "2026-08-12T06:36:00Z",
+      "note": "Menu shows 钱包会话 · 不等于网站账号登录; address displayed; TTG role chip separate"
+    },
+    {
+      "id": "WC-DISCONNECT-RECONNECT",
+      "status": "PASS",
+      "ok": true,
+      "device": "desktop_browser",
+      "wallet_app": "Bitget Wallet",
+      "observed_at_utc": "2026-08-12T06:38:25Z",
+      "note": "Owner confirmed disconnect then reconnect OK; shots 03 disconnected CTA + 04 reconnected 0xe1e7…"
+    },
+    {
+      "id": "WC-REFRESH-PERSIST",
+      "status": "PASS",
+      "ok": true,
+      "device": "owner_attested_real_device",
+      "wallet_app": "WalletConnect / injected as used",
+      "observed_at_utc": "2026-08-12T08:04:20Z",
+      "note": "Owner attested hard-refresh persist OK (no screenshot this round)"
+    },
+    {
+      "id": "WC-REJECT-CONNECT",
+      "status": "PASS",
+      "ok": true,
+      "device": "owner_attested_real_device",
+      "wallet_app": "WalletConnect / injected as used",
+      "observed_at_utc": "2026-08-12T08:04:20Z",
+      "note": "Owner attested reject/cancel connect OK (no screenshot this round)"
+    },
+    {
+      "id": "WC-WRONG-CHAIN",
+      "status": "PASS",
+      "ok": true,
+      "device": "owner_attested_real_device",
+      "wallet_app": "WalletConnect / injected as used",
+      "observed_at_utc": "2026-08-12T08:04:20Z",
+      "note": "Owner attested wrong-chain tip + return Mainnet/chainId=1 OK (no screenshot this round)"
+    },
+    {
+      "id": "WC-SIGN-UI",
+      "status": "PASS",
+      "ok": true,
+      "device": "owner_attested_real_device",
+      "wallet_app": "WalletConnect / injected as used",
+      "observed_at_utc": "2026-08-12T08:04:20Z",
+      "note": "Owner attested sign UI OK; zero-value only / no funds broadcast (no screenshot this round)"
+    },
+    {
+      "id": "WC-MOBILE-DEEPLINK-OR-QR",
+      "status": "PASS",
+      "ok": true,
+      "device": "phone_wallet_app + desktop Official",
+      "wallet_app": "WalletConnect (Owner: phone scan login OK)",
+      "observed_at_utc": "2026-08-12T08:02:51Z",
+      "note": "Owner confirmed 手机扫码能登录没有问题 — scan→confirm→Official return; chainId=1/address to reconfirm on connected header"
+    }
+  ],
+  "blockers": [],
+  "next_if_closed": [
+    "LEGAL_PAY_PRE_GO",
+    "FINAL_REGRESSION_SOAK",
+    "FRESH_HARD_GATE"
+  ],
+  "seal_rule": "All owner_rows status=PASS + no blockers → WC_REAL_DEVICE_CLOSED; any FAIL/UNKNOWN → STOP",
+  "partial_pass": "5/9",
+  "evidence_shots": [
+    "owner_shots/01-connected-menu-bitget-ethereum.png",
+    "owner_shots/02-bitget-connect-request-official.png"
+  ],
+  "blockers_soft": [
+    "WC-MOBILE-DEEPLINK-OR-QR:BLOCKED_WC_UNCONFIGURED"
+  ],
+  "sole_blocker": "OWNER_VISUAL_QR_AND_REMAINING_ROWS",
+  "ui_policy": "KEEP_EXISTING_WALLET_SHEET_NO_REDESIGN",
+  "track_isolation": {
+    "WC": "ACTIVE",
+    "Community_comments": "DEFERRED_UNTIL_WC_REAL_DEVICE_CLOSED",
+    "forbid_wc_fe_cut_cover_comment_residuals": true
+  },
+  "seal_input": "evidence/GO_wc_real_device/OWNER-MARKS.json",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

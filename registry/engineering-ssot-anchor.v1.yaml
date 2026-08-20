@@ -1,92 +1,136 @@
-# TravelTrust · Engineering SSOT Anchor (machine)
+# Engineering SSOT Anchor — cite under Final Truth Baseline (sole system SSOT)
+# Machine: TT_ENGINEERING_SSOT_ANCHOR
 # Human: docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md
-# Parent: PSG = unique Release SSOT (registry/psg-release-source-of-truth.v1.yaml)
-# Unique system: registry/final-release-baseline.v1.yaml
-# Gate: scripts/gates/check-engineering-ssot-anchor-gate.sh
-#
-# Doctrine: PSG is the highest governance anchor. This package binds every
-# engineering entity to the same Active PSG Release Version identity.
-# ≠ Production GO ≠ Staging-grade GO ≠ Reality Closure PASS.
+# Parent system SSOT: Final Truth Baseline (ACTIVE_UNIQUE_SSOT)
+# Official live Web3: Ethereum mainnet (chain_id=1) deployed set
+# Sepolia Candidate PSG-REL-20260720-WEB3-CAND-V2: DEMOTED_TESTNET (Local/Staging only)
+# Archive / GO Pack: preserve · do not delete
+# TT_PRODUCTION_GO=NO_GO · money path MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED
+# Living Official www Product Truth (under FTB): OPS-2026.08.20-v9 · 3e356617 / 2026-08-20T00:51:57Z / hybrid-…-v9 / bootstrap v8 / API 8df2ab21
+# historical daa5ae87 SUPERSEDED · M07 …-m07-unlock ROLLED_BACK_NOT_LIVING
+# GO eligibility: Cycle2 READY_FOR_OWNER_PRODUCTION_GO_VERDICT · next = Owner written GO vs continue NO_GO
 
-schema: traveltrust.engineering_ssot_anchor.v1
-version: 1
+schema_id: traveltrust.engineering_ssot_anchor.v1
 machine_key: TT_ENGINEERING_SSOT_ANCHOR
-status: ACTIVE_UNDER_PSG
-recorded_utc: "2026-07-22T08:47:56Z"
-equals_production_go: false
-equals_staging_grade_go: false
+status: ACTIVE_UNDER_FTB
+role: ENGINEERING_CITE_UNDER_FINAL_TRUTH_BASELINE
 
 governance_parent:
-  psg_release_ssot: registry/psg-release-source-of-truth.v1.yaml
-  architecture_constitution: registry/architecture-constitution.v1.yaml
-  final_release_baseline: registry/final-release-baseline.v1.yaml
-  active_psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
-  git_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
-  contract_profile: v311_fund_safety_candidate_v2
-  constitution_economic: V3.1.1_Final
+  final_truth_baseline:
+    machine_key: TT_FINAL_TRUTH_BASELINE
+    human: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    machine_json: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json
+    status: ACTIVE_UNIQUE_SSOT
+    cycle: TT_FINAL_TRUTH_BASELINE_V8_CYCLE_20260818
+    living_stamp: 20260818T031500Z
+    immutable_parent: docs/runbook/TT-FINAL-TRUTH-BASELINE-20260812.md
+    sole_live_web3: mainnet_deployed_official
+    candidate_status: DEMOTED_TESTNET
+  historical_release_pack:
+    machine_key: TT_FINAL_RELEASE_BASELINE
+    human: docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.md
+    status: FROZEN_HISTORICAL_UNDER_FTB
+    note: Not a competing system SSOT · not Official live Web3
+
+unique_system:
+  web3_runtime: mainnet_deployed_official
+  official_chain_id: 1
+  psg_release_version: MAINNET-OFFICIAL-LIVE-PARTIAL
+  official_contract_profile: mainnet_deployed_official_partial
+  # Demoted Candidate pin retained for gate ancestry / Local-Staging side track
+  candidate_pin_demoted: PSG-REL-20260720-WEB3-CAND-V2
+  # Keep literal pin string for check-engineering-ssot-anchor-gate.sh ancestry grep
+  psg_release_version_demoted_cite: PSG-REL-20260720-WEB3-CAND-V2
+  candidate_status: DEMOTED_TESTNET
+  candidate_live_truth_marker: CLEARED
+  deploy_baseline: mainnet_deployed_official_partial
+  constitution: V3.1.1_Final
   egm: PSG_EGM_Final
+  # Gate-required ancestry tip (do not remove — check-engineering-ssot-anchor-gate.sh)
+  git_sha: "3b310ca856ce2850b37a6f993f8c5649e87903b1"
+  living_tip_sha: "ea71c577ce6f99696df33f9394cf96746edc843b"
+  sole_live_web3: true
+  money_path: MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED
+  dual_wait: WAITING_TRACK2_TIMELOCK_ETA+WAITING_GOV04_TIMELOCK_ETA
+  dual_wait_historical: true
+  dual_wait_living_overlay: TRACK2_1USDC_CLOSED_REALITY_OWNER_A+GOV04_LIVE_10_TO_10+AXIS11_CLOSED_FINAL_CLOSURE_BATCH
+  dual_wait_ssot: docs/runbook/TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md
+  official_www_live: 3e356617a498b0faac42e4ae457343d36294a770
+  official_www_build_time: "2026-08-20T00:51:57Z"
+  official_www_baseline_id: TT-OFFICIAL-OPS-20260820-V9
+  official_www_fly_image: hybrid-live-auth-pin-nontarget-v9-20260820
+  official_www_session_bootstrap: v8
+  go_eligibility_overlay: READY_FOR_OWNER_PRODUCTION_GO_VERDICT
+  official_factory_wired: "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6"
+  fee_router: "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72"
+  settlement_router: "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372"
+  note: >
+    Official live = mainnet Money Path (Wired+Fee+Settlement).
+    Official product truth = FTB Product Truth OPS-2026.08.20-v9
+    (3e356617 / 2026-08-20T00:51:57Z / hybrid-…-v9 / bootstrap v8; not git checkout).
+    daa5ae87 SUPERSEDED; M07 overlay ROLLED_BACK. Candidate DEMOTED_TESTNET. ≠ Production Ready.
+    Cycle2 READY_FOR_OWNER_PRODUCTION_GO_VERDICT. Next = Owner written GO vs continue NO_GO.
 
-# Entities that MUST cite Active pin + tip (or Explicit Expected Difference)
-bound_entities:
-  git:
-    axis: local_git
-    ssot: git rev-parse HEAD == active.git_sha
-  web:
-    axis: web_image
-    ssot: tt-web-staging bake + /api/release-identity
-    defaults_must_not: PSG-REL-20260722-STAGING-ALIGN-W0
-  api:
-    axis: api_image
-    ssot: GET /meta build.*
-    defaults_must_not: PSG-REL-20260722-STAGING-ALIGN-W0
-  runtime:
-    axis: runtime_meta
-    ssot: attestation_status=ok · same pin/sha/profile
-  contract:
-    axis: contract_bytecode_pin
-    ssot: v311_fund_safety_candidate_v2
-    legacy_forbidden_as_active:
-      - gov_freeze_v2_clean_baseline
-      - v311_sepolia_clean_baseline
-  database:
-    axis: database_baseline
-    ssot: staging_rc_ssot_alignment.v1#expected_staging_surface
-  migration:
-    axis: migration_checksum
-    ssot: crates/api/migrations/*.sql eol=lf · match applied ledger
-  registry:
-    axis: registry_active
-    ssot: registry/psg-release-version-LATEST.yaml#active
-  evidence:
-    axis: evidence_bundle
-    ssot: evidence/GO_web3_candidate_v2
-    append_only: evidence/GO_fg15_observation_48h_candidate_v2
-  docs:
-    axis: runbook_cites
-    ssot: FINAL RELEASE + Candidate v2 + V3.1.1 + EGM Final
-  media_assets:
-    axis: role_promo_media
-    ssot: registry/traveltrust-role-promo-media-assets.v1.yaml
-    runtime_manifest: frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json
-    storage: git_lfs
-    gate: scripts/gates/check-traveltrust-role-promo-media-ssot-gate.sh
-    forbidden: bake_depends_on_gitignore_drop_zone
+three_env_lock:
+  official_site_runtime: mainnet_deployed_official
+  testnet: Sepolia_architecture_aligned_address_independent
+  local: Local_architecture_aligned_address_independent
+  status: LOCKED
+  note: >
+    Official = mainnet Wired/Fee/Settlement addresses + ABI.
+    Sepolia/Local match protocol/ABI/flow with independent addresses —
+    never copy mainnet addresses or claim Official.
 
-forbidden_as_active_defaults:
-  - PSG-REL-20260722-STAGING-ALIGN-W0
-  - PSG-REL-20260719-FG15-09c72b93
-  - gov_freeze_v2_clean_baseline_as_ACTIVE_money_path
-  - FG15_A_living_RUNNING
-  - Reality_W0_W7_as_release_mainline
-  - Draft_economic_constitution
+wait_gate:
+  sequence: Inventory → Owner fill → Reality 10 USDC → Timelock×1 → seal → reassess GO
+  inventory_verdict: MONEY_PATH_ON_CHAIN_CODE_YES
+  reality_matrix: docs/runbook/TT-MAINNET-REALITY-FUNDS-TEST-MATRIX-LATEST.md
+  reality_status: PARTIAL_IN_FLIGHT_WAITING_TIMELOCK_ETA
+  money_path_prep: docs/runbook/TT-MAINNET-MONEY-PATH-CLOSURE-PREP-LATEST.md
+  money_path_living: MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED
+  i03_living: TESTNET_SIDE_TRACK
+  i03_closed: false
+  no_redeploy: true
+  axis11: UNBROADCAST
+  axis11_living_overlay: CLOSED_FINAL_CLOSURE_BATCH
+  hard_gate: REFUSED
 
-task_chain_after_freeze:
-  - ELAPSED_48h_FG15_B  # evidence already ELAPSED · registry must match
-  - Project_A
-  - PSG_Recalculate_Inventory_Delta
-  - Reality_Closure
-  - Staging_grade_GO_judgment
-  - Production_GO  # separate · requires TT_PSG_PRODUCTION_CERT=PASS
+production:
+  axis11: UNBROADCAST
+  axis11_living_overlay: CLOSED_FINAL_CLOSURE_BATCH
+  TT_PRODUCTION_GO: NO_GO
+  production_ready_claim: FORBIDDEN
+  money_path: MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED
+
+forbidden:
+  - official_equals_candidate
+  - second_live_web3_under_ftb
+  - unauthorized_web3_mutate
+  - fg15a_as_live
+  - redeploy_over_history
+  - delete_archive_go_pack
+  - claim_candidate_runtime_as_production_go
+  - claim_candidate_as_official_mainnet
+  - axis11_early_broadcast
+  - fake_i03_or_money_path_closed
+  - user_funds_without_settlement_fee
+  - production_ready_mislabel
+
+cites:
+  human: docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md
+  machine_json: docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.json
+  final_truth_baseline: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+  web3_candidate_demoted: docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md
+  mainnet_registry: registry/mainnet-address-registry.v1.yaml
+  money_path_prep: docs/runbook/TT-MAINNET-MONEY-PATH-CLOSURE-PREP-LATEST.md
+  reality_matrix: docs/runbook/TT-MAINNET-REALITY-FUNDS-TEST-MATRIX-LATEST.md
+  inventory: docs/runbook/TT-MAINNET-CONTRACT-INVENTORY-LATEST.md
+  indexer_prep: docs/runbook/TT-MAINNET-INDEXER-READINESS-PREP-LATEST.md
+  i03_side_track: docs/runbook/TT-INTEGRATED-RUNTIME-ALIGNMENT-I03-MONEY-PATH-CHECKLIST-LATEST.md
 
 honesty: >
-  Engineering SSOT Anchor ≠ FREEZE ≠ cert PASS ≠ Staging-grade GO ≠ Production GO.
+  Engineering SSOT Anchor cites Final Truth Baseline as sole system SSOT.
+  Official live Web3 = mainnet deployed (chain_id=1).
+  Candidate 活真源 cleared: PSG-REL-20260720-WEB3-CAND-V2 = DEMOTED_TESTNET.
+  AXIS-11 UNBROADCAST. TT_PRODUCTION_GO=NO_GO. Production Ready FORBIDDEN.
+  Money path incomplete until Settlement/Fee Owner fill.

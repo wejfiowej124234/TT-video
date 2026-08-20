@@ -1,0 +1,104 @@
+{
+  "schema": "traveltrust.wait_window_ux_b10_guides_depth_runtime_verify.v1",
+  "batch": "B10-GUIDES-DEPTH",
+  "verified_utc": "2026-08-10T13:20:00Z",
+  "official_runtime_verify": "PASS",
+  "batch_closed": true,
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "deploy": {
+    "web_app": "tt-web-prod",
+    "web_git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+    "api_app": "tt-api-prod",
+    "api_note": "Native B10-G-001 API parity deploy FAILED (sqlx checksum drift migration 20260708120000); rolled back to prior good image deployment-01KZBCCCCXMM9RT04P0Z074XG4. FE list→detail marketing hydrate closed G-001 on Official."
+  },
+  "checks": [
+    {
+      "id": "B10-G-001",
+      "decision": "CLOSED_VIA_FE_HYDRATE",
+      "result": "PASS",
+      "note": "Detail Omar shows public_title/hourly via list hydrate; native API parity deferred pending migration hygiene"
+    },
+    {
+      "id": "B10-G-002",
+      "decision": "FIX_NOW",
+      "result": "PASS",
+      "evidence": [
+        {
+          "url": "/guides?b10=2",
+          "cards": "Omar/Dubai · Carlos/Barcelona",
+          "result": "PASS"
+        },
+        {
+          "url": "/guides/9ccab777-3e3f-4711-af42-75203b639670",
+          "h1": "Omar",
+          "city": "Dubai · AE",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "B10-G-003",
+      "decision": "FIX_NOW",
+      "result": "PASS",
+      "evidence": "Search box present; filter zzz-no-match clears grid + Clear search"
+    },
+    {
+      "id": "B10-G-004",
+      "decision": "FIX_NOW",
+      "result": "PASS",
+      "evidence": [
+        {
+          "url": "/guides",
+          "uat_visible": false,
+          "result": "PASS"
+        },
+        {
+          "url": "/guides/2caceaae-96f2-4b17-82fc-a5f9ed83b779",
+          "h1": "Guide not found",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "B10-G-005",
+      "decision": "ACCEPT",
+      "result": "CLOSED",
+      "evidence": "Book guide → BookGuideModal (Omar)"
+    },
+    {
+      "id": "B10-G-006",
+      "decision": "DEFER",
+      "note": "Bio remains Chinese under EN; server pagination/sort; mobile polish; pre-existing guides_newItineraryDraft missing i18n key"
+    }
+  ],
+  "frozen_untouched": [
+    "Mainnet Reality",
+    "Money Path",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "honesty": [
+    "B10 CLOSED ≠ Seal ≠ Production GO",
+    "Next: B11 Governance Public Surface → wait-window product face closure → ETA Track1 Finalize"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

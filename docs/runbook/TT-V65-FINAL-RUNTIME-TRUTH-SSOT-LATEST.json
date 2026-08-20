@@ -2,54 +2,46 @@
   "schema": "traveltrust.v65_final_runtime_truth_ssot.v1",
   "machine_key": "TT_V65_FINAL_RUNTIME_TRUTH",
   "title": "V65 Final Runtime Truth SSOT",
-  "stamp": "20260803T040941Z",
+  "stamp": "20260810T002000Z",
   "status": "ACTIVE_UNIQUE_RUNTIME_SSOT",
   "candidate_id": "V65-PROD-CAND-20260802",
+  "unique_rc_id": "V65-PROD-RC-20260806",
   "tt_production_go": "NO_GO",
-  "release_mode": {
-    "id": "V65_BATCH_RELEASE_CLOSURE",
-    "status": "ACTIVE",
-    "active_since": "20260803T034933Z",
-    "active_batch": "V65-ADMIN-UX",
-    "process": "docs/runbook/TT-V65-BATCH-RELEASE-CLOSURE-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-ADMIN-UX-BATCH-GAP-INVENTORY-LATEST.json",
-    "truth_chain": [
-      "V65_Product_Truth",
-      "Release_Candidate_Batch",
-      "Production_Runtime"
-    ],
-    "forbidden": "local_direct_to_production_fragment_deploys_except_p0",
-    "batch_freeze_status": "FROZEN",
-    "batch_inventory_stamp": "20260803T040941Z"
-  },
+  "production_ready_claim": "FORBIDDEN",
+  "money_path": "MAINNET_MONEY_PATH_INCOMPLETE",
   "runtime": {
     "hosts": {
-      "api": "https://tt-api-prod.fly.dev",
-      "web": "https://tt-web-prod.fly.dev"
+      "api": "https://api.web3-ttg.com",
+      "web": "https://www.web3-ttg.com"
     },
-    "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
-    "web_git_sha": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
-    "composition_sha": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "api_git_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "web_git_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "composition_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "composition_model": "unique_rc_dual_tip_fe_face",
     "live_verified": {
-      "api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
-      "web_sha": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
+      "api_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "web_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
       "deployment_profile": "production",
       "attestation_status": "ok",
-      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
-      "contract_profile": "v311_fund_safety_candidate_v2",
-      "cms_baseline": "public_display_10x4 + catalog_bake=1",
-      "web_build_time": "2026-08-03T03:27:00Z",
-      "web_identity_source": "docker-bake",
-      "web_opex_chunk": "39847-0ec032687fc47a33.js",
-      "web_opex_content_verdict": "PASS",
-      "web_reality_verification_stamp": "20260803T023036Z",
-      "tip_advance_note": "7a37d10e OPEX bake → 87a5686f Workbench polish (last fragment before Batch Closure ACTIVE)"
+      "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+      "contract_profile": "mainnet_deployed_official_partial",
+      "chain_id": 1,
+      "cms_baseline": "public_display_10x4 + catalog_bake=1"
     }
+  },
+  "web3_official_live": {
+    "sole_live": "mainnet_deployed_official",
+    "chain_id": 1,
+    "release": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+    "profile": "mainnet_deployed_official_partial",
+    "registry": "registry/mainnet-address-registry.v1.yaml",
+    "money_path": "MAINNET_MONEY_PATH_INCOMPLETE"
   },
   "web3_orthogonal": {
     "tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
     "pin": "PSG-REL-20260720-WEB3-CAND-V2",
-    "status": "LOCKED_UNTOUCHED"
+    "status": "DEMOTED_TESTNET",
+    "must_not_claim_official_live": true
   },
   "parent_baselines": {
     "final_truth": "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json",
@@ -58,49 +50,14 @@
     "freeze_pin": "docs/runbook/TT-V65-PRODUCTION-CANDIDATE-FREEZE-PIN-LATEST.json",
     "alignment_report": "docs/runbook/TT-V65-FINAL-TRUTH-ALIGNMENT-REPORT-LATEST.json",
     "capability_reality": "docs/runbook/TT-V65-PRODUCT-CAPABILITY-REALITY-CLOSURE-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-PRODUCT-CAPABILITY-GAP-INVENTORY-LATEST.json",
-    "exhaustive_capability": "docs/runbook/TT-V65-EXHAUSTIVE-CAPABILITY-CLOSURE-LATEST.json",
-    "production_quality": "docs/runbook/TT-V65-PRODUCTION-QUALITY-CLOSURE-LATEST.json",
-    "production_hardening": "docs/runbook/TT-V65-PRODUCTION-HARDENING-FINAL-LATEST.json",
-    "drift_audit": "docs/runbook/TT-V65-RUNTIME-TRUTH-DRIFT-AUDIT-LATEST.json",
-    "composition_manifest": "docs/runbook/TT-FINAL-TRUTH-RELEASE-COMPOSITION-MANIFEST-LATEST.json",
-    "operational_reality": "docs/runbook/TT-V65-OPERATIONAL-REALITY-SIMULATION-LATEST.json",
-    "product_surface_reality": "docs/runbook/TT-V65-PRODUCT-SURFACE-REALITY-LATEST.json",
-    "final_product_quality_commercial_readiness": "docs/runbook/TT-V65-FINAL-PRODUCT-QUALITY-COMMERCIAL-READINESS-LATEST.json",
-    "enterprise_admin_console_product_quality": "docs/runbook/TT-V65-ENTERPRISE-ADMIN-CONSOLE-PRODUCT-QUALITY-LATEST.json",
-    "admin_console_enterprise_ux_operability": "docs/runbook/TT-V65-ADMIN-CONSOLE-ENTERPRISE-UX-OPERABILITY-LATEST.json",
-    "admin_console_l5_ux_quality_closure": "docs/runbook/TT-V65-ADMIN-CONSOLE-L5-UX-QUALITY-CLOSURE-LATEST.json",
-    "admin_console_real_visual_experience": "docs/runbook/TT-V65-ADMIN-CONSOLE-REAL-VISUAL-EXPERIENCE-LATEST.json",
-    "admin_console_enterprise_l5_ux_reality_hardening": "docs/runbook/TT-V65-ADMIN-CONSOLE-ENTERPRISE-L5-UX-REALITY-HARDENING-LATEST.json",
-    "admin_console_operational_product_experience_final_review": "docs/runbook/TT-V65-ADMIN-CONSOLE-OPERATIONAL-PRODUCT-EXPERIENCE-FINAL-REVIEW-LATEST.json",
-    "admin_logged_in_operational_uat": "docs/runbook/TT-V65-ADMIN-LOGGED-IN-OPERATIONAL-UAT-LATEST.json",
-    "production_runtime_reality_verification": {
-      "stamp": "20260803T023036Z",
-      "verdict": "V65_OPEX_BAKED_IN_PRODUCTION_WEB_RUNTIME_VERIFIED",
-      "web_git_sha_at_opex_bake": "7a37d10efa66630aba686e569227a3b244ed41f9",
-      "web_git_sha_current": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
-      "tt_production_go": "NO_GO",
-      "ref": "docs/runbook/TT-V65-PRODUCTION-RUNTIME-REALITY-VERIFICATION-LATEST.json"
-    },
-    "batch_release_closure": {
-      "stamp": "20260803T040941Z",
-      "status": "FROZEN_BATCH_FIX_APPLIED",
-      "active_batch": "V65-ADMIN-UX",
-      "ref": "docs/runbook/TT-V65-BATCH-RELEASE-CLOSURE-LATEST.json"
-    },
-    "admin_ux_batch_gap_inventory": {
-      "stamp": "20260803T040941Z",
-      "freeze_status": "FROZEN",
-      "ref": "docs/runbook/TT-V65-ADMIN-UX-BATCH-GAP-INVENTORY-LATEST.json"
-    }
+    "gap_inventory": "docs/runbook/TT-V65-PRODUCT-CAPABILITY-GAP-INVENTORY-LATEST.json"
   },
   "capability_summary": {
     "verdict": "PASS",
     "capability_status": "PRODUCTION_CAPABILITY_COMPLETE_MACHINE_SLICE",
     "features_audited": 25,
     "p0_gaps": 0,
-    "p1_gaps": 0,
-    "stamp": "20260802T143114Z"
+    "p1_gaps": 0
   },
   "pollution_forbidden": [
     "legacy_staging_1ff71858_as_runtime",
@@ -112,292 +69,24 @@
   "honesty": {
     "runtime_truth_is_not_production_go": true,
     "human_uat_still_required": true,
-    "machine_capability_complete_not_human_uat": true,
-    "logged_in_admin_uat_auth_gated_hold": true
+    "machine_capability_complete_not_human_uat": true
   },
-  "capability_ref": "docs/runbook/TT-V65-PRODUCT-CAPABILITY-REALITY-CLOSURE-LATEST.json",
-  "gap_inventory_ref": "docs/runbook/TT-V65-PRODUCT-CAPABILITY-GAP-INVENTORY-LATEST.json",
-  "exhaustive_capability_closure": {
-    "stamp": "20260802T144822Z",
-    "verdict": "PASS",
-    "status": "EXHAUSTIVE_CAPABILITY_CLOSURE_MACHINE_PASS",
-    "report": "docs/runbook/TT-V65-EXHAUSTIVE-CAPABILITY-CLOSURE-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-EXHAUSTIVE-GAP-INVENTORY-LATEST.json",
-    "inventory": "registry/v65-exhaustive-capability-inventory.v1.json",
-    "counts": {
-      "fe_pages": 207,
-      "fe_user": 89,
-      "fe_admin": 118,
-      "api_paths": 639,
-      "fe_api_constants": 402,
-      "tables": 155,
-      "journeys": 6
-    },
-    "p0_gaps": 0,
-    "p1_gaps": 0
-  },
-  "production_quality_closure": {
-    "stamp": "20260802T150208Z",
-    "verdict": "PASS",
-    "status": "PRODUCTION_QUALITY_CLOSURE_MACHINE_PASS_WITH_P1_BACKLOG",
-    "report": "docs/runbook/TT-V65-PRODUCTION-QUALITY-CLOSURE-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-PRODUCTION-QUALITY-GAP-INVENTORY-LATEST.json",
-    "api_only_classification": "registry/v65-api-only-table-classification.v1.json",
-    "summary": {
-      "p0_gaps": 0,
-      "p1_gaps": 6,
-      "warn_gaps": 13,
-      "confirm_design": 100,
-      "priority_pages": 20,
-      "api_only_tables_classified": 100,
-      "lifecycle_objects": 7,
-      "ux_gaps": 9,
-      "notify_event_gaps": 0
-    }
-  },
-  "production_hardening_final_sweep": {
-    "stamp": "20260802T151249Z",
-    "verdict": "PASS",
-    "status": "PRODUCTION_HARDENING_FINAL_MACHINE_PASS_WITH_P1_BACKLOG",
-    "report": "docs/runbook/TT-V65-PRODUCTION-HARDENING-FINAL-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-PRODUCTION-HARDENING-GAP-INVENTORY-LATEST.json",
-    "csp_policy": "registry/v65-csp-report-only-policy.v1.json",
-    "summary": {
-      "fe_pages": 207,
-      "live_probed": 35,
-      "p0_gaps": 0,
-      "p1_gaps": 1,
-      "warn_gaps": 49,
-      "content_pass": 6,
-      "content_total": 6,
-      "csp_code": "PASS",
-      "csp_live_report_only": false
-    }
-  },
-  "runtime_truth_drift_prevention": {
-    "stamp": "20260802T151859Z",
-    "verdict": "PASS",
-    "status": "RUNTIME_TRUTH_DRIFT_PREVENTION_PASS",
-    "report": "docs/runbook/TT-V65-RUNTIME-TRUTH-DRIFT-AUDIT-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-RUNTIME-TRUTH-DRIFT-GAP-INVENTORY-LATEST.json",
-    "summary": {
-      "p0_gaps": 0,
-      "p1_gaps": 0,
-      "p2_gaps": 0,
-      "warn_gaps": 0,
-      "pollution_before": 0,
-      "pollution_after": 0,
-      "admin_families_pass": 9,
-      "lifecycle_pass": 5,
-      "autofix_count": 3
-    }
-  },
-  "operational_reality_simulation": {
-    "stamp": "20260802T152203Z",
-    "verdict": "PASS",
-    "status": "OPERATIONAL_REALITY_SIMULATION_MACHINE_PASS",
-    "report": "docs/runbook/TT-V65-OPERATIONAL-REALITY-SIMULATION-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-OPERATIONAL-REALITY-SIMULATION-GAP-INVENTORY-LATEST.json",
-    "journeys_registry": "registry/v65-operational-reality-journeys.v1.json",
-    "summary": {
-      "p0_gaps": 0,
-      "p1_gaps": 0,
-      "p2_gaps": 0,
-      "journeys": 7,
-      "journeys_pass": 7,
-      "live_probe_fails": 0,
-      "data_reality": "PASS",
-      "media_recovery": "PASS"
-    }
-  },
-  "product_surface_reality": {
-    "stamp": "20260802T153252Z",
-    "verdict": "PASS",
-    "status": "PRODUCT_SURFACE_REALITY_MACHINE_PASS",
-    "report": "docs/runbook/TT-V65-PRODUCT-SURFACE-REALITY-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-PRODUCT-SURFACE-REALITY-GAP-INVENTORY-LATEST.json",
-    "inventory": "registry/v65-product-surface-inventory.v1.json",
-    "summary": {
-      "p0_gaps": 0,
-      "p1_gaps": 0,
-      "p2_gaps": 0,
-      "surfaces": 15,
-      "surfaces_pass": 15,
-      "lifecycles_pass": 8,
-      "lifecycles": 8,
-      "live_fail_count": 0,
-      "table_buckets": {
-        "BACKEND_VIA_API": 35,
-        "INTERNAL_ANALYTICS": 11,
-        "INTERNAL_AUDIT": 8,
-        "INTERNAL_JOB_SCHEDULER": 6,
-        "INTERNAL_MIGRATION": 7,
-        "INTERNAL_OR_REVIEW": 30,
-        "INTERNAL_SECURITY": 9,
-        "PRODUCT_DATA": 20,
-        "WEB3_BRIDGE_ORTHOGONAL": 24,
-        "WEB3_OR_INTERNAL": 5
-      }
-    }
-  },
-  "final_product_quality_commercial_readiness": {
-    "stamp": "20260802T155208Z",
-    "verdict": "PASS",
-    "status": "FINAL_PRODUCT_QUALITY_COMMERCIAL_READINESS_MACHINE_PASS_WITH_BACKLOG",
-    "report": "docs/runbook/TT-V65-FINAL-PRODUCT-QUALITY-COMMERCIAL-READINESS-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-FINAL-PRODUCT-QUALITY-GAP-INVENTORY-LATEST.json",
-    "inventory": "registry/v65-final-product-quality-commercial-readiness.v1.json",
-    "summary": {
-      "p0_gaps": 0,
-      "p1_gaps": 1,
-      "p2_gaps": 4,
-      "dimensions_pass": 10,
-      "dimensions": 10,
-      "lifecycles_pass": 8,
-      "lifecycles": 8,
-      "data_chains_pass": 6,
-      "data_chains": 6,
-      "roles_pass": 4,
-      "roles": 4,
-      "commercial_pages": 25
-    }
-  },
-  "enterprise_admin_console_product_quality": {
-    "stamp": "20260802T162312Z",
-    "verdict": "PASS",
-    "status": "ENTERPRISE_ADMIN_CONSOLE_PRODUCT_QUALITY_MACHINE_PASS_WITH_BACKLOG",
-    "report": "docs/runbook/TT-V65-ENTERPRISE-ADMIN-CONSOLE-PRODUCT-QUALITY-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-ENTERPRISE-ADMIN-CONSOLE-PRODUCT-QUALITY-GAP-INVENTORY-LATEST.json",
-    "inventory": "registry/v65-enterprise-admin-console-inventory.v1.json",
-    "summary": {
-      "p0_gaps": 0,
-      "p1_gaps": 1,
-      "p2_gaps": 0,
-      "modules_pass": 14,
-      "modules": 14,
-      "admin_pages": 118,
-      "i18n_missing_zh": 0,
-      "i18n_missing_en": 0,
-      "live_fail_count": 0
-    }
-  },
-  "admin_console_enterprise_ux_operability": {
-    "stamp": "20260803T001504Z",
-    "verdict": "V65_ADMIN_UX_OPERABILITY_MACHINE_PASS",
-    "status": "ADMIN_UX_OPERABILITY_MACHINE_PASS",
-    "report": "docs/runbook/TT-V65-ADMIN-CONSOLE-ENTERPRISE-UX-OPERABILITY-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-ADMIN-CONSOLE-ENTERPRISE-UX-OPERABILITY-GAP-INVENTORY-LATEST.json",
-    "summary": {
-      "modules": 14,
-      "admin_pages_crawled": 118,
-      "p0_gaps": 0,
-      "p1_gaps": 0,
-      "p2_gaps": 50,
-      "vitest_ok": true
-    }
-  },
-  "s5_mainnet_reality_closure": {
-    "stamp": "20260803T002548Z",
-    "verdict": "S5_MAINNET_REALITY_CLOSURE_INCOMPLETE_HOLD_NO_GO",
-    "closure_status": "SYNC_CLOSURE_INCOMPLETE_HOLD_NO_GO",
+  "ssot_sha256": "a62c695dc244a63d2dcd5e0d51de3e5f33053c5de074f97b647387e49a023dc3",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
     "tt_production_go": "NO_GO",
-    "cite": "docs/runbook/TT-S5-MAINNET-REALITY-CLOSURE-LATEST.json",
-    "evidence": "evidence/GO_s5_mainnet_reality_closure/20260803T002548Z",
-    "pins_untouched": true,
-    "web3_lock_untouched": true
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
   },
-  "admin_console_l5_ux_quality_closure": {
-    "stamp": "20260803T010357Z",
-    "verdict": "V65_ADMIN_L5_UX_QUALITY_MACHINE_PASS",
-    "status": "ADMIN_L5_UX_QUALITY_MACHINE_PASS",
-    "report": "docs/runbook/TT-V65-ADMIN-CONSOLE-L5-UX-QUALITY-CLOSURE-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-ADMIN-CONSOLE-L5-UX-QUALITY-GAP-INVENTORY-LATEST.json",
-    "summary": {
-      "page_count": 118,
-      "pages_checklist_pass": 118,
-      "pages_checklist_fail": 0,
-      "p0_gaps": 0,
-      "p1_gaps": 0,
-      "p2_gaps": 0,
-      "gap_total": 0
-    }
-  },
-  "admin_console_real_visual_experience": {
-    "stamp": "20260803T011447Z",
-    "verdict": "V65_ADMIN_REAL_VISUAL_MACHINE_PASS",
-    "status": "ADMIN_REAL_VISUAL_EXPERIENCE_MACHINE_PASS",
-    "report": "docs/runbook/TT-V65-ADMIN-CONSOLE-REAL-VISUAL-EXPERIENCE-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-ADMIN-CONSOLE-REAL-VISUAL-EXPERIENCE-GAP-INVENTORY-LATEST.json",
-    "summary": {
-      "page_count": 118,
-      "pages_l5_pass": 118,
-      "pages_l5_fail": 0,
-      "avg_page_score": 92.4,
-      "l5_bar": 85,
-      "p0_gaps": 0,
-      "p1_gaps": 0,
-      "p2_gaps": 0,
-      "gap_total": 0,
-      "modules": 14
-    }
-  },
-  "admin_console_enterprise_l5_ux_reality_hardening": {
-    "stamp": "20260803T013656Z",
-    "verdict": "V65_ADMIN_ENTERPRISE_L5_UX_REALITY_HARDENING_MACHINE_PASS",
-    "status": "ADMIN_ENTERPRISE_L5_UX_REALITY_HARDENING_MACHINE_PASS",
-    "report": "docs/runbook/TT-V65-ADMIN-CONSOLE-ENTERPRISE-L5-UX-REALITY-HARDENING-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-ADMIN-CONSOLE-ENTERPRISE-L5-UX-REALITY-HARDENING-GAP-INVENTORY-LATEST.json",
-    "summary": {
-      "page_count": 118,
-      "pages_l5_pass": 118,
-      "pages_l5_fail": 0,
-      "avg_page_score": 92.4,
-      "l5_bar": 85,
-      "after_bar": 95,
-      "dossiers_pass": 2,
-      "dossiers_total": 2,
-      "p0_gaps": 0,
-      "p1_gaps": 0,
-      "p2_gaps": 0,
-      "gap_total": 0,
-      "modules": 14,
-      "reality_p0": 0
-    },
-    "orthogonal_to": [
-      "admin_console_real_visual_experience",
-      "admin_console_l5_ux_quality_closure",
-      "admin_console_enterprise_ux_operability"
-    ]
-  },
-  "admin_console_operational_product_experience_final_review": {
-    "stamp": "20260803T015853Z",
-    "verdict": "V65_ADMIN_OPERATIONAL_PRODUCT_EXPERIENCE_FINAL_REVIEW_MACHINE_PASS",
-    "status": "ADMIN_OPERATIONAL_PRODUCT_EXPERIENCE_FINAL_REVIEW_MACHINE_PASS",
-    "report": "docs/runbook/TT-V65-ADMIN-CONSOLE-OPERATIONAL-PRODUCT-EXPERIENCE-FINAL-REVIEW-LATEST.json",
-    "gap_inventory": "docs/runbook/TT-V65-ADMIN-CONSOLE-OPERATIONAL-PRODUCT-EXPERIENCE-FINAL-REVIEW-GAP-INVENTORY-LATEST.json",
-    "summary": {
-      "page_count": 118,
-      "pages_l5_pass": 118,
-      "pages_l5_fail": 0,
-      "avg_page_score": 92.4,
-      "l5_bar": 85,
-      "after_bar": 95,
-      "dossiers_pass": 2,
-      "dossiers_total": 2,
-      "p0_gaps": 0,
-      "p1_gaps": 0,
-      "p2_gaps": 0,
-      "gap_total": 0,
-      "modules": 14,
-      "reality_p0": 0
-    },
-    "orthogonal_to": [
-      "admin_console_enterprise_l5_ux_reality_hardening",
-      "admin_console_real_visual_experience",
-      "admin_console_l5_ux_quality_closure",
-      "admin_console_enterprise_ux_operability",
-      "enterprise_admin_console_product_quality"
-    ]
-  },
-  "ssot_sha256": "74275dc00685b9e7a79e2a03dd948cb722b65330c8e4779e419a06fb5511797a"
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

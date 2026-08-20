@@ -1,0 +1,792 @@
+{
+  "schema": "traveltrust.wait_window_seal_after_official_cut_queue.v1",
+  "status": "CUT_QUEUE_HOLD_PRE_ETA_TRACK1_FINALIZE_BATTLE_READY_NO_NEW_OFFICIAL_CUTS",
+  "recorded_utc": "2026-08-12T10:10:00Z",
+  "before_eta": true,
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "freeze_mode": "CUT_QUEUE_HOLD_PRE_ETA_NO_NEW_CUTS",
+  "hold_lock": "TT-TRACK1-OWNER-RPC-FINALIZE-BATTLE-SURFACE-LATEST",
+  "execute_authorized": false,
+  "battle_surface_status": "TRACK1_FINALIZE_BATTLE_READY",
+  "preflight_snapshot": "TT-WAIT-WINDOW-TRACK1-PRE-ETA-READONLY-PREFLIGHT-LATEST",
+  "cut_queue_unlocked": false,
+  "unlock_requires": "REALITY_EVIDENCE_SEAL_PASS_THEN_OWNER",
+  "local_prep_new_batches": "FORBIDDEN",
+  "product_code_mutations": "FORBIDDEN",
+  "official_runtime_mutations": "FORBIDDEN",
+  "eta_before_allowed": [
+    "track1_fail_closed_read_only_preflight",
+    "track1_readonly_monitor",
+    "battle_surface_recheck",
+    "ssot_registration_only"
+  ],
+  "eta_before_forbidden": [
+    "product_code_add_or_modify",
+    "official_runtime_mutate",
+    "new_local_prep_batches",
+    "official_deploy",
+    "official_fe_cut",
+    "official_api_cut",
+    "non_blocking_ui_hygiene_cut",
+    "track1_execute_release",
+    "seal",
+    "tt_production_go",
+    "unlock_cut_queue",
+    "anomaly_fix"
+  ],
+  "post_seal_cut_order": [
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1"
+  ],
+  "prior_pack_must_be_closed_before_next": true,
+  "post_seal_loop_per_pack": [
+    "official_deploy",
+    "runtime_verify",
+    "ssot_rewrite",
+    "staging_local_semantic_align",
+    "CLOSED"
+  ],
+  "file_overlap": {
+    "R-USDC-1_x_R-PAY-IA-1": [],
+    "R-USDC-1_x_R-ADMIN-1": [],
+    "R-PAY-IA-1_x_R-ADMIN-1": [],
+    "multi_pack_files": [],
+    "union_file_count": 29,
+    "independent_rollback": true
+  },
+  "packs": [
+    {
+      "id": "R-USDC-1",
+      "cut_order": 1,
+      "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+      "evidence": "TT-WAIT-WINDOW-R-USDC-1-LOCAL-PREP-LATEST",
+      "deploy_surface": "FE_ONLY",
+      "changed_file_count": 14,
+      "opens_after": "REALITY_EVIDENCE_SEAL_PASS"
+    },
+    {
+      "id": "R-PAY-IA-1",
+      "cut_order": 2,
+      "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+      "evidence": "TT-WAIT-WINDOW-R-PAY-IA-1-LOCAL-PREP-LATEST",
+      "deploy_surface": "FE_ONLY_NEXT_CONFIG",
+      "changed_file_count": 5,
+      "opens_after": "R-USDC-1_CLOSED"
+    },
+    {
+      "id": "R-ADMIN-1",
+      "cut_order": 3,
+      "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+      "evidence": "TT-WAIT-WINDOW-R-ADMIN-1-LOCAL-PREP-LATEST",
+      "deploy_surface": "FE_PRIMARY_API_ORPHAN_OPTIONAL",
+      "changed_file_count": 10,
+      "opens_after": "R-PAY-IA-1_CLOSED",
+      "notes": "living admin orders id/q already in mod.rs; FE routes.admin.orders serialization is the Cut-3 critical path; admin_orders_http.rs not routed"
+    }
+  ],
+  "hard_file_dependencies_between_packs": false,
+  "soft_order_reason": "USDC display before Pay IA before Admin honesty RV; serial CLOSED gate",
+  "manifest_frozen_at": "2026-08-11T03:07:27Z",
+  "tt_production_go": "NO_GO",
+  "next_action": "GAP_CLOSURE_INVENTORY_UNTIL_TRACK2_ETA_PREEMPT",
+  "strategy": "TT-WAIT-WINDOW-MAXIMIZE-PRE-ETA-REMEDIATION-LATEST",
+  "active_pack": "WAIT-WINDOW-WEB3-GAP-CLOSURE-1",
+  "active_pack_hold": "R-AUTHENTICATED-BUSINESS-WRITE-REALITY-1",
+  "recorded_utc_living": "2026-08-12T09:07:53Z",
+  "latest_official_api_image": "deployment-01KZSY5156YAYSJ6D5YT15QY6W",
+  "latest_official_fe_image": "deployment-01KZTF2X1BWTQS8EZTY75RKCHT",
+  "r_owner_observed_reality_1_status": "CLOSED",
+  "r_owner_observed_reality_1_pipeline_blocking": false,
+  "serial_extended": [
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1",
+    "R-MKT-UAT-LEAK-1",
+    "R-COMM-TEXT-BAN-1",
+    "R-MEDIA-1",
+    "R-PUBLIC-GUIDES-DETAIL-PARITY-1",
+    "R-PUBLIC-DISCOVER-FORCE-1",
+    "R-PUBLIC-COMMUNITY-GOVERNED-FEED-1",
+    "R-PUBLIC-COMMUNITY-BEYOND-FEED-1",
+    "R-PUBLIC-COLD-START-GOVERNED-1",
+    "R-RBAC-PUBLIC-CROSS-AUDIT-1",
+    "R-BUSINESS-STATE-AUTHZ-1",
+    "R-FEE-PAYOUT-CONSISTENCY-1",
+    "R-AUTH-SECURITY-1",
+    "FRESH-HARD-GATE-1",
+    "FRESH_HARD_GATE_AXIS_CLOSURE-1",
+    "TRACK2_FACTORY_TRUST_OFFICIAL_PROMOTION-1"
+  ],
+  "r_media_1_official": "CLOSED_FS_RESTORE_GET_200",
+  "r_usdc_1_status": "CLOSED",
+  "closed_packs": [
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1",
+    "R-MKT-UAT-LEAK-1",
+    "R-COMM-TEXT-BAN-1",
+    "R-PUBLIC-GUIDES-DETAIL-PARITY-1",
+    "R-PUBLIC-DISCOVER-FORCE-1",
+    "R-PUBLIC-COMMUNITY-GOVERNED-FEED-1",
+    "R-PUBLIC-COMMUNITY-BEYOND-FEED-1",
+    "R-PUBLIC-COLD-START-GOVERNED-1",
+    "R-RBAC-PUBLIC-CROSS-AUDIT-1",
+    "R-BUSINESS-STATE-AUTHZ-1",
+    "R-FEE-PAYOUT-CONSISTENCY-1",
+    "R-AUTH-SECURITY-1"
+  ],
+  "r_pay_ia_1_status": "CLOSED",
+  "r_admin_1_status": "CLOSED",
+  "r_mkt_uat_leak_1_status": "CLOSED_RESTORED_AFTER_R_COMM_REGRESSION",
+  "r_comm_text_ban_1_status": "CLOSED",
+  "r_rbac_public_cross_audit_1": {
+    "status": "CLOSED",
+    "official_cut": "deployment-01KZQYBQ78C7ZADYSH9Z8GQ6YR",
+    "blocks_track1": false,
+    "evidence": "TT-WAIT-WINDOW-R-RBAC-PUBLIC-CROSS-AUDIT-1-LOCAL-PREP-LATEST",
+    "child_packs": [
+      "R-PUBLIC-REFERRAL-VALIDATE-1",
+      "R-RBAC-DISPUTE-REVIEW-AUTH-1",
+      "R-PUBLIC-GOVERNANCE-MVP-EMPTY-1",
+      "R-PUBLIC-DISCOVER-STRIP-PARTY-IDS-1"
+    ]
+  },
+  "r_business_state_authz_1": {
+    "status": "CLOSED",
+    "official_cut": "deployment-01KZQZF6VYQP8N4KGRJ5EF2F7F",
+    "official_cut_followon": "deployment-01KZR0D7PA1ESGD42QWMGT959J",
+    "official_cut_followon_b": "deployment-01KZR1GTJAZCJ7P2V92SWBA6FP",
+    "blocks_track1": false,
+    "evidence": "TT-WAIT-WINDOW-R-BUSINESS-STATE-AUTHZ-1-LOCAL-PREP-LATEST"
+  },
+  "r_fee_payout_consistency_1": {
+    "status": "CLOSED",
+    "official_cut": "deployment-01KZR2GX9DZXHHZW7KJ3ST8BDJ",
+    "blocks_track1": false,
+    "evidence": "TT-WAIT-WINDOW-R-FEE-PAYOUT-CONSISTENCY-1-LOCAL-PREP-LATEST"
+  },
+  "r_owner_observed_reality_1": {
+    "status": "CLOSED",
+    "official_cut": "deployment-01KZR3RE2BM3Q4TYCCKQZNCDZC",
+    "blocks_track1": false,
+    "pipeline_blocking": false,
+    "evidence": "TT-WAIT-WINDOW-R-OWNER-OBSERVED-REALITY-1-LOCAL-PREP-LATEST",
+    "human_delete_rv": "PASS",
+    "delete_post_id": "360ab3f4-2c97-4e9b-bf48-65e0cc0dea2e",
+    "detail_api_404": "post_not_found",
+    "official_rv_pass": [
+      "cms_community_visibility",
+      "public_uat_leak_beyond_market",
+      "delete_full_chain_owner_ui"
+    ],
+    "after_seal": [
+      "legacy_jpg_404_object_repair"
+    ]
+  },
+  "r_authenticated_business_write_reality_1": {
+    "status": "HOLD_NO_NEW_CUTS",
+    "blocks_track1": false,
+    "p0_owner_delete_rv": "CLOSED",
+    "r_abw_unlike_1": {
+      "status": "RUNTIME_VERIFIED",
+      "official_fe_cut": "deployment-01KZRDM8ZJH0P5T98V9M6KW023",
+      "rv": "POST like then DELETE like → Like,0",
+      "post_id": "43f9ed05-937b-4c76-8b6d-71fb11521313"
+    },
+    "evidence": "TT-WAIT-WINDOW-R-AUTHENTICATED-BUSINESS-WRITE-REALITY-1-LOCAL-PREP-LATEST"
+  },
+  "after_seal_new_registrations": [
+    {
+      "id": "SSOT-ANTI-FORK-SYNC-BATCHES",
+      "class": "SSOT_PROCESS",
+      "status": "REGISTERED_AFTER_SEAL",
+      "evidence": "TT-AFTER-SEAL-SSOT-ANTI-FORK-SYNC-BATCHES-LATEST",
+      "batches": [
+        "S0",
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "goal": "CHAIN = FTB = REGISTRY/ANCHOR = OFFICIAL RUNTIME"
+    },
+    {
+      "id": "R-TTG-MAINNET-TRUST-VERIFICATION-1",
+      "class": "TOKEN_TRUST_GATE_PRE_GO",
+      "status": "IN_PROGRESS",
+      "phase": "AFTER_SEAL_PRE_GO",
+      "evidence": "TT-WAIT-WINDOW-R-TTG-MAINNET-TRUST-VERIFICATION-1-LOCAL-PREP-LATEST",
+      "tt_production_go": "NO_GO",
+      "forbid_redeploy": true,
+      "subgates": {
+        "bytecode_full_match": "PASS",
+        "supply_privilege": "PASS",
+        "etherscan_com": "PENDING_OWNER",
+        "sourcify": "PASS_EXACT_MATCH",
+        "blockscout": "PASS_FULLY_VERIFIED"
+      },
+      "verify_params": "TT-WAIT-WINDOW-R-TTG-ETHERSCAN-VERIFY-PARAMS-LATEST"
+    },
+    {
+      "id": "UI-HYG-COMM-COMMENT-WALLET-CONTRAST-1",
+      "class": "UI_HYGIENE",
+      "blocking": false,
+      "status": "CLOSED",
+      "official_fe_cut": "deployment-01KZST8J7P7GPSY2QCM174A9JM",
+      "evidence": "TT-WAIT-WINDOW-UI-HYG-COMM-COMMENT-WALLET-CONTRAST-1-LOCAL-PREP-LATEST",
+      "runtime_verify": "PASS",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "R-COMM-COMMENT-DELETE-1",
+      "class": "FEATURE_PACK",
+      "status": "CLOSED",
+      "evidence": "TT-WAIT-WINDOW-R-COMM-COMMENT-DELETE-1-LOCAL-PREP-LATEST",
+      "official_api_cut": "deployment-01KZSVKBK6NCKXV8D1WAFCWWYA",
+      "official_fe_cut": "deployment-01KZSW14GYWM10X6A2HW2RZSNC",
+      "runtime_verify": "PASS_UNAUTH_401_CUTS_LIVE",
+      "tt_production_go": "NO_GO",
+      "opens_next": "R-MEDIA-1"
+    },
+    {
+      "id": "R-MEDIA-1",
+      "class": "MEDIA_PHYSICAL_RESTORE",
+      "status": "CLOSED",
+      "evidence": "TT-WAIT-WINDOW-R-MEDIA-1-LOCAL-PREP-LATEST",
+      "runtime_verify": "GET_200_THREE_LEGACY_JPG",
+      "fe_poster_fallback_not_closure": true,
+      "durability_followon": "R-MEDIA-DURABILITY-1",
+      "tt_production_go": "NO_GO"
+    },
+    {
+      "id": "R-MEDIA-DURABILITY-1",
+      "class": "MEDIA_DURABILITY_PRE_GO",
+      "status": "CLOSED",
+      "evidence": "TT-WAIT-WINDOW-R-MEDIA-DURABILITY-1-LOCAL-PREP-LATEST",
+      "official_api_cut": "deployment-01KZSY5156YAYSJ6D5YT15QY6W",
+      "runtime_verify": "CDN_HEAD_200_FEED_ZERO_LEGACY_POST_RESTART",
+      "gate": "scripts/gates/check-r-media-durability-1-regression.sh",
+      "tt_production_go": "NO_GO",
+      "opens_next": "R-SECRET-COMMUNITY-MEDIA-ROTATION-1"
+    },
+    {
+      "id": "R-SECRET-COMMUNITY-MEDIA-ROTATION-1",
+      "class": "PRE_GO_SECURITY_BLOCKER",
+      "status": "SECRET_ROTATION_VERIFIED",
+      "priority": "CLOSED_SECURITY_BLOCKER",
+      "evidence": "TT-WAIT-WINDOW-R-SECRET-COMMUNITY-MEDIA-ROTATION-1-LOCAL-PREP-LATEST",
+      "blocks_next_prego": false,
+      "secret_rotation_verified": true,
+      "OLD_SECRET_UNRECOVERABLE": true,
+      "inject_verdict": "SECRET_ROTATION_INJECT_VERIFIED",
+      "new_akid_fp": "86a8094d3bc92593",
+      "machine_akid_fp": "86a8094d3bc92593",
+      "exposed_akid_fp": "b9392fc1b1170bae",
+      "negate_old_secret_auth_test": "SKIPPED_DO_NOT_FABRICATE",
+      "living_truth_lock": "TRACK1_REALITY_SEALED_IRREVERSIBLE",
+      "tt_production_go": "NO_GO",
+      "opens_next": "Admin_Public_full_matrix"
+    },
+    {
+      "id": "ADMIN-PUBLIC-FULL-MATRIX-1",
+      "class": "PRE_GO_SERIAL",
+      "status": "ADMIN_PUBLIC_FULL_MATRIX_CLOSED",
+      "evidence": "TT-WAIT-WINDOW-ADMIN-PUBLIC-FULL-MATRIX-1-LOCAL-PREP-LATEST",
+      "opened_by": "R-SECRET-COMMUNITY-MEDIA-ROTATION-1 SECRET_ROTATION_VERIFIED",
+      "runner": "scripts/dev/run-admin-public-full-matrix-1-admin-resume.cjs",
+      "runtime": {
+        "prior_public_25": "PASS",
+        "admin_resume": "PASS",
+        "controlled_rv_archived": "matrix-probe-1786508799193",
+        "admin_public_full_matrix_closed": true
+      },
+      "tt_production_go": "NO_GO",
+      "opens_next": "INDEXER-REALITY-CLOSURE-1"
+    },
+    {
+      "id": "INDEXER-REALITY-CLOSURE-1",
+      "class": "PRE_GO_SERIAL",
+      "status": "INDEXER_REALITY_CLOSED",
+      "evidence": "TT-WAIT-WINDOW-INDEXER-REALITY-CLOSURE-1-LOCAL-PREP-LATEST",
+      "opened_by": "ADMIN-PUBLIC-FULL-MATRIX-1 ADMIN_PUBLIC_FULL_MATRIX_CLOSED",
+      "partial_fix": {
+        "official_factory_aligned_wired": true,
+        "wired": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+        "checkpoint": "0/0",
+        "blocker": "MISSING_ARCHIVE_CAPABLE_MAINNET_RPC"
+      },
+      "indexer_reality_closed": true,
+      "tt_production_go": "NO_GO",
+      "opens_next": "CERT-OWNER-UAT-1",
+      "alchemy_key_rotation": {
+        "class": "NON_BLOCKING_PRE_GO_SECURITY_HYGIENE",
+        "accepted_continue_current_key": true
+      }
+    },
+    {
+      "id": "CERT-OWNER-UAT-1",
+      "class": "PRE_GO_SERIAL",
+      "status": "CERT_OWNER_UAT_CLOSED",
+      "evidence": "TT-WAIT-WINDOW-CERT-OWNER-UAT-1-LOCAL-PREP-LATEST",
+      "runner": "scripts/dev/run-cert-owner-uat-1-c1c2-resume.cjs",
+      "opened_by": "INDEXER_REALITY_CLOSED",
+      "alchemy_key_rotation": {
+        "class": "NON_BLOCKING_PRE_GO_SECURITY_HYGIENE",
+        "accepted_continue_current_key": true,
+        "reopens_indexer": false
+      },
+      "blockers": [],
+      "admin_superadmin": "PASS",
+      "tt_production_go": "NO_GO",
+      "opens_next": "WC_REAL_DEVICE",
+      "wallet_keys_used": false,
+      "stamp_utc": "2026-08-12T06:25:27.704Z",
+      "pass_count": "24/24",
+      "coverage_gaps": [
+        {
+          "id": "REGION_STEWARD_SLOT",
+          "note": "C1 region-steward-profile 404 — 区域主理人槽位未在该账号启用；不得用 Admin 冒充"
+        },
+        {
+          "id": "PURE_C3_GUIDE_VS_C4_MERCHANT_ISOLATION",
+          "note": "仅 C1+C2 无法证明「纯向导 vs 纯商家」互斥写权限；需独立 C3/C4 才闭合。本轮不冒充、不 Admin 补绿。"
+        }
+      ],
+      "note": "C1 hub + C2 tourist Official login UAT closed; no wallet private keys used; C3/C4 pure isolation = COVERAGE_GAP"
+    },
+    {
+      "id": "OA-01-WALLETCONNECT-OFFICIAL-ACTIVATION",
+      "class": "PRE_GO_SERIAL",
+      "status": "OFFICIAL_FE_WC_BAKED_OWNER_VISUAL_PENDING",
+      "evidence": "TT-OA01-WALLETCONNECT-OFFICIAL-ACTIVATION-LATEST",
+      "runner_set": "scripts/dev/set-walletconnect-project-id.sh --official",
+      "runner_probe": "scripts/dev/probe-walletconnect-official-activation.cjs",
+      "runner_deploy": "scripts/dev/deploy-tt-web-production.sh",
+      "allowlist_origin": "https://www.web3-ttg.com",
+      "ui_policy": "KEEP_EXISTING_WALLET_SHEET_NO_REDESIGN",
+      "tt_production_go": "NO_GO",
+      "opens_next": "WC_REAL_DEVICE_RESUME_AFTER_QR",
+      "official_fe_image": "deployment-01KZTF2X1BWTQS8EZTY75RKCHT"
+    },
+    {
+      "id": "WC-REAL-DEVICE-1",
+      "class": "PRE_GO_SERIAL",
+      "status": "WC_REAL_DEVICE_CLOSED",
+      "evidence": "TT-WAIT-WINDOW-WC-REAL-DEVICE-1-LOCAL-PREP-LATEST",
+      "runner_preflight": "scripts/dev/run-wc-real-device-1-preflight.cjs",
+      "runner_seal": "scripts/dev/seal-wc-real-device-1-from-owner-marks.cjs",
+      "opened_by": "CERT_OWNER_UAT_CLOSED",
+      "stamp_utc": "2026-08-12T08:04:49Z",
+      "wallet_keys_used": false,
+      "funds_policy": "NO_FUNDS_NO_BROADCAST",
+      "owner_rows_pending": 9,
+      "coverage_gaps_carried": [
+        {
+          "id": "REGION_STEWARD_SLOT",
+          "note": "Carried from CERT-OWNER-UAT-1 — 不插队；不得用 Admin 冒充补绿"
+        },
+        {
+          "id": "PURE_C3_GUIDE_VS_C4_MERCHANT_ISOLATION",
+          "note": "Carried from CERT-OWNER-UAT-1 — 不插队；需独立 C3/C4"
+        }
+      ],
+      "tt_production_go": "NO_GO",
+      "opens_next": "LEGAL_PAY_PRE_GO",
+      "forbidden": [
+        "read_or_use_PRIVATE_KEY_TEAM_PRIVATE_KEY_EOA_MNEMONIC",
+        "re_run_Track1",
+        "send_USDC_or_TTG",
+        "deploy_or_mutate_mainnet_contracts",
+        "agent_simulated_wallet_as_PASS",
+        "auto_flip_TT_PRODUCTION_GO",
+        "FeeRouter_Track2_83_without_auth",
+        "insert_REGION_STEWARD_or_C3C4_before_WC_CLOSED"
+      ],
+      "sole_blocker": "OA-01-WALLETCONNECT-OFFICIAL-ACTIVATION",
+      "partial_pass": "4/9",
+      "oa01_evidence": "TT-OA01-WALLETCONNECT-OFFICIAL-ACTIVATION-LATEST",
+      "forbid_extension_as_mobile_pass": true,
+      "official_fe_image": "deployment-01KZTF2X1BWTQS8EZTY75RKCHT",
+      "pass_count": "9/9",
+      "community_comments": "DEFERRED_SEPARATE_AFTER_WC"
+    },
+    {
+      "id": "LEGAL-PAY-PRE-GO-1",
+      "class": "PRE_GO_SERIAL",
+      "status": "LEGAL_PAY_PRE_GO_CLOSED",
+      "opened_by": "WC_REAL_DEVICE_CLOSED",
+      "tt_production_go": "NO_GO",
+      "note": "Serial after WC; Community comment re-verify remains separate and deferred",
+      "opens_next": "FINAL_REGRESSION_SOAK",
+      "stamp_utc": "2026-08-12T08:06:56.767Z",
+      "pass_count": "11/11",
+      "counsel_signoff": "DEFERRED_POST_GO_QUEUE",
+      "coverage_gaps": [
+        {
+          "id": "COUNSEL_SIGNOFF_08_4",
+          "class": "DEFERRED_POST_GO_QUEUE",
+          "note": "持牌法务/08-4 定稿签字 · PRE_GO 只验页面可达与入口，不冒充法务定稿"
+        },
+        {
+          "id": "TOS_PRIVACY_COUNSEL_GRADE",
+          "class": "DEFERRED_POST_GO_QUEUE",
+          "note": "LEG-01/02 ToS·Privacy 签收级文稿 · POST_GO_QUEUE（inventory）"
+        },
+        {
+          "id": "FEE_ROUTER_TRACK2_83",
+          "class": "UNAUTHORIZED_THIS_PACK",
+          "note": "FeeRouter/Settlement may appear on /meta (fee set / settlement set) — 本包禁止执行 FeeRouter/Track2/83"
+        },
+        {
+          "id": "COMMUNITY_COMMENT_REVERIFY",
+          "class": "DEFERRED_SEPARATE_AFTER_LEGAL",
+          "note": "评论 create/delete/count/refresh/权限/UX 另轨；禁止用本包或 WC FE Cut 冒充"
+        }
+      ]
+    },
+    {
+      "id": "FINAL-REGRESSION-SOAK-1",
+      "class": "PRE_GO_SERIAL",
+      "status": "FINAL_REGRESSION_SOAK_CLOSED",
+      "opened_by": "LEGAL_PAY_PRE_GO_CLOSED",
+      "tt_production_go": "NO_GO",
+      "note": "Serial after Legal; Community comment re-verify remains separate",
+      "opens_next": "FRESH_HARD_GATE",
+      "stamp_utc": "2026-08-12T08:09:26.232Z",
+      "pass_count": "9/9",
+      "soak_class": "OFFICIAL_SHORT_REGRESSION_SOAK",
+      "coverage_gaps": [
+        {
+          "id": "CONTINUOUS_72H_SOAK",
+          "class": "NOT_THIS_PACK",
+          "note": "本包为 Official SHORT soak + regression；≠ P2FC 72h staging soak"
+        },
+        {
+          "id": "COMMUNITY_COMMENT_REVERIFY",
+          "class": "DEFERRED_SEPARATE",
+          "note": "评论 create/delete/count/refresh/权限/UX 另轨"
+        },
+        {
+          "id": "COUNSEL_SIGNOFF_08_4",
+          "class": "DEFERRED_POST_GO_QUEUE",
+          "note": "持牌法务签字仍 deferred（Legal PRE_GO 已登记）"
+        },
+        {
+          "id": "FRESH_HARD_GATE_AUTO_PASS",
+          "class": "FORBIDDEN",
+          "note": "本包 CLOSED ≠ Hard Gate PASS ≠ TT_PRODUCTION_GO；Hard Gate 须另开且默认 REFUSED/NO_GO"
+        }
+      ],
+      "evidence": "TT-WAIT-WINDOW-FINAL-REGRESSION-SOAK-1-LOCAL-PREP-LATEST"
+    },
+    {
+      "id": "FRESH-HARD-GATE-1",
+      "class": "PRE_GO_SERIAL",
+      "status": "FRESH_HARD_GATE_REEVAL_REFUSED",
+      "opened_by": "FINAL_REGRESSION_SOAK_CLOSED",
+      "tt_production_go": "NO_GO",
+      "note": "Refuse is correct; serial PRE_GO CLOSED ≠ Hard Gate PASS ≠ GO",
+      "opens_next": "FRESH_HARD_GATE_AXIS_CLOSURE-1",
+      "hard_gate_verdict": "REFUSED",
+      "stamp_utc": "2026-08-12T08:14:46.849Z",
+      "open_axes": [
+        "AXIS-05",
+        "AXIS-07",
+        "AXIS-08",
+        "AXIS-09",
+        "AXIS-11",
+        "AXIS-12",
+        "AXIS-14"
+      ],
+      "coverage_gaps": [
+        {
+          "id": "FTB_MONEY_PATH_LABEL_DRIFT",
+          "class": "SSOT_PIN_DRIFT_NO_AUTO_REWRITE",
+          "note": "check-official-mainnet-web3-alignment expects MAINNET_MONEY_PATH_DEPLOYED_REALITY_PARTIAL; living FTB shows TRACK1_REALITY_SEALED — Owner-authorized SSOT sync only; not Hard Gate PASS"
+        },
+        {
+          "id": "OPEN_HARD_GATE_AXES",
+          "class": "BLOCKING_FOR_GO",
+          "note": "Canonical Hard Gate still OPEN: AXIS-05, AXIS-07, AXIS-08, AXIS-09, AXIS-11, AXIS-12, AXIS-14"
+        },
+        {
+          "id": "COUNSEL_SIGNOFF_08_4",
+          "class": "DEFERRED_POST_GO_QUEUE",
+          "note": "持牌法务/08-4 签字仍 deferred"
+        },
+        {
+          "id": "COMMUNITY_COMMENT_REVERIFY",
+          "class": "DEFERRED_SEPARATE",
+          "note": "评论 create/delete/count/refresh/权限/UX 另轨"
+        },
+        {
+          "id": "FEE_ROUTER_TRACK2_83",
+          "class": "UNAUTHORIZED",
+          "note": "本重评未授权 FeeRouter/Track2/83"
+        },
+        {
+          "id": "USER_FUNDS_FULL_GO",
+          "class": "FORBIDDEN_UNTIL_HARD_GATE_PASS",
+          "note": "USER_FUNDS / Full Production GO 禁止在本重评自动开启"
+        }
+      ],
+      "evidence": "TT-WAIT-WINDOW-FRESH-HARD-GATE-1-LOCAL-PREP-LATEST"
+    },
+    {
+      "id": "FRESH_HARD_GATE_AXIS_CLOSURE-1",
+      "class": "PRE_GO_SERIAL",
+      "status": "AXIS_CLOSURE_CLASSIFIED_BLOCKED",
+      "opened_by": "FRESH_HARD_GATE_REEVAL_REFUSED",
+      "tt_production_go": "NO_GO",
+      "owner_production_go_decision": "NOT_ENTERED",
+      "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+      "stop_go": true,
+      "note": "7 OPEN axes classified; Official live still per-escrow Timelock allowlist — immediate bilateral Release NOT proven; FeeRouter/83 not Hard Gate axes; Track2=commercial fix not Official; Community residual separate",
+      "open_axes": [
+        "AXIS-05",
+        "AXIS-07",
+        "AXIS-08",
+        "AXIS-09",
+        "AXIS-11",
+        "AXIS-12",
+        "AXIS-14"
+      ],
+      "stamp_utc": "2026-08-12T08:19:27Z",
+      "opens_next": "TRACK2_FACTORY_TRUST_OFFICIAL_PROMOTION-1",
+      "evidence": "TT-WAIT-WINDOW-FRESH-HARD-GATE-AXIS-CLOSURE-1-LOCAL-PREP-LATEST"
+    },
+    {
+      "id": "TRACK2_FACTORY_TRUST_OFFICIAL_PROMOTION-1",
+      "class": "PRE_GO_SERIAL_P0_COMMERCIAL",
+      "status": "WAITING_TRACK2_TIMELOCK_ETA",
+      "opened_by": "FRESH_HARD_GATE_AXIS_CLOSURE-1",
+      "tt_production_go": "NO_GO",
+      "BROADCAST_AUTHORIZED": false,
+      "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+      "note": "DUAL WAIT FROZEN with GOV-04; deployed+allowed+scheduled; STOP until ETA; no execute/Official/1USDC",
+      "stamp_utc": "2026-08-12T10:10:00Z",
+      "opens_next": "FRESH_PREFLIGHT_THEN_EXECUTE_AFTER_ETA",
+      "evidence": "TT-TRACK2-FACTORY-TRUST-OFFICIAL-PROMOTION-1-LOCAL-PREP-LATEST",
+      "TRAVELTRUST_TRACK2_OFFICIAL_PROMOTION_OK": 1,
+      "predicted_sr_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "T1_opId": "0x35f54aa1bd6eb0f3349ebf3c01cb376d012fbb82cc391090c66dc9b8e58a9ebe",
+      "T2_opId": "0xbdc82edb7d3ff299b12d46c01d50f3610147ee8d735d29dea87c0500ccf4e21a",
+      "u4_usdc": "1.0",
+      "rebase_preview_sr_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "sr_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "T1_eta_utc": "2026-08-14T09:02:59Z",
+      "T2_eta_utc": "2026-08-14T09:03:11Z",
+      "wait_until_utc": "2026-08-14T09:03:11Z",
+      "execute_authorized": false,
+      "dual_wait": "DUAL_WAIT_FROZEN",
+      "dual_wait_ssot": "TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST"
+    },
+    {
+      "id": "WAIT-WINDOW-WEB3-GAP-CLOSURE-1",
+      "class": "WAIT_WINDOW_PARALLEL_TRACK2_DECOUPLED",
+      "status": "WEB3_GAP_CLOSURE_INVENTORY_ACTIVE",
+      "tt_production_go": "NO_GO",
+      "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+      "track2_status": "WAITING_TRACK2_TIMELOCK_ETA",
+      "preempt_at_utc": "2026-08-14T09:03:11Z",
+      "axis14_locked": true,
+      "note": "FTB+registry gap inventory; 83/TBD specs ordered; no Track2 mutation; no FeeRouter distribute",
+      "evidence": "TT-WAIT-WINDOW-WEB3-GAP-CLOSURE-LATEST",
+      "stamp_utc": "2026-08-12T09:07:53Z",
+      "opens_next": "OPTIONAL_REGIONVAULT_OWNER_AUTH_OR_TRACK2_ETA_PREEMPT"
+    },
+    {
+      "id": "TRACK2-WAIT-OFFICIAL-WEB3-RELEASE-REAL-USAGE-1",
+      "class": "WAIT_WINDOW_PARALLEL_READONLY",
+      "status": "REAL_USAGE_MATRIX_ACTIVE",
+      "tt_production_go": "NO_GO",
+      "dual_wait": "DUAL_WAIT_FROZEN",
+      "note": "Official Web3 readonly/no-fund prep during dual wait; no Track2/GOV04 execute",
+      "evidence": "TT-TRACK2-WAIT-OFFICIAL-WEB3-RELEASE-REAL-USAGE-1-LATEST",
+      "stamp_utc": "2026-08-12T10:10:00Z"
+    },
+    {
+      "id": "GOV-04-PUBLIC-SALE-AMENDMENT-1",
+      "class": "PRE_GO_SERIAL_AFTER_TRACK2",
+      "status": "WAITING_GOV04_TIMELOCK_ETA",
+      "tt_production_go": "NO_GO",
+      "opId": "0xb33dfdf23ffcfc0ad05ebe68d0a44a836bc856dc75a34d2101ed6eabb25703bc",
+      "eta_utc": "2026-08-14T09:59:23Z",
+      "new_implementation": "0xB3bCBc8F90b66E88961C2E8F178924F3200D6aA1",
+      "track2_preempt_utc": "2026-08-14T09:03:11Z",
+      "execute_authorized": false,
+      "purchase_authorized": false,
+      "note": "upgrade scheduled; proxy still old rules; Track2 preempts; STOP after execute for PM purchase auth",
+      "evidence": "TT-GOV-04-PUBLIC-SALE-AMENDMENT-1-WAITING-ETA-LATEST",
+      "stamp_utc": "2026-08-12T10:10:00Z"
+    },
+    {
+      "id": "DUAL-WAIT-TRACK2-GOV04-FREEZE",
+      "class": "WAIT_WINDOW_FREEZE_LOCK",
+      "status": "DUAL_WAIT_FROZEN",
+      "dual_status": [
+        "WAITING_TRACK2_TIMELOCK_ETA",
+        "WAITING_GOV04_TIMELOCK_ETA"
+      ],
+      "tt_production_go": "NO_GO",
+      "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+      "execute_authorized": false,
+      "track2_preempt_utc": "2026-08-14T09:03:11Z",
+      "gov04_eta_utc": "2026-08-14T09:59:23Z",
+      "note": "Freeze both tracks; no early execute; no new gov mutating either track; readonly Official Web3 + AXIS prep only",
+      "evidence": "TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST",
+      "prep_board": "TT-DUAL-WAIT-OFFICIAL-WEB3-AXIS-PREP-BOARD-LATEST",
+      "stamp_utc": "2026-08-12T10:10:00Z",
+      "opens_next": "TRACK2_ETA_PREEMPT_THEN_GOV04"
+    },
+    {
+      "id": "DUAL-WAIT-EXECUTION-READY-HARD-GATE-PREP",
+      "class": "WAIT_WINDOW_EXECUTION_READY",
+      "status": "EXECUTION_READY_HARD_GATE_PREP",
+      "tt_production_go": "NO_GO",
+      "execute_authorized": false,
+      "dual_wait": "DUAL_WAIT_FROZEN",
+      "note": "fail-closed runners + AXIS prep; no third schedule; no pin mutate; no forge attestation",
+      "evidence": "TT-DUAL-WAIT-EXECUTION-READY-HARD-GATE-PREP-LATEST",
+      "stamp_utc": "2026-08-12T10:25:00Z",
+      "opens_next": "TRACK2_ETA_PREEMPT"
+    },
+    {
+      "id": "R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1",
+      "class": "PRODUCT_COMMUNITY_UI_API",
+      "status": "LOCAL_PREP_PASS_OFFICIAL_CUT_READY",
+      "tt_production_go": "NO_GO",
+      "blocks_track1_finalize": false,
+      "db_migration": false,
+      "note": "single Guide badge; white reply/delete; no sort tabs; default hot then chrono ASC; hot=reply_count not comment likes",
+      "evidence": "TT-WAIT-WINDOW-R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1-LOCAL-PREP-LATEST",
+      "stamp_utc": "2026-08-12T10:35:00Z",
+      "opens_next": "OFFICIAL_API_THEN_FE_CUT_THEN_RV"
+    },
+    {
+      "id": "AXIS05-ROLES-MATRIX-REALITY-VERIFY",
+      "class": "HARD_GATE_PREP_READONLY",
+      "status": "AXIS05_ROLES_MATRIX_PASS",
+      "tt_production_go": "NO_GO",
+      "roles_matrix_verified": true,
+      "living_ssot": "SSOT-S5-DUAL-WAIT-WEB3-ALIGNED+EXECUTION_READY",
+      "note": "cast Reality Safe/Timelock/Governor/Proxy/Factory/Router allowlist — pins untouched",
+      "evidence": "TT-AXIS05-ROLES-MATRIX-REALITY-VERIFY-LATEST",
+      "stamp_utc": "2026-08-12T10:38:03Z",
+      "opens_next": "AXIS-07"
+    },
+    {
+      "id": "STALE_NARRATIVE_DEBT-ENG-ANCHOR-MD",
+      "class": "STALE_NARRATIVE_DEBT",
+      "status": "AFTER_SEAL",
+      "evidence": "TT-STALE-NARRATIVE-DEBT-ENGINEERING-ANCHOR-AFTER-SEAL-LATEST",
+      "digested_by_batch": "SSOT-S1-ENG-ANCHOR-MD",
+      "do_not_fix_pre_finalize": true,
+      "not_preflight_input": true,
+      "post_seal_target": "CHAIN = FTB = REGISTRY/ANCHOR = OFFICIAL RUNTIME"
+    }
+  ],
+  "r_auth_security_1": {
+    "status": "CLOSED",
+    "official_cut": "deployment-01KZR54WJE6DEG5XA1GFT90XV1",
+    "blocks_track1": false,
+    "evidence": "TT-WAIT-WINDOW-R-AUTH-SECURITY-1-LOCAL-PREP-LATEST",
+    "fix_now_closed": [
+      "AUTH-RL-01",
+      "COM-HTTP-01",
+      "CORS-LOCAL-01"
+    ]
+  },
+  "pipeline_halt": null,
+  "migration_checksum_blocker": "CLEARED",
+  "r_comm_text_ban_1": "CLOSED",
+  "cross_pack_regression_gate": "scripts/gates/check-official-public-gates-regression.sh",
+  "r_public_data_isolation_1": {
+    "status": "INVENTORY_OPEN · CHILD_PACKS_PARTIAL_CLOSED",
+    "official_cut": "CHILD_PACKS_CLOSED_SAME_TIP",
+    "blocks_track1": false,
+    "evidence": "TT-WAIT-WINDOW-R-PUBLIC-DATA-ISOLATION-1-LOCAL-PREP-LATEST",
+    "doctrine": "PUBLIC_SURFACE_ELIGIBILITY_FAIL_CLOSED_V1",
+    "probe_clean_is_not_closed": true,
+    "child_closed": [
+      "R-PUBLIC-GUIDES-DETAIL-PARITY-1",
+      "R-PUBLIC-DISCOVER-FORCE-1",
+      "R-PUBLIC-COMMUNITY-GOVERNED-FEED-1",
+      "R-PUBLIC-COMMUNITY-BEYOND-FEED-1",
+      "R-PUBLIC-COLD-START-GOVERNED-1",
+      "R-RBAC-PUBLIC-CROSS-AUDIT-1"
+    ]
+  },
+  "r_official_runtime_anomaly_1": {
+    "status": "CLOSED",
+    "official_cut": "deployment-01KZR8HJ05AS9KJBQC7S11RNSA",
+    "blocks_track1": false,
+    "evidence": "TT-WAIT-WINDOW-R-OFFICIAL-RUNTIME-ANOMALY-1-LOCAL-PREP-LATEST",
+    "fixed": [
+      "ORA-002",
+      "ORA-007"
+    ],
+    "confirm_design": [
+      "ORA-003",
+      "ORA-006",
+      "ORA-008"
+    ],
+    "after_seal": [
+      "ORA-004",
+      "ORA-005",
+      "ORA-001_media"
+    ],
+    "post_cut_regression": {
+      "public_gates": "PASS",
+      "ocs_10x4": "PASS"
+    }
+  },
+  "r_community_ocs_10x4_reality_restore_1_status": "RUNTIME_VERIFIED",
+  "r_media_fe_ux_status": "RUNTIME_VERIFIED_OBJECTS_AFTER_SEAL",
+  "r_media_fe_overlay_1": {
+    "status": "RUNTIME_VERIFIED",
+    "official_cut": "deployment-01KZR9MV44DCJFF9WFJ9607R9T",
+    "blocks_track1": false,
+    "honest_boundary": "UX_MITIGATION_ONLY",
+    "evidence": "TT-WAIT-WINDOW-R-MEDIA-FE-OVERLAY-1-LOCAL-PREP-LATEST"
+  },
+  "r_no_kyc_1": {
+    "status": "CLOSED",
+    "official_api_cut": "deployment-01KZRBBXKDK3EJH2FM77B8WF9W",
+    "official_fe_cut": "deployment-01KZRBXT4WABHTEQKK86CNRA4X",
+    "blocks_track1": false,
+    "db_schema_drop": "AFTER_SEAL",
+    "evidence": "TT-WAIT-WINDOW-R-NO-KYC-1-LOCAL-PREP-LATEST"
+  },
+  "track1_post_latest_cut": {
+    "readyAt": 1786491935,
+    "done": false,
+    "usdc": "10000000",
+    "isEscrow": false,
+    "stamp_utc": "2026-08-11T12:20:12Z",
+    "cut_image": "deployment-01KZRBBXKDK3EJH2FM77B8WF9W"
+  },
+  "latest_official_fe_note": "OA-01 WC Project ID bake + Next inline fix; does not claim comment UX residuals closed",
+  "dual_wait": "DUAL_WAIT_FROZEN",
+  "dual_wait_ssot": "docs/runbook/TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md",
+  "execution_ready": "EXECUTION_READY_HARD_GATE_PREP",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

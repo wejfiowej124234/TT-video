@@ -1,0 +1,333 @@
+{
+  "schema": "traveltrust.wait_window_cut_queue_hold_pre_eta_read_only.v1",
+  "status": "SUPERSEDED_PRODUCT_HOLD__SEE_MAXIMIZE_PRE_ETA_REMEDIATION",
+  "recorded_utc": "2026-08-11T04:17:00Z",
+  "wall_clock_at_lock_utc": "2026-08-11T04:17:52Z",
+  "before_eta": true,
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "ready_at_unix": 1786491935,
+  "seconds_to_eta_approx": 70062,
+  "tt_production_go": "NO_GO",
+  "flip_production_go_authorized": false,
+  "product_code_mutations": "ALLOWED_MINIMAL_PER_PACK",
+  "official_runtime_mutations": "ALLOWED_WHEN_TRACK1_ISOLATED",
+  "local_prep_new_batches": "FORBIDDEN",
+  "cut_queue_unlocked": true,
+  "unlock_requires": "TRACK1_ISOLATION_PROOF_PER_PACK",
+  "owner_one_liner": "Product hold superseded by MAXIMIZE_PRE_ETA_REMEDIATION; Track1 Money Path remains FROZEN; serial Official Cut allowed when isolated",
+  "cut_queue": "TT-WAIT-WINDOW-SEAL-AFTER-OFFICIAL-CUT-QUEUE-LATEST",
+  "freeze": "TT-WAIT-WINDOW-FREEZE-UNTIL-ETA-LATEST",
+  "preflight_snapshot": "TT-WAIT-WINDOW-TRACK1-PRE-ETA-READONLY-PREFLIGHT-LATEST",
+  "preflight_stamp_utc": "2026-08-11T03:14:19Z",
+  "pf05_status": "PASS",
+  "pf05_detail": "TT-WAIT-WINDOW-TRACK1-PF05-EXECUTOR-GAS-READONLY-LATEST",
+  "overall_preflight": "PRE_ETA_HOLD_NOT_EXECUTE_ONLY_PF01_BLOCKS",
+  "deep_reality_check": "TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-WAVE3-LATEST",
+  "deep_reality_check_status": "WAVE3_RECORDED_STOP",
+  "deep_reality_check_delays_track1": false,
+  "frozen_manifest": {
+    "union_file_count": 29,
+    "multi_pack_files": [],
+    "independent_rollback": true,
+    "hard_file_dependencies_between_packs": false,
+    "soft_order": [
+      "R-USDC-1",
+      "R-PAY-IA-1",
+      "R-ADMIN-1"
+    ],
+    "soft_order_reason": "USDC display before Pay IA before Admin honesty; prior pack must be CLOSED before next opens after Seal",
+    "serial_closed_gate": true,
+    "packs": [
+      {
+        "id": "R-USDC-1",
+        "cut_order": 1,
+        "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+        "evidence": "TT-WAIT-WINDOW-R-USDC-1-LOCAL-PREP-LATEST",
+        "deploy_surface": "FE_ONLY",
+        "file_count": 14,
+        "local_tests_baseline": {
+          "command": "npx vitest run lib/escrowOrderAmountSsot.test.ts lib/admin/adminP1UxFixes.contract.test.ts app/admin/orders/adminOrdersPage.contract.test.ts app/admin/orders/[id]/adminOrderDetailPage.contract.test.ts components/community/OrderChatContextCard.test.tsx",
+          "result": "5 files / 49 tests passed"
+        },
+        "files": [
+          {
+            "path": "frontend/lib/escrowOrderAmountSsot.ts",
+            "bytes": 4825,
+            "sha256_16": "d945876f455a538c"
+          },
+          {
+            "path": "frontend/lib/escrowOrderAmountSsot.test.ts",
+            "bytes": 2479,
+            "sha256_16": "0e326326ef472ea3"
+          },
+          {
+            "path": "frontend/app/admin/orders/AdminOrdersPageMain.tsx",
+            "bytes": 18594,
+            "sha256_16": "8fb5d5ed747a978e"
+          },
+          {
+            "path": "frontend/app/admin/orders/[id]/adminOrderDetailPageModel.ts",
+            "bytes": 2473,
+            "sha256_16": "6dd2a72dae7ece0c"
+          },
+          {
+            "path": "frontend/app/admin/orders/[id]/adminOrderDetailPage.contract.test.ts",
+            "bytes": 1687,
+            "sha256_16": "f585c53ff3840f4e"
+          },
+          {
+            "path": "frontend/app/admin/orders/adminOrdersPage.contract.test.ts",
+            "bytes": 3127,
+            "sha256_16": "6808611640a8fc59"
+          },
+          {
+            "path": "frontend/app/admin/finance/AdminFinanceSummaryGridSection.tsx",
+            "bytes": 4387,
+            "sha256_16": "95bc42adff3a99f4"
+          },
+          {
+            "path": "frontend/components/escrow/EscrowDetail/CreateOnChainEscrowBlock.tsx",
+            "bytes": 19896,
+            "sha256_16": "39b0943e2082f958"
+          },
+          {
+            "path": "frontend/components/escrow/EscrowDetail/CreateOnChainEscrowFactoryModal.tsx",
+            "bytes": 7102,
+            "sha256_16": "b7c6a7515dd15bc0"
+          },
+          {
+            "path": "frontend/components/escrow/EscrowDetail/useEscrowDetailPageOrchestration.ts",
+            "bytes": 11699,
+            "sha256_16": "5b5fe245804a3efd"
+          },
+          {
+            "path": "frontend/components/community/OrderChatContextCard.tsx",
+            "bytes": 15846,
+            "sha256_16": "f066974f29f9b763"
+          },
+          {
+            "path": "frontend/components/community/orderChatContextCardDerived.ts",
+            "bytes": 3273,
+            "sha256_16": "716f68104d669cc1"
+          },
+          {
+            "path": "frontend/app/guides/[id]/GuideDetailPageLoaded.tsx",
+            "bytes": 16856,
+            "sha256_16": "f3dd7a9414f3e996"
+          },
+          {
+            "path": "frontend/lib/admin/adminP1UxFixes.contract.test.ts",
+            "bytes": 21684,
+            "sha256_16": "7368a455e6c639ef"
+          }
+        ],
+        "rollback_boundary": "revert Cut-1 FE files only; no API/DB; independent of Cut-2/3"
+      },
+      {
+        "id": "R-PAY-IA-1",
+        "cut_order": 2,
+        "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+        "evidence": "TT-WAIT-WINDOW-R-PAY-IA-1-LOCAL-PREP-LATEST",
+        "deploy_surface": "FE_ONLY_NEXT_CONFIG",
+        "file_count": 5,
+        "local_tests_baseline": {
+          "command": "npx vitest run lib/me/mePaymentsIa.contract.test.ts components/me/MeQuickLinksSection.contract.test.ts components/header/headerUserMenuNavModel.test.ts lib/me/meSettingsL5.contract.test.ts",
+          "result": "4 files / 21 tests passed"
+        },
+        "files": [
+          {
+            "path": "frontend/next.config.js",
+            "bytes": 12557,
+            "sha256_16": "65821eb0c8464dda"
+          },
+          {
+            "path": "frontend/lib/me/mePaymentsIa.contract.test.ts",
+            "bytes": 1329,
+            "sha256_16": "7f01d3dc5e68c381"
+          },
+          {
+            "path": "frontend/components/me/MeQuickLinksSection.contract.test.ts",
+            "bytes": 1386,
+            "sha256_16": "7fd2891d4b212433"
+          },
+          {
+            "path": "frontend/components/header/headerUserMenuNavModel.test.ts",
+            "bytes": 3213,
+            "sha256_16": "6d9282cf769fe148"
+          },
+          {
+            "path": "frontend/lib/me/meSettingsL5.contract.test.ts",
+            "bytes": 4529,
+            "sha256_16": "8621f812595051da"
+          }
+        ],
+        "rollback_boundary": "revert next.config redirect + contract tests only; independent of Cut-1/3; opens only after R-USDC-1 CLOSED"
+      },
+      {
+        "id": "R-ADMIN-1",
+        "cut_order": 3,
+        "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+        "evidence": "TT-WAIT-WINDOW-R-ADMIN-1-LOCAL-PREP-LATEST",
+        "deploy_surface": "FE_PRIMARY_API_ORPHAN_OPTIONAL",
+        "file_count": 10,
+        "local_tests_baseline": {
+          "command": "npx vitest run lib/admin/adminListPageWritePermission.test.ts lib/admin/adminHomeCardCapability.test.ts app/admin/disputes/adminDisputesPage.contract.test.ts lib/api.routesAdmin.lists.test.ts lib/api.test.ts",
+          "result": "5 files / 15 tests passed"
+        },
+        "files": [
+          {
+            "path": "frontend/lib/admin/adminHomeCardCapability.ts",
+            "bytes": 3221,
+            "sha256_16": "d6ad5523d9442001"
+          },
+          {
+            "path": "frontend/lib/admin/adminHomeCardCapability.test.ts",
+            "bytes": 986,
+            "sha256_16": "823435c4a292400a"
+          },
+          {
+            "path": "frontend/lib/admin/adminListPageWritePermission.ts",
+            "bytes": 2543,
+            "sha256_16": "a205b47cbb062f6f"
+          },
+          {
+            "path": "frontend/lib/admin/adminListPageWritePermission.test.ts",
+            "bytes": 899,
+            "sha256_16": "16b3e8bb6e93ce04"
+          },
+          {
+            "path": "frontend/app/admin/disputes/AdminDisputesPageMain.tsx",
+            "bytes": 17105,
+            "sha256_16": "e4234dd30ec2ee69"
+          },
+          {
+            "path": "frontend/app/admin/disputes/adminDisputesPage.contract.test.ts",
+            "bytes": 2385,
+            "sha256_16": "87065635b4a31339"
+          },
+          {
+            "path": "frontend/lib/api.ts",
+            "bytes": 79412,
+            "sha256_16": "6427c624d152400f"
+          },
+          {
+            "path": "frontend/lib/api.routesAdmin.lists.test.ts",
+            "bytes": 3571,
+            "sha256_16": "b5cbb36d2af72cce"
+          },
+          {
+            "path": "frontend/lib/api.test.ts",
+            "bytes": 15136,
+            "sha256_16": "5cae33ab4e34f696"
+          },
+          {
+            "path": "crates/api/src/routes/admin/admin_orders_http.rs",
+            "bytes": 5583,
+            "sha256_16": "00bb3132524880b6"
+          }
+        ],
+        "rollback_boundary": "revert Cut-3 FE (+ optional orphan admin_orders_http.rs); opens only after R-PAY-IA-1 CLOSED; living mod.rs id/q already present"
+      }
+    ]
+  },
+  "eta_before_allowed": [
+    "track1_fail_closed_read_only_preflight",
+    "cut_queue_manifest_inspection",
+    "ssot_status_refresh_no_product_code_no_seal_no_go"
+  ],
+  "eta_before_forbidden": [
+    "product_code_add_or_modify",
+    "official_runtime_mutate",
+    "new_local_prep",
+    "official_deploy",
+    "timelock_execute",
+    "escrow_release",
+    "settlement_fee_broadcast",
+    "reality_seal",
+    "tt_production_go",
+    "unlock_cut_queue",
+    "顺手修_anomaly_fix"
+  ],
+  "post_eta_serial_track1_exclusive": [
+    "fail_closed_preflight_all_pass",
+    "Timelock.execute",
+    "receipt_event_isEscrow_confirm",
+    "Escrow.release",
+    "Settlement_Fee_reconcile",
+    "Reality_Evidence_Seal",
+    "Hard_Gate_reeval"
+  ],
+  "post_seal_cut_serial": {
+    "order": [
+      "R-USDC-1",
+      "R-PAY-IA-1",
+      "R-ADMIN-1"
+    ],
+    "per_pack": [
+      "official_deploy",
+      "runtime_verify",
+      "ssot",
+      "staging_local_align"
+    ],
+    "prior_pack_must_be_closed": true,
+    "stop_on_fail_or_unknown": true
+  },
+  "honesty": [
+    "CUT_QUEUE_HOLD != Seal != GO",
+    "PRE_ETA_READ_ONLY != execute authorization",
+    "LOCAL_READY_NOT_DEPLOYED_FROZEN != CLOSED != Runtime_Verified",
+    "Reality_Seal != TT_PRODUCTION_GO"
+  ],
+  "owner_ack_utc": "2026-08-11T04:05:00Z",
+  "config_mutations": "FORBIDDEN",
+  "indexer_mutations": "FORBIDDEN",
+  "cut_queue_manifest_mutations": "FORBIDDEN",
+  "new_deep_check_waves": "FORBIDDEN",
+  "fresh_preflight_required_at_eta": true,
+  "stale_preflight_not_reusable": true,
+  "preflight_must_cover": [
+    "wall_clock_ge_eta",
+    "opid_readyAt_done_false",
+    "escrow_10_usdc",
+    "addresses_match_ftb_pins",
+    "wallet_gas"
+  ],
+  "post_eta_serial": [
+    "fresh_track1_preflight_ALL_PASS",
+    "Timelock.execute",
+    "verify_isEscrow_and_events",
+    "Escrow.release",
+    "Settlement_Fee_reconciliation",
+    "Reality_Evidence_Seal",
+    "Hard_Gate_reeval"
+  ],
+  "stop_on_fail_or_unknown": true,
+  "seal_ne_production_go": true,
+  "post_seal_deferred_debts": [
+    "lineage_factory_bake",
+    "indexer_fill",
+    "media_R-MEDIA-1",
+    "admin_usdc_cut_queue",
+    "legal_cert"
+  ],
+  "superseded_by": "TT-WAIT-WINDOW-MAXIMIZE-PRE-ETA-REMEDIATION-LATEST",
+  "track1_money_path": "FROZEN",
+  "active_pack": "R-USDC-1",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

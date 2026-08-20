@@ -1,0 +1,431 @@
+{
+  "schema": "traveltrust.project_master_coverage_dashboard.v1.json",
+  "recorded_utc": "2026-08-18T07:55:27Z",
+  "tt_production_go": "NO_GO",
+  "coverage_percent": "NOT_COMPUTED",
+  "reality_percent": "NOT_COMPUTED",
+  "status": "PACK14_COVERAGE_DASHBOARD_FINALIZED",
+  "dashboard_finalized": true,
+  "note": "Single product/reality/GO percent stays NOT_COMPUTED. ARCHITECTURE_MAP_COMPLETE is Pack 01-13 DEEP_PARTIAL only — not product 100%, not Reality, not CLOSED_REALITY, not PRODUCTION_GO. packs_seeded counts rows, not 9-field depth. Histograms from matrix status machines.",
+  "planes": {
+    "ARCHITECTURE_MAP_COMPLETE": true,
+    "ARCHITECTURE_MAP_COMPLETE_SCOPE": "packs_01_13_deep_partial_only",
+    "OFFICIAL_LIVE": "PARTIAL",
+    "REALITY_VERIFIED": false,
+    "CLOSED_REALITY": false,
+    "PRODUCTION_GO": "NO_GO"
+  },
+  "machine_keys": {
+    "M14_UNRESOLVED_PACK": 0,
+    "M14_UNRESOLVED_STATUS": 0,
+    "M14_AMBIGUOUS_COVERAGE": 0,
+    "UNEXPLAINED_DASHBOARD_DRIFT": 0,
+    "TT_PRODUCTION_GO": "NO_GO",
+    "TT_COVERAGE_PERCENT": "NOT_COMPUTED",
+    "TT_REALITY_PERCENT": "NOT_COMPUTED"
+  },
+  "machine_key_detail": {
+    "unresolved_pack": [],
+    "unresolved_status": [],
+    "ambiguous_coverage": [],
+    "unexplained_dashboard_drift": []
+  },
+  "inventory": {
+    "packs_seeded": 15,
+    "packs_seeded_is_not_coverage": true,
+    "packs_total": 15,
+    "depth": {
+      "NAV_ONLY": 1,
+      "DEEP_PARTIAL": 13,
+      "COUNTS_ONLY": 1
+    },
+    "packs_deep_partial": 13,
+    "packs_shallow_seeded": 0,
+    "packs_pointer_only": 0,
+    "packs_nav_only": 1,
+    "packs_counts_only": 1,
+    "architecture_map_complete_01_13": true,
+    "bta_domains": 20,
+    "bta_nodes": 51,
+    "data_truth_rows": 23,
+    "product_capabilities": 19,
+    "frontend_screens": 31,
+    "web3_nodes": 20,
+    "pack12_gates": 16,
+    "pack13_incidents": 16
+  },
+  "structure_completeness": {
+    "packs_01_13_deep_partial": 13,
+    "packs_01_13_expected": 13,
+    "pack_00": "NAV_ONLY",
+    "pack_14": "COUNTS_ONLY",
+    "architecture_map_complete": true,
+    "equals_product_complete": false
+  },
+  "asis_evidence_completeness": {
+    "official_surface": "https://www.web3-ttg.com",
+    "login_www_405_recorded": true,
+    "login_www_405_closed_reality": true,
+    "steward_target_not_live_recorded": true,
+    "ci02_scheduled_waiting_eta_recorded": true,
+    "pm25_scheduled_waiting_eta_recorded": true,
+    "track2_1usdc_handoff_recorded": true,
+    "ftb_lock": "LOCKED",
+    "unexplained_l7_l8_conflict": 0
+  },
+  "cross_pack_pointer_completeness": {
+    "packs_01_13_machine_zero_keys": true,
+    "required_gap_pointers_present": true
+  },
+  "runtime_reality": {
+    "web3_pack05_status": {
+      "OFFICIAL_LIVE": 9,
+      "DEPLOYED": 0,
+      "WIRED": 2,
+      "SCHEDULED_WAITING_ETA": 1,
+      "NOT_DEPLOYED": 3,
+      "SUPERSEDED": 2,
+      "LEGACY": 3,
+      "REALITY": 0,
+      "CLOSED_REALITY": 0,
+      "DESIGN_ONLY": 0
+    },
+    "web3_recon_address_lifecycle": {
+      "OFFICIAL_LIVE": 8,
+      "DEPLOYED": 1,
+      "WIRED": 0,
+      "SCHEDULED_WAITING_ETA": 1,
+      "NOT_DEPLOYED": 2,
+      "SUPERSEDED": 2,
+      "LEGACY": 6,
+      "REALITY": 0,
+      "CLOSED_REALITY": 0,
+      "DESIGN_ONLY": 0
+    },
+    "frontend_pack02_runtime_status": {
+      "ROUTE_EXISTS": 4,
+      "SCREEN_PARTIAL": 20,
+      "ACTION_WIRED": 5,
+      "ACTION_BLOCKED": 0,
+      "TARGET_NOT_LIVE": 1,
+      "DESIGN_ONLY": 1
+    },
+    "product_pack01_official_status": {
+      "OFFICIAL_LIVE": 10,
+      "PARTIAL": 8,
+      "TARGET_NOT_LIVE": 1,
+      "SCHEDULED_WAITING_ETA": 0
+    },
+    "product_pack01_reality_level": {
+      "NONE_NOT_L7": 14,
+      "HANDOFF": 2,
+      "TARGET": 1,
+      "LIVE_PARTIAL": 2,
+      "SUPERSEDED_SEAL": 0
+    },
+    "pack12_runtime_status": {
+      "OFFICIAL_LIVE": 4,
+      "DEPLOYED": 1,
+      "SCHEDULED_WAITING_ETA": 5,
+      "TARGET_NOT_LIVE": 5,
+      "CODE_READY": 1,
+      "NOT_DEPLOYED": 0
+    },
+    "p0_commercial_money_path_blocker": false
+  },
+  "known_gaps": [
+    {
+      "id": "CI-02",
+      "pointer": "GATE-CI02-ETA",
+      "status": "SCHEDULED_WAITING_ETA"
+    },
+    {
+      "id": "PM25",
+      "pointer": "GATE-PM25-ETA",
+      "status": "LEGACY"
+    },
+    {
+      "id": "1_USDC_REALITY",
+      "pointer": "GATE-1USDC-REALITY",
+      "status": "HANDOFF"
+    },
+    {
+      "id": "LOGIN_405",
+      "pointer": "DEP-LOGIN-WWW-405",
+      "status": "CLOSED_REALITY"
+    },
+    {
+      "id": "REGION_STEWARD",
+      "pointer": "GATE-SEAT-CI01",
+      "status": "TARGET_NOT_LIVE"
+    },
+    {
+      "id": "HARD_GATE",
+      "pointer": "GATE-HARD-GO",
+      "status": "NO_GO"
+    }
+  ],
+  "current_blockers": [
+    {
+      "id": "DEP-LOGIN-WWW-405",
+      "runtime_status": "OFFICIAL_LIVE",
+      "required_gap": true
+    },
+    {
+      "id": "DEP-S05-REGION-83",
+      "runtime_status": "TARGET_NOT_LIVE",
+      "required_gap": false
+    },
+    {
+      "id": "DEP-S06-VACANCY",
+      "runtime_status": "TARGET_NOT_LIVE",
+      "required_gap": false
+    },
+    {
+      "id": "GATE-1USDC-REALITY",
+      "runtime_status": "OFFICIAL_LIVE",
+      "required_gap": true
+    },
+    {
+      "id": "GATE-CI02-ETA",
+      "runtime_status": "SCHEDULED_WAITING_ETA",
+      "required_gap": true
+    },
+    {
+      "id": "GATE-CI02-EXECUTE",
+      "runtime_status": "SCHEDULED_WAITING_ETA",
+      "required_gap": false
+    },
+    {
+      "id": "GATE-FR-NEW-WIRE-CUTOVER",
+      "runtime_status": "DEPLOYED",
+      "required_gap": false
+    },
+    {
+      "id": "GATE-HARD-GO",
+      "runtime_status": "CODE_READY",
+      "required_gap": true
+    },
+    {
+      "id": "GATE-PM-10-TO-04-REALITY",
+      "runtime_status": "SCHEDULED_WAITING_ETA",
+      "required_gap": false
+    },
+    {
+      "id": "GATE-PM25-ETA",
+      "runtime_status": "SCHEDULED_WAITING_ETA",
+      "required_gap": true
+    },
+    {
+      "id": "GATE-PM25-EXECUTE",
+      "runtime_status": "SCHEDULED_WAITING_ETA",
+      "required_gap": false
+    },
+    {
+      "id": "GATE-PROPOSAL-3",
+      "runtime_status": "TARGET_NOT_LIVE",
+      "required_gap": false
+    },
+    {
+      "id": "GATE-SEAT-CI01",
+      "runtime_status": "TARGET_NOT_LIVE",
+      "required_gap": true
+    },
+    {
+      "id": "GATE-VAULT-CI03",
+      "runtime_status": "TARGET_NOT_LIVE",
+      "required_gap": false
+    }
+  ],
+  "phase2_backlog": {
+    "count": 58,
+    "ids": [
+      "P2-LOGIN-405",
+      "P2-STEWARD-TARGET",
+      "P2-PM25-WAIT",
+      "P2-1USDC-REALITY",
+      "P2-PACK02-NOT-STARTED",
+      "P2-PHASE2-NOT-STARTED",
+      "P2-LOGIN-405",
+      "P2-STEWARD-TARGET",
+      "P2-PM25-WAIT",
+      "P2-1USDC-REALITY",
+      "P2-ADMIN-118-SCREENS",
+      "P2-RESPONSIVE-I18N",
+      "P2-LEGAL-404",
+      "P2-ME-PAYMENTS-404",
+      "P2-FUTURE-APP-L0",
+      "P2-PHASE2-NOT-STARTED",
+      "P2-TOKEN-LOCALSTORAGE",
+      "P2-ADMIN-2FA",
+      "P2-SAFE-1OF1-SOLO",
+      "P2-CONSOLE-ROLE-OVERRIDE",
+      "P2-CORS-UNSET-PERMISSIVE",
+      "P2-STEWARD-L7",
+      "P2-V65-RI-STAMP-LAG",
+      "P2-API-FE-SHA-SPLIT",
+      "P2-ENG-SSOT-DUALWAIT-STALE",
+      "P2-FTB-SR-LOCK-LAG",
+      "P2-META-PM-NULL",
+      "P2-CI02-ETA",
+      "P2-PM25-ETA",
+      "P2-LOGIN-NOT-HAPPY-PATH",
+      "P2-STAGING-NOT-CURRENT-PIN",
+      "P2-PACK01-AUTH-CAP",
+      "P2-ADMIN-118-UNEXPANDED",
+      "P2-LOGIN-NOT-HAPPY-PATH",
+      "P2-STEWARD-L7",
+      "P2-CI02-ETA",
+      "P2-PM25-ETA",
+      "P2-ACQUISITION-BACKEND-COARSE",
+      "P2-CMS-NO-GP",
+      "P2-PACK11-INDEPENDENT",
+      "P2-LOGIN-WWW-405",
+      "P2-E2E-NOT-CLOSED",
+      "P2-STEWARD-L7",
+      "P2-CI02-ETA",
+      "P2-PM25-ETA",
+      "P2-ORDER-ID-JOIN",
+      "P2-PACK12-INDEPENDENT",
+      "P2-CI02-ETA",
+      "P2-PM25-ETA",
+      "P2-1USDC-REALITY",
+      "P2-SEAT-VAULT",
+      "P2-PROPOSAL-3-ORTHOGONAL",
+      "P2-PACK13-INDEPENDENT",
+      "P2-LOGIN-405",
+      "P2-CI02-WAIT",
+      "P2-PM25-WAIT",
+      "P2-SEAT-VAULT-ASIS",
+      "P2-PHASE2-NOT-STARTED"
+    ],
+    "explained_stale": [
+      "P2-PACK02-NOT-STARTED"
+    ],
+    "do_not_execute_this_wave": true
+  },
+  "evidence_coverage": {
+    "overlay_unexplained_conflict": 0,
+    "ftb_lock": "LOCKED",
+    "official_live_not_reality_verified": true,
+    "closed_reality_not_production_go": true
+  },
+  "open_p0_p1": {
+    "product_defect_score": "NOT_COMPUTED",
+    "p0_commercial_money_path_blocker": false,
+    "hard_gate": "NO_GO",
+    "scheduled_waiting_eta": [
+      "GATE-CI02-ETA",
+      "GATE-PM25-ETA"
+    ],
+    "action_blocked": [],
+    "session_closed": [
+      "DEP-LOGIN-WWW-405",
+      "FE-AUTH-LOGIN"
+    ],
+    "target_not_live": [
+      "CAP-REGION-STEWARD",
+      "FE-STEWARD",
+      "GATE-SEAT-CI01"
+    ],
+    "reality_handoff": [
+      "GATE-1USDC-REALITY"
+    ]
+  },
+  "systems": [
+    {
+      "id": "SYS-A",
+      "name": "Product / Business",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "MAP_COMPLETE_GAPS_OPEN"
+    },
+    {
+      "id": "SYS-B",
+      "name": "Frontend",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "ACTION_WIRED"
+    },
+    {
+      "id": "SYS-C",
+      "name": "Backend",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "MAP_COMPLETE_GAPS_OPEN"
+    },
+    {
+      "id": "SYS-D",
+      "name": "Data",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "MAP_COMPLETE_GAPS_OPEN"
+    },
+    {
+      "id": "SYS-E",
+      "name": "Web3 / Money",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "NO_GO"
+    },
+    {
+      "id": "SYS-F",
+      "name": "Governance",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "TARGET_NOT_LIVE"
+    },
+    {
+      "id": "SYS-G",
+      "name": "Security / Permission",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "ACTION_WIRED"
+    },
+    {
+      "id": "SYS-H",
+      "name": "Release / Runtime",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "NO_GO"
+    },
+    {
+      "id": "SYS-I",
+      "name": "Evidence / Final Truth",
+      "coverage": "NOT_COMPUTED",
+      "reality": "NOT_COMPUTED",
+      "open_p0_p1": "NOT_COMPUTED",
+      "current_gate": "NO_GO"
+    }
+  ],
+  "stop_after": "PACK14",
+  "next_pack_forbidden_this_wave": [
+    "PHASE2"
+  ],
+  "gate": "python scripts/dev/check-project-coverage-dashboard.py",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

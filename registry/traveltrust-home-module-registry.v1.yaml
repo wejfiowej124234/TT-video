@@ -1,0 +1,377 @@
+# TRAVELTRUST_HOME_MODULAR_RELEASE_V1
+# SSOT: /traveltrust Homepage Module Registry
+# Runbook: docs/runbook/TT-TRAVELTRUST-HOME-MODULAR-RELEASE-V1-LATEST.md
+# Gate: python scripts/gates/check-traveltrust-home-module-registry.py
+# Scope: python scripts/gates/check-traveltrust-home-release-scope.py
+#
+# Not a physical React-file swap on Fly. Next still rebuilds the image.
+# RELEASE_SCOPE only allows the named module(s) to change product behavior;
+# every other module must prove 0-drift (hash/diff/runtime).
+#
+# Do not use module *count* to decide which environment is right.
+# Lifecycle is 5 states. Local-only never jumps to Official.
+
+schema: traveltrust.home_module_registry.v1
+version: 1
+id: TRAVELTRUST_HOME_MODULAR_RELEASE_V1
+route: /traveltrust
+tt_production_go: NO_GO
+forbid:
+  - official_local_dual_track
+  - tt_home_variant
+  - officialBody
+  - localBody
+  - force_equal_module_count_before_mapping
+  - auto_ship_LOCAL_ONLY_PENDING
+  - skip_READY_FOR_RELEASE
+  - local_to_official_jump
+  - delete_PROD_ONLY_to_match_local
+  - auto_r1_rebaseline
+  - hand_edit_READY_without_evidence
+  - stamp_CANONICAL_ACTIVE_before_deploy
+  - stamp_CANONICAL_ACTIVE_before_runtime_pass
+
+# Five fixed Module Lifecycle states. Presence (mounted/absent) is orthogonal.
+lifecycle:
+  status_enum:
+    - CANONICAL_ACTIVE
+    - LOCAL_ONLY_PENDING
+    - READY_FOR_RELEASE
+    - PROD_ONLY_REBASE
+    - DEPRECATED
+  can_ship:
+    CANONICAL_ACTIVE: true
+    LOCAL_ONLY_PENDING: false
+    READY_FOR_RELEASE: auth_required
+    PROD_ONLY_REBASE: false
+    DEPRECATED: dedicated_delete_release
+  transitions:
+    LOCAL_ONLY_PENDING: [READY_FOR_RELEASE, DEPRECATED]
+    READY_FOR_RELEASE: [CANONICAL_ACTIVE, LOCAL_ONLY_PENDING]
+    CANONICAL_ACTIVE: [READY_FOR_RELEASE, DEPRECATED]
+    PROD_ONLY_REBASE: [CANONICAL_ACTIVE]
+    DEPRECATED: []
+  m07_path:
+    - LOCAL_ONLY_PENDING
+    - READY_FOR_RELEASE
+    - RELEASE_SCOPE_PASS
+    - STAGING_OR_PRODUCTION_DEPLOY
+    - RUNTIME_VERIFICATION_PASS
+    - CANONICAL_ACTIVE
+  canonical_active_requires:
+    - matching_READY_FOR_RELEASE_evidence
+    - release_scope_pass
+    - staging_or_production_deploy_pass
+    - official_runtime_pass
+  deploy_fail_keeps: READY_FOR_RELEASE
+  transition_evidence:
+    required_fields:
+      - module_id
+      - from_state
+      - to_state
+      - git_sha
+      - tests
+      - timestamp
+      - reason
+    ledger: registry/traveltrust-home-module-lifecycle-ledger.v1.json
+    ready_for_release_requires_evidence: true
+    canonical_active_promotion_requires_evidence: true
+    recorder: scripts/dev/record-traveltrust-home-module-lifecycle.py
+  canonical_seed:
+    source: production_runtime_observation_2026-08-19
+    module_ids: [M01, M02, M03, M04, M05, M06, M08, M09, M11]
+    note: First-map from Official mounted modules. Not a bake. Later CANONICAL_ACTIVE promotions require ledger + deploy + runtime PASS.
+  release_machine:
+    - registry_lifecycle_allows_scope
+    - scoped_module_diff_only
+    - out_of_scope_zero_drift
+    - build_pass
+    - staging_or_production_deploy
+    - official_runtime_pass
+    - then_stamp_CANONICAL_ACTIVE
+    - deploy_fail_keeps_READY_FOR_RELEASE
+    - no_whole_page_overwrite
+
+status_enum:
+  - CANONICAL_ACTIVE
+  - LOCAL_ONLY_PENDING
+  - READY_FOR_RELEASE
+  - PROD_ONLY_REBASE
+  - DEPRECATED
+
+presence_enum:
+  - mounted
+  - archived
+  - absent
+  - not_sampled
+
+# LOCKED is this-wave *release policy*, not a permanent architecture name.
+this_wave_release_policy:
+  locked_module_ids: [M01, M02, M03]
+  reason: Owner does not want Header / LIVE+Nav / Pulse product change this wave
+  unlock: explicit RELEASE_SCOPE including that Module ID + Owner auth
+
+production_runtime_observation:
+  sampled_utc: "2026-08-20T08:55:00Z"
+  url: https://www.web3-ttg.com/traveltrust
+  pin_baseline_id: TT-OFFICIAL-OPS-20260820-V9
+  pin_git_sha: 3e356617a498b0faac42e4ae457343d36294a770
+  live_build_time: "2026-08-20T00:51:57Z"
+  fly_image_tag: hybrid-live-auth-pin-nontarget-v9-20260820
+  session_bootstrap: v8
+  superseded_pin_git_sha: daa5ae87b8c1af548c6beff6dd3451e5d386acf2
+  rolled_back_overlay_git_sha: 2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b
+  rolled_back_overlay_image: hybrid-live-auth-pin-nontarget-v9-m07-unlock-20260820
+  section_ids_present: [hero, trust, settlement, unlock, liquidity, roles, faq, start]
+  section_ids_absent: []
+  unlock_ssr_titles: ["Unlock schedule", "TTG public unlock"]
+  chrome:
+    header: true
+    live_nav: true
+    pulse: true
+  note: >
+    Living Official = OPS-v9 only (restored after M07 overlay). Tip already mounts
+    id=unlock with pre-windows titles — that is OPS-v9 bytes, NOT M07 CANONICAL.
+    M07 stays LOCAL_ONLY_PENDING; production presence for M07 module = absent
+    (no Public-windows Phase-1 overlay). Do not rename OPS-v9 to M07.
+
+staging_runtime_observation:
+  sampled_utc: "2026-08-20T06:30:00Z"
+  url: https://tt-web-staging.fly.dev/traveltrust
+  git_sha: 2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8
+  build_time: "2026-08-15T12:30:19Z"
+  psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
+  http_status: 200
+  section_ids_present: [hero, trust, settlement, liquidity, roles, faq, start]
+  section_ids_absent: [unlock]
+  chrome:
+    header: true
+    live_nav: true
+    pulse: true
+  note: >
+    Wave-D2 probe. Staging ≠ Official OPS-v9 (Expected Difference).
+    Staging identity 2ba08bd4 / 2026-08-15; Official identity 3e356617 / hybrid-…-v9.
+    Staging bootstrap is NOT v8 header (older). Do not claim Staging isomorphic to V9 without Owner D4 auth.
+
+local_source_observation:
+  sampled_utc: "2026-08-19T11:12:00Z"
+  tree: living
+  layout_lock_id: TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v18-screenshot-body
+  section_ids_present: [hero, trust, settlement, unlock, liquidity, roles, start]
+  section_ids_absent: [faq]
+  note: Owner screenshot body 2026-08-19. FAQ archived locally. M07 remains Local-only Pending.
+
+# Shared chrome shell currently composes M02 + M03 in one visual file.
+# Changing it requires RELEASE_SCOPE covering every module that owns it.
+shared_shells:
+  landing_chrome:
+    path: frontend/components/traveltrust/cinematic/TravelTrustLandingChrome.tsx
+    owned_by: [M02, M03]
+    note: Dual-row LIVE+nav / 项目动态. Do not split visually this wave (FIVE-MAIN freeze).
+
+# Composer / markers that are not a single M0x. Changing them needs RELEASE_SCOPE=PAGE_SHELL.
+page_shell_paths:
+  - frontend/modules/traveltrust-home/presentation/TravelTrustHomeMainColumn.tsx
+  - frontend/modules/traveltrust-home/presentation/TravelTrustHomeBodyModule.tsx
+  - frontend/modules/traveltrust-home/presentation/TravelTrustLockedHomeChrome.tsx
+  - frontend/lib/traveltrust/home/sectionMarkers.ts
+  - frontend/lib/traveltrustHomeLayoutLockL5.ts
+  - frontend/lib/traveltrustHomeLayoutLockL5.test.ts
+  - frontend/modules/traveltrust-home/README.md
+
+modules:
+  - id: M01
+    slug: M01_HEADER
+    name: Header
+    section_id: null
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: true
+    own_paths:
+      - frontend/components/Header.tsx
+      - frontend/components/header/
+    locale_key_prefixes: [header_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+  - id: M02
+    slug: M02_LIVE_NAV
+    name: LIVE / directory nav
+    section_id: null
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: true
+    own_paths:
+      - frontend/components/traveltrust/cinematic/TravelTrustLandingNav.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustPageBriefModeBadge.tsx
+      - frontend/lib/traveltrustLandingNavStyles.ts
+      - frontend/lib/traveltrustSectionNavItems.ts
+      - frontend/modules/traveltrust-home/presentation/TravelTrustHomeLandingNavSlot.tsx
+    locale_key_prefixes: [traveltrust_nav_, traveltrust_landing_chrome_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+  - id: M03
+    slug: M03_PULSE
+    name: Pulse / 项目动态
+    section_id: pulse
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: true
+    own_paths:
+      - frontend/components/traveltrust/cinematic/TravelTrustPulseTicker.tsx
+      - frontend/lib/hooks/useTraveltrustCmsAnnouncements.ts
+      - frontend/lib/traveltrustNetworkAnnouncements.ts
+    locale_key_prefixes: [traveltrust_pulse_, traveltrust_announcements_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+  - id: M04
+    slug: M04_HERO
+    name: Hero + 3D
+    section_id: hero
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: false
+    own_paths:
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeHeroSection.tsx
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeWebGLLayer.tsx
+      - frontend/modules/traveltrust-home/presentation/TravelTrustHomeUnified3DBackdrop.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustCinematicHero.tsx
+    locale_key_prefixes: [traveltrust_hero_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+  - id: M05
+    slug: M05_TRUST
+    name: Trust
+    section_id: trust
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: false
+    own_paths:
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeTrustSection.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustTrustFactsStrip.tsx
+    locale_key_prefixes: [traveltrust_trust_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+  - id: M06
+    slug: M06_SETTLEMENT
+    name: Settlement
+    section_id: settlement
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: false
+    own_paths:
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeSettlementSection.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustSettlementStrip.tsx
+    locale_key_prefixes: [traveltrust_settlement_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+  - id: M07
+    slug: M07_UNLOCK
+    name: TTG Unlock
+    section_id: unlock
+    registry_status: LOCAL_ONLY_PENDING
+    this_wave_locked: false
+    next_lifecycle: READY_FOR_RELEASE
+    own_paths:
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeUnlockSection.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustTtgUnlockSchedule.tsx
+    locale_key_prefixes: [traveltrust_unlock_, traveltrust_nav_unlock]
+    presence:
+      local: mounted
+      staging: absent
+      production: absent
+    note: >
+      LOCAL_ONLY_PENDING. OPS-v9 tip may still show older unlock copy (Unlock schedule /
+      TTG public unlock) — that is NOT this module’s CANONICAL release. M07 overlay bake
+      2551fafd was rolled back; do not stamp CANONICAL_ACTIVE or claim as OPS-v9.
+      Promote only via recorder + ledger + Owner-named new pin (not silent OPS-v9 rename).
+  - id: M08
+    slug: M08_LIQUIDITY
+    name: Liquidity / TTG
+    section_id: liquidity
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: false
+    own_paths:
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeLiquiditySection.tsx
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeLiquidityFacts.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustStablecoinGateway.tsx
+    locale_key_prefixes: [traveltrust_liquidity_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+  - id: M09
+    slug: M09_ROLES
+    name: Roles theater
+    section_id: roles
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: false
+    own_paths:
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeRolesSection.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustIdentityTheater.tsx
+    locale_key_prefixes: [traveltrust_role_, traveltrust_roles_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+  - id: M10
+    slug: M10_FAQ
+    name: FAQ
+    section_id: faq
+    registry_status: DEPRECATED
+    this_wave_locked: false
+    own_paths:
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeFaqSection.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustFaqStrip.tsx
+    locale_key_prefixes: [traveltrust_faq_]
+    presence:
+      local: archived
+      staging: mounted
+      production: mounted
+    note: Owner screenshot sequence has no FAQ. Local archived. Official/Staging still mounted until a dedicated DEPRECATED delete Release. Do not mix with M07 unlock bake.
+  - id: M11
+    slug: M11_START_CTA
+    name: Start / close CTA
+    section_id: start
+    registry_status: CANONICAL_ACTIVE
+    this_wave_locked: false
+    own_paths:
+      - frontend/modules/traveltrust-home/sections/TravelTrustHomeStartCloseSection.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustStartSection.tsx
+      - frontend/components/traveltrust/cinematic/TravelTrustNetworkFooter.tsx
+    locale_key_prefixes: [traveltrust_start_, traveltrust_footer_]
+    presence:
+      local: mounted
+      staging: mounted
+      production: mounted
+    note: Production Canonical remounted on Local (StartSection id=start + grouped footer). Staging already mounted. No Production bake.
+
+# After homepage module close: mint a new Production Baseline, rebuild Local+Staging from it.
+# This wave: NOT_STARTED. Do not auto-execute. Do not bake Official www from this flag.
+r1_rebaseline:
+  status: NOT_STARTED
+  wait_for: homepage_module_close
+  steps:
+    - maybe_release_M07_if_owner_confirms
+    - mint_new_production_baseline
+    - rebuild_local_from_new_baseline
+    - rebuild_staging_from_new_baseline
+    - three_env_registry_100_percent
+    - clear_old_worktree_stash_dirty_tree
+  result: module_level_release_only
+
+scope_allowlist:
+  - registry/traveltrust-home-module-registry.v1.yaml
+  - frontend/lib/traveltrustHomeModuleRegistry.ts
+  - frontend/lib/traveltrustHomeModuleRegistry.test.ts
+  - frontend/modules/traveltrust-home/traveltrustHomeModuleRegistry.test.ts
+  - scripts/gates/check-traveltrust-home-module-registry.py
+  - scripts/gates/check-traveltrust-home-release-scope.py
+  - docs/runbook/TT-TRAVELTRUST-HOME-MODULAR-RELEASE-V1-LATEST.md
+  - registry/traveltrust-home-module-lifecycle-ledger.v1.json
+  - scripts/dev/record-traveltrust-home-module-lifecycle.py

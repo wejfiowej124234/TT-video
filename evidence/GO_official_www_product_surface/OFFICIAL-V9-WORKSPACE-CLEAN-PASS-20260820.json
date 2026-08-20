@@ -1,0 +1,64 @@
+{
+  "machine_key": "OFFICIAL_V9_WORKSPACE_CLEAN_PASS",
+  "status": "PASS",
+  "stamp_utc": "2026-08-20T09:42:43Z",
+  "phase": "① Local workspace hygiene",
+  "not_equal": [
+    "② Staging GO",
+    "③ Production GO",
+    "Official www bake/redeploy"
+  ],
+  "official_v9_recovery_master": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "role": "UNIQUE_PRODUCT_TRUTH_AND_RECOVERY_MASTER",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_image_digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "identity_source": "docker-bake",
+    "identity_sha_is_not_clean_checkout_product_bytes": true,
+    "restore_only": "TT_OFFICIAL_WWW_RESTORE_PIN=1 bash scripts/dev/restore-tt-web-production-product-pin.sh",
+    "forbid": [
+      "git checkout 3e356617 as Official product restore",
+      "restore from dirty tip / non-V9 bake tree",
+      "restore hybrid-live-auth-pin-nontarget-v9-m07-unlock as OPS-v9",
+      "mutate FTB / Web3 addresses / TT_PRODUCTION_GO"
+    ],
+    "modules_ssot": "registry/traveltrust-home-module-registry.v1.yaml",
+    "modules_note": "M07 LOCAL_ONLY_PENDING; production M07 absent; FAQ DEPRECATED; other traveltrust modules CANONICAL_ACTIVE per registry",
+    "runtime_verified_utc": "2026-08-20T09:19:27Z",
+    "tt_production_go": "NO_GO"
+  },
+  "topology_after": {
+    "active_main": {
+      "path": "D:/TravelTrust-V1.1",
+      "branch": "release/inbox-focus-product-truth-1ff71858",
+      "head": "f73e40c140f0cf6ee2259dcb3aea586bc742ea6d",
+      "class": "ACTIVE"
+    },
+    "feature_worktrees": [],
+    "unique_release_worktree": {
+      "path": "D:/TravelTrust-official-ops-v9-release",
+      "branch": "release/official-ops-v9-workspace-baseline",
+      "cite_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "class": "ACTIVE"
+    }
+  },
+  "archives": {
+    "pre_clean_tip": "archive/pre-official-v9-workspace-clean-f73e40c1",
+    "dirty_wip_commit": "archive/dirty-wip-pre-official-v9-workspace-clean",
+    "dirty_wip_sha": "e7da7bf596213fd0ec39bcee73a08c10f8cc7be1"
+  },
+  "forbid_verified": [
+    "No Official www restore/bake from dirty tip",
+    "No claim git checkout 3e356617 == Official product bytes",
+    "No FTB / Web3 address mutation this turn",
+    "TT_PRODUCTION_GO remains NO_GO"
+  ],
+  "local_staging_rebuild_rule": "Reverse-align Local/Staging from Official V9 recovery master (Fly image + living pin index); never from superseded daa5ae87 / M07 unlock / dirty archive tip."
+}

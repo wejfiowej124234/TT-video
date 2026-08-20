@@ -1,0 +1,65 @@
+{
+  "stamp_utc": "2026-08-20T09:42:43Z",
+  "scheme": [
+    "ACTIVE",
+    "ARCHIVE",
+    "DELETE_CANDIDATE"
+  ],
+  "ACTIVE": [
+    {
+      "kind": "worktree",
+      "path": "D:/TravelTrust-V1.1",
+      "branch": "release/inbox-focus-product-truth-1ff71858",
+      "role": "clean_main_dev_baseline"
+    },
+    {
+      "kind": "worktree",
+      "path": "D:/TravelTrust-official-ops-v9-release",
+      "branch": "release/official-ops-v9-workspace-baseline",
+      "role": "unique_release_worktree_cite_v9_identity"
+    },
+    {
+      "kind": "recovery_master",
+      "id": "TT-OFFICIAL-OPS-20260820-V9",
+      "fly_image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820"
+    }
+  ],
+  "ARCHIVE": [
+    {
+      "kind": "branch",
+      "name": "archive/pre-official-v9-workspace-clean-f73e40c1",
+      "sha": "f73e40c140f0cf6ee2259dcb3aea586bc742ea6d"
+    },
+    {
+      "kind": "branch",
+      "name": "archive/dirty-wip-pre-official-v9-workspace-clean",
+      "sha": "e7da7bf596213fd0ec39bcee73a08c10f8cc7be1"
+    },
+    {
+      "kind": "policy",
+      "note": "Branch refs from removed worktrees retained; worktree dirs removed."
+    }
+  ],
+  "DELETE_CANDIDATE": {
+    "worktrees_removed_or_pruned": "non-main registrations from 79-scan cleared to 2 remaining",
+    "orphan_dirs_still_on_disk_optional_rm": [
+      "D:/TravelTrust-fe-lineage-fwd-1",
+      "D:/TravelTrust-FEP-quarantine-20260731",
+      "D:/TravelTrust-full-verify",
+      "D:/TravelTrust-m07-unlock-pin-overlay",
+      "D:/TravelTrust-release-home-only",
+      "D:/TravelTrust-V1.1-wt-quarantine-20260615T020516Z"
+    ],
+    "main_root_untracked_tmp": "?? .tmp* at main root",
+    "orphan_dirs_removed": [
+      "D:/TravelTrust-fe-lineage-fwd-1",
+      "D:/TravelTrust-FEP-quarantine-20260731",
+      "D:/TravelTrust-full-verify",
+      "D:/TravelTrust-m07-unlock-pin-overlay",
+      "D:/TravelTrust-release-home-only",
+      "D:/TravelTrust-V1.1-wt-quarantine-20260615T020516Z",
+      "D:/TravelTrust-recon-official-runtime-baseline-1;C"
+    ]
+  },
+  "feature_worktrees_kept": []
+}

@@ -1,0 +1,76 @@
+{
+  "schema": "traveltrust.wait_window_r_comm_comment_delete_1.v1",
+  "batch_id": "R-COMM-COMMENT-DELETE-1",
+  "status": "OPEN_RESIDUALS",
+  "recorded_utc": "2026-08-13T02:00:00Z",
+  "comment_chain_closed": false,
+  "community_runtime_recovery": "OPEN_RESIDUALS",
+  "umbrella": "OFFICIAL_FULL_REALITY_RECONCILIATION-1",
+  "scatter_hotfix": "FORBIDDEN",
+  "fe_residuals_tip": "3e600076eab6613b55484852197921cb5c622f7e",
+  "ocs_404_initiator": {
+    "route": "/",
+    "component": "ColdStartOfficialHighlightCard",
+    "presentation": "coldStartConsumerPresentation.resolveCoverUrl",
+    "asset": "ocs-tokyo-photo-official-guide-cover.jpg",
+    "legacy_path": "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+    "fix_sha": "3e600076eab6613b55484852197921cb5c622f7e"
+  },
+  "comment_429_classified": {
+    "http": 429,
+    "error": "comment_duplicate",
+    "treatment": "FE_SOFT_SUCCESS_NO_API_CHANGE",
+    "residual_only_if": "new_unique_body_first_send_wrongly_429"
+  },
+  "provider_draft_400_classified": "missing_idempotency_key",
+  "blocks_track1_finalize": false,
+  "tt_production_go": "NO_GO",
+  "hard_gate": "REFUSED",
+  "opens_after": "UI-HYG-COMM-COMMENT-WALLET-CONTRAST-1_CLOSED",
+  "official_cut_authorized": true,
+  "api": {
+    "method": "DELETE",
+    "path": "/api/v1/community/posts/:id/comments/:comment_id",
+    "ownership_only": true,
+    "idempotent_already_deleted": true,
+    "removed_visible_count": true
+  },
+  "official_api_cut": "deployment-01KZSVKBK6NCKXV8D1WAFCWWYA",
+  "official_fe_cut": "3e600076eab6613b55484852197921cb5c622f7e",
+  "runtime_verify": {
+    "unauth_delete": "401_PASS",
+    "community_http": 200,
+    "public_gates": "OWNER_RV_AFTER_RESIDUALS",
+    "author_ui": "DEPLOYED_DETAIL_DELETE_CONTROL",
+    "optimistic_comment_local_delete": "FE_FAIL_CLOSED",
+    "ocs_legacy_network": "FE_COLD_START_NORMALIZE_DEPLOYED_OWNER_RV",
+    "provider_draft_idempotency": "FE_WRITE_HEADERS",
+    "comment_duplicate_429": "FE_SOFT_SUCCESS"
+  },
+  "opens_next": "OWNER_RV_THEN_R_MEDIA_1",
+  "forbid": [
+    "mainnet_ftb_mutate",
+    "fee_router_distribute",
+    "track2",
+    "region_83",
+    "claim_comment_chain_closed_until_owner_rv",
+    "claim_community_closed_while_open_residuals"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

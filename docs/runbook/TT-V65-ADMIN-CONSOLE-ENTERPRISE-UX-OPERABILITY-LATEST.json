@@ -1,0 +1,128 @@
+{
+  "schema": "traveltrust.v65_admin_console_enterprise_ux_operability.v1",
+  "stamp": "20260803T001504Z",
+  "generated_at": "2026-08-03T00:15:08Z",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+  "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+  "web": "075a295fbf5138777dd957feea4d885004a6a953",
+  "web3_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+  "web3_mainnet_untouched": true,
+  "tt_production_go": "NO_GO",
+  "admin_ia_ui_freeze": true,
+  "pin_check": {
+    "ok": true,
+    "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web": "075a295fbf5138777dd957feea4d885004a6a953",
+    "candidate_id": "V65-PROD-CAND-20260802",
+    "tt_production_go": "NO_GO",
+    "expected": {
+      "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web": "075a295fbf5138777dd957feea4d885004a6a953",
+      "candidate_id": "V65-PROD-CAND-20260802",
+      "tt_production_go": "NO_GO"
+    }
+  },
+  "verdict": "V65_ADMIN_UX_OPERABILITY_MACHINE_PASS",
+  "closure_status": "ADMIN_UX_OPERABILITY_MACHINE_PASS",
+  "dimensions": {
+    "dashboard_hierarchy": {
+      "status": "PASS",
+      "non_focus_order": [
+        "inbox",
+        "kpi",
+        "system"
+      ],
+      "indices": {
+        "inbox": 85,
+        "kpi": 549,
+        "system": 1018
+      }
+    },
+    "domain_naming": {
+      "status": "PASS",
+      "used_admin_keys": 3344,
+      "bare_key_count": 0,
+      "recent_path_gaps": 0
+    },
+    "kpi_lineage": {
+      "status": "PASS",
+      "lineage": [
+        {
+          "kpi_id": "home_orders_count",
+          "fe": "frontend/lib/admin/useAdminHomeKpi.ts",
+          "api": "GET /api/v1/admin/orders (list total)",
+          "sql_or_store": "orders table via admin orders list",
+          "label_key": "admin_home_kpi_orders",
+          "scope_note": "Queue list total for ops snapshot — not settlement ledger",
+          "permission": "ORDERS_READ",
+          "surfaceable": true
+        },
+        {
+          "kpi_id": "home_disputes_count",
+          "fe": "frontend/lib/admin/useAdminHomeKpi.ts",
+          "api": "GET /api/v1/admin/disputes (list total)",
+          "sql_or_store": "disputes table via admin disputes list",
+          "label_key": "admin_home_kpi_disputes",
+          "scope_note": "Open/list total for ops snapshot",
+          "permission": "ORDERS_READ / disputes capability",
+          "surfaceable": true
+        },
+        {
+          "kpi_id": "system_overview_user_sample",
+          "fe": "frontend/lib/admin/adminHomeSystemOverviewMetrics.ts",
+          "api": "GET /api/v1/admin/metrics/home-overview + users list sample",
+          "sql_or_store": "users sample ≤500 · possiblyTruncated honesty",
+          "label_key": "admin_home_system_overview_*",
+          "scope_note": "Sample aggregation — not full-DB KPI",
+          "permission": "admin shell",
+          "surfaceable": true
+        }
+      ],
+      "metrics_api_present": true,
+      "permission_honesty": true,
+      "sample_honesty": true
+    },
+    "page_five_states": {
+      "status": "PASS",
+      "priority_modules": [
+        "finance",
+        "disputes",
+        "content",
+        "config"
+      ]
+    }
+  },
+  "summary": {
+    "modules": 14,
+    "admin_pages_crawled": 118,
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "p2_gaps": 50,
+    "vitest_ok": true
+  },
+  "autofix": [
+    "non_focus_hierarchy_already_aligned_or_manual",
+    "config_hub_permission_via_shell_actor_documented_skip"
+  ],
+  "honest_closure": "V65_ADMIN_UX_OPERABILITY_MACHINE_PASS|GAP ≠ Human UAT ≠ Owner Sign-off ≠ Production GO",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

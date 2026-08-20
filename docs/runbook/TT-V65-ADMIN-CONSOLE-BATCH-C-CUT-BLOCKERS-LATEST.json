@@ -1,0 +1,117 @@
+{
+  "schema": "tt.v65.admin_console.batch_c_cut_blockers.v1",
+  "track": "V65_ADMIN_CONSOLE_PRODUCTION_REALITY_DEEP_AUDIT",
+  "stamp_utc": "20260803T083705Z",
+  "inventory_status": "FROZEN",
+  "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "tip_short": "35872b40",
+  "matrix_residual_locked": {
+    "pending": 0,
+    "fail": 3,
+    "gap": 63
+  },
+  "formal_totals": {
+    "open": 1,
+    "closed": 14,
+    "blocks_cut": 0
+  },
+  "cut_allowed": true,
+  "tt_production_go": "NO_GO",
+  "next_allowed": "runtime_certification",
+  "agent_local_done": {
+    "batch_a": "CLOSED_LOCAL_CODE",
+    "batch_b": "CLOSED_LOCAL_PARTIAL",
+    "batch_c_cut_blockers": "CLOSED_OWNER_WALK",
+    "evidence_stamp": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z",
+    "vitest_prior": "evidence/GO_v65_admin_console_batch_remediation/20260803T080900Z/LOCAL-VITEST.json"
+  },
+  "cut_blockers": [
+    {
+      "id": "V65-PR-G009",
+      "status": "CLOSED_OWNER_WALK",
+      "blocks_cut": false,
+      "priority": "P1",
+      "closed_at_stamp": "20260803T083705Z",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/FIVE-STATE.json",
+      "disposition": "ACCEPT_WALK"
+    },
+    {
+      "id": "V65-PR-G010",
+      "status": "CLOSED_OWNER_WALK",
+      "blocks_cut": false,
+      "priority": "P1",
+      "closed_at_stamp": "20260803T083705Z",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/BUTTONS.json"
+    },
+    {
+      "id": "V65-PR-G011",
+      "status": "CLOSED_LIVE_EVIDENCE",
+      "blocks_cut": false,
+      "priority": "P1",
+      "closed_at_stamp": "20260803T083705Z",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/NETWORK.json"
+    },
+    {
+      "id": "V65-PR-G012",
+      "status": "CLOSED_OWNER_WALK",
+      "blocks_cut": false,
+      "priority": "P1",
+      "closed_at_stamp": "20260803T083705Z",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/RBAC.json"
+    }
+  ],
+  "non_blocking_open": [
+    {
+      "id": "V65-PR-G014",
+      "status": "OPEN",
+      "blocks_cut": false,
+      "priority": "P2",
+      "owner_action": "Note slow pages + console warnings into matrix performance dimension during walks",
+      "exit": "Optional before Cut; prefer stamp before Runtime Certification"
+    }
+  ],
+  "owner_gate": "Deploy PASS + PRV-2 PARTIAL → Owner logged-in Cert UAT · still NO_GO until Cert ladder",
+  "local_full_verify": {
+    "stamp_utc": "20260803T083705Z",
+    "result": "PASS",
+    "files": 4,
+    "tests": 12
+  },
+  "single_release_cut": {
+    "stamp_utc": "20260803T084500Z",
+    "result": "COMPLETE",
+    "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "tip_frozen": true,
+    "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T084500Z/SINGLE-RELEASE-CUT.json"
+  },
+  "forbidden_until_runtime_certification": [
+    "TT_PRODUCTION_GO"
+  ],
+  "production_deploy": {
+    "stamp_utc": "20260803T090651Z",
+    "result": "PASS",
+    "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T090651Z/PRODUCTION-DEPLOY.json"
+  },
+  "prv2": {
+    "stamp_utc": "20260803T090651Z",
+    "result": "PRV2_PARTIAL_OWNER_UAT_PENDING",
+    "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T090651Z/PRV-2.json"
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

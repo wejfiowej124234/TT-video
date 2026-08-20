@@ -1,90 +1,114 @@
 {
   "schema": "TT-V65-PRODUCTION-RUNTIME-REALITY-VERIFICATION.v1",
-  "stamp": "20260803T020818Z",
-  "generated_at": "2026-08-03T02:14:00Z",
+  "stamp": "20260803T023036Z",
+  "pre_redeploy_stamp": "20260803T020818Z",
+  "generated_at": "2026-08-03T02:31:00Z",
   "phase": "③ Production Runtime Reality — NOT Production GO",
   "TT_PRODUCTION_GO": "NO_GO",
-  "verdict": "V65_OPEX_NOT_IN_PRODUCTION_WEB_RUNTIME_PIN_MATCH_AUDIT_DRIFT",
-  "most_likely_cause": "1_FIXES_NEVER_ENTERED_PRODUCTION_WEB_BUILD_GIT",
+  "verdict": "V65_OPEX_BAKED_IN_PRODUCTION_WEB_RUNTIME_VERIFIED",
+  "most_likely_cause_closed": "1_FIXES_NEVER_ENTERED_PRODUCTION_WEB_BUILD_GIT",
   "cause_rank": [
     {
       "rank": 1,
       "id": "audit_git_runtime_split",
-      "status": "CONFIRMED",
-      "detail": "Audit MACHINE_PASS / WT OPEX locales exist, but Production Web pin 075a295f still ships English Ops Leaf stubs; admin_orders_op_more absent from live chunk."
+      "status": "FIXED",
+      "detail": "Committed 7a37d10e + deploy-tt-web-production.sh; live identity and chunk OPEX match tip."
     },
     {
       "rank": 2,
       "id": "tip_eq_bytes_false",
-      "status": "CONFIRMED_VARIANT",
-      "detail": "Runtime tip correctly equals frozen Web pin; tip==pin does NOT equal tip==WT OPEX bytes. OPEX never committed onto pin."
+      "status": "FIXED",
+      "detail": "New tip baked; git_sha==artifact_sha==7a37d10e; OPEX strings in 39847-0ec032687fc47a33.js."
     },
     {
       "rank": 3,
       "id": "cdn_browser_cache",
-      "status": "SECONDARY_NON_ROOT",
-      "detail": "Live chunk 39847-18c0fd88b2e244f3.js still contains Ops Leaf Data Source Title — not a stale-browser-only illusion."
+      "status": "MITIGATED",
+      "detail": "Old chunk 39847-18c0fd88b2e244f3.js returns HTTP 404; new chunk immutable with LM 2026-08-03T02:20:36Z."
     },
     {
       "rank": 4,
       "id": "ui_ok_data_old",
-      "status": "PARTIAL",
-      "detail": "Locale keys themselves are PIN stubs; CMS/data secondary."
+      "status": "LOCALE_IN_RUNTIME",
+      "detail": "admin_orders_op_more + CN/EN real-db copy HIT in live chunk."
     }
   ],
   "three_truths": {
-    "A_audit_truth": "OPEX audit After 96.7 MACHINE_PASS against local/audit target — NOT proof of www runtime",
-    "B_git_truth_at_pin": "075a295f: zh/en admin_ops_leaf_data_source_title=Ops Leaf Data Source Title; admin_orders_op_more MISSING",
-    "C_runtime_truth": "www.web3-ttg.com release-identity git_sha=075a295f build_time=2026-08-02T13:11:32Z; chunk embeds PIN stubs"
+    "A_audit_truth": "OPEX audit After 96.7 MACHINE_PASS — still not a GO substitute",
+    "B_git_truth": "7a37d10efa66630aba686e569227a3b244ed41f9 — OPEX locale + Ops Leaf copy committed",
+    "C_runtime_truth": "www release-identity git_sha=7a37d10e build_time=2026-08-03T02:17:31Z; chunk OPEX PASS"
   },
   "production_web_identity": {
     "host": "https://www.web3-ttg.com",
-    "git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
-    "artifact_sha": "075a295fbf5138777dd957feea4d885004a6a953",
-    "build_time": "2026-08-02T13:11:32Z",
+    "git_sha": "7a37d10efa66630aba686e569227a3b244ed41f9",
+    "artifact_sha": "7a37d10efa66630aba686e569227a3b244ed41f9",
+    "build_time": "2026-08-03T02:17:31Z",
     "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
     "identity_source": "docker-bake",
-    "matches_frozen_web_pin": true
+    "matches_committed_opex_tip": true,
+    "note": "OPEX bake historical identity; see tip_advance for current live tip"
+  },
+  "tip_advance": {
+    "git_sha": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
+    "artifact_sha": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
+    "build_time": "2026-08-03T03:27:00Z",
+    "cause": "Workbench polish (modules fold / Domain Health truncate / CN ops copy)",
+    "boundary": "LAST_FRAGMENT_DEPLOY_BEFORE_BATCH_RELEASE_CLOSURE",
+    "opex_bake_still_valid": true,
+    "process": "docs/runbook/TT-V65-BATCH-RELEASE-CLOSURE-LATEST.md",
+    "active_batch": "V65-ADMIN-UX"
+  },
+  "batch_release_closure": {
+    "status": "ACTIVE",
+    "forbid_fragment_admin_ux_deploy": true,
+    "p0_exception_only": true
   },
   "frozen_pins_untouched": {
     "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
     "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
     "web_pre_redeploy": "075a295fbf5138777dd957feea4d885004a6a953",
+    "web_opex_bake": "7a37d10efa66630aba686e569227a3b244ed41f9",
+    "web_live_tip": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
     "web3": "PSG-REL-20260720-WEB3-CAND-V2"
   },
-  "chunk_probe": {
-    "url": "https://www.web3-ttg.com/_next/static/chunks/39847-18c0fd88b2e244f3.js",
-    "bytes": 1675081,
-    "Ops_Leaf_Data_Source_Title": "HIT",
-    "admin_orders_op_more": "MISS",
-    "已连接真实数据库": "MISS",
-    "Connected_to_real_database": "MISS"
+  "chunk_probe_after": {
+    "url": "https://www.web3-ttg.com/_next/static/chunks/39847-0ec032687fc47a33.js",
+    "bytes": 1691611,
+    "sha256": "0f384143c4c375e4a8162fc1a2d814cbde51d7f1599663bb630587e1890919fc",
+    "Ops_Leaf_Data_Source_Title": "MISS",
+    "admin_orders_op_more": "HIT",
+    "已连接真实数据库": "HIT",
+    "Connected_to_real_database": "HIT",
+    "old_chunk_404": true,
+    "content_verdict": "PASS"
   },
-  "working_tree_opex": {
-    "zh_admin_ops_leaf_data_source_title": "数据来源",
-    "zh_admin_ops_leaf_data_source_real_db": "已连接真实数据库",
-    "en_admin_ops_leaf_data_source_title": "Data source",
-    "en_admin_ops_leaf_data_source_real_db": "Connected to real database",
-    "admin_orders_op_more_zh": "更多",
-    "committed_on_pin": false,
-    "commits_after_pin": [
-      "dab2da0f docs CMS Reality",
-      "9ea94166 feat RI audit",
-      "ccfe8833 docs Freeze Certificate"
-    ],
-    "note": "No OPEX/locale/admin UX commit after Web pin — fixes live only in dirty WT"
+  "actions_completed": [
+    "commit_opex_slice_7a37d10e",
+    "deploy_tt_web_production",
+    "reprobe_identity_and_chunk",
+    "update_runtime_ssot_web_pin",
+    "keep_TT_PRODUCTION_GO_NO_GO"
+  ],
+  "remaining": [
+    "logged_in_admin_screenshot_uat_auth_gated",
+    "production_go_separate_gate"
+  ],
+  "honest_boundary": "Runtime OPEX bake verified ≠ Production GO. Audit After 96.7 alone never proved www.",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
   },
-  "required_action": {
-    "1": "Commit minimal frontend OPEX/locale/admin UX slice (tip=bytes)",
-    "2": "Minimal Web redeploy + cache refresh via deploy-tt-web-production.sh",
-    "3": "Re-probe release-identity + chunk strings + screenshot",
-    "4": "Update Runtime SSOT web_git_sha only after success; keep TT_PRODUCTION_GO=NO_GO",
-    "forbidden": [
-      "dirty bake without commit",
-      "Web3 pin change",
-      "Sidebar IA change",
-      "claim Production GO"
-    ]
-  },
-  "honest_boundary": "① audit green / After 96.7 ≠ ③ Production Runtime contains V65 OPEX. Runtime correctly serves pin; pin never received OPEX."
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

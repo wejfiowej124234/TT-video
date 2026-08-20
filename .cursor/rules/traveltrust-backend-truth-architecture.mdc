@@ -1,0 +1,33 @@
+---
+description: Backend Truth Architecture — locate L0–L8 before editing; Web3 is L7, Indexer/FTB is L8; do not mutate those tracks from this map.
+alwaysApply: true
+---
+
+# Backend Truth Architecture（排障母地图）
+
+**SSOT:** [TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md](../../docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md) · [registry/backend-truth-architecture.v1.yaml](../../registry/backend-truth-architecture.v1.yaml)
+
+前端树回答：用户在哪一页、点了什么。  
+后端树回答：请求从哪进来、经过什么、死在哪一层、谁是真源。
+
+## 硬规则
+
+1. **先定位 Layer，再动手。** 禁止看到「登录不了」就改账号 / 改 DB；禁止看到「页面没数据」就改前端。
+2. Spine 是 **L0–L8**（9 层）。**不要**把 Web3 / Indexer 塞进 External。
+3. **L7 = 链上真正发生了什么。L8 = 系统是否观察、投影、证明了它。** 二者不得混。
+4. 节点 `status` 禁止 PASS/FAIL。用：`DESIGN_ONLY` · `IMPLEMENTED` · `UNIT_PASS` · `DEPLOYED` · `DEPLOYED_NOT_WIRED` · `WIRED` · `PRODUCT_READY_WAITING_RUNTIME` · `OFFICIAL_LIVE` · `CLOSED_REALITY` · `DEFERRED` · `LEGACY` · `BLOCKED`。
+5. **纳入架构与只读 Reality，但本轮不修改** FTB 地址、`/meta` 契约、Indexer 语义、Timelock/Governor/PrimaryMarket live 参数、`TT_PRODUCTION_GO`。
+6. 核心只走 **GP-01…GP-08**。未来 App 是另一个 L0，复用同一组 Golden Path。
+7. 前端 Action ↔ 后端 capability key（例：`HOME.TTG_PURCHASE.SUBMIT` → `GP-06.PM.PURCHASE`）。
+
+## 登录不了（INC-LOGIN）
+
+`POST /auth/login`（API origin，不是 Next 页）→ Cookie/token → `GET /api/v1/me` → 若 UI 仍匿名才查 L0 hydration。  
+405 打在 Next `/auth/login` 上是路由层（L3），不是账号错。  
+503 `api.example.com` / `api_unavailable` 是 L2 `proxyTraveltrustApi`。
+
+## 链上成功但页面没更新（INC-INDEXER-LAG）
+
+Receipt `status=1`（L7）→ Indexer checkpoint ≥ tx block（L8）→ projection → API → UI。
+
+Pause 门禁是 **503 `api_paused`**，不是 418。

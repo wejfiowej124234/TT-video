@@ -1,0 +1,199 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_w2_write_path_runtime_evidence.v1",
+  "machine_key": "TT_V65_B3_W2_WRITE_PATH_RUNTIME",
+  "stamp": "20260805T054411Z",
+  "generated_at": "2026-08-05T05:44:31.756Z",
+  "claim": "STAGING_RUNTIME_PASS",
+  "tt_production_go": "NO_GO",
+  "phase": "① Local PASS → ② Staging PASS → Runtime Evidence STAMPED · Residual Close eligible · ≠ ③ Production GO",
+  "hosts": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev"
+  },
+  "tip": {
+    "api_git_sha": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "required": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "match": true,
+    "tip_lag": false
+  },
+  "ids": [
+    "V65-PROD-003-B3-R059",
+    "V65-PROD-003-B3-R060",
+    "V65-PROD-003-B3-R061",
+    "V65-PROD-003-B3-R062"
+  ],
+  "smoke": {
+    "path": "evidence/GO_v65_prod_003_batch3_w2_write_path/20260805T054411Z/SMOKE.json",
+    "verdict": "PASS",
+    "checks": [
+      {
+        "id": "api_tip",
+        "ok": true,
+        "detail": "got=16f29c7ea78b3a718e6b3763513932a8ea32b9d5 required_prefix=16f29c7ea78b profile=?"
+      },
+      {
+        "id": "admin_auth",
+        "ok": true,
+        "detail": "email=adm-10x4-20260719143519@traveltrust.test"
+      },
+      {
+        "id": "admin_capabilities",
+        "ok": true,
+        "detail": "http=200 role=?"
+      },
+      {
+        "id": "missing_idem_W2-S-STEWARD-REVIEW",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=false"
+      },
+      {
+        "id": "missing_idem_W2-S-ACQUISITION-SUSPEND",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=false"
+      },
+      {
+        "id": "missing_idem_W2-S-GUIDE-REGISTRATION-ADMIN",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=false"
+      },
+      {
+        "id": "missing_idem_W2-S-PROVIDER-APPLICATION-ADMIN",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=false"
+      },
+      {
+        "id": "missing_idem_W2-S-CMS-ANNOUNCEMENT-CREATE",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=false"
+      },
+      {
+        "id": "missing_idem_W2-S-CMS-ANNOUNCEMENT-PATCH",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=false"
+      },
+      {
+        "id": "missing_idem_W2-S-CMS-ANNOUNCEMENT-WORKFLOW",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=false"
+      },
+      {
+        "id": "missing_idem_W2-S-APPROVALS-REJECT",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=false"
+      },
+      {
+        "id": "missing_idem_W2-S-ROLE-CHANGE-REQUEST",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=true"
+      },
+      {
+        "id": "tip_known_missing_idem_W2-S-ROLE-CHANGE-REQUEST",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key"
+      },
+      {
+        "id": "missing_idem_W2-S-ROLE-CHANGE-APPROVE-EXECUTE",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key tip_classifier=true"
+      },
+      {
+        "id": "tip_known_missing_idem_W2-S-ROLE-CHANGE-APPROVE-EXECUTE",
+        "ok": true,
+        "detail": "http=400 err=missing_idempotency_key"
+      },
+      {
+        "id": "tip_classifier_w2_deployed",
+        "ok": true,
+        "detail": "W2 classifier surfaces fail-closed on missing Idempotency-Key"
+      },
+      {
+        "id": "r060_cms_stable_key_replay",
+        "ok": true,
+        "detail": "a=200/1794f09f-5b3d-4e52-8230-76db58acfa36 b=200/1794f09f-5b3d-4e52-8230-76db58acfa36 same=true"
+      },
+      {
+        "id": "r060_cms_distinct_key_new_write",
+        "ok": true,
+        "detail": "c=200/dba50a78-2d71-4869-b451-a59a9c656c66 != a=1794f09f-5b3d-4e52-8230-76db58acfa36"
+      },
+      {
+        "id": "r059_steward_with_idem_key",
+        "ok": true,
+        "detail": "http=422 err= (404/422 ok; missing_idem not ok)"
+      },
+      {
+        "id": "r059_steward_idem_replay",
+        "ok": true,
+        "detail": "a=422/ b=422/"
+      },
+      {
+        "id": "tourist_login",
+        "ok": true,
+        "detail": "email=tourist@test.com role=tourist http=200"
+      },
+      {
+        "id": "r062_role_change_without_perm",
+        "ok": true,
+        "detail": "http=403 err=admin_required"
+      },
+      {
+        "id": "r062_role_change_with_perm",
+        "ok": true,
+        "detail": "http=404 err=target_user_not_found"
+      },
+      {
+        "id": "r062_no_public_execute",
+        "ok": true,
+        "detail": "http=404"
+      },
+      {
+        "id": "r061_burst_429_observable",
+        "ok": true,
+        "detail": "n429=28/40 statuses=404,429"
+      }
+    ]
+  },
+  "coverage": {
+    "critical_write_registry_surfaces": [
+      "W2-S-STEWARD-REVIEW",
+      "W2-S-ACQUISITION-SUSPEND",
+      "W2-S-GUIDE-REGISTRATION-ADMIN",
+      "W2-S-PROVIDER-APPLICATION-ADMIN",
+      "W2-S-CMS-ANNOUNCEMENT-CREATE",
+      "W2-S-CMS-ANNOUNCEMENT-PATCH",
+      "W2-S-CMS-ANNOUNCEMENT-WORKFLOW",
+      "W2-S-APPROVALS-REJECT",
+      "W2-S-ROLE-CHANGE-REQUEST",
+      "W2-S-ROLE-CHANGE-APPROVE-EXECUTE"
+    ],
+    "idempotency_missing_fail_closed": true,
+    "cms_stable_retry": true,
+    "rbac_request_approve_execute_boundary": true,
+    "burst_429": true
+  },
+  "forbidden_claims": [
+    "W2_CLOSED",
+    "R059_R062_CLOSED_WITHOUT_STAGING_PASS",
+    "Enterprise_L5_Ready",
+    "Production_Ready",
+    "TT_PRODUCTION_GO=GO"
+  ],
+  "next": "Close R059–R062 Residual → enter W3 · keep TT_PRODUCTION_GO=NO_GO",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

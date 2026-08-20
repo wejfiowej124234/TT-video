@@ -1,0 +1,301 @@
+{
+  "schema": "traveltrust.v65_runtime_truth_drift_audit.v1",
+  "key": "V65_RUNTIME_TRUTH_DRIFT_PREVENTION",
+  "title": "V65 Runtime Truth Drift Prevention Audit",
+  "stamp": "20260804T052554Z",
+  "verdict": "PASS",
+  "closure_status": "RUNTIME_TRUTH_DRIFT_PREVENTION_PASS",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "production_web_git_sha": "31ce39490a35c3038928c0d42bcd8de909388512"
+  },
+  "tip_sources": {
+    "matrix": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "runtime_ssot": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "ftb": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "expect_web": "31ce39490a35c3038928c0d42bcd8de909388512"
+  },
+  "writeback_policy": {
+    "autofix_default": "TRAVELTRUST_V65_DRIFT_AUTOFIX=1",
+    "ftb_writeback_requires_live_web_match_or": "TRAVELTRUST_V65_DRIFT_WRITEBACK=1",
+    "expect_web_resolved_from": "batch_matrix_live_web_then_runtime_ssot_then_ftb"
+  },
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "legacy_staging_not_runtime_ssot": true,
+    "no_fake_production_go": true
+  },
+  "live": {
+    "api_sha": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "web_sha": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "checks": {
+      "health_ok": true,
+      "api_sha_v65": true,
+      "web_sha_v65": true,
+      "deployment_production": true,
+      "attestation_ok": true,
+      "web3_pin_locked": true,
+      "not_legacy_api": true,
+      "not_legacy_web": true
+    },
+    "status": "PASS",
+    "build": {
+      "deployment_profile": "production",
+      "attestation_status": "ok",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "contract_profile": "v311_fund_safety_candidate_v2"
+    }
+  },
+  "dimensions": {
+    "doc_pollution_before": [],
+    "doc_pollution_after": [],
+    "prior_closures": {
+      "exhaustive": {
+        "file": "docs/runbook/TT-V65-EXHAUSTIVE-CAPABILITY-CLOSURE-LATEST.json",
+        "verdict": "PASS",
+        "closure_status": "EXHAUSTIVE_CAPABILITY_CLOSURE_MACHINE_PASS",
+        "pass": true,
+        "go_not_flipped": true
+      },
+      "quality": {
+        "file": "docs/runbook/TT-V65-PRODUCTION-QUALITY-CLOSURE-LATEST.json",
+        "verdict": "PASS",
+        "closure_status": "PRODUCTION_QUALITY_CLOSURE_MACHINE_PASS_WITH_P1_BACKLOG",
+        "pass": true,
+        "go_not_flipped": true
+      },
+      "hardening": {
+        "file": "docs/runbook/TT-V65-PRODUCTION-HARDENING-FINAL-LATEST.json",
+        "verdict": "PASS",
+        "closure_status": "PRODUCTION_HARDENING_FINAL_MACHINE_PASS_WITH_P1_BACKLOG",
+        "pass": true,
+        "go_not_flipped": true
+      },
+      "capability": {
+        "file": "docs/runbook/TT-V65-PRODUCT-CAPABILITY-REALITY-CLOSURE-LATEST.json",
+        "verdict": "PASS",
+        "closure_status": null,
+        "pass": true,
+        "go_not_flipped": true
+      }
+    },
+    "admin_menu_api_closure": [
+      {
+        "family": "guide-applications",
+        "admin_route": "/admin/guide-applications",
+        "api": "/api/v1/admin/guide-applications",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      },
+      {
+        "family": "provider-applications",
+        "admin_route": "/admin/provider-applications",
+        "api": "/api/v1/admin/provider-applications",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      },
+      {
+        "family": "orders",
+        "admin_route": "/admin/orders",
+        "api": "/api/v1/admin/orders",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      },
+      {
+        "family": "disputes",
+        "admin_route": "/admin/disputes",
+        "api": "/api/v1/admin/disputes",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      },
+      {
+        "family": "announcements",
+        "admin_route": "/admin/content/announcements",
+        "api": "/api/v1/admin/content/announcements",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      },
+      {
+        "family": "community-reports",
+        "admin_route": "/admin/community/reports",
+        "api": "/api/v1/admin/community/reports",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      },
+      {
+        "family": "users",
+        "admin_route": "/admin/users",
+        "api": "/api/v1/admin/users",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      },
+      {
+        "family": "finance",
+        "admin_route": "/admin/finance",
+        "api": "/api/v1/admin",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      },
+      {
+        "family": "capabilities",
+        "admin_route": "/admin",
+        "api": "/api/v1/admin/capabilities",
+        "fe": true,
+        "api_present": true,
+        "status": "PASS"
+      }
+    ],
+    "lifecycle": [
+      {
+        "id": "guide",
+        "paths": [
+          "frontend/app/guide/register",
+          "frontend/app/admin/guide-applications",
+          "frontend/app/guides"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "provider",
+        "paths": [
+          "frontend/app/provider/register",
+          "frontend/app/admin/provider-applications"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "announcement",
+        "paths": [
+          "frontend/app/admin/content/announcements",
+          "frontend/app/traveltrust/announcements"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "order",
+        "paths": [
+          "frontend/app/orders",
+          "frontend/app/admin/orders",
+          "frontend/app/disputes"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "community_report",
+        "paths": [
+          "frontend/app/admin/community/reports",
+          "frontend/app/community"
+        ],
+        "status": "PASS"
+      }
+    ],
+    "critical_page_states": [
+      {
+        "route": "/market",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true
+        },
+        "missing": [],
+        "status": "PASS"
+      },
+      {
+        "route": "/orders",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true
+        },
+        "missing": [],
+        "status": "PASS"
+      },
+      {
+        "route": "/disputes",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true
+        },
+        "missing": [],
+        "status": "PASS"
+      },
+      {
+        "route": "/admin",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true
+        },
+        "missing": [],
+        "status": "PASS"
+      }
+    ],
+    "web3_ui_honesty": {
+      "status": "PASS",
+      "hit_count": 0
+    },
+    "csp": {
+      "code_report_only": true,
+      "registry": true,
+      "status": "PASS"
+    },
+    "state_machine_illegal_hits": 0
+  },
+  "summary": {
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "p2_gaps": 0,
+    "warn_gaps": 0,
+    "pollution_before": 0,
+    "pollution_after": 0,
+    "admin_families_pass": 9,
+    "lifecycle_pass": 5,
+    "autofix_count": 3
+  },
+  "autofix_applied": [
+    "rewrote_composition_manifest_to_v65",
+    "stamped_superseded:docs/runbook/TT-STAGING-TRUTH-X-PROD-FROZEN-ADMIN-COMPAT-MATRIX-LATEST.json",
+    "updated_final_truth_baseline_v65"
+  ],
+  "honesty": {
+    "machine_pass_not_human_uat": true,
+    "not_production_go": true,
+    "historical_lates_may_remain_with_superseded_stamp": true
+  },
+  "report_sha256": "bb1a182b99e3ec37dc362b6ed694718220c8b86c1566d1154b4c9192f2bf084e",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

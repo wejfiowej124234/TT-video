@@ -1,0 +1,87 @@
+# TTG V8 · Official Quote Surface allowlist (zero UI/UX drift)
+# Human: docs/runbook/TT-TTG-V8-OFFICIAL-QUOTE-SURFACE-CUTOVER-PRECHECK-LATEST.md
+# This file is DESIGN / STOP evidence. It does not authorize bake, overlay deploy, or Production GO.
+schema_id: ttg-v8-official-quote-surface-allowlist.v1
+stamp: TTG_V8_OFFICIAL_QUOTE_SURFACE_CUTOVER_PRECHECK
+issued_at_utc: "2026-08-18T09:04:46Z"
+live_probe: STOP
+tt_production_go: NO_GO
+official_www_product_surface: FROZEN
+target_quote: "1_USDC_EQUALS_100000_TTG"
+forbidden_if_product_bytes_would_change: true
+
+# Two quote surfaces on Official /traveltrust#liquidity — do not collapse.
+surfaces:
+  hydrated_api_quote_line:
+    ui_label: "API 报价"
+    source: GET /api/v1/governance/ttg-exchange/quote
+    overlay_path: registry/ttg-v8-api-runtime-contract-overlay.v1.json
+    needs_www_recompile: false
+    zero_ui_ux_drift: true
+    status: ALREADY_V8_LIVE
+    observed_example: "1.0000 USDC -> 100000.0000 TTG"
+    allow_this_stamp: true
+    notes: Official session already hydrates V8 via API overlay. No www bake.
+
+  compiled_indicative_line:
+    ui_label: "示意"
+    source: frontend/lib/governance/ttgReferencePriceV1.ts baked into Fly image
+    pin_git_sha: 3e356617a498b0faac42e4ae457343d36294a770
+    pin_baseline_id: TT-OFFICIAL-OPS-20260820-V9
+    superseded_pin_git_sha: daa5ae87b8c1af548c6beff6dd3451e5d386acf2
+    quote_asset: USDC
+    compile_formula: "1 TTG ≈ 27.7778 USDC (compiled first-paint)"
+    observed_example: "1 USDC -> 约 0.0360 TTG"
+    needs_www_recompile: true
+    zero_ui_ux_drift_overlay_exists: false
+    status: OLD_COMPILED_USDC_INDICATIVE_REQUIRES_RECOMPILE
+    allow_this_stamp: false
+    notes: Living Official is OPS-v9; compiled 示意 may still lag API-hydrated V8 quote (Expected Difference). Recompile only via Owner unlock + RELEASE_SCOPE — not this Wave-0→D closure.
+
+# Allowlist — only these may be used to sync quote without touching frozen chrome.
+allow:
+  - id: api_runtime_overlay_already_live
+    action: keep
+    writes: 0
+    changes_www_bytes: false
+    covers: [hydrated_api_quote_line, meta_primary_market, meta_ttg, meta_governor]
+
+deny:
+  - id: official_www_full_bake
+    script: scripts/dev/deploy-tt-web-production.sh
+    reason: product-surface freeze · would replace frozen chrome
+  - id: official_www_web3_overlay_bake
+    script: scripts/dev/deploy-tt-web-production-web3-overlay.sh
+    reason: Docker COPY . ./ replaces live image bytes · not a surgical quote patch
+  - id: checkout_product_pin
+    action: git checkout 3e356617
+    reason: identity SHA ≠ product bytes · never checkout as Official rollback
+  - id: checkout_superseded_pin
+    action: git checkout daa5ae87
+    reason: SUPERSEDED living Official · strips hybrid product surface
+  - id: restore_misnamed_v8_image
+    action: fly deploy --image …-v8-20260820
+    reason: misnamed tag carries bootstrap v7 · breaks Header login · FORBIDDEN
+  - id: restore_image
+    script: scripts/dev/restore-tt-web-production-product-pin.sh
+    reason: restore is rollback-only to OPS-v9 · does not inject quote first-paint alone
+    allowed_when: TT_OFFICIAL_WWW_RESTORE_PIN=1 and handle is hybrid-…-v9 only
+  - id: mutate_i18n
+    paths: [frontend/locales/zh.ts, frontend/locales/en.ts]
+    reason: i18n structure / copy = product bytes
+  - id: mutate_gateway_component_css
+    paths:
+      - frontend/components/traveltrust/cinematic/TravelTrustStablecoinGateway.tsx
+      - frontend/lib/traveltrust/l5.ts
+    reason: layout / CSS / component = product bytes
+  - id: mutate_announcements_or_ticker
+    reason: FIVE-MAIN / pulse freeze
+  - id: hop_official_fee_router
+    reason: KEEP Official FR 0x2aF47… · independent of quote surface
+
+stop:
+  verdict: STOP
+  reason: COMPILED_INDICATIVE_REQUIRES_RECOMPILE_NO_ZERO_DRIFT_OVERLAY
+  do_not_force_online: true
+  next_session_starts_at: STOP_WAIT_OWNER_ACCEPT_API_QUOTE_AS_OFFICIAL_QUOTE_SURFACE_OR_LATER_EXPLICIT_DATA_ONLY_BAKE_AUTH
+  later_data_only_bake: FORBIDDEN_THIS_STAMP

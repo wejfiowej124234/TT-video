@@ -1,0 +1,993 @@
+{
+  "schema": "traveltrust.v65_production_quality_closure.v1",
+  "key": "V65_PRODUCTION_QUALITY_CLOSURE",
+  "title": "V65 Production Experience & Quality Closure Audit",
+  "stamp": "20260802T150208Z",
+  "verdict": "PASS",
+  "closure_status": "PRODUCTION_QUALITY_CLOSURE_MACHINE_PASS_WITH_P1_BACKLOG",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "api_only_force_ui_forbidden": true
+  },
+  "prereq": {
+    "status": "PASS",
+    "runtime_ssot": true,
+    "pins_match": true,
+    "exhaustive_pass": true,
+    "tt_production_go": "NO_GO",
+    "live_meta_http": 200,
+    "live_api_sha": null,
+    "live_web_hint": null,
+    "identity_live_ok": true,
+    "web_http": 200
+  },
+  "dimensions": {
+    "ux_page_states": [
+      {
+        "route": "/",
+        "file": "frontend/app/(home)/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": true,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/market",
+        "file": "frontend/app/market/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": false,
+          "success": true,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [
+          "permission"
+        ],
+        "honesty_bad": []
+      },
+      {
+        "route": "/guides",
+        "file": "frontend/app/guides/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": true,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/community",
+        "file": "frontend/app/community/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": false,
+          "success": true,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [
+          "permission"
+        ],
+        "honesty_bad": []
+      },
+      {
+        "route": "/governance",
+        "file": "frontend/app/governance/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false,
+          "success": true,
+          "partial": false,
+          "timeout": false
+        },
+        "missing_required": [
+          "empty"
+        ],
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin",
+        "file": "frontend/app/admin/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin/finance",
+        "file": "frontend/app/admin/finance/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin/orders",
+        "file": "frontend/app/admin/orders/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin/disputes",
+        "file": "frontend/app/admin/disputes/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin/guide-applications",
+        "file": "frontend/app/admin/guide-applications/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin/provider-applications",
+        "file": "frontend/app/admin/provider-applications/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin/content/announcements",
+        "file": "frontend/app/admin/content/announcements/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin/community/reports",
+        "file": "frontend/app/admin/community/reports/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": true,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/auth/login",
+        "file": "frontend/app/auth/login/page.tsx",
+        "status": "OK",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true,
+          "success": false,
+          "partial": false,
+          "timeout": true
+        },
+        "missing_required": [],
+        "honesty_bad": []
+      },
+      {
+        "route": "/guide/register",
+        "file": "frontend/app/guide/register/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false,
+          "success": true,
+          "partial": false,
+          "timeout": false
+        },
+        "missing_required": [
+          "empty"
+        ],
+        "honesty_bad": []
+      },
+      {
+        "route": "/provider/register",
+        "file": "frontend/app/provider/register/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false,
+          "success": false,
+          "partial": false,
+          "timeout": false
+        },
+        "missing_required": [
+          "empty"
+        ],
+        "honesty_bad": []
+      },
+      {
+        "route": "/orders",
+        "file": "frontend/app/orders/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": true,
+          "success": true,
+          "partial": false,
+          "timeout": false
+        },
+        "missing_required": [
+          "empty"
+        ],
+        "honesty_bad": []
+      },
+      {
+        "route": "/disputes",
+        "file": "frontend/app/disputes/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": true,
+          "success": true,
+          "partial": false,
+          "timeout": false
+        },
+        "missing_required": [
+          "empty"
+        ],
+        "honesty_bad": []
+      },
+      {
+        "route": "/me",
+        "file": "frontend/app/me/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": false,
+          "success": true,
+          "partial": false,
+          "timeout": false
+        },
+        "missing_required": [
+          "permission"
+        ],
+        "honesty_bad": []
+      },
+      {
+        "route": "/did-rank",
+        "file": "frontend/app/did-rank/page.tsx",
+        "status": "GAP",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": false,
+          "permission": false,
+          "success": false,
+          "partial": false,
+          "timeout": true
+        },
+        "missing_required": [
+          "empty",
+          "error"
+        ],
+        "honesty_bad": []
+      }
+    ],
+    "lifecycle": [
+      {
+        "id": "guide",
+        "name": "Guide",
+        "fe_surface": true,
+        "admin_surface": true,
+        "verbs": {
+          "create": true,
+          "update": true,
+          "approve": true,
+          "publish": true,
+          "suspend": true,
+          "archive": true,
+          "restore": true,
+          "delete": true
+        },
+        "missing_required": [],
+        "optional_missing": [],
+        "status": "PASS"
+      },
+      {
+        "id": "provider",
+        "name": "Provider",
+        "fe_surface": true,
+        "admin_surface": true,
+        "verbs": {
+          "create": true,
+          "update": true,
+          "approve": true,
+          "publish": true,
+          "suspend": true,
+          "archive": true,
+          "restore": true,
+          "delete": false
+        },
+        "missing_required": [],
+        "optional_missing": [
+          "delete"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "announcement",
+        "name": "Announcement",
+        "fe_surface": true,
+        "admin_surface": true,
+        "verbs": {
+          "create": true,
+          "update": true,
+          "approve": true,
+          "publish": true,
+          "suspend": true,
+          "archive": true,
+          "restore": true,
+          "delete": false
+        },
+        "missing_required": [],
+        "optional_missing": [
+          "delete"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cms",
+        "name": "CMS catalog",
+        "fe_surface": true,
+        "admin_surface": true,
+        "verbs": {
+          "create": true,
+          "update": true,
+          "approve": true,
+          "publish": true,
+          "suspend": true,
+          "archive": true,
+          "restore": true,
+          "delete": true
+        },
+        "missing_required": [],
+        "optional_missing": [],
+        "status": "PASS"
+      },
+      {
+        "id": "community_post",
+        "name": "Community post",
+        "fe_surface": true,
+        "admin_surface": true,
+        "verbs": {
+          "create": true,
+          "update": true,
+          "approve": true,
+          "publish": true,
+          "suspend": true,
+          "archive": true,
+          "restore": true,
+          "delete": true
+        },
+        "missing_required": [],
+        "optional_missing": [],
+        "status": "PASS"
+      },
+      {
+        "id": "community_report",
+        "name": "Community report",
+        "fe_surface": true,
+        "admin_surface": true,
+        "verbs": {
+          "create": true,
+          "update": true,
+          "approve": true,
+          "publish": true,
+          "suspend": true,
+          "archive": true,
+          "restore": true,
+          "delete": false
+        },
+        "missing_required": [],
+        "optional_missing": [
+          "delete"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "order",
+        "name": "Order / Dispute",
+        "fe_surface": true,
+        "admin_surface": true,
+        "verbs": {
+          "create": true,
+          "update": true,
+          "approve": true,
+          "publish": true,
+          "suspend": true,
+          "archive": true,
+          "restore": false,
+          "delete": true
+        },
+        "missing_required": [],
+        "optional_missing": [
+          "restore"
+        ],
+        "status": "PASS"
+      }
+    ],
+    "notifications": {
+      "infra": {
+        "user_security_notifications_table": true,
+        "me_notifications_route": false,
+        "email_send_path": true,
+        "admin_audit": true
+      },
+      "events": [
+        {
+          "object": "guide",
+          "event": "guide_application_submitted",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "guide",
+          "event": "guide_application_approved",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "guide",
+          "event": "guide_application_rejected",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "guide",
+          "event": "guide_application_need_more_info",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "guide",
+          "event": "guide_suspended",
+          "literal_present": true,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "provider",
+          "event": "provider_application_submitted",
+          "literal_present": true,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "provider",
+          "event": "provider_application_approved",
+          "literal_present": true,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "provider",
+          "event": "provider_application_rejected",
+          "literal_present": true,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "provider",
+          "event": "provider_listing_status",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "community_post",
+          "event": "community_moderation",
+          "literal_present": true,
+          "family_signal": false,
+          "status": "PASS"
+        },
+        {
+          "object": "community_post",
+          "event": "community_report",
+          "literal_present": true,
+          "family_signal": false,
+          "status": "PASS"
+        },
+        {
+          "object": "community_report",
+          "event": "report_opened",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "community_report",
+          "event": "report_resolved",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "community_report",
+          "event": "appeal_reviewed",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "order",
+          "event": "dispute_opened",
+          "literal_present": true,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "order",
+          "event": "dispute_resolved",
+          "literal_present": true,
+          "family_signal": true,
+          "status": "PASS"
+        },
+        {
+          "object": "order",
+          "event": "order_refunded",
+          "literal_present": false,
+          "family_signal": true,
+          "status": "PASS"
+        }
+      ],
+      "gap_count": 0,
+      "status": "PASS"
+    },
+    "security": {
+      "status": "PASS",
+      "checks": [
+        {
+          "id": "web_header_x-content-type-options",
+          "pass": true,
+          "value": "nosniff"
+        },
+        {
+          "id": "web_header_x-frame-options",
+          "pass": true,
+          "value": "SAMEORIGIN"
+        },
+        {
+          "id": "web_header_strict-transport-security",
+          "pass": true,
+          "value": "max-age=31536000; includeSubDomains"
+        },
+        {
+          "id": "web_header_referrer-policy",
+          "pass": true,
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "id": "web_csp",
+          "pass": false,
+          "value": ""
+        },
+        {
+          "id": "api_header_x-content-type-options",
+          "pass": true,
+          "value": "nosniff"
+        },
+        {
+          "id": "api_header_strict-transport-security",
+          "pass": true,
+          "value": "max-age=31536000; includeSubDomains"
+        },
+        {
+          "id": "api_header_x-frame-options",
+          "pass": true,
+          "value": "DENY"
+        },
+        {
+          "id": "rate_limit_layer",
+          "pass": true
+        },
+        {
+          "id": "session_cookie_flags",
+          "pass": true
+        },
+        {
+          "id": "upload_surface_present",
+          "pass": true,
+          "note": "presence only"
+        },
+        {
+          "id": "idor_ownership_signals",
+          "pass": true,
+          "count": 1180
+        }
+      ]
+    },
+    "performance": {
+      "live_probes": [
+        {
+          "path": "/",
+          "http": 200,
+          "ttfb_ms": 6192.9,
+          "content_length": 78739,
+          "cache_control": "s-maxage=31536000",
+          "pass": true,
+          "slow": true
+        },
+        {
+          "path": "/market",
+          "http": 200,
+          "ttfb_ms": 17425.3,
+          "content_length": null,
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "pass": true,
+          "slow": true
+        },
+        {
+          "path": "/community",
+          "http": 200,
+          "ttfb_ms": 4949.1,
+          "content_length": null,
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "pass": true,
+          "slow": true
+        },
+        {
+          "path": "/governance",
+          "http": 200,
+          "ttfb_ms": 2695.8,
+          "content_length": 28329,
+          "cache_control": "s-maxage=31536000",
+          "pass": true,
+          "slow": false
+        },
+        {
+          "path": "/admin",
+          "http": 200,
+          "ttfb_ms": 11491.2,
+          "content_length": 35152,
+          "cache_control": "s-maxage=31536000",
+          "pass": true,
+          "slow": true
+        },
+        {
+          "path": "/did-rank",
+          "http": 200,
+          "ttfb_ms": 7662.7,
+          "content_length": null,
+          "cache_control": "private, no-cache, no-store, max-age=0, must-revalidate",
+          "pass": true,
+          "slow": true
+        }
+      ],
+      "next_image_config": true,
+      "heavy_routes": {
+        "/governance": {
+          "dynamic_import": false,
+          "next_image": false,
+          "loading_ui": true
+        },
+        "/community": {
+          "dynamic_import": false,
+          "next_image": true,
+          "loading_ui": true
+        },
+        "/market": {
+          "dynamic_import": true,
+          "next_image": false,
+          "loading_ui": true
+        },
+        "/admin": {
+          "dynamic_import": false,
+          "next_image": false,
+          "loading_ui": true
+        }
+      },
+      "gaps": [
+        {
+          "class": "PERF_TTFB_ELEVATED",
+          "severity": "WARN",
+          "path": "/",
+          "ttfb_ms": 6192.9,
+          "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+        },
+        {
+          "class": "PERF_TTFB_ELEVATED",
+          "severity": "P1",
+          "path": "/market",
+          "ttfb_ms": 17425.3,
+          "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+        },
+        {
+          "class": "PERF_TTFB_ELEVATED",
+          "severity": "WARN",
+          "path": "/community",
+          "ttfb_ms": 4949.1,
+          "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+        },
+        {
+          "class": "PERF_TTFB_ELEVATED",
+          "severity": "P1",
+          "path": "/admin",
+          "ttfb_ms": 11491.2,
+          "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+        },
+        {
+          "class": "PERF_TTFB_ELEVATED",
+          "severity": "WARN",
+          "path": "/did-rank",
+          "ttfb_ms": 7662.7,
+          "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+        }
+      ],
+      "status": "PASS",
+      "note": "Machine TTFB ≠ lab LCP/INP/CLS; Human/field measurement still required"
+    },
+    "i18n_a11y": {
+      "sampled": [
+        {
+          "route": "/",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/market",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/guides",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/community",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/governance",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/admin",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/admin/finance",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/admin/orders",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/admin/disputes",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/admin/guide-applications",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/admin/provider-applications",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/admin/content/announcements",
+          "i18n": true,
+          "a11y": false
+        },
+        {
+          "route": "/admin/community/reports",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/auth/login",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/guide/register",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/provider/register",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/orders",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/disputes",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/me",
+          "i18n": true,
+          "a11y": true
+        },
+        {
+          "route": "/did-rank",
+          "i18n": true,
+          "a11y": true
+        }
+      ],
+      "missing_i18n_user_routes": [],
+      "missing_a11y_signals": [
+        "/admin/content/announcements"
+      ],
+      "status": "PASS"
+    },
+    "api_only_classification_ref": "registry/v65-api-only-table-classification.v1.json",
+    "api_only_counts": {
+      "BACKEND_VIA_API": 35,
+      "INTERNAL_ANALYTICS": 11,
+      "INTERNAL_AUDIT": 8,
+      "INTERNAL_JOB_SCHEDULER": 6,
+      "INTERNAL_MIGRATION": 7,
+      "INTERNAL_SECURITY": 9,
+      "WEB3_BRIDGE_ORTHOGONAL": 24
+    }
+  },
+  "summary": {
+    "p0_gaps": 0,
+    "p1_gaps": 6,
+    "warn_gaps": 13,
+    "confirm_design": 100,
+    "priority_pages": 20,
+    "api_only_tables_classified": 100,
+    "lifecycle_objects": 7,
+    "ux_gaps": 9,
+    "notify_event_gaps": 0
+  },
+  "autofix_applied": [
+    "wrote_api_only_table_classification_registry",
+    "wrote_api_only_owner_confirmation_queue"
+  ],
+  "honesty": {
+    "machine_quality_pass_not_human_uat": true,
+    "machine_ttfb_not_lab_lcp_inp_cls": true,
+    "api_only_classified_not_forced_ui": true,
+    "p1_backlog_may_remain": true,
+    "csp_enablement_is_owner_policy": true,
+    "not_production_go": true
+  },
+  "report_sha256": "0f4cfa444146e18b9ce398401692e946ffb33ff846b8a45d6a27423fef9836e4",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

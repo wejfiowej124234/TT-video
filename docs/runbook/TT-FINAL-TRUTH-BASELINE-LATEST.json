@@ -45,8 +45,26 @@
     "frozen_as_final_closure_unique_entry": true,
     "do_not_rewrite_counts_to_look_greener": true,
     "successor_batch": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH",
-    "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE",
+    "frontend_product_baseline": "OPS-2026.08.20-v9",
     "do_not_recast_closed_packs": true
+  },
+  "production_go_reassessment_cycle2": {
+    "human": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-CYCLE2-LATEST.md",
+    "machine": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-CYCLE2-LATEST.json",
+    "status": "READY_FOR_OWNER_PRODUCTION_GO_VERDICT",
+    "issued_at_utc": "2026-08-18T07:00:00Z",
+    "cite_stop_freeze_sha": "94785a66",
+    "freeze_required_before_go": 8,
+    "current_required_before_go": 0,
+    "unexplained_drift": 0,
+    "hard_gate_entry": "PASS",
+    "hard_gate_live": "AUTHORIZED_FOR_WAVE",
+    "open_axis_count": 0,
+    "owner_production_go_verdict": "NOT_THIS_TURN",
+    "tt_production_go": "NO_GO",
+    "auto_issue_production_go": false,
+    "read_only": true,
+    "frontend_product_baseline": "OPS-2026.08.20-v9"
   },
   "recorded_utc": "2026-08-18T03:15:00Z",
   "alignment_stamp": "20260818T031500Z",
@@ -54,20 +72,21 @@
   "tt_production_go": "NO_GO",
   "phase_now": "FTB_V8_CYCLE_ACTIVE_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN",
   "umbrella_name": "TravelTrust Final Truth Baseline",
-  "identity_rule": "FTB LATEST is sole living system SSOT (this V8 Cycle). Parent 20260812 is immutable historical fact and must not be overwritten. Web3 Active Truth = NEW TTG / NEW PM / NEW Governor + KEEP Wired Money Path identity. Product Truth = Official API must match ACTIVE addresses; Official www = FROZEN_LATEST_PRODUCT_BASELINE daa5ae87 / 2026-08-16T15:15:49Z (forbid bake/checkout). Historical FactoryV2 0x0520 = lineage only. Sepolia/Local align architecture/ABI/flow with independent addresses. Cite V8 consistency cert; do not recast closed L7. Final Reality / Release Certification = PASS. Production GO reassessment = STOP required_before_go=8 hard_gate=REFUSED Owner verdict NOT_THIS_TURN. Bitget HOLD is independent and must not unwind this pin.",
+  "identity_rule": "FTB LATEST is sole living system SSOT (this V8 Cycle). Two planes under one SSOT: Web3 Active Truth (mainnet NEW TTG/PM/Governor + KEEP Money Path) and Product Truth (TravelTrust Official · OPS-2026.08.20-v9 = 3e356617 / hybrid-live-auth-pin-nontarget-v9-20260820 / bootstrap v8; immutable this window). Parent 20260812 immutable. daa5ae87 SUPERSEDED; M07 …-m07-unlock ROLLED_BACK_NOT_LIVING. Official API must match ACTIVE addresses. Sepolia/Local independent. Cite V8 cert; do not recast closed L7. Final Reality PASS. Production GO reassessment freeze STOP required_before_go=8 (SHA 94785a66 never rewrite). Cycle2 READY_FOR_OWNER_PRODUCTION_GO_VERDICT current_required_before_go=0; Owner NOT_THIS_TURN; do not auto-issue TT_PRODUCTION_GO. Bitget HOLD independent.",
   "owner_lock": {
     "sole_system_ssot": "TT_FINAL_TRUTH_BASELINE",
     "web3_active_truth": "new_ttg_new_pm_new_governor_keep_wired_money_path",
-    "product_truth": "official_api_must_match_active_www_frozen_latest_product_baseline",
+    "product_truth": "ops_20260820_v9_immutable_this_window",
     "candidate_status": "DEMOTED_TESTNET",
     "user_funds_enabled": false,
     "primary_market_trading_enabled": false,
     "tt_production_go": "NO_GO",
     "production_ready_claim": "FORBIDDEN",
-    "hard_gate": "REEVAL_STILL_REFUSED_NO_GO_REMAINING_GAP_E2E_THEN_AXIS_14",
+    "hard_gate": "LIVING_AUTHORIZED_FOR_WAVE_OPEN_AXES_0_REGISTRY_SSOT_REFUSED_NO_GO_READY_FOR_OWNER_VERDICT",
     "P0_COMMERCIAL_MONEY_PATH_BLOCKER": false,
     "dual_wait": "TRACK2_1USDC_CLOSED_REALITY_OWNER_A+WAITING_GOV04_TIMELOCK_ETA_DEFERRED_POST_GO",
-    "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE"
+    "frontend_product_baseline": "OPS-2026.08.20-v9",
+    "forbid_second_ssot": true
   },
   "web3": {
     "role": "SOLE_LIVE_OFFICIAL_WEB3",
@@ -167,15 +186,26 @@
     "web_base": "https://www.web3-ttg.com",
     "must_match_web3_addresses": true,
     "official_api": "MUST_MATCH_ACTIVE_ADDRESSES",
-    "official_www": "FROZEN_LATEST_PRODUCT_BASELINE",
-    "www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
-    "www_build_time": "2026-08-16T15:15:49Z",
-    "web_git_sha_cite": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "official_www": "OPS-2026.08.20-v9",
+    "www_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "www_build_time": "2026-08-20T00:51:57Z",
+    "www_fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "www_session_bootstrap": "v8",
+    "web_git_sha_cite": "3e356617a498b0faac42e4ae457343d36294a770",
+    "superseded_www_pin": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md",
     "alignment_gate": "scripts/gates/check-official-mainnet-web3-alignment.sh",
     "absorb_gate": "scripts/dev/run-ftb-v8-cycle-absorb-gate.sh",
     "final_reality_release_cert_gate": "scripts/dev/run-final-reality-release-certification.sh",
-    "forbid_www_bake": true,
-    "forbid_checkout_old_fe": true
+    "forbid_www_bake_without_owner_unlock": true,
+    "forbid_restore_misnamed_v8_image": true,
+    "forbid_checkout_old_fe": true,
+    "www_fly_image_digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+    "product_truth_role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "immutable_this_window": true,
+    "rolled_back_m07_overlay": "2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
+    "forbid_claim_m07_as_ops_v9": true,
+    "human_baseline": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md"
   },
   "three_env": {
     "official": {
@@ -183,7 +213,10 @@
       "align_to": "mainnet_deployed_money_path",
       "chain_id": 1,
       "address_policy": "mainnet_ftb_wired_fee_settlement",
-      "equals_production_go": false
+      "equals_production_go": false,
+      "www": "OPS-2026.08.20-v9",
+      "www_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "www_note": "Product Truth pin; not daa5ae87; not M07 overlay"
     },
     "sepolia": {
       "role": "verification",
@@ -247,7 +280,10 @@
     "read_Settlement_Fee_UNSET_as_living_truth",
     "read_stale_MISSING_OWNER_FILL_as_living_truth",
     "rebind_official_fe_api_to_lineage_factory_0520",
-    "tt_production_go_flip_before_reality_evidence"
+    "tt_production_go_flip_before_reality_evidence",
+    "claim_m07_overlay_as_ops_v9",
+    "second_system_ssot_for_official_www",
+    "rewrite_ops_v9_product_bytes_this_window"
   ],
   "cites": {
     "human": "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md",
@@ -277,7 +313,7 @@
     "Money_Path_KEEP_identity_Track2_dual_wait_independent",
     "Bitget_HOLD_independent_must_not_unwind_v8_pin",
     "FeeRouter_distribute_83_require_separate_Owner_auth",
-    "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH_remaining_GAP_E2E_then_AXIS_14",
+    "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH_ITEMS_CLOSED_REASSESSMENT_NOT_REOPENED",
     "Do_not_reopen_TT_PRODUCTION_GO_REASSESSMENT_this_turn",
     "Do_not_flip_TT_PRODUCTION_GO",
     "Do_not_rewrite_STOP_required_before_go_8"
@@ -417,14 +453,16 @@
   "production_go_final_closure_batch": {
     "human": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.md",
     "machine": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.json",
-    "status": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH_OPEN",
+    "status": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH_ITEMS_CLOSED_REASSESSMENT_CYCLE2_OPEN",
     "cite_stop_required_before_go": 8,
     "tt_production_go": "NO_GO",
     "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE",
-    "remaining_before_axis14": [
-      "GAP-E2E-JOURNEY",
-      "AXIS-14"
-    ]
+    "remaining_before_axis14": [],
+    "batch_remaining": 0,
+    "axis14": "CLOSED",
+    "hard_gate_wave": "AUTHORIZED_FOR_WAVE",
+    "do_not_reopen_reassessment_this_turn": false,
+    "successor_cycle2": "TT_PRODUCTION_GO_REASSESSMENT_CYCLE2"
   },
   "stamp_lag_cluster": {
     "status": "CLOSED_THIS_BATCH",
@@ -435,5 +473,66 @@
     "do_not_change_keep_sr": true,
     "keep_sr": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
     "closed_utc": "2026-08-18T06:00:00Z"
+  },
+  "product_truth_pin": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "role": "PRODUCT_TRUTH_PLANE_ONLY",
+    "absorbed_utc": "2026-08-20T08:55:00Z",
+    "immutable_this_window": true,
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_image_digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+    "session_bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md",
+    "human_baseline": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md",
+    "freeze_json": "docs/runbook/TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json",
+    "superseded_www_pins": [
+      {
+        "git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+        "fly_image": "deployment-01M05JAAXJPTRZJAQEJ4JJWQMK",
+        "status": "SUPERSEDED"
+      },
+      {
+        "git_sha": "2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
+        "fly_image": "hybrid-live-auth-pin-nontarget-v9-m07-unlock-20260820",
+        "status": "ROLLED_BACK_NOT_LIVING",
+        "note": "M07 Unlock overlay must not claim OPS-v9 name"
+      }
+    ],
+    "forbid": [
+      "www_bake_without_owner_unlock",
+      "checkout_as_rollback",
+      "restore_misnamed_v8_image",
+      "claim_m07_overlay_as_ops_v9",
+      "second_system_ssot_for_official_www"
+    ],
+    "fly_image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "not_full_system_ssot": true,
+    "web3_update_deferred": {
+      "status": "OWNER_DECLARED_PENDING",
+      "note": "Owner will later align Web3 track using Official V9 product baseline as reference; this turn does not mutate Web3 Active Truth addresses or TT_PRODUCTION_GO.",
+      "stamp_utc": "2026-08-20T09:54:18Z"
+    },
+    "not_living_runtime_ids": [
+      "4495d68ebf1447e1575d0fa2699732dd310d581c",
+      "2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
+      "daa5ae87b8c1af548c6beff6dd3451e5d386acf2"
+    ]
+  },
+  "product_truth_absorb_note": {
+    "utc": "2026-08-20T08:55:00Z",
+    "action": "ABSORB_OPS_V9_AS_FTB_PRODUCT_TRUTH",
+    "does_not_mutate": [
+      "TT-FINAL-TRUTH-BASELINE-20260812",
+      "web3_active_addresses",
+      "TT_PRODUCTION_GO",
+      "production_go_reassessment_freeze_sha_94785a66"
+    ],
+    "restored_www_after_m07": true
   }
 }

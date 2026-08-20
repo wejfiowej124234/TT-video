@@ -1,0 +1,48 @@
+{
+  "machine_key": "OFFICIAL_V9_LOCAL_PRODUCT_SSOT_RESTORE_PASS",
+  "status": "PASS",
+  "stamp_utc": "2026-08-20T09:55:59Z",
+  "phase": "① Local product SSOT reverse-align from Official V9",
+  "not_equal": [
+    "② Staging GO",
+    "③ Production GO",
+    "Web3 address mutation",
+    "M07 product bake",
+    "TT_PRODUCTION_GO flip"
+  ],
+  "official_v9_recovery_master": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_image_digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+    "bootstrap": "v8",
+    "role": "PRODUCT_TRUTH_PLANE_ONLY_NOT_FULL_SYSTEM_SSOT"
+  },
+  "restored_from": "archive/dirty-wip-pre-official-v9-workspace-clean",
+  "restored_path_count": 458,
+  "live_fly_verify": {
+    "image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+    "machines_started": [
+      "683d613c295458",
+      "d8d0d71ce67718"
+    ]
+  },
+  "not_living": {
+    "4495d68e": "M07 bake-tree branch tip only",
+    "2551fafd": "M07 overlay ROLLED_BACK",
+    "daa5ae87": "SUPERSEDED as living Official"
+  },
+  "web3_plane": {
+    "mutated_this_turn": false,
+    "owner_declared": "later Web3 track update will use Official V9 product baseline as reference",
+    "tt_production_go": "NO_GO"
+  },
+  "topology": {
+    "main": "D:/TravelTrust-V1.1",
+    "release_wt": "D:/TravelTrust-official-ops-v9-release",
+    "feature_worktrees": []
+  },
+  "m07": "NOT_DONE_LOCAL_ONLY_PENDING"
+}

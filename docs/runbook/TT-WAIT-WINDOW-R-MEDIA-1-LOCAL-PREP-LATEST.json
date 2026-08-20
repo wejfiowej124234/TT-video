@@ -1,0 +1,59 @@
+{
+  "schema": "traveltrust.wait_window_r_media_1.v1",
+  "batch_id": "R-MEDIA-1",
+  "status": "CLOSED",
+  "recorded_utc": "2026-08-12T02:32:00Z",
+  "tt_production_go": "NO_GO",
+  "hard_gate": "REFUSED",
+  "blocks_track1_finalize": false,
+  "opens_after": "R-COMM-COMMENT-DELETE-1_CLOSED",
+  "reality_check": {
+    "feed_legacy_upload_count": 3,
+    "prior_head": "404",
+    "keys": [
+      "ca438fb3-ea0b-4bde-8fcc-a5d25a947e5a.jpg",
+      "16e8fc19-f0c7-4d80-a3e9-a51e12722c25.jpg",
+      "2441880f-d4dc-485f-9b99-f15625dbce10.jpg"
+    ]
+  },
+  "fix": {
+    "method": "ffmpeg_frame_from_cdn_mp4_then_fly_sftp_put",
+    "target_dir": "data/community_post_media",
+    "app": "tt-api-prod"
+  },
+  "runtime_verify": {
+    "get_status": [
+      200,
+      200,
+      200
+    ],
+    "fe_video_poster_fallback": "NOT_USED_AS_CLOSURE"
+  },
+  "durability": {
+    "fly_volume_attached": false,
+    "followon": "migrate_covers_to_tigris_cdn_and_rewrite_cover_url"
+  },
+  "forbid": [
+    "mainnet_ftb_mutate",
+    "fee_router_distribute",
+    "track2",
+    "region_83"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

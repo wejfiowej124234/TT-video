@@ -7,6 +7,8 @@
 **JSON:** `docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.json`  
 **Staging OD PASS (sole cite):** `20260806T044213Z` · `evidence/GO_v65_prod_003_batch3_cut_b_od_r012_r019/20260806T044213Z`
 
+> **Official 产品真源（FTB Product Truth · OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **≠** git checkout · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` SUPERSEDED · M07 **NOT this wave** · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
 ## Pins (immutable)
 
 | Pin | Value |
@@ -102,8 +104,8 @@
 
 ## Next
 
-1. Cut C **design-scope docs only**（no eng / no Staging Cut C deploy / no Production）  
-2. Keep `TT_PRODUCTION_GO=NO_GO`  
+1. Cut C **Engineering may start**（OD-C-01～05 SIGNED · gate `AUTHORIZED` · stamp `20260806T052445Z`）— **new eng session**; this Cut B pack does **not** land Cut C product code  
+2. Keep `TT_PRODUCTION_GO=NO_GO` · Staging Cut C deploy / Production / GO flip still **FORBIDDEN** until later Owner gates  
 3. Future Production **only** via Staging-verified + Release-certified V65 RC  
 
-*Stamp `20260806T050409Z` · Cut B OD ladder CLOSED · Final State CONSOLIDATED · Cut C PREP_READY_DOCS_ONLY_NO_ENG · NO_GO.*
+*Stamp `20260806T050409Z` · Cut B OD ladder CLOSED · Final State CONSOLIDATED · Cut C next=`CUT_C_ENGINEERING_IMPL_MAY_START` · NO_GO.*

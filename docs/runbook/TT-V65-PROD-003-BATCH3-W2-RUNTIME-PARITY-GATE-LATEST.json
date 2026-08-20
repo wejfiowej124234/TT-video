@@ -1,0 +1,58 @@
+{
+  "schema": "traveltrust.v65_batch3_w2_runtime_parity_gate.v1",
+  "claim": "W2_RUNTIME_PARITY_PASS",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "probed_at_utc": "2026-08-05T05:28:04.501Z",
+  "api_base": "https://tt-api-staging.fly.dev",
+  "tip": {
+    "git_sha": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "required_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+    "deployment_profile": "staging"
+  },
+  "strict_mode": {
+    "require_idempotency_key": true,
+    "strict_ssot": false,
+    "strict_session_gate": true,
+    "internal_api_secret_configured": true
+  },
+  "config_fix": {
+    "action": "fly secrets set REQUIRE_IDEMPOTENCY_KEY=1 -a tt-api-staging",
+    "result": "exit_0_machine_updated",
+    "note": "fly.toml [env] still lacks REQUIRE_IDEMPOTENCY_KEY; runtime secret is the live SSOT for this probe."
+  },
+  "critical_write_registry": {
+    "surfaces_probed": 10,
+    "fail_closed_count": 10,
+    "all_fail_closed": true,
+    "mechanism": "REQUIRE_IDEMPOTENCY_KEY=1 global fail-closed (not tip R061 classifier expansion alone)",
+    "r061_tip_status": "tip=16f29c7e · committed classifier narrower than dirty working-tree R061 expansion; global flag covers W2 surfaces for parity"
+  },
+  "checks_summary": {
+    "meta_reachable": true,
+    "strict_mode.require_idempotency_key": true,
+    "tip_pin": true,
+    "admin_auth": true,
+    "critical_write_fail_closed": "10/10",
+    "rbac.tourist_denied_role_change": true
+  },
+  "blockers": [],
+  "smoke_unlocked": true,
+  "note": "Parity PASS unlocks targeted W2 smoke + Evidence only. Residual Close and TT_PRODUCTION_GO remain separate. Do not stamp tip-lag smoke packs while parity FAIL.",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

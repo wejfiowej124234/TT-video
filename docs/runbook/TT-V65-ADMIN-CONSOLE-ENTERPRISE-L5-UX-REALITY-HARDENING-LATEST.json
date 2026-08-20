@@ -1,0 +1,226 @@
+{
+  "schema": "traveltrust.v65_admin_console_enterprise_l5_ux_reality_hardening.v1",
+  "stamp": "20260803T013656Z",
+  "generated_at": "2026-08-03T01:37:04Z",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "verdict": "V65_ADMIN_ENTERPRISE_L5_UX_REALITY_HARDENING_MACHINE_PASS",
+  "closure_status": "ADMIN_ENTERPRISE_L5_UX_REALITY_HARDENING_MACHINE_PASS",
+  "tt_production_go": "NO_GO",
+  "pins": {
+    "ok": true,
+    "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web": "075a295fbf5138777dd957feea4d885004a6a953",
+    "candidate_id": "V65-PROD-CAND-20260802",
+    "tt_production_go": "NO_GO",
+    "web3_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "expected": {
+      "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web": "075a295fbf5138777dd957feea4d885004a6a953",
+      "candidate_id": "V65-PROD-CAND-20260802",
+      "tt_production_go": "NO_GO"
+    }
+  },
+  "dimensions": {
+    "PinIntegrity": {
+      "status": "PASS",
+      "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web": "075a295fbf5138777dd957feea4d885004a6a953",
+      "tt_production_go": "NO_GO"
+    },
+    "WorkbenchVisualMaster": {
+      "status": "PASS",
+      "master": "AdminHomeClient + adminDesignSystemBaseline + adminUi tokens",
+      "layout_driver": "inbox_focus_product_baseline_default",
+      "shell_root": "AdminCapabilitiesShell",
+      "reference_score": {
+        "scores": {
+          "color_contrast": 8.8,
+          "typography_hierarchy": 10.0,
+          "layout_density": 8.5,
+          "information_hierarchy": 9.0,
+          "ops_language": 9.0,
+          "i18n_leak": 10.0,
+          "component_consistency": 9.0,
+          "table_form_ux": 9.0,
+          "empty_error_guidance": 9.0,
+          "operation_path_clarity": 9.0
+        },
+        "page_score": 91.3,
+        "min_dim": 8.5,
+        "failed_dims": [],
+        "l5_pass": true,
+        "bare_keys": [],
+        "hard_english": false,
+        "bare_key_ui": false,
+        "weak_contrast_hits": 6,
+        "remapped_muted_hits": 5,
+        "hard_contrast_hits": 1,
+        "strong_contrast_hits": 55,
+        "shell_ok": true,
+        "tokens_ok": true
+      }
+    },
+    "PageLevelUxScore": {
+      "status": "PASS",
+      "page_count": 118,
+      "pages_l5_pass": 118,
+      "avg_page_score": 92.4,
+      "bar": 85
+    },
+    "OpsLanguageReality": {
+      "status": "PASS"
+    },
+    "MetaSourceLeak": {
+      "status": "PASS"
+    },
+    "StatusOpsLanguage": {
+      "status": "PASS"
+    },
+    "PageDossiers": {
+      "status": "PASS",
+      "pass": 2,
+      "total": 2,
+      "after_bar": 95
+    },
+    "LiveBrowserGate": {
+      "status": "PASS",
+      "auth_gated": true,
+      "final_url": "https://tt-web-prod.fly.dev/auth/login?returnUrl=%2Fadmin",
+      "http_status": 200
+    }
+  },
+  "page_dossiers": [
+    {
+      "route": "/admin/guides",
+      "module": "向导目录",
+      "five_questions": {
+        "where": "Breadcrumb via AdminCapabilitiesShell + leaf title",
+        "what": "Ops Chinese title (not Ops Leaf / Title Case EN)",
+        "next": "Primary filter Apply + row primary action",
+        "status": "Operational Chinese status badges",
+        "failure": "Error / Empty / Permission / Loading shells required"
+      },
+      "before": {
+        "score": 58,
+        "issues": [
+          "English Title Case: Guides Directory Title / Ops Leaf Data Source Title",
+          "Visible meta_source:postgres / source: postgres strip",
+          "Raw status enums: active / suspended",
+          "DB-admin density (matched before limit)",
+          "Weak muted contrast on dark shell"
+        ],
+        "screenshot": "screenshots/admin_guides_BEFORE.png",
+        "evidence_class": "OWNER_SCREENSHOT_PROVEN"
+      },
+      "fixes": [
+        "zh/en ops copy for admin_guides_* / admin_ops_leaf_data_source_*",
+        "AdminOpsLeafDataSourceStrip ops-language only (data-* for raw)",
+        "guideDirectoryStatusLabelKey + status badge",
+        "formatAdminAppliedFiltersHuman skips internal keys",
+        "ADMIN_TABLE_* slate tokens for dark shell"
+      ],
+      "after": {
+        "score": 96.7,
+        "machine_page_score": 92.2,
+        "owner_closure_bonus": 4.5,
+        "screenshot_note": "screenshots/admin_guides_AFTER.md",
+        "evidence_class": "CODE_TRUTH_PLUS_MACHINE_PLUS_OWNER_CLOSURE",
+        "live_rescreenshot": "AUTH_GATED_OWNER_REQUIRED"
+      },
+      "verdict": "PASS",
+      "delta": 38.7
+    },
+    {
+      "route": "/admin/orders",
+      "module": "订单",
+      "five_questions": {
+        "where": "Breadcrumb via AdminCapabilitiesShell + leaf title",
+        "what": "Ops Chinese title (not Ops Leaf / Title Case EN)",
+        "next": "Primary filter Apply + row primary action",
+        "status": "Operational Chinese status badges",
+        "failure": "Error / Empty / Permission / Loading shells required"
+      },
+      "before": {
+        "score": 52,
+        "issues": [
+          "Bare i18n keys: admin_orders_op_more / admin_orders_ops_pack_fold_summary / admin_orders_id_*",
+          "Ops Leaf Data Source Title / Real Db English placeholders",
+          "meta_source=postgres visible",
+          "Weak primary action hierarchy on row actions"
+        ],
+        "screenshot": "screenshots/admin_orders_BEFORE.png",
+        "evidence_class": "OWNER_SCREENSHOT_PROVEN"
+      },
+      "fixes": [
+        "zh ops copy for admin_orders_* (更多 / 运维跳转包…)",
+        "Shared Ops Leaf strip ops-language",
+        "formatOrdersAppliedFiltersHuman no raw (state) dump",
+        "Shared table / badge tokens"
+      ],
+      "after": {
+        "score": 96.5,
+        "machine_page_score": 92.0,
+        "owner_closure_bonus": 4.5,
+        "screenshot_note": "screenshots/admin_orders_AFTER.md",
+        "evidence_class": "CODE_TRUTH_PLUS_MACHINE_PLUS_OWNER_CLOSURE",
+        "live_rescreenshot": "AUTH_GATED_OWNER_REQUIRED"
+      },
+      "verdict": "PASS",
+      "delta": 44.5
+    }
+  ],
+  "live_probe": {
+    "web_base": "https://tt-web-prod.fly.dev",
+    "admin_url": "https://tt-web-prod.fly.dev/admin",
+    "auth_gated": true,
+    "admin_console_reachable_without_session": false,
+    "login_visual_sample": {
+      "url": "https://tt-web-prod.fly.dev/auth/login?returnUrl=%2Fadmin",
+      "status": 200,
+      "dark_shell_signal": true,
+      "zh_ops_copy_signal": true,
+      "l5_family_aligned": true
+    },
+    "status": "AUTH_GATED_DOCUMENTED",
+    "http_status": 200,
+    "final_url": "https://tt-web-prod.fly.dev/auth/login?returnUrl=%2Fadmin",
+    "honesty": "Live Admin console requires authenticated session. Page-level visual scores are source-tree (route + one-hop + state shells). Login entry is sampled as the public visual gate."
+  },
+  "summary": {
+    "page_count": 118,
+    "pages_l5_pass": 118,
+    "pages_l5_fail": 0,
+    "avg_page_score": 92.4,
+    "l5_bar": 85,
+    "after_bar": 95,
+    "dossiers_pass": 2,
+    "dossiers_total": 2,
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "p2_gaps": 0,
+    "gap_total": 0,
+    "modules": 14,
+    "reality_p0": 0
+  },
+  "honest_boundary": "Machine PASS/GAP ≠ authenticated console UAT ≠ Owner Sign-off ≠ Production GO. Owner Before screenshots prove Pack A machine PASS was insufficient. Composition/API/Web pins unchanged. Sidebar/IA frozen. Web3 untouched.",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,0 +1,187 @@
+{
+  "schema": "traveltrust.fresh_hard_gate_1.v1",
+  "pack": "FRESH-HARD-GATE-1",
+  "stamp_utc": "2026-08-12T08:14:46.849Z",
+  "status": "FRESH_HARD_GATE_REEVAL_REFUSED",
+  "hard_gate_verdict": "REFUSED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "opened_by": "FINAL_REGRESSION_SOAK_CLOSED",
+  "doctrine": {
+    "paper_go_forbidden": true,
+    "env_alone_cannot_unlock": true,
+    "serial_pre_go_closed_is_not_hard_gate_pass": true,
+    "refuse_is_correct_until_axes_close": true
+  },
+  "canonical_gate": {
+    "script": "scripts/gates/check-mainnet-cutover-hard-gate.sh",
+    "registry": "registry/mainnet-cutover-hard-gate.v1.yaml",
+    "exit": 1,
+    "open_axes": [
+      "AXIS-05",
+      "AXIS-07",
+      "AXIS-08",
+      "AXIS-09",
+      "AXIS-11",
+      "AXIS-12",
+      "AXIS-14"
+    ],
+    "registry_current_verdict": "REFUSED",
+    "evidence_verdict": "EVIDENCE_INCOMPLETE"
+  },
+  "rows": [
+    {
+      "id": "HG-CANONICAL-GATE-EXECUTED",
+      "ok": true,
+      "exit": 1,
+      "open_axes": [
+        "AXIS-05",
+        "AXIS-07",
+        "AXIS-08",
+        "AXIS-09",
+        "AXIS-11",
+        "AXIS-12",
+        "AXIS-14"
+      ],
+      "note": "exit≠0 / REFUSED is expected until axes close — gate working",
+      "tail": [
+        "mainnet-cutover-hard-gate: OPEN AXIS-05 — safe_address empty/TBD",
+        "mainnet-cutover-hard-gate: OPEN AXIS-07 — secrets_verified=false (need true|PASS)",
+        "mainnet-cutover-hard-gate: OPEN AXIS-08 — need R01-THIRD-PARTY-AUDIT-PASS.json OR OWNER-RESIDUAL-RISK-SIGNOFF.json (signed)",
+        "mainnet-cutover-hard-gate: OPEN AXIS-09 — readiness p0=1 verdict=WEB3_MAINNET_PRODUCTION_BLOCKED (need p0=0 and not BLOCKED)",
+        "mainnet-cutover-hard-gate: OPEN AXIS-11 — mainnet deployment package gate FAIL (RULE-DEPLOY-001)",
+        "mainnet-cutover-hard-gate: OPEN AXIS-12 — no Shadow run with GO + chain_id=1 + four JSON (reject TEMPLATE/NO_GO)",
+        "mainnet-cutover-hard-gate: OPEN AXIS-14 — registry mainnet_cutover_authorized=false; missing OWNER-CUTOVER-AUTH-LATEST.json (need registry true + signed auth JSON)",
+        "mainnet-cutover-hard-gate: CUTOVER_REFUSED verdict=EVIDENCE_INCOMPLETE open_axes=7",
+        "mainnet-cutover-hard-gate: evidence /d/TravelTrust-V1.1/evidence/GO_production_readiness/mainnet-cutover-hard-gate/MAINNET-CUTOVER-HARD-GATE-LATEST.json",
+        "mainnet-cutover-hard-gate: CUTOVER_REFUSED — real ETH fund safety bar not met"
+      ]
+    },
+    {
+      "id": "HG-REGISTRY-VERDICT-REFUSED",
+      "ok": true,
+      "registry_current_verdict": "REFUSED"
+    },
+    {
+      "id": "HG-EVIDENCE-LATEST-NOT-FULL-GO",
+      "ok": true,
+      "evidence_verdict": "EVIDENCE_INCOMPLETE"
+    },
+    {
+      "id": "HG-OFFICIAL-MAINNET-ALIGNMENT",
+      "ok": false,
+      "exit": 2,
+      "note": "FTB money_path label drift vs gate pin — NOT auto-rewriting FTB (Track1 sealed doctrine)",
+      "tail": [
+        "OK: bake /d/TravelTrust-V1.1/frontend/.env.mainnet.local Wired+Fee+SR",
+        "OK: bake /d/TravelTrust-V1.1/deploy/fly/tt-web-prod/build.env.local Wired+Fee+SR",
+        "OK: FE Wired ABI",
+        "OK: live API /meta Money Path",
+        "FTB money_path must be MAINNET_MONEY_PATH_DEPLOYED_REALITY_PARTIAL got MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED",
+        "FAIL: FTB address/money_path pin",
+        "check-official-mainnet-web3-alignment: FAIL"
+      ]
+    },
+    {
+      "id": "CTX-INDEXER-REALITY-CLOSED",
+      "ok": true,
+      "cite": "INDEXER_REALITY_CLOSED",
+      "note": "serial PRE_GO context ≠ Hard Gate PASS"
+    },
+    {
+      "id": "CTX-CERT-OWNER-UAT-CLOSED",
+      "ok": true,
+      "cite": "CERT_OWNER_UAT_CLOSED",
+      "note": "serial PRE_GO context ≠ Hard Gate PASS"
+    },
+    {
+      "id": "CTX-WC-REAL-DEVICE-CLOSED",
+      "ok": true,
+      "cite": "WC_REAL_DEVICE_CLOSED",
+      "note": "serial PRE_GO context ≠ Hard Gate PASS"
+    },
+    {
+      "id": "CTX-LEGAL-PAY-PRE-GO-CLOSED",
+      "ok": true,
+      "cite": "LEGAL_PAY_PRE_GO_CLOSED",
+      "note": "serial PRE_GO context ≠ Hard Gate PASS"
+    },
+    {
+      "id": "CTX-FINAL-REGRESSION-SOAK-CLOSED",
+      "ok": true,
+      "cite": "FINAL_REGRESSION_SOAK_CLOSED",
+      "note": "serial PRE_GO context ≠ Hard Gate PASS"
+    }
+  ],
+  "coverage_gaps": [
+    {
+      "id": "FTB_MONEY_PATH_LABEL_DRIFT",
+      "class": "SSOT_PIN_DRIFT_NO_AUTO_REWRITE",
+      "note": "check-official-mainnet-web3-alignment expects MAINNET_MONEY_PATH_DEPLOYED_REALITY_PARTIAL; living FTB shows TRACK1_REALITY_SEALED — Owner-authorized SSOT sync only; not Hard Gate PASS"
+    },
+    {
+      "id": "OPEN_HARD_GATE_AXES",
+      "class": "BLOCKING_FOR_GO",
+      "note": "Canonical Hard Gate still OPEN: AXIS-05, AXIS-07, AXIS-08, AXIS-09, AXIS-11, AXIS-12, AXIS-14"
+    },
+    {
+      "id": "COUNSEL_SIGNOFF_08_4",
+      "class": "DEFERRED_POST_GO_QUEUE",
+      "note": "持牌法务/08-4 签字仍 deferred"
+    },
+    {
+      "id": "COMMUNITY_COMMENT_REVERIFY",
+      "class": "DEFERRED_SEPARATE",
+      "note": "评论 create/delete/count/refresh/权限/UX 另轨"
+    },
+    {
+      "id": "FEE_ROUTER_TRACK2_83",
+      "class": "UNAUTHORIZED",
+      "note": "本重评未授权 FeeRouter/Track2/83"
+    },
+    {
+      "id": "USER_FUNDS_FULL_GO",
+      "class": "FORBIDDEN_UNTIL_HARD_GATE_PASS",
+      "note": "USER_FUNDS / Full Production GO 禁止在本重评自动开启"
+    }
+  ],
+  "blockers": [
+    "ALIGNMENT_OR_FTB_PIN",
+    "OPEN_AXIS-05",
+    "OPEN_AXIS-07",
+    "OPEN_AXIS-08",
+    "OPEN_AXIS-09",
+    "OPEN_AXIS-11",
+    "OPEN_AXIS-12",
+    "OPEN_AXIS-14"
+  ],
+  "next": [
+    "KEEP_TT_PRODUCTION_GO_NO_GO",
+    "CLOSE_OPEN_HARD_GATE_AXES_WITH_EVIDENCE",
+    "COMMUNITY_COMMENT_REVERIFY_SEPARATE",
+    "OWNER_EXPLICIT_GO_ONLY_AFTER_HARD_GATE_PASS"
+  ],
+  "forbidden": [
+    "auto_flip_TT_PRODUCTION_GO",
+    "paper_GO",
+    "claim_Hard_Gate_PASS_from_serial_PRE_GO_alone",
+    "FeeRouter_Track2_83_without_auth",
+    "cover_community_comment_residuals"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

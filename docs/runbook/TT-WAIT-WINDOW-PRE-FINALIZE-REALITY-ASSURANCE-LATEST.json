@@ -1,0 +1,136 @@
+{
+  "schema": "traveltrust.wait_window_pre_finalize_reality_assurance.v1",
+  "status": "PASS_HOLD_OFFICIAL_AND_TRACK1_FREEZE_LOCAL_PREP_ALLOWED",
+  "recorded_utc": "2026-08-11T01:37:00Z",
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "ready_at_unix": 1786491935,
+  "before_eta": true,
+  "seconds_to_eta_approx": 79755,
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "mode": "read_only_no_ui_batch_no_fund_exec",
+  "parent": "TT-WAIT-WINDOW-ETA-HOLD-PREFLIGHT-POLICY-LATEST",
+  "cockpit": "TT-WAIT-WINDOW-FINAL-REALITY-AUDIT-LATEST",
+  "prior_l1_l2": "TT-WAIT-WINDOW-L1-L2-FINAL-OPS-PACK-REHEARSAL-LATEST",
+  "verdict": "track1_pass_hold_product_anchors_consistent_no_blocking_hotfix",
+  "track1_preflight": {
+    "chain_id": 1,
+    "escrow": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+    "escrow_status": 2,
+    "usdc_balance_raw": "10000000",
+    "opid": "0xe1d51e09d8c5df11bc83330d5d6c545d3431b3107d6de7652f2c5d840890c116",
+    "operations_ready_at": 1786491935,
+    "operations_done": false,
+    "is_escrow_allowed": false,
+    "settlement_state": 0,
+    "chain_timestamp": 1786412015,
+    "verdict": "PASS_HOLD"
+  },
+  "ops_pack_recheck": {
+    "verdict": "PASS",
+    "eta_opid_ftb_aligned": true,
+    "addresses_ftb_aligned": true,
+    "mainnet_execute_via_cast_not_sepolia_forge": true,
+    "evidence_template_alignment_pass_claim": "STALE_VS_LIVE_GATE_FAIL_USE_LIVING"
+  },
+  "official_alignment": {
+    "gate": "check-official-mainnet-web3-alignment.sh",
+    "verdict": "FAIL",
+    "api_factory": "0x052052f06bfc15cbd63606252db68b4b445aa4f7",
+    "api_factory_is_lineage": true,
+    "classification": "OPEN_OPS_HYGIENE",
+    "blocks_timelock_wait": false
+  },
+  "product_consistency": {
+    "anchors": {
+      "disputed_no_escrow": "7617eba0-4eb6-4c04-bf7a-6f026be5e239",
+      "refunded_sample": "0cd98cfc-b7a4-4eb2-93e9-2b48b5347ea4"
+    },
+    "traveler_list": "Refundedx2@12USDC + InDispute@10USDC",
+    "admin_order_detail_disputed": {
+      "state": "disputed",
+      "escrow": null,
+      "amount": "10.00",
+      "currency_field": "USD"
+    },
+    "chain_page_disputed": {
+      "fail_closed": true,
+      "checkpoint": "0/0",
+      "order_state_projection": "disputed"
+    },
+    "indexer_meta": {
+      "checkpoint_block": 0,
+      "memory_last_block": 0,
+      "reorg_detected": false,
+      "replay_required": false
+    },
+    "reality_escrow_vs_product_orders": "EXPECTED_DIFFERENCE_NOT_IN_TRAVELER_LIST"
+  },
+  "blocking": {
+    "fund": false,
+    "permission": false,
+    "severe_misleading": false,
+    "hotfix_allowed": false
+  },
+  "open_items": [
+    {
+      "id": "H1",
+      "disposition": "OPEN_OPS_HYGIENE",
+      "item": "API /meta escrow_factory_v2 still lineage"
+    },
+    {
+      "id": "H2",
+      "disposition": "OPEN_OPS_HYGIENE",
+      "item": "Alignment gate FAIL (same root as H1)"
+    },
+    {
+      "id": "H3",
+      "disposition": "OPEN_OPS_HYGIENE",
+      "item": "Admin orders list/detail still display USD raw field"
+    },
+    {
+      "id": "H4",
+      "disposition": "OPEN_OPS_HYGIENE",
+      "item": "Indexer checkpoint empty (fail-closed correct; not Confirmed)"
+    },
+    {
+      "id": "H5",
+      "disposition": "DOC_DRIFT",
+      "item": "Evidence template alignment PASS claim stale vs living FAIL"
+    }
+  ],
+  "freeze_until_eta": true,
+  "forbidden_until_eta": [
+    "timelock_execute",
+    "escrow_release",
+    "trusted_factory",
+    "production_go",
+    "new_ui_batch",
+    "expand_product_fix",
+    "mutate_ftb_registry_wired_track1"
+  ],
+  "post_eta_serial": [
+    "Timelock.execute",
+    "Escrow.release",
+    "Settlement_Fee_reconciliation",
+    "Reality_Evidence_Seal",
+    "Hard_Gate_reeval"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

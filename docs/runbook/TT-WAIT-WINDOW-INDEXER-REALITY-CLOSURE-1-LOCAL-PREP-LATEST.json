@@ -1,0 +1,86 @@
+{
+  "schema": "traveltrust.wait_window.indexer_reality_closure_1.v1",
+  "status": "INDEXER_REALITY_CLOSED",
+  "stamp_utc": "2026-08-12T06:05:21Z",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "INDEXER_REALITY_CLOSED": true,
+  "hard_gate": "REFUSED_NO_GO",
+  "fail_closed_rpc": {
+    "host": "eth-mainnet.g.alchemy.com",
+    "chainId": "0x1",
+    "getLogs_track1": "PASS",
+    "note": "Free-tier eth_getLogs max 10 blocks via INDEXER_ETH_GET_LOGS_MAX_BLOCK_SPAN env (not hardcoded)"
+  },
+  "official": {
+    "escrow_factory_wired": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+    "bootstrap": 25735000,
+    "INDEXER_TICK_MAX_BLOCKS_PER_SCAN": 50,
+    "INDEXER_ETH_GET_LOGS_MAX_BLOCK_SPAN": 10,
+    "INDEXER_EXTRA_ESCROW_ADDRESSES": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+    "volume": "tt_api_prod_data -> /app/data"
+  },
+  "ingest": {
+    "execute_tx": "0xe5754054c90d04a2f6b5f1de9c44180a5899cf13a0c0c0c3ba08d0fdd1e88e04",
+    "release_tx": "0x271ed4ec6ab6d061f982f9921098ca16bcbae184f5178be6f481dcee6170f796",
+    "events": [
+      "EscrowAllowlisted",
+      "FeeLegReceived",
+      "ServiceFeeStateChanged",
+      "Released"
+    ],
+    "events_cached": 4,
+    "checkpoint_last_block_after_restart": 25735299
+  },
+  "chain_projection": {
+    "escrow": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+    "status_completed": 3,
+    "usdc": 0,
+    "isEscrow": true,
+    "conservation_raw": "10000000=9500000+500000"
+  },
+  "gates": {
+    "continuous_no_gap_tick": "PASS",
+    "restart_persistence": "PASS",
+    "idempotent_replay": "PASS",
+    "rpc_fail_closed": "PASS_OBSERVED",
+    "rpc_auto_failover": "NOT_IMPLEMENTED_IN_CODE_BACKUP_SAME_PRIMARY",
+    "public_gates_regression": "PASS",
+    "api_official_reality": "PASS_CHAIN_INDEXER_META"
+  },
+  "honest_boundaries": [
+    "INDEXER_REALITY_CLOSED != Production GO",
+    "Track1 bytes32 order has no product UUID orders_projection row (chain-native Reality)",
+    "orders_projection missing_projection=5 is separate product debt",
+    "Alchemy key exposed in chat screenshot — Owner must rotate",
+    "Next serial: Cert/Owner UAT → WC → Legal/支付 PRE_GO → Final Regression → Hard Gate",
+    "Forbidden: FeeRouter/Track2/83 / rewrite FTB/Mainnet / auto-flip GO"
+  ],
+  "owner_followups": [
+    "Rotate Alchemy API key (screenshot exposure) then fly secrets set CHAIN_RPC_URL=…",
+    "Optional: upgrade Alchemy PAYG then raise INDEXER_ETH_GET_LOGS_MAX_BLOCK_SPAN"
+  ],
+  "alchemy_key_rotation": {
+    "class": "NON_BLOCKING_PRE_GO_SECURITY_HYGIENE",
+    "accepted_continue_current_key": true,
+    "reopens_indexer_reality_closed": false,
+    "blocks_release_mainline": false,
+    "recorded_utc": "2026-08-12T06:13:27Z"
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

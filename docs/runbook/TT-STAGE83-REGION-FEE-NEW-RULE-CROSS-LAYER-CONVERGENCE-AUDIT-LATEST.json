@@ -1,0 +1,46 @@
+{
+  "schema": "tt.stage83_region_fee_new_rule_cross_layer_convergence_audit.v1",
+  "track": "STAGE_83_REGION_FEE_NEW_RULE_CROSS_LAYER_CONVERGENCE_AUDIT",
+  "stamp_utc": "2026-08-14T03:13:00Z",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "mode": "PRE_ETA_STABILITY_HOLD",
+  "verdict": "CONVERGENCE_AUDIT_COMPLETE_CONFLICTS_REGISTERED_NO_FIX",
+  "target_ssot": "docs/runbook/TT-STAGE83-VACANCY-REGION-FEE-TARGET-FROZEN-LATEST.json",
+  "full_pack": "Also see worktree D:/TravelTrust-recon-official-runtime-baseline-1/docs/runbook/TT-STAGE83-REGION-FEE-NEW-RULE-CROSS-LAYER-CONVERGENCE-AUDIT-LATEST.json for full matrices",
+  "counts": {
+    "ALIGNED_NEW_TARGET": 8,
+    "LEGACY_HISTORICAL": 4,
+    "STALE_DOC": 4,
+    "STALE_CODE": 1,
+    "IMPLEMENTATION_REQUIRED_83": 7,
+    "REAL_CONFLICT": 3
+  },
+  "p0_conflicts": [
+    "SCF-01 Q-F01 Unallocated (forbid Global) vs Owner vacant→P4Cap"
+  ],
+  "independence": {
+    "solidity_modified": false,
+    "fe_modified": false,
+    "deploy": false,
+    "schedule": false,
+    "execute": false,
+    "fixes_applied": false
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

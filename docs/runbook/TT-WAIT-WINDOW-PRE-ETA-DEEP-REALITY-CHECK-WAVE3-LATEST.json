@@ -1,0 +1,537 @@
+{
+  "schema": "traveltrust.wait_window_pre_eta_deep_reality_check.v1",
+  "status": "WAVE3_RECORDED_STOP",
+  "mode": "PRE_ETA_DEEP_REALITY_CHECK_READ_ONLY",
+  "wave": 3,
+  "recorded_utc": "2026-08-11T04:05:00Z",
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "before_eta": true,
+  "parent_wave1": "TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-LATEST",
+  "parent_wave2": "TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-WAVE2-LATEST",
+  "cut_queue_hold": "CUT_QUEUE_HOLD_PRE_ETA_READ_ONLY",
+  "ftb_unique_ssot": "TT-FINAL-TRUTH-BASELINE-LATEST",
+  "manifest_mutations": "NONE",
+  "product_code_mutations": "NONE",
+  "official_runtime_mutations": "NONE",
+  "production_data_mutations": "NONE",
+  "on_chain_mutations": "NONE",
+  "fix_policy": "NO_FIX",
+  "wave4_auto_start": false,
+  "track1_delay_triggered": false,
+  "p0_fund_privilege_finalize_unsafe": false,
+  "abort_at_eta": true,
+  "hand_back_to": "Track1_fresh_Preflight",
+  "methods_allowed": [
+    "GET_HEAD_official",
+    "stateless_rpc_eth_call",
+    "existing_logs_config_samples",
+    "readonly_probes_no_business_state"
+  ],
+  "methods_forbidden": [
+    "create_data",
+    "write_http",
+    "production_fix",
+    "restart_deploy",
+    "config_mutate",
+    "indexer_backfill",
+    "status_cosmetics",
+    "mainnet_mutate"
+  ],
+  "truth": {
+    "non_web3_product": "https://www.web3-ttg.com",
+    "api": "https://api.web3-ttg.com",
+    "web3": "mainnet_broadcast_FTB_Wired"
+  },
+  "official_build": {
+    "git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+    "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+    "image_digest": "registry.fly.io/tt-api-prod:deployment-01KZPAYFV5K6A5QTB7RP8TBVNC"
+  },
+  "finalize_impact_judgment": {
+    "meta_timeout_slowness": {
+      "ops_debt": true,
+      "affects_track1_finalize": false,
+      "affects_release_forensics": "indirect_slow_only",
+      "verdict": "DO_NOT_DELAY_TRACK1"
+    },
+    "pause_rpc_error": {
+      "ops_debt": true,
+      "root_cause": "official_CHAIN_RPC_1rpc_plan_usage_limit",
+      "on_chain_pause": false,
+      "independent_rpc": {
+        "fee_distributePaused": false,
+        "wired_factoryPaused": false
+      },
+      "affects_track1_finalize": false,
+      "verdict": "DO_NOT_DELAY_TRACK1_DO_NOT_READ_AS_CHAIN_PAUSE"
+    },
+    "indexer_0_0": {
+      "ops_debt": true,
+      "class": "EXPECTED_DIFFERENCE",
+      "affects_track1_finalize": false,
+      "post_seal": "INDEXER_FILL",
+      "verdict": "DO_NOT_DELAY_TRACK1"
+    },
+    "migration_checksum": {
+      "live_api_db": "PASS",
+      "historical_checksum_audit": "COVERAGE_GAP",
+      "affects_track1_finalize": false,
+      "verdict": "DO_NOT_DELAY_TRACK1"
+    },
+    "media_404": {
+      "covered_by": "R-MEDIA-1",
+      "affects_track1_finalize": false,
+      "verdict": "DO_NOT_DELAY_TRACK1"
+    },
+    "p0_stop_escalate_track1": false
+  },
+  "track1_pin_reconfirm": {
+    "timelock": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "opid": "0xe1d51e09d8c5df11bc83330d5d6c545d3431b3107d6de7652f2c5d840890c116",
+    "readyAt": 1786491935,
+    "done": false,
+    "target": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "payload": "setEscrow(0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6,true)",
+    "execute_eth_call": "TooEarly(0x085de625)",
+    "escrow": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+    "escrow_status": 2,
+    "usdc_balance": "10000000",
+    "settlement_isEscrow": false,
+    "rpc_note": "custom GovernanceTimelock.operations(bytes32) — not OZ getTimestamp"
+  },
+  "dedupe_inherit": [
+    {
+      "id": "DRC-W1-004",
+      "now": "COVERED_BY_READY_PACK",
+      "pack": "R-PAY-IA-1"
+    },
+    {
+      "id": "DRC-W1-005",
+      "now": "COVERED_BY_READY_PACK",
+      "pack": "R-USDC-1"
+    },
+    {
+      "id": "DRC-W1-006",
+      "now": "COVERED_BY_READY_PACK",
+      "pack": "R-ADMIN-1"
+    },
+    {
+      "id": "DRC-W2-001",
+      "now": "COVERED_BY_READY_PACK",
+      "pack": "R-MEDIA-1"
+    },
+    {
+      "id": "DRC-W1-001",
+      "now": "POST_SEAL_BLOCKER_CANDIDATE",
+      "pack": "POST_SEAL_OPS_HYGIENE_H1_H2_bake_Wired"
+    },
+    {
+      "id": "DRC-W1-002",
+      "now": "EXPECTED_DIFFERENCE",
+      "pack": "POST_SEAL_INDEXER_FILL"
+    }
+  ],
+  "counts": {
+    "PASS": 9,
+    "NEW_GAP": 3,
+    "KNOWN_GAP": 4,
+    "COVERED_BY_READY_PACK": 4,
+    "COVERAGE_GAP": 5,
+    "EXPECTED_DIFFERENCE": 2,
+    "POST_SEAL_BLOCKER_CANDIDATE": 1
+  },
+  "findings": [
+    {
+      "id": "DRC-W3-001",
+      "class": "KNOWN_GAP",
+      "domain": "meta_stability",
+      "root_cause_layer": "OBS_PERF",
+      "runtime_evidence": "GET /meta timings ~15.155s / 2.057s / 2.8s; payload ~76552 bytes",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_META_PERF"
+    },
+    {
+      "id": "DRC-W3-002",
+      "class": "PASS",
+      "domain": "api_health",
+      "root_cause_layer": "OPS",
+      "runtime_evidence": "GET /health → 200 body=ok ~1.4s",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-003",
+      "class": "EXPECTED_DIFFERENCE",
+      "domain": "ready_route",
+      "root_cause_layer": "API_SURFACE",
+      "runtime_evidence": "GET /ready → 404; health is sole live probe",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_READY_ROUTE_OPTIONAL"
+    },
+    {
+      "id": "DRC-W3-004",
+      "class": "NEW_GAP",
+      "domain": "pause_rpc",
+      "root_cause_layer": "RPC_PROVIDER",
+      "runtime_evidence": "meta.pause.chain_pause_read.error cites 1rpc.io usage limit; independent eth_call distributePaused=false factoryPaused=false",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_RPC_PROVIDER_QUOTA"
+    },
+    {
+      "id": "DRC-W3-005",
+      "class": "EXPECTED_DIFFERENCE",
+      "domain": "indexer",
+      "root_cause_layer": "INDEXER",
+      "runtime_evidence": "indexer.checkpoint block_number=0 log_index=0; memory.last_block=0",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": true,
+      "blocks_production_go": true,
+      "remediation_pack": "POST_SEAL_INDEXER_FILL",
+      "note": "hard_gate/go flags inherited as post-seal readiness candidates — not Track1 fund path"
+    },
+    {
+      "id": "DRC-W3-006",
+      "class": "POST_SEAL_BLOCKER_CANDIDATE",
+      "domain": "runtime_identity",
+      "root_cause_layer": "CONFIG",
+      "runtime_evidence": "meta escrow_factory_v2_address=0x052052f06bfc15cbd63606252db68b4b445aa4f7 ≠ Wired 0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6; SR/Fee/Timelock match FTB",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": true,
+      "blocks_production_go": true,
+      "remediation_pack": "POST_SEAL_OPS_HYGIENE_H1_H2_bake_Wired"
+    },
+    {
+      "id": "DRC-W3-007",
+      "class": "PASS",
+      "domain": "auth_session",
+      "root_cause_layer": "SECURITY",
+      "runtime_evidence": "GET /me no auth → 401 unauthorized; X-User-Id only → 401 STRICT_SESSION_GATE message; strict_session_gate=true",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-008",
+      "class": "PASS",
+      "domain": "cors",
+      "root_cause_layer": "SECURITY",
+      "runtime_evidence": "Origin www.web3-ttg.com → ACAO mirror; evil.example and null → no ACAO (credentials header alone)",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-009",
+      "class": "PASS",
+      "domain": "csrf_credentials",
+      "root_cause_layer": "SECURITY",
+      "runtime_evidence": "public GET cookie-less; ACAO+credentials only for Official origin",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-010",
+      "class": "PASS",
+      "domain": "idempotency",
+      "root_cause_layer": "API_CONTRACT",
+      "runtime_evidence": "require_idempotency_key=true; CORS allows idempotency-key; GET discover+Idempotency-Key → 200",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-011",
+      "class": "PASS",
+      "domain": "error_leakage",
+      "root_cause_layer": "SECURITY",
+      "runtime_evidence": "bad bearer → login_required short; meta has no sk_live/private_key hex; internal_api_secret_configured boolean only",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-012",
+      "class": "COVERAGE_GAP",
+      "domain": "rate_limit_retry_timeout",
+      "root_cause_layer": "RELIABILITY",
+      "runtime_evidence": "no 429 load test in READ_ONLY; meta slowness is soft timeout risk only",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_RATE_LIMIT_PROBE"
+    },
+    {
+      "id": "DRC-W3-013",
+      "class": "PASS",
+      "domain": "fe_security_headers",
+      "root_cause_layer": "FE",
+      "runtime_evidence": "HSTS includeSubDomains; X-Frame-Options SAMEORIGIN; X-Content-Type-Options nosniff; Referrer-Policy strict-origin-when-cross-origin",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-014",
+      "class": "KNOWN_GAP",
+      "domain": "fe_ttfb",
+      "root_cause_layer": "PERF",
+      "runtime_evidence": "www / TTFB~2.296s; /market ~1.949s",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_FE_TTFB"
+    },
+    {
+      "id": "DRC-W3-015",
+      "class": "NEW_GAP",
+      "domain": "auth_tls_edge",
+      "root_cause_layer": "EDGE",
+      "runtime_evidence": "intermittent SSL EOF on /auth/login during probe window",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_EDGE_TLS_STABILITY"
+    },
+    {
+      "id": "DRC-W3-016",
+      "class": "KNOWN_GAP",
+      "domain": "cdn",
+      "root_cause_layer": "CDN",
+      "runtime_evidence": "CDN root 403 listing denied; OCS sample 200 covered in Wave-1",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-017",
+      "class": "COVERED_BY_READY_PACK",
+      "domain": "community_media_orphan",
+      "root_cause_layer": "OBJECT_STORAGE_OR_VOLUME_PERSISTENCE",
+      "runtime_evidence": "inherit DRC-W2-001 relative covers 404",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "R-MEDIA-1"
+    },
+    {
+      "id": "DRC-W3-018",
+      "class": "COVERED_BY_READY_PACK",
+      "domain": "pay_ia",
+      "root_cause_layer": "FE_IA",
+      "runtime_evidence": "/me/payments 404 inherit",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "R-PAY-IA-1"
+    },
+    {
+      "id": "DRC-W3-019",
+      "class": "PASS",
+      "domain": "migration_live",
+      "root_cause_layer": "DB",
+      "runtime_evidence": "API up; /health ok; /meta returns DB-backed sections",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W3-020",
+      "class": "COVERAGE_GAP",
+      "domain": "migration_checksum_history",
+      "root_cause_layer": "DB",
+      "runtime_evidence": "no Official migrate checksum diff under NO_FIX/no-deploy",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_MIGRATION_CHECKSUM_AUDIT"
+    },
+    {
+      "id": "DRC-W3-021",
+      "class": "COVERAGE_GAP",
+      "domain": "db_pool_txn",
+      "root_cause_layer": "DB",
+      "runtime_evidence": "no production DB session; no evidence of fail-open writes",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_DB_POOL_OBS"
+    },
+    {
+      "id": "DRC-W3-022",
+      "class": "COVERAGE_GAP",
+      "domain": "backup_rollback_spof",
+      "root_cause_layer": "OPS",
+      "runtime_evidence": "runbooks exist; DR drill not executed this wave",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_DR_DRILL"
+    },
+    {
+      "id": "DRC-W3-023",
+      "class": "COVERAGE_GAP",
+      "domain": "logging_alerting",
+      "root_cause_layer": "OBS",
+      "runtime_evidence": "pause/RPC error visible on /meta; external alert proof absent",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_ALERTING"
+    },
+    {
+      "id": "DRC-W3-024",
+      "class": "KNOWN_GAP",
+      "domain": "admin_fail_open_rbac",
+      "root_cause_layer": "SECURITY",
+      "runtime_evidence": "STRICT_SESSION + unauth 401; admin write paths not re-tested (write forbidden); dual-signal → R-ADMIN-1",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "R-ADMIN-1_PLUS_POST_SEAL_ADMIN_RBAC_AUDIT"
+    },
+    {
+      "id": "DRC-W3-025",
+      "class": "PASS",
+      "domain": "track1_chain_state",
+      "root_cause_layer": "WEB3",
+      "runtime_evidence": "operations pin + escrow status/USDC/isEscrow match Preflight",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "Track1_fresh_Preflight"
+    },
+    {
+      "id": "DRC-W3-026",
+      "class": "COVERED_BY_READY_PACK",
+      "domain": "payment_display",
+      "root_cause_layer": "UI",
+      "runtime_evidence": "Admin USD vs Traveler USDC inherit",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "R-USDC-1"
+    },
+    {
+      "id": "DRC-W3-027",
+      "class": "COVERED_BY_READY_PACK",
+      "domain": "disputes_rbac_signal",
+      "root_cause_layer": "ADMIN",
+      "runtime_evidence": "Can-write dual-signal inherit",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "R-ADMIN-1"
+    },
+    {
+      "id": "DRC-W3-028",
+      "class": "NEW_GAP",
+      "domain": "indexer_reorg_reconcile",
+      "root_cause_layer": "INDEXER",
+      "runtime_evidence": "0/0 empty — reorg/rewind/reconcile path not production-sample-proven",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_INDEXER_REORG_DRILL"
+    },
+    {
+      "id": "DRC-W3-029",
+      "class": "KNOWN_GAP",
+      "domain": "404_rewrite",
+      "root_cause_layer": "EDGE",
+      "runtime_evidence": "/ready 404; /me/payments→R-PAY; Growth FE W2",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_ROUTE_HYGIENE"
+    }
+  ],
+  "remediation_queue_suggestion": [
+    "Track1_ETA_fresh_Preflight_execute_release_Settlement_Fee_Reality_Seal",
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1",
+    "R-MEDIA-1_SEPARATE",
+    "POST_SEAL_RPC_PROVIDER_QUOTA",
+    "POST_SEAL_OPS_HYGIENE_H1_H2_bake_Wired",
+    "POST_SEAL_INDEXER_FILL",
+    "POST_SEAL_META_PERF",
+    "POST_SEAL_FE_TTFB",
+    "POST_SEAL_EDGE_TLS_STABILITY",
+    "POST_SEAL_DR_DRILL",
+    "POST_SEAL_ALERTING",
+    "POST_SEAL_MIGRATION_CHECKSUM_AUDIT"
+  ],
+  "honesty": {
+    "ftb_unique_ssot": true,
+    "wave3_is_not_second_ssot": true,
+    "tt_production_go": "NO_GO",
+    "runtime_verified_ne_owner_validated_ne_closed_ne_go": true,
+    "wave4": "NOT_STARTED_OWNER_ONLY"
+  },
+  "owner_hold_ack_utc": "2026-08-11T04:05:00Z",
+  "owner_hold_ack": "MAINTAIN_WAVE3_STOP_PRE_ETA_READ_ONLY_NO_WAVE4_ETA_FRESH_PREFLIGHT_ONLY",
+  "next": "HOLD_UNTIL_ETA_THEN_FRESH_TRACK1_PREFLIGHT",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

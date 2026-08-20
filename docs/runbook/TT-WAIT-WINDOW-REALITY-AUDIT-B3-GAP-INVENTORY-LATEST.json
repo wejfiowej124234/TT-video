@@ -1,0 +1,101 @@
+{
+  "schema": "traveltrust.wait_window_reality_audit_b3_gap_inventory.v1",
+  "batch": "REALITY-AUDIT-B3",
+  "status": "SEALED",
+  "recorded_utc": "2026-08-11T00:36:00Z",
+  "closed_pack": "TT-WAIT-WINDOW-REALITY-AUDIT-B3-CLOSED-LATEST",
+  "slice_closed": [
+    "B3-G-001",
+    "B3-G-002",
+    "B3-G-006"
+  ],
+  "open_separate_only": [
+    "B3-G-007"
+  ],
+  "parent": "TT-WAIT-WINDOW-FINAL-REALITY-AUDIT-LATEST",
+  "mode": "fe_api_db_indexer_consistency_check_fix_no_fund_exec",
+  "truth": {
+    "product": "https://www.web3-ttg.com",
+    "api": "https://api.web3-ttg.com",
+    "web3": "mainnet_broadcast_frozen_read_only"
+  },
+  "historical_api_smoke_fail": {
+    "class": "HISTORICAL_RESOLVED",
+    "must_not_recount_as": [
+      "current_P0",
+      "Blocking"
+    ]
+  },
+  "gaps": [
+    {
+      "id": "B3-G-001",
+      "sev": "P0",
+      "disposition": "CLOSED",
+      "verdict": "PASS",
+      "runtime_verify": "TT-WAIT-WINDOW-REALITY-AUDIT-B3-G001-RUNTIME-VERIFY-LATEST"
+    },
+    {
+      "id": "B3-G-002",
+      "sev": "P1",
+      "disposition": "CLOSED",
+      "verdict": "PASS",
+      "runtime_verify": "TT-WAIT-WINDOW-REALITY-AUDIT-B3-G002-RUNTIME-VERIFY-LATEST"
+    },
+    {
+      "id": "B3-G-003",
+      "sev": "P1",
+      "disposition": "ACCEPT_PARTIAL",
+      "carry": "B5"
+    },
+    {
+      "id": "B3-G-004",
+      "sev": "P2",
+      "disposition": "ACCEPT"
+    },
+    {
+      "id": "B3-G-005",
+      "sev": "P2",
+      "disposition": "DEFER_B8"
+    },
+    {
+      "id": "B3-G-006",
+      "sev": "P1",
+      "disposition": "CLOSED",
+      "verdict": "PASS"
+    },
+    {
+      "id": "B3-G-007",
+      "sev": "P2",
+      "disposition": "OPEN_SEPARATE",
+      "blocks_batch3_seal": false,
+      "summary": "Community orphan UUID media 404"
+    }
+  ],
+  "frozen_untouched": [
+    "Mainnet Money Path",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "next": "Optional B3-G-007 media track only; Batch 4 per cockpit",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

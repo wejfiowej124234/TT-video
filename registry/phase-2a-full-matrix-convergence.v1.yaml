@@ -1,0 +1,277 @@
+# PHASE_2A_FULL_MATRIX_CONVERGENCE_AND_GAP_CLOSURE
+# Navigation only: PHASE_1_AS_IS_ARCHITECTURE_FROZEN + Pack 01–14 + Gap Register.
+# Not a 16th product matrix. Not Phase 2B architecture upgrade.
+# Human: docs/runbook/TT-PHASE-2A-FULL-MATRIX-CONVERGENCE-LATEST.md
+# Gate:  python scripts/dev/check-phase-2a-full-matrix-convergence.py
+#
+# 2A may close classified gaps via:
+#   Root Cause → Local Fix → Unit/Integration → Staging → Official → Reality Evidence
+#   → Registry/SSOT/01–14 writeback → GAP CLOSED
+# Fail = repair the breakpoint only. Do not expand rerun.
+# 2B FORBIDDEN until 2A exit: UNEXPLAINED_DRIFT=0 AND key-path Reality closed.
+# TT_PRODUCTION_GO=NO_GO until Hard Gate really passes.
+
+schema: traveltrust.phase_2a_full_matrix_convergence.v1
+version: 1
+effective_utc: "2026-08-15T12:50:00Z"
+status: PHASE_2A_FULL_MATRIX_CONVERGENCE_ACTIVE
+machine_key: TT_PHASE_2A_FULL_MATRIX_CONVERGENCE
+tt_production_go: NO_GO
+baseline: PHASE_1_AS_IS_ARCHITECTURE_FROZEN
+baseline_status: ISSUED
+not_a_sixteenth_matrix: true
+solo_owner: true
+team_approval: FORBIDDEN
+
+phase_2_gap_audit: CLOSED
+phase_2a_convergence: ACTIVE
+phase_2a_gap_closure: ACTIVE
+phase_2b_upgrade_review: FORBIDDEN
+legacy_cleanup: FORBIDDEN_UNTIL_2B
+large_architecture_refactor: FORBIDDEN
+
+navigation:
+  - PHASE_1_AS_IS_ARCHITECTURE_FROZEN
+  - pack_01_14
+  - CAP_JNY_DEP_GATE_INC
+  - phase2_gap_register
+
+truth_planes:
+  official: [Web, API, Admin]
+  data: [PostgreSQL, ObjectStorage]
+  l7: [Mainnet, Timelock]
+  l8: [Indexer, meta]
+  freeze: [FTB, Registry]
+
+check_surfaces:
+  - Route/Action
+  - API_Contract
+  - ABI_address_proxy_implementation
+  - DB_schema_migration
+  - Indexer_projection
+  - Auth_RBAC
+  - CMS_media
+  - money_conservation
+  - Runtime_identity
+  - release_status
+  - Evidence
+
+finding_kind_enum:
+  - DEFECT
+  - DRIFT
+  - STALE_API
+  - STALE_ABI
+  - STALE_DATA
+  - MISSING_WIRING
+  - FUNCTION_GAP
+  - REALITY_GAP
+
+legal_non_bug:
+  - WAITING_TIMELOCK
+  - NOT_DEPLOYED
+  - ORTHOGONAL
+  - EXPECTED_SOLO
+
+ladder: Root Cause → Local Fix → Unit/Integration → Staging → Official → Reality Evidence → writeback → GAP CLOSED
+
+exit_criteria:
+  UNEXPLAINED_DRIFT: 0
+  key_path_reality_closed: false
+  note: >
+    2A is not complete. GAP-1USDC-HANDOFF CLOSED_REALITY Owner A (Track2 L7+L8
+    money-path). L8_INDEXER_CHECKPOINT_LAG and L8_OR_UI_PROJECTION_UNVERIFIED
+    are historical/cleared as close criteria for that gap. Current focus
+    GAP-E2E-JOURNEY Official traveler book/UI hop CLOSED_REALITY (C2 non-money
+    Draft UUID; frozen www /escrow/{uuid}; not USDC/TTG; not Track2). Parallel 2A surface:
+    GAP-FE-BFF-BYPASS CLOSED_REALITY (Official www same-origin BFF).
+    OFFICIAL_FE_RELEASE_LINEAGE_REGRESSION CLOSED_REALITY: product baseline 3e600076
+    + CLOSED Session/BFF 9959ae50; API 80eed10f kept.
+    WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY on historical hop Official FE 2ba08bd4
+    (Dockerfile ARG/ENV; bundle ID + wagmi connector + Sheet QR; living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED); not a 16th gap).
+    Do not start 2B. Do not flip GO. Do not repeat real money.
+
+batch_a_session: FROZEN_CLOSED_REALITY
+surface_audit:
+  status: CLOSED_REALITY
+  name: OFFICIAL_FULL_SURFACE_MATRIX_RUNTIME_CONVERGENCE_AUDIT
+  gap_id: GAP-FE-BFF-BYPASS
+  finding_kind: STALE_API
+  breakpoint: STALE_API_CLIENT_BFF_BYPASS
+  first_breakpoint: browserUsesSameOriginApiProxy www vs apex SITE_URL
+  do_not_reopen_batch_a: true
+  do_not_merge_ci02_pm25_1usdc: true
+  close_without_official_authenticated_200: FORBIDDEN
+  closed_utc: "2026-08-15T09:55:00Z"
+  lineage_restore:
+    class: OFFICIAL_FE_RELEASE_LINEAGE_REGRESSION
+    status: CLOSED_REALITY
+    product_baseline_fe: 3e600076eab6613b55484852197921cb5c622f7e
+    forward_fix_fe: 9959ae506c0ccaf65c6d191fbe32fe5f18815f31
+    api_kept: 80eed10fd21959ae03f65bb446ee2a4598a010f7
+    closed_utc: "2026-08-15T11:27:00Z"
+    note: d5303513 SUPERSEDED_AS_OFFICIAL_BAKE_SOURCE; do not bake living dirty c3eeaf10
+  walletconnect_official_bake:
+    class: WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX
+    status: CLOSED_REALITY
+    finding_kind: MISSING_WIRING
+    official_live_fe: 2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8
+    prior_official_fe: a6efa351
+    product_baseline_fe: 3e600076eab6613b55484852197921cb5c622f7e
+    api_kept: 80eed10fd21959ae03f65bb446ee2a4598a010f7
+    closed_utc: "2026-08-15T12:50:00Z"
+    evidence: evidence/GO_oa01_walletconnect_official_bake/WALLETCONNECT-OFFICIAL-BAKE-FORWARD-FIX-LATEST.json
+    note: Dockerfile ARG/ENV hole only. Source still process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID. Do not reopen Header/Community/CMS/Session/BFF. OA-01 9/9 mobile seal remains Owner-only. official_live_fe hop SUPERSEDED; living Official product = OPS-2026.08.20-v9 (`3e356617`); historical www pin daa5ae87 SUPERSEDED.
+current_focus:
+  gap_id: GAP-E2E-JOURNEY
+  finding_kind: FUNCTION_GAP
+  hop_status: CLOSED_REALITY
+  breakpoint: READY_FOR_OWNER_PRODUCTION_GO_VERDICT
+  living_official_www: 3e356617a498b0faac42e4ae457343d36294a770
+  living_official_www_build_time: "2026-08-20T00:51:57Z"
+  living_official_api: 8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51
+  historical_wc_bake_fe: 2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8
+  l7: PASS
+  l8_checkpoint_ge_tx: true
+  indexer_checkpoint: 25759530
+  release_block: 25759423
+  prior_gap: GAP-1USDC-HANDOFF
+  prior_gap_closure: CLOSED_REALITY_OWNER_A_TRACK2_L7_L8
+  classify_a: docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.json
+  preflight: registry/batch-b-1usdc-handoff-preflight.v1.yaml
+  l7_pack: registry/batch-b-1usdc-l7-reality.v1.yaml
+  close_without_l7_receipt: FORBIDDEN
+  close_without_l8_checkpoint: FORBIDDEN
+  close_without_projection_and_ui: NOT_A_CLOSE_GATE_FOR_HANDOFF
+  official_book_ui: GAP-E2E-JOURNEY_CLOSED_HOP
+  repeat_real_money: FORBIDDEN
+
+independent_timelock:
+  CI-02:
+    class: WAITING_TIMELOCK
+    eta_utc: "2026-08-16T13:42:11Z"
+    execute: FORBIDDEN_UNTIL_ETA_AND_OWNER_AUTH
+  PM-25:
+    class: WAITING_TIMELOCK
+    eta_utc: "2026-08-16T16:20:23Z"
+    execute: FORBIDDEN_UNTIL_ETA_AND_OWNER_AUTH
+  merge: FORBIDDEN
+
+queue:
+  closed_frozen:
+    - { gap_id: GAP-LOGIN-WWW-405, finding_kind: DEFECT, note: BATCH-A CLOSED_REALITY · do not reopen }
+    - { gap_id: GAP-SEC-TOKEN-LOCALSTORAGE, finding_kind: DEFECT, note: BATCH-A CLOSED_REALITY · do not reopen }
+    - { gap_id: GAP-FE-BFF-BYPASS, finding_kind: STALE_API, note: BATCH-2A-SURFACE-BFF CLOSED_REALITY · Official FE 9959ae50 · do not reopen Session }
+    - { gap_id: GAP-1USDC-HANDOFF, finding_kind: REALITY_GAP, note: Owner A CLOSED_REALITY Track2 L7+L8 money-path · Official book hop is GAP-E2E-JOURNEY CLOSED }
+    - { gap_id: GAP-E2E-JOURNEY, finding_kind: FUNCTION_GAP, note: "Official C2 non-money Draft + frozen www /escrow/{uuid} CLOSED_REALITY hop · UUID 7d91f354-af9d-461c-8790-b70a597751af · not Track2 · not USDC/TTG" }
+  current: []
+  parallel_now: []
+  next_after_current: []
+  legal_hold:
+    - { gap_id: GAP-CI02-FR-CUTOVER, class: WAITING_TIMELOCK }
+    - { gap_id: GAP-PM25-UPGRADE, class: WAITING_TIMELOCK }
+    - { gap_id: GAP-STEWARD-SEAT-VAULT, class: NOT_DEPLOYED }
+    - { gap_id: GAP-PROPOSAL-3, class: ORTHOGONAL }
+    - { gap_id: GAP-SAFE-1OF1, class: EXPECTED_SOLO }
+    - { gap_id: GAP-STAGING-PIN, class: ORTHOGONAL }
+    - { gap_id: GAP-FUTURE-APP, class: ORTHOGONAL }
+    - { gap_id: GAP-CMS-NO-GP, class: ORTHOGONAL }
+  queued_p1_p2:
+    - GAP-SEC-CORS
+    - GAP-FE-SCREEN-PARTIAL
+    - GAP-ADMIN-118
+    - GAP-RESPONSIVE
+    - GAP-LEGAL-404
+    - GAP-SEC-ADMIN-2FA
+    - GAP-SEC-CONSOLE-OVERRIDE
+    - GAP-REL-IDENTITY-STAMP
+    - GAP-FTB-SR-STAMP-LAG
+    - GAP-META-PM-NULL
+    - GAP-ORDER-ID-JOIN
+    - GAP-GUIDE-STAKE-PROJECTION
+    - GAP-ME-PAYMENTS-404
+    - GAP-ENG-SSOT-STALE
+    - GAP-ACQUISITION-DOMAIN
+
+findings:
+  - id: 2A-F-001
+    kind: STALE_DATA
+    severity: P2
+    pointer: taxonomy.official_observation_20260815.API.LOGIN_WWW
+    vs: GAP-LOGIN-WWW-405 CLOSED_REALITY
+    disposition: FIX_MAP_OBSERVATION
+    status: CLOSED_THIS_ENTRY
+    note: Observation updated to Owner C2 200. Historical 405 SUPERSEDED. Do not reopen BATCH-A.
+  - id: 2A-F-002
+    kind: REALITY_GAP
+    severity: P0
+    pointer: GAP-1USDC-HANDOFF
+    disposition: LADDER
+    status: CLOSED_THIS_ENTRY
+    l7: PASS
+    breakpoint: L8_OR_UI_PROJECTION_UNVERIFIED
+    note: >
+      Owner A 2026-08-17. GATE-1USDC = Track2 L7+L8 money-path PASS.
+      L8_INDEXER_CHECKPOINT_LAG cleared. L8_OR_UI_PROJECTION_UNVERIFIED
+      superseded as a close criterion. Official book hop GAP-E2E-JOURNEY subsequent CLOSED_REALITY. GO remaining = Owner written verdict.
+  - id: 2A-F-003
+    kind: DRIFT
+    severity: P2
+    pointer: indexer.checkpoint vs chain head
+    disposition: TX_WINDOW_CLEARED
+    status: OPEN
+    note: >
+      lag_blocks=0 · checkpoint 25759530 ≥ release 25759423.
+      Do not overwrite L7 from Indexer. Do not require Official projection+UI
+      to keep GAP-1USDC-HANDOFF closed under Owner A.
+  - id: 2A-F-004
+    kind: STALE_API
+    severity: P1
+    pointer: GAP-FE-BFF-BYPASS
+    disposition: LADDER
+    status: CLOSED_THIS_ENTRY
+    breakpoint: STALE_API_CLIENT_BFF_BYPASS
+    note: >
+      Official FE SITE_URL=https://www.web3-ttg.com + live JS www/apex helper.
+      Owner C2 www /me bookmarks orders 200. /market Network discover/guides on www.
+      catalog/cold-start still api origin (public; not this Gap). Do not reopen BATCH-A.
+  - id: 2A-F-005
+    kind: MISSING_WIRING
+    severity: P1
+    pointer: WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX
+    disposition: LADDER
+    status: CLOSED_THIS_ENTRY
+    breakpoint: DOCKERFILE_UNDECLARED_WC_ARG
+    note: >
+      Official a6efa351 dropped undeclared NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID.
+      Forward-fix FE 2ba08bd4 ARG/ENV + Official CHAIN_ID=1 bake gate.
+      Bundle inlined masked 2b29…8926; wagmi WalletConnect connector; Sheet no 未配置; real QR.
+      Not a 16th Gap Register row. Do not reopen Header/Community/CMS/Session/BFF/1USDC.
+
+unexplained_drift: 0
+unexplained_drift_note: All known deltas classified. 2A-F-002 CLOSED_THIS_ENTRY under Owner A. GAP-E2E-JOURNEY Official book hop CLOSED_REALITY; not unexplained.
+
+forbidden:
+  - PHASE_2B
+  - LARGE_REFACTOR
+  - SIXTEENTH_MATRIX
+  - WAIT_AS_DEFECT
+  - TARGET_AS_LIVE
+  - MERGE_CI02_PM25
+  - EXECUTE_CI02_BEFORE_ETA
+  - EXECUTE_PM25_BEFORE_ETA
+  - DEPLOY_SEAT_VAULT
+  - TOUCH_PROPOSAL_3
+  - REOPEN_BATCH_A
+  - FAKE_L7_RECEIPT
+  - FTB_FROM_META
+  - META_FROM_FTB
+  - TT_PRODUCTION_GO_FLIP
+
+machine_line: >
+  TT_PHASE_2A_FULL_MATRIX_CONVERGENCE: ACTIVE
+  PHASE_2B: FORBIDDEN UNEXPLAINED_DRIFT=0
+  FOCUS=GAP-E2E-JOURNEY READY_FOR_OWNER_PRODUCTION_GO_VERDICT
+  LIVING_WWW=3e356617 OFFICIAL_PIN=2026-08-20T00:51:57Z OPS=OPS-2026.08.20-v9
+  SURFACE=GAP-FE-BFF-BYPASS CLOSED_REALITY
+  WC_BAKE=WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY
+  BATCH-A=FROZEN TT_PRODUCTION_GO=NO_GO

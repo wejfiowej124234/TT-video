@@ -1,151 +1,154 @@
 {
-  "schema_version": "1.0.0",
-  "document_id": "TT-V65-BATCH-RELEASE-CLOSURE",
+  "schema": "traveltrust.v65_batch_release_closure.v1",
+  "machine": "TT_V65_BATCH_RELEASE_CLOSURE",
   "status": "ACTIVE",
-  "stamp_utc": "20260803T040941Z",
-  "mode": "BATCH_RELEASE_CLOSURE",
-  "supersedes_process": "fragment_fix_then_immediate_production_deploy",
-  "tt_production_go": "NO_GO",
-  "truth_chain": [
-    "V65_PRODUCT_TRUTH",
-    "RELEASE_CANDIDATE_BATCH",
-    "PRODUCTION_RUNTIME"
-  ],
-  "forbidden": [
-    "local_direct_to_production_except_p0",
-    "single_issue_production_deploy"
-  ],
-  "pipeline": [
-    "deep_audit",
-    "gap_inventory",
-    "batch_fix",
-    "local_full_verify",
-    "release_batch_freeze",
-    "one_commit",
-    "one_build",
-    "one_production_deploy",
-    "runtime_verify"
-  ],
-  "batch_size_guidance": {
-    "daily_recommended_min": 10,
-    "daily_recommended_max": 50,
-    "small": {
-      "min": 10,
-      "max": 30,
-      "fit": [
-        "copy",
-        "style",
-        "locale",
-        "small_widget"
-      ]
-    },
-    "medium": {
-      "min": 30,
-      "max": 80,
-      "fit": [
-        "single_module",
-        "single_domain"
-      ]
-    },
-    "large": {
-      "min": 100,
-      "max": null,
-      "fit": [
-        "must_split_by_module"
-      ]
-    }
-  },
-  "daily_release_window": {
-    "max_production_deploys_per_day": 1,
-    "p0_exception": true,
-    "cut_id_pattern": "V65-BATCH-YYYYMMDD",
-    "schedule": {
-      "morning": "audit_and_gap_inventory",
-      "afternoon": "batch_fix_and_local_verify",
-      "evening": "release_cut_freeze_commit_build_deploy_runtime_evidence"
-    },
-    "cut_must_register": [
-      "batch_id",
-      "commit_sha",
-      "build_artifact_sha",
-      "deploy_proof",
-      "evidence_dir",
-      "gap_inventory_closed_count"
+  "stamp": "20260804T002417Z",
+  "solo_branch_policy": {
+    "policy": "BRANCHLESS_ON_LIVING_TIP",
+    "branch_required": false,
+    "rule": "Solo independent development: all V65 Production Batch Repair MUST NOT require feature/hotfix/patch/cut branches or a dedicated fix worktree as a process gate. Commit on the living Production tip in the primary checkout. Optional clean worktree is deploy hygiene only when primary is dirty.",
+    "ssot": [
+      "registry/psg-solo-developer-workflow.v1.yaml#v65_production_batch_repair",
+      "docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md#11",
+      ".cursor/rules/traveltrust-v65-batch-release-closure.mdc",
+      "docs/runbook/TT-V65-PRODUCTION-BATCH-REPAIR-MATRIX-LATEST.json#solo_branch_policy"
     ]
   },
-  "rules": {
-    "R1_all_fixes_enter_batch": true,
-    "R2_batch_freeze_then_verify_only": true,
-    "R3_max_one_production_deploy_per_day": true,
-    "R4_git_build_deploy_runtime_must_match": true
-  },
-  "active_batch": {
-    "id": "V65-ADMIN-UX",
-    "name": "V65 Admin UX Batch Closure",
-    "candidate": "V65",
-    "not_a_new_version": true,
-    "status": "FROZEN_BATCH_FIX_APPLIED",
-    "gate": "G005_CN_RUNTIME_UAT",
-    "inventory_stamp": "20260803T040941Z",
-    "scope": [
-      "admin_ui",
-      "admin_ux",
-      "locale_i18n",
-      "dashboard",
-      "workbench",
-      "live_production_findings"
-    ],
-    "batch_tree": [
-      "i18n",
-      "domain_language",
-      "visual",
-      "workbench",
-      "tables"
-    ],
-    "gap_inventory": "docs/runbook/TT-V65-ADMIN-UX-BATCH-GAP-INVENTORY-LATEST.json",
-    "evidence_pack": "evidence/GO_v65_admin_ux_batch/20260803T040941Z/",
-    "freeze_status": "FROZEN",
-    "totals_snapshot": {
-      "open": 19,
-      "p0_open": 0,
-      "p1_open": 0,
-      "p2_open_children": 19,
-      "locale_keys_patched": 61
+  "tt_production_go": "NO_GO",
+  "honesty": "RUNTIME_VERIFIED_ne_OWNER_VALIDATED_ne_CLOSED_ne_PRODUCTION_GO",
+  "live_web_tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "live_api_tip_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+  "api_tip_policy": "EXPECTED_DIFFERENCE_CONFIRM_DESIGN",
+  "active_batch_id": "V65-PROD-003",
+  "last_fully_closed_batch_id": "V65-PROD-001",
+  "batches": {
+    "V65-PROD-001": {
+      "status": "CLOSED",
+      "note": "historical last fully closed"
     },
-    "freeze_gate": {
-      "p0_open_max": 0,
-      "p1_open_max": 0,
-      "p2_open_max": 50,
-      "batch_size_min": 10,
-      "batch_size_max": 50
-    },
-    "next": "one_commit → one_build → one_production_web_deploy → runtime_evidence",
-    "batch_fix": {
-      "stamp": "20260803T040941Z",
-      "locale_keys_applied": 61,
-      "locale_keys_missed": [],
-      "closed_gap_ids": [
-        "V65-UX-G012",
-        "V65-UX-G013",
-        "V65-UX-G014",
-        "V65-UX-G015",
-        "V65-UX-G016",
-        "V65-UX-G017",
-        "V65-UX-G018",
-        "V65-UX-G019",
-        "V65-UX-G020",
-        "V65-UX-G021",
-        "V65-UX-G022"
-      ]
+    "V65-PROD-003": {
+      "status": "WAVE_D_RUNTIME_VERIFIED__WAVE_E_SCOPE_FROZEN",
+      "wave_d": {
+        "gap_range": "G021-G049",
+        "status": "RUNTIME_VERIFIED",
+        "tip_sha": "3d1cca13b319c7f179817fc91c6033378ade6348",
+        "evidence": "evidence/GO_v65_prod_003_residual_g021_g049/20260803T162045Z",
+        "batch_closed": false,
+        "owner_prv3b": "AWAITING"
+      },
+      "wave_e": {
+        "gap_range": "G050-G089",
+        "status": "SCOPE_FROZEN",
+        "stamp": "20260804T002417Z",
+        "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+        "open_count": 40,
+        "gap_ids": [
+          "V65-PROD-003-G057",
+          "V65-PROD-003-G058",
+          "V65-PROD-003-G059",
+          "V65-PROD-003-G065",
+          "V65-PROD-003-G073",
+          "V65-PROD-003-G074",
+          "V65-PROD-003-G075",
+          "V65-PROD-003-G050",
+          "V65-PROD-003-G051",
+          "V65-PROD-003-G060",
+          "V65-PROD-003-G061",
+          "V65-PROD-003-G062",
+          "V65-PROD-003-G063",
+          "V65-PROD-003-G064",
+          "V65-PROD-003-G066",
+          "V65-PROD-003-G067",
+          "V65-PROD-003-G068",
+          "V65-PROD-003-G070",
+          "V65-PROD-003-G071",
+          "V65-PROD-003-G072",
+          "V65-PROD-003-G076",
+          "V65-PROD-003-G077",
+          "V65-PROD-003-G078",
+          "V65-PROD-003-G080",
+          "V65-PROD-003-G081",
+          "V65-PROD-003-G082",
+          "V65-PROD-003-G083",
+          "V65-PROD-003-G084",
+          "V65-PROD-003-G085",
+          "V65-PROD-003-G086",
+          "V65-PROD-003-G087",
+          "V65-PROD-003-G088",
+          "V65-PROD-003-G052",
+          "V65-PROD-003-G053",
+          "V65-PROD-003-G054",
+          "V65-PROD-003-G055",
+          "V65-PROD-003-G056",
+          "V65-PROD-003-G069",
+          "V65-PROD-003-G079",
+          "V65-PROD-003-G089"
+        ],
+        "machine_gates": [
+          "G070",
+          "G071",
+          "G072"
+        ],
+        "batch_goal": "Admin Console Production Reality Closure",
+        "owner_decisions": {
+          "config_hub_name": "配置中心",
+          "appeals_moderation": "IN_SCOPE",
+          "content_siblings": "KEEP_AND_PRODUCTIONIZE",
+          "community_residual_g084": "KEEP_AND_PRODUCTIONIZE",
+          "kyc": "DELETE",
+          "entry_fee": "REMOVE",
+          "onboarding_queues": "PRODUCTION_WRITABLE"
+        },
+        "scope_frozen": true,
+        "final_audit": {
+          "stamp": "20260804T002417Z",
+          "new_gaps": [
+            "V65-PROD-003-G086",
+            "V65-PROD-003-G087",
+            "V65-PROD-003-G088",
+            "V65-PROD-003-G089"
+          ],
+          "dimensions_complete": true
+        },
+        "repair_order": "P0→P1→P2",
+        "forbid_new_batch": true
+      },
+      "implementing_prod_004": "FORBIDDEN_REMAPPED_INTO_003",
+      "stamp": "20260804T002417Z",
+      "updated_at": "2026-08-04T00:24:17Z",
+      "tt_production_go": "NO_GO",
+      "batch_closed": false,
+      "note": "Wave E G050-G089 SCOPE_FROZEN after R7 final audit; G084 KEEP_AND_PRODUCTIONIZE; Discovery closed; Fix only P0→P1→P2; NO_GO; no fragment ship"
     }
   },
-  "transitional_note": {
-    "last_fragment_web_tip_sha": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
-    "meaning": "Workbench polish shipped before Batch Closure ACTIVE; further Admin UX changes must enter V65 Admin UX Batch"
+  "g056_tip_hygiene": {
+    "issue": "inventory_pin_vs_living_tip",
+    "living_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "prior_inventory_pin": "3d1cca13b319c7f179817fc91c6033378ade6348",
+    "fix": "branchless_integrate_onto_primary_living_line",
+    "not": "open_new_feature_or_cut_branch_as_gate"
   },
-  "related": {
-    "md": "docs/runbook/TT-V65-BATCH-RELEASE-CLOSURE-LATEST.md",
-    "runtime_ssot": "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.md",
-    "cursor_rule": ".cursor/rules/traveltrust-v65-batch-release-closure.mdc"
-  }
+  "prv3b": {
+    "result": "AWAITING_OWNER_UAT",
+    "tt_production_go": "NO_GO",
+    "note": "Scope frozen; implement then Local Full Verify → Single Cut → Runtime Evidence → PRV-3b; Wave D RUNTIME_VERIFIED does not flip CLOSED or GO"
+  },
+  "updated_at": "2026-08-04T00:24:17Z",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

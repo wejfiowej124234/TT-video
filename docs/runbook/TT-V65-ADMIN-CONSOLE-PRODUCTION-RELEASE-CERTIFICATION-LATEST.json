@@ -1,0 +1,243 @@
+{
+  "schema": "tt.v65.admin_console.production_release_certification.v1",
+  "track": "V65_ADMIN_CONSOLE_PRODUCTION_RELEASE_CERTIFICATION",
+  "stamp_utc": "20260803T090651Z",
+  "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "tip_message": "fix(admin): V65 Admin UX Batch freeze + zh locale Wave-1",
+  "site": "https://www.web3-ttg.com",
+  "tt_production_go": "NO_GO",
+  "enterprise_l5_claim": "NOT_READY",
+  "production_release_ready": false,
+  "inventory_status": "FROZEN",
+  "scope": {
+    "sidebar_leaves": 12,
+    "matrix_rows": 66,
+    "hub_children": 49,
+    "detail_routes": 5,
+    "web3_orthogonal": true,
+    "replaces_owner_uat": false
+  },
+  "quality_dimensions": [
+    "openability",
+    "runtime_stability",
+    "function_completeness",
+    "fe_api_db_chain",
+    "rbac",
+    "five_states",
+    "exception_recovery",
+    "performance",
+    "ui_workbench_l5",
+    "product_ux_i18n",
+    "component_health",
+    "component_contract",
+    "api_schema_drift",
+    "button_capability",
+    "design_system_compliance",
+    "performance_baseline"
+  ],
+  "machine_summary": {
+    "routes_scanned": 66,
+    "missing_export_findings": 9,
+    "unique_missing_exports": 8,
+    "extra_missing_beyond_g001_g002": 2,
+    "announcement_missing_exports": 2,
+    "unsafe_spread_suspects": 19,
+    "five_state_weak_routes": 0,
+    "api_weak_sidebar_or_detail": 0,
+    "machine_fail_routes": 4,
+    "machine_warn_routes": 62,
+    "verdict_fail": 4,
+    "verdict_fail_ui_release": 1,
+    "verdict_pending_owner_runtime": 61,
+    "extended_component_contract_findings": 63,
+    "extended_api_schema_drift_findings": 47,
+    "extended_button_capability_findings": 2,
+    "extended_design_system_findings": 73,
+    "extended_performance_baseline_findings": 66
+  },
+  "priority_judgment_owner": {
+    "P0": [
+      "V65-PR-G001"
+    ],
+    "P1": [
+      "V65-PR-G002",
+      "V65-PR-G015"
+    ],
+    "P2": [
+      "V65-PR-G003",
+      "V65-PR-G004",
+      "V65-PR-G005",
+      "V65-PR-G006",
+      "V65-PR-G007",
+      "V65-PR-G013",
+      "V65-PR-G021"
+    ],
+    "machine_audit_expanded_batch_map": {
+      "BATCH-A": [
+        "V65-PR-G018",
+        "V65-PR-G016"
+      ],
+      "BATCH-B": [
+        "V65-PR-G021"
+      ],
+      "BATCH-C": [
+        "V65-PR-G019",
+        "V65-PR-G020",
+        "V65-PR-G022"
+      ]
+    },
+    "note": "Owner P0/P1/P2 product priority separate from five-dimension machine audit expansion (G018–G022)."
+  },
+  "confirmed_blockers": [
+    {
+      "id": "OWNER_LOGGED_IN_UAT",
+      "severity": "P0_PROCESS",
+      "confidence": "PROCESS",
+      "note": "PRV-2 Owner logged-in operational UAT not executed — blocks Cert / Production GO"
+    },
+    {
+      "id": "V65-PR-G014",
+      "severity": "P2",
+      "confidence": "PROCESS",
+      "note": "Performance baseline OPEN — non-blocking for Cut; still open residual"
+    }
+  ],
+  "freeze_gate": {
+    "status": "FROZEN",
+    "inventory_status": "FROZEN",
+    "stamped_utc": "20260803T075100Z",
+    "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "machine_forensic": "COMPLETE",
+    "owner_walk_sheet": "COMPLETE — PENDING=0",
+    "owner_acceptance": true,
+    "cut_allowed": true,
+    "batch_land_allowed": true,
+    "batch_land_scope": "unified_batch_a_b_c_under_frozen_inventory",
+    "residual_accepted": {
+      "pending": 0,
+      "fail": 3,
+      "gap": 63
+    },
+    "single_release_cut": "COMPLETE",
+    "production_deploy": "PASS",
+    "prv2": "PARTIAL_OWNER_UAT_PENDING",
+    "production_release_ready": false
+  },
+  "batch_fix_plan": {
+    "status": "ACTIVE_POST_FREEZE",
+    "rule": "Inventory FROZEN — execute Batch-A→B→C → Local full verify → one Cut → Runtime Certification",
+    "batches": [
+      {
+        "id": "BATCH-A-RUNTIME-CRASH",
+        "severity": "P0/P1",
+        "priority_owner_confirmed": "P0 G001 → P1 G002 Finance FE contract → P1 G015 Announcements CMS loop",
+        "items": [
+          "V65-PR-G001",
+          "V65-PR-G002",
+          "V65-PR-G015",
+          "V65-PR-G018",
+          "V65-PR-G016"
+        ],
+        "actions": [
+          "Restore officialOpsL5 helpers (G001) — Admin ops page must open",
+          "Restore ADMIN_SHELL_FINANCE_PEER_NAV_LINKS + Array.isArray + type guard + regression test (G002 FE contract mismatch)",
+          "Restore adminConfirmAnnouncementPublish/Unpublish (G015) — CMS Publish/Unpublish ops loop",
+          "Close residual Component Contract findings (G018): dead imports / call-on-missing / dynamic import failures",
+          "Array.isArray fail-closed on remaining unsafe spreads (G016)",
+          "Vitest: officialOpsL5 · financeSuiteNavTiles · announcement confirm exports"
+        ]
+      },
+      {
+        "id": "BATCH-B-UI-L5-OPS",
+        "severity": "P2",
+        "priority_owner_confirmed": "Orders debug feel · Workbench unify · contrast · eng-language leak — machine scan misses visual truth",
+        "items": [
+          "V65-PR-G003",
+          "V65-PR-G004",
+          "V65-PR-G005",
+          "V65-PR-G006",
+          "V65-PR-G007",
+          "V65-PR-G013",
+          "V65-PR-G021"
+        ],
+        "actions": [
+          "Workbench L5 contrast/token unification (G003/G007)",
+          "Orders ops-center chrome — not debug console (G004)",
+          "Ops language + i18n key completeness (G005/G013)",
+          "Design System Compliance: eliminate non-standard hex/spacing/raw tables; Workbench = DS source (G021)",
+          "No Sidebar IA change"
+        ]
+      },
+      {
+        "id": "BATCH-C-CAPABILITY-EVIDENCE",
+        "severity": "P1/P2",
+        "items": [
+          "V65-PR-G008",
+          "V65-PR-G009",
+          "V65-PR-G010",
+          "V65-PR-G011",
+          "V65-PR-G012",
+          "V65-PR-G014",
+          "V65-PR-G017",
+          "V65-PR-G019",
+          "V65-PR-G020",
+          "V65-PR-G022"
+        ],
+        "actions": [
+          "Owner walk residual PENDING_OWNER_RUNTIME (G008) — converge 61 rows via walk sheet tiers",
+          "Five-states + RBAC deny + API→DB on critical leaves (G009/G011/G012)",
+          "Button Capability: every action Button→handler→API→feedback→refresh (G010/G020)",
+          "API Schema Drift: FE interface vs live payload guards (G019)",
+          "Performance Baseline: live FCP/TTI/API latency/chunk/console stamp (G014/G022)",
+          "Exception recovery / ErrorBoundary proof (G017)",
+          "Close process gaps with evidence — not docs-only"
+        ]
+      }
+    ],
+    "freeze_stamp": "20260803T075100Z"
+  },
+  "next_actions": [
+    "Owner logged-in walk on production critical leaves (Orders · Official · Finance · Announcements · Hub)",
+    "Stamp authenticated Session→Network→API evidence or Owner Sign-off ACCEPT",
+    "If Official Accounts still crashes on tip — tip-advance Batch-A CLOSED_LOCAL_CODE",
+    "Do NOT claim TT_PRODUCTION_GO until Cert ladder + Owner Sign-off"
+  ],
+  "honesty": [
+    "Machine forensic ≠ Production GO",
+    "Deploy tip-match ≠ Owner UAT PASS",
+    "AUTH_GATED unauth ≠ enterprise L5",
+    "Cut COMPLETE ≠ Production GO"
+  ],
+  "production_deploy": {
+    "stamp_utc": "20260803T090651Z",
+    "result": "PASS",
+    "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "web_build_time": "2026-08-03T08:56:35Z",
+    "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T090651Z/PRODUCTION-DEPLOY.json"
+  },
+  "prv2": {
+    "stamp_utc": "20260803T090651Z",
+    "result": "PRV2_PARTIAL_OWNER_UAT_PENDING",
+    "auth_gated_critical_leaves": "PASS",
+    "owner_logged_in_uat": "NOT_RUN",
+    "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T090651Z/PRV-2.json"
+  },
+  "tip_local_code_note": "Inventory G001/G002/G015 are CLOSED_LOCAL_CODE in living tree — tip production may still exhibit tip-time defects until Owner tip advance; do not claim tip-fixed without logged-in repro",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

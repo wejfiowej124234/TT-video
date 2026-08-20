@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.wait_window_ux_b2_auth_runtime_verify.v1",
+  "batch": "B2-AUTH",
+  "recorded_utc": "2026-08-10T10:45:00Z",
+  "verdict": "PASS",
+  "web_base": "https://www.web3-ttg.com",
+  "release_identity": {
+    "git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+    "build_time_utc": "2026-08-10T10:35:57Z",
+    "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL"
+  },
+  "checks": [
+    {
+      "id": "B2-A-002",
+      "url": "https://www.web3-ttg.com/auth/reset-password?b2v=6",
+      "expect": "Human token labels; no raw i18n keys",
+      "observed": "Reset token / Token from email or reset link / Paste the reset token…",
+      "result": "PASS"
+    },
+    {
+      "id": "B2-A-001",
+      "urls": [
+        "https://www.web3-ttg.com/auth/forgot-password?b2v=6",
+        "https://www.web3-ttg.com/auth/reset-password?b2v=6",
+        "https://www.web3-ttg.com/auth/verify-email?b2v=6"
+      ],
+      "expect": "EN UI document.title follows auth meta keys",
+      "observed": "Forgot password | TravelTrust · Reset password | TravelTrust · Verify email | TravelTrust",
+      "result": "PASS"
+    },
+    {
+      "id": "B2-A-003",
+      "expect": "No chain_off placeholder in reset/verify done copy",
+      "observed": "JS has Your password has been reset / Email verified…; chain_off placeholder=false",
+      "result": "PASS"
+    }
+  ],
+  "note": "LocaleProvider sync-init + useLayoutEffect fixed EN title hydrate; second Official deploy build_time 10:35:57Z",
+  "honesty": "PASS ≠ Seal ≠ Production GO · frozen Mainnet/FTB/Registry/Wired/Track1 untouched",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.engineering_ssot_anchor_v65_runtime_overlay.v1",
+  "machine_key": "TT_ENGINEERING_SSOT_ANCHOR_V65_RUNTIME",
+  "stamp": "20260806T095406Z",
+  "parent_anchor": "registry/engineering-ssot-anchor.v1.yaml",
+  "web3_tip_unchanged": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "web3_pin_unchanged": "PSG-REL-20260720-WEB3-CAND-V2",
+  "non_web3_production_runtime": {
+    "candidate_id": "V65-PROD-CAND-20260802",
+    "unique_rc_id": "V65-PROD-RC-20260806",
+    "v65_baseline": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "api_git_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "web_git_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "hosts": {
+      "api": "https://api.web3-ttg.com",
+      "web": "https://www.web3-ttg.com"
+    },
+    "runtime_ssot": true,
+    "legacy_tips_must_not_override": [
+      "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+      "d77584dbf4108b472f02e49620dff959e3838a7e"
+    ]
+  },
+  "tt_production_go": "NO_GO",
+  "honesty": "Overlay binds Non-Web3 Production runtime to V65; Web3 Engineering tip remains ea71c577 under PSG.",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

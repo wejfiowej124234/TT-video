@@ -1,0 +1,625 @@
+{
+  "schema": "traveltrust.v65_exhaustive_gap_inventory.v1",
+  "stamp": "20260802T144822Z",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "p0": [],
+  "p1": [],
+  "warn": [
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "admin_approval_requests"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "admin_audit_logs"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "admin_console_roles"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "admin_data_policies"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "admin_security_policies"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "admin_tenant_scopes"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "admin_totp_enrollments"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "airdrop_allocations"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "airdrop_campaigns"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "airdrop_snapshots"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "api_versions"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "async_jobs"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "auth_email_send_window_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "auth_email_tokens"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "backfill_jobs"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "catalog_content_revisions"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "catalog_poi_image_batches"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "catalog_poi_image_candidates"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "catalog_poi_images_published"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "checkpoints_sharded"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "cms_roadmap_section"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_abuse_policy"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_collects"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_comments"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_conversations"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_dm_messages"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_dm_read_state"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_follows"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_friend_requests"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_friends"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_likes"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_moderation_cases"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_penalties"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_policy_change_logs"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_ranking_snapshots"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_report_appeals"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_reports"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "community_risk_signals"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "compliance_data_request_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "compliance_data_requests"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "correction_log"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "country_market_launches"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "country_pool_net_profit_epochs"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "country_pool_net_profit_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "did_rank_rank_snapshots"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "dual_write_checks"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "early_bird_stages"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "escrow_settlement_projection"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "evidence_receipts"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "executor_executions"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "feature_flags"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "governance_mvp_delegations"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "governance_mvp_proposals"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "governance_mvp_votes"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "governance_pool"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "governance_proposals_projection"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "governance_reward_records"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "growth_fraud_cases"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "growth_fraud_scan_runs"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "growth_fraud_signals"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "growth_point_ledger"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "growth_registration_seq"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "guide_exit_requests"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "internal_tool_audit_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "investor_distribution_accrual_lines"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "investor_distribution_accruals"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "investor_lock_state_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "investor_share_compliance_wallets"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "investor_share_transfer_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "investor_stake_state_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "lifecycle_state_machines"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "migration_histories"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "migration_rollbacks"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "onboarding_compliance_audit_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "onboarding_fee_paid_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "onboarding_payment_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "onboarding_webhook_dlq"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "onboarding_webhook_jobs"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "ops_cold_start_campaigns"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "ops_cold_start_items"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "ops_official_accounts"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "ops_official_guide_posts"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "ops_official_itinerary_templates"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "ops_public_operations_display_history"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "ops_public_operations_policy"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "p5_country_ledger_lines"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "profile_avatar_presign_pending"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "referral_codes"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "role_documents"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "scheduler_job_runs"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "schema_versions"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "secret_key_metadata"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "settlement_router_events"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "staking_positions"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "trust_growth_control"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "trust_growth_generation_history"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "trust_growth_runtime_state"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "trust_growth_variant_metrics"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "user_security_notifications"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "WARN",
+      "table": "vacancy_ledger_projections"
+    }
+  ],
+  "confirm_design": [
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_sessions",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_LEGACY"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_users",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_LEGACY"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "fee_router_v2_routed_events",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "order_settlement_receipt_audit",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "order_settlement_receipts",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "platform_safe_audit_log",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "platform_safe_current",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "platform_safe_version_history",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "region_payout_registry_events",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "region_reward_wallet_change_events",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "region_reward_wallets",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    },
+    {
+      "class": "DB_TABLE_API_ONLY_NO_FE_ADMIN",
+      "severity": "CONFIRM_DESIGN",
+      "table": "region_share_snapshot_lines",
+      "disposition": "EXPECTED_INFRA_OR_WEB3"
+    },
+    {
+      "class": "DB_TABLE_ORPHAN_NO_CODE_REF",
+      "severity": "CONFIRM_DESIGN",
+      "table": "reward_paid_events",
+      "note": "Present in migrations but no reference in api/src or frontend lib/admin",
+      "disposition": "EXPECTED_WEB3"
+    }
+  ],
+  "counts": {
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "warn_gaps": 101,
+    "confirm_design": 13,
+    "total_gaps": 114
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

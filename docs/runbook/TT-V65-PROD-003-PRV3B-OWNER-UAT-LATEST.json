@@ -1,0 +1,219 @@
+{
+  "schema": "traveltrust.v65_prod_003_prv3b_owner_uat_progress.v1",
+  "machine_key": "TT_V65_PROD_003_PRV3B_OWNER_UAT",
+  "stamp": "20260804T230300Z",
+  "status": "OWNER_VALIDATED",
+  "result": "PASS",
+  "owner_validated": true,
+  "tt_production_go": "NO_GO",
+  "tip": "33d94fee6f286d7c99a85958b311af303f866080",
+  "fe_live_tip": "33d94fee6f286d7c99a85958b311af303f866080",
+  "api_live_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+  "cut_class": "FE_ONLY",
+  "focus": [
+    "ENTRY_FEE_IA",
+    "ONBOARDING_IA",
+    "FINANCE_ISOLATION",
+    "STEWARD_FLOW",
+    "UI_UX_L5"
+  ],
+  "reality_patch_tip": "eb9ed5b8d65a3531d96b29f66d064529b73f178d",
+  "pre_cut_tip": "31ce39490a35c3038928c0d42bcd8de909388512",
+  "composition_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+  "candidate": "V65-PROD-CAND-20260802",
+  "runtime_evidence_stamp": "20260804T170911Z",
+  "runtime_evidence": "D:\\TravelTrust-V1.1\\.tmp-v65-prod-003-reconcile\\evidence\\GO_v65_prod_003_reconcile_single_cut\\20260804T170911Z",
+  "prior_owner_uat_stamp": "20260804T124327Z",
+  "prior_owner_uat_tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+  "single_cut_stamp": "20260804T120534Z",
+  "single_cut_evidence": "D:\\TravelTrust-V1.1\\evidence\\GO_v65_prod_003_prv3b_single_cut\\20260804T120534Z",
+  "hosts": {
+    "api": "https://api.web3-ttg.com",
+    "web": "https://www.web3-ttg.com"
+  },
+  "browser_tab": "110619",
+  "session": "super-admin",
+  "checklist": [
+    {
+      "id": "ENTRY_FEE_IA",
+      "status": "PASS",
+      "evidence": "tip 33d94fee live FE; shell NAV applications-only; legacyInShell=[]; no fee/webhook/compliance-audit in shell; G065/G075 REMOVE_ENTRY_FEE_HUB; Guide application review i18n (not Guide onboarding review)",
+      "gaps": []
+    },
+    {
+      "id": "ONBOARDING_IA",
+      "status": "PASS",
+      "evidence": "/admin/onboarding applications hub; zh ops copy; shell审核枢纽; finance CTA -> /admin/finance-suite; hub may show LEGACY entry-fee links (honesty, not shell FAIL)",
+      "gaps": []
+    },
+    {
+      "id": "FINANCE_ISOLATION",
+      "status": "PASS",
+      "evidence": "/admin/finance-suite h1财务对账七件套; honesty非入驻准入费/私人钱包; shell财务->finance-suite",
+      "gaps": []
+    },
+    {
+      "id": "STEWARD_FLOW",
+      "status": "PASS",
+      "evidence": "/admin/steward-applications?status=stake_pending h1区域主理人申请队列; no准入费; empty OK",
+      "gaps": [],
+      "residuals_non_blocking": [
+        "Raw i18n key admin_steward_queue_private_transfer_honesty (cosmetic P3)"
+      ]
+    },
+    {
+      "id": "GUIDE_QUEUE",
+      "status": "PASS",
+      "evidence": "/admin/guide-applications?status=pending h1向导入驻审核队列; no Guide onboarding review / entry-fee EN leak",
+      "gaps": []
+    },
+    {
+      "id": "PROVIDER_QUEUE",
+      "status": "PASS",
+      "evidence": "/admin/provider-applications?status=submitted h1商家入驻审核队列; zh ops; no fee leak",
+      "gaps": []
+    },
+    {
+      "id": "REVIEW_CLOSED_LOOP",
+      "status": "PASS",
+      "evidence": "carried OWNER_VALIDATED tip 16f29c7e stamp 20260804T124327Z (API retained FE_ONLY)",
+      "gaps": []
+    },
+    {
+      "id": "UI_UX_L5",
+      "status": "PASS",
+      "evidence": "Admin shell Brand TravelTrust; finance-suite present; no fee text in shell; legacyInShell=[]",
+      "gaps": []
+    },
+    {
+      "id": "APPROVALS",
+      "status": "PARTIAL_PASS",
+      "evidence": "not re-scored; B3-R010 / G061 acrp_seed P2 still OPEN",
+      "gaps": [
+        "V65-PROD-003-G061"
+      ]
+    },
+    {
+      "id": "KYC_DELETE",
+      "status": "PASS",
+      "evidence": "carried from 20260804T124327Z",
+      "gaps": []
+    },
+    {
+      "id": "DISPUTES",
+      "status": "PASS",
+      "evidence": "carried from 20260804T124327Z",
+      "gaps": []
+    },
+    {
+      "id": "CONFIG_CENTER",
+      "status": "PASS",
+      "evidence": "carried from 20260804T124327Z",
+      "gaps": []
+    },
+    {
+      "id": "COMMUNITY",
+      "status": "PARTIAL_PASS",
+      "evidence": "not re-scored; brand TravelTrust on scored Admin paths",
+      "gaps": []
+    },
+    {
+      "id": "FINANCE",
+      "status": "PASS",
+      "evidence": "aligned by FINANCE_ISOLATION tip 33d94fee; finance-suite PASS",
+      "gaps": []
+    }
+  ],
+  "pages_scored": [
+    {
+      "path": "/admin/onboarding",
+      "h1": "申请审核 hub",
+      "result": "PASS",
+      "notes": "applications-only; finance->finance-suite; LEGACY hub honesty OK; legacyInShell=[]"
+    },
+    {
+      "path": "/admin/guide-applications?status=pending",
+      "h1": "向导入驻审核队列",
+      "result": "PASS",
+      "notes": "no Guide onboarding review / entry-fee EN leak"
+    },
+    {
+      "path": "/admin/steward-applications?status=stake_pending",
+      "h1": "区域主理人申请队列",
+      "result": "PASS",
+      "notes": "no准入费; empty OK; raw i18n key non-blocking"
+    },
+    {
+      "path": "/admin/finance-suite",
+      "h1": "财务对账七件套",
+      "result": "PASS",
+      "notes": "isolation honesty; not entry-fee ledger"
+    },
+    {
+      "path": "/admin/provider-applications?status=submitted",
+      "h1": "商家入驻审核队列",
+      "result": "PASS",
+      "notes": "zh ops; shell L5 PASS"
+    }
+  ],
+  "summary": {
+    "checklist_pass": 12,
+    "checklist_fail": 0,
+    "checklist_partial": 2,
+    "blocker": null,
+    "critical_path": "ENTRY_FEE_IA",
+    "critical_path_result": "PASS",
+    "pass_ids": [
+      "ENTRY_FEE_IA",
+      "ONBOARDING_IA",
+      "FINANCE_ISOLATION",
+      "STEWARD_FLOW",
+      "GUIDE_QUEUE",
+      "PROVIDER_QUEUE",
+      "REVIEW_CLOSED_LOOP",
+      "UI_UX_L5",
+      "KYC_DELETE",
+      "DISPUTES",
+      "CONFIG_CENTER",
+      "FINANCE"
+    ],
+    "fail_ids": [],
+    "partial_ids": [
+      "APPROVALS",
+      "COMMUNITY"
+    ]
+  },
+  "honesty": {
+    "not_owner_validated": false,
+    "not_frozen": false,
+    "not_production_go": true,
+    "owner_validated_is_not_production_go": true,
+    "owner_validated_is_not_batch_closed": false,
+    "batch_closed_is_not_production_go": true,
+    "fe_only_api_tip_may_differ": true,
+    "production_go_review_not_started": true,
+    "partial_non_blocking_approvals_community_carried": true,
+    "steward_i18n_raw_key_non_blocking": true,
+    "legacy_hub_entry_fee_links_are_honesty_not_shell_fail": true
+  },
+  "batch3_residual": "D:\\TravelTrust-V1.1\\.tmp-v65-prod-003-reconcile\\docs\\runbook\\TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+  "observed_at": "2026-08-04T23:03:00Z",
+  "owner_validated_stamp": "20260804T230300Z",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

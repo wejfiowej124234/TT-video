@@ -1,0 +1,105 @@
+{
+  "schema": "traveltrust.wait_window_track1_pf05_executor_gas_readonly.v1",
+  "status": "PASS",
+  "mode": "READ_ONLY_NO_TX",
+  "recorded_utc": "2026-08-11T03:14:19Z",
+  "parent_preflight": "TT-WAIT-WINDOW-TRACK1-PRE-ETA-READONLY-PREFLIGHT-LATEST",
+  "block_number": 25729004,
+  "rpc": "https://ethereum.publicnode.com",
+  "on_chain_mutations": "NONE",
+  "cut_queue_mutations": "NONE",
+  "product_code_mutations": "NONE",
+  "execute_permission_model": {
+    "contract": "GovernanceTimelock",
+    "address": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "source_path": "contracts/src/GovernanceTimelock.sol",
+    "execute_fn": "execute(bytes32 id) external",
+    "caller_restriction": "NONE_PERMISSIONLESS",
+    "gates": [
+      "readyAt!=0",
+      "done==false",
+      "block.timestamp>=readyAt"
+    ],
+    "not_required": [
+      "msg.sender==admin",
+      "EXECUTOR_ROLE",
+      "Safe signature on execute"
+    ],
+    "admin_scope": "schedule_setGovernor_setAllowedExecutionTarget_only",
+    "admin_on_chain": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "doc_align": "OWNER-TRACK1-FINALIZE-REHEARSAL-READONLY Step1 谁付 gas=任何人（permissionless）·常用 Wallet A"
+  },
+  "operation": {
+    "opid": "0xe1d51e09d8c5df11bc83330d5d6c545d3431b3107d6de7652f2c5d840890c116",
+    "readyAt_unix": 1786491935,
+    "done": false,
+    "target": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "value": 0,
+    "data_selector": "0x229003ec",
+    "data_decoded": "setEscrow(0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6, true)",
+    "allowedExecutionTarget_SR": true
+  },
+  "predetermined_executor": {
+    "label": "Wallet_A_deploy_traveler",
+    "address": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+    "cites": [
+      "TT-FINAL-TRUTH-BASELINE-LATEST",
+      "OWNER-TRACK1-REALITY-FINALIZE-EVIDENCE",
+      "TT-MAINNET-REALITY-FUNDS-TEST-MATRIX-LATEST"
+    ],
+    "eth_balance_wei": "334069075949911771",
+    "eth_balance": "0.334069",
+    "signable_sendable_conditions": {
+      "permissionless_execute_allows_this_eoa": true,
+      "eth_for_gas_present": true,
+      "conservative_budget_eth_150k_gas_50_gwei": "0.007500",
+      "headroom_ge_10x": true,
+      "base_fee_wei_observed": 46238402,
+      "safe_eth_not_required_for_execute": true,
+      "owner_private_key_custody": "OUT_OF_BAND_ASSUMED_AT_ETA_NOT_PROBED"
+    }
+  },
+  "timelock_admin_safe": {
+    "address": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "role_for_this_op": "already_scheduled_admin_not_needed_at_execute",
+    "eth_balance_wei": "0",
+    "required_to_pay_execute_gas": false
+  },
+  "simulation": {
+    "method": "eth_call_and_estimateGas",
+    "from": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+    "to": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "fn": "execute(bytes32)",
+    "revert": "TooEarly()",
+    "selector": "0x085de625",
+    "interpretation": "BEFORE_ETA expected; proves execute path is live and not admin-gated",
+    "state_change": false
+  },
+  "verdict": "PASS",
+  "blocks_execute_now": false,
+  "still_blocked_by": [
+    "PF-01_BEFORE_ETA"
+  ],
+  "honesty": [
+    "PASS_is_evidence_for_permission_and_gas_not_execute_authorization",
+    "no_transaction_sent",
+    "Seal_and_Cut_Queue_unchanged"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

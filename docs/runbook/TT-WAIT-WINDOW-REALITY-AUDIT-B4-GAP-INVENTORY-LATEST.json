@@ -1,0 +1,113 @@
+{
+  "schema": "traveltrust.wait_window_reality_audit_b4_gap_inventory.v1",
+  "batch": "REALITY-AUDIT-B4",
+  "status": "SEALED",
+  "recorded_utc": "2026-08-11T01:02:45Z",
+  "parent": "TT-WAIT-WINDOW-FINAL-REALITY-AUDIT-LATEST",
+  "mode": "same_object_cross_layer_consistency_blocking_fix_closed",
+  "product_truth": {
+    "web": "https://www.web3-ttg.com",
+    "api": "https://api.web3-ttg.com"
+  },
+  "anchor_order_id": "7617eba0-4eb6-4c04-bf7a-6f026be5e239",
+  "currency_policy": "USDC_ONLY",
+  "runtime_verify": "TT-WAIT-WINDOW-REALITY-AUDIT-B4-RUNTIME-VERIFY-LATEST",
+  "closed_pack": "TT-WAIT-WINDOW-REALITY-AUDIT-B4-CLOSED-LATEST",
+  "gaps": [
+    {
+      "id": "B4-G-001",
+      "sev": "P0",
+      "disposition": "CLOSED",
+      "summary": "Fund safety honest when No escrow created"
+    },
+    {
+      "id": "B4-G-002",
+      "sev": "P1",
+      "disposition": "CLOSED",
+      "summary": "Pay hub + create-escrow gated off disputed / non-payable"
+    },
+    {
+      "id": "B4-G-003",
+      "sev": "P1",
+      "disposition": "CLOSED",
+      "summary": "Indexer 0/0 + no_row fail-closed honesty"
+    },
+    {
+      "id": "B4-G-004",
+      "sev": "P1",
+      "disposition": "CLOSED",
+      "summary": "USD display unified to USDC"
+    },
+    {
+      "id": "B4-G-005",
+      "sev": "P1",
+      "disposition": "CLOSED",
+      "summary": "Admin memory/unknown fail-closed (no fake green)"
+    },
+    {
+      "id": "B4-G-006",
+      "sev": "P2",
+      "disposition": "CHECK_OPEN",
+      "summary": "Admin Disputes 12 vs traveler disputed 1 — universe not reconciled"
+    },
+    {
+      "id": "B4-G-007",
+      "sev": "P2",
+      "disposition": "CLOSED",
+      "summary": "Progress rail journeyInterrupted when terminal + no escrow"
+    },
+    {
+      "id": "B4-G-008",
+      "sev": "P2",
+      "disposition": "EXPECTED_HOLD",
+      "summary": "Reality Settlement/Timelock ETA hold"
+    },
+    {
+      "id": "B4-G-009",
+      "sev": "P2",
+      "disposition": "CHECK_OPEN",
+      "summary": "/me/payments 404 while Trip payment nav present"
+    },
+    {
+      "id": "B3-G-007",
+      "sev": "P2",
+      "disposition": "OPEN_SEPARATE",
+      "summary": "Media 404 remains independent of Batch 4"
+    }
+  ],
+  "explicit_non_goals": [
+    "Timelock.execute",
+    "Escrow.release",
+    "FTB/Registry/Wired/Track1 mutate",
+    "Reality Seal",
+    "Production GO",
+    "G-007 media bulk",
+    "Indexer redesign (deep → B5)"
+  ],
+  "frozen_untouched": [
+    "Mainnet Money Path",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

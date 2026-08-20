@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.legal_pay_pre_go_1.v1",
+  "pack": "LEGAL-PAY-PRE-GO-1",
+  "stamp_utc": "2026-08-12T08:06:56.767Z",
+  "status": "LEGAL_PAY_PRE_GO_CLOSED",
+  "web": "https://www.web3-ttg.com",
+  "api": "https://api.web3-ttg.com",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "opened_by": "WC_REAL_DEVICE_CLOSED",
+  "counsel_signoff": "DEFERRED_POST_GO_QUEUE",
+  "isolation": {
+    "community_comments": "DEFERRED_SEPARATE",
+    "fee_router_track2_83": "UNAUTHORIZED"
+  },
+  "rows": [
+    {
+      "id": "LEG-TERMS-HTTP",
+      "ok": true,
+      "path": "/terms",
+      "http": 200,
+      "has_main_or_aria": true
+    },
+    {
+      "id": "LEG-PRIVACY-HTTP",
+      "ok": true,
+      "path": "/privacy",
+      "http": 200,
+      "has_main_or_aria": true
+    },
+    {
+      "id": "LEG-COMMUNITY-GUIDELINES-HTTP",
+      "ok": true,
+      "path": "/terms/community-guidelines",
+      "http": 200,
+      "has_main_or_aria": true
+    },
+    {
+      "id": "LEG-FOOTER-TERMS-LINK",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "LEG-FOOTER-PRIVACY-LINK",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "PAY-META-HTTP",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "PAY-CHAIN-ID-1",
+      "ok": true,
+      "chain_id": "1"
+    },
+    {
+      "id": "PAY-FACTORY-WIRED",
+      "ok": true,
+      "factory_prefix": "0xEE0BE3a8…"
+    },
+    {
+      "id": "PAY-NO-MOCK-CORE-DISCLOSURE-SURFACE",
+      "ok": true,
+      "note": "Machine: meta/home heuristic only; WC_REAL_DEVICE_CLOSED already covers wallet multi-path",
+      "mock_string_heuristic": false,
+      "ok_policy": "Web3 USDC Escrow is Official core; Stripe optional — counsel/payment GO separate"
+    },
+    {
+      "id": "PRIOR-WC-REAL-DEVICE-CLOSED",
+      "ok": true,
+      "cite": "TT-WAIT-WINDOW-WC-REAL-DEVICE-1 · WC_REAL_DEVICE_CLOSED · multi-wallet QR path"
+    },
+    {
+      "id": "PRIOR-INDEXER-REALITY-CLOSED",
+      "ok": true,
+      "cite": "INDEXER_REALITY_CLOSED · Released+FeeLeg ingestion"
+    }
+  ],
+  "coverage_gaps": [
+    {
+      "id": "COUNSEL_SIGNOFF_08_4",
+      "class": "DEFERRED_POST_GO_QUEUE",
+      "note": "持牌法务/08-4 定稿签字 · PRE_GO 只验页面可达与入口，不冒充法务定稿"
+    },
+    {
+      "id": "TOS_PRIVACY_COUNSEL_GRADE",
+      "class": "DEFERRED_POST_GO_QUEUE",
+      "note": "LEG-01/02 ToS·Privacy 签收级文稿 · POST_GO_QUEUE（inventory）"
+    },
+    {
+      "id": "FEE_ROUTER_TRACK2_83",
+      "class": "UNAUTHORIZED_THIS_PACK",
+      "note": "FeeRouter/Settlement may appear on /meta (fee set / settlement set) — 本包禁止执行 FeeRouter/Track2/83"
+    },
+    {
+      "id": "COMMUNITY_COMMENT_REVERIFY",
+      "class": "DEFERRED_SEPARATE_AFTER_LEGAL",
+      "note": "评论 create/delete/count/refresh/权限/UX 另轨；禁止用本包或 WC FE Cut 冒充"
+    }
+  ],
+  "blockers": [],
+  "next_if_closed": [
+    "FINAL_REGRESSION_SOAK",
+    "FRESH_HARD_GATE",
+    "COMMUNITY_COMMENT_REVERIFY_SEPARATE"
+  ],
+  "forbidden": [
+    "auto_flip_TT_PRODUCTION_GO",
+    "claim_licensed_counsel_complete",
+    "FeeRouter_Track2_83",
+    "cover_community_comment_residuals",
+    "send_USDC_TTG_as_legal_pack"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

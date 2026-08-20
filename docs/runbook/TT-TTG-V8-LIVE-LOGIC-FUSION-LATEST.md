@@ -1,6 +1,6 @@
 # TT · TTG V8 live-logic fusion（25T 面额 · DESIGN_ONLY）
 
-**STATUS:** `DESIGN_ONLY` · **Candidate PINNED** · **① 25/25** · **② fusion Sepolia PASS_STOP** · **NOT** Official live · **NOT** ③ Mainnet cutover · **NOT** Production GO  
+**STATUS:** `DESIGN_ONLY` · **Candidate PINNED** · **① 25/25** · **② fusion Sepolia PASS_STOP** · **③ Preflight CLOSED** · **2A RUNTIME_PASS** · **Verification-1 PASS_STOP** · **`setGovernor` RUNTIME_PASS**（live already NEW · 禁止再发）· **Token Risk Differential `HOLD_NO_CUSTODY_CHANGE`** · **Token Risk Index `HOLD_RESCAN_PASS_STOP`（独立轨 · 不得 unwind V8 针）** · **Official Product Runtime Cutover Precheck `PASS_STOP`** · **Official Contract Registry Cutover Precheck `PASS_STOP`（`/meta` 段已 SUPERSEDED）** · **Official API Runtime ALIGNED** · **Registry/Runtime/L7 Consistency Cert `PASS_STOP`** · **Official Quote Surface Cutover Precheck `STOP`**（编译示意须重编译 · 无零漂移 overlay）· **Official www product surface FROZEN OLD bake** · **FTB V8 Cycle `20260818` ACTIVE**（parent `20260812` immutable）· **NOT** Production GO  
 **Pin:** [TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md](./TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md)  
 **Machine:** [registry/ttg-v8-live-logic-fusion.v1.yaml](../../registry/ttg-v8-live-logic-fusion.v1.yaml)  
 **Classification policy:** [TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY](./TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md)  
@@ -129,3 +129,75 @@ PM 状态机 · 购买账 `walletPurchasedTtg` · 三轮 · Governor 提案/投�
 - **本波未做** Mainnet broadcast / Safe `setGovernor` / Timelock op / CI-02 / Money Path / 10M 迁移 / FTB / `/meta` / Official www bake。
 
 本事件到此结束。`TT_PRODUCTION_GO` 仍 **NO_GO**。
+
+### 3.5 独立闸（2026-08-18 · `TTG_V8_FUSION_3_DEPLOY_AND_SETGOVERNOR_OWNER_AUTH_REQUIRED`）
+
+Owner 本会话写出 2A：**③ Mainnet Deploy NEW TTG / NEW PM / NEW Governor + Safe NEW_TTG allowlist**。句中写明 **不含 Verification-1 与 setGovernor**。2A 已链上 **RUNTIME_PASS**。Owner 随后写死：Verification-1 **必须先于任何切针**。Verification-1 已 **PASS_STOP**（含 PM/Governor Sourcify `exact_match`）。Safe `setGovernor(NEW)` 已链上 **RUNTIME_PASS**（tx `0x94f61c61…2216` · block `25777625`）。2B 专用脚本已只读 pre-check + fork dry-run **PASS_STOP**；**禁止再发**。不重跑 Preflight。不改 Pin `8b09d297`。
+
+NEW TTG `0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602` · NEW PM `0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2` · NEW Governor `0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F`。live Timelock `governor()` **已经是** NEW `0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F`。
+
+SSOT：[TT-TTG-V8-FUSION-3-OWNER-AUTH-GATE-LATEST.md](./TT-TTG-V8-FUSION-3-OWNER-AUTH-GATE-LATEST.md) · [fills](./TT-TTG-V8-FUSION-3-GENESIS-ADDRESS-FILLS-LATEST.md) · evidence `GO_ttg_v8_mainnet_2a`。
+
+`team_` / `daoTreasury_` / `publicSaleHolder_` 已点名。MUST 1–7 已点头并执行。2A PASS ≠ Verification-1 ≠ `setGovernor`。`TT_PRODUCTION_GO` 仍 **NO_GO**。
+
+### 3.6 Token Risk Index HOLD_RESCAN（`TTG_V8_TOKEN_RISK_INDEX_HOLD_RESCAN`）
+
+只读：[TT-TTG-V8-TOKEN-RISK-INDEX-HOLD-RESCAN-LATEST.md](./TT-TTG-V8-TOKEN-RISK-INDEX-HOLD-RESCAN-LATEST.md)。官方地址识别：[registry/ttg-v8-token-risk-official-address-identification.v1.yaml](../../registry/ttg-v8-token-risk-official-address-identification.v1.yaml)。
+
+- NEW TTG / PM / Governor、25T、15/35/50 **未动**。**禁止**再发 `setGovernor`。
+- GoPlus 同条件复检：`is_open_source=1` · NEW `buy_tax`/`sell_tax` 已追上 `"0"` · holder `tag` 两边仍空。
+- Bitget UI 无公开 API；老鼠仓 50% 在稳定索引后是否仍持续 = **未证明** → tranche &lt;15% **NOT_THIS_PHASE**。
+- **禁止**拆仓、迁币、改 FTB、切 `/meta`、bake Official www、宣称 Production GO。
+
+### 3.7 Official Product Runtime Cutover Precheck（`TTG_V8_OFFICIAL_PRODUCT_RUNTIME_CUTOVER_PRECHECK`）
+
+只读：[TT-TTG-V8-OFFICIAL-PRODUCT-RUNTIME-CUTOVER-PRECHECK-LATEST.md](./TT-TTG-V8-OFFICIAL-PRODUCT-RUNTIME-CUTOVER-PRECHECK-LATEST.md)。
+
+- HOLD_RESCAN **仍绑定**。**禁止**迁币 / 拆仓 / 再发 `setGovernor`。
+- 控制面：Timelock.governor = NEW。
+- **当时快照：** 产品面 `/meta` + Official www bake env 仍 OLD TTG / OLD Governor；`primary_market_address` **缺键**。
+- **2026-08-18 活 overlay：** Official `/meta` **NOW** NEW Governor / NEW TTG / NEW PM `0x882Ad` + SR-FT。www chrome **10→10** + CMS 25T = Expected Difference · bake **FORBIDDEN**。见 [§3.11 Consistency Cert](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md)。
+- KEEP：Timelock · Money Path · CI-02 · Official FeeRouter hop。FTB `20260812` **LOCKED**。
+- 未部署合约默认 **不部署**。唯一「以后若部署必须绑新币」：`RegionStewardStakePool`（NEW TTG + 25T units）。
+- `PASS_STOP` · **当时**等待 Owner **独立产品切针授权**。**之后已发生：** API Runtime overlay + Consistency Cert。www bake 仍 **FORBIDDEN**。`TT_PRODUCTION_GO=NO_GO`。
+
+### 3.8 Official Contract Registry Cutover Precheck（`TTG_V8_OFFICIAL_CONTRACT_REGISTRY_CUTOVER_PRECHECK`）
+
+只读全项目 Mainnet 矩阵：[TT-TTG-V8-OFFICIAL-CONTRACT-REGISTRY-CUTOVER-PRECHECK-LATEST.md](./TT-TTG-V8-OFFICIAL-CONTRACT-REGISTRY-CUTOVER-PRECHECK-LATEST.md)。
+
+- **不是**全部合约重新部署。NEW TTG / PM / Governor 已 L7 部署并接到 KEEP Timelock；其余成熟合约 KEEP。
+- L7 NEW 映射全部正确：TTG `0x0EC4…3602` · PM `0x882A…B6D2` · Governor `0xD581…787F` · Timelock `0x50F0…22f7`（`governor()`=NEW · `admin()`=Safe）。
+- **当时快照（2026-08-17 23:58Z）：** OLD `0x3cB1…` / `0xf7B7…` / `0x46Ce…` 仍被 Official `/meta`、living Registry、www bake env 引用。`/meta` `primary_market_address` 缺键。
+- **Living successor：** [Registry/Runtime/L7 Consistency Cert](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md) — Official API Runtime + Registry Official 槽 **已** NEW。www bake 与 FTB 吸收仍另闸。不得用本快照回滚 V8 针。`TT_PRODUCTION_GO=NO_GO`。
+
+### 3.9 Official Runtime Contract Cutover · NO_UI_BAKE（`TTG_V8_OFFICIAL_RUNTIME_CONTRACT_CUTOVER_NO_UI_BAKE`）
+
+[TT-TTG-V8-OFFICIAL-RUNTIME-CONTRACT-CUTOVER-NO-UI-BAKE-LATEST.md](./TT-TTG-V8-OFFICIAL-RUNTIME-CONTRACT-CUTOVER-NO-UI-BAKE-LATEST.md)
+
+- Owner 已授权 runtime-only 切针，并 **CANCEL** checkout 旧 tip / bake www。
+- **当时** `STOP_BLOCKED_RUNTIME_DECOUPLING_REQUIRED`（2026-08-18 01:16Z）：活 API `8df2ab21` 不能仅靠 env 放出 `primary_market_address` 与 V8 报价。
+- **之后已闭：** [API Runtime Decoupling](./TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.md) 放出 overlay；Official `/meta`/quote **已** NEW。www pin 未动。`TT_PRODUCTION_GO=NO_GO`。
+
+### 3.10 Official API Runtime Decoupling · No Web Touch（`TTG_V8_API_RUNTIME_DECOUPLING_NO_WEB_TOUCH`）
+
+[TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.md](./TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.md)
+
+- Official API `/meta` + quote = NEW V8；Official www fingerprint BEFORE == AFTER。
+- `PASS_STOP` · ≠ FTB 已改 ≠ Production GO。
+
+### 3.11 Registry / Runtime Evidence / Mainnet Reality Consistency Cert（`TTG_V8_REGISTRY_RUNTIME_MAINNET_REALITY_CONSISTENCY_CERT`）
+
+[TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md)
+
+- Overlay = living Registry Official = Official `/meta`/quote = Mainnet L7 = **NEW V8 ALIGNED**。
+- Official www Product Truth = **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-live-auth-pin-nontarget-v9-20260820`；historical `daa5ae87` SUPERSEDED；cert-era Expected Difference 观察保留）。FTB `20260812` = immutable parent。Living FTB = V8 Cycle `20260818` Active Truth（NEW TTG/PM/Governor · KEEP Money Path）+ Product Truth OPS-v9。M07 **NOT this wave**。
+- Token Risk · Bitget HOLD = **独立轨** · 不得 unwind V8 针。
+- Consistency Cert `PASS_STOP` 被引用，不重证 · `TT_PRODUCTION_GO=NO_GO`。下一闸 = Final Reality / Release Certification（未做）。
+
+### 3.12 Official Quote Surface Cutover Precheck（`TTG_V8_OFFICIAL_QUOTE_SURFACE_CUTOVER_PRECHECK`）
+
+[TT-TTG-V8-OFFICIAL-QUOTE-SURFACE-CUTOVER-PRECHECK-LATEST.md](./TT-TTG-V8-OFFICIAL-QUOTE-SURFACE-CUTOVER-PRECHECK-LATEST.md)
+
+- 只读核验 Official `/traveltrust#liquidity`：报价面 **只认 USDC**。**API 报价已 V8** `1 USDC = 100,000 TTG`；**示意仍是编译期 OLD USDC** `1 USDC → 约 0.0360 TTG` / `1 TTG ≈ 27.7778 USDC`。
+- 零 UI/UX 漂移允许名单：**仅** API overlay 已 live。示意行无手术式 overlay；git-tree web3 overlay = 整镜像替换 = **FORBIDDEN**。
+- 本闸 **`STOP`** · 不得 bake / checkout pin / 改 i18n·CSS·组件·公告·ticker · `TT_PRODUCTION_GO=NO_GO`。

@@ -9,20 +9,66 @@
   "capability_avg": 3.5,
   "workbench_eight_dim_cite": "24/40",
   "questions": {
-    "Q1_guide_approve": { "verdict": "PARTIAL", "score": 3.0 },
-    "Q2_guide_materials": { "verdict": "PARTIAL", "score": 3.5 },
-    "Q3_guide_field_align": { "verdict": "PARTIAL", "score": 3.5 },
-    "Q4_provider_onboard": { "verdict": "YES_PHASE1", "score": 4.5 },
-    "Q5_steward_review": { "verdict": "YES_ACTIONS_PARTIAL_MATERIALS", "score": 4.0 },
-    "Q6_overview_all_real": { "verdict": "NO", "score": 2.5 }
+    "Q1_guide_approve": {
+      "verdict": "PARTIAL",
+      "score": 3.0
+    },
+    "Q2_guide_materials": {
+      "verdict": "PARTIAL",
+      "score": 3.5
+    },
+    "Q3_guide_field_align": {
+      "verdict": "PARTIAL",
+      "score": 3.5
+    },
+    "Q4_provider_onboard": {
+      "verdict": "YES_PHASE1",
+      "score": 4.5
+    },
+    "Q5_steward_review": {
+      "verdict": "YES_ACTIONS_PARTIAL_MATERIALS",
+      "score": 4.0
+    },
+    "Q6_overview_all_real": {
+      "verdict": "NO",
+      "score": 2.5
+    }
   },
-  "p0_blockers": [491, 493, 478, 495],
-  "new_hu": [491, 492, 493, 494, 495],
+  "p0_blockers": [
+    491,
+    493,
+    478,
+    495
+  ],
+  "new_hu": [
+    491,
+    492,
+    493,
+    494,
+    495
+  ],
   "next_hu": 496,
   "open_count_after": 18,
   "gate_495": "OPEN",
   "hard_gate_locked": true,
   "cutover_locked": true,
   "production_go": "NO_GO",
-  "honesty": "no_fake_kpi_numbers_found; gray_and_empty_are_honest_not_green_fraud; release_requires_all_real_or_signed_empty"
+  "honesty": "no_fake_kpi_numbers_found; gray_and_empty_are_honest_not_green_fraud; release_requires_all_real_or_signed_empty",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

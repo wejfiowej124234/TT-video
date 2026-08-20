@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.staging_truth_x_prod_frozen_admin_compat_matrix.v1",
   "at": "2026-08-01T06:44:06Z",
-  "product_truth_tip": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+  "product_truth_tip": "075a295fbf5138777dd957feea4d885004a6a953",
   "restore_base_sha": "568f4988f117a4d970f46784b43d25a29ee4c555",
   "frozen_prod_image": "registry.fly.io/tt-web-prod:deployment-01KYXVT3AA2K87MEBM8XQB3FMN",
   "frozen_admin_source": "D:\\TravelTrust-bake-1ff71858",
@@ -63,5 +63,35 @@
     "frontend/lib/admin/adminRole70Matrix.ts": [
       "consoleRole70DisplayLabel"
     ]
-  }
+  },
+  "runtime_ssot_status": "SUPERSEDED_BY_V65",
+  "runtime_ssot": "V65_PRODUCTION_REALITY",
+  "v65_runtime": {
+    "candidate_id": "V65-PROD-CAND-20260802",
+    "composition_sha": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "api_git_sha": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "web_git_sha": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "ssot": "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json"
+  },
+  "historical_only": true,
+  "tt_production_go": "NO_GO",
+  "drift_prevention_note": "This LATEST retained historical Staging bake evidence; it MUST NOT be used as Non-Web3 Runtime SSOT. Use V65 pins.",
+  "product_truth_tip_historical": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

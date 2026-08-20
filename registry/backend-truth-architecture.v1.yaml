@@ -1,0 +1,1655 @@
+# TravelTrust · Backend Truth Architecture · Machine SSOT
+#
+# Human: docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md
+# JSON:  docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.json
+# Gate:  python scripts/dev/check-backend-truth-architecture.py
+#
+# This is the diagnostic mother map (Runtime Spine × Domain Matrix × Golden Path).
+# It does NOT replace 04/14 HTTP-ABI contracts, 18 bird's-eye, FTB, or Production GO.
+# L7/L8 are INCLUDED as read-only Reality. This wave MUST NOT mutate those tracks.
+# Living Official www Product Truth: OPS-2026.08.20-v9 / 3e356617 / 2026-08-20T00:51:57Z / hybrid-live-auth-pin-nontarget-v9-20260820 / API 8df2ab21
+# GO eligibility: Cycle2 READY_FOR_OWNER_PRODUCTION_GO_VERDICT · freeze required_before_go=8 STOP unchanged
+# Next: Owner written GO vs continue NO_GO · NOT auto-issue · NOT bake www
+
+schema: traveltrust.backend_truth_architecture.v1
+version: 1
+effective_utc: "2026-08-15"
+status: ACTIVE_ARCHITECTURE_SSOT
+tt_production_go: NO_GO
+owner: Sebastian Ward
+
+machine_keys:
+  TT_BACKEND_TRUTH_ARCHITECTURE: ACTIVE
+  TT_BACKEND_TRUTH_LOCATE_LAYER_FIRST: ENFORCED
+  TT_PRODUCTION_GO: NO_GO
+  M3_SHALLOW_NODE: 0
+  M3_UNRESOLVED_POINTER: 0
+  TT_PACK03_NINE_FIELD: ACTIVE
+
+human_doc: docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md
+json_companion: docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.json
+parent_taxonomy: registry/project-architecture-taxonomy.v1.yaml
+parent_map: docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.md
+pack_id: "03"
+depth_grade: DEEP_PARTIAL
+frontend_matrix: docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md
+user_spine: docs/runbook/TT-9625-golden-path-system-spine.md
+bounded_contexts: docs/runbook/TT-9622-bounded-contexts-layering-and-integration-map.md
+http_ssot: docs/spec/04-后端与API.md
+abi_ssot: docs/spec/14-合约-API-ABI-前后端对齐.md
+birdseye: docs/spec/18-TravelTrust-全系统架构图.md
+ftb: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+auth_trace: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+mainnet_registry: registry/mainnet-address-registry.v1.yaml
+l7_l8_overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+ftb_lock: READ_ONLY_20260812
+
+mutation_policy:
+  this_wave: PACK03_NINE_FIELD_DEEPEN
+  may_edit:
+    - registry/backend-truth-architecture.v1.yaml
+    - docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md
+    - docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.json
+    - scripts/dev/check-backend-truth-architecture.py
+    - .cursor/rules/traveltrust-backend-truth-architecture.mdc
+    - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    - docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
+  must_not_mutate:
+    - Web3 contract addresses / FTB
+    - GET /meta contract
+    - TT_PRODUCTION_GO
+    - Hard Gate
+    - Indexer checkpoint semantics
+    - Timelock / Governor / PrimaryMarket live params
+
+official_observation_20260815:
+  surface: https://www.web3-ttg.com
+  api: https://api.web3-ttg.com
+  notes:
+    - GET /meta 200 chain_id=1 pause.enabled=false indexer.lag=0 checkpoint=25759530
+    - GET www /api/v1/me without Bearer → 401 (L2 503 closed; L4 expected)
+    - POST www /auth/login → 200 Owner Official C2 (historical 405 SUPERSEDED; INC-LOGIN L3 closed)
+    - community/feed 200 · discover/orders 200
+    - ttg-exchange/quote 401 STRICT_SESSION_GATE=1
+  mutation: READ_ONLY
+
+hard_rules:
+  - id: LOCATE_LAYER_BEFORE_EDIT
+    text: >
+      Symptom first → locate L0–L8 → then edit that layer only.
+      Login failure is not a DB/account first move.
+  - id: L7_IS_NOT_EXTERNAL
+    text: Web3 Money Path is core runtime (L7), not a SaaS third-party.
+  - id: L7_NE_L8
+    text: "L7 = what happened on chain. L8 = whether the product observed, projected, and proved it."
+  - id: STATUS_IS_NOT_PASS_FAIL
+    text: Node status uses the lifecycle enum. DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE ≠ CLOSED_REALITY.
+  - id: FRONTEND_ACTION_HAS_BACKEND_KEY
+    text: Every frontend Action maps to one backend capability_key (GP or domain).
+  - id: APP_REUSES_GOLDEN_PATHS
+    text: Future App is another L0 consumer of GP-01..08. It does not invent a second backend.
+
+zoom_levels:
+  A:
+    name: Executive Map
+    audience: Owner
+    shows: [L0, L1, L3, L5, L6, L7, L8]
+  B:
+    name: Engineering Spine
+    audience: AI / engineer debug
+    shows: [L0, L1, L2, L3, L4, L5, L6, L7, L8]
+  C:
+    name: Domain Drilldown
+    audience: domain owner
+    shows: one domain expanded through the spine
+
+status_enum:
+  - DESIGN_ONLY
+  - IMPLEMENTED
+  - UNIT_PASS
+  - DEPLOYED
+  - DEPLOYED_NOT_WIRED
+  - WIRED
+  - PRODUCT_READY_WAITING_RUNTIME
+  - OFFICIAL_LIVE
+  - CLOSED_REALITY
+  - DEFERRED
+  - LEGACY
+  - BLOCKED
+
+node_fields:
+  - node_id
+  - layer
+  - domain
+  - purpose
+  - code_owner
+  - source_ssot
+  - runtime_instance
+  - dependencies
+  - consumers
+  - health_probe
+  - failure_classes
+  - security_boundary
+  - evidence
+  - status
+
+layers:
+  - id: L0
+    name: Client / Consumer
+    question: Who initiated the request?
+    children: [Web, Future App, Admin Console, Automation / Runner, Wallet]
+  - id: L1
+    name: Edge / Network
+    question: Did the packet reach origin?
+    children: [DNS, Cloudflare, TLS, Fly ingress, CORS, timeout / rate edge]
+  - id: L2
+    name: BFF / Proxy / Origin Routing
+    question: Did same-origin bridge hit the right API base?
+    children: [Next rewrite, proxyTraveltrustApi, SITE_URL, API_BASE_URL, same-origin bridge]
+  - id: L3
+    name: API Surface / Contract
+    question: Does the route exist and match 04?
+    children: [/auth/*, /me, /admin/*, /orders, /community, /governance, /meta, /health]
+  - id: L4
+    name: Request Control / Middleware
+    question: Was the request gated before domain logic?
+    children: [Session gate, Bearer, Idempotency, Rate limit, Pause, Headers, validation]
+  - id: L5
+    name: Identity / Authorization / Domain
+    question: Who is the actor and which business rule fired?
+    children: [user identity, roles, capabilities, admin RBAC, domain service, order state machine, business rules]
+  - id: L6
+    name: Persistence / Internal Data
+    question: What did we store off-chain?
+    children: [PostgreSQL, migrations, sessions, CMS metadata, catalog, configuration, object metadata]
+  - id: L7
+    name: Web3 Runtime / Money Path
+    question: What actually happened on chain?
+    children: [RPC, Escrow, Settlement, FeeRouter, PrimaryMarket, Seat Registry, Region Vault, P4Cap, Governor, Timelock]
+  - id: L8
+    name: Projection / Runtime Truth / Release
+    question: Did the product observe, project, and prove L7?
+    children: [Indexer, checkpoint, event projection, Registry, /meta, build identity, FTB, Evidence, Hard Gate, TT_PRODUCTION_GO]
+
+domains:
+  - id: AUTH
+    label: Auth
+  - id: COMMUNITY
+    label: Community
+  - id: CMS
+    label: CMS
+  - id: MEDIA
+    label: Media
+  - id: ORDERS
+    label: Orders
+  - id: ESCROW
+    label: Escrow
+  - id: SETTLEMENT
+    label: Settlement
+  - id: TTG_MARKET
+    label: TTG Market
+  - id: STEWARD
+    label: Steward
+  - id: GOVERNANCE
+    label: Governance
+  - id: ADMIN
+    label: Admin
+  - id: PLATFORM
+    label: Platform Meta
+  - id: ITINERARY
+    label: Itinerary
+  - id: DISPUTES
+    label: Disputes
+  - id: MESSAGES
+    label: Order Messages
+  - id: DID_RANK
+    label: DID Rank
+  - id: ONBOARDING
+    label: Onboarding Fees
+  - id: GROWTH
+    label: Growth / Referrals
+  - id: GUIDES
+    label: Guides
+  - id: PROVIDER
+    label: Provider Applications
+
+domain_backlog_from_api_router:
+  note: Eight first-class domains inventoried 2026-08-15. Remaining api_router modules map to existing domains (see taxonomy m3_inventory_seed).
+  status: CLOSED
+  items: []
+
+pack03_nine_field:
+  overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  ftb_lock: READ_ONLY_20260812
+  m3_shallow_node: 0
+  m3_unresolved_pointer: 0
+  eight_domains:
+    - ITINERARY
+    - DISPUTES
+    - MESSAGES
+    - DID_RANK
+    - ONBOARDING
+    - GROWTH
+    - GUIDES
+    - PROVIDER
+  required_l6_tables:
+    ITINERARY: [itinerary_custom_drafts, itineraries]
+    DISPUTES: [disputes]
+    MESSAGES: [order_messages]
+    DID_RANK: [orders, reviews, community_penalties, did_rank_rank_snapshots]
+    ONBOARDING: [onboarding_entitlements, onboarding_payment_events]
+    GROWTH: [referral_codes, referral_events]
+    GUIDES: [guides]
+    PROVIDER: [role_applications]
+  stop_after: PACK03
+  next_pack_forbidden_this_wave: ["05", "04"]
+
+domain_matrix:
+  - domain: AUTH
+    L3: POST /auth/login · GET /api/v1/me
+    L4: session / Bearer / rate
+    L5: identity
+    L6: users / sessions
+    L7: "—"
+    L8: meta / session evidence
+  - domain: COMMUNITY
+    L3: posts / comments
+    L4: idem / rate / auth write
+    L5: ACL
+    L6: posts / comments
+    L7: "—"
+    L8: "—"
+  - domain: CMS
+    L3: public announcements / catalog consumers
+    L4: public read
+    L5: ownership / publish
+    L6: CMS metadata / catalog
+    L7: "—"
+    L8: Live vs fallback
+  - domain: MEDIA
+    L3: POST /api/v1/uploads/community-posts · GET /api/v1/media/access/*
+    L4: auth / size / rate
+    L5: object owner
+    L6: object metadata
+    L7: "—"
+    L8: "—"
+  - domain: ORDERS
+    L3: /api/v1/orders
+    L4: auth / idem
+    L5: order state machine
+    L6: orders
+    L7: Escrow create
+    L8: events / chain_sync
+  - domain: ESCROW
+    L3: GET /api/v1/orders/:id · chain-sync
+    L4: session
+    L5: escrow state machine
+    L6: order escrow fields
+    L7: EscrowFactoryV2Wired / Escrow
+    L8: Indexer
+    gp: GP-04
+    probe: PROBE-FTB-ALIGN
+    failure_classes: [tx_revert, indexer_lag, allowlist]
+  - domain: SETTLEMENT
+    L3: order chain-sync / admin observe
+    L4: capability
+    L5: release rules
+    L6: order projection
+    L7: SettlementRouter / FeeRouter
+    L8: Indexer
+  - domain: TTG_MARKET
+    L3: GET /api/v1/governance/ttg-exchange/quote
+    L4: wallet / auth
+    L5: sale rules + dual disclosure
+    L6: purchase records
+    L7: PrimaryMarket / P4Cap
+    L8: Indexer / meta / FE price SSOT
+  - domain: STEWARD
+    L3: admin / steward API
+    L4: RBAC
+    L5: Seat
+    L6: seat projection
+    L7: Seat / Vault / FeeRouter
+    L8: Indexer
+  - domain: GOVERNANCE
+    L3: /governance/proposals*
+    L4: wallet
+    L5: governance rules
+    L6: proposal cache
+    L7: Governor / Timelock
+    L8: Indexer
+  - domain: ADMIN
+    L3: /api/v1/admin/*
+    L4: session + admin RBAC
+    L5: admin capabilities
+    L6: admin audit rows
+    L7: "observe-only unless Owner ops"
+    L8: observability /meta
+  - domain: PLATFORM
+    L3: /health · /meta · /meta/build
+    L4: public / rate
+    L5: "—"
+    L6: configuration
+    L7: address observation
+    L8: build identity / FTB / Hard Gate
+  - domain: ITINERARY
+    L0: Official homepage AI 定制旅行 (10 countries)
+    L3: POST /api/v1/itineraries · POST /api/v1/itineraries/custom · drafts
+    L4: session Bearer · login_required
+    L5: extract_user_with_session_check · itinerary_custom_drafts owner_user_id match (miss = None, anti-enum)
+    L6: itinerary_custom_drafts · itineraries (order_id UNIQUE · dual-write snapshot · not L7)
+    L7: "—"
+    L8: Official live page consumes catalog/geo; draft is PG
+    gp: GP-04
+    probe: PROBE-ITINERARY
+    failure_classes: [401_login_required, 503_database_unavailable, 404_draft_not_found, 501_not_implemented]
+  - domain: DISPUTES
+    L0: /disputes · /traveltrust FAQ
+    L3: GET /api/v1/disputes · GET /api/v1/disputes/:id · POST /api/v1/orders/:id/dispute · POST …/resolve
+    L4: session required
+    L5: session · privileged admin|super_admin|arbitrator else tourist_id|guides.user_id|arbitrator_id · non-party detail 404
+    L6: disputes JOIN orders · guides (ACL join) · off-chain envelope ≠ L7 escrow
+    L7: "observe order/escrow state; dispute itself is off-chain"
+    L8: "—"
+    gp: GP-04
+    probe: PROBE-DISPUTES
+    failure_classes: [401_login_required, 403_or_404_acl, 501_not_implemented]
+  - domain: MESSAGES
+    L0: escrow/order thread (not Community DM)
+    L3: GET|POST /api/v1/orders/:id/messages
+    L4: session required
+    L5: session · tourist or guide user_id party · non-participant 403 · unknown order 404
+    L6: order_messages (PG dual-write + chain_off hydrate)
+    L7: "—"
+    L8: GET /meta order_messages.chain_off_mounted
+    gp: GP-04
+    probe: PROBE-ORDER-MESSAGES
+    failure_classes: [401_login_required, 400_invalid_uuid, 501_not_implemented]
+    note: Community inbox/friends stay in COMMUNITY (/api/v1/community/conversations*)
+  - domain: DID_RANK
+    L0: Official /did-rank 排行榜
+    L3: GET /api/v1/did-rank/{travelers,guides,itineraries,prize-pool,providers,acquisitions}
+    L4: public read (optional session)
+    L5: public read · guides NOT EXISTS community_penalties active mute|ban|shadow_ban|limit_feed
+    L6: orders · reviews · community_penalties · did_rank_rank_snapshots (projection ≠ L7)
+    L7: "—"
+    L8: projection from completed orders; empty list ≠ chain fail
+    gp: GP-04
+    probe: PROBE-DID-RANK
+    failure_classes: [empty_projection, db_fallback_chain_off]
+  - domain: ONBOARDING
+    L0: /provider/register · /guide/register · steward register
+    L3: GET /api/v1/onboarding/quote · POST payment-intents · GET entitlements/me · POST role-confirm · POST /api/v1/hooks/stripe/onboarding
+    L4: session + onboarding write rate limit · Idempotency-Key
+    L5: quote public+rate · entitlements/me session 401 · write 429 · role-confirm needs entitlement
+    L6: onboarding_entitlements · onboarding_payment_events · onboarding_compliance_audit_events
+    L7: "—"
+    L8: "Fiat/Stripe orthogonal to USDC escrow (pack 06 note)"
+    gp: GP-01
+    probe: PROBE-ONBOARDING
+    failure_classes: [401, 429, stripe_disabled_null_secret, 503_database_unavailable]
+  - domain: GROWTH
+    L0: /me/referrals
+    L3: GET /api/v1/growth/referrals/validate · GET /api/v1/me/referrals · POST /api/v1/trust-growth/ingest · GET /api/v1/trust-growth/config
+    L4: validate public · me/referrals session · ingest service
+    L5: GET /growth/referrals/validate public · GET /me/referrals session login_required
+    L6: referral_codes · referral_events · growth_point_ledger · trust_growth_control
+    L7: "—"
+    L8: "—"
+    gp: GP-01
+    probe: PROBE-GROWTH
+    failure_classes: [401_login_required, 503_database_unavailable]
+  - domain: GUIDES
+    L0: /market · /guides · Official 向导栏
+    L3: GET|POST /api/v1/guides · GET /api/v1/guides/:id · availability · POST …/stake · upload-doc
+    L4: list public · create/stake/session · GET :id may 401 without session
+    L5: GET /guides public status=active · POST create/stake session 401
+    L6: guides.stake_amount TEXT (DB catalog · Official /meta guide_staking_address=null ≠ L7)
+    L7: "guide_staking_address Official /meta often null — do not invent L7 live stake"
+    L8: public catalog projection
+    gp: GP-04
+    probe: PROBE-GUIDES
+    failure_classes: [401, 400_bad_query, empty_catalog, stake_not_on_list]
+  - domain: PROVIDER
+    L0: /provider/register · /market/provider
+    L3: POST /api/v1/provider-applications
+    L4: session required
+    L5: session login_required · dual_write_after_provider_application_submit
+    L6: role_applications (kind provider_onboarding) · role_documents
+    L7: "—"
+    L8: "—"
+    gp: GP-01
+    probe: PROBE-PROVIDER
+    failure_classes: [401_login_required, 501_not_implemented]
+
+golden_paths:
+  - id: GP-01
+    name: Login / Session
+    layers: [L0, L1, L2, L3, L4, L5, L6]
+    hops:
+      - POST /auth/login (API origin, not Next page)
+      - persist token / cookies
+      - GET /api/v1/me via proxy
+      - RBAC / UI identity
+    frontend_actions: [AUTH.LOGIN.SUBMIT, AUTH.SESSION.HYDRATE]
+  - id: GP-02
+    name: Community Write
+    layers: [L0, L2, L3, L4, L5, L6]
+    hops:
+      - POST /api/v1/community/posts/:id/comments
+      - Idempotency-Key
+      - ACL
+      - posts/comments rows
+    frontend_actions: [COMMUNITY.COMMENT.REPLY, COMMUNITY.POST.CREATE]
+  - id: GP-03
+    name: Media Upload
+    layers: [L0, L2, L3, L4, L5, L6]
+    hops:
+      - POST /api/v1/uploads/community-posts
+      - object store
+      - object metadata
+      - GET /api/v1/media/access/*
+    frontend_actions: [COMMUNITY.MEDIA.UPLOAD]
+  - id: GP-04
+    name: Order → Escrow
+    layers: [L0, L3, L4, L5, L6, L7, L8]
+    hops:
+      - POST /api/v1/itineraries or /itineraries/custom (homepage AI / custom draft)
+      - POST /api/v1/guides (guide must exist)
+      - POST /api/v1/orders
+      - state machine
+      - EscrowFactoryV2Wired.createEscrow
+      - Indexer projection
+      - GET /api/v1/orders/:id
+    frontend_actions: [HOME.ITINERARY.CREATE, GUIDES.LIST.VIEW, ORDERS.CREATE.SUBMIT, ESCROW.OPEN]
+  - id: GP-05
+    name: Settlement → Fee
+    layers: [L5, L6, L7, L8]
+    hops:
+      - release rules
+      - SettlementRouter
+      - FeeRouter
+      - USDC conservation
+      - Indexer checkpoint ≥ tx block
+    frontend_actions: [ESCROW.RELEASE.SUBMIT]
+  - id: GP-06
+    name: USDC → TTG
+    layers: [L0, L3, L5, L7, L8]
+    hops:
+      - Homepage quote
+      - GET /api/v1/governance/ttg-exchange/quote
+      - wallet
+      - PrimaryMarket proxy / impl
+      - USDC
+      - P4Cap
+      - TTG inventory
+      - Purchase event
+      - Indexer
+      - API / UI dual disclosure
+    frontend_actions: [HOME.TTG_PURCHASE.SUBMIT]
+  - id: GP-07
+    name: Region Fee → Vault/P4Cap → Claim
+    layers: [L5, L7, L8]
+    hops:
+      - Region fee
+      - SettlementRouter
+      - FeeRouter
+      - SeatRegistry
+      - RegionVault | P4Cap
+      - Claim
+    frontend_actions: [STEWARD.CLAIM.SUBMIT]
+  - id: GP-08
+    name: Governance → Timelock → Spend
+    layers: [L0, L3, L5, L7, L8]
+    hops:
+      - proposal
+      - Governor
+      - Timelock (48h)
+      - execute
+      - Indexer / Reality evidence
+    frontend_actions: [GOVERNANCE.PROPOSAL.QUEUE, GOVERNANCE.TIMELOCK.EXECUTE]
+
+dependency_graph:
+  - id: DEP-PM-TTG
+    purpose: Can we change TTG sale price / inventory now?
+    edges:
+      - [PrimaryMarket, TTG inventory]
+      - [TTG inventory, USDC]
+      - [USDC, P4Cap]
+      - [P4Cap, Governor]
+      - [Governor, Timelock]
+  - id: DEP-REGION-FEE
+    purpose: Can Reality B / Vault claim run now?
+    edges:
+      - [Region Fee, SettlementRouter]
+      - [SettlementRouter, FeeRouter]
+      - [FeeRouter, SeatRegistry]
+      - [SeatRegistry, RegionVault]
+      - [SeatRegistry, P4Cap]
+      - [RegionVault, Claim]
+    notes:
+      - CI-03 Vault deploy does not wait CI-02 execute.
+      - Reality B waits FeeRouter config/cutover. DEPLOYED ≠ WIRED.
+
+incident_trees:
+  - id: INC-LOGIN
+    symptom: 登录不了
+    locate_first: [L3, L2, L4, L5]
+    tree: |
+      POST /auth/login ?
+       ├─ 401 → Credential / Account (L5) — Staging seed on Production = invalid_credentials
+       ├─ 404/405 → Route (L3) — historical Next page POST 405 SUPERSEDED 2026-08-15
+       ├─ 5xx → API runtime (L3/L4) or Proxy (L2)
+       └─ 200
+            ↓
+      Cookie / token persisted?
+       ├─ no → Cookie / Edge / Browser (L0/L1)
+       └─ yes HttpOnly traveltrust_session (GAP-SEC CLOSED)
+            ↓
+      GET /api/v1/me ?
+       ├─ 401 → Session (L4)
+       ├─ 403 → RBAC (L5)
+       ├─ 503 → Proxy / upstream / pause (L2/L4)
+       └─ 200
+            ↓
+      UI still anonymous?
+       └─ Hydration / client state (L0)
+    evidence: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+  - id: INC-403
+    symptom: 已登录但 403
+    locate_first: [L5, L4]
+    tree: |
+      GET /me 200?
+       ├─ no → GP-01 first
+       └─ yes → capability / admin RBAC / role slot (L5)
+  - id: INC-404-405
+    symptom: 404 / 405
+    locate_first: [L3, L2]
+    tree: |
+      Hitting Next page or API origin?
+       ├─ Next /auth/login POST → historical 405 SUPERSEDED; live 200 Session/BFF
+       ├─ missing Axum route → 404 (L3)
+       └─ rewrite dest wrong → L2
+  - id: INC-418
+    symptom: 418
+    locate_first: [L4]
+    tree: |
+      Not an observed Official code today.
+      Pause is 503 api_paused (PAUSE_MODE=1).
+      If 418 appears → treat as unknown L4/L3 contract drift; do not invent a handler.
+  - id: INC-429
+    symptom: 429
+    locate_first: [L4, L1]
+    tree: |
+      Edge rate vs API rate_limit_layer vs onboarding quote/write limit.
+      Read Retry-After. Do not raise limits as a first fix.
+  - id: INC-500-503
+    symptom: 500 / 503
+    locate_first: [L2, L4, L6]
+    tree: |
+      503 api_unavailable / api.example.com → L2 proxyTraveltrustApi
+      503 api_paused → L4 pause_gate
+      503 chain_off / database_unavailable → L6
+      500 → L3/L5 panic or unhandled domain error
+  - id: INC-DB-DRIFT
+    symptom: DB drift
+    locate_first: [L6]
+    tree: |
+      migrations applied?
+      session/user row exists?
+      projection table vs handler query mismatch?
+      Do not "fix" by reseeding until L3/L4/L5 are ruled out.
+  - id: INC-INDEXER-LAG
+    symptom: 链上成功但页面没更新
+    locate_first: [L7, L8, L3, L0]
+    tree: |
+      Receipt status=1? (L7)
+       ↓
+      Indexer checkpoint >= tx block? (L8)
+       ├─ no → ingestion lag/stall
+       └─ yes
+            ↓
+      event projection exists?
+       ├─ no → ABI / filter / address
+       └─ yes
+            ↓
+      API returns projection? (L3)
+       ↓
+      UI renders? (L0)
+  - id: INC-CHAIN-TX-FAIL
+    symptom: Chain tx fail
+    locate_first: [L7]
+    tree: |
+      Receipt status=0 / revert → L7 (allowlist, pause, cap, USDC, Timelock ETA).
+      Do not patch Indexer or UI to fake success.
+
+capability_map:
+  - frontend: AUTH.LOGIN.SUBMIT
+    backend: GP-01.AUTH.LOGIN
+    domain: AUTH
+    api: POST /auth/login
+  - frontend: AUTH.SESSION.HYDRATE
+    backend: GP-01.AUTH.ME
+    domain: AUTH
+    api: GET /api/v1/me
+  - frontend: COMMUNITY.COMMENT.REPLY
+    backend: COMMUNITY.POST_COMMENT
+    domain: COMMUNITY
+    api: POST /api/v1/community/posts/:id/comments
+  - frontend: COMMUNITY.POST.CREATE
+    backend: COMMUNITY.CREATE_POST
+    domain: COMMUNITY
+    api: POST /api/v1/community/posts
+  - frontend: COMMUNITY.MEDIA.UPLOAD
+    backend: GP-03.MEDIA.UPLOAD
+    domain: MEDIA
+    api: POST /api/v1/uploads/community-posts
+  - frontend: HOME.TTG_PURCHASE.SUBMIT
+    backend: GP-06.PM.PURCHASE
+    domain: TTG_MARKET
+    api: GET /api/v1/governance/ttg-exchange/quote + wallet PrimaryMarket
+  - frontend: HOME.ITINERARY.CREATE
+    backend: ITINERARY.CREATE
+    domain: ITINERARY
+    api: POST /api/v1/itineraries
+  - frontend: ITINERARY.CUSTOM.CREATE
+    backend: ITINERARY.CUSTOM
+    domain: ITINERARY
+    api: POST /api/v1/itineraries/custom
+  - frontend: ORDERS.CREATE.SUBMIT
+    backend: GP-04.ORDERS.CREATE
+    domain: ORDERS
+    api: POST /api/v1/orders
+  - frontend: GUIDES.LIST.VIEW
+    backend: GUIDES.LIST
+    domain: GUIDES
+    api: GET /api/v1/guides
+  - frontend: DID_RANK.VIEW
+    backend: DID_RANK.LIST
+    domain: DID_RANK
+    api: GET /api/v1/did-rank/guides
+  - frontend: DISPUTES.OPEN
+    backend: DISPUTES.CREATE
+    domain: DISPUTES
+    api: POST /api/v1/orders/:id/dispute
+  - frontend: ORDER.MESSAGE.SEND
+    backend: MESSAGES.POST
+    domain: MESSAGES
+    api: POST /api/v1/orders/:id/messages
+  - frontend: COMMUNITY.INBOX.OPEN
+    backend: COMMUNITY.CONVERSATIONS
+    domain: COMMUNITY
+    api: GET /api/v1/community/conversations
+  - frontend: ONBOARDING.QUOTE.VIEW
+    backend: ONBOARDING.QUOTE
+    domain: ONBOARDING
+    api: GET /api/v1/onboarding/quote
+  - frontend: PROVIDER.APPLY.SUBMIT
+    backend: PROVIDER.APPLICATIONS
+    domain: PROVIDER
+    api: POST /api/v1/provider-applications
+  - frontend: GROWTH.REFERRALS.VIEW
+    backend: GROWTH.ME_REFERRALS
+    domain: GROWTH
+    api: GET /api/v1/me/referrals
+  - frontend: ESCROW.RELEASE.SUBMIT
+    backend: GP-05.SETTLEMENT.RELEASE
+    domain: SETTLEMENT
+    api: order chain-sync + SettlementRouter
+  - frontend: STEWARD.CLAIM.SUBMIT
+    backend: GP-07.STEWARD.CLAIM
+    domain: STEWARD
+    api: steward / vault claim (L7)
+  - frontend: GOVERNANCE.PROPOSAL.QUEUE
+    backend: GP-08.GOV.QUEUE
+    domain: GOVERNANCE
+    api: Governor queue → Timelock
+  - frontend: ADMIN.RBAC.ACTION
+    backend: ADMIN.RBAC
+    domain: ADMIN
+    api: /api/v1/admin/*
+
+coverage_matrix:
+  status: SEEDED_NOT_EXHAUSTIVE
+  note: >
+    This pack seeds architecture coverage. It does not replace 93 / 96-20 / R-002.
+    A domain row COVERED means the spine+GP+incident tree exist, not that ②③ GO is closed.
+  rows:
+    - domain: AUTH
+      spine: COVERED
+      gp: GP-01
+      incident: INC-LOGIN
+      phase1: CLOSED_TRACE
+      phase2: OPEN
+      phase3: OPEN
+    - domain: COMMUNITY
+      spine: COVERED
+      gp: GP-02
+      incident: INC-429
+      phase1: PARTIAL
+      phase2: OPEN
+      phase3: OPEN
+    - domain: MEDIA
+      spine: COVERED
+      gp: GP-03
+      incident: INC-500-503
+      phase1: PARTIAL
+      phase2: OPEN
+      phase3: OPEN
+    - domain: ORDERS
+      spine: COVERED
+      gp: GP-04
+      incident: INC-CHAIN-TX-FAIL
+      phase1: PARTIAL
+      phase2: OPEN
+      phase3: OPEN
+    - domain: ESCROW
+      spine: COVERED
+      gp: GP-04
+      incident: INC-CHAIN-TX-FAIL
+      phase1: TRACK1_SEALED_READ_ONLY
+      phase2: OPEN
+      phase3: NO_GO
+    - domain: SETTLEMENT
+      spine: COVERED
+      gp: GP-05
+      incident: INC-INDEXER-LAG
+      phase1: TRACK1_SEALED_READ_ONLY
+      phase2: OPEN
+      phase3: NO_GO
+    - domain: TTG_MARKET
+      spine: COVERED
+      gp: GP-06
+      incident: INC-INDEXER-LAG
+      phase1: DUAL_DISCLOSURE
+      phase2: OPEN
+      phase3: NO_GO
+    - domain: STEWARD
+      spine: COVERED
+      gp: GP-07
+      incident: INC-CHAIN-TX-FAIL
+      phase1: DEPLOYED_NOT_WIRED
+      phase2: OPEN
+      phase3: NO_GO
+    - domain: GOVERNANCE
+      spine: COVERED
+      gp: GP-08
+      incident: INC-CHAIN-TX-FAIL
+      phase1: TIMELOCK_WAIT_READ_ONLY
+      phase2: OPEN
+      phase3: NO_GO
+    - domain: ADMIN
+      spine: COVERED
+      gp: GP-01
+      incident: INC-403
+      phase1: PARTIAL
+      phase2: OPEN
+      phase3: OPEN
+    - domain: CMS
+      spine: COVERED
+      gp: "—"
+      incident: INC-DB-DRIFT
+      phase1: EXECUTION_MOSTLY
+      phase2: OPEN
+      phase3: OPEN
+    - domain: PLATFORM
+      spine: COVERED
+      gp: "—"
+      incident: INC-500-503
+      phase1: OBSERVE_ONLY
+      phase2: OPEN
+      phase3: NO_GO
+    - domain: ITINERARY
+      spine: L3_L5_L6
+      gp: GP-04
+      incident: INC-LOGIN
+      phase1: OFFICIAL_HERO_LIVE
+      phase2: OPEN
+      phase3: OPEN
+    - domain: DISPUTES
+      spine: L3_L5_L6
+      gp: GP-04
+      incident: INC-403
+      phase1: PG_ENVELOPE
+      phase2: OPEN
+      phase3: OPEN
+    - domain: MESSAGES
+      spine: L3_L5_L6
+      gp: GP-04
+      incident: INC-LOGIN
+      phase1: ORDER_THREAD
+      phase2: OPEN
+      phase3: OPEN
+    - domain: DID_RANK
+      spine: L3_L5_L6
+      gp: GP-04
+      incident: INC-DB-DRIFT
+      phase1: PUBLIC_PROJECTION
+      phase2: OPEN
+      phase3: OPEN
+    - domain: ONBOARDING
+      spine: L3_L5_L6
+      gp: GP-01
+      incident: INC-429
+      phase1: LOCAL_FEE_SCHEDULE
+      phase2: STRIPE_OPTIONAL
+      phase3: OPEN
+    - domain: GROWTH
+      spine: L3_L5_L6
+      gp: GP-01
+      incident: INC-LOGIN
+      phase1: PARTIAL
+      phase2: OPEN
+      phase3: OPEN
+    - domain: GUIDES
+      spine: L3_L5_L6
+      gp: GP-04
+      incident: INC-LOGIN
+      phase1: PUBLIC_CATALOG
+      phase2: OPEN
+      phase3: OPEN
+    - domain: PROVIDER
+      spine: L3_L5_L6
+      gp: GP-01
+      incident: INC-LOGIN
+      phase1: APPLICATION_WRITE
+      phase2: OPEN
+      phase3: OPEN
+
+probes:
+  - id: PROBE-AUTH-SESSION
+    layer: L2
+    path: frontend/lib/server/proxyTraveltrustApi.candidates.test.ts
+    run: npx vitest run lib/server/proxyTraveltrustApi.candidates.test.ts
+    maps_to: GP-01
+  - id: PROBE-HEALTH-META
+    layer: L8
+    path: scripts/gates/vertical-slice-02-main-spine.sh
+    run: bash scripts/gates/vertical-slice-02-main-spine.sh
+    maps_to: PLATFORM
+  - id: PROBE-PUBLIC-API
+    layer: L3
+    path: scripts/smoke-api-public-routes.sh
+    run: bash scripts/smoke-api-public-routes.sh
+    maps_to: L3
+  - id: PROBE-FTB-ALIGN
+    layer: L8
+    path: scripts/gates/check-official-mainnet-web3-alignment.sh
+    run: bash scripts/gates/check-official-mainnet-web3-alignment.sh
+    maps_to: L7/L8
+    mutation: READ_ONLY
+  - id: PROBE-ARCH-SSOT
+    layer: PLATFORM
+    path: scripts/dev/check-backend-truth-architecture.py
+    run: python scripts/dev/check-backend-truth-architecture.py
+    maps_to: this pack
+  - id: PROBE-ITINERARY
+    layer: L3
+    path: crates/api/src/routes/itineraries.rs
+    run: bash scripts/dev/run-web3-itinerary-l5-green.sh
+    maps_to: GP-04
+  - id: PROBE-DISPUTES
+    layer: L3
+    path: crates/api/src/routes/disputes.rs
+    run: cargo test -p traveltrust-api disputes -- --nocapture
+    maps_to: GP-04
+  - id: PROBE-ORDER-MESSAGES
+    layer: L3
+    path: crates/api/src/routes/messages.rs
+    run: GET /meta order_messages.chain_off_mounted
+    maps_to: GP-04
+  - id: PROBE-DID-RANK
+    layer: L3
+    path: crates/api/src/routes/did_rank.rs
+    run: GET /api/v1/did-rank/guides
+    maps_to: GP-04
+  - id: PROBE-ONBOARDING
+    layer: L3
+    path: crates/api/src/routes/onboarding/mod.rs
+    run: bash scripts/dev/smoke-provider-onboarding-local.sh
+    maps_to: GP-01
+  - id: PROBE-GROWTH
+    layer: L3
+    path: crates/api/src/routes/growth/mod.rs
+    run: GET /api/v1/growth/referrals/validate
+    maps_to: GP-01
+  - id: PROBE-GUIDES
+    layer: L3
+    path: scripts/gates/vertical-slice-01-guides-catalog.sh
+    run: bash scripts/gates/vertical-slice-01-guides-catalog.sh
+    maps_to: GP-04
+  - id: PROBE-PROVIDER
+    layer: L3
+    path: crates/api/src/routes/provider_applications.rs
+    run: bash scripts/dev/smoke-provider-onboarding-local.sh
+    maps_to: GP-01
+
+nodes:
+  - node_id: N-L0-WEB
+    layer: L0
+    domain: PLATFORM
+    purpose: Browser Next.js consumer of GP-01..08
+    code_owner: frontend/app
+    source_ssot: docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md
+    runtime_instance: https://www.web3-ttg.com
+    dependencies: [N-L2-PROXY]
+    consumers: [human]
+    health_probe: Official GET / → 200
+    failure_classes: [hydration, client_state]
+    security_boundary: public
+    evidence: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+    status: OFFICIAL_LIVE
+  - node_id: N-L1-EDGE
+    layer: L1
+    domain: PLATFORM
+    purpose: DNS / TLS / Fly ingress / CORS / edge timeout
+    code_owner: crates/api/src/middleware/timeout_cors.rs
+    source_ssot: crates/api/src/middleware/timeout_cors.rs
+    runtime_instance: Cloudflare + Fly + CORS_ORIGINS
+    dependencies: [N-L2-REWRITE]
+    consumers: [N-L0-WEB]
+    health_probe: TLS + CORS preflight
+    failure_classes: [dns, tls, cors, edge_timeout]
+    security_boundary: network
+    evidence: crates/api/src/middleware/timeout_cors.rs
+    status: WIRED
+  - node_id: N-L0-APP
+    layer: L0
+    domain: PLATFORM
+    purpose: Future iOS/Android — same GP-01..08, no second backend
+    code_owner: DESIGN_ONLY
+    source_ssot: registry/backend-truth-architecture.v1.yaml
+    runtime_instance: none
+    dependencies: [GP-01, GP-02, GP-03, GP-04, GP-05, GP-06, GP-07, GP-08]
+    consumers: [future_app]
+    health_probe: none
+    failure_classes: [not_built]
+    security_boundary: public
+    evidence: registry/backend-truth-architecture.v1.yaml
+    status: DESIGN_ONLY
+  - node_id: N-L2-PROXY
+    layer: L2
+    domain: PLATFORM
+    purpose: Same-origin /api/v1 bridge; skip *.example.com; try next API base
+    code_owner: frontend/lib/server/proxyTraveltrustApi.ts
+    source_ssot: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+    runtime_instance: www / apex Next
+    dependencies: [N-L3-API]
+    consumers: [N-L0-WEB]
+    health_probe: GET /api/v1/me without Bearer → 401 (not 503)
+    failure_classes: [ME_PROXY_503, example_com_placeholder]
+    security_boundary: origin
+    evidence: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+    status: WIRED
+  - node_id: N-L2-REWRITE
+    layer: L2
+    domain: PLATFORM
+    purpose: next.config rewrite /api/v1/:path* → API dest
+    code_owner: frontend/next.config.js
+    source_ssot: frontend/next.config.js
+    runtime_instance: Next origin
+    dependencies: [N-L3-API]
+    consumers: [N-L0-WEB]
+    health_probe: rewrite dest matches API_BASE_URL
+    failure_classes: [wrong_dest, SITE_URL_drift]
+    security_boundary: origin
+    evidence: frontend/next.config.js
+    status: WIRED
+  - node_id: N-L3-API
+    layer: L3
+    domain: PLATFORM
+    purpose: Axum api_router merge of domain routers
+    code_owner: crates/api/src/routes/mod.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: traveltrust-api
+    dependencies: [N-L4-MW]
+    consumers: [N-L2-PROXY, N-L2-REWRITE]
+    health_probe: GET /health
+    failure_classes: [404, 405, unhandled_500]
+    security_boundary: api
+    evidence: crates/api/src/routes/mod.rs
+    status: WIRED
+  - node_id: N-L3-AUTH
+    layer: L3
+    domain: AUTH
+    purpose: POST /auth/login · logout · register
+    code_owner: crates/api/src/routes/auth.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: API origin (not Next page)
+    dependencies: [N-L4-MW, N-L5-IDENTITY, N-L6-PG]
+    consumers: [GP-01]
+    health_probe: POST /auth/login
+    failure_classes: [401, 405_on_next_page, 429]
+    security_boundary: auth
+    evidence: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+    status: OFFICIAL_LIVE
+  - node_id: N-L3-ME
+    layer: L3
+    domain: AUTH
+    purpose: GET /api/v1/me identity surface
+    code_owner: crates/api/src/routes/me.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: /api/v1/me
+    dependencies: [N-L4-MW, N-L5-IDENTITY]
+    consumers: [GP-01]
+    health_probe: GET /api/v1/me + Bearer
+    failure_classes: [401, 403, 503]
+    security_boundary: session
+    evidence: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+    status: WIRED
+  - node_id: N-L4-MW
+    layer: L4
+    domain: PLATFORM
+    purpose: Idempotency, pause, rate limit, CORS, trace, auth placeholder
+    code_owner: crates/api/src/middleware/mod.rs
+    source_ssot: crates/api/src/middleware/mod.rs
+    runtime_instance: Axum layers
+    dependencies: []
+    consumers: [N-L3-API]
+    health_probe: PAUSE_MODE → 503 api_paused
+    failure_classes: [api_paused, 429, missing_idempotency]
+    security_boundary: api
+    evidence: crates/api/src/middleware/auth_pause_metrics/mod.rs
+    status: WIRED
+  - node_id: N-L5-IDENTITY
+    layer: L5
+    domain: AUTH
+    purpose: User identity, roles, admin RBAC, capabilities
+    code_owner: crates/api/src/chain_off/auth.rs
+    source_ssot: registry/admin-rbac-route-matrix.v1.yaml
+    runtime_instance: session + role
+    dependencies: [N-L6-PG]
+    consumers: [GP-01, ADMIN]
+    health_probe: /me role vs admin matrix
+    failure_classes: [403, wrong_role, capability_miss]
+    security_boundary: rbac
+    evidence: registry/admin-rbac-route-matrix.v1.yaml
+    status: WIRED
+  - node_id: N-L6-PG
+    layer: L6
+    domain: PLATFORM
+    purpose: PostgreSQL + migrations + sessions + projections
+    code_owner: crates/api/migrations
+    source_ssot: crates/api/migrations
+    runtime_instance: DATABASE_URL
+    dependencies: []
+    consumers: [N-L5-IDENTITY, N-L6-ITINERARY, N-L6-DISPUTES, N-L6-MESSAGES, N-L6-DID-RANK, N-L6-ONBOARDING, N-L6-GROWTH, N-L6-GUIDES, N-L6-PROVIDER, ORDERS, COMMUNITY, CMS]
+    health_probe: /health/ready
+    failure_classes: [database_unavailable, migration_drift]
+    security_boundary: data
+    evidence: crates/api/migrations
+    status: WIRED
+  - node_id: N-L3-COMMUNITY
+    layer: L3
+    domain: COMMUNITY
+    purpose: Community posts / comments write
+    code_owner: crates/api/src/routes/community/posts.rs
+    source_ssot: frontend/lib/api.ts
+    runtime_instance: /api/v1/community/*
+    dependencies: [N-L4-MW, N-L5-IDENTITY, N-L6-PG]
+    consumers: [GP-02]
+    health_probe: GET /api/v1/community/feed
+    failure_classes: [401, 429, acl_deny]
+    security_boundary: session_write
+    evidence: crates/api/src/routes/community/posts.rs
+    status: WIRED
+  - node_id: N-L3-MEDIA
+    layer: L3
+    domain: MEDIA
+    purpose: Community media upload + access URL
+    code_owner: crates/api/src/routes/media.rs
+    source_ssot: crates/api/src/routes/media.rs
+    runtime_instance: /api/v1/uploads/* · /api/v1/media/access/*
+    dependencies: [N-L4-MW, N-L6-PG]
+    consumers: [GP-03]
+    health_probe: GET /api/v1/media/access (allowlisted in pause)
+    failure_classes: [413, 401, object_missing]
+    security_boundary: session_write
+    evidence: crates/api/src/routes/media.rs
+    status: WIRED
+  - node_id: N-L3-ORDERS
+    layer: L3
+    domain: ORDERS
+    purpose: Create / read orders
+    code_owner: crates/api/src/routes/orders/mod.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: /api/v1/orders
+    dependencies: [N-L5-IDENTITY, N-L6-PG, N-L7-ESCROW]
+    consumers: [GP-04]
+    health_probe: GET /api/v1/discover/orders
+    failure_classes: [401, state_illegal, chain_off]
+    security_boundary: session
+    evidence: crates/api/src/routes/orders/mod.rs
+    status: WIRED
+  - node_id: N-L3-TTG-QUOTE
+    layer: L3
+    domain: TTG_MARKET
+    purpose: TTG exchange quote (dual disclosure live vs candidate)
+    code_owner: crates/api/src/routes/governance/ttg_exchange_quote.rs
+    source_ssot: frontend/lib/governance/primaryMarketRuntimePriceSsot.ts
+    runtime_instance: GET /api/v1/governance/ttg-exchange/quote
+    dependencies: [N-L7-PM, N-L8-META]
+    consumers: [GP-06]
+    health_probe: GET quote
+    failure_classes: [candidate_shown_as_live, price_drift]
+    security_boundary: public_read
+    evidence: docs/runbook/TT-TTG-25USDC-FULL-STACK-FINAL-TRUTH-CONVERGENCE-AUDIT-LATEST.md
+    status: PRODUCT_READY_WAITING_RUNTIME
+  - node_id: N-L7-ESCROW
+    layer: L7
+    domain: ESCROW
+    purpose: Official createEscrow on EscrowFactoryV2Wired
+    code_owner: contracts/src
+    source_ssot: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    runtime_instance: "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6"
+    dependencies: [N-L7-SR]
+    consumers: [GP-04]
+    health_probe: FTB address + code=yes
+    failure_classes: [wrong_factory, allowlist, pause]
+    security_boundary: mainnet
+    evidence: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    status: OFFICIAL_LIVE
+    mutation: READ_ONLY
+  - node_id: N-L7-SR
+    layer: L7
+    domain: SETTLEMENT
+    purpose: >
+      Official create path SettlementRouterFactoryTrust after Track2 T2.
+      Track1 SR 0xe5C3… is SUPERSEDED (still on-chain; Track1 CLOSED_REALITY).
+    code_owner: contracts/src
+    source_ssot: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    runtime_instance: "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147"
+    dependencies: [N-L7-FR]
+    consumers: [GP-05]
+    health_probe: Wired.settlementRouter() == this
+    failure_classes: [ftb_locked_stamp_lag, one_usdc_reality_not_pass]
+    security_boundary: mainnet
+    evidence: docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
+    status: OFFICIAL_LIVE
+    mutation: READ_ONLY
+  - node_id: N-L7-FR
+    layer: L7
+    domain: SETTLEMENT
+    purpose: FeeRouter Official live OLD 0x2aF47C… · CI-02 NEW 0xb6bf… SCHEDULED_WAITING_ETA (not executed)
+    code_owner: contracts/src
+    source_ssot: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    runtime_instance: "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72"
+    dependencies: [N-L7-TIMELOCK]
+    consumers: [GP-05, GP-07]
+    health_probe: /meta fee_router_address + Timelock CI-02 done=false
+    failure_classes: [config_not_cutover, 83_gap, scheduled_not_executed]
+    security_boundary: mainnet
+    evidence: docs/runbook/TT-CI02-EXECUTE-DAY-CHECKLIST-READONLY-LATEST.md
+    status: OFFICIAL_LIVE
+    mutation: READ_ONLY
+  - node_id: N-L7-PM
+    layer: L7
+    domain: TTG_MARKET
+    purpose: PrimaryMarket proxy · L7 $25 4e16 · Official www still GOV-04 1e18 bake WAIT
+    code_owner: contracts/src/TtgPrimaryMarketV1.sol
+    source_ssot: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    runtime_instance: "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce"
+    dependencies: [N-L7-P4CAP, N-L7-TIMELOCK]
+    consumers: [GP-06]
+    health_probe: EIP-1967 impl + ttgPerUsdcUnit
+    failure_classes: [live_vs_target_drift, scheduled_not_executed]
+    security_boundary: mainnet
+    evidence: docs/runbook/TT-PM25USDC-EXECUTE-VERIFIED-LATEST.md
+    status: PRODUCT_READY_WAITING_RUNTIME
+    mutation: READ_ONLY
+  - node_id: N-L7-P4CAP
+    layer: L7
+    domain: TTG_MARKET
+    purpose: Treasury P4Cap
+    code_owner: contracts/src
+    source_ssot: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    runtime_instance: "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+    dependencies: [N-L7-TIMELOCK]
+    consumers: [GP-06, GP-07]
+    health_probe: FTB
+    failure_classes: [cap, allowlist]
+    security_boundary: mainnet
+    evidence: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    status: OFFICIAL_LIVE
+    mutation: READ_ONLY
+  - node_id: N-L7-GOV
+    layer: L7
+    domain: GOVERNANCE
+    purpose: Governor
+    code_owner: contracts/src
+    source_ssot: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    runtime_instance: "0x46Ce671b04d21760e496646bb370ADEbC374ea4d"
+    dependencies: [N-L7-TIMELOCK]
+    consumers: [GP-08]
+    health_probe: FTB
+    failure_classes: [proposal_not_queued, eta]
+    security_boundary: mainnet
+    evidence: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    status: OFFICIAL_LIVE
+    mutation: READ_ONLY
+  - node_id: N-L7-TIMELOCK
+    layer: L7
+    domain: GOVERNANCE
+    purpose: Governance Timelock delay=48h · remaining wait CI-02 hop B + PM $25 Official www bake
+    code_owner: contracts/src
+    source_ssot: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    runtime_instance: "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7"
+    dependencies: []
+    consumers: [GP-08, N-L7-PM, N-L7-FR]
+    health_probe: operations(opId).done
+    failure_classes: [WAITING_ETA, premature_execute]
+    security_boundary: mainnet
+    evidence: docs/runbook/TT-STAGE83-WAIT-WINDOW-PARALLEL-CLOSURE-LATEST.md
+    status: PRODUCT_READY_WAITING_RUNTIME
+    mutation: READ_ONLY
+  - node_id: N-L7-VAULT
+    layer: L7
+    domain: STEWARD
+    purpose: RegionStewardVault JP — CI-03 NOT_DEPLOYED (no mainnet address; /meta region_vault=null)
+    code_owner: contracts/src
+    source_ssot: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    runtime_instance: see 83-GROUNDED / FTB gap
+    dependencies: [N-L7-FR]
+    consumers: [GP-07]
+    health_probe: 83-GROUNDED
+    failure_classes: [NOT_DEPLOYED, 83_final_gap]
+    security_boundary: mainnet
+    evidence: docs/runbook/TT-STAGE83-VACANCY-CONTRACT-IMPACT-CLOSURE-CHECKLIST-LATEST.md
+    status: DESIGN_ONLY
+    mutation: READ_ONLY
+  - node_id: N-L8-INDEXER
+    layer: L8
+    domain: PLATFORM
+    purpose: Event ingestion + checkpoint. Chain success ≠ product knows.
+    code_owner: crates/api/src/chain/indexer.rs
+    source_ssot: crates/api/src/chain/indexer.rs
+    runtime_instance: GET /meta indexer.checkpoint
+    dependencies: [N-L7-ESCROW, N-L7-SR, N-L7-PM]
+    consumers: [GP-04, GP-05, GP-06, GP-08]
+    health_probe: GET /meta indexer.checkpoint
+    failure_classes: [checkpoint_stall, abi_filter_miss, address_miss]
+    security_boundary: observe
+    evidence: crates/api/src/routes/health_meta/handlers.rs
+    status: WIRED
+    mutation: READ_ONLY
+  - node_id: N-L8-META
+    layer: L8
+    domain: PLATFORM
+    purpose: GET /meta runtime truth surface (build, pause, contracts, indexer)
+    code_owner: crates/api/src/routes/health_meta/handlers.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: GET /meta
+    dependencies: [N-L8-INDEXER, N-L8-FTB]
+    consumers: [N-L0-WEB, GP-06]
+    health_probe: GET /meta + /meta/build
+    failure_classes: [408_timeout, contract_key_drift]
+    security_boundary: public_read
+    evidence: crates/api/src/routes/health_meta/handlers.rs
+    status: WIRED
+    mutation: READ_ONLY
+  - node_id: N-L8-FTB
+    layer: L8
+    domain: PLATFORM
+    purpose: Final Truth Baseline — LOCKED stamp 20260812. Living L7/L8 overlay is the reconciliation pack. Do not overwrite FTB from /meta.
+    code_owner: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    source_ssot: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    runtime_instance: ACTIVE_UNIQUE_SSOT
+    dependencies: []
+    consumers: [N-L8-META, N-L8-GO]
+    health_probe: python scripts/dev/check-l7-l8-reality-reconciliation.py
+    failure_classes: [stale_incomplete_narrative, ftb_locked_stamp_lag]
+    security_boundary: governance
+    evidence: docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
+    status: OFFICIAL_LIVE
+    mutation: READ_ONLY
+  - node_id: N-L8-GO
+    layer: L8
+    domain: PLATFORM
+    purpose: TT_PRODUCTION_GO / Hard Gate — not flipped by this architecture pack
+    code_owner: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    source_ssot: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    runtime_instance: NO_GO
+    dependencies: [N-L8-FTB]
+    consumers: [Owner]
+    health_probe: TT_PRODUCTION_GO key
+    failure_classes: [false_completion]
+    security_boundary: governance
+    evidence: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    status: BLOCKED
+    mutation: READ_ONLY
+  - node_id: N-L3-ITINERARY
+    layer: L3
+    domain: ITINERARY
+    purpose: Homepage AI / custom itinerary create + owner drafts
+    code_owner: crates/api/src/routes/itineraries.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: POST /api/v1/itineraries
+    dependencies: [N-L4-MW, N-L5-ITINERARY, N-L6-ITINERARY]
+    consumers: [GP-04]
+    health_probe: POST /api/v1/itineraries (session)
+    failure_classes: [401_login_required, 503_database_unavailable, 404_draft_not_found]
+    security_boundary: session
+    evidence: crates/api/src/routes/itineraries.rs
+    status: OFFICIAL_LIVE
+  - node_id: N-L5-ITINERARY
+    layer: L5
+    domain: ITINERARY
+    purpose: Session actor + draft owner ACL (id AND owner_user_id; miss ≡ not found)
+    code_owner: crates/api/src/routes/itineraries.rs
+    source_ssot: crates/api/src/db/itinerary_custom_drafts.rs
+    runtime_instance: extract_user_with_session_check → owner_user_id
+    dependencies: [N-L5-IDENTITY, N-L4-MW]
+    consumers: [N-L3-ITINERARY, GP-04]
+    health_probe: POST /api/v1/itineraries without Bearer → 401 login_required
+    failure_classes: [401_login_required, draft_owner_miss_as_404]
+    security_boundary: session_owner
+    evidence: crates/api/src/db/itinerary_custom_drafts.rs
+    status: WIRED
+  - node_id: N-L6-ITINERARY
+    layer: L6
+    domain: ITINERARY
+    purpose: Off-chain itinerary persistence (draft + order snapshot). Not L7.
+    code_owner: crates/api/src/db/itineraries.rs
+    source_ssot: crates/api/migrations/20250228000006_itineraries.sql
+    runtime_instance: itinerary_custom_drafts · itineraries
+    dependencies: [N-L6-PG]
+    consumers: [N-L3-ITINERARY, N-L5-ITINERARY]
+    health_probe: select_itinerary_custom_draft_by_id_for_owner
+    failure_classes: [503_database_unavailable, dual_write_skip]
+    security_boundary: data
+    evidence: crates/api/migrations/20260427103000_itinerary_custom_drafts.sql
+    status: WIRED
+  - node_id: N-L3-DISPUTES
+    layer: L3
+    domain: DISPUTES
+    purpose: Order dispute list/detail/open/resolve
+    code_owner: crates/api/src/routes/disputes.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: /api/v1/disputes
+    dependencies: [N-L4-MW, N-L5-DISPUTES, N-L6-DISPUTES]
+    consumers: [GP-04]
+    health_probe: GET /api/v1/disputes + Bearer
+    failure_classes: [401_login_required, 403_or_404_acl]
+    security_boundary: session_acl
+    evidence: crates/api/src/routes/disputes.rs
+    status: WIRED
+  - node_id: N-L5-DISPUTES
+    layer: L5
+    domain: DISPUTES
+    purpose: R-RBAC-DISPUTE-REVIEW-AUTH-1 — party/arbitrator/admin; else 404
+    code_owner: crates/api/src/routes/disputes.rs
+    source_ssot: crates/api/src/db/disputes.rs
+    runtime_instance: privileged=admin|super_admin|arbitrator else tourist_id|guides.user_id|arbitrator_id
+    dependencies: [N-L5-IDENTITY]
+    consumers: [N-L3-DISPUTES]
+    health_probe: GET /api/v1/disputes no session → 401 login_required
+    failure_classes: [401_login_required, 404_non_party]
+    security_boundary: order_party_or_privileged
+    evidence: crates/api/src/db/disputes.rs
+    status: WIRED
+  - node_id: N-L6-DISPUTES
+    layer: L6
+    domain: DISPUTES
+    purpose: PostgreSQL disputes envelope joined to orders. Not chain escrow truth.
+    code_owner: crates/api/src/db/disputes.rs
+    source_ssot: crates/api/migrations/20250228000004_reviews_disputes.sql
+    runtime_instance: disputes · orders · guides
+    dependencies: [N-L6-PG]
+    consumers: [N-L5-DISPUTES, N-L3-DISPUTES]
+    health_probe: list_disputes_public_page
+    failure_classes: [503_database_unavailable]
+    security_boundary: data
+    evidence: crates/api/migrations/20250228000004_reviews_disputes.sql
+    status: WIRED
+  - node_id: N-L3-MESSAGES
+    layer: L3
+    domain: MESSAGES
+    purpose: Order thread messages (not Community DM)
+    code_owner: crates/api/src/routes/messages.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: /api/v1/orders/:id/messages
+    dependencies: [N-L4-MW, N-L5-MESSAGES, N-L6-MESSAGES]
+    consumers: [GP-04]
+    health_probe: GET /meta order_messages.chain_off_mounted
+    failure_classes: [401_login_required, 400_invalid_uuid]
+    security_boundary: order_party
+    evidence: crates/api/src/routes/messages.rs
+    status: WIRED
+  - node_id: N-L5-MESSAGES
+    layer: L5
+    domain: MESSAGES
+    purpose: Order-party ACL — tourist or guide user; non-participant 403; unknown 404
+    code_owner: crates/api/src/routes/messages.rs
+    source_ssot: crates/api/src/db/messages.rs
+    runtime_instance: orders.tourist_id | guides.user_id via orders.guide_id
+    dependencies: [N-L5-IDENTITY]
+    consumers: [N-L3-MESSAGES]
+    health_probe: GET /api/v1/orders/:id/messages no session → 401
+    failure_classes: [401_login_required, 403_non_participant, 404_unknown_order]
+    security_boundary: order_party
+    evidence: crates/api/src/routes/messages.rs
+    status: WIRED
+  - node_id: N-L6-MESSAGES
+    layer: L6
+    domain: MESSAGES
+    purpose: order_messages dual-write + startup hydrate. Not Community DM tables.
+    code_owner: crates/api/src/db/messages.rs
+    source_ssot: crates/api/migrations/20250228000007_order_messages.sql
+    runtime_instance: order_messages
+    dependencies: [N-L6-PG]
+    consumers: [N-L3-MESSAGES, N-L5-MESSAGES]
+    health_probe: GET /meta order_messages.chain_off_mounted
+    failure_classes: [503_database_unavailable]
+    security_boundary: data
+    evidence: crates/api/migrations/20250228000007_order_messages.sql
+    status: WIRED
+  - node_id: N-L3-DID-RANK
+    layer: L3
+    domain: DID_RANK
+    purpose: Public DID rank projections from completed orders/reviews
+    code_owner: crates/api/src/routes/did_rank.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: GET /api/v1/did-rank/guides
+    dependencies: [N-L5-DID-RANK, N-L6-DID-RANK]
+    consumers: [N-L0-WEB]
+    health_probe: GET /api/v1/did-rank/guides
+    failure_classes: [empty_projection, db_fallback_chain_off]
+    security_boundary: public_read
+    evidence: crates/api/src/routes/did_rank.rs
+    status: OFFICIAL_LIVE
+  - node_id: N-L5-DID-RANK
+    layer: L5
+    domain: DID_RANK
+    purpose: Public list ACL — guides exclude community_penalties active mute|ban|shadow_ban|limit_feed
+    code_owner: crates/api/src/db/community_penalties.rs
+    source_ssot: crates/api/src/routes/did_rank.rs
+    runtime_instance: AND_USER_NOT_EXCLUDED_FROM_DID_RANK_GUIDES
+    dependencies: []
+    consumers: [N-L3-DID-RANK]
+    health_probe: Official GET /api/v1/did-rank/guides 200
+    failure_classes: [penalty_filter_miss, db_fallback_skips_penalties_without_pool]
+    security_boundary: public_read_penalty_filter
+    evidence: crates/api/src/db/community_penalties.rs
+    status: OFFICIAL_LIVE
+  - node_id: N-L6-DID-RANK
+    layer: L6
+    domain: DID_RANK
+    purpose: Rank projection tables. Empty list ≠ chain fail. Not L7 stake.
+    code_owner: crates/api/src/db/did_rank_snapshots.rs
+    source_ssot: crates/api/migrations/20260531120000_did_rank_rank_snapshots.sql
+    runtime_instance: orders · reviews · community_penalties · did_rank_rank_snapshots
+    dependencies: [N-L6-PG]
+    consumers: [N-L3-DID-RANK, N-L5-DID-RANK]
+    health_probe: Official GET /api/v1/did-rank/guides 200
+    failure_classes: [empty_projection, db_fallback_chain_off]
+    security_boundary: data_projection
+    evidence: crates/api/migrations/20260406000034_community_penalties.sql
+    status: WIRED
+  - node_id: N-L3-ONBOARDING
+    layer: L3
+    domain: ONBOARDING
+    purpose: Role fee quote / payment-intent / entitlement / Stripe hook
+    code_owner: crates/api/src/routes/onboarding/mod.rs
+    source_ssot: crates/api/src/routes/onboarding/mod.rs
+    runtime_instance: /api/v1/onboarding/*
+    dependencies: [N-L4-MW, N-L5-ONBOARDING, N-L6-ONBOARDING]
+    consumers: [GP-01]
+    health_probe: GET /api/v1/onboarding/quote
+    failure_classes: [401, 429, stripe_disabled_null_secret]
+    security_boundary: session
+    evidence: crates/api/src/routes/onboarding/mod.rs
+    status: WIRED
+  - node_id: N-L5-ONBOARDING
+    layer: L5
+    domain: ONBOARDING
+    purpose: Quote public+rate; entitlements/me 401; write 429; role-confirm needs entitlement
+    code_owner: crates/api/src/routes/onboarding/quote.rs
+    source_ssot: crates/api/src/db/_onboarding_legacy_monolith.rs
+    runtime_instance: onboarding_quote_rate_limited · onboarding_entitlement_required
+    dependencies: [N-L5-IDENTITY, N-L4-MW]
+    consumers: [N-L3-ONBOARDING]
+    health_probe: GET /api/v1/onboarding/entitlements/me no session → 401
+    failure_classes: [401_login_required, 429_onboarding_quote_rate_limited, onboarding_entitlement_required]
+    security_boundary: mixed_public_session
+    evidence: crates/api/src/routes/onboarding/tests.rs
+    status: WIRED
+  - node_id: N-L6-ONBOARDING
+    layer: L6
+    domain: ONBOARDING
+    purpose: Fiat onboarding rows. Orthogonal to USDC escrow L7 (pack 06).
+    code_owner: crates/api/src/db/_onboarding_legacy_monolith.rs
+    source_ssot: crates/api/migrations/20260505100000_onboarding_entitlements_payment_events.sql
+    runtime_instance: onboarding_entitlements · onboarding_payment_events · onboarding_compliance_audit_events
+    dependencies: [N-L6-PG]
+    consumers: [N-L3-ONBOARDING, N-L5-ONBOARDING]
+    health_probe: GET /api/v1/onboarding/quote
+    failure_classes: [503_database_unavailable, stripe_disabled_null_secret]
+    security_boundary: data
+    evidence: crates/api/migrations/20260506100000_onboarding_compliance_audit_events.sql
+    status: WIRED
+  - node_id: N-L3-GROWTH
+    layer: L3
+    domain: GROWTH
+    purpose: Referral validate + me/referrals + trust-growth ingest
+    code_owner: crates/api/src/routes/growth/mod.rs
+    source_ssot: crates/api/src/routes/growth/mod.rs
+    runtime_instance: /api/v1/growth/referrals/validate
+    dependencies: [N-L5-GROWTH, N-L6-GROWTH]
+    consumers: [GP-01]
+    health_probe: GET /api/v1/growth/referrals/validate
+    failure_classes: [401_login_required, 503_database_unavailable]
+    security_boundary: mixed_public_session
+    evidence: crates/api/src/routes/me_referrals.rs
+    status: WIRED
+  - node_id: N-L5-GROWTH
+    layer: L5
+    domain: GROWTH
+    purpose: Validate is public; GET /api/v1/me/referrals requires session
+    code_owner: crates/api/src/routes/me_referrals.rs
+    source_ssot: crates/api/src/db/growth_referral.rs
+    runtime_instance: extract_user_with_session_check on /me/referrals
+    dependencies: [N-L5-IDENTITY]
+    consumers: [N-L3-GROWTH]
+    health_probe: GET /api/v1/me/referrals no Bearer → 401 login_required
+    failure_classes: [401_login_required, referral_code_required, growth_db_unavailable]
+    security_boundary: mixed_public_session
+    evidence: crates/api/src/routes/me_referrals.rs
+    status: WIRED
+  - node_id: N-L6-GROWTH
+    layer: L6
+    domain: GROWTH
+    purpose: Referral + ledger + trust-growth control tables
+    code_owner: crates/api/src/db/growth_referral.rs
+    source_ssot: crates/api/migrations/20260607120200_cms_growth_p3.sql
+    runtime_instance: referral_codes · referral_events · growth_point_ledger · trust_growth_control
+    dependencies: [N-L6-PG]
+    consumers: [N-L3-GROWTH, N-L5-GROWTH]
+    health_probe: GET /api/v1/growth/referrals/validate
+    failure_classes: [503_database_unavailable, growth_db_unavailable]
+    security_boundary: data
+    evidence: crates/api/migrations/20260426120000_trust_growth_obs_control.sql
+    status: WIRED
+  - node_id: N-L3-GUIDES
+    layer: L3
+    domain: GUIDES
+    purpose: Public guide catalog + create/stake
+    code_owner: crates/api/src/routes/guides.rs
+    source_ssot: docs/spec/04-后端与API.md
+    runtime_instance: GET /api/v1/guides
+    dependencies: [N-L5-GUIDES, N-L6-GUIDES]
+    consumers: [GP-04]
+    health_probe: bash scripts/gates/vertical-slice-01-guides-catalog.sh
+    failure_classes: [empty_catalog, 401, stake_not_on_list]
+    security_boundary: public_list_session_write
+    evidence: scripts/gates/vertical-slice-01-guides-catalog.sh
+    status: OFFICIAL_LIVE
+  - node_id: N-L5-GUIDES
+    layer: L5
+    domain: GUIDES
+    purpose: Public list status=active; POST create/stake session login_required
+    code_owner: crates/api/src/chain_off/guides.rs
+    source_ssot: crates/api/src/routes/guides.rs
+    runtime_instance: guides_list_impl status==active · extract_user_with_session_check on write
+    dependencies: [N-L5-IDENTITY]
+    consumers: [N-L3-GUIDES, GP-04]
+    health_probe: Official GET /api/v1/guides 200
+    failure_classes: [401_login_required, 400_invalid_uuid, empty_catalog]
+    security_boundary: public_list_session_write
+    evidence: crates/api/src/chain_off/guides.rs
+    status: OFFICIAL_LIVE
+  - node_id: N-L6-GUIDES
+    layer: L6
+    domain: GUIDES
+    purpose: guides.stake_amount is PG TEXT catalog. Official /meta guide_staking_address=null — not L7.
+    code_owner: crates/api/src/db/guides.rs
+    source_ssot: crates/api/migrations/20250228000002_guides.sql
+    runtime_instance: guides
+    dependencies: [N-L6-PG]
+    consumers: [N-L3-GUIDES, N-L5-GUIDES]
+    health_probe: Official GET /api/v1/guides 200
+    failure_classes: [empty_catalog, db_stake_shown_as_chain]
+    security_boundary: data
+    evidence: crates/api/src/db/guides.rs
+    status: WIRED
+  - node_id: N-L3-PROVIDER
+    layer: L3
+    domain: PROVIDER
+    purpose: Merchant qualification application write
+    code_owner: crates/api/src/routes/provider_applications.rs
+    source_ssot: crates/api/src/routes/provider_applications.rs
+    runtime_instance: POST /api/v1/provider-applications
+    dependencies: [N-L4-MW, N-L5-PROVIDER, N-L6-PROVIDER]
+    consumers: [GP-01]
+    health_probe: POST /api/v1/provider-applications (session)
+    failure_classes: [401_login_required, 501_not_implemented]
+    security_boundary: session
+    evidence: crates/api/src/routes/provider_applications.rs
+    status: WIRED
+  - node_id: N-L5-PROVIDER
+    layer: L5
+    domain: PROVIDER
+    purpose: Session required; dual_write_after_provider_application_submit; admin review stays ADMIN
+    code_owner: crates/api/src/chain_off/provider_application.rs
+    source_ssot: crates/api/src/db/role_identity/mod.rs
+    runtime_instance: extract_user_with_session_check → role_applications kind=provider_onboarding
+    dependencies: [N-L5-IDENTITY]
+    consumers: [N-L3-PROVIDER]
+    health_probe: POST /api/v1/provider-applications no session → 401 login_required
+    failure_classes: [401_login_required, 501_not_implemented]
+    security_boundary: session
+    evidence: crates/api/src/chain_off/provider_application.rs
+    status: WIRED
+  - node_id: N-L6-PROVIDER
+    layer: L6
+    domain: PROVIDER
+    purpose: role_applications + role_documents SSOT when PG present (not a guessed provider_applications table)
+    code_owner: crates/api/src/db/role_identity/mod.rs
+    source_ssot: crates/api/migrations/20260601120000_role_identity_phase_a_dual_write.sql
+    runtime_instance: role_applications · role_documents
+    dependencies: [N-L6-PG]
+    consumers: [N-L3-PROVIDER, N-L5-PROVIDER]
+    health_probe: dual_write_after_provider_application_submit
+    failure_classes: [503_database_unavailable, dual_write_audit_only]
+    security_boundary: data
+    evidence: crates/api/migrations/20260601120000_role_identity_phase_a_dual_write.sql
+    status: WIRED

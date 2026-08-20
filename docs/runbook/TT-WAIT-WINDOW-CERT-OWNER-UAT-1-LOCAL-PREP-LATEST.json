@@ -1,0 +1,201 @@
+{
+  "schema": "traveltrust.cert_owner_uat_1.c1c2_resume.v1",
+  "pack": "CERT-OWNER-UAT-1",
+  "mode": "RESUME_FROM_STOP_BUSINESS_LOGIN_INCOMPLETE",
+  "stamp_utc": "2026-08-12T06:25:27.704Z",
+  "api": "https://api.web3-ttg.com",
+  "web": "https://www.web3-ttg.com",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "INDEXER_REALITY_CLOSED": true,
+  "wallet_keys_used": false,
+  "forbidden_wallet_keys_policy": "NEVER_READ_PRINT_OR_USE",
+  "prior_pass_not_rerun": [
+    "PUB-*",
+    "ADMIN-*",
+    "INDEXER_CHECKPOINT",
+    "FACTORY_WIRED"
+  ],
+  "alchemy_key_rotation": {
+    "class": "NON_BLOCKING_PRE_GO_SECURITY_HYGIENE",
+    "accepted_continue_current_key": true
+  },
+  "rows": [
+    {
+      "id": "C1-LOGIN",
+      "ok": true,
+      "http": 200,
+      "token_present": true,
+      "error": null,
+      "email_fp": "pla…@gmail.co"
+    },
+    {
+      "id": "C1-ME",
+      "ok": true,
+      "http": 200,
+      "role": "super_admin",
+      "has_trust": true
+    },
+    {
+      "id": "C1-GUIDE-PROFILE",
+      "ok": true,
+      "http": 200,
+      "auth_fail": false
+    },
+    {
+      "id": "C1-MERCHANT-PROFILE",
+      "ok": true,
+      "http": 404,
+      "auth_fail": false
+    },
+    {
+      "id": "C1-ACQUISITION-PROFILE",
+      "ok": true,
+      "http": 200,
+      "auth_fail": false
+    },
+    {
+      "id": "C1-REGION-STEWARD-PROFILE",
+      "ok": true,
+      "http": 404,
+      "auth_fail": false
+    },
+    {
+      "id": "C1-ORDERS",
+      "ok": true,
+      "http": 200,
+      "auth_fail": false
+    },
+    {
+      "id": "C1-ME-STATS",
+      "ok": true,
+      "http": 200,
+      "auth_fail": false
+    },
+    {
+      "id": "C1-DISCOVER",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "C1-GUIDES-LIST",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "C1-COMMUNITY-FEED",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "C1-SESSION-REFRESH-OR-PERSIST",
+      "ok": true,
+      "refresh_http": 200,
+      "me_after_ok": true
+    },
+    {
+      "id": "C2-LOGIN",
+      "ok": true,
+      "http": 200,
+      "token_present": true,
+      "error": null,
+      "email_fp": "yin…@gmail.co"
+    },
+    {
+      "id": "C2-ME",
+      "ok": true,
+      "http": 200,
+      "role": "tourist"
+    },
+    {
+      "id": "C2-DISCOVER",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "C2-GUIDES-LIST",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "C2-COMMUNITY-FEED",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "C2-ORDERS",
+      "ok": true,
+      "http": 200
+    },
+    {
+      "id": "C2-NEG-MERCHANT-PROFILE-WRITE",
+      "ok": true,
+      "http": 405,
+      "expect": "deny"
+    },
+    {
+      "id": "C2-NEG-GUIDE-PROFILE-WRITE",
+      "ok": true,
+      "http": 405,
+      "expect": "deny"
+    },
+    {
+      "id": "C2-NEG-ADMIN-CAMPAIGNS",
+      "ok": true,
+      "http": 403,
+      "expect": "401/403"
+    },
+    {
+      "id": "C2-LOGOUT-SESSION-BOUNDARY",
+      "ok": true,
+      "logout_http": 200,
+      "me_after_http": 401
+    },
+    {
+      "id": "REALITY-CITE-FACTORY",
+      "ok": true,
+      "factory_prefix": "0xEE0BE3a8…"
+    },
+    {
+      "id": "REALITY-CITE-INDEXER",
+      "ok": true,
+      "last_block": 25735399,
+      "events_cached": 4
+    }
+  ],
+  "coverage_gaps": [
+    {
+      "id": "REGION_STEWARD_SLOT",
+      "note": "C1 region-steward-profile 404 — 区域主理人槽位未在该账号启用；不得用 Admin 冒充"
+    },
+    {
+      "id": "PURE_C3_GUIDE_VS_C4_MERCHANT_ISOLATION",
+      "note": "仅 C1+C2 无法证明「纯向导 vs 纯商家」互斥写权限；需独立 C3/C4 才闭合。本轮不冒充、不 Admin 补绿。"
+    }
+  ],
+  "blockers": [],
+  "non_blocking_debts": [],
+  "verdict": "CERT_OWNER_UAT_CLOSED",
+  "next": [
+    "WC_REAL_DEVICE_OWNER_MANUAL",
+    "LEGAL_PAY_PRE_GO",
+    "FINAL_REGRESSION_SOAK",
+    "FRESH_HARD_GATE"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

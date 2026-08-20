@@ -10,7 +10,9 @@
 # Historical EscrowFactoryV2 0x0520… = lineage only (no settlementRouter).
 # Money path: MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED · USER_FUNDS=0 · TT_PRODUCTION_GO=NO_GO
 # Dual wait (historical 2026-08-12): Track2+GOV-04 EXECUTED 2026-08-14 (see recon overlay).
-# Living remaining (this batch): GAP-E2E-JOURNEY + AXIS-14. CI-02 hop B / www bake FORBIDDEN.
+# Living remaining for Production GO: Owner written GO vs continue NO_GO (Cycle2 READY_FOR_OWNER).
+# GAP-E2E-JOURNEY hop CLOSED_REALITY. AXIS-14 living Hard Gate AUTHORIZED_FOR_WAVE open_axes=0.
+# Official product truth = OPS-2026.08.20-v9 / 3e356617 / 2026-08-20T00:51:57Z / hybrid-live-auth-pin-nontarget-v9-20260820. CI-02 hop B / www bake FORBIDDEN.
 # Owner A 1 USDC money-path PASS (do not replay). Track1 SR KEEP listed. SR-FT = create hop /meta. ≠ GO
 
 schema: traveltrust.mainnet_address_registry.v1
@@ -43,11 +45,13 @@ network:
   broadcast_authorized: false
   money_path: MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED
   # living: Track2 T1/T2 executed · Wired → SR-FT · Owner A 1 USDC money-path PASS
-  # Official book remainder GAP-E2E-JOURNEY. Parent FTB 20260812 immutable.
+  # Official book hop CLOSED_REALITY; GO remaining = Owner written verdict. Parent FTB 20260812 immutable.
   # FTB 20260812 table lag EXPLAINED — do not rewrite FTB bytes from /meta
   # FORBIDDEN living reads: MAINNET_MONEY_PATH_INCOMPLETE · Settlement/Fee UNSET · Track1 WAITING_ETA
   # FORBIDDEN claims: Official www 1e18 = $25 live bake · CI-02 NEW FR = Official fee_router · 1 USDC PASS
   dual_wait: SCHEDULED_WAITING_ETA_CI02_PM25
+  # living overlay: PM $25 L7 execute historically CLOSED; CI-02 hop B still WAIT/FORBIDDEN.
+  # GO remaining = Owner written verdict (Cycle2 READY_FOR_OWNER). Do not recast this enum string.
   dual_wait_ssot: docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
   P0_COMMERCIAL_MONEY_PATH_BLOCKER: false
 
@@ -438,7 +442,8 @@ contracts:
         After Track2 T2 (2026-08-14) Wired no longer points here. Official create path = SR-FT.
         FTB 20260812 table still labels this Official live (LOCKED stamp lag). Do not rewrite FTB.
         TT_PRODUCTION_GO=NO_GO. P0_COMMERCIAL_MONEY_PATH_BLOCKER=false after Owner A 1 USDC money-path PASS.
-        KEEP listing remains Track1 SR for alignment pin. Official book remainder = GAP-E2E-JOURNEY.
+        KEEP listing remains Track1 SR for alignment pin. Official book hop GAP-E2E CLOSED_REALITY.
+        GO remaining = Owner written verdict. Do not rewrite KEEP from /meta SR-FT.
       living_cite: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
 
     settlement_router_factory_trust:
@@ -461,7 +466,7 @@ contracts:
       wait_until_utc: "2026-08-14T09:03:11Z"
       note: >
         WIRED Official create path (L7+L8). T1/T2 done=true. Owner A 1 USDC money-path PASS.
-        Official book remainder = GAP-E2E-JOURNEY. FTB parent 20260812 immutable. Do not rewrite parent bytes.
+        Official book hop CLOSED_REALITY; GO remaining = Owner written verdict. FTB parent 20260812 immutable. Do not rewrite parent bytes.
         SSOT overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
       living_cite: docs/runbook/TT-TRACK2-SAME-WAVE-OFFICIAL-CUT-RESULT-LATEST.md
       dual_wait_ssot: docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md

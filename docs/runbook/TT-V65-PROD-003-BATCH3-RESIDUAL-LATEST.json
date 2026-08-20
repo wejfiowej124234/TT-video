@@ -99,7 +99,11 @@
         "owner_review_pack": {
           "action": "OWNER_REVIEW_CUT_C_STAGING_PACK",
           "submitted_at": "20260806T080500Z",
-          "status": "SUBMITTED_AWAITING_OWNER_SIGN_OFF",
+          "status": "OWNER_SIGNED",
+          "signed_at": "20260806T081200Z",
+          "signed_by": "Sebastian Ward（塞巴斯蒂安·沃德）",
+          "sign_off_mode": "SOLO_OWNER_SELF_APPROVAL",
+          "result": "SIGNED_ENTER_RC_EVAL",
           "baseline_pin": "V65-PROD-CAND-20260802",
           "web3_freeze_pin": "PSG-REL-20260720-WEB3-CAND-V2",
           "product_tip": "106feef436f205c7286d789b8ff9704c0fb28f48",
@@ -124,17 +128,40 @@
           "tt_production_go": "NO_GO",
           "forbidden": [
             "no_new_engineering_scope",
-            "no_production_deploy",
+            "no_production_deploy_until_unique_rc",
+            "no_staging_tip_or_old_artifact_prod_deploy",
             "no_tt_production_go_flip",
-            "no_web3_mix_track"
+            "no_web3_mix_track",
+            "no_web3_pin_change"
           ],
           "after_owner_sign_off": "RELEASE_CANDIDATE_EVALUATION",
-          "honesty": "Staging smoke PASS != Owner GO != Production GO; Residual CLOSED != Production GO"
+          "solo_ladder": [
+            "CUT_C_OWNER_SIGN_OFF",
+            "V65_RELEASE_CANDIDATE_EVALUATION",
+            "UNIQUE_PRODUCTION_RELEASE_CANDIDATE",
+            "PRODUCTION_DEPLOY_RC_ONLY",
+            "PRODUCTION_HUMAN_UAT",
+            "TT_PRODUCTION_GO_DECISION"
+          ],
+          "honesty": "Owner Sign-off != Production GO; Staging PASS != Production GO; Residual CLOSED != Production GO; unique RC required before Production deploy",
+          "evidence_stamp": "evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T081200Z",
+          "rc_eval_ssot": "docs/runbook/TT-V65-RELEASE-CANDIDATE-EVALUATION-LATEST.json"
         },
         "next": {
-          "action": "AWAITING_OWNER_SIGN_OFF_THEN_RC_EVAL",
+          "action": "RELEASE_CANDIDATE_EVALUATION",
           "cut": "CUT_C",
-          "note": "Cut C SSOT/Evidence pack submitted; no Production GO; no new eng scope"
+          "scope": "Cut C Owner Sign-off recorded; enter V65 RC Evaluation; mint unique Production RC only after RC PASS; Production deploy forbidden until unique RC; TT_PRODUCTION_GO=NO_GO",
+          "honesty": "Owner Sign-off != Production GO; unique RC != Staging tip; Production Human UAT required before TT_PRODUCTION_GO",
+          "tt_production_go": "NO_GO",
+          "note": "Sign-off 20260806T081200Z · smoke 20260806T075010Z · tip 106feef4… · Web3 freeze orthogonal · NO_GO"
+        },
+        "staging_owner_sign_off": {
+          "status": "SIGNED",
+          "signed_at": "20260806T081200Z",
+          "owner": "Sebastian Ward（塞巴斯蒂安·沃德）",
+          "mode": "SOLO_OWNER_SELF_APPROVAL",
+          "result": "ENTER_RELEASE_CANDIDATE_EVALUATION",
+          "tt_production_go": "NO_GO"
         }
       }
     },
@@ -1990,7 +2017,7 @@
         "V65-PROD-003-B3-R039",
         "V65-PROD-003-B3-R041"
       ],
-      "owner_review_pack": "SUBMITTED_AWAITING_OWNER_SIGN_OFF"
+      "owner_review_pack": "OWNER_SIGNED"
     }
   },
   "honesty": {
@@ -2044,7 +2071,11 @@
     "cut_c_full_closed_staging_verified": true,
     "cut_c_staging_runtime_verified_is_not_production_go": true,
     "cut_c_owner_review_pack_submitted": true,
-    "cut_c_owner_review_is_not_production_go": true
+    "cut_c_owner_review_is_not_production_go": true,
+    "cut_c_owner_staging_sign_off": true,
+    "cut_c_owner_sign_off_is_not_production_go": true,
+    "unique_rc_required_before_production_deploy": true,
+    "staging_tip_forbidden_for_production_deploy": true
   },
   "observed_at": "20260806T044213Z",
   "freeze_stamp": "20260804T132141Z",
@@ -2083,17 +2114,17 @@
   },
   "owner_validated_current_fe_tip": true,
   "generated_at": "20260806T050409Z",
-  "source_of_truth": "Cut C FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED 20260806T075500Z; Staging smoke PASS 20260806T075010Z; 11 R-IDs CLOSED (R011/R017/R018/R023/R024/R026/R027/R028/R038/R039/R041); evidence evidence/GO_v65_prod_003_batch3_cut_c_eng_wave/20260806T075010Z; FE tip 106feef436f205c7286d789b8ff9704c0fb28f48; API tip 1915ec4da828e0139e90a85cd321415fdb6e53d9; Cut B FULL_CLOSED retained (R012/R019); PAGE_SURFACE_DRIFT = ED (OD-C-05); R013 DEFER + misc P2 Owner-accept remain open_non_blocking; TT_PRODUCTION_GO=NO_GO",
-  "blocking_for_go": "Cut C P1/P2 residuals CLOSED on Staging; remaining blockers: R013 DEFER + misc P2 Owner-accept + historical Release Cert rerun + Staging RC / Production Entry gates. Enterprise L5 Ready=false · Production GO Review blocked · TT_PRODUCTION_GO=NO_GO.",
-  "updated_at": "20260806T075500Z",
-  "updated_by": "cut_c_eng_wave_staging_residual_close",
+  "source_of_truth": "Cut C Owner Sign-off 20260806T081200Z (solo self-approval); Staging smoke PASS 20260806T075010Z; 11 R-IDs CLOSED; FE tip 106feef436f205c7286d789b8ff9704c0fb28f48; API tip 1915ec4da828e0139e90a85cd321415fdb6e53d9; enter RELEASE_CANDIDATE_EVALUATION; unique Production RC required before Production deploy; Web3 freeze PSG-REL-20260720-WEB3-CAND-V2 orthogonal; TT_PRODUCTION_GO=NO_GO",
+  "blocking_for_go": "Cut C Owner Sign-off recorded; remaining: V65 Release Candidate Evaluation PASS → unique Production RC → Production deploy (RC only) → Production Human UAT Evidence → Owner TT_PRODUCTION_GO decision. R013 DEFER + misc P2 Owner-accept remain non-blocking. Web3 freeze independent. TT_PRODUCTION_GO=NO_GO.",
+  "updated_at": "20260806T081200Z",
+  "updated_by": "cut_c_owner_sign_off_solo_enter_rc_eval",
   "next": {
-    "action": "OWNER_REVIEW_CUT_C_STAGING_PACK",
+    "action": "RELEASE_CANDIDATE_EVALUATION",
     "cut": "CUT_C",
-    "scope": "Cut C FULL_CLOSED_OD_LOCKED_STAGING_VERIFIED; Owner review Staging pack; keep NO_GO; no Production; no Web3; do not reopen R012/R019",
-    "honesty": "RUNTIME_VERIFIED ≠ OWNER_VALIDATED ≠ CLOSED ≠ Production GO; Staging smoke PASS ≠ Owner GO ≠ Production GO",
+    "scope": "Cut C Owner Sign-off recorded; enter V65 RC Evaluation; mint unique Production RC only after RC PASS; Production deploy forbidden until unique RC; TT_PRODUCTION_GO=NO_GO",
+    "honesty": "Owner Sign-off != Production GO; unique RC != Staging tip; Production Human UAT required before TT_PRODUCTION_GO",
     "tt_production_go": "NO_GO",
-    "note": "Smoke 20260806T075010Z · residual close 20260806T075500Z · tip 106feef4… · TT_PRODUCTION_GO=NO_GO"
+    "note": "Sign-off 20260806T081200Z · smoke 20260806T075010Z · tip 106feef4… · Web3 freeze orthogonal · NO_GO"
   },
   "release_cert_stamp": "20260804T231322Z",
   "release_cert_verdict": "PASS_WITH_NON_BLOCKING_OPEN",
@@ -2330,5 +2361,22 @@
     "staging_pass_stamp": "20260806T044213Z",
     "note": "Cut B Final State CONSOLIDATED; buckets CLOSED/DEFER/ED/Cut_C_Candidate_Scope; PAGE_SURFACE_DRIFT must not reopen R012/R019"
   },
-  "honesty_line": "Staging smoke PASS != Owner GO != Production GO; Residual CLOSED != Production GO; TT_PRODUCTION_GO=NO_GO"
+  "honesty_line": "Staging smoke PASS != Owner GO != Production GO; Residual CLOSED != Production GO; TT_PRODUCTION_GO=NO_GO",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

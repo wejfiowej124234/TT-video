@@ -1,0 +1,423 @@
+{
+  "schema": "traveltrust.v65_admin_console_enterprise_ux_operability.v1",
+  "stamp": "20260803T001504Z",
+  "gaps": [
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/auth-audit-events",
+      "missing_state": "loading|error",
+      "surface": "/admin/auth-audit-events",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/backup",
+      "missing_state": "loading|error",
+      "surface": "/admin/backup",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/compliance",
+      "missing_state": "loading|error",
+      "surface": "/admin/compliance",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/conversion-analytics",
+      "missing_state": "loading|error",
+      "surface": "/admin/conversion-analytics",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/growth",
+      "missing_state": "loading|error",
+      "surface": "/admin/growth",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/guide-applications",
+      "missing_state": "loading|error",
+      "surface": "/admin/guide-applications",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/net-profit-ledger",
+      "missing_state": "loading|error",
+      "surface": "/admin/net-profit-ledger",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/operator-guide",
+      "missing_state": "loading|error",
+      "surface": "/admin/operator-guide",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/vacancy-ledger",
+      "missing_state": "loading|error",
+      "surface": "/admin/vacancy-ledger",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/steward-applications/[id]",
+      "missing_state": "loading|error",
+      "surface": "/admin/steward-applications/[id]",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/region-share/reconcile",
+      "missing_state": "loading|error",
+      "surface": "/admin/region-share/reconcile",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/provider-applications/[id]",
+      "missing_state": "loading|error",
+      "surface": "/admin/provider-applications/[id]",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/onboarding/compliance-audit",
+      "missing_state": "loading|error",
+      "surface": "/admin/onboarding/compliance-audit",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/onboarding/entitlements",
+      "missing_state": "loading|error",
+      "surface": "/admin/onboarding/entitlements",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/onboarding/payment-events",
+      "missing_state": "loading|error",
+      "surface": "/admin/onboarding/payment-events",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/onboarding/webhook-jobs",
+      "missing_state": "loading|error",
+      "surface": "/admin/onboarding/webhook-jobs",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/onboarding/entitlements/[id]",
+      "missing_state": "loading|error",
+      "surface": "/admin/onboarding/entitlements/[id]",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/official/accounts",
+      "missing_state": "loading|error",
+      "surface": "/admin/official/accounts",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/official/cold-start",
+      "missing_state": "loading|error",
+      "surface": "/admin/official/cold-start",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/official/guides",
+      "missing_state": "loading|error",
+      "surface": "/admin/official/guides",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/official/itinerary-templates",
+      "missing_state": "loading|error",
+      "surface": "/admin/official/itinerary-templates",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/official/public-operations",
+      "missing_state": "loading|error",
+      "surface": "/admin/official/public-operations",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/guide-applications/[id]",
+      "missing_state": "loading|error",
+      "surface": "/admin/guide-applications/[id]",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/growth/airdrop-campaigns",
+      "missing_state": "loading|error",
+      "surface": "/admin/growth/airdrop-campaigns",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/growth/analytics",
+      "missing_state": "loading|error",
+      "surface": "/admin/growth/analytics",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/growth/anti-fraud",
+      "missing_state": "loading|error",
+      "surface": "/admin/growth/anti-fraud",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/growth/early-bird",
+      "missing_state": "loading|error",
+      "surface": "/admin/growth/early-bird",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/growth/kol-center",
+      "missing_state": "loading|error",
+      "surface": "/admin/growth/kol-center",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/growth/referral-codes",
+      "missing_state": "loading|error",
+      "surface": "/admin/growth/referral-codes",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/growth/reward-ledger",
+      "missing_state": "loading|error",
+      "surface": "/admin/growth/reward-ledger",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/governance/execution-uat",
+      "missing_state": "loading|error",
+      "surface": "/admin/governance/execution-uat",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/catalog-dashboard",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/catalog-dashboard",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/cities",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/cities",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/country-market",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/country-market",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/geo-validation",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/geo-validation",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/hotel-tiers",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/hotel-tiers",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/import-operations",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/import-operations",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/intercity-routes",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/intercity-routes",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/landing-ambient",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/landing-ambient",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/media-assets",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/media-assets",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/poi-images",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/poi-images",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/pois",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/pois",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/pricing",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/pricing",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/revisions",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/revisions",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/roadmap",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/roadmap",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/seo",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/seo",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/translation",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/translation",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/transport-region-rules",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/transport-region-rules",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/revisions/compare",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/revisions/compare",
+      "backlog": true
+    },
+    {
+      "class": "ADMIN_PAGE_FIVE_STATE_GAP",
+      "severity": "P2",
+      "route": "/admin/content/poi-images/batches/[id]",
+      "missing_state": "loading|error",
+      "surface": "/admin/content/poi-images/batches/[id]",
+      "backlog": true
+    }
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

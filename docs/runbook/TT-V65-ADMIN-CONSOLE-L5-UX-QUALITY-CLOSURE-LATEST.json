@@ -1,0 +1,90 @@
+{
+  "schema": "traveltrust.v65_admin_console_l5_ux_quality_closure.v1",
+  "stamp": "20260803T010357Z",
+  "generated_at": "2026-08-03T01:03:59Z",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "verdict": "V65_ADMIN_L5_UX_QUALITY_MACHINE_PASS",
+  "closure_status": "ADMIN_L5_UX_QUALITY_MACHINE_PASS",
+  "tt_production_go": "NO_GO",
+  "pins": {
+    "ok": true,
+    "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web": "075a295fbf5138777dd957feea4d885004a6a953",
+    "candidate_id": "V65-PROD-CAND-20260802",
+    "tt_production_go": "NO_GO",
+    "web3_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "expected": {
+      "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web": "075a295fbf5138777dd957feea4d885004a6a953",
+      "candidate_id": "V65-PROD-CAND-20260802",
+      "tt_production_go": "NO_GO"
+    }
+  },
+  "dimensions": {
+    "PinIntegrity": {
+      "status": "PASS",
+      "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web": "075a295fbf5138777dd957feea4d885004a6a953",
+      "tt_production_go": "NO_GO"
+    },
+    "WorkbenchMaster": {
+      "status": "PASS",
+      "master": "AdminHomeClient + adminDesignSystemBaseline",
+      "layout_driver": "inbox_focus_product_baseline_default",
+      "shell_root": "AdminCapabilitiesShell"
+    },
+    "I18nCompleteness": {
+      "status": "PASS",
+      "bare_key_gaps": 0
+    },
+    "ShellChrome": {
+      "status": "PASS",
+      "shell_gaps": 0
+    },
+    "PageFiveStates": {
+      "status": "PASS",
+      "five_state_p1": 0
+    },
+    "OpsLanguageHardEnglish": {
+      "status": "PASS",
+      "hard_en_pages": 0
+    },
+    "PageInventory": {
+      "status": "PASS",
+      "page_count": 118,
+      "pages_checklist_pass": 118,
+      "pages_checklist_fail": 0
+    }
+  },
+  "autofix": [],
+  "summary": {
+    "page_count": 118,
+    "pages_checklist_pass": 118,
+    "pages_checklist_fail": 0,
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "p2_gaps": 0,
+    "gap_total": 0
+  },
+  "honest_boundary": "Machine PASS/GAP ≠ Human UAT ≠ Owner Sign-off ≠ Production GO. Composition/API/Web pins unchanged. Sidebar/IA frozen.",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

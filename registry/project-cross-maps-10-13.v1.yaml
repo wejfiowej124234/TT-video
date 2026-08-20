@@ -1,0 +1,1819 @@
+# Packs 10–13 connectors. Pack 10–12 CLOSED; Pack 13 DEEPENED this wave.
+# Pack 10 = JOIN map CAP-*. Pack 11 = JNY-*. Pack 12 = DEP-*/GATE-* DAG.
+# Pack 13 = INC-* diagnostic trees. Do not copy product/data/web3/money truth.
+# Pack 13 gate: python scripts/dev/check-incident-diagnostic-architecture.py
+# Pack 13 human: docs/runbook/TT-INCIDENT-DIAGNOSTIC-ARCHITECTURE-LATEST.md
+#
+# Forbidden this wave: FTB/runtime/Web3/RBAC/money mutate, Phase 2 upgrade, CI-02/PM25 execute.
+
+schema: traveltrust.project_cross_maps_10_13.v1
+version: 1
+effective_utc: "2026-08-15"
+status: PACK10_CAPABILITY_MAP_DEEPENED
+pack_id: "10"
+depth_grade: DEEP_PARTIAL
+tt_production_go: NO_GO
+mutation: READ_ONLY_INVENTORY
+phase: PHASE1_AS_IS
+human_doc: docs/runbook/TT-CROSS-LAYER-CAPABILITY-MAP-LATEST.md
+ftb_lock: READ_ONLY_20260812
+living_ssot:
+  - registry/product-capability-matrix.v1.yaml
+  - registry/frontend-design-matrix-seed.v1.yaml
+  - registry/backend-truth-architecture.v1.yaml
+  - registry/data-truth-matrix.v1.yaml
+  - registry/web3-contract-architecture-matrix.v1.yaml
+  - registry/commercial-money-lifecycle-matrix.v1.yaml
+  - registry/governance-economic-matrix.v1.yaml
+  - registry/security-identity-authority-matrix.v1.yaml
+  - registry/release-runtime-evidence-matrix.v1.yaml
+note: >
+  Pack 03–12 CLOSED. Pack 13 is INC-* over existing IDs only.
+  OFFICIAL_LIVE ≠ END_TO_END_CLOSED_REALITY. ① Local ≠ ② Staging ≠ ③ Official.
+  Locate layer first. Login 405 is L3 not DB. WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX
+  CLOSED_REALITY (Dockerfile ARG; historical hop Official 2ba08bd4 QR; living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED)). TT_PRODUCTION_GO=NO_GO.
+
+machine_keys:
+  M10_SHALLOW_CAPABILITY: 0
+  M10_UNRESOLVED_CROSSPACK_POINTER: 0
+  M10_AMBIGUOUS_RUNTIME_CAPABILITY: 0
+  UNEXPLAINED_CAPABILITY_GAP: 0
+  M11_SHALLOW_JOURNEY: 0
+  M11_UNRESOLVED_CAPABILITY_POINTER: 0
+  M11_AMBIGUOUS_END_TO_END_STATUS: 0
+  UNEXPLAINED_JOURNEY_BREAK: 0
+  M12_SHALLOW_DEPENDENCY: 0
+  M12_UNRESOLVED_UPSTREAM_POINTER: 0
+  M12_AMBIGUOUS_BLOCKER: 0
+  UNEXPLAINED_GATE_TRANSITION: 0
+  DEPENDENCY_CYCLE: 0
+  M13_SHALLOW_INCIDENT: 0
+  M13_UNRESOLVED_DIAGNOSTIC_POINTER: 0
+  M13_AMBIGUOUS_ROOT_CAUSE: 0
+  UNEXPLAINED_INCIDENT_PATH: 0
+  TT_PRODUCTION_GO: NO_GO
+
+node_fields:
+  - cap_id
+  - product
+  - frontend
+  - backend
+  - data
+  - web3
+  - money
+  - authority
+  - security
+  - release
+  - current_runtime_status
+  - probe
+  - failure_class
+  - evidence
+  - reality_level
+
+status_enum:
+  - OFFICIAL_LIVE
+  - TARGET_NOT_LIVE
+  - SCHEDULED_WAITING_ETA
+  - CODE_READY
+  - REALITY_VERIFIED
+
+reality_enum:
+  - 1_LOCAL
+  - 2_STAGING
+  - 3_OFFICIAL_PARTIAL
+  - NOT_LIVE
+
+pack10_capability_field:
+  overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  pack03: CLOSED
+  pack04: CLOSED
+  pack05: CLOSED
+  pack06: CLOSED
+  pack07: CLOSED
+  pack08: CLOSED
+  pack09: CLOSED
+  m10_shallow_capability: 0
+  m10_unresolved_crosspack_pointer: 0
+  m10_ambiguous_runtime_capability: 0
+  unexplained_capability_gap: 0
+  stop_after: PACK10
+  next_pack_forbidden_this_wave: []
+  ci02_pm25_merge: FORBIDDEN
+  required_nodes:
+    - CAP-AUTH-SESSION
+    - CAP-AI-ITINERARY
+    - CAP-MARKET-GUIDE-BOOK
+    - CAP-MARKET-PROVIDER
+    - CAP-MARKET-ACQUISITION
+    - CAP-REGION-STEWARD
+    - CAP-DID-RANK
+    - CAP-COMMUNITY
+    - CAP-CMS-ANNOUNCE
+    - CAP-ESCROW-USDC
+    - CAP-ESCROW-SETTLEMENT
+    - CAP-TTG-GATEWAY
+    - CAP-DISPUTES
+    - CAP-MESSAGES
+    - CAP-ONBOARDING-FIAT
+    - CAP-GROWTH
+    - CAP-LEGAL-TRUST
+    - CAP-GOVERNANCE-PORTAL
+    - CAP-ADMIN-FOUR-CENTERS
+    - CAP-I18N
+
+hard_split: >
+  Pack 10 is a join map, not a new SSOT.
+  ① Local Map/Code ≠ ② Staging Verified ≠ ③ Official/Production Verified.
+  Session identity ≠ Wallet identity.
+  Admin publish ≠ Web3 execute.
+  DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE ≠ CLOSED_REALITY.
+  CAP-REGION-STEWARD session ≠ Seat Claim Official.
+  CAP-TTG-GATEWAY live quote/PM GOV-04 ≠ PM $25 Reality.
+
+none_tokens:
+  - NONE_NOT_L7
+  - NONE_NOT_MONEY
+  - NONE_FIAT_ORTHOGONAL
+  - NONE_NOT_GO
+
+phase2_backlog:
+  - id: P2-PACK01-AUTH-CAP
+    class: OBSERVED_GAP
+    fact: Pack 01 seed has no CAP-AUTH-SESSION; login lives in Pack 08/03
+    do_not_fix_this_wave: true
+  - id: P2-ADMIN-118-UNEXPANDED
+    class: OBSERVED_GAP
+    fact: Pack 02 PAGE.ADMIN 118 routes unexpanded; not a 16th matrix
+    do_not_fix_this_wave: true
+  - id: P2-LOGIN-NOT-HAPPY-PATH
+    class: OBSERVED_GAP
+    fact: Official www POST /auth/login 405; API Bearer login 200
+    do_not_fix_this_wave: true
+  - id: P2-STEWARD-L7
+    class: TARGET_NOT_LIVE
+    fact: AUTH-STEWARD-CLAIM / W3-SEAT-REGISTRY / S10 NOT_DEPLOYED
+    do_not_fix_this_wave: true
+  - id: P2-CI02-ETA
+    class: SCHEDULED_WAITING_ETA
+    fact: REL-CI02-FR-NEW DEPLOYED; Official fee still REL-FR-OLD / W3-FR-OLD
+    do_not_fix_this_wave: true
+  - id: P2-PM25-ETA
+    class: SCHEDULED_WAITING_ETA
+    fact: REL-PM25 DEPLOYED; live impl W3-PM-IMPL-GOV04
+    do_not_fix_this_wave: true
+  - id: P2-ACQUISITION-BACKEND-COARSE
+    class: OBSERVED_GAP
+    fact: Pack 01 CAP-MARKET-ACQUISITION backend_domain=ORDERS too coarse vs PD-009
+    do_not_fix_this_wave: true
+  - id: P2-CMS-NO-GP
+    class: OBSERVED_GAP
+    fact: CAP-CMS-ANNOUNCE gp dash; CMS is ops not GP-01..08
+    do_not_fix_this_wave: true
+  - id: P2-PACK11-INDEPENDENT
+    class: STOP
+    fact: HISTORICAL Pack 10 freeze; Pack 11 is an independent later wave
+    do_not_fix_this_wave: true
+
+nodes:
+  - cap_id: CAP-AUTH-SESSION
+    product: CAP-AUTH-SESSION
+    frontend: PAGE.AUTH_LOGIN AUTH.LOGIN.SUBMIT AUTH.SESSION.HYDRATE
+    backend: GP-01.AUTH.LOGIN GP-01.AUTH.ME POST /auth/login GET /api/v1/me
+    data: DATA-USER-ACCOUNT DATA-SESSION
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-TRAVELER-SELF
+    security: SEC-SESSION-BEARER SEC-STRICT-SESSION-GATE SEC-TRAVELER-SESSION
+    release: REL-PROBE-UAT REL-ENV-OFFICIAL-API
+    current_runtime_status: OFFICIAL_LIVE
+    probe: www login 200 HttpOnly Owner C2 (historical 405 SUPERSEDED); GET /me 401 without cookie
+    failure_class: [INC-LOGIN, STRICT_SESSION_GATE, 405]
+    evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.md
+    reality_level: 3_OFFICIAL_PARTIAL
+    note: Join key. GAP-LOGIN CLOSED_REALITY. Session ≠ Wallet (Pack 08). Historical 405 SUPERSEDED. WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY on SEC-WALLET-EOA / historical hop Official 2ba08bd4 QR — living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED); not this CAP.
+
+  - cap_id: CAP-AI-ITINERARY
+    product: CAP-AI-ITINERARY
+    frontend: PAGE.HOME HOME.ITINERARY.CREATE ITINERARY.CUSTOM.CREATE
+    backend: GP-04 ITINERARY.CREATE POST /api/v1/itineraries
+    data: DATA-ITINERARY-DRAFT DATA-ITINERARY-GENERATED DATA-CATALOG-GEO
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-TRAVELER-SELF AUTH-DB-RUNTIME-WRITER
+    security: SEC-TRAVELER-SESSION SEC-POSTGRES-ROW
+    release: REL-OFFICIAL-TRAFFIC REL-ENV-OFFICIAL-WEB
+    current_runtime_status: OFFICIAL_LIVE
+    probe: Official / 200 hero; POST itineraries needs session
+    failure_class: [401, 503]
+    evidence: registry/backend-truth-architecture.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-MARKET-GUIDE-BOOK
+    product: CAP-MARKET-GUIDE-BOOK
+    frontend: PAGE.MARKET GUIDES.LIST.VIEW ORDERS.CREATE.SUBMIT
+    backend: GP-04 GUIDES.LIST GP-04.ORDERS.CREATE GET /api/v1/guides POST /api/v1/orders
+    data: DATA-GUIDE-PROFILE DATA-ORDER DATA-GUIDE-STAKE-DB
+    web3: W3-FACTORY-WIRED W3-SR-FT
+    money: S01 S02
+    authority: AUTH-GUIDE-SELF AUTH-TRAVELER-SELF
+    security: SEC-GUIDE-SESSION SEC-CROSS-USER
+    release: REL-SR-FT REL-ENV-OFFICIAL-WEB
+    current_runtime_status: OFFICIAL_LIVE
+    probe: GET /api/v1/guides 200; orders require session; guide stake DB ≠ L7 W3-GUIDE-STAKING
+    failure_class: [401, empty_catalog, pg_as_chain]
+    evidence: registry/data-truth-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-MARKET-PROVIDER
+    product: CAP-MARKET-PROVIDER
+    frontend: PAGE.PROVIDER_REGISTER PROVIDER.APPLY.SUBMIT
+    backend: GP-01 PROVIDER.APPLICATIONS POST /api/v1/provider-applications
+    data: DATA-PROVIDER-APPLICATION
+    web3: NONE_NOT_L7
+    money: NONE_FIAT_ORTHOGONAL
+    authority: AUTH-PROVIDER-APPLY
+    security: SEC-PROVIDER-SESSION
+    release: REL-ENV-OFFICIAL-WEB
+    current_runtime_status: OFFICIAL_LIVE
+    probe: self-register stores traveler until Admin review
+    failure_class: [401, review_pending]
+    evidence: registry/governance-economic-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-MARKET-ACQUISITION
+    product: CAP-MARKET-ACQUISITION
+    frontend: PAGE.MARKET
+    backend: GP-04 acquisition_publish_gate
+    data: DATA-ORDER DATA-ONBOARDING-ENTITLEMENT
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-TRAVELER-SELF AUTH-ADMIN-OPS
+    security: SEC-TRAVELER-SESSION SEC-ADMIN-OPS
+    release: REL-ENV-OFFICIAL-WEB
+    current_runtime_status: OFFICIAL_LIVE
+    probe: /market/acquisition Hub UI frozen ①; Pack 01 backend_domain=ORDERS coarse
+    failure_class: [401, coarse_domain]
+    evidence: registry/product-capability-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-REGION-STEWARD
+    product: CAP-REGION-STEWARD
+    frontend: PAGE.TRAVELTRUST STEWARD.CLAIM.SUBMIT
+    backend: GP-07.STEWARD.CLAIM
+    data: DATA-ONBOARDING-ENTITLEMENT
+    web3: W3-SEAT-REGISTRY W3-REGION-VAULT
+    money: S10
+    authority: AUTH-STEWARD-APPLY AUTH-STEWARD-CLAIM
+    security: SEC-STEWARD-SESSION
+    release: REL-JP-VAULT
+    current_runtime_status: TARGET_NOT_LIVE
+    probe: /meta.registry_address=null; REL-JP-VAULT CODE_READY; session apply is live PG
+    failure_class: [seat_not_deployed, session_as_l7]
+    evidence: registry/governance-economic-matrix.v1.yaml
+    reality_level: NOT_LIVE
+
+  - cap_id: CAP-DID-RANK
+    product: CAP-DID-RANK
+    frontend: PAGE.DID_RANK DID_RANK.VIEW
+    backend: GP-04 DID_RANK.LIST GET /api/v1/did-rank/guides
+    data: DATA-DID-RANK
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-BACKEND-SERVICE
+    security: SEC-ANON-PUBLIC
+    release: REL-OFFICIAL-TRAFFIC
+    current_runtime_status: OFFICIAL_LIVE
+    probe: GET /did-rank 200; GET /api/v1/did-rank/guides 200
+    failure_class: [empty_projection]
+    evidence: registry/project-pack-depth-audit.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-COMMUNITY
+    product: CAP-COMMUNITY
+    frontend: PAGE.COMMUNITY COMMUNITY.POST.CREATE COMMUNITY.COMMENT.REPLY COMMUNITY.MEDIA.UPLOAD
+    backend: GP-02 GP-03 COMMUNITY.CREATE_POST COMMUNITY.POST_COMMENT
+    data: DATA-COMMUNITY-POST DATA-MEDIA-OBJECT DATA-COMMUNITY-DM
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-TRAVELER-SELF AUTH-MODERATOR-COMMUNITY
+    security: SEC-TRAVELER-SESSION SEC-MODERATOR-RBAC
+    release: REL-OFFICIAL-TRAFFIC
+    current_runtime_status: OFFICIAL_LIVE
+    probe: GET /api/v1/community/feed 200; writes 401/429
+    failure_class: [401, 429]
+    evidence: registry/backend-truth-architecture.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-CMS-ANNOUNCE
+    product: CAP-CMS-ANNOUNCE
+    frontend: PAGE.HOME
+    backend: CMS public_announcements
+    data: DATA-CMS-ANNOUNCEMENT
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-CMS-PUBLISH AUTH-SUPERADMIN
+    security: SEC-CMS-OCS SEC-SUPERADMIN
+    release: REL-ENV-OFFICIAL-WEB
+    current_runtime_status: OFFICIAL_LIVE
+    probe: homepage CMS catalog not static fallback; publish SuperAdmin L6
+    failure_class: [unpublished_draft, admin_as_l7]
+    evidence: registry/data-truth-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+    note: Admin publish ≠ Web3 execute. gp dash in Pack 01 is explained.
+
+  - cap_id: CAP-ESCROW-USDC
+    product: CAP-ESCROW-USDC
+    frontend: PAGE.ESCROW ESCROW.OPEN ORDERS.CREATE.SUBMIT
+    backend: GP-04 GP-04.ORDERS.CREATE
+    data: DATA-ORDER DATA-ESCROW-CHAIN DATA-ESCROW-PROJECTION
+    web3: W3-FACTORY-WIRED W3-SR-FT W3-FR-OLD
+    money: S01 S02 S03 S04
+    authority: AUTH-TRAVELER-SELF AUTH-CONTRACT-OWNER-TIMELOCK
+    security: SEC-WALLET-EOA SEC-CROSS-USER
+    release: REL-SR-FT REL-FR-OLD REL-TRACK1-ESCROW
+    current_runtime_status: OFFICIAL_LIVE
+    probe: Official create Wired→SR-FT→OLD FR; Track1 10 USDC REALITY_VERIFIED on SUPERSEDED path; 1 USDC not closed
+    failure_class: [pg_as_chain, scheduled_as_official]
+    evidence: registry/commercial-money-lifecycle-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+    note: S04 INTERIM Safe/P4Cap. CI-02 W3-FR-NEW / REL-CI02-FR-NEW DEPLOYED not Official.
+
+  - cap_id: CAP-ESCROW-SETTLEMENT
+    product: CAP-ESCROW-USDC
+    frontend: PAGE.ESCROW ESCROW.RELEASE.SUBMIT
+    backend: GP-05.SETTLEMENT.RELEASE
+    data: DATA-ESCROW-CHAIN DATA-ESCROW-PROJECTION
+    web3: W3-SR-FT W3-FR-OLD W3-TIMELOCK
+    money: S07 S08 S09
+    authority: AUTH-TIMELOCK-EXECUTE AUTH-INDEXER-READONLY
+    security: SEC-WALLET-EOA SEC-INDEXER-READONLY
+    release: REL-L7-L8-OBS REL-ENV-INDEXER
+    current_runtime_status: OFFICIAL_LIVE
+    probe: release/refund path wired to SR-FT/OLD FR; Indexer lag 0; not CLOSED_REALITY
+    failure_class: [indexer_lag, premature_official_claim]
+    evidence: registry/web3-contract-architecture-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+    note: Join alias of CAP-ESCROW-USDC. Dispute is CAP-DISPUTES.
+
+  - cap_id: CAP-TTG-GATEWAY
+    product: CAP-TTG-GATEWAY
+    frontend: PAGE.HOME PAGE.TRAVELTRUST HOME.TTG_PURCHASE.SUBMIT
+    backend: GP-06.PM.PURCHASE GET /api/v1/governance/ttg-exchange/quote
+    data: DATA-PM-PRICE-LIVE DATA-PM-PRICE-TARGET
+    web3: W3-PM-PROXY W3-PM-IMPL-GOV04 W3-P4CAP
+    money: S11 S12 S13 S14
+    authority: AUTH-PM-PROXY-UPGRADE AUTH-PM25-UPGRADE
+    security: SEC-WALLET-EOA SEC-STRICT-SESSION-GATE
+    release: REL-PM-PROXY REL-PM25
+    current_runtime_status: OFFICIAL_LIVE
+    probe: quote 401 STRICT_SESSION_GATE; Official /meta NEW PM 100_000; www chrome GOV-04 1e18 ED; REL-PM25 LEGACY bake FORBIDDEN
+    failure_class: [401, scheduled_as_official, meta_pm_null]
+    evidence: registry/release-runtime-evidence-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-DISPUTES
+    product: CAP-DISPUTES
+    frontend: PAGE.DISPUTES DISPUTES.OPEN
+    backend: GP-04 DISPUTES.CREATE POST /api/v1/orders/:id/dispute
+    data: DATA-DISPUTE DATA-ORDER
+    web3: W3-FACTORY-WIRED
+    money: S09
+    authority: AUTH-TRAVELER-SELF AUTH-ADMIN-OPS
+    security: SEC-CROSS-USER SEC-POSTGRES-ROW
+    release: REL-ENV-OFFICIAL-API
+    current_runtime_status: OFFICIAL_LIVE
+    probe: dispute APIs session-gated; ACL 404
+    failure_class: [401, ACL_404]
+    evidence: registry/data-truth-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-MESSAGES
+    product: CAP-MESSAGES
+    frontend: PAGE.ESCROW ORDER.MESSAGE.SEND
+    backend: GP-04 MESSAGES.POST POST /api/v1/orders/:id/messages
+    data: DATA-ORDER-MESSAGE
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-TRAVELER-SELF AUTH-GUIDE-SELF
+    security: SEC-CROSS-USER
+    release: REL-ENV-OFFICIAL-API
+    current_runtime_status: OFFICIAL_LIVE
+    probe: order messages ≠ community DM DATA-COMMUNITY-DM
+    failure_class: [401, ACL_404]
+    evidence: registry/backend-truth-architecture.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-ONBOARDING-FIAT
+    product: CAP-ONBOARDING-FIAT
+    frontend: PAGE.PROVIDER_REGISTER ONBOARDING.QUOTE.VIEW
+    backend: GP-01 ONBOARDING.QUOTE GET /api/v1/onboarding/quote
+    data: DATA-ONBOARDING-ENTITLEMENT
+    web3: NONE_NOT_L7
+    money: NONE_FIAT_ORTHOGONAL
+    authority: AUTH-PROVIDER-APPLY AUTH-STEWARD-APPLY
+    security: SEC-API-MIDDLEWARE
+    release: REL-ENV-OFFICIAL-API
+    current_runtime_status: OFFICIAL_LIVE
+    probe: quote may 429; Stripe orthogonal to USDC escrow
+    failure_class: [401, 429]
+    evidence: registry/backend-truth-architecture.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-GROWTH
+    product: CAP-GROWTH
+    frontend: GROWTH.REFERRALS.VIEW
+    backend: GP-01 GROWTH.ME_REFERRALS GET /api/v1/me/referrals
+    data: DATA-REFERRAL
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-TRAVELER-SELF
+    security: SEC-STRICT-SESSION-GATE
+    release: REL-ENV-OFFICIAL-API
+    current_runtime_status: OFFICIAL_LIVE
+    probe: referrals 401 without Bearer
+    failure_class: [401]
+    evidence: registry/backend-truth-architecture.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-LEGAL-TRUST
+    product: CAP-LEGAL-TRUST
+    frontend: PAGE.HOME PAGE.TRAVELTRUST
+    backend: PLATFORM
+    data: DATA-CMS-ANNOUNCEMENT
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-CMS-PUBLISH
+    security: SEC-ANON-PUBLIC
+    release: REL-OFFICIAL-TRAFFIC
+    current_runtime_status: OFFICIAL_LIVE
+    probe: footer trust/help on Official 200
+    failure_class: [stale_copy]
+    evidence: registry/frontend-design-matrix-seed.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-GOVERNANCE-PORTAL
+    product: CAP-GOVERNANCE-PORTAL
+    frontend: PAGE.TRAVELTRUST GOVERNANCE.PROPOSAL.QUEUE
+    backend: GP-08.GOV.QUEUE
+    data: DATA-PM-PRICE-LIVE
+    web3: W3-GOVERNOR W3-TIMELOCK W3-SAFE
+    money: S14
+    authority: AUTH-GOVERNOR-PROPOSE AUTH-PROPOSAL-3-ORTHOGONAL
+    security: SEC-GOVERNOR-VOTE SEC-TIMELOCK-EXECUTE SEC-SAFE-1OF1
+    release: REL-HARD-GATE REL-REALITY-CLOSURE
+    current_runtime_status: OFFICIAL_LIVE
+    probe: "Governor/Timelock/Safe live; Proposal #3 TARGET_NOT_LIVE; Hard Gate NO_GO"
+    failure_class: [proposal3_as_official, docs_as_go]
+    evidence: registry/governance-economic-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-ADMIN-FOUR-CENTERS
+    product: CAP-ADMIN-FOUR-CENTERS
+    frontend: PAGE.ADMIN ADMIN.RBAC.ACTION
+    backend: ADMIN.RBAC /api/v1/admin/*
+    data: DATA-CMS-ANNOUNCEMENT DATA-USER-ACCOUNT
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-ADMIN-OPS AUTH-SUPERADMIN
+    security: SEC-ADMIN-OPS SEC-SUPERADMIN SEC-MODERATOR-RBAC
+    release: REL-ENV-OFFICIAL-WEB
+    current_runtime_status: OFFICIAL_LIVE
+    probe: SuperAdmin login PASS; Ops cannot publish; 118 admin routes unexpanded Pack 02
+    failure_class: [403, rbac_as_l7]
+    evidence: registry/security-identity-authority-matrix.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+  - cap_id: CAP-I18N
+    product: CAP-I18N
+    frontend: PAGE.HOME
+    backend: PLATFORM
+    data: NONE_NOT_L7
+    web3: NONE_NOT_L7
+    money: NONE_NOT_MONEY
+    authority: AUTH-BACKEND-SERVICE
+    security: SEC-ANON-PUBLIC
+    release: REL-ENV-OFFICIAL-WEB
+    current_runtime_status: OFFICIAL_LIVE
+    probe: language button present on Official header; Pack 01 NEEDS_DEEPENING
+    failure_class: [shallow_i18n]
+    evidence: registry/frontend-design-matrix-seed.v1.yaml
+    reality_level: 3_OFFICIAL_PARTIAL
+
+hard_rule: >
+  Pack 11 is an independent later wave. Do not execute CI-02 or PM $25. TT_PRODUCTION_GO=NO_GO.
+  Pointers must resolve to Pack 03–09 IDs or NONE_* tokens.
+
+# Pack 11 DEEPENED this wave. Pack 12–13 remain pointer seeds.
+pack_11_journeys:
+  status: PACK11_JOURNEY_DEEPENED
+  depth_grade: DEEP_PARTIAL
+  human_doc: docs/runbook/TT-END-TO-END-USER-SYSTEM-JOURNEY-ARCHITECTURE-LATEST.md
+  overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  pack03: CLOSED
+  pack04: CLOSED
+  pack05: CLOSED
+  pack06: CLOSED
+  pack07: CLOSED
+  pack08: CLOSED
+  pack09: CLOSED
+  pack10: CLOSED
+  m11_shallow_journey: 0
+  m11_unresolved_capability_pointer: 0
+  m11_ambiguous_end_to_end_status: 0
+  unexplained_journey_break: 0
+  stop_after: PACK11
+  next_pack_forbidden_this_wave: []
+  ci02_pm25_merge: FORBIDDEN
+  living_ssot:
+    - registry/project-cross-maps-10-13.v1.yaml
+    - docs/runbook/TT-9625-golden-path-system-spine.md
+    - registry/business-flow-matrix.v1.yaml
+  journey_fields:
+    - jny_id
+    - actor
+    - entry
+    - identity_auth
+    - capability
+    - frontend_action
+    - api
+    - domain_acl
+    - data_mutation
+    - l7_transaction
+    - money_hop
+    - l8_projection
+    - runtime_observation
+    - user_visible_outcome
+    - happy_path
+    - alternate_path
+    - failure_path
+    - failure_recovery
+    - breakpoint_layer
+    - current_runtime_status
+    - reality_level
+    - dependency
+    - probe
+    - evidence
+  status_enum:
+    - OFFICIAL_LIVE
+    - TARGET_NOT_LIVE
+    - SCHEDULED_WAITING_ETA
+    - CODE_READY
+    - REALITY_VERIFIED
+  reality_enum:
+    - 1_LOCAL
+    - 2_STAGING
+    - 3_OFFICIAL_PARTIAL
+    - NOT_LIVE
+  none_tokens:
+    - NONE_NOT_L7
+    - NONE_NOT_MONEY
+    - NONE_FIAT_ORTHOGONAL
+    - NONE_NOT_GO
+    - NONE_NOT_FE
+    - NONE_SYSTEM_JOB
+  hard_split: >
+    OFFICIAL_LIVE ≠ END_TO_END_CLOSED_REALITY.
+    No-L7 journey must not bind Web3 as required live tx.
+    Region Steward TARGET_NOT_LIVE is not a usable Official claim path.
+    Session ≠ Wallet. Admin publish ≠ Timelock execute.
+    DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE ≠ CLOSED_REALITY.
+    ① Local ≠ ② Staging ≠ ③ Official. TT_PRODUCTION_GO=NO_GO.
+  required_journeys:
+    - JNY-TRAVELER-LOGIN
+    - JNY-TRAVELER-AI-ITINERARY
+    - JNY-TRAVELER-GUIDE-BOOK
+    - JNY-GUIDE-FULFILL
+    - JNY-ESCROW-RELEASE-REFUND
+    - JNY-PROVIDER-ONBOARD
+    - JNY-ACQUISITION-PUBLISH
+    - JNY-COMMUNITY-POST
+    - JNY-ADMIN-CMS
+    - JNY-TTG-PURCHASE
+    - JNY-GOVERNANCE-QUEUE
+    - JNY-REGION-STEWARD-CLAIM
+    - JNY-INDEXER-L8-PROJECT
+    - JNY-DID-RANK-PUBLIC
+  phase2_backlog:
+    - id: P2-LOGIN-WWW-405
+      class: OBSERVED_GAP
+      fact: Historical Official www POST /auth/login 405 SUPERSEDED; Owner C2 Session CLOSED_REALITY
+      do_not_fix_this_wave: true
+    - id: P2-E2E-NOT-CLOSED
+      class: OBSERVED_GAP
+      fact: No JNY-* is END_TO_END_CLOSED_REALITY; Track1 REALITY_VERIFIED ≠ Production GO
+      do_not_fix_this_wave: true
+    - id: P2-STEWARD-L7
+      class: TARGET_NOT_LIVE
+      fact: JNY-REGION-STEWARD-CLAIM Seat/Vault NOT_DEPLOYED
+      do_not_fix_this_wave: true
+    - id: P2-CI02-ETA
+      class: SCHEDULED_WAITING_ETA
+      fact: NEW FR DEPLOYED; Official fee still W3-FR-OLD / REL-FR-OLD
+      do_not_fix_this_wave: true
+    - id: P2-PM25-ETA
+      class: SCHEDULED_WAITING_ETA
+      fact: REL-PM25 DEPLOYED; live impl W3-PM-IMPL-GOV04
+      do_not_fix_this_wave: true
+    - id: P2-ORDER-ID-JOIN
+      class: OBSERVED_GAP
+      fact: AI itinerary draft not joined to order_id on Official logged-in evidence
+      do_not_fix_this_wave: true
+    - id: P2-PACK12-INDEPENDENT
+      class: STOP
+      fact: HISTORICAL Pack 11 freeze; Pack 12 is an independent later wave
+      do_not_fix_this_wave: true
+  journeys:
+    - jny_id: JNY-TRAVELER-LOGIN
+      actor: Traveler
+      entry: PAGE.AUTH_LOGIN /auth/login
+      identity_auth: CAP-AUTH-SESSION SEC-SESSION-BEARER AUTH-TRAVELER-SELF
+      capability: CAP-AUTH-SESSION
+      frontend_action: AUTH.LOGIN.SUBMIT AUTH.SESSION.HYDRATE
+      api: GP-01.AUTH.LOGIN GP-01.AUTH.ME POST /auth/login GET /api/v1/me
+      domain_acl: AUTH
+      data_mutation: DATA-USER-ACCOUNT DATA-SESSION
+      l7_transaction: NONE_NOT_L7
+      money_hop: NONE_NOT_MONEY
+      l8_projection: NONE_NOT_L7
+      runtime_observation: REL-PROBE-UAT REL-ENV-OFFICIAL-API
+      user_visible_outcome: www HttpOnly session; JSON token=null
+      happy_path: www POST /auth/login 200 Owner C2 → HttpOnly cookie → GET /me 200
+      alternate_path: existing session GET /me 200
+      failure_path: Staging seed 401 invalid_credentials; historical www POST 405 SUPERSEDED; GET /me 401 without cookie
+      failure_recovery: use Owner Official test identity; do not reset Production accounts
+      breakpoint_layer: L5_CREDENTIAL_DATASET
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-AUTH-SESSION SEC-STRICT-SESSION-GATE
+      probe: Owner C2 www login 200; Staging seed 401; GET /me 401 without cookie
+      evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.md
+      note: No L7. GAP-LOGIN CLOSED_REALITY. Historical 405 SUPERSEDED. ≠ END_TO_END_CLOSED_REALITY.
+
+    - jny_id: JNY-TRAVELER-AI-ITINERARY
+      actor: Traveler
+      entry: PAGE.HOME /
+      identity_auth: CAP-AUTH-SESSION SEC-TRAVELER-SESSION AUTH-TRAVELER-SELF
+      capability: CAP-AI-ITINERARY
+      frontend_action: HOME.ITINERARY.CREATE ITINERARY.CUSTOM.CREATE
+      api: GP-04 ITINERARY.CREATE POST /api/v1/itineraries
+      domain_acl: ITINERARY
+      data_mutation: DATA-ITINERARY-DRAFT DATA-ITINERARY-GENERATED DATA-CATALOG-GEO
+      l7_transaction: NONE_NOT_L7
+      money_hop: NONE_NOT_MONEY
+      l8_projection: NONE_NOT_L7
+      runtime_observation: REL-OFFICIAL-TRAFFIC REL-ENV-OFFICIAL-WEB
+      user_visible_outcome: Official / 200 hero; draft itinerary in PG
+      happy_path: session → POST /api/v1/itineraries → DATA-ITINERARY-GENERATED
+      alternate_path: anonymous hero browse without create
+      failure_path: 401 no session; 503 database_unavailable
+      failure_recovery: Bearer session; do not treat catalog fallback as CMS miss
+      breakpoint_layer: L4_STRICT_SESSION_GATE
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-AI-ITINERARY CAP-AUTH-SESSION DATA-CATALOG-GEO
+      probe: Official / 200 hero; POST itineraries needs session
+      evidence: registry/backend-truth-architecture.v1.yaml
+      seed_alias: J-AI-ITINERARY
+      note: No L7. Draft not evidenced joined to order_id (P2-ORDER-ID-JOIN).
+
+    - jny_id: JNY-TRAVELER-GUIDE-BOOK
+      actor: Traveler
+      entry: PAGE.MARKET /market
+      identity_auth: CAP-AUTH-SESSION SEC-TRAVELER-SESSION AUTH-TRAVELER-SELF
+      capability: CAP-MARKET-GUIDE-BOOK CAP-ESCROW-USDC
+      frontend_action: GUIDES.LIST.VIEW ORDERS.CREATE.SUBMIT ESCROW.OPEN
+      api: GP-04 GUIDES.LIST GP-04.ORDERS.CREATE GET /api/v1/guides POST /api/v1/orders
+      domain_acl: GUIDES ORDERS ESCROW
+      data_mutation: DATA-GUIDE-PROFILE DATA-ORDER DATA-ESCROW-CHAIN DATA-ESCROW-PROJECTION
+      l7_transaction: W3-FACTORY-WIRED W3-SR-FT W3-FR-OLD
+      money_hop: S01 S02 S03 S04
+      l8_projection: DATA-ESCROW-PROJECTION W3-INDEXER
+      runtime_observation: REL-SR-FT REL-FR-OLD REL-ENV-OFFICIAL-WEB
+      user_visible_outcome: guides catalog 200; order create needs session; Official create Wired→SR-FT→OLD FR
+      happy_path: session → list guides → create order → escrow open on Wired/SR-FT/OLD FR
+      alternate_path: browse GET /api/v1/guides 200 without book
+      failure_path: 401; empty_catalog; pg_as_chain; scheduled_as_official
+      failure_recovery: Guide DB catalog ≠ W3-GUIDE-STAKING; fee stays W3-FR-OLD not CI-02
+      breakpoint_layer: L4_STRICT_SESSION_GATE
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-MARKET-GUIDE-BOOK CAP-ESCROW-USDC CAP-AUTH-SESSION W3-SR-FT W3-FR-OLD
+      probe: GET /api/v1/guides 200; orders require session; Track1 10 USDC REALITY_VERIFIED ≠ CLOSED_REALITY
+      evidence: registry/commercial-money-lifecycle-matrix.v1.yaml
+      seed_alias: J-TRAVELER-ORDER
+      note: CI-02 W3-FR-NEW DEPLOYED not Official. OFFICIAL_LIVE ≠ END_TO_END_CLOSED_REALITY.
+
+    - jny_id: JNY-GUIDE-FULFILL
+      actor: Guide
+      entry: PAGE.MARKET PAGE.ESCROW
+      identity_auth: AUTH-GUIDE-SELF SEC-GUIDE-SESSION
+      capability: CAP-MARKET-GUIDE-BOOK CAP-MESSAGES
+      frontend_action: ORDER.MESSAGE.SEND
+      api: GP-04 MESSAGES.POST POST /api/v1/orders/:id/messages
+      domain_acl: GUIDES MESSAGES ORDERS
+      data_mutation: DATA-ORDER-MESSAGE DATA-GUIDE-PROFILE DATA-GUIDE-STAKE-DB
+      l7_transaction: NONE_NOT_L7
+      money_hop: NONE_NOT_MONEY
+      l8_projection: NONE_NOT_L7
+      runtime_observation: REL-ENV-OFFICIAL-API
+      user_visible_outcome: order thread after session; guide stake is DB not L7
+      happy_path: guide session → order ACL → post message
+      alternate_path: traveler posts on same DATA-ORDER-MESSAGE
+      failure_path: 401; ACL_404; pg_as_chain treating DATA-GUIDE-STAKE-DB as W3-GUIDE-STAKING
+      failure_recovery: order messages ≠ DATA-COMMUNITY-DM; stake DB ≠ L7
+      breakpoint_layer: L5_ACL
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-MESSAGES CAP-MARKET-GUIDE-BOOK SEC-CROSS-USER
+      probe: order messages session-gated; /meta.guide_staking_address=null
+      evidence: registry/data-truth-matrix.v1.yaml
+      note: No L7 on this hop. Guide fulfill is session/ACL; settlement is JNY-ESCROW-RELEASE-REFUND.
+
+    - jny_id: JNY-ESCROW-RELEASE-REFUND
+      actor: Traveler
+      entry: PAGE.ESCROW PAGE.DISPUTES
+      identity_auth: SEC-WALLET-EOA AUTH-TIMELOCK-EXECUTE
+      capability: CAP-ESCROW-SETTLEMENT CAP-DISPUTES CAP-ESCROW-USDC
+      frontend_action: ESCROW.RELEASE.SUBMIT DISPUTES.OPEN
+      api: GP-05.SETTLEMENT.RELEASE DISPUTES.CREATE POST /api/v1/orders/:id/dispute
+      domain_acl: SETTLEMENT DISPUTES ESCROW
+      data_mutation: DATA-ESCROW-CHAIN DATA-ESCROW-PROJECTION DATA-DISPUTE
+      l7_transaction: W3-SR-FT W3-FR-OLD W3-TIMELOCK W3-FACTORY-WIRED
+      money_hop: S07 S08 S09
+      l8_projection: DATA-ESCROW-PROJECTION W3-INDEXER REL-L7-L8-OBS
+      runtime_observation: REL-L7-L8-OBS REL-ENV-INDEXER REL-TRACK1-ESCROW
+      user_visible_outcome: release/refund wired to SR-FT/OLD FR; dispute APIs session-gated
+      happy_path: wallet release → SR-FT → OLD FR → Indexer projection
+      alternate_path: refund S08; dispute S09 DATA-DISPUTE
+      failure_path: indexer_lag; ACL_404; premature_official_claim; pg_as_chain
+      failure_recovery: wait Indexer checkpoint; Track1 REALITY_VERIFIED ≠ CLOSED_REALITY
+      breakpoint_layer: L8_PROJECTION
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-ESCROW-SETTLEMENT CAP-DISPUTES W3-SR-FT W3-FR-OLD W3-INDEXER
+      probe: Indexer lag 0; release path SR-FT/OLD FR; dispute 401/ACL; not CLOSED_REALITY
+      evidence: registry/web3-contract-architecture-matrix.v1.yaml
+      note: 1 USDC Track2 Reality not closed. CI-02 not Official fee.
+
+    - jny_id: JNY-PROVIDER-ONBOARD
+      actor: Provider
+      entry: PAGE.PROVIDER_REGISTER /provider/register
+      identity_auth: AUTH-PROVIDER-APPLY SEC-PROVIDER-SESSION
+      capability: CAP-MARKET-PROVIDER CAP-ONBOARDING-FIAT
+      frontend_action: PROVIDER.APPLY.SUBMIT ONBOARDING.QUOTE.VIEW
+      api: GP-01 PROVIDER.APPLICATIONS ONBOARDING.QUOTE POST /api/v1/provider-applications GET /api/v1/onboarding/quote
+      domain_acl: PROVIDER ONBOARDING
+      data_mutation: DATA-PROVIDER-APPLICATION DATA-ONBOARDING-ENTITLEMENT
+      l7_transaction: NONE_NOT_L7
+      money_hop: NONE_FIAT_ORTHOGONAL
+      l8_projection: NONE_NOT_L7
+      runtime_observation: REL-ENV-OFFICIAL-WEB REL-ENV-OFFICIAL-API
+      user_visible_outcome: self-register stores traveler until Admin review; quote may 429
+      happy_path: session apply → DATA-PROVIDER-APPLICATION → Admin review
+      alternate_path: onboarding quote without Stripe live
+      failure_path: 401; review_pending; 429
+      failure_recovery: Stripe orthogonal to USDC escrow; do not bind L7
+      breakpoint_layer: L6_ADMIN_REVIEW
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-MARKET-PROVIDER CAP-ONBOARDING-FIAT CAP-ADMIN-FOUR-CENTERS
+      probe: self-register stores traveler until Admin review; quote may 429
+      evidence: registry/governance-economic-matrix.v1.yaml
+      note: No L7. Fiat onboarding ≠ USDC escrow money path.
+
+    - jny_id: JNY-ACQUISITION-PUBLISH
+      actor: Traveler
+      entry: PAGE.MARKET /market/acquisition
+      identity_auth: AUTH-TRAVELER-SELF SEC-TRAVELER-SESSION AUTH-ADMIN-OPS
+      capability: CAP-MARKET-ACQUISITION
+      frontend_action: PAGE.MARKET
+      api: GP-04 acquisition_publish_gate
+      domain_acl: ORDERS
+      data_mutation: DATA-ORDER DATA-ONBOARDING-ENTITLEMENT
+      l7_transaction: NONE_NOT_L7
+      money_hop: NONE_NOT_MONEY
+      l8_projection: NONE_NOT_L7
+      runtime_observation: REL-ENV-OFFICIAL-WEB
+      user_visible_outcome: Hub UI frozen ①; publish gate session/Admin
+      happy_path: identities → /market/acquisition → acquisition_publish_gate
+      alternate_path: Admin suspend listing
+      failure_path: 401; coarse_domain Pack 01 ORDERS
+      failure_recovery: PD-009 gate; not AUTH-STEWARD-CLAIM
+      breakpoint_layer: L4_STRICT_SESSION_GATE
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-MARKET-ACQUISITION CAP-AUTH-SESSION CAP-ADMIN-FOUR-CENTERS
+      probe: /market/acquisition Hub UI frozen ①; Pack 01 backend_domain=ORDERS coarse
+      evidence: registry/product-capability-matrix.v1.yaml
+      note: No L7. Acquisition ≠ Region Steward. TTG token purchase is JNY-TTG-PURCHASE.
+
+    - jny_id: JNY-COMMUNITY-POST
+      actor: Traveler
+      entry: PAGE.COMMUNITY /community
+      identity_auth: AUTH-TRAVELER-SELF SEC-TRAVELER-SESSION AUTH-MODERATOR-COMMUNITY
+      capability: CAP-COMMUNITY
+      frontend_action: COMMUNITY.POST.CREATE COMMUNITY.COMMENT.REPLY COMMUNITY.MEDIA.UPLOAD
+      api: GP-02 GP-03 COMMUNITY.CREATE_POST COMMUNITY.POST_COMMENT
+      domain_acl: COMMUNITY MEDIA
+      data_mutation: DATA-COMMUNITY-POST DATA-MEDIA-OBJECT DATA-COMMUNITY-DM
+      l7_transaction: NONE_NOT_L7
+      money_hop: NONE_NOT_MONEY
+      l8_projection: NONE_NOT_L7
+      runtime_observation: REL-OFFICIAL-TRAFFIC
+      user_visible_outcome: feed 200; writes need session
+      happy_path: session → create post/media → feed
+      alternate_path: anonymous GET /api/v1/community/feed 200
+      failure_path: writes 401/429; moderator RBAC 403
+      failure_recovery: Community DM ≠ DATA-ORDER-MESSAGE
+      breakpoint_layer: L4_STRICT_SESSION_GATE
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-COMMUNITY CAP-AUTH-SESSION SEC-MODERATOR-RBAC
+      probe: GET /api/v1/community/feed 200; writes 401/429
+      evidence: registry/backend-truth-architecture.v1.yaml
+      seed_alias: J-COMMUNITY-POST
+      note: No L7. WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY on Official /community Sheet QR (bake only; not community write E2E).
+
+    - jny_id: JNY-ADMIN-CMS
+      actor: Admin
+      entry: PAGE.ADMIN PAGE.HOME
+      identity_auth: AUTH-ADMIN-OPS AUTH-SUPERADMIN AUTH-CMS-PUBLISH SEC-ADMIN-OPS SEC-CMS-OCS
+      capability: CAP-ADMIN-FOUR-CENTERS CAP-CMS-ANNOUNCE
+      frontend_action: ADMIN.RBAC.ACTION
+      api: ADMIN.RBAC /api/v1/admin/* CMS public_announcements
+      domain_acl: ADMIN CMS
+      data_mutation: DATA-CMS-ANNOUNCEMENT DATA-USER-ACCOUNT
+      l7_transaction: NONE_NOT_L7
+      money_hop: NONE_NOT_MONEY
+      l8_projection: NONE_NOT_L7
+      runtime_observation: REL-ENV-OFFICIAL-WEB
+      user_visible_outcome: homepage CMS catalog; SuperAdmin can publish; Ops cannot
+      happy_path: SuperAdmin → AUTH-CMS-PUBLISH → DATA-CMS-ANNOUNCEMENT live
+      alternate_path: Ops RBAC 403 on publish
+      failure_path: unpublished_draft; admin_as_l7; 403
+      failure_recovery: Admin publish ≠ AUTH-TIMELOCK-EXECUTE
+      breakpoint_layer: L6_RBAC
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-ADMIN-FOUR-CENTERS CAP-CMS-ANNOUNCE SEC-SUPERADMIN
+      probe: SuperAdmin login PASS; Ops cannot publish; 118 admin routes unexpanded Pack 02
+      evidence: registry/security-identity-authority-matrix.v1.yaml
+      note: No L7. 118 routes unexpanded is not a 16th matrix.
+
+    - jny_id: JNY-TTG-PURCHASE
+      actor: Traveler
+      entry: PAGE.HOME PAGE.TRAVELTRUST
+      identity_auth: SEC-WALLET-EOA SEC-STRICT-SESSION-GATE AUTH-PM-PROXY-UPGRADE
+      capability: CAP-TTG-GATEWAY
+      frontend_action: HOME.TTG_PURCHASE.SUBMIT
+      api: GP-06.PM.PURCHASE GET /api/v1/governance/ttg-exchange/quote
+      domain_acl: TTG_MARKET GOVERNANCE
+      data_mutation: DATA-PM-PRICE-LIVE DATA-PM-PRICE-TARGET
+      l7_transaction: W3-PM-PROXY W3-PM-IMPL-GOV04 W3-P4CAP
+      money_hop: S11 S12 S13 S14
+      l8_projection: W3-INDEXER
+      runtime_observation: REL-PM-PROXY REL-PM25 REL-HARD-GATE
+      user_visible_outcome: quote 401 STRICT_SESSION_GATE; Official /meta NEW PM 100_000; www chrome GOV-04 1e18 ED
+      happy_path: session+wallet → quote → NEW PM 100_000 purchase → P4Cap
+      alternate_path: /traveltrust dual disclosure CMS 25T vs www chrome 10→10 / 1e18 ED
+      failure_path: 401; scheduled_as_official; meta_pm_null (historical; living /meta publishes NEW PM)
+      failure_recovery: REL-PM25 LEGACY bake FORBIDDEN; Official sale W3-TTG NEW PM not W3-PM-IMPL-GOV04
+      breakpoint_layer: L4_STRICT_SESSION_GATE
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-TTG-GATEWAY W3-PM-PROXY W3-PM-IMPL-GOV04 REL-PM25
+      probe: quote 401 STRICT_SESSION_GATE; Official /meta NEW PM 100_000; www chrome GOV-04 1e18 ED; REL-PM25 LEGACY bake FORBIDDEN
+      evidence: registry/release-runtime-evidence-matrix.v1.yaml
+      seed_alias: J-TTG-PURCHASE
+      note: TTG Acquisition here is token purchase. Listing acquisition is JNY-ACQUISITION-PUBLISH.
+
+    - jny_id: JNY-GOVERNANCE-QUEUE
+      actor: Governor
+      entry: PAGE.TRAVELTRUST /governance/proposals
+      identity_auth: AUTH-GOVERNOR-PROPOSE AUTH-PROPOSAL-3-ORTHOGONAL SEC-GOVERNOR-VOTE SEC-TIMELOCK-EXECUTE
+      capability: CAP-GOVERNANCE-PORTAL
+      frontend_action: GOVERNANCE.PROPOSAL.QUEUE
+      api: GP-08.GOV.QUEUE
+      domain_acl: GOVERNANCE
+      data_mutation: DATA-PM-PRICE-LIVE
+      l7_transaction: W3-GOVERNOR W3-TIMELOCK W3-SAFE
+      money_hop: S14
+      l8_projection: REL-L7-L8-OBS
+      runtime_observation: REL-HARD-GATE REL-REALITY-CLOSURE
+      user_visible_outcome: Governor/Timelock/Safe live; Hard Gate NO_GO
+      happy_path: propose → vote → Timelock queue → execute after 48h
+      alternate_path: Safe 1/1 admin of Timelock
+      failure_path: proposal3_as_official; docs_as_go
+      failure_recovery: "Proposal #3 TARGET_NOT_LIVE; do not treat portal as Production GO"
+      breakpoint_layer: L7_TIMELOCK_QUEUE
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-GOVERNANCE-PORTAL AUTH-GOVERNOR-PROPOSE REL-HARD-GATE
+      probe: "Governor/Timelock/Safe live; Proposal #3 TARGET_NOT_LIVE; Hard Gate NO_GO"
+      evidence: registry/governance-economic-matrix.v1.yaml
+      note: Portal OFFICIAL_LIVE ≠ END_TO_END_CLOSED_REALITY.
+
+    - jny_id: JNY-REGION-STEWARD-CLAIM
+      actor: RegionSteward
+      entry: PAGE.TRAVELTRUST
+      identity_auth: AUTH-STEWARD-APPLY AUTH-STEWARD-CLAIM SEC-STEWARD-SESSION
+      capability: CAP-REGION-STEWARD
+      frontend_action: STEWARD.CLAIM.SUBMIT
+      api: GP-07.STEWARD.CLAIM
+      domain_acl: STEWARD
+      data_mutation: DATA-ONBOARDING-ENTITLEMENT
+      l7_transaction: W3-SEAT-REGISTRY W3-REGION-VAULT
+      money_hop: S10
+      l8_projection: NONE_NOT_L7
+      runtime_observation: REL-JP-VAULT
+      user_visible_outcome: session apply may exist in PG; Seat Claim is not Official live
+      happy_path: TARGET_NOT_LIVE — not a current Official claim
+      alternate_path: AUTH-STEWARD-APPLY session/PG entitlement only
+      failure_path: seat_not_deployed; session_as_l7
+      failure_recovery: do not draw Steward session as Seat Claim Official
+      breakpoint_layer: L7_NOT_DEPLOYED
+      current_runtime_status: TARGET_NOT_LIVE
+      reality_level: NOT_LIVE
+      dependency: CAP-REGION-STEWARD W3-SEAT-REGISTRY W3-REGION-VAULT S10 REL-JP-VAULT
+      probe: /meta.registry_address=null; REL-JP-VAULT CODE_READY; session apply is live PG
+      evidence: registry/governance-economic-matrix.v1.yaml
+      note: TARGET_NOT_LIVE. Not a usable Official journey.
+
+    - jny_id: JNY-INDEXER-L8-PROJECT
+      actor: System
+      entry: NONE_SYSTEM_JOB L7 receipt
+      identity_auth: AUTH-INDEXER-READONLY SEC-INDEXER-READONLY
+      capability: CAP-ESCROW-SETTLEMENT
+      frontend_action: NONE_NOT_FE
+      api: GP-05.SETTLEMENT.RELEASE
+      domain_acl: SETTLEMENT PLATFORM
+      data_mutation: DATA-ESCROW-PROJECTION
+      l7_transaction: W3-INDEXER W3-SR-FT
+      money_hop: NONE_NOT_MONEY
+      l8_projection: DATA-ESCROW-PROJECTION REL-L7-L8-OBS
+      runtime_observation: REL-ENV-INDEXER REL-L7-L8-OBS
+      user_visible_outcome: UI reads projection after checkpoint; lag 0 observed
+      happy_path: L7 receipt status=1 → Indexer checkpoint ≥ block → API → UI
+      alternate_path: pause is 503 api_paused not 418
+      failure_path: INC-INDEXER-LAG; premature UI close
+      failure_recovery: wait checkpoint; lag 0 ≠ CLOSED_REALITY
+      breakpoint_layer: L8_PROJECTION
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-ESCROW-SETTLEMENT W3-INDEXER DATA-ESCROW-PROJECTION REL-L7-L8-OBS
+      probe: indexer lag 0 checkpoint 25759530 ≥ release 25759423; Official pause.enabled=false
+      evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      note: Background L8. Observation ≠ Production GO.
+
+    - jny_id: JNY-DID-RANK-PUBLIC
+      actor: Traveler
+      entry: PAGE.DID_RANK /did-rank
+      identity_auth: AUTH-BACKEND-SERVICE SEC-ANON-PUBLIC
+      capability: CAP-DID-RANK
+      frontend_action: DID_RANK.VIEW
+      api: GP-04 DID_RANK.LIST GET /api/v1/did-rank/guides
+      domain_acl: DID_RANK
+      data_mutation: DATA-DID-RANK
+      l7_transaction: NONE_NOT_L7
+      money_hop: NONE_NOT_MONEY
+      l8_projection: DATA-DID-RANK
+      runtime_observation: REL-OFFICIAL-TRAFFIC
+      user_visible_outcome: GET /did-rank 200; guides 200
+      happy_path: anonymous GET page + API 200
+      alternate_path: empty projection still 200
+      failure_path: empty_projection
+      failure_recovery: DB rank ≠ L7 stake
+      breakpoint_layer: L8_PROJECTION
+      current_runtime_status: OFFICIAL_LIVE
+      reality_level: 3_OFFICIAL_PARTIAL
+      dependency: CAP-DID-RANK DATA-DID-RANK
+      probe: GET /did-rank 200; GET /api/v1/did-rank/guides 200
+      evidence: registry/project-pack-depth-audit.v1.yaml
+      note: No L7. Public read journey.
+
+  note: Pack 12 is an independent later wave.
+
+pack_12_blockers:
+  status: PACK12_DEPENDENCY_GATE_DEEPENED
+  depth_grade: DEEP_PARTIAL
+  human_doc: docs/runbook/TT-DEPENDENCY-BLOCKER-GATE-ARCHITECTURE-LATEST.md
+  overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  pack03: CLOSED
+  pack04: CLOSED
+  pack05: CLOSED
+  pack06: CLOSED
+  pack07: CLOSED
+  pack08: CLOSED
+  pack09: CLOSED
+  pack10: CLOSED
+  pack11: CLOSED
+  m12_shallow_dependency: 0
+  m12_unresolved_upstream_pointer: 0
+  m12_ambiguous_blocker: 0
+  unexplained_gate_transition: 0
+  dependency_cycle: 0
+  stop_after: PACK12
+  next_pack_forbidden_this_wave: []
+  ci02_pm25_merge: FORBIDDEN
+  living_ssot:
+    - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    - registry/commercial-money-lifecycle-matrix.v1.yaml
+    - registry/web3-contract-architecture-matrix.v1.yaml
+    - registry/release-runtime-evidence-matrix.v1.yaml
+  node_fields:
+    - node_id
+    - kind
+    - lane
+    - dep_class
+    - upstream
+    - required_state
+    - gate_condition
+    - downstream
+    - blocker
+    - unblock_evidence
+    - allowed_next_transition
+    - current_blocker
+    - next_allowed_gate
+    - failure_propagation
+    - cites
+    - probe
+    - evidence
+    - current_runtime_status
+  kind_enum: [GATE, DEP]
+  lane_enum: [CRITICAL_PATH, ORTHOGONAL]
+  dep_class_enum:
+    - TECHNICAL
+    - RUNTIME
+    - TIMELOCK_ETA
+    - OWNER_AUTH
+    - NOT_DEPLOYED
+    - REALITY_EVIDENCE
+    - ORTHOGONAL
+  hard_split: >
+    DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE ≠ REALITY_VERIFIED ≠ CLOSED_REALITY.
+    TIMELOCK_ETA ≠ OWNER_AUTH execute ≠ NOT_DEPLOYED ≠ REALITY_EVIDENCE.
+    Proposal #3 ≠ CI-02 blocker ≠ PM25 blocker.
+    CI-02 execute ≠ NEW FeeRouter Official cutover.
+    PM $25 execute ≠ 10→0.4 Reality.
+    Track1 10 USDC REALITY_VERIFIED on SUPERSEDED path ≠ Track2 1 USDC CLOSED_REALITY.
+    TT_PRODUCTION_GO=NO_GO.
+  required_nodes:
+    - GATE-T1T2-DONE
+    - GATE-CI02-ETA
+    - GATE-CI02-EXECUTE
+    - GATE-FR-NEW-WIRE-CUTOVER
+    - GATE-1USDC-REALITY
+    - GATE-GOV04-DONE
+    - GATE-PM25-ETA
+    - GATE-PM25-EXECUTE
+    - GATE-PM-10-TO-04-REALITY
+    - GATE-SEAT-CI01
+    - GATE-VAULT-CI03
+    - DEP-S05-REGION-83
+    - DEP-S06-VACANCY
+    - GATE-PROPOSAL-3
+    - GATE-HARD-GO
+    - DEP-LOGIN-WWW-405
+  phase2_backlog:
+    - id: P2-CI02-ETA
+      class: TIMELOCK_ETA
+      fact: CI-02 done=false until 2026-08-16T13:42:11Z; Official fee still W3-FR-OLD
+      do_not_fix_this_wave: true
+    - id: P2-PM25-ETA
+      class: TIMELOCK_ETA
+      fact: PM $25 L7 done=true 4e16; Official www still W3-PM-IMPL-GOV04 1e18; bake WAIT
+      do_not_fix_this_wave: true
+    - id: P2-1USDC-REALITY
+      class: REALITY_EVIDENCE
+      fact: Track2 1 USDC money-path PASS Owner A L7+L8; Official book hop CLOSED_REALITY; GO remaining = Owner written verdict; P0_COMMERCIAL_MONEY_PATH_BLOCKER false
+      do_not_fix_this_wave: true
+    - id: P2-SEAT-VAULT
+      class: NOT_DEPLOYED
+      fact: W3-SEAT-REGISTRY / W3-REGION-VAULT / S05 / S06 TARGET_NOT_LIVE
+      do_not_fix_this_wave: true
+    - id: P2-PROPOSAL-3-ORTHOGONAL
+      class: ORTHOGONAL
+      fact: AUTH-PROPOSAL-3-ORTHOGONAL is not a CI-02 or PM25 blocker
+      do_not_fix_this_wave: true
+    - id: P2-PACK13-INDEPENDENT
+      class: STOP
+      fact: HISTORICAL Pack 12 freeze; Pack 13 is an independent later wave
+      do_not_fix_this_wave: true
+  nodes:
+    - node_id: GATE-T1T2-DONE
+      kind: GATE
+      lane: CRITICAL_PATH
+      dep_class: TECHNICAL
+      upstream: W3-FACTORY-WIRED W3-SR-FT
+      required_state: Timelock T1/T2 operations.done=true
+      gate_condition: already executed 2026-08-14
+      downstream: REL-SR-FT JNY-TRAVELER-GUIDE-BOOK
+      blocker: NONE_NOT_GO
+      unblock_evidence: recon T1 0x35f54aa1 done=true T2 0xbdc82edb done=true
+      allowed_next_transition: GATE-1USDC-REALITY
+      current_blocker: false
+      next_allowed_gate: GATE-1USDC-REALITY
+      failure_propagation: n/a already done; SUPERSEDED Track1 SR is not this gate
+      cites: W3-FACTORY-WIRED W3-SR-FT REL-SR-FT JNY-TRAVELER-GUIDE-BOOK
+      probe: Wired.settlementRouter=SR-FT; /meta.settlement_router=SR-FT
+      evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+      note: Dual-wait freeze doc is historical. Not a current blocker.
+
+    - node_id: GATE-CI02-ETA
+      kind: GATE
+      lane: CRITICAL_PATH
+      dep_class: TIMELOCK_ETA
+      upstream: W3-FR-NEW REL-CI02-FR-NEW
+      required_state: Timelock ETA reached 2026-08-16T13:42:11Z
+      gate_condition: operations.done=false until ETA; do not treat DEPLOYED as execute
+      downstream: GATE-CI02-EXECUTE
+      blocker: TIMELOCK_ETA waiting
+      unblock_evidence: chain operations.done still false; Official fee W3-FR-OLD
+      allowed_next_transition: GATE-CI02-EXECUTE
+      current_blocker: true
+      next_allowed_gate: GATE-CI02-EXECUTE
+      failure_propagation: ETA miss delays execute only; does not block GATE-PM25-ETA or GATE-PROPOSAL-3 or GATE-1USDC-REALITY
+      cites: W3-FR-NEW REL-CI02-FR-NEW W3-FR-OLD REL-FR-OLD CAP-ESCROW-USDC
+      probe: NEW FR 0xb6bfED DEPLOYED; /meta.fee_router still OLD 0x2aF47C; done=false
+      evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      current_runtime_status: SCHEDULED_WAITING_ETA
+      note: TIMELOCK_ETA ≠ OWNER_AUTH execute ≠ Official cutover.
+
+    - node_id: GATE-CI02-EXECUTE
+      kind: GATE
+      lane: CRITICAL_PATH
+      dep_class: OWNER_AUTH
+      upstream: GATE-CI02-ETA AUTH-TIMELOCK-EXECUTE
+      required_state: ETA elapsed AND Owner/permissionless execute
+      gate_condition: not executable before ETA; execute ≠ WIRED ≠ OFFICIAL_LIVE
+      downstream: GATE-FR-NEW-WIRE-CUTOVER
+      blocker: OWNER_AUTH execute after ETA; currently also pre-ETA
+      unblock_evidence: Timelock op 0xa26f09da done must become true
+      allowed_next_transition: GATE-FR-NEW-WIRE-CUTOVER
+      current_blocker: false
+      next_allowed_gate: GATE-FR-NEW-WIRE-CUTOVER
+      failure_propagation: execute fail keeps Official OLD FR; does not block GATE-PM25-EXECUTE
+      cites: AUTH-TIMELOCK-EXECUTE REL-CI02-FR-NEW W3-FR-NEW SEC-TIMELOCK-EXECUTE
+      probe: CI-02 op done=false; do not execute this wave
+      evidence: registry/governance-economic-matrix.v1.yaml
+      current_runtime_status: SCHEDULED_WAITING_ETA
+      note: Distinct from ETA wait. This wave must not execute.
+
+    - node_id: GATE-FR-NEW-WIRE-CUTOVER
+      kind: GATE
+      lane: CRITICAL_PATH
+      dep_class: RUNTIME
+      upstream: GATE-CI02-EXECUTE W3-SR-FT
+      required_state: NEW FR executed then Official /meta.fee_router points NEW
+      gate_condition: DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE
+      downstream: CAP-ESCROW-USDC S03 S04
+      blocker: Official still W3-FR-OLD / REL-FR-OLD
+      unblock_evidence: /meta.fee_router == W3-FR-NEW AND SR-FT.feeRouter == NEW
+      allowed_next_transition: NONE_NOT_GO
+      current_blocker: false
+      next_allowed_gate: GATE-HARD-GO
+      failure_propagation: cutover fail leaves OLD FR Official; 1 USDC Reality may still use OLD FR
+      cites: W3-FR-NEW W3-FR-OLD W3-SR-FT REL-FR-OLD REL-CI02-FR-NEW S03 CAP-ESCROW-USDC
+      probe: SR-FT.feeRouter=OLD; /meta.fee_router=OLD
+      evidence: registry/web3-contract-architecture-matrix.v1.yaml
+      current_runtime_status: DEPLOYED
+      note: NEW FR DEPLOYED not Official. Not the same node as GATE-CI02-EXECUTE.
+
+    - node_id: GATE-1USDC-REALITY
+      kind: GATE
+      lane: CRITICAL_PATH
+      dep_class: REALITY_EVIDENCE
+      upstream: GATE-T1T2-DONE W3-SR-FT REL-TRACK1-ESCROW
+      required_state: Track2 1 USDC L7+L8 money-path PASS under Owner A
+      gate_condition: WIRED+OFFICIAL_LIVE ≠ REALITY_VERIFIED ≠ CLOSED_REALITY
+      downstream: GATE-HARD-GO
+      blocker: NONE_NOT_GO
+      unblock_evidence: Owner A classify A Track2 L7 receipt + L8 checkpoint
+      allowed_next_transition: GATE-HARD-GO
+      current_blocker: false
+      next_allowed_gate: GATE-HARD-GO
+      failure_propagation: Money-path PASS does not flip GO; Official book hop CLOSED_REALITY; GO remaining = Owner written verdict; does not require CI-02 or PM25
+      cites: W3-SR-FT W3-FR-OLD REL-TRACK1-ESCROW JNY-ESCROW-RELEASE-REFUND S01 S02
+      probe: Track2 L7 status=3 conservation 1e6; indexer 25759530>=25759423
+      evidence: docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.json
+      current_runtime_status: OFFICIAL_LIVE
+      note: Independent of CI-02 ETA. OLD FR is the living fee path. Official book hop CLOSED_REALITY; GO remaining = Owner written verdict.
+
+    - node_id: GATE-GOV04-DONE
+      kind: GATE
+      lane: ORTHOGONAL
+      dep_class: TECHNICAL
+      upstream: W3-PM-PROXY AUTH-PM-PROXY-UPGRADE
+      required_state: GOV-04 upgradeTo done=true
+      gate_condition: already executed 2026-08-14; live ttgPerUsdcUnit=1e18
+      downstream: CAP-TTG-GATEWAY JNY-TTG-PURCHASE
+      blocker: NONE_NOT_GO
+      unblock_evidence: recon GOV-04 0xb33dfdf2 done=true impl 0xB3bC
+      allowed_next_transition: GATE-PM25-ETA
+      current_blocker: false
+      next_allowed_gate: GATE-PM25-ETA
+      failure_propagation: n/a already done; old impl SUPERSEDED
+      cites: W3-PM-PROXY W3-PM-IMPL-GOV04 REL-PM-PROXY CAP-TTG-GATEWAY JNY-TTG-PURCHASE
+      probe: PM proxy LEGACY OLD 0xf7B7; Official /meta NEW PM 0x882Ad 100_000; www chrome GOV-04 1e18 ED
+      evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - node_id: GATE-PM25-ETA
+      kind: GATE
+      lane: ORTHOGONAL
+      dep_class: TIMELOCK_ETA
+      upstream: GATE-GOV04-DONE W3-PM-IMPL-25 REL-PM25
+      required_state: Timelock ETA reached 2026-08-16T16:20:23Z
+      gate_condition: L7 execute done ≠ Official www Live $25; DEPLOYED ≠ Official live
+      downstream: GATE-PM25-EXECUTE
+      blocker: TIMELOCK_ETA remaining = Official www bake WAIT
+      unblock_evidence: L7 done=true; Official www still W3-PM-IMPL-GOV04 1e18
+      allowed_next_transition: GATE-PM25-EXECUTE
+      current_blocker: true
+      next_allowed_gate: GATE-PM25-EXECUTE
+      failure_propagation: ETA miss delays $25 only; does not block GATE-CI02-ETA or GATE-PROPOSAL-3
+      cites: W3-PM-IMPL-25 REL-PM25 W3-PM-IMPL-GOV04 AUTH-PM25-UPGRADE CAP-TTG-GATEWAY
+      probe: L7 $25 done=true 4e16; Official www still GOV-04 1e18; bake WAIT
+      evidence: registry/release-runtime-evidence-matrix.v1.yaml
+      current_runtime_status: SCHEDULED_WAITING_ETA
+      note: Orthogonal to CI-02. TIMELOCK_ETA ≠ 10→0.4 Reality.
+
+    - node_id: GATE-PM25-EXECUTE
+      kind: GATE
+      lane: ORTHOGONAL
+      dep_class: OWNER_AUTH
+      upstream: GATE-PM25-ETA AUTH-PM25-UPGRADE
+      required_state: ETA elapsed AND execute upgradeTo $25 impl
+      gate_condition: execute ≠ Official 10→0.4 Reality
+      downstream: GATE-PM-10-TO-04-REALITY
+      blocker: OWNER_AUTH remaining = Official www $25 bake; L7 execute already done
+      unblock_evidence: Timelock op 0xb7d2a7c3 done=true; Official bake still WAIT
+      allowed_next_transition: GATE-PM-10-TO-04-REALITY
+      current_blocker: false
+      next_allowed_gate: GATE-PM-10-TO-04-REALITY
+      failure_propagation: execute fail keeps 1e18 live; does not block GATE-CI02-EXECUTE
+      cites: AUTH-PM25-UPGRADE W3-PM-IMPL-25 W3-PM-PROXY REL-PM25
+      probe: PM $25 L7 done=true; Official www bake WAIT; do not bake this wave
+      evidence: registry/governance-economic-matrix.v1.yaml
+      current_runtime_status: SCHEDULED_WAITING_ETA
+
+    - node_id: GATE-PM-10-TO-04-REALITY
+      kind: GATE
+      lane: ORTHOGONAL
+      dep_class: REALITY_EVIDENCE
+      upstream: GATE-PM25-EXECUTE W3-PM-PROXY DATA-PM-PRICE-TARGET
+      required_state: live ttgPerUsdcUnit reflects 10→0.4 after $25 impl
+      gate_condition: execute ≠ Reality; www chrome still 10→10 1e18 ED; Official sale NEW PM 100_000
+      downstream: JNY-TTG-PURCHASE S11 S12
+      blocker: price Reality not started; live GOV-04 1e18
+      unblock_evidence: probe live unit != 1e18 AND Reality pack for 10→0.4
+      allowed_next_transition: NONE_NOT_GO
+      current_blocker: false
+      next_allowed_gate: GATE-HARD-GO
+      failure_propagation: 10→0.4 Reality fail does not block CI-02 or 1 USDC Reality
+      cites: W3-PM-IMPL-25 DATA-PM-PRICE-LIVE DATA-PM-PRICE-TARGET JNY-TTG-PURCHASE S11
+      probe: live ttgPerUsdcUnit=1e18; REL-PM25 DEPLOYED not Official
+      evidence: registry/data-truth-matrix.v1.yaml
+      current_runtime_status: SCHEDULED_WAITING_ETA
+      note: 10→0.4 is Reality Evidence after execute, not the execute gate.
+
+    - node_id: GATE-SEAT-CI01
+      kind: GATE
+      lane: ORTHOGONAL
+      dep_class: NOT_DEPLOYED
+      upstream: W3-SEAT-REGISTRY CAP-REGION-STEWARD
+      required_state: mainnet SeatRegistry address exists
+      gate_condition: NOT_DEPLOYED ≠ TARGET session apply
+      downstream: GATE-VAULT-CI03 DEP-S05-REGION-83 JNY-REGION-STEWARD-CLAIM
+      blocker: /meta.registry_address=null; no mainnet address
+      unblock_evidence: Pack 05 W3-SEAT-REGISTRY lifecycle not NOT_DEPLOYED
+      allowed_next_transition: GATE-VAULT-CI03
+      current_blocker: true
+      next_allowed_gate: GATE-VAULT-CI03
+      failure_propagation: Seat missing keeps Steward TARGET_NOT_LIVE; does not block CI-02 or PM25
+      cites: W3-SEAT-REGISTRY CAP-REGION-STEWARD JNY-REGION-STEWARD-CLAIM AUTH-STEWARD-CLAIM REL-JP-VAULT
+      probe: /meta.registry_address=null
+      evidence: registry/web3-contract-architecture-matrix.v1.yaml
+      current_runtime_status: TARGET_NOT_LIVE
+      note: NOT_DEPLOYED ≠ TIMELOCK_ETA.
+
+    - node_id: GATE-VAULT-CI03
+      kind: GATE
+      lane: ORTHOGONAL
+      dep_class: NOT_DEPLOYED
+      upstream: GATE-SEAT-CI01 W3-REGION-VAULT
+      required_state: JP RegionVault deployed then setRegionVault
+      gate_condition: no address today; old ascii CI-02→CI-03 must not collapse NOT_DEPLOYED into CI-02 ETA
+      downstream: DEP-S05-REGION-83 S10
+      blocker: CI-03 NOT_DEPLOYED; REL-JP-VAULT CODE_READY
+      unblock_evidence: /meta.region_steward_stake_pool_address set AND vault code
+      allowed_next_transition: DEP-S05-REGION-83
+      current_blocker: true
+      next_allowed_gate: DEP-S05-REGION-83
+      failure_propagation: Vault missing keeps S05 TARGET; does not block GATE-CI02-ETA
+      cites: W3-REGION-VAULT REL-JP-VAULT S10 CAP-REGION-STEWARD
+      probe: /meta.region_steward_stake_pool_address=null; REL-JP-VAULT CODE_READY
+      evidence: registry/release-runtime-evidence-matrix.v1.yaml
+      current_runtime_status: TARGET_NOT_LIVE
+
+    - node_id: DEP-S05-REGION-83
+      kind: DEP
+      lane: ORTHOGONAL
+      dep_class: NOT_DEPLOYED
+      upstream: GATE-SEAT-CI01 GATE-VAULT-CI03 S05
+      required_state: Seat Active + Vault live before 83 Snapshot/Claim
+      gate_condition: S05 TARGET_NOT_LIVE; Safe/P4Cap S04 is INTERIM not this hop
+      downstream: JNY-REGION-STEWARD-CLAIM
+      blocker: 83 country vault chain not instantiated
+      unblock_evidence: Pack 06 S05 runtime_status not TARGET_NOT_LIVE
+      allowed_next_transition: NONE_NOT_GO
+      current_blocker: true
+      next_allowed_gate: GATE-HARD-GO
+      failure_propagation: S05 TARGET does not block Official OLD FR path or PM GOV-04
+      cites: S05 S04 W3-SEAT-REGISTRY W3-REGION-VAULT CAP-REGION-STEWARD
+      probe: Pack 06 S05 TARGET_NOT_LIVE; /meta seat+vault null
+      evidence: registry/commercial-money-lifecycle-matrix.v1.yaml
+      current_runtime_status: TARGET_NOT_LIVE
+
+    - node_id: DEP-S06-VACANCY
+      kind: DEP
+      lane: ORTHOGONAL
+      dep_class: NOT_DEPLOYED
+      upstream: GATE-SEAT-CI01 S06 W3-P4CAP
+      required_state: 83 vacancy routing Seat vs P4Cap
+      gate_condition: P4Cap live as treasury S04 ≠ vacancy CLOSED_REALITY
+      downstream: S14
+      blocker: vacancy attribution TARGET_NOT_LIVE
+      unblock_evidence: Pack 06 S06 not TARGET_NOT_LIVE
+      allowed_next_transition: NONE_NOT_GO
+      current_blocker: true
+      next_allowed_gate: GATE-HARD-GO
+      failure_propagation: S06 TARGET does not block CI-02 or PM25
+      cites: S06 S04 W3-P4CAP W3-SEAT-REGISTRY
+      probe: WRR-VACANCY-LEDGER closed_reality=false
+      evidence: registry/commercial-money-lifecycle-matrix.v1.yaml
+      current_runtime_status: TARGET_NOT_LIVE
+
+    - node_id: GATE-PROPOSAL-3
+      kind: GATE
+      lane: ORTHOGONAL
+      dep_class: ORTHOGONAL
+      upstream: AUTH-PROPOSAL-3-ORTHOGONAL W3-GOVERNOR W3-P4CAP
+      required_state: LONG_WAIT; not current Official spend
+      gate_condition: "Proposal #3 TARGET_NOT_LIVE; must not appear as CI-02 or PM25 blocker"
+      downstream: CAP-GOVERNANCE-PORTAL JNY-GOVERNANCE-QUEUE
+      blocker: "Proposal #3 not Official; orthogonal LONG_WAIT"
+      unblock_evidence: AUTH-PROPOSAL-3-ORTHOGONAL stays TARGET this wave
+      allowed_next_transition: NONE_NOT_GO
+      current_blocker: true
+      next_allowed_gate: NONE_NOT_GO
+      failure_propagation: "#3 wait does not block GATE-CI02-ETA or GATE-PM25-ETA or GATE-1USDC-REALITY"
+      cites: AUTH-PROPOSAL-3-ORTHOGONAL W3-GOVERNOR W3-P4CAP CAP-GOVERNANCE-PORTAL JNY-GOVERNANCE-QUEUE REL-HARD-GATE
+      probe: "Governor/Timelock/Safe live; Proposal #3 TARGET_NOT_LIVE"
+      evidence: registry/governance-economic-matrix.v1.yaml
+      current_runtime_status: TARGET_NOT_LIVE
+      note: "#3 ≠ CI-02 blocker ≠ PM25 blocker."
+
+    - node_id: GATE-HARD-GO
+      kind: GATE
+      lane: CRITICAL_PATH
+      dep_class: REALITY_EVIDENCE
+      upstream: GATE-1USDC-REALITY REL-HARD-GATE REL-REALITY-CLOSURE
+      required_state: P0 false AND Reality closes AND Owner GO; no single ETA unblocks
+      gate_condition: DEPLOYED scheduled CI-02/PM25 ≠ Production GO
+      downstream: NONE_NOT_GO
+      blocker: TT_PRODUCTION_GO NO_GO; living P0_COMMERCIAL_MONEY_PATH_BLOCKER false; global Reality not closed
+      unblock_evidence: FTB/Hard Gate PASS plus 1 USDC Reality PASS; still Owner-only
+      allowed_next_transition: NONE_NOT_GO
+      current_blocker: true
+      next_allowed_gate: NONE_NOT_GO
+      failure_propagation: GO stays NO_GO if any of Reality/P0 remain; CI-02 execute alone does not flip GO; PM25 execute alone does not flip GO; Proposal #3 does not flip GO
+      cites: REL-HARD-GATE REL-REALITY-CLOSURE GATE-1USDC-REALITY JNY-INDEXER-L8-PROJECT
+      probe: TT_PRODUCTION_GO=NO_GO; Hard Gate CODE_READY
+      evidence: docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
+      current_runtime_status: CODE_READY
+      note: Independent ladders. Do not AND CI-02 + PM25 + #3 into one blocker.
+
+    - node_id: DEP-LOGIN-WWW-405
+      kind: DEP
+      lane: ORTHOGONAL
+      dep_class: RUNTIME
+      upstream: CAP-AUTH-SESSION JNY-TRAVELER-LOGIN SEC-SESSION-BEARER
+      required_state: Official www POST /auth/login not 405
+      gate_condition: API Bearer happy path already live; www L3 405 SUPERSEDED
+      downstream: JNY-TRAVELER-AI-ITINERARY JNY-TRAVELER-GUIDE-BOOK
+      blocker: INC-LOGIN historical L3 www 405 SUPERSEDED
+      unblock_evidence: www POST /auth/login 200 Owner Official C2
+      allowed_next_transition: NONE_NOT_GO
+      current_blocker: false
+      next_allowed_gate: NONE_NOT_GO
+      failure_propagation: login 405 closed does not flip Production GO; 1 USDC / CI-02 remain
+      cites: CAP-AUTH-SESSION JNY-TRAVELER-LOGIN SEC-STRICT-SESSION-GATE REL-PROBE-UAT
+      probe: Owner C2 www login 200 HttpOnly; historical 405 SUPERSEDED
+      evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.md
+      current_runtime_status: OFFICIAL_LIVE
+      note: GAP-LOGIN-WWW-405 CLOSED_REALITY. Product orthogonal. Not a Timelock or Reality blocker.
+
+  note: Pack 13 is an independent later wave. CI-02 / PM $25 / Proposal #3 remain independent ladders.
+
+pack_13_incidents:
+  status: PACK13_INCIDENT_DIAGNOSTIC_DEEPENED
+  depth_grade: DEEP_PARTIAL
+  human_doc: docs/runbook/TT-INCIDENT-DIAGNOSTIC-ARCHITECTURE-LATEST.md
+  overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  bta_trees: registry/backend-truth-architecture.v1.yaml
+  pack03: CLOSED
+  pack04: CLOSED
+  pack05: CLOSED
+  pack06: CLOSED
+  pack07: CLOSED
+  pack08: CLOSED
+  pack09: CLOSED
+  pack10: CLOSED
+  pack11: CLOSED
+  pack12: CLOSED
+  m13_shallow_incident: 0
+  m13_unresolved_diagnostic_pointer: 0
+  m13_ambiguous_root_cause: 0
+  unexplained_incident_path: 0
+  stop_after: PACK13
+  next_pack_forbidden_this_wave: ["PHASE2"]
+  ci02_pm25_merge: FORBIDDEN
+  phase2_upgrade: FORBIDDEN
+  living_ssot:
+    - registry/backend-truth-architecture.v1.yaml
+    - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    - registry/project-cross-maps-10-13.v1.yaml
+  node_fields:
+    - inc_id
+    - family
+    - symptom
+    - entry_probe
+    - layer
+    - capability_journey
+    - dependency
+    - failure_class
+    - next_probe
+    - stop_condition
+    - root_cause_class
+    - forbidden_jump
+    - as_is_sample
+    - cites
+    - evidence
+    - current_runtime_status
+  family_enum:
+    - LOGIN_SESSION
+    - FRONTEND_BFF
+    - API
+    - RBAC
+    - DB_MIGRATION
+    - CMS_OBJECT
+    - ADMIN
+    - INDEXER_L8
+    - WEB3_CONTRACT_WIRING
+    - MONEY_SETTLEMENT
+    - TTG_PRIMARY_MARKET
+    - TIMELOCK_GOVERNANCE
+    - REGION_STEWARD
+    - RELEASE_RUNTIME_IDENTITY
+  root_cause_class_enum:
+    - L0_HYDRATION
+    - L2_PROXY
+    - L3_ROUTE
+    - L4_SESSION
+    - L5_RBAC
+    - L5_CREDENTIAL
+    - L6_DB
+    - L7_CHAIN
+    - L8_INDEXER
+    - L8_STAMP_LAG
+    - TIMELOCK_ETA
+    - NOT_DEPLOYED
+    - DEPLOYED_NOT_WIRED
+    - REALITY_NOT_CLOSED
+    - CMS_OBJECT
+    - RELEASE_IDENTITY
+  hard_split: >
+    Locate layer first. Do not jump Login 405 to account/DB.
+    Do not overwrite L7 from L8 drift. DEPLOYED ≠ WIRED.
+    Timelock WAIT ≠ code fault. Reality not closed ≠ deploy failure.
+    AS-IS samples (405, CI-02 WAIT, PM25 WAIT, Seat/Vault NOT_DEPLOYED)
+    are diagnostic only. Phase 1 does not fix them.
+    TT_PRODUCTION_GO=NO_GO.
+  required_nodes:
+    - INC-LOGIN
+    - INC-FE-BFF
+    - INC-500-503
+    - INC-403
+    - INC-DB-DRIFT
+    - INC-CMS-OBJECT
+    - INC-ADMIN
+    - INC-INDEXER-LAG
+    - INC-L8-VS-L7
+    - INC-WEB3-WIRING
+    - INC-CHAIN-TX-FAIL
+    - INC-MONEY-SETTLEMENT
+    - INC-PM-TTG
+    - INC-TIMELOCK-WAIT
+    - INC-STEWARD-NOT-DEPLOYED
+    - INC-RELEASE-IDENTITY
+  phase2_backlog:
+    - id: P2-LOGIN-405
+      class: L3_ROUTE
+      fact: Historical www POST /auth/login 405 SUPERSEDED; GAP-LOGIN CLOSED_REALITY; remaining seed 401 is L5_CREDENTIAL
+      do_not_fix_this_wave: true
+    - id: P2-CI02-WAIT
+      class: TIMELOCK_ETA
+      fact: CI-02 WAIT is GATE-CI02-ETA not a code fault
+      do_not_fix_this_wave: true
+    - id: P2-PM25-WAIT
+      class: TIMELOCK_ETA
+      fact: PM25 WAIT is GATE-PM25-ETA not a code fault
+      do_not_fix_this_wave: true
+    - id: P2-SEAT-VAULT-ASIS
+      class: NOT_DEPLOYED
+      fact: Seat/Vault NOT_DEPLOYED is GATE-SEAT-CI01 / GATE-VAULT-CI03 sample
+      do_not_fix_this_wave: true
+    - id: P2-PHASE2-NOT-STARTED
+      class: STOP
+      fact: Phase 2 Production-Grade Review is forbidden until Phase 1 AS-IS FROZEN
+      do_not_fix_this_wave: true
+  note: Phase 2 upgrade forbidden this wave. Diagnose only. Locate layer first.
+  nodes:
+    - inc_id: INC-LOGIN
+      family: LOGIN_SESSION
+      symptom: www login fails / UI stays anonymous
+      entry_probe: POST https://www.web3-ttg.com/auth/login then API POST /auth/login then GET /api/v1/me
+      layer: L5 then L4 then L3
+      capability_journey: CAP-AUTH-SESSION JNY-TRAVELER-LOGIN
+      dependency: DEP-LOGIN-WWW-405 GATE-HARD-GO
+      failure_class: CREDENTIAL_OR_HISTORICAL_405
+      next_probe: Owner Official C2 200 on living www pin OPS-2026.08.20-v9 `3e356617` (historical daa5ae87 SUPERSEDED) (historical hop FE 2ba08bd4 SUPERSEDED as live); Staging seed 401; historical www 405 SUPERSEDED
+      stop_condition: seed 401 is L5_CREDENTIAL dataset; do not open account or DB; 405 L3_ROUTE CLOSED
+      root_cause_class: L5_CREDENTIAL
+      forbidden_jump: do not jump Login 405 or 401 to account reset or DATA-USER-ACCOUNT / DATA-SESSION reseed
+      as_is_sample: true
+      cites: CAP-AUTH-SESSION JNY-TRAVELER-LOGIN DEP-LOGIN-WWW-405 SEC-SESSION-BEARER SEC-STRICT-SESSION-GATE REL-PROBE-UAT DATA-SESSION
+      evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.md
+      current_runtime_status: OFFICIAL_LIVE
+      note: GAP-LOGIN CLOSED_REALITY. Living Official FE OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED). Historical hop 2ba08bd4 SUPERSEDED as live. Historical 405 SUPERSEDED. Staging seed ≠ Official dataset. WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY is not INC-LOGIN.
+
+    - inc_id: INC-FE-BFF
+      family: FRONTEND_BFF
+      symptom: page blank / Next rewrite / BFF 404 vs API origin mix
+      entry_probe: compare www path vs https://api.web3-ttg.com origin; REL-ENV-OFFICIAL-WEB vs REL-ENV-OFFICIAL-API
+      layer: L0 then L2 then L3
+      capability_journey: CAP-AI-ITINERARY JNY-TRAVELER-AI-ITINERARY
+      dependency: REL-ENV-OFFICIAL-WEB REL-OFFICIAL-TRAFFIC
+      failure_class: NEXT_VS_API_ORIGIN
+      next_probe: Official FE OPS-2026.08.20-v9 (`3e356617`) same-origin www /api/v1 (historical hop 2ba08bd4 SUPERSEDED as live); C2 /me 200; api origin cookie 401 expected; WalletConnect 未配置 is Docker ARG (CLOSED_REALITY), not this INC
+      stop_condition: origin mismatch classified; authenticated www hop 200; hydration only after /me 200
+      root_cause_class: L0_HYDRATION
+      forbidden_jump: do not jump FE blank to DB or Timelock
+      as_is_sample: false
+      cites: CAP-AI-ITINERARY JNY-TRAVELER-AI-ITINERARY REL-ENV-OFFICIAL-WEB REL-ENV-OFFICIAL-API REL-OFFICIAL-TRAFFIC
+      evidence: docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-500-503
+      family: API
+      symptom: 500 / 503 from Official API
+      entry_probe: read error body api_unavailable vs api_paused vs database_unavailable
+      layer: L2 then L4 then L6
+      capability_journey: CAP-AUTH-SESSION JNY-TRAVELER-LOGIN
+      dependency: REL-ENV-OFFICIAL-API REL-PROBE-UAT
+      failure_class: API_PAUSE_OR_PROXY
+      next_probe: 503 api_paused is L4 pause_gate not 418; api.example.com is L2
+      stop_condition: classified L2_PROXY or L4 pause; do not treat pause as chain fault
+      root_cause_class: L2_PROXY
+      forbidden_jump: do not treat 503 api_paused as L7 or as 418
+      as_is_sample: false
+      cites: CAP-AUTH-SESSION REL-ENV-OFFICIAL-API REL-PROBE-UAT JNY-TRAVELER-LOGIN
+      evidence: registry/backend-truth-architecture.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-403
+      family: RBAC
+      symptom: logged in but 403
+      entry_probe: GET /api/v1/me 200 first then capability key
+      layer: L5 after L4
+      capability_journey: CAP-ADMIN-FOUR-CENTERS JNY-ADMIN-CMS
+      dependency: SEC-SUPERADMIN AUTH-CMS-PUBLISH
+      failure_class: RBAC_DENY
+      next_probe: if /me not 200 go INC-LOGIN; else role slot / admin RBAC
+      stop_condition: 403 after session is L5_RBAC; not L7
+      root_cause_class: L5_RBAC
+      forbidden_jump: do not jump 403 to Timelock or Seat deploy
+      as_is_sample: false
+      cites: CAP-ADMIN-FOUR-CENTERS JNY-ADMIN-CMS SEC-SUPERADMIN AUTH-CMS-PUBLISH SEC-STRICT-SESSION-GATE
+      evidence: registry/security-identity-authority-matrix.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-DB-DRIFT
+      family: DB_MIGRATION
+      symptom: handler 200 shape vs Postgres row mismatch / migration lag
+      entry_probe: rule out L3/L4/L5 then check migrations and projection table
+      layer: L6 last after L3 L4 L5
+      capability_journey: CAP-AI-ITINERARY JNY-TRAVELER-AI-ITINERARY
+      dependency: DATA-ITINERARY-GENERATED DATA-USER-ACCOUNT
+      failure_class: PG_VS_HANDLER
+      next_probe: migrations applied? row exists? do not reseed first
+      stop_condition: L6 only after upper layers ruled out
+      root_cause_class: L6_DB
+      forbidden_jump: do not jump Login 405 or Timelock WAIT to DATA-USER-ACCOUNT reseed
+      as_is_sample: false
+      cites: DATA-ITINERARY-GENERATED DATA-USER-ACCOUNT DATA-SESSION CAP-AI-ITINERARY JNY-TRAVELER-AI-ITINERARY
+      evidence: registry/data-truth-matrix.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-CMS-OBJECT
+      family: CMS_OBJECT
+      symptom: announcement / media missing or fallback image
+      entry_probe: CMS catalog vs Tigris object vs API public_announcements
+      layer: L6 object metadata not L7
+      capability_journey: CAP-CMS-ANNOUNCE JNY-ADMIN-CMS
+      dependency: DATA-CMS-ANNOUNCEMENT DATA-MEDIA-OBJECT SEC-CMS-OCS
+      failure_class: CMS_VS_OBJECT
+      next_probe: OCS ownership then object bytes; not chain
+      stop_condition: CMS/object classified; Admin publish ≠ Web3 execute
+      root_cause_class: CMS_OBJECT
+      forbidden_jump: do not jump CMS miss to Timelock or FeeRouter
+      as_is_sample: false
+      cites: CAP-CMS-ANNOUNCE JNY-ADMIN-CMS DATA-CMS-ANNOUNCEMENT DATA-MEDIA-OBJECT SEC-CMS-OCS AUTH-CMS-PUBLISH
+      evidence: registry/data-truth-matrix.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-ADMIN
+      family: ADMIN
+      symptom: Admin four centers publish blocked or 403
+      entry_probe: session + SEC-SUPERADMIN then AUTH-CMS-PUBLISH
+      layer: L5 Admin ≠ L7 execute
+      capability_journey: CAP-ADMIN-FOUR-CENTERS JNY-ADMIN-CMS
+      dependency: SEC-SUPERADMIN AUTH-CMS-PUBLISH
+      failure_class: ADMIN_PUBLISH_NOT_EXECUTE
+      next_probe: confirm Admin RBAC; do not schedule Timelock to unblock CMS
+      stop_condition: Admin publish ≠ Web3 execute
+      root_cause_class: L5_RBAC
+      forbidden_jump: do not jump Admin 403 to GATE-CI02-ETA or Seat deploy
+      as_is_sample: false
+      cites: CAP-ADMIN-FOUR-CENTERS JNY-ADMIN-CMS SEC-SUPERADMIN AUTH-CMS-PUBLISH SEC-CMS-OCS
+      evidence: registry/security-identity-authority-matrix.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-INDEXER-LAG
+      family: INDEXER_L8
+      symptom: chain success but page not updated
+      entry_probe: receipt status=1 then Indexer checkpoint >= tx block then API projection
+      layer: L7 first then L8 then L3 then L0
+      capability_journey: JNY-INDEXER-L8-PROJECT CAP-ESCROW-USDC
+      dependency: W3-INDEXER REL-ENV-INDEXER DATA-ESCROW-PROJECTION
+      failure_class: INDEXER_CHECKPOINT_LAG
+      next_probe: if receipt not 1 go INC-CHAIN-TX-FAIL; if checkpoint lag wait L8
+      stop_condition: L8 lag is not an L7 rewrite; Pause is 503 api_paused not 418
+      root_cause_class: L8_INDEXER
+      forbidden_jump: do not overwrite L7 because UI is stale
+      as_is_sample: false
+      cites: JNY-INDEXER-L8-PROJECT CAP-ESCROW-USDC W3-INDEXER REL-ENV-INDEXER DATA-ESCROW-PROJECTION DATA-ESCROW-CHAIN
+      evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-L8-VS-L7
+      family: INDEXER_L8
+      symptom: /meta or FTB stamp disagrees with chain pointer
+      entry_probe: cast L7 first; then Official GET /meta; then FTB lock table
+      layer: L7 highest; L8 observation; FTB freeze
+      capability_journey: JNY-INDEXER-L8-PROJECT CAP-ESCROW-SETTLEMENT
+      dependency: W3-SR-FT W3-FACTORY-WIRED REL-SR-FT GATE-T1T2-DONE
+      failure_class: EXPLAINED_STAMP_LAG
+      next_probe: if L7 and /meta both SR-FT then FTB Track1 row is EXPLAINED lag
+      stop_condition: do not overwrite L7 from L8; do not overwrite FTB from /meta
+      root_cause_class: L8_STAMP_LAG
+      forbidden_jump: L8 drift must not rewrite L7 or FTB addresses
+      as_is_sample: true
+      cites: W3-SR-FT W3-FACTORY-WIRED REL-SR-FT GATE-T1T2-DONE JNY-INDEXER-L8-PROJECT CAP-ESCROW-SETTLEMENT
+      evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+      note: THREE_TRUTH_PLANES. Matrices follow Reality.
+
+    - inc_id: INC-WEB3-WIRING
+      family: WEB3_CONTRACT_WIRING
+      symptom: new contract deployed but Official still old path
+      entry_probe: codesize/address DEPLOYED; then SR-FT.feeRouter; then /meta.fee_router
+      layer: L7 wiring not L3
+      capability_journey: CAP-ESCROW-USDC JNY-ESCROW-RELEASE-REFUND
+      dependency: GATE-FR-NEW-WIRE-CUTOVER W3-FR-NEW W3-FR-OLD REL-CI02-FR-NEW
+      failure_class: DEPLOYED_NOT_OFFICIAL
+      next_probe: if Timelock done=false go INC-TIMELOCK-WAIT; else wiring/cutover
+      stop_condition: DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE; do not treat DEPLOYED as WIRED
+      root_cause_class: DEPLOYED_NOT_WIRED
+      forbidden_jump: do not treat DEPLOYED NEW FR as Official WIRED or as a compile bug
+      as_is_sample: true
+      cites: GATE-FR-NEW-WIRE-CUTOVER GATE-CI02-ETA W3-FR-NEW W3-FR-OLD W3-SR-FT REL-CI02-FR-NEW REL-FR-OLD CAP-ESCROW-USDC
+      evidence: registry/web3-contract-architecture-matrix.v1.yaml
+      current_runtime_status: DEPLOYED
+      note: CI-02 NEW FR DEPLOYED. Official fee still W3-FR-OLD.
+
+    - inc_id: INC-CHAIN-TX-FAIL
+      family: WEB3_CONTRACT_WIRING
+      symptom: wallet tx revert / receipt status=0
+      entry_probe: receipt status then revert reason; Timelock ETA vs allowlist vs pause
+      layer: L7 only first
+      capability_journey: CAP-ESCROW-USDC JNY-ESCROW-RELEASE-REFUND
+      dependency: W3-FACTORY-WIRED W3-SR-FT REL-SR-FT
+      failure_class: L7_REVERT
+      next_probe: if ETA not reached go INC-TIMELOCK-WAIT; do not patch Indexer to fake success
+      stop_condition: revert stays L7_CHAIN; UI must not fake receipt=1
+      root_cause_class: L7_CHAIN
+      forbidden_jump: do not patch L8/UI to hide revert; WAIT is not this tree
+      as_is_sample: false
+      cites: CAP-ESCROW-USDC JNY-ESCROW-RELEASE-REFUND W3-FACTORY-WIRED W3-SR-FT REL-SR-FT AUTH-TIMELOCK-EXECUTE
+      evidence: registry/web3-contract-architecture-matrix.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-MONEY-SETTLEMENT
+      family: MONEY_SETTLEMENT
+      symptom: Official money path live; Track2 1 USDC L7+L8 PASS Owner A; Official traveler book remainder
+      entry_probe: S01-S04 hops then Track2 Reality pack; distinguish Track1 SUPERSEDED seal
+      layer: L7 live path then Reality Evidence
+      capability_journey: CAP-ESCROW-USDC JNY-ESCROW-RELEASE-REFUND
+      dependency: GATE-1USDC-REALITY S01 S02 W3-SR-FT W3-FR-OLD
+      failure_class: REALITY_HANDOFF
+      next_probe: living P0 false; Official book hop CLOSED_REALITY; GO remaining = Owner written verdict; do not require CI-02
+      stop_condition: Reality not closed ≠ deploy failure; WIRED+OFFICIAL_LIVE ≠ CLOSED_REALITY
+      root_cause_class: REALITY_NOT_CLOSED
+      forbidden_jump: do not treat remaining Official book as missing deploy or as CI-02 WAIT
+      as_is_sample: true
+      cites: GATE-1USDC-REALITY CAP-ESCROW-USDC JNY-ESCROW-RELEASE-REFUND S01 S02 W3-SR-FT W3-FR-OLD REL-TRACK1-ESCROW
+      evidence: registry/commercial-money-lifecycle-matrix.v1.yaml
+      current_runtime_status: OFFICIAL_LIVE
+
+    - inc_id: INC-PM-TTG
+      family: TTG_PRIMARY_MARKET
+      symptom: TTG quote/purchase www chrome still 10→10; $25 not Official remaining; Official /meta NEW PM 100_000
+      entry_probe: PM proxy impl vs DATA-PM-PRICE-LIVE vs GATE-PM25-ETA
+      layer: L7 impl then TIMELOCK then Reality
+      capability_journey: CAP-TTG-GATEWAY JNY-TTG-PURCHASE
+      dependency: GATE-PM25-ETA GATE-PM-10-TO-04-REALITY W3-PM-IMPL-GOV04 W3-PM-IMPL-25
+      failure_class: PM25_NOT_EXECUTED
+      next_probe: if done=false go INC-TIMELOCK-WAIT; execute ≠ 10→0.4 Reality
+      stop_condition: www chrome GOV-04 1e18 is Expected Difference; Official /meta NEW PM is live; $25 LEGACY
+      root_cause_class: TIMELOCK_ETA
+      forbidden_jump: do not treat PM25 WAIT as code fault or as CI-02 blocker
+      as_is_sample: true
+      cites: GATE-PM25-ETA GATE-PM-10-TO-04-REALITY CAP-TTG-GATEWAY JNY-TTG-PURCHASE W3-PM-PROXY W3-PM-IMPL-GOV04 W3-PM-IMPL-25 DATA-PM-PRICE-LIVE DATA-PM-PRICE-TARGET REL-PM25
+      evidence: registry/governance-economic-matrix.v1.yaml
+      current_runtime_status: SCHEDULED_WAITING_ETA
+
+    - inc_id: INC-TIMELOCK-WAIT
+      family: TIMELOCK_GOVERNANCE
+      symptom: scheduled op not yet executable / still done=false
+      entry_probe: Timelock operations.done and ETA; AUTH-TIMELOCK-EXECUTE
+      layer: L7 Timelock time dependency not L3
+      capability_journey: CAP-GOVERNANCE-PORTAL JNY-GOVERNANCE-QUEUE
+      dependency: GATE-CI02-ETA GATE-PM25-ETA AUTH-TIMELOCK-EXECUTE SEC-TIMELOCK-EXECUTE
+      failure_class: TIMELOCK_ETA_WAIT
+      next_probe: CI-02 ETA 2026-08-16T13:42:11Z; PM25 ETA 2026-08-16T16:20:23Z; independent ladders
+      stop_condition: WAIT ≠ code fault; WAIT ≠ DEPLOYED_NOT_WIRED until execute
+      root_cause_class: TIMELOCK_ETA
+      forbidden_jump: do not treat Timelock WAIT as a code fault or merge CI-02 with PM25
+      as_is_sample: true
+      cites: GATE-CI02-ETA GATE-PM25-ETA AUTH-TIMELOCK-EXECUTE SEC-TIMELOCK-EXECUTE W3-TIMELOCK CAP-GOVERNANCE-PORTAL JNY-GOVERNANCE-QUEUE REL-CI02-FR-NEW REL-PM25
+      evidence: registry/governance-economic-matrix.v1.yaml
+      current_runtime_status: SCHEDULED_WAITING_ETA
+      note: CI-02 WAIT and PM25 WAIT are AS-IS samples on independent ladders.
+
+    - inc_id: INC-STEWARD-NOT-DEPLOYED
+      family: REGION_STEWARD
+      symptom: Region Steward Claim / 83 vault path not live
+      entry_probe: /meta.registry_address and region_steward_stake_pool_address null
+      layer: NOT_DEPLOYED before L7 claim
+      capability_journey: CAP-REGION-STEWARD JNY-REGION-STEWARD-CLAIM
+      dependency: GATE-SEAT-CI01 GATE-VAULT-CI03 DEP-S05-REGION-83 DEP-S06-VACANCY
+      failure_class: SEAT_VAULT_ABSENT
+      next_probe: W3-SEAT-REGISTRY / W3-REGION-VAULT lifecycle NOT_DEPLOYED; S05 TARGET
+      stop_condition: NOT_DEPLOYED ≠ TIMELOCK_ETA ≠ session apply; session ≠ Seat Claim Official
+      root_cause_class: NOT_DEPLOYED
+      forbidden_jump: do not jump Steward miss to CI-02 WAIT or account/DB
+      as_is_sample: true
+      cites: GATE-SEAT-CI01 GATE-VAULT-CI03 DEP-S05-REGION-83 DEP-S06-VACANCY CAP-REGION-STEWARD JNY-REGION-STEWARD-CLAIM W3-SEAT-REGISTRY W3-REGION-VAULT S05 S06 AUTH-STEWARD-CLAIM REL-JP-VAULT
+      evidence: registry/web3-contract-architecture-matrix.v1.yaml
+      current_runtime_status: TARGET_NOT_LIVE
+
+    - inc_id: INC-RELEASE-IDENTITY
+      family: RELEASE_RUNTIME_IDENTITY
+      symptom: which git_sha / env / probe is Official vs local
+      entry_probe: Official GET /meta git_sha + REL-ENV-OFFICIAL-WEB vs REL-ENV-LOCAL
+      layer: Release identity not a product bug
+      capability_journey: JNY-INDEXER-L8-PROJECT CAP-AUTH-SESSION
+      dependency: REL-ENV-OFFICIAL-WEB REL-ENV-OFFICIAL-API DATA-PRODUCTION-IDENTITY REL-HARD-GATE
+      failure_class: ENV_IDENTITY_MIX
+      next_probe: ① local map ≠ ② staging ≠ ③ Official; Hard Gate CODE_READY
+      stop_condition: do not use local 405-fixed branch as Official identity; GO stays NO_GO
+      root_cause_class: RELEASE_IDENTITY
+      forbidden_jump: do not flip TT_PRODUCTION_GO from a local green or from DEPLOYED
+      as_is_sample: false
+      cites: REL-ENV-OFFICIAL-WEB REL-ENV-OFFICIAL-API REL-ENV-LOCAL DATA-PRODUCTION-IDENTITY REL-HARD-GATE REL-PROBE-UAT GATE-HARD-GO
+      evidence: registry/release-runtime-evidence-matrix.v1.yaml
+      current_runtime_status: CODE_READY
+      note: ① map deepen ≠ ② staging GO ≠ ③ Production GO.

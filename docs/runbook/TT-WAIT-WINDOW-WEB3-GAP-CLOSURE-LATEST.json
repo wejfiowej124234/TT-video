@@ -1,0 +1,224 @@
+{
+  "schema": "traveltrust.wait_window_web3_gap_closure.v1",
+  "pack": "WAIT-WINDOW-WEB3-GAP-CLOSURE-1",
+  "stamp_utc": "2026-08-12T10:15:00Z",
+  "status": "WEB3_GAP_CLOSURE_INVENTORY_ACTIVE",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+  "axis14_locked": true,
+  "hard_gate_go_locked": true,
+  "ssot_only": [
+    "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md",
+    "registry/mainnet-address-registry.v1.yaml"
+  ],
+  "candidate_v2": "DEMOTED_TESTNET_NOT_OFFICIAL_DIFF_TARGET",
+  "track2_freeze": {
+    "status": "WAITING_TRACK2_TIMELOCK_ETA",
+    "sr_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+    "T1_opId": "0x35f54aa1bd6eb0f3349ebf3c01cb376d012fbb82cc391090c66dc9b8e58a9ebe",
+    "T1_readyAt": 1786698179,
+    "T1_eta_utc": "2026-08-14T09:02:59Z",
+    "T2_opId": "0xbdc82edb7d3ff299b12d46c01d50f3610147ee8d735d29dea87c0500ccf4e21a",
+    "T2_readyAt": 1786698191,
+    "T2_eta_utc": "2026-08-14T09:03:11Z",
+    "preempt_at_utc": "2026-08-14T09:03:11Z",
+    "wired_settlementRouter": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "trustedFactory": "0x0000000000000000000000000000000000000000",
+    "do_not_mutate_T1_T2": true,
+    "superseded_sr_ft": "0xce269Cdc60bd8DA39a86dabB74BD6Be0C5f693Fa"
+  },
+  "forbidden": [
+    "redeploy_TTG_Governor_Timelock_Wired_FeeRouter_Track1",
+    "mutate_Track2_T1_T2_payload_opId_ETA",
+    "FeeRouter_four_bucket_distribute",
+    "invent_Snapshot_Claim_protocol_this_window",
+    "early_execute_Track2",
+    "early_Official_cutover",
+    "early_1_USDC_Reality",
+    "close_P0_COMMERCIAL",
+    "AXIS14_or_TT_PRODUCTION_GO"
+  ],
+  "classification": [
+    {
+      "id": "EscrowFactoryV2Wired",
+      "address": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+      "class": "DEPLOYED_ACTIVE",
+      "track2_decoupled": false,
+      "note": "T2 will retarget settlementRouter at ETA"
+    },
+    {
+      "id": "SettlementRouter_Track1",
+      "address": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+      "class": "DEPLOYED_ACTIVE",
+      "track2_decoupled": true
+    },
+    {
+      "id": "SettlementRouterFactoryTrust",
+      "address": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+      "class": "DEPLOYED_UNWIRED",
+      "track2_decoupled": false,
+      "note": "SUPERSEDED_BY_TRACK2 waiting T1/T2"
+    },
+    {
+      "id": "FeeRouter",
+      "address": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+      "class": "DEPLOYED_ACTIVE",
+      "track2_decoupled": true,
+      "note": "distribute NOT_THIS_WAIT_WINDOW"
+    },
+    {
+      "id": "EscrowFactoryV2_lineage",
+      "address": "0x052052f06bfc15cbd63606252db68b4b445aa4f7",
+      "class": "LINEAGE_ONLY"
+    },
+    {
+      "id": "TTG",
+      "address": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",
+      "class": "DEPLOYED_ACTIVE"
+    },
+    {
+      "id": "Timelock",
+      "address": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+      "class": "DEPLOYED_ACTIVE"
+    },
+    {
+      "id": "Governor",
+      "address": "0x46Ce671b04d21760e496646bb370ADEbC374ea4d",
+      "class": "DEPLOYED_ACTIVE"
+    },
+    {
+      "id": "TreasuryP4Cap",
+      "address": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+      "class": "DEPLOYED_ACTIVE"
+    },
+    {
+      "id": "PrimaryMarket",
+      "address": "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce",
+      "class": "DEPLOYED_ACTIVE"
+    },
+    {
+      "id": "TimelockAdminSafe",
+      "address": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+      "class": "DEPLOYED_ACTIVE"
+    },
+    {
+      "id": "USDC",
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "class": "EXTERNAL"
+    },
+    {
+      "id": "RegionVault",
+      "address": null,
+      "class": "NOT_DEPLOYED",
+      "track2_decoupled": true,
+      "source": "contracts/src/RegionVault.sol",
+      "constructor": "constructor(address owner_)",
+      "owner_planned": "Timelock",
+      "snapshot_claim": "NOT_IN_MVP",
+      "deploy_order": 1,
+      "wire_fee_router": "SEPARATE_OWNER_GATE_NOT_DISTRIBUTE"
+    },
+    {
+      "id": "ReserveVault",
+      "address": null,
+      "class": "NOT_DEPLOYED",
+      "track2_decoupled": true,
+      "source": "contracts/src/ReserveVault.sol",
+      "constructor": "constructor(address _asset, address _timelock)",
+      "deploy_order": 2
+    },
+    {
+      "id": "RegionStewardStakePool",
+      "address": null,
+      "class": "NOT_DEPLOYED",
+      "track2_decoupled": true,
+      "source": "contracts/src/RegionStewardStakePool.sol",
+      "constructor": "constructor(owner, ttgToken, ttgTotalSupplyUnits, releaseDelay, releaseVest)",
+      "posture": "PROXY_REQUIRED",
+      "deploy_order": 3
+    },
+    {
+      "id": "TtgSeatConcentrationRegistry",
+      "address": null,
+      "class": "NOT_DEPLOYED",
+      "track2_decoupled": true,
+      "source": "contracts/src/TtgSeatConcentrationRegistry.sol",
+      "constructor": "constructor(owner_, stakePool_)",
+      "depends_on": [
+        "RegionStewardStakePool"
+      ],
+      "deploy_order": 4
+    },
+    {
+      "id": "CountryPoolNetProfitLedger",
+      "address": null,
+      "class": "NOT_DEPLOYED",
+      "track2_decoupled": true,
+      "source": "contracts/src/CountryPoolNetProfitLedger.sol",
+      "deploy_order": 5,
+      "jurisdiction_wave": true
+    },
+    {
+      "id": "StewardPathVault",
+      "address": null,
+      "class": "NOT_DEPLOYED",
+      "track2_decoupled": true,
+      "source": "contracts/src/StewardPathVault.sol",
+      "depends_on": [
+        "CountryPoolNetProfitLedger"
+      ],
+      "deploy_order": 6
+    },
+    {
+      "id": "UnallocatedStewardPathVault",
+      "address": null,
+      "class": "NOT_DEPLOYED",
+      "track2_decoupled": true,
+      "source": "contracts/src/vacancy/UnallocatedStewardPathVault.sol",
+      "vacancy_stack": "Vacancy_V1",
+      "deploy_order": 7
+    },
+    {
+      "id": "83_Snapshot_Claim_final",
+      "address": null,
+      "class": "NOT_DEPLOYED",
+      "track2_decoupled": true,
+      "note": "Target only — do not invent protocol this window"
+    }
+  ],
+  "axis_readonly_prep": {
+    "AXIS-05": "INCOMPLETE — Safe 0x9649 known 1/1; roles need Owner",
+    "AXIS-07": "INCOMPLETE — prod probes",
+    "AXIS-08": "UNSIGNED — R01 missing or residual",
+    "AXIS-09": "BLOCKED — P0 MN-P0-006 R-01",
+    "AXIS-11": "package LATEST missing",
+    "AXIS-12": "Shadow NO_GO scaffold",
+    "AXIS-14": "LOCKED"
+  },
+  "next": [
+    "keep_Track2_WAITING",
+    "WAVE1_Phase1_SSOT:docs/runbook/TT-FROZEN-WEB3-REMAINING-MAINNET-WAVE-1-PHASE1-LATEST.md",
+    "optional_Owner_auth_per_WAVE1_deploy_pack_before_broadcast",
+    "AXIS_05_07_08_09_11_12_readonly_prep",
+    "at_2026-08-14T09:03:11Z_preempt_Track2_execute_ladder"
+  ],
+  "dual_wait_ssot": "docs/runbook/TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md",
+  "ftb_stamp": "20260812T101500Z",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,0 +1,111 @@
+{
+  "schema": "traveltrust.wait_window_l1_l2_final_ops_pack_rehearsal.v1",
+  "status": "PREFLIGHT_PASS_SCHEDULE_PINNED_WAIT_ETA",
+  "recorded_utc": "2026-08-10T14:04:30Z",
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "ready_at_unix": 1786491935,
+  "before_eta": true,
+  "seconds_to_eta_approx": 153700,
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "parent": "TT-WAIT-WINDOW-ETA-HOLD-PREFLIGHT-POLICY-LATEST",
+  "pack": {
+    "rehearsal": "docs/runbook/templates/mainnet-money-path/OWNER-TRACK1-FINALIZE-REHEARSAL-READONLY.md",
+    "evidence": "docs/runbook/templates/mainnet-money-path/OWNER-TRACK1-REALITY-FINALIZE-EVIDENCE.md"
+  },
+  "l1_ops_pack_review": {
+    "verdict": "PASS",
+    "eta_opid_ftb_aligned": true,
+    "addresses_ftb_aligned": true,
+    "mainnet_execute_via_cast_not_sepolia_forge": true,
+    "post_eta_serial_confirmed": true,
+    "abi_allowlist_read": "isEscrow(address)"
+  },
+  "l2_readonly_reads": {
+    "verdict": "PASS_HOLD",
+    "escrow": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+    "escrow_status": 2,
+    "escrow_status_label": "Funded",
+    "usdc_balance_raw": "10000000",
+    "usdc_balance_human": "10",
+    "timelock": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "opid": "0xe1d51e09d8c5df11bc83330d5d6c545d3431b3107d6de7652f2c5d840890c116",
+    "operations_ready_at": 1786491935,
+    "operations_done": false,
+    "operations_target": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "settlement_router": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "is_escrow_allowed": false,
+    "fee_router": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+    "wired_factory": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+    "order_id": "0x764cae8c7bfa1a861f82235a982ece4cef1f3e8788826d2ba1db9d084ededda5"
+  },
+  "official_alignment": {
+    "gate": "check-official-mainnet-web3-alignment.sh",
+    "verdict": "FAIL",
+    "fe_bake_wired_fee_sr": true,
+    "fe_wired_abi": true,
+    "api_meta_fee_sr_timelock_ok": true,
+    "api_factory": "0x052052f06bfc15cbd63606252db68b4b445aa4f7",
+    "api_factory_is_lineage": true,
+    "api_factory_is_wired": false,
+    "classification": "OPEN_OPS_HYGIENE",
+    "blocks_timelock_wait": false,
+    "blocks_alignment_pass_and_seal_honesty": true
+  },
+  "open_items": [
+    {
+      "id": "H1",
+      "item": "Official API /meta escrow_factory_v2 still lineage",
+      "disposition": "OPEN_OPS_HYGIENE"
+    },
+    {
+      "id": "H2",
+      "item": "Alignment gate FAIL (same root as H1)",
+      "disposition": "OPEN_OPS_HYGIENE"
+    }
+  ],
+  "freeze": {
+    "allowed_until_eta": [
+      "read_only_recheck",
+      "wall_clock_confirm"
+    ],
+    "forbidden_until_eta": [
+      "timelock_execute",
+      "escrow_release",
+      "trusted_factory",
+      "production_go",
+      "new_ux_batch",
+      "expand_product_fix",
+      "mutate_ftb_registry_wired_track1"
+    ]
+  },
+  "post_eta_serial": [
+    "Timelock.execute",
+    "Escrow.release",
+    "Settlement_Fee_reconciliation",
+    "Reality_Evidence_Seal",
+    "Hard_Gate_reeval"
+  ],
+  "honesty": [
+    "rehearsal PASS_HOLD ≠ Seal ≠ GO",
+    "UX ARCHIVED ≠ Web3 Seal",
+    "alignment FAIL ≠ schedule not pinned"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

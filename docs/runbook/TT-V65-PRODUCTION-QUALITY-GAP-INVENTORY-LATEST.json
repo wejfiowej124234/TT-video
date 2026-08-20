@@ -1,0 +1,593 @@
+{
+  "schema": "traveltrust.v65_production_quality_gap_inventory.v1",
+  "stamp": "20260802T150208Z",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "p0": [],
+  "p1": [
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "P1",
+      "route": "/market",
+      "missing": [
+        "permission"
+      ],
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": false,
+        "success": true,
+        "partial": true,
+        "timeout": true
+      }
+    },
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "P1",
+      "route": "/orders",
+      "missing": [
+        "empty"
+      ],
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": true,
+        "success": true,
+        "partial": false,
+        "timeout": false
+      }
+    },
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "P1",
+      "route": "/disputes",
+      "missing": [
+        "empty"
+      ],
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": true,
+        "success": true,
+        "partial": false,
+        "timeout": false
+      }
+    },
+    {
+      "class": "CSP_ABSENT",
+      "severity": "P1",
+      "surface": "web",
+      "disposition": "OWNER_REVIEW",
+      "note": "Production web lacks Content-Security-Policy; adding CSP is high-blast-radius — Owner policy before enable"
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "P1",
+      "path": "/market",
+      "ttfb_ms": 17425.3,
+      "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "P1",
+      "path": "/admin",
+      "ttfb_ms": 11491.2,
+      "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+    }
+  ],
+  "warn": [
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/community",
+      "missing": [
+        "permission"
+      ],
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": false,
+        "success": true,
+        "partial": true,
+        "timeout": true
+      }
+    },
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/governance",
+      "missing": [
+        "empty"
+      ],
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": false,
+        "success": true,
+        "partial": false,
+        "timeout": false
+      }
+    },
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/guide/register",
+      "missing": [
+        "empty"
+      ],
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": false,
+        "success": true,
+        "partial": false,
+        "timeout": false
+      }
+    },
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/provider/register",
+      "missing": [
+        "empty"
+      ],
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": true,
+        "permission": false,
+        "success": false,
+        "partial": false,
+        "timeout": false
+      }
+    },
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/me",
+      "missing": [
+        "permission"
+      ],
+      "states": {
+        "loading": true,
+        "empty": true,
+        "error": true,
+        "permission": false,
+        "success": true,
+        "partial": false,
+        "timeout": false
+      }
+    },
+    {
+      "class": "UX_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/did-rank",
+      "missing": [
+        "empty",
+        "error"
+      ],
+      "states": {
+        "loading": true,
+        "empty": false,
+        "error": false,
+        "permission": false,
+        "success": false,
+        "partial": false,
+        "timeout": true
+      }
+    },
+    {
+      "class": "LIFECYCLE_OPTIONAL_GAPS",
+      "severity": "WARN",
+      "object": "provider",
+      "optional_missing": [
+        "delete"
+      ]
+    },
+    {
+      "class": "LIFECYCLE_OPTIONAL_GAPS",
+      "severity": "WARN",
+      "object": "announcement",
+      "optional_missing": [
+        "delete"
+      ]
+    },
+    {
+      "class": "LIFECYCLE_OPTIONAL_GAPS",
+      "severity": "WARN",
+      "object": "community_report",
+      "optional_missing": [
+        "delete"
+      ]
+    },
+    {
+      "class": "LIFECYCLE_OPTIONAL_GAPS",
+      "severity": "WARN",
+      "object": "order",
+      "optional_missing": [
+        "restore"
+      ]
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "path": "/",
+      "ttfb_ms": 6192.9,
+      "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "path": "/community",
+      "ttfb_ms": 4949.1,
+      "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "path": "/did-rank",
+      "ttfb_ms": 7662.7,
+      "note": "Machine TTFB elevated — field LCP/INP still required; not a capability island"
+    }
+  ],
+  "confirm_design": [
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_approval_requests",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_audit_logs",
+      "bucket": "INTERNAL_AUDIT",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_console_roles",
+      "bucket": "INTERNAL_SECURITY",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_data_policies",
+      "bucket": "INTERNAL_SECURITY",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_security_policies",
+      "bucket": "INTERNAL_SECURITY",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_tenant_scopes",
+      "bucket": "INTERNAL_SECURITY",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "admin_totp_enrollments",
+      "bucket": "INTERNAL_SECURITY",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "airdrop_allocations",
+      "bucket": "WEB3_BRIDGE_ORTHOGONAL",
+      "disposition": "CONFIRM_DESIGN_WEB3",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "airdrop_campaigns",
+      "bucket": "WEB3_BRIDGE_ORTHOGONAL",
+      "disposition": "CONFIRM_DESIGN_WEB3",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "airdrop_snapshots",
+      "bucket": "WEB3_BRIDGE_ORTHOGONAL",
+      "disposition": "CONFIRM_DESIGN_WEB3",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "api_versions",
+      "bucket": "INTERNAL_MIGRATION",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "async_jobs",
+      "bucket": "INTERNAL_JOB_SCHEDULER",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "auth_email_send_window_events",
+      "bucket": "INTERNAL_AUDIT",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "auth_email_tokens",
+      "bucket": "INTERNAL_SECURITY",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "backfill_jobs",
+      "bucket": "INTERNAL_JOB_SCHEDULER",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "catalog_content_revisions",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "catalog_poi_image_batches",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "catalog_poi_image_candidates",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "catalog_poi_images_published",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "checkpoints_sharded",
+      "bucket": "INTERNAL_MIGRATION",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "cms_roadmap_section",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_abuse_policy",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_collects",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_comments",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_conversations",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_dm_messages",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_dm_read_state",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_follows",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_friend_requests",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_friends",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_likes",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_moderation_cases",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_penalties",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_policy_change_logs",
+      "bucket": "INTERNAL_AUDIT",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_ranking_snapshots",
+      "bucket": "INTERNAL_ANALYTICS",
+      "disposition": "INTERNAL_CAPABILITY",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_report_appeals",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_reports",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "community_risk_signals",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "compliance_data_request_events",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    },
+    {
+      "class": "API_ONLY_CLASSIFIED",
+      "severity": "CONFIRM_DESIGN",
+      "table": "compliance_data_requests",
+      "bucket": "BACKEND_VIA_API",
+      "disposition": "INTERNAL_CAPABILITY_API_MEDIATED",
+      "force_ui_forbidden": true
+    }
+  ],
+  "counts": {
+    "p0_gaps": 0,
+    "p1_gaps": 6,
+    "warn_gaps": 13,
+    "confirm_design": 100,
+    "priority_pages": 20,
+    "api_only_tables_classified": 100,
+    "lifecycle_objects": 7,
+    "ux_gaps": 9,
+    "notify_event_gaps": 0
+  },
+  "api_only_policy": {
+    "force_ui_forbidden": true,
+    "rationale": "Large systems have internal job/scheduler/audit/analytics/cache/Web3-bridge tables; forcing Admin UI creates junk entrances.",
+    "owner_gate": "Owner confirms INTERNAL_CAPABILITY vs FUTURE_PRODUCT_CAPABILITY"
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "traveltrust.wait_window_reality_audit_b2_gap.v1",
+  "status": "GAP_INVENTORY_FIX_NOW",
+  "recorded_utc": "2026-08-10T14:40:00Z",
+  "parent": "TT-WAIT-WINDOW-FINAL-REALITY-AUDIT-LATEST",
+  "mode": "display_api_honesty_readonly_money_path",
+  "gaps": [
+    {
+      "id": "B2-G-001",
+      "sev": "P0",
+      "disposition": "FIX_NOW",
+      "summary": "guest market shows draft amounts"
+    },
+    {
+      "id": "B2-G-002",
+      "sev": "P1",
+      "disposition": "FIX_NOW",
+      "summary": "released maps to completed label"
+    },
+    {
+      "id": "B2-G-003",
+      "sev": "P1",
+      "disposition": "FIX_NOW",
+      "summary": "guide stats USDT vs USDC"
+    },
+    {
+      "id": "B2-G-004",
+      "sev": "P1",
+      "disposition": "DEFER_B3",
+      "summary": "discover API draft pollution"
+    },
+    {
+      "id": "B2-G-005",
+      "sev": "P2",
+      "disposition": "ACCEPT",
+      "summary": "expected vs settled count copy ok"
+    },
+    {
+      "id": "B2-G-006",
+      "sev": "P2",
+      "disposition": "ACCEPT",
+      "summary": "governance FeeRouter readonly ok"
+    },
+    {
+      "id": "B2-G-007",
+      "sev": "P2",
+      "disposition": "DEFER_B6",
+      "summary": "guide dashboard slow skeleton"
+    }
+  ],
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

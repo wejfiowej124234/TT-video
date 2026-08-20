@@ -1,0 +1,89 @@
+{
+  "schema": "traveltrust.v65_release_certification.v1",
+  "machine_key": "TT_V65_RELEASE_CERTIFICATION",
+  "track": "V65_PRODUCT_LINE_RELEASE_CERTIFICATION",
+  "stamp": "20260804T231322Z",
+  "live_reconfirm_utc": "20260804T231540Z",
+  "tip_fe": "33d94fee6f286d7c99a85958b311af303f866080",
+  "tip_api": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+  "composition_sha": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+  "web3_tip": "ea71c577ce6f99696df33f9394cf96746edc843b",
+  "hosts": {
+    "api": "https://api.web3-ttg.com",
+    "web": "https://www.web3-ttg.com",
+    "fly_web_alias": "https://tt-web-prod.fly.dev"
+  },
+  "tt_production_go": "NO_GO",
+  "verdict": "PASS_WITH_NON_BLOCKING_OPEN",
+  "release_certification": "PASS",
+  "production_go_review_entry": "ALLOWED",
+  "production_go_allowed": false,
+  "enterprise_l5_claim": "NOT_CLAIMED",
+  "phase_now": "V65_PROD_003_RELEASE_CERT_PASS_GO_REVIEW_OPEN_NO_GO",
+  "prior": {
+    "owner_uat_stamp": "20260804T230300Z",
+    "batch_phase": "RECONCILE_ENTRY_FEE_IA_BATCH_CLOSED",
+    "entry_fee_ia": "CLOSED"
+  },
+  "open_residuals": {
+    "p0": 0,
+    "p1": 0,
+    "p2": 1,
+    "p3": 2,
+    "ids": [
+      "V65-PROD-003-B3-R010",
+      "V65-PROD-003-G-GUIDE-STATUS-LABEL",
+      "V65-PROD-003-STEWARD-I18N-RAW-KEY"
+    ]
+  },
+  "gates": {
+    "psg_production_cert": "PASS",
+    "final_release_freeze": "FROZEN",
+    "live_tip_match_ssot": "PASS",
+    "critical_path_p0_p1_open": "PASS_ZERO"
+  },
+  "honesty": {
+    "release_cert_is_not_production_go": true,
+    "go_review_entry_is_not_production_go": true,
+    "batch_closed_is_not_production_go": true,
+    "fe_only_api_tip_may_differ": true,
+    "admin_console_cert_35872b40_not_this_pack": true,
+    "tt_production_go": "NO_GO"
+  },
+  "decision": {
+    "update_final_truth_baseline": true,
+    "set_production_go_review_open": true,
+    "keep_tt_production_go": "NO_GO",
+    "enter_production_go_review": "READY_FOR_OWNER",
+    "promote_production_go": "FORBIDDEN_THIS_STAMP"
+  },
+  "evidence_dir": "D:\\TravelTrust-V1.1\\evidence\\GO_v65_release_certification\\20260804T231322Z",
+  "cites": {
+    "live_tip_probe": "D:/TravelTrust-V1.1/evidence/GO_v65_release_certification/20260804T231322Z/LIVE-TIP-PROBE.json",
+    "open_impact_matrix": "D:/TravelTrust-V1.1/evidence/GO_v65_release_certification/20260804T231322Z/OPEN-IMPACT-MATRIX.json",
+    "gate_reconcile": "D:/TravelTrust-V1.1/evidence/GO_v65_release_certification/20260804T231322Z/GATE-RECONCILE.json",
+    "owner_uat": "evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T230300Z",
+    "residual": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+    "ftb": "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json",
+    "ssot": "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json"
+  },
+  "latest_pointer": true,
+  "evidence_stamp": "20260804T231322Z",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

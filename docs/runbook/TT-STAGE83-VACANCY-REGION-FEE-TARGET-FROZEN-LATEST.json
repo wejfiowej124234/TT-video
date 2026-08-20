@@ -1,0 +1,93 @@
+{
+  "schema": "tt.stage83_vacancy_region_fee_target_frozen.v1",
+  "track": "STAGE_83_NEXT",
+  "freeze_status": "FROZEN",
+  "ssot_role": "STAGE83_VACANCY_REGION_FEE_UNIQUE_TARGET",
+  "freeze_utc": "2026-08-14T03:09:21Z",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "mode": "PRE_ETA_STABILITY_HOLD",
+  "owner_decision_cite": "docs/runbook/TT-OWNER-83-VACANCY-REGION-FEE-TO-PROTOCOL-LATEST.json",
+  "commercial_ssot_cite": "docs/runbook/TT-WEB3-COMMERCIAL-FULL-CLOSURE-READONLY-MATRIX-LATEST.json",
+  "impact_checklist_cite": "docs/runbook/TT-STAGE83-VACANCY-CONTRACT-IMPACT-CLOSURE-CHECKLIST-LATEST.json",
+  "unchanged_economics": {
+    "platform_fee_bps_of_order": 500,
+    "platform_fee_pct": "5%",
+    "fee_router_bps": {
+      "BPS_COUNTRY": 4500,
+      "BPS_GLOBAL_STAKERS": 3575,
+      "BPS_GLOBAL_RESERVE": 1100,
+      "BPS_GLOBAL_OPS": 825,
+      "sum": 10000,
+      "region_share_of_fee": "45%",
+      "global_share_of_fee": "55%"
+    },
+    "note": "5% and 45/55 proportions FROZEN; this target only rewrites no-steward region-share destination"
+  },
+  "unique_target_routing": {
+    "condition_ssot": "single verifiable Active Region Steward Seat status (Seat Registry)",
+    "when_seat_active": "region FeeRouter bucket → RegionVault → Snapshot → Claim (SeatBonus per rules)",
+    "when_seat_inactive_or_vacant": "region FeeRouter bucket → P4Cap directly; SeatBonus=0; long PendingVault FORBIDDEN",
+    "p4cap_spend_path": "Governor → Vote → Timelock → spendP4Reserve (same exit as Primary Market USDC)",
+    "p4cap_accounting": "REQUIRED independent attribution: source + region + period + amount (even when pooled with PM USDC)"
+  },
+  "legacy_not_target": {
+    "status": "LEGACY_NOT_TARGET",
+    "frozen_readonly": true,
+    "items": [
+      {
+        "id": "LEGACY-PendingVault-long-hold",
+        "cite": "83 pre-2026-08-14 §13 / B.5 PendingVault then long-hold ProtocolVault",
+        "disposition": "SUPERSEDED · must not be implemented as STAGE_83_NEXT target"
+      },
+      {
+        "id": "LEGACY-UnallocatedStewardPathVault",
+        "cite": "contracts/src/vacancy/UnallocatedStewardPathVault.sol",
+        "disposition": "LEGACY_NOT_TARGET · source retained for history/tests; not Official STAGE_83_NEXT money-path target"
+      },
+      {
+        "id": "LEGACY-vacancy-sweep-reserve-model",
+        "cite": "contracts/src/vacancy/* VacancyLedger sweep/reserve/disburse model",
+        "disposition": "LEGACY_NOT_TARGET unless rewritten to match unique target (direct P4Cap + attribution)"
+      },
+      {
+        "id": "LEGACY-RegionVault-MVP-forward-only",
+        "cite": "contracts/src/RegionVault.sol owner.forward MVP",
+        "disposition": "INCOMPLETE_RELATIVE_TO_TARGET · needs Snapshot/Claim; not sufficient alone"
+      }
+    ]
+  },
+  "hold_constraints": {
+    "solidity_modify": false,
+    "deploy": false,
+    "schedule": false,
+    "execute": false,
+    "mutate_track2_gov04": false,
+    "real_money": false,
+    "entry_gate": "Track2 Reality ALL PASS → GOV-04 Reality ALL PASS → then STAGE_83_NEXT implementation may start",
+    "paper_clear_forbidden": true,
+    "doc_CLOSED_neq_CLOSED_REALITY": true
+  },
+  "segments": [
+    "S05",
+    "S06"
+  ],
+  "verdict": "STAGE83_VACANCY_REGION_FEE_TARGET_FROZEN_HOLD_REGISTER_ONLY",
+  "NOW_FIXABLE_BLOCKER": 0,
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

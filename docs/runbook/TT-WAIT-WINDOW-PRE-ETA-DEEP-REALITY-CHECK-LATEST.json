@@ -1,0 +1,532 @@
+{
+  "schema": "traveltrust.wait_window_pre_eta_deep_reality_check.v1",
+  "status": "WAVE1_RECORDED_WAVE2_STOP_WAVE3_STOP",
+  "wave": 3,
+  "wave2": "TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-WAVE2-LATEST",
+  "wave2_status": "WAVE2_RECORDED_STOP",
+  "wave3": "TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-WAVE3-LATEST",
+  "wave3_status": "WAVE3_RECORDED_STOP",
+  "fix_policy": "NO_FIX",
+  "track1_delay_triggered": false,
+  "wave4_auto_start": false,
+  "next": "HOLD_WAVE3_STOP_UNTIL_ETA_FRESH_TRACK1_PREFLIGHT_NO_WAVE4",
+  "methods_used": [
+    "GET_HEAD_official",
+    "browser_readonly_existing_admin_session",
+    "existing_sample_crosscheck",
+    "no_business_POST_PUT_PATCH_DELETE"
+  ],
+  "methods_deferred": [
+    "curl_login_session_probe_blocked_by_auto_review_use_existing_browser_session_instead"
+  ],
+  "priority_lane_results": {
+    "migration_checksum": "PASS_LIVE_API_UP_DB_CONNECTED_COVERAGE_GAP_REDEPLOY",
+    "community_media_404_persistence": "NEW_GAP_RELATIVE_UPLOAD_COVERS_404",
+    "admin_traveler_data_universe": "NEW_GAP_CURRENCY_AND_DISPUTES_COUNT",
+    "indexer_0_0": "EXPECTED_DIFFERENCE_HONESTY_POST_SEAL_FILL",
+    "api_lineage_wired": "POST_SEAL_BLOCKER_CANDIDATE",
+    "pay_refund_dispute_state": "PASS_DISPUTED_PAY_HONEST",
+    "me_legal_auth_boundary": "NEW_GAP_ME_PAYMENTS_404_EXPECTED_LEGAL_DUAL_PATH"
+  },
+  "findings": [
+    {
+      "id": "DRC-W1-001",
+      "class": "POST_SEAL_BLOCKER_CANDIDATE",
+      "severity": "P1",
+      "domain": "API_Runtime_identity",
+      "route": "GET /meta chain.contracts.escrow_factory_v2_address",
+      "role": "ops",
+      "symptom": "Official API factory=0x052052…a4f7 lineage ≠ Wired 0xEE0B…C1C6; Fee/SR/Timelock match FTB",
+      "layers": [
+        "API",
+        "Runtime_config",
+        "Web3_identity"
+      ],
+      "runtime_evidence": "meta.json 2026-08-11T03:34Z; Fee/SR/TL OK; factory !=WIRED",
+      "blocks_seal": false,
+      "blocks_hard_gate": true,
+      "blocks_go": true,
+      "blocks_track1": false,
+      "remediation_pack": "POST_SEAL_OPS_HYGIENE_H1_H2_bake_Wired",
+      "related": [
+        "H1",
+        "H2",
+        "C-04",
+        "W-03"
+      ]
+    },
+    {
+      "id": "DRC-W1-002",
+      "class": "EXPECTED_DIFFERENCE",
+      "severity": "P2",
+      "domain": "Indexer",
+      "route": "GET /meta indexer.checkpoint",
+      "role": "ops",
+      "symptom": "checkpoint/memory 0/0 · fail-closed design (no fake Confirmed)",
+      "layers": [
+        "Indexer",
+        "observability"
+      ],
+      "runtime_evidence": "indexer.checkpoint.block_number=0 log_index=0; memory.last_block=0 events_cached=0",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "post_seal_note": "empty fill remains POST_SEAL_BLOCKER_CANDIDATE for production indexer readiness",
+      "remediation_pack": "POST_SEAL_INDEXER_FILL",
+      "related": [
+        "H4",
+        "B4-G-003"
+      ]
+    },
+    {
+      "id": "DRC-W1-003",
+      "class": "POST_SEAL_BLOCKER_CANDIDATE",
+      "severity": "P2",
+      "domain": "Indexer",
+      "route": "GET /meta indexer",
+      "role": "ops",
+      "symptom": "Indexer empty checkpoint fill still required for Official chain projection completeness after Seal",
+      "layers": [
+        "Indexer",
+        "DB_projection"
+      ],
+      "runtime_evidence": "same as DRC-W1-002",
+      "blocks_seal": false,
+      "blocks_hard_gate": true,
+      "blocks_go": true,
+      "blocks_track1": false,
+      "remediation_pack": "POST_SEAL_INDEXER_FILL",
+      "related": [
+        "W-04"
+      ]
+    },
+    {
+      "id": "DRC-W1-004",
+      "class": "NEW_GAP",
+      "severity": "P1",
+      "domain": "Me_Pay_IA",
+      "route": "/me/payments",
+      "role": "Traveler",
+      "symptom": "Official FE still 404; Local Prep R-PAY-IA-1 frozen redirect→/orders not deployed",
+      "layers": [
+        "FE",
+        "IA"
+      ],
+      "runtime_evidence": "HEAD/GET www 404 twice (03:22Z · 03:39Z)",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "R-PAY-IA-1",
+      "related": [
+        "B4-G-009",
+        "U-03"
+      ]
+    },
+    {
+      "id": "DRC-W1-005",
+      "class": "NEW_GAP",
+      "severity": "P1",
+      "domain": "Admin_Traveler_currency_universe",
+      "route": "/admin/orders/7617eba0… vs /escrow/7617eba0…",
+      "role": "Admin+Traveler",
+      "symptom": "Same disputed order: Admin Currency=USD Amount=10.00; Traveler Order amount=10 USDC",
+      "layers": [
+        "FE",
+        "Admin",
+        "money_display"
+      ],
+      "runtime_evidence": "browser CDP admin order detail + traveler escrow detail 2026-08-11",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "R-USDC-1",
+      "related": [
+        "A-03",
+        "C-05"
+      ]
+    },
+    {
+      "id": "DRC-W1-006",
+      "class": "NEW_GAP",
+      "severity": "P2",
+      "domain": "Admin_RBAC_honesty",
+      "route": "/admin/disputes?orderId=7617eba0…",
+      "role": "Admin",
+      "symptom": "Header badge 'Can write' coexists with copy 'Dispute Admin is a read-only bench' / FINANCE_WRITE FORBIDDEN elsewhere",
+      "layers": [
+        "FE",
+        "RBAC",
+        "honesty"
+      ],
+      "runtime_evidence": "browser disputes filtered page text 2026-08-11",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "R-ADMIN-1",
+      "related": [
+        "B5-G-007",
+        "A-02"
+      ]
+    },
+    {
+      "id": "DRC-W1-007",
+      "class": "NEW_GAP",
+      "severity": "P2",
+      "domain": "Admin_Traveler_dispute_universe",
+      "route": "Admin nav Disputes 12 vs filtered orderId=1 row",
+      "role": "Admin",
+      "symptom": "Nav badge Disputes 12 while orderId filter returns 1 Open dispute for traveler disputed sample — same-object universe still unexplained",
+      "layers": [
+        "FE",
+        "API",
+        "Admin",
+        "DB_projection"
+      ],
+      "runtime_evidence": "nav 'Disputes 12'; filtered list 1 row Order 7617eba0…",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "R-ADMIN-1_or_POST_SEAL_UNIVERSE_EXPLAIN",
+      "related": [
+        "B4-G-006",
+        "A-01"
+      ]
+    },
+    {
+      "id": "DRC-W1-008",
+      "class": "NEW_GAP",
+      "severity": "P2",
+      "domain": "Community_media_persistence",
+      "route": "GET /api/v1/uploads/community-posts/*.jpg (cover_url relative)",
+      "role": "public",
+      "symptom": "3 feed posts advertise relative cover_url under /api/v1/uploads/community-posts/… all Official HEAD 404; OCS tigris covers 200; CDN media currently 200",
+      "layers": [
+        "API",
+        "media",
+        "persistence",
+        "Community"
+      ],
+      "runtime_evidence": "community_feed.json + curl -I 404×3 relative covers; OCS 200; CDN mp4/avatar HEAD 200 on recheck",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "SEPARATE_COMMUNITY_MEDIA_PERSISTENCE",
+      "related": [
+        "B3-G-007",
+        "M-02"
+      ]
+    },
+    {
+      "id": "DRC-W1-009",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Pay_dispute_illegal_state",
+      "route": "/pay?orderId=7617eba0…",
+      "role": "Traveler",
+      "symptom": "Pay hub explicitly not payable for disputed; warns do not transfer funds",
+      "layers": [
+        "FE",
+        "Pay",
+        "illegal_state"
+      ],
+      "runtime_evidence": "browser pay hub text 2026-08-11",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": null,
+      "related": [
+        "B5-G-002",
+        "B4-G-002"
+      ]
+    },
+    {
+      "id": "DRC-W1-010",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Traveler_order_terminal",
+      "route": "/escrow/7617eba0…",
+      "role": "Traveler",
+      "symptom": "In dispute · 10 USDC · no escrow · itinerary locked · fund-safety honesty",
+      "layers": [
+        "FE",
+        "Orders",
+        "Escrow"
+      ],
+      "runtime_evidence": "browser CDP traveler order 2026-08-11",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": null,
+      "related": [
+        "Assurance C3"
+      ]
+    },
+    {
+      "id": "DRC-W1-011",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Auth_STRICT_SESSION",
+      "route": "GET /api/v1/me · /api/v1/orders · chain-sync-status",
+      "role": "unauth",
+      "symptom": "401 STRICT_SESSION_GATE without Bearer — fail-closed",
+      "layers": [
+        "API",
+        "Auth-RBAC"
+      ],
+      "runtime_evidence": "curl 401 bodies 2026-08-11",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": null,
+      "related": [
+        "SEC-10"
+      ]
+    },
+    {
+      "id": "DRC-W1-012",
+      "class": "NEW_GAP",
+      "severity": "P3",
+      "domain": "CMS_public_route_naming",
+      "route": "GET /api/v1/cms/public/announcements",
+      "role": "public",
+      "symptom": "Path says public but returns 401 STRICT_SESSION; working public path is /api/v1/public/announcements 200",
+      "layers": [
+        "API",
+        "CMS",
+        "Auth"
+      ],
+      "runtime_evidence": "curl 401 vs 200 pair",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "POST_SEAL_CMS_ROUTE_HYGIENE",
+      "related": [
+        "CMS"
+      ]
+    },
+    {
+      "id": "DRC-W1-013",
+      "class": "EXPECTED_DIFFERENCE",
+      "severity": "P3",
+      "domain": "Legal_routes",
+      "route": "/legal/* vs /privacy /terms /trust",
+      "role": "public",
+      "symptom": "/legal and /legal/terms 404; /privacy /terms /trust 200",
+      "layers": [
+        "FE",
+        "Legal"
+      ],
+      "runtime_evidence": "FE status matrix 2026-08-11",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "R-LEG-1_after_queue",
+      "related": [
+        "F-13"
+      ]
+    },
+    {
+      "id": "DRC-W1-014",
+      "class": "COVERAGE_GAP",
+      "severity": "P3",
+      "domain": "Market_discover",
+      "route": "GET /api/v1/discover/orders",
+      "role": "public",
+      "symptom": "items=[] empty market discover — cannot deep-probe discover→order→pay chain on live listings this wave",
+      "layers": [
+        "API",
+        "Market",
+        "coverage"
+      ],
+      "runtime_evidence": "discover 200 empty page",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "POST_SEAL_COVERAGE_EXISTING_ONLY",
+      "related": [
+        "B5-G-006"
+      ]
+    },
+    {
+      "id": "DRC-W1-015",
+      "class": "NEW_GAP",
+      "severity": "P3",
+      "domain": "observability",
+      "route": "GET /meta pause.chain_pause_read",
+      "role": "ops",
+      "symptom": "chain_pause_read status=eth_call_error decoding distributePaused — pause observability fail-soft noise",
+      "layers": [
+        "API",
+        "observability",
+        "Runtime_config"
+      ],
+      "runtime_evidence": "meta.pause.chain_pause_read.error",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "POST_SEAL_OBS_PAUSE_ETH_CALL",
+      "related": [
+        "CFG-06"
+      ]
+    },
+    {
+      "id": "DRC-W1-016",
+      "class": "NEW_GAP",
+      "severity": "P3",
+      "domain": "perf_stability",
+      "route": "GET /meta",
+      "role": "ops",
+      "symptom": "Intermittent /meta timeouts (45–75s) before success — fail-open risk for clients treating hang as unknown",
+      "layers": [
+        "API",
+        "perf",
+        "observability"
+      ],
+      "runtime_evidence": "multiple curl 28 timeouts then 75KB success",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "POST_SEAL_META_PERF",
+      "related": [
+        "Batch6 perf PENDING"
+      ]
+    },
+    {
+      "id": "DRC-W1-017",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Admin_finance_write_forbidden",
+      "route": "/admin/finance-suite",
+      "role": "Admin",
+      "symptom": "FINANCE_WRITE FORBIDDEN · Read-only · USDC track labeled",
+      "layers": [
+        "FE",
+        "Admin",
+        "Finance"
+      ],
+      "runtime_evidence": "browser finance suite 2026-08-11",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W1-018",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "migration_live",
+      "route": "GET /health + /meta database_connected",
+      "role": "ops",
+      "symptom": "API health ok · database_connected true — historical migration checksum not live-broken",
+      "layers": [
+        "API",
+        "DB"
+      ],
+      "runtime_evidence": "health 200 ok; meta db true",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": null,
+      "related": [
+        "MIG-CHK HISTORICAL_RESOLVED"
+      ]
+    },
+    {
+      "id": "DRC-W1-019",
+      "class": "EXPECTED_DIFFERENCE",
+      "severity": "—",
+      "domain": "Web3_vs_product_orders",
+      "route": "Reality Escrow 0x9996… vs product list",
+      "role": "Traveler",
+      "symptom": "Mainnet Reality bilateral escrow not represented as product disputed/refunded samples — documented Expected Difference",
+      "layers": [
+        "Web3",
+        "Orders"
+      ],
+      "runtime_evidence": "Assurance prior + this wave no contradiction",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W1-020",
+      "class": "COVERAGE_GAP",
+      "severity": "P3",
+      "domain": "state_coverage",
+      "route": "Orders matrix",
+      "role": "multi",
+      "symptom": "Live deep check still limited to Disputed(+Refunded prior); no Cancelled/Funded/Completed/PartiallyRefunded/Slashed Official samples — forbid fabricate",
+      "layers": [
+        "coverage"
+      ],
+      "runtime_evidence": "existing samples only",
+      "blocks_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_go": false,
+      "blocks_track1": false,
+      "remediation_pack": "POST_SEAL_COVERAGE_EXISTING_ONLY",
+      "related": [
+        "B5-G-006"
+      ]
+    }
+  ],
+  "counts": {
+    "PASS": 5,
+    "NEW_GAP": 8,
+    "COVERAGE_GAP": 2,
+    "EXPECTED_DIFFERENCE": 3,
+    "POST_SEAL_BLOCKER_CANDIDATE": 2
+  },
+  "honesty": [
+    "NO_FIX this wave",
+    "CUT_QUEUE_HOLD preserved",
+    "29_file_manifest unchanged",
+    "does_not_delay_Track1",
+    "Seal_neq_GO",
+    "discover_empty_limits_market_depth"
+  ],
+  "next_wave_candidates": [
+    "Guide_Provider_Acquisition_login_readonly_if_approved",
+    "Admin_orders_list_filter_id_q_live",
+    "Refunded_0cd98cfc_illegal_actions_rehit",
+    "Community_FE_broken_image_render_check",
+    "Growth_CMS_country_runtime_readonly"
+  ],
+  "tt_production_go": "NO_GO",
+  "owner_hold_ack_utc": "2026-08-11T04:05:00Z",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

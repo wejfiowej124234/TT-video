@@ -1,21 +1,23 @@
 # V65 Production Candidate Freeze Certificate
 
-**Stamp:** 20260802T134705Z  
+**Stamp:** 20260804T132141Z  
 **Verdict:** `PASS`  
 **freeze_status:** `FROZEN`  
 **Candidate ID:** `V65-PROD-CAND-20260802`  
 **Key:** `V65_PRODUCTION_CANDIDATE_FREEZE`  
-**Certificate SHA-256:** `6b0e47714bc7af1dd59fa0ef436ecba25835af5e7213dd5a687c000ae38d6235`
+**Certificate SHA-256:** `56b034d8bcfd6b15e4e583dbfd87b58f6f9f44caa116ecc9fccddef8615da306`
+
+> **Official 产品真源（FTB Product Truth · OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **≠** git checkout · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` SUPERSEDED · M07 **NOT this wave** · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
 
 ## Frozen composition
 
 | Pin | SHA |
 |-----|-----|
 | V65 Non-Web3 baseline | `0e5d438916f29395b9cbfbc376be70723e3b0848` |
-| Production API | `6e76a299dfbeac8f412923533d56e00efaae0893` |
-| Production Web | `075a295fbf5138777dd957feea4d885004a6a953` |
-| Live API verified | `6e76a299dfbeac8f412923533d56e00efaae0893` |
-| Live Web verified | `075a295fbf5138777dd957feea4d885004a6a953` |
+| Production API | `16f29c7ea78b3a718e6b3763513932a8ea32b9d5` |
+| Production Web | `16f29c7ea78b3a718e6b3763513932a8ea32b9d5` |
+| Live API verified | `16f29c7ea78b3a718e6b3763513932a8ea32b9d5` |
+| Live Web verified | `16f29c7ea78b3a718e6b3763513932a8ea32b9d5` |
 
 ## Gate matrix
 

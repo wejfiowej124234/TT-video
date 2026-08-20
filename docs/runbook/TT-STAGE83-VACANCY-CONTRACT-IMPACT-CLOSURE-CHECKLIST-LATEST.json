@@ -1,0 +1,187 @@
+{
+  "schema": "tt.stage83_vacancy_contract_impact_closure_checklist.v1",
+  "stamp_utc": "2026-08-14T03:09:21Z",
+  "freeze_status": "FROZEN_REGISTER_ONLY",
+  "target_ssot": "docs/runbook/TT-STAGE83-VACANCY-REGION-FEE-TARGET-FROZEN-LATEST.json",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "mode": "PRE_ETA_STABILITY_HOLD",
+  "implementation_allowed": false,
+  "implementation_gate": "Track2 CLOSED_REALITY pack PASS + GOV-04 Reality PASS",
+  "segments": [
+    "S05",
+    "S06"
+  ],
+  "checklist": [
+    {
+      "id": "CI-01",
+      "item": "Seat Registry 真源",
+      "need": "Single on-chain (or Timelock-governed) Active Region Steward Seat status readable by router",
+      "impact": [
+        "new or extend registry contract",
+        "Governor/Timelock role for seat set/revoke"
+      ],
+      "closure_criterion": "Seat active/inactive eth_call matches Official policy for each region under test",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": true,
+      "needs_timelock": true,
+      "needs_real_money": false
+    },
+    {
+      "id": "CI-02",
+      "item": "FeeRouter 路由改造",
+      "need": "Region bucket routing: Active Seat → RegionVault; else → P4Cap; keep 5% and BPS 45/55",
+      "impact": [
+        "FeeRouter.sol and/or downstream router",
+        "setBuckets Timelock ops",
+        "LEGACY Safe interim exit"
+      ],
+      "closure_criterion": "distribute Reality: with-seat funds hit Vault; no-seat funds hit P4Cap; BPS conservation holds",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": true,
+      "needs_timelock": true,
+      "needs_real_money": true
+    },
+    {
+      "id": "CI-03",
+      "item": "RegionVault Snapshot / Claim",
+      "need": "Replace forward-only MVP with Snapshot→Claim + SeatBonus rules when seat active",
+      "impact": [
+        "RegionVault",
+        "RegionDistributionClaim",
+        "Indexer snapshot events"
+      ],
+      "closure_criterion": "S05 CLOSED_REALITY: steward Claim path funded + claimed with evidence",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": true,
+      "needs_timelock": true,
+      "needs_real_money": true
+    },
+    {
+      "id": "CI-04",
+      "item": "P4Cap vacancy accounting",
+      "need": "Independent attribution fields: source=vacancy_region_fee, regionId, period, amount — even when USDC pooled with Primary Market",
+      "impact": [
+        "P4Cap extension or companion ledger",
+        "API/Indexer accounting rows",
+        "Gov UI source filter"
+      ],
+      "closure_criterion": "Vacancy credit and PM credit distinguishable in Official accounting; spend still spendP4Reserve",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": true,
+      "needs_timelock": true,
+      "needs_real_money": true
+    },
+    {
+      "id": "CI-05",
+      "item": "LEGACY 冲突语义冻结与迁移/回滚",
+      "need": "PendingVault / UnallocatedStewardPathVault / vacancy sweep model = LEGACY_NOT_TARGET; migration plan from Safe interim; rollback point",
+      "impact": [
+        "docs freeze",
+        "no further feature on LEGACY path",
+        "Safe→Vault/P4Cap migration Timelock plan"
+      ],
+      "closure_criterion": "LEGACY paths not used by Official Money Path; migration Reality or Owner-accepted residual documented",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": false,
+      "needs_timelock": true,
+      "needs_real_money": true
+    },
+    {
+      "id": "CI-06",
+      "item": "权限与攻击面",
+      "need": "Seat set/revoke RBAC; FeeRouter owner; Vault claim authz; P4Cap spender=Timelock only; forbid silent Pending hold",
+      "impact": [
+        "threat model",
+        "allowlist",
+        "fail-closed no-seat → P4Cap"
+      ],
+      "closure_criterion": "Negative tests: non-steward cannot Claim; non-Timelock cannot spend; seat forge fails",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": true,
+      "needs_timelock": false,
+      "needs_real_money": false
+    },
+    {
+      "id": "CI-07",
+      "item": "测试 / fork / 真钱 Reality",
+      "need": "Unit + fork: seat on/off routing; conservation; attribution; then mainnet small Reality under Owner auth",
+      "impact": [
+        "forge tests",
+        "fork scripts",
+        "Reality evidence pack"
+      ],
+      "closure_criterion": "Evidence pack PASS before any S05/S06 class upgrade",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": true,
+      "needs_timelock": true,
+      "needs_real_money": true
+    },
+    {
+      "id": "CI-08",
+      "item": "S05 CLOSED_REALITY 判据",
+      "need": "Active Seat path: FeeRouter→RegionVault→Snapshot→Claim with live mainnet (or Owner-scoped Reality) evidence",
+      "impact": [
+        "Commercial matrix S05"
+      ],
+      "closure_criterion": "class→CLOSED_REALITY only after CI-01..03+07 Reality; never by docs alone",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": true,
+      "needs_timelock": true,
+      "needs_real_money": true
+    },
+    {
+      "id": "CI-09",
+      "item": "S06 CLOSED_REALITY 判据",
+      "need": "No Active Seat: region bucket→P4Cap; SeatBonus=0; no long Pending; attribution rows; spend via same Gov exit as PM",
+      "impact": [
+        "Commercial matrix S06"
+      ],
+      "closure_criterion": "class→CLOSED_REALITY only after CI-01..02+04+07 Reality; never by docs alone",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": true,
+      "needs_timelock": true,
+      "needs_real_money": true
+    },
+    {
+      "id": "CI-10",
+      "item": "API / Indexer / UI 表达",
+      "need": "Official surfaces show seat status, route taken, vacancy credits vs PM credits; no PendingVault-as-target copy",
+      "impact": [
+        "/meta or governance surfaces",
+        "Indexer events",
+        "FE after authorized cut — not during HOLD FE rollback"
+      ],
+      "closure_criterion": "UI/API match chain for seat on/off scenarios in Reality pack",
+      "status": "REGISTERED_NOT_STARTED",
+      "needs_solidity": false,
+      "needs_timelock": false,
+      "needs_real_money": true
+    }
+  ],
+  "forbidden_now": [
+    "modify Solidity",
+    "deploy RegionVault/Vacancy/FeeRouter changes",
+    "schedule or execute Timelock for 83",
+    "mutate Track2/GOV-04 pins/opId/ETA",
+    "paper-clear S05/S06 to CLOSED_REALITY",
+    "claim TT_PRODUCTION_GO"
+  ],
+  "verdict": "STAGE83_IMPACT_CHECKLIST_FROZEN_REGISTER_ONLY",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

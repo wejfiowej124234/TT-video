@@ -1,0 +1,335 @@
+{
+  "schema": "traveltrust.official_full_reality_reconciliation_1.v1",
+  "batch_id": "OFFICIAL_FULL_REALITY_RECONCILIATION-1",
+  "status": "BATCH_1_CRITICAL_RUNTIME_ALIGNMENT_ACTIVE",
+  "recorded_utc": "2026-08-13T03:00:00Z",
+  "tt_production_go": "NO_GO",
+  "hard_gate": "REFUSED",
+  "axis_resume": "BLOCKED_UNTIL_BATCH1_CRITICAL_CLOSED",
+  "forbid": [
+    "scatter_community_axis_ux_hotfixes",
+    "bake_from_old_release_tip",
+    "bake_from_living_c3eeaf10_or_dirty_tree",
+    "mutate_track2_gov04_opid_eta",
+    "TT_PRODUCTION_GO_flip",
+    "skip_baseline_pin_without_owner_override"
+  ],
+  "frozen": {
+    "track2_eta_utc": "2026-08-14T09:03:11Z",
+    "gov04_eta_utc": "2026-08-14T09:59:23Z",
+    "mainnet_ftb": "IMMUTABLE_THIS_PACK",
+    "dual_wait": "DUAL_WAIT_FROZEN"
+  },
+  "batch_0_baseline_pin": {
+    "status": "CLOSED",
+    "approved_reproducible_baseline_sha": "ce0079dd957b42348560e9d9c91dfb9e4ef78ae9",
+    "branch": "recon/official-runtime-baseline-1",
+    "worktree": "D:/TravelTrust-recon-official-runtime-baseline-1",
+    "composition": {
+      "official_fe_tip": "3e600076eab6613b55484852197921cb5c622f7e",
+      "official_api_tip": "80eed10fd21959ae03f65bb446ee2a4598a010f7",
+      "merge_base": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "method": "git_merge_ort"
+    },
+    "forensic_pins": {
+      "fe_release_identity": "3e600076eab6613b55484852197921cb5c622f7e",
+      "fe_fly_image": "deployment-01KZWD20X2056DTV9TWKVK1J2J",
+      "api_oci_revision": "80eed10fd21959ae03f65bb446ee2a4598a010f7",
+      "api_fly_image": "deployment-01KZW5TEZC014DWFG5TJ1W3JXM",
+      "api_pin_source": "fly_image_show_org.opencontainers.image.revision",
+      "guessing": "FORBIDDEN"
+    },
+    "api_ancestor_chain": [
+      "80eed10fd21959ae03f65bb446ee2a4598a010f7",
+      "15cfe52d",
+      "7a53d3c7740d7994d350f644778519fadb0950e6",
+      "18671cd370a09a3e7baf618ccdd0f6c2b06d8fcf",
+      "c3eeaf10ae18ed675e32aa153977808ca586c08e"
+    ],
+    "fe_commits_ahead_of_living": 13,
+    "baseline_divergence": "NONE",
+    "local_verify": {
+      "static_capability_markers": "14/14_PASS",
+      "fe_vitest_high_risk": "42/42_PASS",
+      "host_cargo_check": "HOST_TOOLCHAIN_GAP_rustc_1.92_vs_aws_need_1.94_AND_rust_toolchain_toml_nightly_pin",
+      "host_cargo_check_class": "NOT_BASELINE_DIVERGENCE",
+      "official_build_path": "Docker rust:1-bookworm (Dockerfile does not COPY rust-toolchain.toml; image rustc 1.97.1)",
+      "deployed_this_batch": false,
+      "host_rustc_upgrade": "NON_BLOCKING_ENGINEERING_HYGIENE",
+      "docker_cargo_check": "PASS",
+      "docker_cargo_build_release": "PASS",
+      "docker_cargo_test_lib": "PASS",
+      "docker_image_build": "PASS",
+      "docker_local_smoke_meta_attestation": "ok",
+      "docker_local_smoke_health": "ok",
+      "evidence": "evidence/GO_official_full_reality_reconciliation_1/api-baseline-repro-parity.json"
+    },
+    "superseded_tips": [
+      {
+        "sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+        "role": "living_tip_pre_baseline",
+        "status": "SUPERSEDED_AS_OFFICIAL_BAKE_SOURCE",
+        "still_ancestor_of_baseline": true
+      }
+    ],
+    "deploy_gate": {
+      "script": "scripts/gates/check-official-bake-baseline-pin.sh",
+      "wired": [
+        "scripts/dev/deploy-tt-web-production.sh",
+        "scripts/dev/phase3-production-fly-deploy-and-sync.sh"
+      ],
+      "rule": "HEAD_must_be_descendant_of_approved_baseline",
+      "owner_escape": "TT_SKIP_OFFICIAL_BASELINE_PIN=1"
+    },
+    "content_merge_sha": "f6a313cdb187ef297fae9f25195c9a5516524758",
+    "fe_baseline_reproducible": "SIGNED",
+    "api_baseline_reproducible": "SIGNED",
+    "closure_rule": "Official_Runtime_EQUALS_Reproducible_Git_Baseline_EQUALS_Build_Artifact_for_FE_and_API",
+    "api_artifact": {
+      "status": "API_BASELINE_REPRODUCIBLE",
+      "official_oci_revision": "80eed10fd21959ae03f65bb446ee2a4598a010f7",
+      "official_fly_digest": "sha256:4191cf665e5f4893eb460089bf0a8e3fdf296eeef9a1fa3c3bb4959f5961c923",
+      "official_fly_image": "deployment-01KZW5TEZC014DWFG5TJ1W3JXM",
+      "local_image_tag": "tt-api-baseline-repro:80eed10f",
+      "local_image_id": "sha256:18147f1b17da3da1e7cf75557c0a67365c3ef079a759809c250a5683edf6a9ac",
+      "local_oci_revision": "80eed10fd21959ae03f65bb446ee2a4598a010f7",
+      "oci_revision_match": true,
+      "bit_identical_digest": false,
+      "bit_identical_class": "EXPECTED_DIFFERENCE_CONFIRM_DESIGN",
+      "crates_api_tree": "11f89bde238c5eef6d7defe8f1fb03384b7d6044"
+    },
+    "fe_artifact": {
+      "status": "FE_BASELINE_REPRODUCIBLE",
+      "official_git_sha": "3e600076eab6613b55484852197921cb5c622f7e",
+      "official_fly_image": "deployment-01KZWD20X2056DTV9TWKVK1J2J",
+      "vitest": "42/42_PASS",
+      "tree_match_baseline": true
+    },
+    "runtime_contract_recheck_utc": "2026-08-13T02:50:00Z",
+    "runtime_contracts": {
+      "attestation": "ok",
+      "r_mkt_uat_hits": 0,
+      "cors_acao": "https://www.web3-ttg.com",
+      "comment_idempotency_headers_cors": true,
+      "comment_delete_route": true,
+      "provider_guide_draft_writeRequestHeaders": true,
+      "indexer_state_path": "/app/data/indexer_state.json",
+      "public_gates_ocs_dual_wait_pins": "FROZEN_UNTOUCHED"
+    }
+  },
+  "runtime_code_map": {
+    "official_fe": {
+      "git_sha": "9959ae506c0ccaf65c6d191fbe32fe5f18815f31",
+      "product_baseline_fe": "3e600076eab6613b55484852197921cb5c622f7e",
+      "role": "FORWARD_FIX_SUCCESSOR_OF_CE0079DD",
+      "fly_image": "deployment-01M02GZ7TPND8862160087A0MP",
+      "superseded_bake": "d5303513f465572bc78db76396b0dfb336b0e6cd"
+    },
+    "official_api": {
+      "git_sha": "80eed10fd21959ae03f65bb446ee2a4598a010f7",
+      "pin_source": "OCI_org.opencontainers.image.revision",
+      "fly_image": "deployment-01KZW5TEZC014DWFG5TJ1W3JXM"
+    },
+    "engineering_ssot_tip": {
+      "git_sha": "6d6607419061f394cbbf50f3d6e896636c738dd5",
+      "branch": "recon/official-runtime-baseline-1",
+      "note": "Batch1 only from this tip or approved successor",
+      "api_baseline_reproducible": "SIGNED",
+      "fe_baseline_reproducible": "SIGNED"
+    }
+  },
+  "batches": [
+    {
+      "id": "BATCH_0_BASELINE_PIN",
+      "sev": "P0",
+      "status": "CLOSED",
+      "api_baseline_reproducible": "SIGNED",
+      "fe_baseline_reproducible": "SIGNED"
+    },
+    {
+      "id": "BATCH_1_CRITICAL_RUNTIME_ALIGNMENT",
+      "sev": "P0_P1",
+      "status": "ACTIVE",
+      "note": "Open only from approved baseline worktree; Gap Matrix OFR-H1/H3",
+      "baseline_tip": "a3d19981e01b1d92970a9d669465989421c780ef"
+    },
+    {
+      "id": "BATCH_2_P1_FE_API_MEDIA",
+      "sev": "P1",
+      "status": "BLOCKED_ON_BATCH_1"
+    },
+    {
+      "id": "BATCH_3_P2_DOCS_UX",
+      "sev": "P2",
+      "status": "BLOCKED_ON_BATCH_2"
+    }
+  ],
+  "next": "CLOSE_OFR_H2_01_THEN_OWNER_RV_AND_RBAC_REGRESSION",
+  "batch_1_critical_runtime_alignment": {
+    "status": "ACTIVE",
+    "opened_utc": "2026-08-13T03:00:00Z",
+    "baseline_tip": "6d6607419061f394cbbf50f3d6e896636c738dd5",
+    "approved_ancestor": "ce0079dd957b42348560e9d9c91dfb9e4ef78ae9",
+    "forbid_bake_from": [
+      "c3eeaf10",
+      "orphan_cuts",
+      "dirty_living"
+    ],
+    "workflow": "CHECK→GAP→MIN_FIX→Local/Docker Test→clean diff→Official Cut→RV→cross-pack→SSOT",
+    "active_fix": "OFR-H2-01_awaiting_official_cut",
+    "frozen": {
+      "track2_eta_utc": "2026-08-14T09:03:11Z",
+      "gov04_eta_utc": "2026-08-14T09:59:23Z"
+    }
+  },
+  "gaps": [
+    {
+      "id": "OFR-H1-01",
+      "sev": "P0",
+      "face": "FE_API_CONTRACT",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS",
+      "note": "baseline has communityWriteHeaders"
+    },
+    {
+      "id": "OFR-H1-02",
+      "sev": "P0",
+      "face": "FE_API_CONTRACT",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS",
+      "note": "baseline deleteComment uses postComments()+id"
+    },
+    {
+      "id": "OFR-H1-03",
+      "sev": "P1",
+      "face": "FE_API_CONTRACT",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS",
+      "note": "soft-duplicate helper present"
+    },
+    {
+      "id": "OFR-H1-04",
+      "sev": "P0",
+      "face": "FE_API_CONTRACT",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS",
+      "note": "provider/guide draft writeRequestHeaders"
+    },
+    {
+      "id": "OFR-H1-05",
+      "sev": "P1",
+      "face": "FE_API_CONTRACT",
+      "status": "OPEN",
+      "mark": "COVERAGE_GAP",
+      "note": "Owner create→delete RV still required"
+    },
+    {
+      "id": "OFR-H2-01",
+      "sev": "P1",
+      "face": "MEDIA_DUAL_TRACK",
+      "status": "AWAITING_OFFICIAL_CUT",
+      "mark": "DATA_REALITY_GAP",
+      "note": "guides avatar_url still legacy on Official live; API serialize remap in progress",
+      "fix_sha": "6d6607419061f394cbbf50f3d6e896636c738dd5"
+    },
+    {
+      "id": "OFR-H2-02",
+      "sev": "P1",
+      "face": "MEDIA_DUAL_TRACK",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS",
+      "scope": "official_fe_tip"
+    },
+    {
+      "id": "OFR-H2-03",
+      "sev": "P1",
+      "face": "MEDIA_DUAL_TRACK",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS",
+      "note": "baseline FE normalizer present"
+    },
+    {
+      "id": "OFR-H2-05",
+      "sev": "P1",
+      "face": "MEDIA_DUAL_TRACK",
+      "status": "OPEN",
+      "mark": "DRIFT",
+      "note": "closes with H2-01 API serialize"
+    },
+    {
+      "id": "OFR-H3-01",
+      "sev": "P0",
+      "face": "OFFICIAL_NOT_ON_MAINLINE",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS"
+    },
+    {
+      "id": "OFR-H3-02",
+      "sev": "P0",
+      "face": "OFFICIAL_NOT_ON_MAINLINE",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS"
+    },
+    {
+      "id": "OFR-H3-04",
+      "sev": "P0",
+      "face": "OFFICIAL_NOT_ON_MAINLINE",
+      "status": "CLOSED_BY_BATCH_0",
+      "mark": "PASS"
+    },
+    {
+      "id": "OFR-H4-01",
+      "sev": "P1",
+      "face": "RBAC_STATE_MATRIX",
+      "status": "OPEN",
+      "mark": "COVERAGE_GAP"
+    },
+    {
+      "id": "OFR-H4-02",
+      "sev": "P1",
+      "face": "RBAC_STATE_MATRIX",
+      "status": "OPEN",
+      "mark": "COVERAGE_GAP",
+      "note": "regression only"
+    },
+    {
+      "id": "OFR-H4-03",
+      "sev": "P1",
+      "face": "RBAC_STATE_MATRIX",
+      "status": "OPEN",
+      "mark": "COVERAGE_GAP"
+    },
+    {
+      "id": "OFR-H5-01",
+      "sev": "P1",
+      "face": "SSR_CLIENT_FALLBACK",
+      "status": "OPEN",
+      "mark": "COVERAGE_GAP"
+    },
+    {
+      "id": "OFR-H5-02",
+      "sev": "P1",
+      "face": "SSR_CLIENT_FALLBACK",
+      "status": "OPEN",
+      "mark": "DRIFT",
+      "note": "depends H2-01"
+    }
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

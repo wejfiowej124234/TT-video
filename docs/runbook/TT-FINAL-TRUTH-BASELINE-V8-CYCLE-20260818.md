@@ -6,6 +6,10 @@
 **Evidence cited (do not recast L7):** [`TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST`](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md) · `PASS_STOP` · `issued_at_utc=2026-08-18T03:00:00Z`  
 **`TT_PRODUCTION_GO`:** `NO_GO`
 
+> **Living Product Truth（2026-08-20 吸收进 FTB LATEST · 不改本 Amendment 的 Web3 决策字节）：**  
+> **TravelTrust Official · OPS-2026.08.20-v9** · `3e356617…` / `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap v8。  
+> 下文若仍写 `daa5ae87` /「冻结 OLD bake」= **本 Cycle 当时 Expected Difference 历史句** · **不得**再当活 Official www。
+
 Owner 本轮选择：**另立 NEW FTB Cycle 吸收 V8，不覆盖 FTB `20260812`。**
 
 梯子（禁止跳阶 / 禁止把本 Amendment 写成 Production GO）：
@@ -15,9 +19,10 @@ FTB 20260812（历史事实，immutable）
 → V8 Mainnet Reality Certification          ← PASS_STOP（引用，不重证）
 → NEW FTB Cycle / Amendment（本文件 · Active Truth）
 → Final Reality / Release Certification     ← PASS · blocking_p0_p1=0
-→ Production GO 重评                        ← STOP · **FROZEN unique Final Closure entry** · required_before_go=8 · hard_gate=REFUSED
-→ TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH      ← 八项窄闭环（冻结之后）
-→ Owner Production GO 裁决                  ← 未开
+→ Production GO 重评                        ← STOP · **FROZEN unique Final Closure entry** · required_before_go=8 · hard_gate=REFUSED · SHA `94785a66`（永不改写）
+→ TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH      ← 八项窄闭环 **CLOSED** · remaining=0
+→ Production GO 重评 Cycle2                 ← `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · current_required_before_go=0 · **禁止**自动签发 GO
+→ Owner Production GO 裁决                  ← **未开** · `TT_PRODUCTION_GO=NO_GO`
 ```
 
 ## ACTIVE（本 Cycle）

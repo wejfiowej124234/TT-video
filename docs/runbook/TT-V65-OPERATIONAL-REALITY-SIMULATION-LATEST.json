@@ -1,0 +1,690 @@
+{
+  "schema": "traveltrust.v65_operational_reality_simulation.v1",
+  "key": "V65_OPERATIONAL_REALITY_SIMULATION",
+  "title": "V65 Operational Reality Simulation Audit",
+  "stamp": "20260802T152203Z",
+  "verdict": "PASS",
+  "closure_status": "OPERATIONAL_REALITY_SIMULATION_MACHINE_PASS",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "not_owner_signoff": true,
+    "simulation_not_substitute_for_uat": true
+  },
+  "identity": {
+    "api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "checks": {
+      "api_v65": true,
+      "web_v65": true,
+      "production": true,
+      "web3_pin": true,
+      "go_not_claimed_in_meta": true
+    },
+    "status": "PASS",
+    "build": {
+      "deployment_profile": "production",
+      "attestation_status": "ok",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2"
+    }
+  },
+  "journeys": [
+    {
+      "id": "J-TRAVELER-BOOK",
+      "role": "traveler",
+      "name": "Browse → create itinerary → order → escrow view",
+      "steps": [
+        {
+          "id": "browse_market",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "auth_register_login",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "create_itinerary_order",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "escrow_view",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-GUIDE-ONBOARD",
+      "role": "guide",
+      "name": "Apply → review → supplement → approve → public guides",
+      "steps": [
+        {
+          "id": "apply",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "admin_review",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "supplement_need_more_info",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "approve_publish",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-PROVIDER-ONBOARD",
+      "role": "provider",
+      "name": "Provider apply → approve → listing surface",
+      "steps": [
+        {
+          "id": "apply",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "admin_review",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "listing_visibility",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-ORDER-DISPUTE",
+      "role": "ops",
+      "name": "Order → dispute → admin resolve → archive",
+      "steps": [
+        {
+          "id": "orders_list",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "open_dispute",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "admin_resolve",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-CMS-PUBLISH",
+      "role": "admin_cms",
+      "name": "CMS draft → publish → public home/market consume",
+      "steps": [
+        {
+          "id": "admin_content",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "announcements",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "public_consume",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-COMMUNITY-MOD",
+      "role": "community",
+      "name": "Post/feed → report → moderate → penalty",
+      "steps": [
+        {
+          "id": "feed",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "report",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "moderate",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-PAYMENT-TEST-WEBHOOK",
+      "role": "finance_ops",
+      "name": "Onboarding payment test mode · webhook jobs · DLQ recovery",
+      "steps": [
+        {
+          "id": "stripe_test_surfaces",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "webhook_jobs_admin",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        },
+        {
+          "id": "async_jobs",
+          "fe": true,
+          "api": true,
+          "db": true,
+          "admin": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "visibility": true,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "live": {
+    "api": [
+      {
+        "method": "GET",
+        "path": "/health",
+        "http": 200,
+        "ttfb_ms": 3192.4,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/meta?compact=1",
+        "http": 200,
+        "ttfb_ms": 8353.2,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/public/announcements?for_home=1",
+        "http": 200,
+        "ttfb_ms": 7980.1,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/guides",
+        "http": 200,
+        "ttfb_ms": 5311.4,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/discover/orders",
+        "http": 200,
+        "ttfb_ms": 4160.2,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/did-rank/travelers",
+        "http": 200,
+        "ttfb_ms": 6074.3,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/community/feed",
+        "http": 200,
+        "ttfb_ms": 3469.9,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/me",
+        "http": 401,
+        "ttfb_ms": 3624.8,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/capabilities",
+        "http": 401,
+        "ttfb_ms": 2825.4,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/guide-applications",
+        "http": 401,
+        "ttfb_ms": 1706.5,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/provider-applications",
+        "http": 401,
+        "ttfb_ms": 7871.9,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/orders",
+        "http": 401,
+        "ttfb_ms": 1590.4,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/disputes",
+        "http": 401,
+        "ttfb_ms": 2124.2,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/content/announcements",
+        "http": 401,
+        "ttfb_ms": 3338.8,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/community/reports",
+        "http": 401,
+        "ttfb_ms": 1932.2,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/onboarding/webhook-jobs",
+        "http": 401,
+        "ttfb_ms": 11840.9,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/onboarding/webhook-dlq",
+        "http": 401,
+        "ttfb_ms": 3236.0,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/disputes",
+        "http": 401,
+        "ttfb_ms": 6927.3,
+        "pass": true,
+        "data_ok": true,
+        "in_rust": true
+      }
+    ],
+    "web": [
+      {
+        "path": "/",
+        "http": 200,
+        "ttfb_ms": 3268.6,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/market",
+        "http": 200,
+        "ttfb_ms": 5889.6,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/guides",
+        "http": 200,
+        "ttfb_ms": 5416.0,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/community",
+        "http": 200,
+        "ttfb_ms": 9772.1,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/orders",
+        "http": 200,
+        "ttfb_ms": 3654.8,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/disputes",
+        "http": 200,
+        "ttfb_ms": 4481.9,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/guide/register",
+        "http": 200,
+        "ttfb_ms": 3024.5,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/provider/register",
+        "http": 200,
+        "ttfb_ms": 4408.8,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/admin",
+        "http": 200,
+        "ttfb_ms": 3958.5,
+        "pass": true,
+        "crash": false
+      },
+      {
+        "path": "/auth/login",
+        "http": 200,
+        "ttfb_ms": 3361.4,
+        "pass": true,
+        "crash": false
+      }
+    ],
+    "fail_count": 0,
+    "status": "PASS"
+  },
+  "data_reality": {
+    "probes": {
+      "guides": {
+        "http": 200,
+        "kind": "object.items",
+        "count": 11,
+        "pass": true,
+        "empty_ok": true
+      },
+      "discover": {
+        "http": 200,
+        "kind": "object.items",
+        "count": 0,
+        "pass": true,
+        "empty_ok": true
+      },
+      "announcements": {
+        "http": 200,
+        "kind": "object.items",
+        "count": 3,
+        "pass": true,
+        "empty_ok": true
+      }
+    },
+    "status": "PASS",
+    "note": "Empty lists are valid early-prod Operational Reality"
+  },
+  "media_webhook_recovery": {
+    "checks": {
+      "presign_or_upload_api": true,
+      "webhook_jobs_api": true,
+      "webhook_dlq_api": true,
+      "async_jobs_table": true,
+      "scheduler_table": true,
+      "webhook_jobs_table": true,
+      "webhook_dlq_table": true
+    },
+    "status": "PASS"
+  },
+  "summary": {
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "p2_gaps": 0,
+    "journeys": 7,
+    "journeys_pass": 7,
+    "live_probe_fails": 0,
+    "data_reality": "PASS",
+    "media_recovery": "PASS"
+  },
+  "autofix_applied": [
+    "wrote_operational_reality_journeys_registry"
+  ],
+  "honesty": {
+    "machine_simulation_not_human_uat": true,
+    "empty_prod_lists_may_be_healthy": true,
+    "payment_test_mode_only": true,
+    "not_production_go": true,
+    "owner_signoff_still_required": true
+  },
+  "report_sha256": "722f17e97c89a6d2206516d3b5c8e7075bc776e2ca025d08167e630c92ccc120",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

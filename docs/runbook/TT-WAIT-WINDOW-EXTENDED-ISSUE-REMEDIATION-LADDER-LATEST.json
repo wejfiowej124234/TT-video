@@ -1,0 +1,217 @@
+{
+  "schema": "traveltrust.wait_window_extended_issue_remediation_ladder.v1",
+  "status": "CUT_QUEUE_HOLD_PRE_ETA_READ_ONLY_MANIFEST_FROZEN",
+  "recorded_utc": "2026-08-11T03:07:27Z",
+  "cut_queue": "TT-WAIT-WINDOW-SEAL-AFTER-OFFICIAL-CUT-QUEUE-LATEST",
+  "hold_lock": "TT-WAIT-WINDOW-CUT-QUEUE-HOLD-PRE-ETA-READ-ONLY-LATEST",
+  "preflight_snapshot": "TT-WAIT-WINDOW-TRACK1-PRE-ETA-READONLY-PREFLIGHT-LATEST",
+  "local_prep_new_batches": "FORBIDDEN",
+  "product_code_mutations": "FORBIDDEN",
+  "cut_queue_unlocked": false,
+  "prior_pack_must_be_closed_before_next": true,
+  "r_usdc_1": {
+    "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+    "evidence": "TT-WAIT-WINDOW-R-USDC-1-LOCAL-PREP-LATEST",
+    "cut_order": 1,
+    "opens_after": "REALITY_EVIDENCE_SEAL_PASS"
+  },
+  "r_pay_ia_1": {
+    "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+    "evidence": "TT-WAIT-WINDOW-R-PAY-IA-1-LOCAL-PREP-LATEST",
+    "cut_order": 2,
+    "opens_after": "R-USDC-1_CLOSED"
+  },
+  "r_admin_1": {
+    "status": "LOCAL_READY_NOT_DEPLOYED_FROZEN",
+    "evidence": "TT-WAIT-WINDOW-R-ADMIN-1-LOCAL-PREP-LATEST",
+    "cut_order": 3,
+    "opens_after": "R-PAY-IA-1_CLOSED"
+  },
+  "auto_start_r_leg_1": false,
+  "post_seal_cut_order": [
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1"
+  ],
+  "file_overlap_none": true,
+  "gated_by": [
+    "CUT_QUEUE_HOLD_PRE_ETA_READ_ONLY",
+    "ETA_THEN_TRACK1_SERIAL",
+    "SEAL_THEN_UNLOCK_CUT",
+    "SERIAL_CLOSED_GATE"
+  ],
+  "inventory": "TT-WAIT-WINDOW-EXTENDED-ISSUE-INVENTORY-LATEST",
+  "freeze": "TT-WAIT-WINDOW-FREEZE-UNTIL-ETA-LATEST",
+  "ftb": "TT-FINAL-TRUTH-BASELINE-LATEST",
+  "tt_production_go": "NO_GO",
+  "hard_gates": {
+    "USDC_ONLY": true,
+    "WEB3_DEPLOYED_SSOT_NO_ADDRESS_REWRITE": true,
+    "NO_OFFICIAL_UNTIL_SEAL": true,
+    "NO_QUEUE_JUMP_TRACK1": true,
+    "LOCAL_READY_NE_CLOSED_NE_RV": true,
+    "BATCH_CLOSED_NE_PRODUCTION_GO": true
+  },
+  "currency_policy": "USDC_ONLY",
+  "local_prep_loop": [
+    "CHECK",
+    "GAP",
+    "local_min_fix",
+    "local_test",
+    "READY_AFTER_SEAL"
+  ],
+  "batch_complete_status_allowed_before_seal": "LOCAL_READY_NOT_DEPLOYED",
+  "batch_complete_status_forbidden_before_official_rv": [
+    "CLOSED",
+    "Runtime_Verified"
+  ],
+  "phases": [
+    {
+      "id": 0,
+      "name": "LOCAL_PREP_ACTIVE",
+      "active_now": true,
+      "priority": [
+        "R-USDC-1",
+        "R-PAY-IA-1",
+        "R-ADMIN-1",
+        "R-LEG-1_legal_docs_honesty"
+      ],
+      "stop_at_eta": true
+    },
+    {
+      "id": 1,
+      "name": "TRACK1_REALITY_SERIAL",
+      "active_now": false,
+      "steps": [
+        "stop_all_product_local_prep",
+        "fail_closed_preflight",
+        "Timelock.execute",
+        "verify_isEscrow_and_events",
+        "Escrow.release",
+        "Settlement_Fee_balance_and_event_reconcile",
+        "Reality_Evidence_Seal"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "POST_SEAL_OFFICIAL_CUT_PREPARED_BATCHES",
+      "active_now": false,
+      "order": [
+        "prepared_LOCAL_READY_batches_first",
+        "R-USDC-1",
+        "Ops_Indexer_lineage",
+        "Cert_WC_Legal_payment_release_grade",
+        "separate_track_coverage_no_fake_data"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "HARD_GATE_GO_QUEUE",
+      "active_now": false
+    }
+  ],
+  "owner_one_liner": "CUT_QUEUE_HOLD PRE_ETA_READ_ONLY: freeze 29-file manifest/test baselines/deps/rollback; no product code or Official Runtime; ETA-before Track1 fail-closed read-only Preflight only (record anomalies no fix); ETA+Preflight PASS → Track1 exclusive execute→confirm→release→Settlement/Fee→Seal→Hard Gate; FAIL/UNKNOWN→STOP; Seal≠GO; unlock Cut only after Seal; serial CLOSED gate R-USDC-1→R-PAY-IA-1→R-ADMIN-1",
+  "phase0_half_loop": [
+    "gap_pin",
+    "local_min_fix",
+    "local_targeted_test",
+    "LOCAL_READY_NOT_DEPLOYED"
+  ],
+  "phase2_full_loop": [
+    "official_deploy",
+    "official_runtime_verify",
+    "ssot_rewrite",
+    "staging_local_semantic_align_no_mainnet_addr_copy",
+    "CLOSED"
+  ],
+  "suggested_batches": [
+    {
+      "id": "R-USDC-1",
+      "priority": 1,
+      "eta_before": "LOCAL_PREP",
+      "scope": "all_payment_bilateral_admin_money_display_USDC"
+    },
+    {
+      "id": "R-PAY-IA-1",
+      "priority": 2,
+      "eta_before": "LOCAL_PREP",
+      "scope": "me_payments_nav_honesty"
+    },
+    {
+      "id": "R-ADMIN-1",
+      "priority": 3,
+      "eta_before": "LOCAL_PREP",
+      "scope": "admin_honesty_filters_messaging"
+    },
+    {
+      "id": "R-LEG-1",
+      "priority": 4,
+      "eta_before": "LOCAL_PREP",
+      "scope": "legal_pages_docs_honesty"
+    },
+    {
+      "id": "R-META-1",
+      "priority": 5,
+      "eta_before": "LOCAL_DRAFT_ONLY_NO_OFFICIAL_CONFIG",
+      "scope": "api_meta_factory_align_wired_no_chain_mutate"
+    },
+    {
+      "id": "R-IDX-1",
+      "priority": 6,
+      "eta_before": "DEBT_ONLY_NO_COSMETICS",
+      "scope": "indexer_honest_progress"
+    },
+    {
+      "id": "R-MEDIA-1",
+      "priority": 7,
+      "eta_before": "SEPARATE_DEFAULT_NO_QUEUE_JUMP",
+      "scope": "media_404_cdn_separate"
+    },
+    {
+      "id": "R-SEC-1",
+      "priority": 8,
+      "eta_before": "POST_GO_DEFAULT",
+      "scope": "auth_identity"
+    },
+    {
+      "id": "R-PFA-1",
+      "priority": 9,
+      "eta_before": "POST_GO_DEFAULT",
+      "scope": "wc_trust_role_owner_gates"
+    }
+  ],
+  "ftb_update_policy": {
+    "addresses_table": "IMMUTABLE_DEPLOYED_SSOT",
+    "allowed_after_seal": [
+      "money_path_status",
+      "reality_wave_status",
+      "user_funds_flag_owner_only",
+      "evidence_cites",
+      "currency_policy_product_sentence"
+    ],
+    "forbidden": [
+      "rewrite_wired_sr_fee_timelock_usdc_addresses",
+      "promote_lineage_to_official_create",
+      "copy_mainnet_addrs_to_sepolia_local_create"
+    ]
+  },
+  "three_env_consistency": "semantic_and_policy_align_not_same_contract_addresses",
+  "next_action": "cut_queue_hold_readonly_preflight_until_eta_then_track1_then_cut_R-USDC-1",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

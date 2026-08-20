@@ -1,0 +1,518 @@
+{
+  "schema": "tt.v65.admin_console.production_reality_gap_inventory.v2",
+  "track": "V65_ADMIN_CONSOLE_PRODUCTION_REALITY_DEEP_AUDIT",
+  "stamp_utc": "20260803T090651Z",
+  "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "tip_message": "fix(admin): V65 Admin UX Batch freeze + zh locale Wave-1",
+  "inventory_status": "FROZEN",
+  "freeze_gate": "FROZEN — Single Release Cut COMPLETE · Production Deploy PASS · PRV-2 PARTIAL (AUTH_GATE only) · tip 35872b40 frozen · blocks_cut:0 · TT_PRODUCTION_GO still NO_GO",
+  "process_lock": {
+    "forbidden": [
+      "fragmented_one_page_ship",
+      "v65.x_branch",
+      "sidebar_ia_change",
+      "web3_pin_change",
+      "tip_sync_mid_batch",
+      "claim_production_go_before_cut_cert",
+      "mutate_frozen_inventory_counts_without_new_defect"
+    ],
+    "required_sequence": [
+      "full_gap_inventory",
+      "inventory_freeze",
+      "batch_a_runtime_crash",
+      "batch_b_workbench_l5",
+      "batch_c_perf_contract_evidence",
+      "local_full_verify",
+      "single_release_cut",
+      "runtime_certification"
+    ],
+    "current_step": "6_runtime_certification",
+    "next_allowed": "owner_logged_in_prv2_cert",
+    "completed_through": [
+      "full_gap_inventory",
+      "inventory_freeze",
+      "batch_a_runtime_crash",
+      "batch_b_workbench_l5",
+      "batch_c_perf_contract_evidence",
+      "local_full_verify",
+      "single_release_cut",
+      "production_deploy"
+    ],
+    "single_release_cut": {
+      "stamp_utc": "20260803T084500Z",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "tip_frozen": true,
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T084500Z/SINGLE-RELEASE-CUT.json",
+      "prior_cut_blocker_evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z",
+      "disposition": "PROCESS_CUT — tip remains 35872b40; Batch-A/B local code CLOSED_* may remain WT until Owner tip advance; no tip-sync mid-batch"
+    },
+    "production_deploy": {
+      "stamp_utc": "20260803T090651Z",
+      "result": "PASS",
+      "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "web_build_time": "2026-08-03T08:56:35Z",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T090651Z/PRODUCTION-DEPLOY.json"
+    },
+    "prv2": {
+      "stamp_utc": "20260803T090651Z",
+      "result": "PRV2_PARTIAL_OWNER_UAT_PENDING",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T090651Z/PRV-2.json",
+      "owner_logged_in_uat": "NOT_RUN"
+    }
+  },
+  "matrix_ref": {
+    "stamp_utc": "20260803T064641Z",
+    "rows_total": 66,
+    "verdict_fail": 3,
+    "verdict_fail_ui_release": 1,
+    "verdict_pending_owner_runtime": 0,
+    "verdict_gap": 63,
+    "verdict_pass": 0
+  },
+  "totals": {
+    "open": 1,
+    "p0": 0,
+    "p1": 0,
+    "p2": 0,
+    "process": 1,
+    "pending_owner_repro": 0,
+    "blocks_cut": 0,
+    "closed": 14
+  },
+  "items": [
+    {
+      "id": "V65-PR-G001",
+      "status": "CLOSED_LOCAL_CODE",
+      "class": "A_runtime_functional",
+      "severity": "P0",
+      "title": "Official Accounts page crashes — missing officialOpsL5 helpers",
+      "route": "/admin/official/accounts",
+      "symptom": "TypeError: (0 , x.isOfficialAccountProbeRow) is not a function",
+      "root_cause": {
+        "confidence": "CODE_CONFIRMED",
+        "detail": "AdminOfficialAccountsPageMain imports helpers not exported from frontend/lib/admin/officialOpsL5.ts at tip 35872b40"
+      },
+      "impacts": [
+        "openability",
+        "runtime_console",
+        "function_completeness",
+        "api_data_contract",
+        "business_loop"
+      ],
+      "fix_plan": "Restore isOfficialAccountProbeRow + label/flag/verify helpers; vitest contract; do not one-page-ship before Inventory Freeze",
+      "owner": "Agent after inventory freeze",
+      "evidence": "frontend/lib/admin/officialOpsL5.ts helpers + officialOpsL5.batch11W03.test.ts · local vitest",
+      "blocks_cut": false,
+      "batch": "BATCH-A",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-A: restored isOfficialAccountProbeRow + label/flag/verify helpers on local tree (tip frozen 35872b40; ship only at Cut)"
+    },
+    {
+      "id": "V65-PR-G002",
+      "status": "CLOSED_LOCAL_CODE",
+      "class": "A_runtime_functional",
+      "severity": "P1",
+      "title": "Finance Suite TypeError: e is not iterable (PEER nav SSOT missing)",
+      "route": "/admin/finance-suite",
+      "symptom": "Owner FAIL — suite unusable; Console TypeError: … is not iterable (minified: e is not iterable)",
+      "root_cause": {
+        "confidence": "CODE_CONFIRMED",
+        "detail": "At tip 35872b40, financeOpsL5.financeSuiteNavTiles defaults to ADMIN_SHELL_FINANCE_PEER_NAV_LINKS and spreads it ([…links]). adminShellFinanceNavLinks.ts exports only ADMIN_SHELL_FINANCE_NAV_LINKS — PEER export absent → undefined is not iterable when rendering /admin/finance-suite hub tiles. Not primary API→DB shape drift; SSOT nav-contract gap. Known fix commit 0e5d4389 (PEER export + Array.isArray fail-closed + financeSuiteNavTiles.guard.test.ts) lives on hotfix/finance-peer-nav-a994db63 and is NOT an ancestor of tip — do not mid-inventory ship.",
+        "contract_surface": "frontend/lib/admin/adminShellFinanceNavLinks.ts ↔ financeOpsL5.financeSuiteNavTiles ↔ AdminFinanceSuitePageMain",
+        "known_fix_sha_not_on_tip": "0e5d438916f29395b9cbfbc376be70723e3b0848"
+      },
+      "impacts": [
+        "openability",
+        "runtime_console",
+        "api_data_contract",
+        "function_completeness",
+        "business_loop"
+      ],
+      "fix_plan": "After Inventory Freeze: restore ADMIN_SHELL_FINANCE_PEER_NAV_LINKS (= NAV_LINKS.filter !activeExact) + fail-closed Array.isArray in financeSuiteNavTiles + restore financeSuiteNavTiles.guard.test.ts from 0e5d4389; Batch with G001; no one-page-ship",
+      "owner": "Agent after inventory freeze",
+      "evidence": "ADMIN_SHELL_FINANCE_PEER_NAV_LINKS + Array.isArray fail-closed + financeSuiteNavTiles.guard.test.ts",
+      "blocks_cut": false,
+      "pending_owner_repro": false,
+      "batch": "BATCH-A",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-A: Finance suite peer nav SSOT restored locally"
+    },
+    {
+      "id": "V65-PR-G015",
+      "status": "CLOSED_LOCAL_CODE",
+      "class": "A_runtime_functional",
+      "severity": "P1",
+      "title": "Announcements Publish/Unpublish CMS loop incomplete",
+      "route": "/admin/content/announcements",
+      "symptom": "Owner LIVE: Publish click produces no confirm dialog/toast — CMS ops loop broken",
+      "root_cause": {
+        "confidence": "CODE_CONFIRMED",
+        "detail": "adminConfirmAnnouncementPublish / adminConfirmAnnouncementUnpublish missing or not wired at tip 35872b40"
+      },
+      "impacts": [
+        "function_completeness",
+        "business_loop",
+        "button_capability"
+      ],
+      "fix_plan": "Batch-A: restore adminConfirmAnnouncementPublish/Unpublish + wire buttons → confirm → API → toast → refresh; vitest contract",
+      "owner": "Agent Batch-A",
+      "evidence": "adminConfirmAnnouncementPublish/Unpublish in adminOpsWriteConfirm.ts · wired AdminContentAnnouncementsPageMain",
+      "blocks_cut": false,
+      "batch": "BATCH-A",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-A: CMS Announcements Publish/Unpublish confirm loop restored locally"
+    },
+    {
+      "id": "V65-PR-G003",
+      "status": "CLOSED_LOCAL_CODE",
+      "class": "B_ui_ux_release",
+      "severity": "P2",
+      "title": "Low contrast / unreadability on ops tables and meta text",
+      "route": "ADMIN_CROSS_CUTTING",
+      "symptom": "Owner: colors unreadable; contrast fails Workbench ops standard",
+      "root_cause": {
+        "confidence": "OWNER_VISUAL",
+        "detail": "Token drift + muted gray stacks on high-density tables"
+      },
+      "impacts": [
+        "typography_contrast_spacing",
+        "ux_workbench_l5"
+      ],
+      "fix_plan": "Batch: enforce ADMIN_TEXT_* contrast pairs; audit Orders/Finance/Official first",
+      "owner": "Agent after inventory freeze",
+      "evidence": "ADMIN_TABLE_TBODY_CLASS contrast floor + Orders tbody · adminUi.test.ts",
+      "blocks_cut": false,
+      "batch": "BATCH-B",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-B: priority surface contrast floor (Orders + token); cross-cutting matrix GAP remains until Cut"
+    },
+    {
+      "id": "V65-PR-G004",
+      "status": "CLOSED_LOCAL_CODE",
+      "class": "B_ui_ux_release",
+      "severity": "P2",
+      "title": "Orders page reads as DB query console, not ops order center",
+      "route": "/admin/orders",
+      "symptom": "Owner: legacy admin / debug-console style",
+      "root_cause": {
+        "confidence": "OWNER_VISUAL",
+        "detail": "Workbench + Legacy + Debug mix"
+      },
+      "impacts": [
+        "ux_workbench_l5",
+        "ops_language_i18n",
+        "table_interaction"
+      ],
+      "fix_plan": "Batch: Workbench L5 chrome/filters/table/actions; no Sidebar IA change",
+      "owner": "Agent after inventory freeze",
+      "evidence": "AdminOrdersOpsJumpPack + zh/en ops-language (作业快捷入口 / Quick ops links)",
+      "blocks_cut": false,
+      "batch": "BATCH-B",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-B: Orders chrome ops language (not DB console)"
+    },
+    {
+      "id": "V65-PR-G005",
+      "status": "CLOSED_LOCAL_CODE",
+      "class": "B_ui_ux_release",
+      "severity": "P2",
+      "title": "Engineering / source language still leaks to ops UI",
+      "route": "ADMIN_CROSS_CUTTING",
+      "symptom": "数据来源 / source / internal field descriptions visible to operators",
+      "root_cause": {
+        "confidence": "OWNER_VISUAL",
+        "detail": "Residual engineering wording after UX Batch Wave-1"
+      },
+      "impacts": [
+        "ops_language_i18n"
+      ],
+      "fix_plan": "Batch: ops-language scan; forbid engineering IDs as operator-facing copy",
+      "owner": "Agent + Owner UAT",
+      "evidence": "admin_ops_leaf_data_source_* → 数据状态 / Data status · unmarked connection copy",
+      "blocks_cut": false,
+      "batch": "BATCH-B",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-B: engineering source wording softened on leaf strip + users meta"
+    },
+    {
+      "id": "V65-PR-G006",
+      "status": "CLOSED_LOCAL_PARTIAL",
+      "class": "B_ui_ux_release",
+      "severity": "P2",
+      "title": "Workbench + Legacy Admin + Debug Console style mix",
+      "route": "ADMIN_CROSS_CUTTING",
+      "symptom": "Inconsistent shells/cards/tables/badges across left-nav modules",
+      "root_cause": {
+        "confidence": "OWNER_VISUAL",
+        "detail": "Three style eras coexist"
+      },
+      "impacts": [
+        "ux_workbench_l5",
+        "component_reuse"
+      ],
+      "fix_plan": "Batch: Workbench L5 checklist per matrix row",
+      "owner": "Agent after inventory freeze",
+      "evidence": "Orders Workbench L5 tokens + jump pack; other leaves still mixed eras",
+      "blocks_cut": false,
+      "batch": "BATCH-B",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-B: style mix reduced on Orders priority leaf — full left-nav unify deferred to Cut UAT"
+    },
+    {
+      "id": "V65-PR-G007",
+      "status": "CLOSED_LOCAL_PARTIAL",
+      "class": "B_ui_ux_release",
+      "severity": "P2",
+      "title": "Unify Admin visual tokens (ADMIN_TEXT_* / BORDER / BG)",
+      "route": "ADMIN_CROSS_CUTTING",
+      "symptom": "Token drift enables contrast and style failures",
+      "root_cause": {
+        "confidence": "DESIGN_DEBT",
+        "detail": "Pages invent local gray/neutral stacks"
+      },
+      "impacts": [
+        "typography_contrast_spacing",
+        "component_reuse"
+      ],
+      "fix_plan": "Batch: consolidate tokens; migrate Dashboard/Orders/Finance/Official first",
+      "owner": "Agent after inventory freeze",
+      "evidence": "adminUi ADMIN_TEXT_* / ADMIN_TABLE_TBODY_CLASS · Orders migration",
+      "blocks_cut": false,
+      "batch": "BATCH-B",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-B: token consolidation on priority surfaces; remaining text-ink-* elsewhere = matrix GAP"
+    },
+    {
+      "id": "V65-PR-G008",
+      "status": "CLOSED_WALK_COMPLETE",
+      "class": "C_process_coverage",
+      "severity": "P1",
+      "title": "Full product-boundary Reality Matrix walk incomplete",
+      "route": "ADMIN_SIDEBAR_12_PLUS_HUB_CHILDREN",
+      "symptom": "0/66 PENDING_OWNER_RUNTIME — Owner Matrix Walk complete",
+      "root_cause": {
+        "confidence": "PROCESS",
+        "detail": "Expanded matrix seed done; Owner Admin session required for openability/five-states/business loops/perf"
+      },
+      "impacts": [
+        "openability",
+        "five_states",
+        "business_loop",
+        "performance",
+        "evidence"
+      ],
+      "fix_plan": "CLOSED by Owner Walk + Inventory Freeze acceptance — residual FAIL/GAP accepted into Batch Remediation",
+      "owner": "Owner",
+      "evidence": "Owner Freeze 20260803T075100Z · matrix PENDING=0",
+      "blocks_cut": false,
+      "closed_at_stamp": "20260803T075100Z",
+      "batch": "BATCH-C"
+    },
+    {
+      "id": "V65-PR-G009",
+      "status": "CLOSED_OWNER_WALK",
+      "class": "C_process_coverage",
+      "severity": "P1",
+      "title": "Five-state coverage not proven (Loading/Empty/Error/Permission/Success)",
+      "route": "ADMIN_PRODUCT_BOUNDARY",
+      "symptom": "No evidence pack proving five states per leaf/hub child",
+      "root_cause": {
+        "confidence": "PROCESS",
+        "detail": "Prior batches improved empty/error components; Production Ready requires explainable states on every product page"
+      },
+      "impacts": [
+        "five_states",
+        "ux_workbench_l5"
+      ],
+      "fix_plan": "Owner+Agent: sample deny role, empty DB, API 5xx, success path per critical leaf; record in matrix",
+      "owner": "Owner + Agent",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/FIVE-STATE.json",
+      "blocks_cut": false,
+      "batch": "BATCH-C",
+      "closed_at_stamp": "20260803T083705Z",
+      "note": "ACCEPT_WALK: Loading/Success/Empty/Error/Permission proven on critical leaves (Orders·Finance·Announcements·Official Error live; Shell Ops/Auditor Permission). Product-boundary beyond sample remains Matrix residual (locked)."
+    },
+    {
+      "id": "V65-PR-G010",
+      "status": "CLOSED_OWNER_WALK",
+      "class": "C_process_coverage",
+      "severity": "P1",
+      "title": "Button/action functional completeness not verified",
+      "route": "ADMIN_PRODUCT_BOUNDARY",
+      "symptom": "Cannot yet claim every button has real function / complete workflow",
+      "root_cause": {
+        "confidence": "PROCESS",
+        "detail": "Requires Owner session click-through against Reality Matrix features column"
+      },
+      "impacts": [
+        "function_completeness",
+        "business_loop"
+      ],
+      "fix_plan": "Walk features[] per matrix row; mark dead buttons as new P0/P1 gaps",
+      "owner": "Owner + Agent",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/BUTTONS.json",
+      "blocks_cut": false,
+      "batch": "BATCH-C",
+      "closed_at_stamp": "20260803T083705Z",
+      "note": "Critical-leaf button/action click-through stamped (Orders·Finance·CMS Announcements). Official under Error boundary — actions N/A on that leaf; no new dead-button P0/P1 opened."
+    },
+    {
+      "id": "V65-PR-G011",
+      "status": "CLOSED_LIVE_EVIDENCE",
+      "class": "C_process_coverage",
+      "severity": "P1",
+      "title": "API → DB data-reality chain not verified page-by-page",
+      "route": "ADMIN_PRODUCT_BOUNDARY",
+      "symptom": "api_candidates/db_surface seeded from SSOT; live contract + DB truth PENDING",
+      "root_cause": {
+        "confidence": "PROCESS",
+        "detail": "Need Network payloads + DB projection checks under Owner Admin session"
+      },
+      "impacts": [
+        "api_data_contract",
+        "db_data_reality"
+      ],
+      "fix_plan": "For each FAIL/PENDING critical leaf: capture Network + assert list/object shapes; map to DB tables",
+      "owner": "Agent + Owner",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/NETWORK.json",
+      "blocks_cut": false,
+      "batch": "BATCH-C",
+      "closed_at_stamp": "20260803T083705Z",
+      "note": "Admin Session→Network→API on Official Accounts / Finance / CMS Announcements / Orders. Official UI Error with API 200 = G009 Error evidence (not API contract fail). DB projection honesty stamped in NETWORK.json."
+    },
+    {
+      "id": "V65-PR-G012",
+      "status": "CLOSED_OWNER_WALK",
+      "class": "C_process_coverage",
+      "severity": "P1",
+      "title": "RBAC denial paths not verified per product leaf",
+      "route": "ADMIN_PRODUCT_BOUNDARY",
+      "symptom": "permission_ssot annotated; Permission state UX not evidenced",
+      "root_cause": {
+        "confidence": "PROCESS",
+        "detail": "Need reduced-permission Admin account walk"
+      },
+      "impacts": [
+        "rbac_permission",
+        "five_states"
+      ],
+      "fix_plan": "Walk with restricted role; ensure Permission state not blank crash",
+      "owner": "Owner",
+      "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/RBAC.json",
+      "blocks_cut": false,
+      "batch": "BATCH-C",
+      "closed_at_stamp": "20260803T083705Z",
+      "note": "Shell preview Ops + Auditor: Permission/isolation copy — not blank crash. Write chrome may follow login SuperAdmin capabilities (honest design)."
+    },
+    {
+      "id": "V65-PR-G013",
+      "status": "CLOSED_LOCAL_PARTIAL",
+      "class": "B_ui_ux_release",
+      "severity": "P2",
+      "title": "Admin i18n / multi-locale ops experience incomplete",
+      "route": "ADMIN_CROSS_CUTTING",
+      "symptom": "zh Wave-1 landed; en/other locales + mixed-key surfaces not Production-proven",
+      "root_cause": {
+        "confidence": "PROCESS_PLUS_CODE",
+        "detail": "Locale coverage uneven; ops must not see raw keys"
+      },
+      "impacts": [
+        "ops_language_i18n"
+      ],
+      "fix_plan": "Batch: locale key audit on product-boundary routes; fix missing keys",
+      "owner": "Agent after inventory freeze",
+      "evidence": "zh.ts + en.ts parity for Orders ops pack + data-status keys",
+      "blocks_cut": false,
+      "batch": "BATCH-B",
+      "closed_at_stamp": "20260803T080707Z",
+      "note": "Batch-B: priority i18n keys aligned; full product-boundary locale audit remains Owner UAT"
+    },
+    {
+      "id": "V65-PR-G014",
+      "status": "OPEN",
+      "class": "C_process_coverage",
+      "severity": "P2",
+      "title": "Performance / Console noise baseline absent",
+      "route": "ADMIN_PRODUCT_BOUNDARY",
+      "symptom": "No stamped evidence for TTI/API latency/console warnings across left-nav",
+      "root_cause": {
+        "confidence": "PROCESS",
+        "detail": "Production Ready requires performance dimension filled"
+      },
+      "impacts": [
+        "performance",
+        "runtime_console"
+      ],
+      "fix_plan": "Owner walk: note slow pages + console warnings into matrix performance dimension",
+      "owner": "Owner + Agent",
+      "evidence": "PENDING",
+      "blocks_cut": false,
+      "batch": "BATCH-C"
+    }
+  ],
+  "freeze": {
+    "status": "FROZEN",
+    "stamped_utc": "20260803T075100Z",
+    "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "tip_short": "35872b40",
+    "owner_acceptance_zh": "接受 V65 Admin Console Production Reality Validation Inventory Freeze：锁定当前 Reality Matrix 与 Gap Inventory（0 PENDING、3 FAIL、63 GAP），保持 tip `35872b40` 冻结，不创建 V65.x、不修改 Web3/Pin/Sidebar IA；进入统一 Batch Remediation 阶段，按优先级执行 Batch-A（P0/P1 Runtime Crash 与业务闭环修复：Official Accounts、Finance、CMS）、Batch-B（Workbench L5 UX/UI、Design System、i18n、视觉一致性优化）、Batch-C（Performance、Contract Guard、Regression、Evidence），完成本地全量验证后再执行一次 Release Cut 与 Runtime Certification。",
+    "matrix_residual": {
+      "pending": 0,
+      "fail": 3,
+      "gap": 63,
+      "fail_ui_release": 1,
+      "pass": 0,
+      "rows_total": 66
+    },
+    "formal_gap_inventory": {
+      "open": 14,
+      "closed": 1,
+      "p0": 1,
+      "p1": 6,
+      "p2": 7,
+      "blocks_cut": 7
+    },
+    "constraints": {
+      "sole_candidate": "V65",
+      "no_v65x": true,
+      "no_web3_pin_change": true,
+      "no_sidebar_ia_change": true,
+      "tip_frozen": true,
+      "no_fragmented_ship": true,
+      "cut_allowed": false
+    },
+    "next_phase": "3_batch_remediation"
+  },
+  "batch_progress": {
+    "stamp_utc": "20260803T090651Z",
+    "BATCH_A": "CLOSED_LOCAL_CODE",
+    "BATCH_B": "CLOSED_LOCAL_PARTIAL",
+    "BATCH_C": "CUT_BLOCKERS_CLOSED",
+    "SINGLE_RELEASE_CUT": "COMPLETE",
+    "PRODUCTION_DEPLOY": "PASS",
+    "PRV2": "PARTIAL_OWNER_UAT_PENDING",
+    "note": "Deploy tip-matched. Unauth AUTH_GATED PASS. Owner logged-in Cert UAT still required. G014 OPEN non-blocking."
+  },
+  "local_full_verify": {
+    "stamp_utc": "20260803T083705Z",
+    "result": "PASS",
+    "evidence": "evidence/GO_v65_admin_console_batch_remediation/20260803T083705Z/LOCAL-VITEST.json"
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

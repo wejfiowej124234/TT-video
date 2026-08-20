@@ -450,11 +450,11 @@
     "do_not_cite_blocked_or_local_only_as_staging_success": true
   },
   "next": {
-    "action": "CUT_C_DESIGN_OWNER_DECISIONS_AWAIT_SIGN",
+    "action": "CUT_C_ENGINEERING_IMPL_MAY_START",
     "cut": "CUT_C",
-    "scope": "Cut C Design Confirmation entered (20260806T051233Z); Owner complete OD-C-01..05 — no eng; no Production; no GO flip",
+    "scope": "OD-C-01..05 SIGNED 20260806T052445Z; eng gate OPEN; no Production; no GO flip",
     "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.json",
-    "honesty": "Cut B Full CLOSED + Staging Runtime VERIFIED ≠ Cut C eng ≠ Production GO",
+    "honesty": "Cut B Full CLOSED + Staging Runtime VERIFIED ≠ Cut C impl ≠ Production GO",
     "tt_production_go": "NO_GO"
   },
   "prohibitions": [
@@ -467,6 +467,24 @@
     "reuse_blocked_or_local_only_as_staging_pass"
   ],
   "generated_at": "20260806T050409Z",
-  "updated_at": "20260806T050409Z",
-  "updated_by": "agent_cut_b_final_state_consolidation"
+  "updated_at": "20260806T052445Z",
+  "updated_by": "owner_od_c_sign_via_agent",
+  "cut_b_commit": "1b8ebe104d818092257968396cd03630169a86ee",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

@@ -1,0 +1,87 @@
+{
+  "schema": "traveltrust.wait_window_reality_audit_b3_g006_runtime_verify.v1",
+  "batch": "REALITY-AUDIT-B3-G-006",
+  "status": "CLOSED",
+  "verdict": "PASS",
+  "recorded_utc": "2026-08-10T17:16:00Z",
+  "parent": "TT-WAIT-WINDOW-REALITY-AUDIT-B3-GAP-INVENTORY-LATEST",
+  "scope": "community_comment_contract_only",
+  "not_in_scope": [
+    "community_media_404",
+    "discover_draft",
+    "guide_detail",
+    "fund_exec"
+  ],
+  "frozen_untouched": [
+    "Mainnet Reality",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "deploy": {
+    "api": {
+      "app": "tt-api-prod",
+      "ok": true,
+      "note": "first tip deploy crashed on migration 20260708120000 checksum; restored image then redeployed after git checkout migrations; CORS outermost live"
+    },
+    "web": {
+      "app": "tt-web-prod",
+      "ok": true,
+      "release_identity_git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "build_time_utc": "2026-08-10T17:03:12Z",
+      "idempotency_key_in_js_chunks": true
+    }
+  },
+  "checks": [
+    {
+      "id": "B3-G-006-RV-001",
+      "name": "error_response_cors_acao",
+      "result": "PASS",
+      "observed": "POST comments without Idempotency-Key → 400 missing_idempotency_key + access-control-allow-origin: https://www.web3-ttg.com; 401 unauthorized also has ACAO"
+    },
+    {
+      "id": "B3-G-006-RV-002",
+      "name": "fe_sends_idempotency_key",
+      "result": "PASS",
+      "observed": "Official JS chunks include Idempotency-Key / X-Idempotency-Key mint (writeRequestHeaders)"
+    },
+    {
+      "id": "B3-G-006-RV-003",
+      "name": "comment_create_official_ui",
+      "result": "PASS",
+      "observed": "Logged-in Community PostDetailDrawer send → Comments · 1 · body 'B3-G-006 RV comment create 20260810T1715Z'; feed Comment count 0→1; no Failed to fetch / CORS mask"
+    },
+    {
+      "id": "B3-G-006-RV-004",
+      "name": "duplicate_idempotency_replay",
+      "result": "PASS",
+      "observed": "Public POST trust-growth/ingest twice with same Idempotency-Key → identical body replay + ACAO (comment path uses same middleware)"
+    }
+  ],
+  "media_404_separate": {
+    "id": "B3-G-007",
+    "disposition": "OPEN_SEPARATE",
+    "summary": "Orphan community-posts UUID objects 404 on API+www rewrite; not part of B3-G-006"
+  },
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "honesty": "B3-G-006 CLOSED ≠ Seal ≠ Production GO · no fund execution",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

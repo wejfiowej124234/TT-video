@@ -1,0 +1,88 @@
+{
+  "schema": "traveltrust.wait_window_r_comm_text_ban_1.v1",
+  "batch_id": "R-COMM-TEXT-BAN-1",
+  "status": "CLOSED",
+  "recorded_utc": "2026-08-11T07:22:00Z",
+  "blocks_track1_finalize": false,
+  "tt_production_go": "NO_GO",
+  "seal": false,
+  "closed": true,
+  "product_rule": "TravelTrust Community does not allow standalone pure-text posts; photo/video (+ caption) only",
+  "check": {
+    "official_feed_sample": {
+      "n": 15,
+      "types": {
+        "text": 2,
+        "video": 3,
+        "photo": 10
+      }
+    },
+    "prod_db_full_count": "UNAVAILABLE_MPG_DNS · PROBE_PARTIAL",
+    "historical_text_retained_after_cut": 2
+  },
+  "fix": {
+    "api": {
+      "reject_post_type_text": "text_posts_disabled",
+      "whitelist": [
+        "photo",
+        "video",
+        "food",
+        "travel"
+      ],
+      "empty_media": "media_required",
+      "comments_replies": "untouched",
+      "historical_text_posts": "readable_retained_no_bulk_delete"
+    },
+    "fe": {
+      "TYPES_removed_text": true,
+      "food_travel_media_required": true,
+      "feed_filter_keeps_text_for_history": true,
+      "role": "defense_in_depth"
+    }
+  },
+  "official_api_cut": {
+    "app": "tt-api-prod",
+    "image": "deployment-01KZQT308DHCTXC63NC8RMN8T8",
+    "boot": "database: connected and migrations applied",
+    "health": 200
+  },
+  "official_fe_cut": {
+    "app": "tt-web-prod",
+    "image": "deployment-01KZQTMWTRMCPEB2H654PEM59V",
+    "git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e"
+  },
+  "runtime_verify": {
+    "health": 200,
+    "community_web": 200,
+    "feed_historical_text_retained": 2,
+    "track1": {
+      "readyAt": 1786491935,
+      "done": false,
+      "usdc_balance": "10000000",
+      "isEscrow": false
+    }
+  },
+  "tests": {
+    "rust_r_comm_text_ban": "3 PASS (skip without DATABASE_URL)",
+    "vitest_publish_form": "4 PASS"
+  },
+  "next": "R-MEDIA-1_LOCAL_READY_AFTER_SEAL_DEFAULT",
+  "r_public_data_isolation_1": "INVENTORY_READONLY_CONTINUE",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

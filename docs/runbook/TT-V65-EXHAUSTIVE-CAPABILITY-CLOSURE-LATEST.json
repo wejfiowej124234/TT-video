@@ -1,0 +1,1756 @@
+{
+  "schema": "traveltrust.v65_exhaustive_capability_closure.v1",
+  "key": "V65_EXHAUSTIVE_CAPABILITY_CLOSURE",
+  "title": "V65 Runtime SSOT Exhaustive Capability Closure Audit",
+  "stamp": "20260802T144822Z",
+  "verdict": "PASS",
+  "closure_status": "EXHAUSTIVE_CAPABILITY_CLOSURE_MACHINE_PASS",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "runtime_ssot": "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.json",
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "not_limited_to_25_item_slice": true
+  },
+  "identity": {
+    "id": "EX-00",
+    "title": "V65 Runtime SSOT identity",
+    "status": "PASS",
+    "checks": {
+      "runtime_ssot_file": true,
+      "final_truth_v65": true,
+      "runtime_candidate": true,
+      "runtime_api": true,
+      "runtime_web": true,
+      "tt_production_go_no_go": true,
+      "live_api_match": true,
+      "live_web_match": true
+    },
+    "live": {
+      "api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+    }
+  },
+  "live": {
+    "id": "EX-LIVE",
+    "title": "Live V65 sample probe",
+    "api_probes": [
+      {
+        "method": "GET",
+        "path": "/health",
+        "http": 200,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/meta?compact=1",
+        "http": 200,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/public/announcements?for_home=1",
+        "http": 200,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/guides",
+        "http": 200,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/discover/orders",
+        "http": 200,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/did-rank/travelers",
+        "http": 200,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/community/feed",
+        "http": 200,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/me",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/capabilities",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/users",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/orders",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/disputes",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/content/announcements",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/community/reports",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/guide-applications",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/admin/provider-applications",
+        "http": 401,
+        "pass": true,
+        "in_rust_surface": true
+      },
+      {
+        "method": "OPTIONS",
+        "path": "/auth/login",
+        "http": 200,
+        "pass": true,
+        "in_rust_surface": true
+      }
+    ],
+    "web_probes": [
+      {
+        "path": "/",
+        "http": 200,
+        "pass": true
+      },
+      {
+        "path": "/market",
+        "http": 200,
+        "pass": true
+      },
+      {
+        "path": "/guides",
+        "http": 200,
+        "pass": true
+      },
+      {
+        "path": "/community",
+        "http": 200,
+        "pass": true
+      },
+      {
+        "path": "/admin",
+        "http": 200,
+        "pass": true
+      },
+      {
+        "path": "/auth/login",
+        "http": 200,
+        "pass": true
+      },
+      {
+        "path": "/guide/register",
+        "http": 200,
+        "pass": true
+      },
+      {
+        "path": "/provider/register",
+        "http": 200,
+        "pass": true
+      }
+    ],
+    "fail_count": 0,
+    "status": "PASS"
+  },
+  "counts": {
+    "fe_pages": 207,
+    "fe_user": 89,
+    "fe_admin": 118,
+    "api_paths": 639,
+    "fe_api_constants": 402,
+    "tables": 155,
+    "journeys": 6
+  },
+  "journeys": [
+    {
+      "id": "J-GUIDE-ONBOARD",
+      "name": "Guide apply → approve → public display",
+      "steps": [
+        {
+          "id": "register",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        },
+        {
+          "id": "admin_review",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        },
+        {
+          "id": "public_list",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-PROVIDER-ONBOARD",
+      "name": "Provider apply → approve → listing",
+      "steps": [
+        {
+          "id": "register",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        },
+        {
+          "id": "admin_review",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-ORDER-DISPUTE",
+      "name": "Order → dispute → admin resolve",
+      "steps": [
+        {
+          "id": "orders",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        },
+        {
+          "id": "disputes",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-COMMUNITY-MOD",
+      "name": "Community post → report → moderate",
+      "steps": [
+        {
+          "id": "feed",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        },
+        {
+          "id": "reports",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-CMS-ANNOUNCE",
+      "name": "Admin CMS announce → homepage",
+      "steps": [
+        {
+          "id": "admin",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        },
+        {
+          "id": "public",
+          "fe": true,
+          "api": true,
+          "admin": true,
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "J-AUTH",
+      "name": "Register → login → me",
+      "steps": [
+        {
+          "id": "register",
+          "fe": true,
+          "api": true,
+          "admin": null,
+          "pass": true
+        },
+        {
+          "id": "login",
+          "fe": true,
+          "api": true,
+          "admin": null,
+          "pass": true
+        },
+        {
+          "id": "me",
+          "fe": true,
+          "api": true,
+          "admin": null,
+          "pass": true
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "warn_gaps": 101,
+    "confirm_design": 13,
+    "total_gaps": 114
+  },
+  "gap_inventory_ref": "docs/runbook/TT-V65-EXHAUSTIVE-GAP-INVENTORY-LATEST.json",
+  "matrix_samples": {
+    "user_routes": [
+      {
+        "route": "/",
+        "apis": [
+          "/api/v1/orders/:id/chain-sync-status",
+          "/auth/error",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/reset-password",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/auth/forgot-password",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/auth/login",
+        "apis": [
+          "/auth/error",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/auth/register",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/auth/reset-password",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/auth/verify-email",
+        "apis": [
+          "/auth/error",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/activity",
+        "apis": [
+          "/api/v1/uploads/community-posts/{uuid}.{ext}",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/reset-password",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/explore",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/feedback",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/friends",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/guidelines",
+        "apis": [
+          "/api/v1/uploads/community-posts/{uuid}.{ext}",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/reset-password",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/me/collects",
+        "apis": [
+          "/auth/login"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/me/likes",
+        "apis": [
+          "/auth/login"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/me",
+        "apis": [
+          "/auth/login"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/me/posts",
+        "apis": [
+          "/api/v1/uploads",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/me/reports/[id]",
+        "apis": [
+          "/api/v1/uploads/community-posts/{uuid}.{ext}",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/me/reports",
+        "apis": [
+          "/api/v1/uploads/community-posts/{uuid}.{ext}",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/messages/[id]",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/messages",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community",
+        "apis": [
+          "/api/v1/uploads",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/post/[id]",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/topic/[tag]",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/tt",
+        "apis": [
+          "/api/v1/uploads/community-posts/{uuid}.{ext}",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/reset-password",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/community/user/[id]",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/did-rank",
+        "apis": [
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/reset-password",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/discover",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/disputes/[id]",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/disputes",
+        "apis": [
+          "/api/v1/orders/:id/chain-sync-status",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/escrow/[id]/chain",
+        "apis": [
+          "/api/v1/orders/:id/chain-sync-status",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/escrow/[id]",
+        "apis": [
+          "/api/v1/orders/:id/chain-sync-status",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/escrow/[id]/proof",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/escrow/[id]/rate",
+        "apis": [
+          "/api/v1/orders/:id/chain-sync-status",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/delegate",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/distribution-accruals/[id]",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/distribution-accruals",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/distribution-claim",
+        "apis": [
+          "/api/v1/trust-growth/…",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/fee-routes",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/net-profit-ledger",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/params",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/proposals/[id]",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/proposals/new",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/proposals",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/vacancy-ledger",
+        "apis": [
+          "/api/v1/admin",
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/governance/vault-forwards",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/guide",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/guide/register",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/guides/[id]",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/guides",
+        "apis": [
+          "/api/v1/uploads",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/help",
+        "apis": [
+          "/api/v1/governance/protocol-reference",
+          "/api/v1/governance/ttg-exchange/quote",
+          "/api/v1/onboarding/quote",
+          "/api/v1/uploads",
+          "/auth/error",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/itinerary/new",
+        "apis": [
+          "/api/v1/catalog/cities",
+          "/api/v1/catalog/countries",
+          "/api/v1/catalog/hotel-tiers",
+          "/api/v1/catalog/intercity-routes",
+          "/api/v1/catalog/media",
+          "/api/v1/catalog/poi-images",
+          "/api/v1/catalog/pois",
+          "/api/v1/catalog/pricing"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/market/acquisition/[id]",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/market/acquisition",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/market",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/market/provider",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/market/provider/showcase/[id]",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/identities/acquisition/settings",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/identities/guide/settings",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/identities/merchant/settings",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/identities",
+        "apis": [
+          "/api/v1/admin/guide-applications",
+          "/api/v1/me/acquisition-profile",
+          "/api/v1/me/guide-profile",
+          "/api/v1/me/merchant-profile",
+          "/api/v1/me/region-steward-profile",
+          "/api/v1/uploads/...",
+          "/auth/error",
+          "/auth/forgot-password"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/identities/region-steward/settings",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/onboarding",
+        "apis": [
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/reset-password",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me",
+        "apis": [
+          "/api/v1/me/acquisition-profile",
+          "/api/v1/me/merchant-profile",
+          "/api/v1/me/region-steward-profile",
+          "/auth/error",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/password",
+        "apis": [
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/publish",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/referrals",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/security",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/settings/data",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/settings/language",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/settings/notifications-prefs",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/settings",
+        "apis": [
+          "/api/v1/uploads",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/settings/privacy",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/settings/profile",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/me/settings/trust",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/network",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/orders/[id]",
+        "apis": [
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/orders/new",
+        "apis": [
+          "/api/v1/admin/alerts/incidents",
+          "/api/v1/admin/api-versions",
+          "/api/v1/admin/approvals",
+          "/api/v1/admin/audit-logs",
+          "/api/v1/admin/audit/operations",
+          "/api/v1/admin/auth-audit-events",
+          "/api/v1/admin/capabilities",
+          "/api/v1/admin/community/abuse-policy"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/orders",
+        "apis": [
+          "/api/v1/uploads",
+          "/auth/login",
+          "/auth/register"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/pay",
+        "apis": [
+          "/api/v1/orders/:id/chain-sync-status",
+          "/auth/error",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/reset-password",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      },
+      {
+        "route": "/privacy",
+        "apis": [
+          "/api/v1/uploads",
+          "/auth/error",
+          "/auth/forgot-password",
+          "/auth/login",
+          "/auth/register",
+          "/auth/reset-password",
+          "/auth/verify-email"
+        ],
+        "fake": []
+      }
+    ],
+    "admin_routes": [
+      {
+        "route": "/admin/alerts/incidents/[id]",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/alerts/incidents",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/api-versions",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/approvals/[id]",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/approvals",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/audit/logs/[id]",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/audit/operations",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/audit",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/auth-audit-events",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/backup",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/abuse-policy",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/appeals",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/appeals/review",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/comments/visibility",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/moderation/cases",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/penalties",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/policy-change-logs",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/ranking/snapshots",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/reports",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/community/risk-signals",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/compliance",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/compliance/requests/[requestId]/events",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/compliance/requests/[requestId]/update",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/compliance/requests",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/config",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/config/releases/[id]",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/config/releases",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/announcements",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/catalog-dashboard",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/cities",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/countries",
+        "apis": 5,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/country-market",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/geo-validation",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/hotel-tiers",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/import-operations",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/intercity-routes",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/landing-ambient",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/media-assets",
+        "apis": 5,
+        "fake": []
+      },
+      {
+        "route": "/admin/content",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/poi-images/batches/[id]",
+        "apis": 5,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/poi-images",
+        "apis": 5,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/pois",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/pricing",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/publish-queue",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/revisions/compare",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/revisions",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/roadmap",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/seo",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/translation",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/content/transport-region-rules",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/conversion-analytics",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/cross-check",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/disputes/[id]",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/disputes",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/drift-summary",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/fee-router",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/finance",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/finance-reconciliation",
+        "apis": 6,
+        "fake": []
+      },
+      {
+        "route": "/admin/finance-suite",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/flags",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/governance/execution-uat",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/growth/airdrop-campaigns",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/growth/analytics",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/growth/anti-fraud",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/growth/early-bird",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/growth/kol-center",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/growth",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/growth/referral-codes",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/growth/reward-ledger",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/guide-applications/[id]",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/guide-applications",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/guides/[id]",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/guides",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/inbox",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/indexer",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/indexer/reconcile/[id]",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/indexer/reconcile-reports",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/internal-tools/audits",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/jobs",
+        "apis": 40,
+        "fake": []
+      },
+      {
+        "route": "/admin/lifecycle",
+        "apis": 40,
+        "fake": []
+      }
+    ]
+  },
+  "autofix_applied": [
+    "wrote_exhaustive_inventory_registry",
+    "wrote_expected_orphans_allowlist"
+  ],
+  "honesty": {
+    "exhaustive_scan_is_static_plus_live_sample": true,
+    "p1_backlog_may_remain": true,
+    "confirm_design_infra_not_blocking": true,
+    "machine_pass_not_human_uat": true,
+    "admin_ia_not_redesigned": true,
+    "not_every_dynamic_string_route_guaranteed": true
+  },
+  "report_sha256": "8895c8120c9658d61af83f8e077dd7ab979566e9a052f8f058b0e96a6848a12f",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

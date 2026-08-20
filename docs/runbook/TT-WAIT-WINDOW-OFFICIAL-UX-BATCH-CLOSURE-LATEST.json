@@ -1,0 +1,131 @@
+{
+  "schema": "traveltrust.wait_window_official_ux_batch_closure.v1",
+  "status": "ARCHIVED_PRODUCT_FIX_SCOPE_FROZEN",
+  "recorded_utc": "2026-08-10T13:56:00Z",
+  "product_truth": "official_runtime",
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "official_ux_batch_closure": "B1_B11_ARCHIVED",
+  "product_fix_scope": "FROZEN_NO_EXPAND",
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "eta_hold_policy": "TT-WAIT-WINDOW-ETA-HOLD-PREFLIGHT-POLICY-LATEST",
+  "frozen": [
+    "Mainnet Reality",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "batches": [
+    {
+      "id": "B1",
+      "domain": "Market",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B2",
+      "domain": "Auth",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B3",
+      "domain": "Orders",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B4",
+      "domain": "Escrow",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B5",
+      "domain": "Admin",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B6",
+      "domain": "CMS",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B7",
+      "domain": "Me",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B8",
+      "domain": "Provider_Guide",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B9",
+      "domain": "Community",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B10",
+      "domain": "Guides_Depth",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    },
+    {
+      "id": "B11",
+      "domain": "Governance_Public",
+      "status": "CLOSED_ARCHIVED",
+      "official_runtime_verify": "PASS"
+    }
+  ],
+  "allowed_until_eta": [
+    "read_only_preflight",
+    "finalize_ops_pack_review"
+  ],
+  "forbidden_until_eta": [
+    "new_ux_batch",
+    "expand_product_fix_scope",
+    "timelock_execute",
+    "escrow_release",
+    "trusted_factory",
+    "production_go",
+    "mutate_ftb_registry_wired_track1"
+  ],
+  "post_eta_serial": [
+    "Timelock.execute",
+    "Escrow.release",
+    "Settlement_Fee_reconciliation",
+    "Reality_Evidence_Seal",
+    "Hard_Gate_reeval"
+  ],
+  "fail_closed": true,
+  "next_action": "ETA hold: read-only Preflight + Finalize ops pack review only. After 2026-08-11T23:45:35Z serial Finalize. Stop on any step fail. No TrustedFactory. No Production GO. UX ARCHIVED ≠ Seal.",
+  "honesty": [
+    "B1–B11 ARCHIVED ≠ Seal ≠ Production GO",
+    "Official UX Batch Closure ≠ Web3 Reality Seal",
+    "Do not expand product fix scope before ETA"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

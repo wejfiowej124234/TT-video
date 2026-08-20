@@ -1,0 +1,596 @@
+{
+  "schema": "traveltrust.v65_enterprise_admin_console_product_quality.v1",
+  "key": "V65_ENTERPRISE_ADMIN_CONSOLE_PRODUCT_QUALITY_FINAL",
+  "title": "V65 Enterprise Admin Console Product Quality Final Audit",
+  "stamp": "20260802T162312Z",
+  "verdict": "PASS",
+  "closure_status": "ENTERPRISE_ADMIN_CONSOLE_PRODUCT_QUALITY_MACHINE_PASS_WITH_BACKLOG",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "legacy_baseline_forbidden": true
+  },
+  "identity": {
+    "api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+    "checks": {
+      "api_v65": true,
+      "web_v65": true,
+      "production": true,
+      "web3_pin": true,
+      "meta_http": true
+    },
+    "status": "PASS"
+  },
+  "dimensions": {
+    "ia_freeze": {
+      "admin_ia_ui_freeze": true,
+      "status": "PASS"
+    },
+    "i18n": {
+      "used_keys": 3342,
+      "missing_zh": 0,
+      "missing_en": 0,
+      "missing_zh_sample": [],
+      "missing_en_sample": [],
+      "status": "PASS"
+    },
+    "modules": {
+      "rows": [
+        {
+          "id": "workbench",
+          "routes": [
+            "/admin"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "super_admin",
+            "ops"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "inbox",
+          "routes": [
+            "/admin/inbox"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops",
+            "cs"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "users",
+          "routes": [
+            "/admin/users"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "super_admin",
+            "ops"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "guides",
+          "routes": [
+            "/admin/guides",
+            "/admin/guide-applications"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "providers",
+          "routes": [
+            "/admin/provider-applications"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "orders",
+          "routes": [
+            "/admin/orders"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops",
+            "finance",
+            "cs"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "disputes",
+          "routes": [
+            "/admin/disputes"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops",
+            "risk",
+            "cs"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "content",
+          "routes": [
+            "/admin/content",
+            "/admin/content/countries",
+            "/admin/content/announcements",
+            "/admin/content/publish-queue"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "official",
+          "routes": [
+            "/admin/official"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "growth",
+          "routes": [
+            "/admin/growth"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops",
+            "growth"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "finance",
+          "routes": [
+            "/admin/finance",
+            "/admin/finance-suite"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "finance",
+            "super_admin"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "config",
+          "routes": [
+            "/admin/config",
+            "/admin/flags",
+            "/admin/permissions"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "super_admin"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "community",
+          "routes": [
+            "/admin/community",
+            "/admin/community/reports"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops",
+            "risk"
+          ],
+          "status": "PASS"
+        },
+        {
+          "id": "operator_guide",
+          "routes": [
+            "/admin/operator-guide"
+          ],
+          "fe": true,
+          "api": true,
+          "db": true,
+          "rbac": true,
+          "audit": true,
+          "notify": true,
+          "states": {
+            "loading": true,
+            "empty": true,
+            "error": true,
+            "permission": true,
+            "success": true
+          },
+          "roles": [
+            "ops",
+            "cs"
+          ],
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    "pages": {
+      "page_count": 118,
+      "wired": 118,
+      "unwired": [],
+      "status": "PASS"
+    },
+    "media_cdn": {
+      "remote_patterns": {
+        "cdn.web3-ttg.com": true,
+        "www.web3-ttg.com": true
+      },
+      "live_image_probe": {
+        "http": 400,
+        "ttfb_ms": 1657.9,
+        "note": "400 expected until web tip redeploys with remotePatterns"
+      },
+      "status": "PASS"
+    },
+    "rbac": {
+      "role_signals": {
+        "super_admin": true,
+        "ops": true,
+        "finance": true,
+        "risk": true,
+        "cs": true
+      },
+      "unauth_probes": [
+        {
+          "path": "/api/v1/admin/users",
+          "http": 401,
+          "pass": true,
+          "ttfb_ms": 2044.3
+        },
+        {
+          "path": "/api/v1/admin/orders",
+          "http": 401,
+          "pass": true,
+          "ttfb_ms": 13127.2
+        },
+        {
+          "path": "/api/v1/admin/disputes",
+          "http": 401,
+          "pass": true,
+          "ttfb_ms": 1800.9
+        }
+      ],
+      "admin_api": true,
+      "status": "PASS"
+    },
+    "live": {
+      "pages": [
+        {
+          "path": "/admin",
+          "http": 200,
+          "ttfb_ms": 7076.8,
+          "pass": true
+        },
+        {
+          "path": "/admin/inbox",
+          "http": 200,
+          "ttfb_ms": 14407.9,
+          "pass": true
+        },
+        {
+          "path": "/admin/users",
+          "http": 200,
+          "ttfb_ms": 7036.7,
+          "pass": true
+        },
+        {
+          "path": "/admin/guides",
+          "http": 200,
+          "ttfb_ms": 31103.5,
+          "pass": true
+        },
+        {
+          "path": "/admin/guide-applications",
+          "http": 200,
+          "ttfb_ms": 7032.1,
+          "pass": true
+        },
+        {
+          "path": "/admin/provider-applications",
+          "http": 200,
+          "ttfb_ms": 8582.2,
+          "pass": true
+        },
+        {
+          "path": "/admin/orders",
+          "http": 200,
+          "ttfb_ms": 27938.1,
+          "pass": true
+        },
+        {
+          "path": "/admin/disputes",
+          "http": 200,
+          "ttfb_ms": 9793.0,
+          "pass": true
+        },
+        {
+          "path": "/admin/content",
+          "http": 200,
+          "ttfb_ms": 9912.2,
+          "pass": true
+        },
+        {
+          "path": "/admin/content/announcements",
+          "http": 200,
+          "ttfb_ms": 13839.2,
+          "pass": true
+        },
+        {
+          "path": "/admin/content/countries",
+          "http": 200,
+          "ttfb_ms": 29035.2,
+          "pass": true
+        },
+        {
+          "path": "/admin/content/publish-queue",
+          "http": 200,
+          "ttfb_ms": 8045.9,
+          "pass": true
+        },
+        {
+          "path": "/admin/official",
+          "http": 200,
+          "ttfb_ms": 9786.4,
+          "pass": true
+        },
+        {
+          "path": "/admin/growth",
+          "http": 200,
+          "ttfb_ms": 9163.0,
+          "pass": true
+        },
+        {
+          "path": "/admin/finance",
+          "http": 200,
+          "ttfb_ms": 11672.1,
+          "pass": true
+        },
+        {
+          "path": "/admin/config",
+          "http": 200,
+          "ttfb_ms": 20793.9,
+          "pass": true
+        },
+        {
+          "path": "/admin/community",
+          "http": 200,
+          "ttfb_ms": 5581.5,
+          "pass": true
+        },
+        {
+          "path": "/admin/operator-guide",
+          "http": 200,
+          "ttfb_ms": 27833.3,
+          "pass": true
+        }
+      ],
+      "fail_count": 0,
+      "status": "PASS"
+    }
+  },
+  "summary": {
+    "p0_gaps": 0,
+    "p1_gaps": 1,
+    "p2_gaps": 0,
+    "modules_pass": 14,
+    "modules": 14,
+    "admin_pages": 118,
+    "i18n_missing_zh": 0,
+    "i18n_missing_en": 0,
+    "live_fail_count": 0
+  },
+  "autofix_applied": [
+    "i18n_patch_exit_0",
+    "TOTAL_ADDED=0",
+    "wrote_admin_console_inventory"
+  ],
+  "honesty": {
+    "machine_pass_not_human_uat": true,
+    "not_production_go": true,
+    "admin_ia_not_redesigned": true,
+    "cdn_fix_needs_web_redeploy_for_live_400_clear": true
+  },
+  "report_sha256": "270fc5884e03e805c3e0566bcf9d0670a091ef2cb62af56290d4599e444b3977",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

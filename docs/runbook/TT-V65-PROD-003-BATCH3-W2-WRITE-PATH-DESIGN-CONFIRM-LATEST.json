@@ -1,0 +1,279 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_w2_write_path_design_confirm.v1",
+  "machine_key": "TT_V65_PROD_003_BATCH3_W2_WRITE_PATH_DESIGN_CONFIRM",
+  "stamp": "20260805T045955Z",
+  "wave": "W2_WRITE_PATH_HARDENING",
+  "phase": "LOCAL_CODE_LANDED_RESIDUALS_OPEN",
+  "claim": "W2_LOCAL_CODE_LANDED_R059_R062_OPEN",
+  "tt_production_go": "NO_GO",
+  "enterprise_l5_production_ready": false,
+  "prep_ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-PREP-LATEST.json",
+  "prep_stamp": "20260805T043000Z",
+  "design_confirmed_at": "20260805T043612Z",
+  "confirmed_by": "Owner_session_mandate",
+  "confirmed_at": "20260805T043612Z",
+  "local_code_landed_at": "20260805T045955Z",
+  "honesty": {
+    "w1_closed": true,
+    "w2_design_confirmed": true,
+    "w2_code_unlocked": true,
+    "w2_code_started": true,
+    "w2_local_code_landed": true,
+    "w2_staging_pass": false,
+    "w2_residuals_closed": false,
+    "r059_r062_status": "OPEN",
+    "batch3_full_closed": false,
+    "docs_alone_not_closed": true,
+    "local_green_not_staging_pass": true,
+    "tt_production_go": "NO_GO",
+    "enterprise_l5_production_ready": false,
+    "no_production_mutate": true,
+    "no_new_audit_pass": true
+  },
+  "confirmations": [
+    {
+      "id": "DC-01",
+      "topic": "Critical Write Registry scope",
+      "checklist_item": "Owner accepts critical_write_surfaces inventory (no silent extras)",
+      "verdict": "CONFIRMED",
+      "contract": {
+        "in_scope_surface_ids": [
+          "W2-S-STEWARD-REVIEW",
+          "W2-S-ACQUISITION-SUSPEND",
+          "W2-S-GUIDE-REGISTRATION-ADMIN",
+          "W2-S-PROVIDER-APPLICATION-ADMIN",
+          "W2-S-CMS-ANNOUNCEMENT-CREATE",
+          "W2-S-CMS-ANNOUNCEMENT-PATCH",
+          "W2-S-CMS-ANNOUNCEMENT-WORKFLOW",
+          "W2-S-APPROVALS-REJECT",
+          "W2-S-ROLE-CHANGE-REQUEST",
+          "W2-S-ROLE-CHANGE-APPROVE-EXECUTE"
+        ],
+        "residuals": [
+          "R059",
+          "R060",
+          "R061",
+          "R062"
+        ],
+        "no_silent_extras": true,
+        "out_of_scope": [
+          "V65-PROD-003-B3-R006",
+          "V65-PROD-003-B3-R048",
+          "V65-PROD-003-B3-R057",
+          "V65-PROD-003-B3-R015",
+          "V65-PROD-003-B3-R030",
+          "V65-PROD-003-B3-R063",
+          "V65-PROD-003-B3-R064",
+          "V65-PROD-003-B3-R065",
+          "V65-PROD-003-B3-R066",
+          "V65-PROD-003-B3-R025",
+          "V65-PROD-003-B3-R050"
+        ],
+        "provider_application_note": "Align with steward/guide pattern at impl; VERIFY_AT_IMPL for idempotency/classifier; do not reopen R006"
+      }
+    },
+    {
+      "id": "DC-02",
+      "topic": "Idempotency-Key lifecycle",
+      "checklist_item": "Owner accepts Idempotency lifecycle MINT→REUSE→ROTATE",
+      "verdict": "CONFIRMED",
+      "contract": {
+        "headers": [
+          "Idempotency-Key",
+          "X-Idempotency-Key"
+        ],
+        "helper": "frontend/lib/apiClient/core.ts#writeRequestHeaders(idempotencyKey?)",
+        "server_cache_key": "method + path + Idempotency-Key",
+        "phases": [
+          "MINT",
+          "ATTACH",
+          "REUSE",
+          "ROTATE",
+          "SERVER_REPLAY",
+          "FAIL_CLOSED"
+        ],
+        "rules": {
+          "MINT": "One key per user intent — NOT per HTTP attempt",
+          "ATTACH": "writeRequestHeaders(stableKey); forbid bare writeRequestHeaders() on W2 critical CMS/admin writes",
+          "REUSE": "Same key until 2xx accepted OR explicit replay/409 treated as success",
+          "ROTATE": "Only on terminal success · cancel · new distinct intent · validation 4xx after payload correction",
+          "SERVER_REPLAY": "Return prior response; no second side-effect",
+          "FAIL_CLOSED": "After R061 expansion, missing key on classified path → 400"
+        },
+        "locale_honesty": "admin_approvals_idempotency_hint must say retry reuses same key; only new intent mints new key"
+      }
+    },
+    {
+      "id": "DC-03",
+      "topic": "CMS retry rules",
+      "checklist_item": "Owner accepts CMS retry contract (stable key per intent)",
+      "verdict": "CONFIRMED",
+      "contract": {
+        "residual": "R060",
+        "problem_accepted": "writeRequestHeaders() no-arg mints new UUID every call → retry ≠ replay",
+        "create": "Hook holds key for create intent until 2xx or abandon",
+        "save_patch": "Hook holds key per (id, edit-session) until 2xx",
+        "workflow_publish": "Hook holds key per (id, action, version) until 2xx or abandon",
+        "retry_5xx_timeout": "Reuse same key",
+        "double_click": "Second click reuses in-flight key; UI disables or coalesces",
+        "validation_4xx": "After operator corrects body, mint new key",
+        "replay_2xx_or_409": "Treat as success of first write — no second CMS row"
+      }
+    },
+    {
+      "id": "DC-04",
+      "topic": "RBAC request/approve/execute boundaries",
+      "checklist_item": "Owner accepts RBAC request≠approve≠execute",
+      "verdict": "CONFIRMED",
+      "contract": {
+        "residual": "R062",
+        "request": {
+          "endpoint": "POST /api/v1/admin/users/:id/role-change-request",
+          "today": "require_admin_actor only",
+          "target": "require_admin_actor + PERM_USERS_WRITE (admin.users.write)",
+          "forbidden": "Any admin JWT without users-write minting privilege-escalation requests"
+        },
+        "approve": {
+          "endpoint": "POST /api/v1/admin/approvals/:id/approve",
+          "target": "Keep independent higher gate; do not collapse into create perm"
+        },
+        "execute": {
+          "endpoint": "same approve path (no separate public execute)",
+          "target": "No new public execute surface; create≠approve≠execute remain separated"
+        },
+        "not_duplicate_of": [
+          "V65-PROD-003-B3-R048",
+          "V65-PROD-003-B3-R057",
+          "V65-PROD-003-B3-R006"
+        ]
+      }
+    },
+    {
+      "id": "DC-05",
+      "topic": "Classifier must_add (pairs with R061)",
+      "checklist_item": "Owner accepts classifier must_add list",
+      "verdict": "CONFIRMED",
+      "contract": {
+        "ssot": "crates/api/src/middleware/rate_limit.rs#is_admin_critical_write_path",
+        "must_add": [
+          "POST /api/v1/admin/approvals/:id/reject",
+          "POST/PATCH CMS announcement admin write + workflow publish/unpublish/submit-review/archive",
+          "Steward / acquisition-suspend / guide-registration admin write paths used by R059 clients"
+        ],
+        "already_in": [
+          "POST .../approvals/:id/approve",
+          "POST .../users/:id/role-change-request",
+          "flags/policies/scopes publish",
+          "selected community moderation PATCHes"
+        ],
+        "pairing": "Idempotency middleware fail-closed list MUST match classifier after expansion",
+        "observability": "GET /meta rate_limits snapshot remains truthful"
+      }
+    },
+    {
+      "id": "DC-06",
+      "topic": "Regression test matrix",
+      "checklist_item": "Owner unlocks W2 code after confirm — not before",
+      "verdict": "CONFIRMED",
+      "contract": {
+        "order": [
+          "R059",
+          "R060",
+          "R061",
+          "R062"
+        ],
+        "phases": {
+          "local_1": {
+            "required": true,
+            "bar": [
+              "cargo test targeted: rate_limit classifier + role-change RBAC fixtures",
+              "frontend vitest/contract for writeRequestHeaders(stableKey) consumers in scope",
+              "no broad workspace npm/cargo unless Owner asks"
+            ]
+          },
+          "staging_2": {
+            "required_before_residual_close": true,
+            "bar": [
+              "Double-click / retry smoke on CMS announce publish + one R059 review path",
+              "Missing Idempotency-Key on newly classified path → 400",
+              "Role-change create without perm → 403; with perm → pending approval",
+              "Burst critical write → 429 observable (R061)"
+            ]
+          },
+          "runtime_evidence_3": {
+            "required_before_residual_close": true,
+            "dir_pattern": "evidence/GO_v65_prod_003_batch3_w2_write_path/<stamp>/"
+          },
+          "delta_cert_4": {
+            "required_before_go_review": true,
+            "note": "Delta Cert after W2 residual close — still does NOT flip TT_PRODUCTION_GO"
+          }
+        },
+        "exit_criteria_all_r059_r062": [
+          "All four residuals CLOSED in Residual SSOT with evidence refs",
+          "Classifier ↔ Idempotency middleware list paired",
+          "RBAC create/approve/execute boundaries fixture-green",
+          "Locale idempotency hint honest",
+          "Enterprise L5 Ready still false until other hard-gate P1 (R025/R050 …) clear",
+          "TT_PRODUCTION_GO remains NO_GO"
+        ]
+      }
+    }
+  ],
+  "code_unlock": {
+    "unlocked": true,
+    "unlocked_at": "20260805T043612Z",
+    "started": true,
+    "started_at": "20260805T045000Z",
+    "local_code_landed": true,
+    "local_code_landed_at": "20260805T045955Z",
+    "current_slice": "R059–R062_LOCAL_LANDED",
+    "implementation_order": [
+      "R059",
+      "R060",
+      "R061",
+      "R062"
+    ],
+    "first_slice": "R059",
+    "residuals_remain": "OPEN",
+    "local_verify": {
+      "r059_vitest": "adminStewardApplicationReviewCard + adminBatch11W04 contract PASS",
+      "r060_vitest": "homeCmsAnnouncements.contract R060 needles PASS",
+      "r061_cargo": "middleware::rate_limit::tests::admin_critical_write_paths_are_detected PASS (20260805T045955Z)",
+      "r062_vitest": "adminUsersPage.contract roleChangeIdemRef PASS",
+      "chain_config_test_fix": "settlement_router_address: None in f029_reorg_rewind + helpers (compile unblock only)"
+    },
+    "forbidden_claims_until_evidence": [
+      "W2 CLOSED",
+      "R059–R062 CLOSED",
+      "Staging PASS",
+      "Production GO",
+      "Batch3 full CLOSED",
+      "Enterprise L5 Production Ready"
+    ]
+  },
+  "parents": {
+    "prep": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-PREP-LATEST.json",
+    "engineering_closure": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.json",
+    "residual": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+    "expansion": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json"
+  },
+  "next": "W2 local code landed (R059–R062) · residuals OPEN · next = ② Staging smoke → ③ evidence/GO_v65_prod_003_batch3_w2_write_path/<stamp>/ → Residual Close · TT_PRODUCTION_GO=NO_GO · no Production mutate · no new Audit Pass · no Enterprise L5 / Production Ready claims",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,0 +1,72 @@
+{
+  "schema": "traveltrust.wait_window_r_official_runtime_anomaly_1.v1",
+  "status": "CLOSED",
+  "recorded_utc": "2026-08-11T11:30:00Z",
+  "strategy": "MAXIMIZE_PRE_ETA_REMEDIATION_TRACK1_MONEY_PATH_FROZEN",
+  "blocks_track1_finalize": false,
+  "tt_production_go": "NO_GO",
+  "official_api_cut": "deployment-01KZR8HJ05AS9KJBQC7S11RNSA",
+  "preserve": {
+    "R-AUTH-SECURITY-1": "CLOSED",
+    "R-OWNER-OBSERVED-REALITY-1": "PARTIAL_HUMAN_DELETE_RV_PENDING",
+    "R-MEDIA": "AFTER_SEAL"
+  },
+  "fixed_now": [
+    {
+      "id": "ORA-002",
+      "fix": "community_unknown_post_http_404_post_not_found",
+      "rv": "PASS"
+    },
+    {
+      "id": "ORA-007",
+      "fix": "public_guide_dto_strip_kyc_keys",
+      "rv": "PASS"
+    }
+  ],
+  "confirm_design": [
+    "ORA-003",
+    "ORA-006",
+    "ORA-008"
+  ],
+  "after_seal_ops": [
+    "ORA-004",
+    "ORA-005",
+    "ORA-001_media_objects"
+  ],
+  "leave_owner_delete_rv": [
+    "ORA-001"
+  ],
+  "post_cut_regression": {
+    "public_gates": "PASS",
+    "ocs_10x4": "PASS_OCS_10X4_REALITY",
+    "auth_create_post_no_token": 401,
+    "track1": {
+      "readyAt": 1786491935,
+      "done": false,
+      "usdc": "10000000",
+      "isEscrow": false,
+      "stamp_utc": "2026-08-11T11:22:32Z"
+    }
+  },
+  "evidence": [
+    "docs/runbook/_probe_tmp/r_official_runtime_role_anomaly.json",
+    "docs/runbook/_probe_tmp/r_official_runtime_role_anomaly_round2.json"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

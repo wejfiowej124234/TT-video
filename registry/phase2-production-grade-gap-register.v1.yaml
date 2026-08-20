@@ -1,0 +1,1129 @@
+# Phase 2 · Production-Grade Architecture Gap Audit (AUDIT ONLY)
+# Baseline (immutable): PHASE_1_AS_IS_ARCHITECTURE_FROZEN
+# Human: docs/runbook/TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.md
+# Gate:  python scripts/dev/check-phase2-production-grade-gap-audit.py
+# JSON:  docs/runbook/TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.json
+#
+# Gap Audit CLOSED. Phase 2A convergence overlay ACTIVE (not a 16th matrix).
+# 2A may close classified gaps via the evidence ladder. 2B upgrade FORBIDDEN.
+# Still forbidden: execute CI-02 / PM $25 before ETA, deploy Seat/Vault,
+# treat WAIT as defect, Target-as-Live, FTB↔/meta overwrite, TT_PRODUCTION_GO flip.
+
+schema: traveltrust.phase2_production_grade_gap_register.v1
+version: 1
+effective_utc: "2026-08-15"
+status: PHASE2_GAP_AUDIT_CLOSED
+pack_id: P2A
+depth_grade: REGISTER_ONLY
+tt_production_go: NO_GO
+mutation: READ_ONLY_AUDIT
+phase: PHASE2_PRODUCTION_GRADE_GAP_AUDIT
+baseline: PHASE_1_AS_IS_ARCHITECTURE_FROZEN
+baseline_status: ISSUED
+phase2_upgrade: FORBIDDEN
+phase2_execute: FORBIDDEN
+phase2_fix: FORBIDDEN
+phase2_gap_audit: CLOSED
+phase_2a_convergence: ACTIVE
+phase_2a_gap_closure: ACTIVE
+phase_2b_upgrade_review: FORBIDDEN
+stop_after: PHASE_2A_CONVERGENCE
+next_pack_forbidden_this_wave: ["PHASE2_EXECUTE", "PHASE_2B_UPGRADE"]
+do_not_expand_to_sixteenth_matrix: true
+do_not_fix_this_wave: true
+coverage_percent: NOT_COMPUTED
+reality_percent: NOT_COMPUTED
+official_surface: https://www.web3-ttg.com
+official_api: https://api.web3-ttg.com
+alignment_policy: docs/runbook/TT-ALIGNMENT-AUDIT-EXPECTED-DIFFERENCE-POLICY.md
+human_doc: docs/runbook/TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.md
+audit_json: docs/runbook/TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.json
+join_ssot: registry/project-cross-maps-10-13.v1.yaml
+freeze_ssot: registry/project-final-master-map.v1.yaml
+overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+taxonomy: registry/project-architecture-taxonomy.v1.yaml
+note: >
+  Unique Phase 2 Gap Register. Audit CLOSED. Phase 2A convergence ACTIVE.
+  BATCH-A Session two gaps CLOSED_REALITY (GAP-LOGIN-WWW-405 · GAP-SEC-TOKEN-LOCALSTORAGE).
+  GAP-FE-BFF-BYPASS CLOSED_REALITY (Official www same-origin BFF · Owner C2 /me bookmarks orders 200).
+  OFFICIAL_FE_RELEASE_LINEAGE_REGRESSION CLOSED_REALITY on forward-fix FE 9959ae50
+  (product baseline 3e600076 + CLOSED Session/BFF; API 80eed10f kept). Do not reopen as a 16th gap.
+  WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY on historical hop Official FE 2ba08bd4
+  (Dockerfile ARG/ENV hole; bundle + wagmi + Sheet QR; living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED)). Overlay only — not a 16th Gap Register row.
+  GAP-1USDC-HANDOFF CLOSED_REALITY 2026-08-17 Owner A (Track2 L7+L8 money-path).
+  GAP-E2E-JOURNEY Official C2 non-money book→escrow UI hop CLOSED_REALITY.
+  UUID 7d91f354-af9d-461c-8790-b70a597751af. Not USDC/TTG. Not Track2. 2A closes classified gaps via evidence ladder only.
+  Phase 2B upgrade FORBIDDEN. Global CLOSED_REALITY plane stays false.
+  TT_PRODUCTION_GO=NO_GO. Forbidden: WAIT-as-defect, Target-as-Live, 16th matrix,
+  FTB rewrite, GO flip, CI-02/PM25 merge or pre-ETA execute.
+
+plane_split:
+  ARCHITECTURE_MAP_COMPLETE: true
+  ARCHITECTURE_MAP_COMPLETE_SCOPE: packs_01_13_deep_partial_only
+  OFFICIAL_LIVE: PARTIAL
+  REALITY_VERIFIED: false
+  CLOSED_REALITY: false
+  PRODUCTION_GO: NO_GO
+
+root_cause_class_enum:
+  - DEFECT
+  - ARCHITECTURE_DEBT
+  - PRODUCT_DEBT
+  - WAITING_TIMELOCK
+  - NOT_DEPLOYED
+  - REALITY_EVIDENCE
+  - EXPECTED_SOLO
+  - ORTHOGONAL
+
+severity_enum:
+  - P0
+  - P1
+  - P2
+  - P3
+
+hard_split: >
+  DEFECT ≠ WAITING_TIMELOCK ≠ NOT_DEPLOYED ≠ REALITY_EVIDENCE ≠ EXPECTED_SOLO ≠ ORTHOGONAL.
+  Target ≠ Live. TIMELOCK_ETA ≠ OWNER_AUTH ≠ code fault.
+  ARCHITECTURE_MAP_COMPLETE ≠ OFFICIAL_LIVE ≠ REALITY_VERIFIED ≠ CLOSED_REALITY ≠ PRODUCTION_GO.
+  Route Exists ≠ Screen Complete ≠ Action Works ≠ E2E Closed.
+
+later_execute_ladder: Local Fix → Tests → Staging → Official → Reality Evidence → Gap CLOSED
+
+# Historical Phase-1 STOP rows are SUPERSEDED by freeze + this audit. Not open gaps.
+superseded_phase1_stops:
+  - id: P2-PACK02-NOT-STARTED
+    reason: Pack 02 CLOSED DEEP_PARTIAL; Frontend SCREEN_PARTIAL is GAP-FE-SCREEN-PARTIAL
+  - id: P2-PHASE2-NOT-STARTED
+    reason: Phase 2 Gap Audit started this wave; Phase 2 execute remains FORBIDDEN
+  - id: P2-PACK11-INDEPENDENT
+    reason: Pack 11 CLOSED; journeys cited by GAP-* pointers
+  - id: P2-PACK12-INDEPENDENT
+    reason: Pack 12 CLOSED; gates cited by GAP-* pointers
+  - id: P2-PACK13-INDEPENDENT
+    reason: Pack 13 CLOSED; incidents cited by GAP-* pointers
+
+required_coverage:
+  - GAP-LOGIN-WWW-405
+  - GAP-1USDC-HANDOFF
+  - GAP-CI02-FR-CUTOVER
+  - GAP-PM25-UPGRADE
+  - GAP-STEWARD-SEAT-VAULT
+  - GAP-FE-SCREEN-PARTIAL
+  - GAP-ADMIN-118
+  - GAP-RESPONSIVE
+  - GAP-SEC-TOKEN-LOCALSTORAGE
+  - GAP-FE-BFF-BYPASS
+  - GAP-SEC-ADMIN-2FA
+  - GAP-REL-IDENTITY-STAMP
+  - GAP-FTB-SR-STAMP-LAG
+
+gaps:
+  - gap_id: GAP-LOGIN-WWW-405
+    source_pointers:
+      - P2-LOGIN-405
+      - P2-LOGIN-WWW-405
+      - P2-LOGIN-NOT-HAPPY-PATH
+      - CAP-AUTH-SESSION
+      - FE-AUTH-LOGIN
+      - JNY-TRAVELER-LOGIN
+      - DEP-LOGIN-WWW-405
+      - INC-LOGIN
+      - SEC-SESSION-BEARER
+    pack: "02"
+    layer: L3
+    capability: CAP-AUTH-SESSION
+    journey: JNY-TRAVELER-LOGIN
+    current_reality: >
+      Historical Official www POST /auth/login 405 (Next page) is SUPERSEDED.
+      Live tip 9959ae50 (3e600076 product tree + CLOSED Session/BFF overlay; not d5303513):
+      www POST /auth/login 200 with Owner Official C2; HttpOnly traveltrust_session;
+      JSON token=null; GET www /api/v1/me 200. Staging seed tourist@test.com on Production
+      returns 401 invalid_credentials (wrong dataset). Traveler Action Works true on
+      FE-AUTH-LOGIN for Owner Official C2. API tip 80eed10f kept (no API rollback).
+    expected_production_state: >
+      Official www login form submits to a working session hop; traveler can sign in on
+      https://www.web3-ttg.com without using a separate API client. Action Works true on FE-AUTH-LOGIN.
+    root_cause_class: DEFECT
+    severity: P0
+    impact_user: BLOCKING — Official traveler login and downstream write journeys stop at L3
+    impact_money: INDIRECT — book/pay/escrow traveler paths cannot start from www
+    impact_security: SESSION_SURFACE — do not confuse with account/DB failure
+    impact_data: NONE — not a DATA-USER-ACCOUNT / DATA-SESSION reseed
+    impact_release: BLOCKING — traveler happy path is not a closed Official Reality
+    depends_on: []
+    blocked_by: []
+    fix_boundary: >
+      Next L3 /auth/login POST proxy or form action to API origin. Do not reset accounts,
+      reseed DB, or change FIVE-MAIN structure. Do not treat 405 as API 401.
+    verify_path: >
+      POST https://www.web3-ttg.com/auth/login → 2xx session; GET /api/v1/me authenticated;
+      INC-LOGIN stop_condition no longer L3_ROUTE; JNY-TRAVELER-LOGIN Action Works.
+    reality_closure: >
+      Official www login 200 session on live surface + traveler me probe. Local tests ≠ Official Reality.
+    do_not_fix_this_wave: true
+    open: false
+    closure_status: CLOSED_REALITY
+    closed_utc: "2026-08-15T08:25:00Z"
+    closed_by_batch: BATCH_A_SESSION_OFFICIAL_CREDENTIAL_REALITY_DIAGNOSIS
+    closure_evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.json
+
+  - gap_id: GAP-1USDC-HANDOFF
+    source_pointers:
+      - P2-1USDC-REALITY
+      - CAP-ESCROW-USDC
+      - FE-ESCROW
+      - GATE-1USDC-REALITY
+      - JNY-TRAVELER-GUIDE-BOOK
+    pack: "06"
+    layer: L7
+    capability: CAP-ESCROW-USDC
+    journey: JNY-TRAVELER-GUIDE-BOOK
+    current_reality: >
+      Owner A 2026-08-17 CLOSED_REALITY hop: GATE-1USDC money-path = Track2 L7 receipt
+      + L8 checkpoint ≥ tx. escrow 0x45B28A…09C4 · release 0x2139ea58… block 25759423 ·
+      status=3 Completed · escrow USDC 0 · conservation 1e6=950000+50000.
+      L8 checkpoint 25759530 ≥ 25759423. Official www Product Truth OPS-2026.08.20-v9 3e356617… /
+      2026-08-20T00:51:57Z. Official book/UI is OUT OF SCOPE for this gap
+      (08-17 read-only mapping still absent; not a close criterion under A).
+      Evidence: docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.json.
+      Living P0_COMMERCIAL_MONEY_PATH_BLOCKER false. FTB stamp still TRUE =
+      EXPLAINED_FTB_STAMP_LAG. No new real money. Not CI-02 / PM25 / Seat / Proposal #3.
+    expected_production_state: >
+      Track2 1 USDC money-path Reality PASS with chain receipt and Indexer checkpoint ≥ tx.
+      Official traveler book/UI hop is CLOSED_REALITY (GAP-E2E), not this gap.
+      Global REALITY_VERIFIED / CLOSED_REALITY / Production GO remain separate gates.
+    root_cause_class: REALITY_EVIDENCE
+    severity: P0
+    impact_user: CLOSED_THIS_GAP — Track2 money-path Reality PASS; Official book hop CLOSED_REALITY
+    impact_money: CLOSED_THIS_GAP — conservation 1e6=950000+50000 on-chain; living P0 false
+    impact_security: NONE_DIRECT
+    impact_data: L8 observed the L7 receipt; do not overwrite L7 from UI; do not bind Track2 escrow to Official orders
+    impact_release: NON_BLOCKING_ALONE — hop closed; GATE-HARD-GO / Production GO still NO_GO
+    depends_on: []
+    blocked_by: []
+    fix_boundary: >
+      Independent Reality Evidence ladder. Not a CI-02 execute. Not a missing FE-ESCROW route.
+      Do not treat HANDOFF as NOT_DEPLOYED or as a code defect in the draft shell.
+      Do not insert/bind an Official orders row onto escrow 0x45B28A…09C4.
+    verify_path: >
+      L7 receipt status=1 → Indexer checkpoint ≥ tx block. GATE-1USDC-REALITY money-path PASS under Owner A.
+      Official book hop GAP-E2E-JOURNEY subsequent CLOSED_REALITY. GO remaining = Owner written verdict.
+    reality_closure: >
+      Track2 1 USDC L7+L8 money-path PASS. Hop CLOSED_REALITY ≠ global CLOSED_REALITY ≠ Production GO.
+    do_not_fix_this_wave: true
+    open: false
+    closure_status: CLOSED_REALITY
+    closed_utc: "2026-08-17T04:50:00Z"
+    closed_by_batch: GAP_1USDC_HANDOFF_OWNER_CLASSIFY_A
+    closure_evidence: docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.json
+
+  - gap_id: GAP-CI02-FR-CUTOVER
+    source_pointers:
+      - P2-CI02-ETA
+      - P2-CI02-WAIT
+      - GATE-CI02-ETA
+      - W3-FR-NEW
+      - REL-CI02-FR-NEW
+      - INC-TIMELOCK-WAIT
+    pack: "05"
+    layer: L7
+    capability: CAP-ESCROW-USDC
+    journey: JNY-TRAVELER-GUIDE-BOOK
+    current_reality: >
+      NEW FeeRouter 0xb6bfED… deployed. Timelock op done=false until 2026-08-16T13:42:11Z.
+      Official /meta fee_router still OLD 0x2aF47C…. Legal WAIT, not a missing contract.
+    expected_production_state: >
+      After ETA + Owner execute ladder: Official fee_router = NEW FR, L7 SR.feeRouter aligned,
+      L8 /meta matches L7. Independent of PM $25 and of 1 USDC Reality evidence.
+    root_cause_class: WAITING_TIMELOCK
+    severity: P1
+    impact_user: LOW_UNTIL_CUTOVER — live fee path still OLD FR
+    impact_money: SCHEDULED — fee recipient cutover waiting ETA; not a current accounting bug
+    impact_security: TIMELOCK — execute is Owner-only after ETA
+    impact_data: L8_META — /meta must follow L7 after cutover; do not rewrite FTB from /meta
+    impact_release: SCHEDULED — independent execute ladder; not Production GO by itself
+    depends_on: []
+    blocked_by: ["TIMELOCK_ETA:2026-08-16T13:42:11Z"]
+    fix_boundary: >
+      Wait ETA then Owner Timelock execute + Official cutover on the CI-02 ladder only.
+      Forbidden: class as DEFECT, merge with PM25, execute during this audit, rewrite FTB.
+    verify_path: >
+      Timelock operations.done=true for CI-02; SR.feeRouter() = NEW FR; Official /meta fee_router same.
+    reality_closure: >
+      L7+L8 NEW FR Official live. ≠ 1 USDC Reality PASS. ≠ Production GO.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-PM25-UPGRADE
+    source_pointers:
+      - P2-PM25-WAIT
+      - P2-PM25-ETA
+      - GATE-PM25-ETA
+      - W3-PM-IMPL-25
+      - REL-PM25
+      - FE-TRAVELTRUST
+      - INC-PM-TTG
+    pack: "05"
+    layer: L7
+    capability: CAP-TTG-GATEWAY
+    journey: JNY-TTG-PURCHASE
+    current_reality: >
+      Official sale is NEW PM 0x882Ad ttgPerUsdcUnit=100_000 (L7 + /meta). OLD proxy $25
+      0x53d0…Fc6b is LEGACY (done=true). Official www still discloses GOV-04 1e18
+      (price 10→10). Official bake WAIT / SCHEDULED_WAITING_ETA. Do not draw 10→0.4 as Official Live.
+    expected_production_state: >
+      After Official www bake: Official TTG chrome matches CMS 25T / NEW PM 100_000.
+      Independent of CI-02 hop B. $25 is LEGACY, not remaining Official hop.
+    root_cause_class: WAITING_TIMELOCK
+    severity: P1
+    impact_user: COPY — /traveltrust still shows 10→10 which matches Official www chrome, not NEW PM 100_000
+    impact_money: SCHEDULED — Official bake WAIT; NEW PM 100_000 is already Official /meta live
+    impact_security: TIMELOCK — remaining WAIT is Official www chrome bake Owner-auth (ETA held)
+    impact_data: NONE_DIRECT
+    impact_release: SCHEDULED — independent execute ladder
+    depends_on: []
+    blocked_by: ["TIMELOCK_ETA:2026-08-16T16:20:23Z"]
+    fix_boundary: >
+      Wait ETA then Owner Official www bake (FORBIDDEN this freeze). Forbidden: class as DEFECT,
+      merge with CI-02, paint 10→0.4 Live now, bake www without Owner auth.
+    verify_path: >
+      Official /meta NEW PM 100_000; www chrome still 10→10 WAIT; $25 remains LEGACY.
+    reality_closure: >
+      Official sale + /meta aligned to NEW PM 100_000. $25 LEGACY. www chrome 10→10 still WAIT.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-STEWARD-SEAT-VAULT
+    source_pointers:
+      - P2-STEWARD-TARGET
+      - P2-STEWARD-L7
+      - P2-SEAT-VAULT
+      - P2-SEAT-VAULT-ASIS
+      - CAP-REGION-STEWARD
+      - FE-STEWARD
+      - JNY-REGION-STEWARD-CLAIM
+      - GATE-SEAT-CI01
+      - GATE-VAULT-CI03
+      - W3-SEAT-REGISTRY
+      - W3-REGION-VAULT
+      - INC-STEWARD-NOT-DEPLOYED
+    pack: "05"
+    layer: L7
+    capability: CAP-REGION-STEWARD
+    journey: JNY-REGION-STEWARD-CLAIM
+    current_reality: >
+      /steward/register route exists. Seat Registry CI-01 and JP RegionVault CI-03 have no address.
+      CAP-REGION-STEWARD is TARGET_NOT_LIVE. Session steward must not be treated as L7 claim authority.
+    expected_production_state: >
+      Seat + Vault deployed, wired, Official-live, then steward claim Reality. Target remains Target until then.
+    root_cause_class: NOT_DEPLOYED
+    severity: P1
+    impact_user: REGION_PRODUCT — steward claim cannot be live
+    impact_money: REGION_83 — S05/S06 region split not live; not the 1 USDC P0 hop
+    impact_security: AUTHORITY — session steward ≠ L7 seat
+    impact_data: NONE_UNTIL_DEPLOY
+    impact_release: TARGET — do not list as Official Live
+    depends_on: []
+    blocked_by: ["OWNER_AUTH_DEPLOY:CI-01", "OWNER_AUTH_DEPLOY:CI-03"]
+    fix_boundary: >
+      Owner deploy CI-01 then CI-03 on independent ladders. Forbidden: class as DEFECT,
+      class as WAITING_TIMELOCK, draw as Official Live, treat session role as L7.
+    verify_path: >
+      L7 addresses exist; /meta non-null; FE-STEWARD TARGET_NOT_LIVE cleared; INC-STEWARD-NOT-DEPLOYED closed.
+    reality_closure: >
+      Seat+Vault DEPLOYED then WIRED then OFFICIAL_LIVE then steward claim Reality. ≠ Production GO.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-E2E-JOURNEY
+    source_pointers:
+      - P2-E2E-NOT-CLOSED
+      - JNY-TRAVELER-LOGIN
+      - JNY-TRAVELER-GUIDE-BOOK
+      - GATE-HARD-GO
+    pack: "11"
+    layer: L0
+    capability: CAP-AUTH-SESSION
+    journey: JNY-TRAVELER-GUIDE-BOOK
+    current_reality: >
+      Official C2 non-money Draft + frozen www /escrow/{uuid} hop CLOSED_REALITY.
+      UUID 7d91f354-af9d-461c-8790-b70a597751af. Not USDC/TTG. Not Track2 0x45B28A….
+      Login 405 CLOSED_REALITY. GAP-1USDC-HANDOFF money-path CLOSED_REALITY (Owner A Track2 L7+L8).
+      Global JNY END_TO_END_CLOSED_REALITY / Production GO remain separate.
+    expected_production_state: >
+      Official traveler login → book → escrow UI E2E closed on Official www.
+      Track2 money-path already PASS; do not redo 1 USDC.
+    root_cause_class: PRODUCT_DEBT
+    severity: P1
+    impact_user: CLOSED_THIS_GAP — Official C2 book→order→escrow UI hop PASS on frozen www
+    impact_money: NON_BLOCKING_ALONE — Track2 1 USDC money-path PASS; this hop is non-money Draft
+    impact_security: NONE_DIRECT
+    impact_data: TEST_DATA marked then cancelled; UUID retained in evidence only
+    impact_release: NON_BLOCKING_ALONE — hop closed; GATE-HARD-GO / Production GO still NO_GO
+    depends_on: [GAP-LOGIN-WWW-405, GAP-1USDC-HANDOFF]
+    blocked_by: []
+    fix_boundary: >
+      Product hop. Login + 1 USDC money-path already closed. This hop is Official book/UI only.
+      Do not bind Track2 escrow 0x45B28A… to Official orders. Do not invent a new GAP id.
+      Do not fund/release/refund. Do not bake Official www.
+    verify_path: >
+      Official C2 POST /api/v1/itineraries Draft → GET /api/v1/orders/{uuid} → frozen www /escrow/{uuid} 200.
+      Cite docs/runbook/TT-GAP-E2E-JOURNEY-OFFICIAL-C2-NONMONEY-LATEST.json.
+    reality_closure: >
+      Official traveler book→order→escrow UI CLOSED_REALITY for that hop only.
+      ≠ global CLOSED_REALITY ≠ Production GO.
+    do_not_fix_this_wave: true
+    open: false
+    closure_status: CLOSED_REALITY
+    closed_utc: "2026-08-18T04:40:00Z"
+    closed_by_batch: TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH
+    closure_evidence: docs/runbook/TT-GAP-E2E-JOURNEY-OFFICIAL-C2-NONMONEY-LATEST.json
+
+  - gap_id: GAP-FE-SCREEN-PARTIAL
+    source_pointers:
+      - FE-HOME
+      - FE-MARKET
+      - FE-COMMUNITY
+      - FE-ESCROW
+      - FE-ORDERS
+      - P2-E2E-NOT-CLOSED
+    pack: "02"
+    layer: L0
+    capability: CAP-AI-ITINERARY
+    journey: JNY-TRAVELER-AI-ITINERARY
+    current_reality: >
+      Pack 02 histogram SCREEN_PARTIAL=20, ACTION_WIRED=4, ROUTE_EXISTS=4, ACTION_BLOCKED=1,
+      TARGET_NOT_LIVE=1, DESIGN_ONLY=1. Zero screens E2E_CLOSED. FIVE-MAIN structure is frozen.
+    expected_production_state: >
+      Production-grade screens reach Action Works on in-scope happy paths without reopening FIVE-MAIN layout.
+      Route Exists ≠ Screen Complete remains a hard split.
+    root_cause_class: PRODUCT_DEBT
+    severity: P2
+    impact_user: PARTIAL — public read often works; write/book often blocked by 405 or HANDOFF
+    impact_money: INDIRECT
+    impact_security: NONE_DIRECT
+    impact_data: NONE_DIRECT
+    impact_release: NON_BLOCKING_ALONE — do not treat SCREEN_PARTIAL as Production GO
+    depends_on: [GAP-LOGIN-WWW-405]
+    blocked_by: [GAP-LOGIN-WWW-405]
+    fix_boundary: >
+      Per-screen batches after login. Forbidden: FIVE-MAIN structure/visual/layout lock reopen,
+      bulk rewrite, treating SCREEN_PARTIAL as a single defect, 16th matrix.
+    verify_path: Pack 02 runtime_status upgrades per FE-* with Official probes. No invented E2E_CLOSED.
+    reality_closure: Named FE-* Action Works on Official. ≠ whole-site 100%.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-ADMIN-118
+    source_pointers:
+      - P2-ADMIN-118-SCREENS
+      - P2-ADMIN-118-UNEXPANDED
+      - CAP-ADMIN-FOUR-CENTERS
+      - FE-ADMIN-118-FAMILY
+      - FE-ADMIN-OPS
+    pack: "02"
+    layer: L0
+    capability: CAP-ADMIN-FOUR-CENTERS
+    journey: JNY-ADMIN-CMS
+    current_reality: >
+      Admin 118 routes exist (census). Screens not individually E2E. Unauth 307 login wall.
+      Admin 118 is a required_domain, not a 16th matrix.
+    expected_production_state: >
+      In-scope Admin centers have Screen Complete + Action Works for Owner ops, still behind auth.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P2
+    impact_user: ADMIN_ONLY
+    impact_money: NONE_DIRECT
+    impact_security: AUTH_WALL — unauth 307 is expected; do not open Admin unauthenticated
+    impact_data: NONE_DIRECT
+    impact_release: NON_BLOCKING_ALONE
+    depends_on: []
+    blocked_by: []
+    fix_boundary: >
+      Expand Admin screens inside Pack 02 domain only. Forbidden: 16th matrix, FIVE-MAIN reopen.
+    verify_path: Authenticated Admin probe per in-scope center; census remains 118 unless routes change for real.
+    reality_closure: Named Admin centers Action Works. ≠ traveler E2E. ≠ Production GO.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-RESPONSIVE
+    source_pointers:
+      - P2-RESPONSIVE-I18N
+    pack: "02"
+    layer: L0
+    capability: CAP-I18N
+    journey: JNY-TRAVELER-LOGIN
+    current_reality: >
+      Modal/Desktop_Mobile columns were empty in the seed era. Official mobile NOT_PROBED.
+    expected_production_state: Official mobile + i18n probed for FIVE-MAIN and login without layout lock reopen.
+    root_cause_class: PRODUCT_DEBT
+    severity: P2
+    impact_user: UNKNOWN_MOBILE — not probed, not proven broken
+    impact_money: NONE_DIRECT
+    impact_security: NONE_DIRECT
+    impact_data: NONE_DIRECT
+    impact_release: NON_BLOCKING_ALONE
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "Probe first, then fix real mobile defects. Forbidden: FIVE-MAIN visual reopen to look complete."
+    verify_path: Official mobile screenshot/probe pack for FIVE-MAIN + /auth/login.
+    reality_closure: Official mobile probed; real defects filed as new GAP-* if found.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-LEGAL-404
+    source_pointers:
+      - P2-LEGAL-404
+      - FE-LEGAL
+      - CAP-LEGAL-TRUST
+    pack: "02"
+    layer: L3
+    capability: CAP-LEGAL-TRUST
+    journey: JNY-TRAVELER-LOGIN
+    current_reality: /legal/privacy and /legal/terms Official 404; /privacy and /terms return 200.
+    expected_production_state: One canonical legal URL pair works; dual-path 404 is either redirected or removed.
+    root_cause_class: DEFECT
+    severity: P2
+    impact_user: LEGAL_NAV — some legal deep links 404
+    impact_money: NONE
+    impact_security: NONE
+    impact_data: NONE
+    impact_release: NON_BLOCKING_ALONE
+    depends_on: []
+    blocked_by: []
+    fix_boundary: Redirect or retire /legal/* aliases. Do not treat working /privacy /terms as missing product.
+    verify_path: Official GET /legal/privacy and /legal/terms no longer 404, or documented canonical-only.
+    reality_closure: Canonical legal URLs 200 on Official.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-ME-PAYMENTS-404
+    source_pointers:
+      - P2-ME-PAYMENTS-404
+      - FE-ME
+    pack: "02"
+    layer: L3
+    capability: CAP-ESCROW-USDC
+    journey: JNY-TRAVELER-GUIDE-BOOK
+    current_reality: /me/payments Official 404; not in 207 happy path.
+    expected_production_state: Either a working payments surface or the route is not advertised.
+    root_cause_class: PRODUCT_DEBT
+    severity: P3
+    impact_user: LOW — route 404 if guessed
+    impact_money: NONE_DIRECT — USDC rail is FE-PAY / escrow, not this 404
+    impact_security: NONE
+    impact_data: NONE
+    impact_release: NON_BLOCKING
+    depends_on: []
+    blocked_by: []
+    fix_boundary: Add page or remove dead route. Do not invent a fiat payments rail.
+    verify_path: Official GET /me/payments is 200 authenticated or 404 is documented as retired.
+    reality_closure: No silent dead payments URL on Official.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-FUTURE-APP
+    source_pointers:
+      - P2-FUTURE-APP-L0
+    pack: "02"
+    layer: L0
+    capability: CAP-AUTH-SESSION
+    journey: JNY-TRAVELER-LOGIN
+    current_reality: Future App is another L0; reuses GP-01..GP-08; no Official route.
+    expected_production_state: Future App remains a later L0; not required for current Official Production GO.
+    root_cause_class: ORTHOGONAL
+    severity: P3
+    impact_user: NONE_ON_WWW
+    impact_money: NONE
+    impact_security: NONE
+    impact_data: NONE
+    impact_release: ORTHOGONAL
+    depends_on: []
+    blocked_by: []
+    fix_boundary: Do not implement Future App to green current Official. Confirm as later L0.
+    verify_path: CONFIRM_DESIGN — no Official route required this product.
+    reality_closure: CONFIRM_DESIGN. Not a Live gap.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-SEC-TOKEN-LOCALSTORAGE
+    source_pointers:
+      - P2-TOKEN-LOCALSTORAGE
+      - SEC-SESSION-BEARER
+      - CAP-AUTH-SESSION
+    pack: "08"
+    layer: L4
+    capability: CAP-AUTH-SESSION
+    journey: JNY-TRAVELER-LOGIN
+    current_reality: >
+      Historical JSON token + localStorage.traveltrust_session_token is SUPERSEDED on Official www.
+      Live tip 9959ae50: login Set-Cookie traveltrust_session HttpOnly+Secure+SameSite=Lax;
+      JSON token=null; BFF does not persist traveltrust_session_token in localStorage.
+      Owner Official C2 Reality: cookie auth, forged cookie/Bearer 401, logout clears cookie.
+    expected_production_state: Production-grade session uses HttpOnly Secure cookie or equivalent XSS-resistant store.
+    root_cause_class: DEFECT
+    severity: P1
+    impact_user: SESSION
+    impact_money: INDIRECT
+    impact_security: BLOCKING_RISK_CANDIDATE — XSS can steal Bearer from localStorage
+    impact_data: SESSION_TOKEN
+    impact_release: SHOULD_FIX_BEFORE_GO
+    depends_on: [GAP-LOGIN-WWW-405]
+    blocked_by: []
+    fix_boundary: >
+      Session transport on API+www. Pair with login fix. Do not treat as account DB defect.
+      Alignment policy: security session is FIX, not Expected Difference.
+    verify_path: Official login sets HttpOnly cookie; localStorage token gone or non-authoritative.
+    reality_closure: Official session probe shows cookie auth; no Bearer in localStorage.
+    do_not_fix_this_wave: true
+    open: false
+    closure_status: CLOSED_REALITY
+    closed_utc: "2026-08-15T08:25:00Z"
+    closed_by_batch: BATCH_A_SESSION_OFFICIAL_CREDENTIAL_REALITY_DIAGNOSIS
+    closure_evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.json
+
+  - gap_id: GAP-FE-BFF-BYPASS
+    source_pointers:
+      - CAP-AUTH-SESSION
+      - FE-AUTH-LOGIN
+      - FE-MARKET
+      - FE-ORDERS
+      - JNY-TRAVELER-LOGIN
+      - INC-LOGIN
+      - SEC-SESSION-BEARER
+      - SEC-STRICT-SESSION-GATE
+    pack: "02"
+    layer: L3
+    capability: CAP-AUTH-SESSION
+    journey: JNY-TRAVELER-LOGIN
+    current_reality: >
+      CLOSED_REALITY. Official FE forward-fix 9959ae50 (SITE_URL=https://www.web3-ttg.com)
+      plus live JS Official www/apex same-origin helper. Owner C2 www
+      POST /auth/login 200 HttpOnly cookie; GET www /api/v1/me · /me/market-bookmarks ·
+      /orders?limit=50 = 200 (re-proved 2026-08-15T11:27Z). api.web3-ttg.com with www cookie stays 401 (host-only cookie).
+      Browser /market Network: discover/orders and guides hit www /api/v1/*; protected
+      /me not called anonymously; same-origin fetch of /me bookmarks orders resolves to
+      www (anonymous 401 expected). Remaining public catalog/cold-start still concatenate
+      API origin (not this Gap). BATCH-A Session architecture not reopened.
+    expected_production_state: >
+      Browser on www.web3-ttg.com (or apex) uses same-origin /api/v1/* and
+      /auth/login|logout|refresh|register. Middleware injects Bearer from
+      HttpOnly cookie. Authenticated /me /me/market-bookmarks /orders = 200 on
+      www, not 401 on api origin. OFFICIAL_SURFACE_UNEXPLAINED_DRIFT=0 for this
+      transport class.
+    root_cause_class: DEFECT
+    severity: P1
+    impact_user: BLOCKING_AFTER_LOGIN — Golden login PASS; Market bookmarks / orders / me fail
+    impact_money: INDIRECT — traveler cannot load own orders after session
+    impact_security: SESSION_SURFACE — cookie never sent to API origin; not account theft
+    impact_data: NONE — not a DATA-USER-ACCOUNT / DATA-SESSION reseed
+    impact_release: SHOULD_FIX_BEFORE_GO — Full-Surface Convergence, not Golden Path
+    depends_on: [GAP-LOGIN-WWW-405]
+    blocked_by: []
+    fix_boundary: >
+      frontend/lib/api.ts browserUsesSameOriginApiProxy only. Treat Official www/apex
+      as same-origin BFF. Do not reopen middleware cookie/BFF. Do not change FIVE-MAIN
+      structure. Do not guess via account/DB. catalogApi/coldStartCampaign still
+      concatenate NEXT_PUBLIC_API_BASE_URL (public reads); fold into same transport
+      after this hop if they still hit api origin on Official.
+    verify_path: >
+      Vitest Official www vs apex SITE_URL. Staging same-origin still green.
+      After Official FE deploy: logged-in C2 Network shows www /api/v1/me 200,
+      zero authenticated api.web3-ttg.com /api/v1/me|market-bookmarks|orders 401.
+      Classify remaining anonymous public 401 as EXPECTED_ANONYMOUS_401 only if
+      the URL is still protected; public catalog 200 on either origin is not this defect.
+    reality_closure: >
+      Official authenticated www hop 200 for /me /bookmarks /orders. Live JS same-origin.
+      ≠ global CLOSED_REALITY plane. ≠ Production GO. ≠ GAP-1USDC L8.
+    do_not_fix_this_wave: true
+    open: false
+    closure_status: CLOSED_REALITY
+    closed_utc: "2026-08-15T09:55:00Z"
+    closed_by_batch: BATCH-2A-SURFACE-BFF
+    closure_evidence: evidence/GO_gap_fe_bff_bypass/
+
+  - gap_id: GAP-SEC-ADMIN-2FA
+    source_pointers:
+      - P2-ADMIN-2FA
+      - SEC-ADMIN-OPS
+    pack: "08"
+    layer: L4
+    capability: CAP-ADMIN-FOUR-CENTERS
+    journey: JNY-ADMIN-CMS
+    current_reality: admin_2fa_policy_storage exists; enforce_2fa_totp_wiring phase2_not_started.
+    expected_production_state: Admin TOTP (or equivalent) enforced on Official Admin.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P2
+    impact_user: ADMIN_ONLY
+    impact_money: NONE_DIRECT
+    impact_security: HARDENING — not proven bypass of Admin RBAC
+    impact_data: NONE_DIRECT
+    impact_release: SHOULD_FIX_BEFORE_GO
+    depends_on: []
+    blocked_by: []
+    fix_boundary: Wire existing 2FA policy to Official Admin enforce. Do not invent a new identity system.
+    verify_path: Official Admin login requires 2FA challenge.
+    reality_closure: enforce_2fa_totp_wiring live on Official Admin.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-SEC-CONSOLE-OVERRIDE
+    source_pointers:
+      - P2-CONSOLE-ROLE-OVERRIDE
+    pack: "08"
+    layer: L4
+    capability: CAP-ADMIN-FOUR-CENTERS
+    journey: JNY-ADMIN-CMS
+    current_reality: TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE can remap console role locally.
+    expected_production_state: Override unset on Official; fail-closed if present in production env.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P2
+    impact_user: NONE_IF_UNSET
+    impact_money: NONE
+    impact_security: VERIFY — local/dev lever; Official must remain unset
+    impact_data: NONE
+    impact_release: VERIFY_OFFICIAL_ENV
+    depends_on: []
+    blocked_by: []
+    fix_boundary: Confirm Official env unset; keep local-only. Do not treat as current Official breach without env evidence.
+    verify_path: Official runtime env lacks TRAVELTRUST_ADMIN_CONSOLE_ROLE_OVERRIDE.
+    reality_closure: Official env probe PASS; local override remains Expected Difference if documented.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-SEC-CORS
+    source_pointers:
+      - P2-CORS-UNSET-PERMISSIVE
+    pack: "08"
+    layer: L2
+    capability: CAP-AUTH-SESSION
+    journey: JNY-TRAVELER-LOGIN
+    current_reality: CORS_ORIGINS unset → very_permissive() in code. Official must keep CORS_ORIGINS set.
+    expected_production_state: Official CORS_ORIGINS is a tight allow-list including www.web3-ttg.com.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P1
+    impact_user: NONE_IF_SET
+    impact_money: NONE
+    impact_security: VERIFY — fail-open in code if unset; Official wiring must be proven
+    impact_data: NONE
+    impact_release: VERIFY_OFFICIAL_ENV
+    depends_on: []
+    blocked_by: []
+    fix_boundary: Verify Official CORS_ORIGINS. If unset on Official, reclassify to DEFECT in a later execute batch. Do not change code this wave.
+    verify_path: Official API CORS headers allow-list only www + known origins.
+    reality_closure: Official CORS probe PASS.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-SAFE-1OF1
+    source_pointers:
+      - P2-SAFE-1OF1-SOLO
+      - SEC-SAFE-1OF1
+    pack: "08"
+    layer: L7
+    capability: CAP-GOVERNANCE-PORTAL
+    journey: JNY-GOVERNANCE-QUEUE
+    current_reality: Safe threshold 1, owners [0xe1e732]. Solo Owner AS-IS.
+    expected_production_state: >
+      Solo 1/1 remains valid under PSG Solo workflow unless Owner later chooses a new Safe policy.
+      Not a missing team Approver. CONFIRM_DESIGN, not FIX_TO_MATCH a dual-owner target.
+    root_cause_class: EXPECTED_SOLO
+    severity: P3
+    impact_user: NONE
+    impact_money: OWNER_KEY — expected Solo control, not a defect
+    impact_security: EXPECTED_DIFFERENCE
+    impact_data: NONE
+    impact_release: CONFIRM_DESIGN
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "CONFIRM_DESIGN only. Forbidden: class as DEFECT, add fake Approver, FIX_TO_MATCH team PR."
+    verify_path: Owner written confirm that 1/1 Safe is intended Solo control.
+    reality_closure: CONFIRM_DESIGN recorded. Not a Live fault.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-REL-IDENTITY-STAMP
+    source_pointers:
+      - P2-V65-RI-STAMP-LAG
+      - P2-API-FE-SHA-SPLIT
+      - INC-RELEASE-IDENTITY
+      - REL-OFFICIAL-TRAFFIC
+    pack: "09"
+    layer: L8
+    capability: CAP-CMS-ANNOUNCE
+    journey: JNY-ADMIN-CMS
+    current_reality: >
+      V65 RI 20260804 live SHA 16f29c7e ≠ Official 20260815 /meta git_sha 8df2ab21.
+      Official API git_sha 8df2ab21 (2026-08-13) vs later FE cut 892650f7 (2026-08-14 Track2 bake).
+    expected_production_state: Release identity stamps match the traffic actually served, or lag is explained per cut.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P2
+    impact_user: NONE_DIRECT
+    impact_money: NONE
+    impact_security: NONE_DIRECT
+    impact_data: NONE
+    impact_release: IDENTITY_LAG — do not "fix" by rewriting FTB or pretending SHA equality
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "New release identity / RI stamp cycle. Forbidden: mutate frozen PSG Archive, overwrite FTB from /meta."
+    verify_path: Next Official cut records matching API+FE identity or an explained split.
+    reality_closure: Living RI matches Official /meta for that cut.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-FTB-SR-STAMP-LAG
+    source_pointers:
+      - P2-FTB-SR-LOCK-LAG
+      - REL-SR-FT
+    pack: "09"
+    layer: L7
+    capability: CAP-ESCROW-USDC
+    journey: JNY-TRAVELER-GUIDE-BOOK
+    current_reality: >
+      FTB 20260812 Official SR still Track1 0xe5C3ED…. Living L7+L8 is SR-FT 0xD1DAE665….
+      EXPLAINED_FTB_LOCKED_STAMP_LAG. Not L8≠L7 conflict.
+    expected_production_state: A later FTB stamp cycle records SR-FT as Official live. Until then living overlay is the read.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P2
+    impact_user: NONE — Official traffic already uses SR-FT
+    impact_money: NONE_DIRECT — lock-table lag, not a wrong live router
+    impact_security: NONE
+    impact_data: NONE
+    impact_release: STAMP — new FTB cycle only
+    depends_on: []
+    blocked_by: []
+    fix_boundary: >
+      New FTB stamp. Forbidden: overwrite FTB from /meta this wave, overwrite /meta from FTB,
+      class as DEFECT, class as UNEXPLAINED conflict.
+    verify_path: Next FTB stamp lists SR-FT Official live; overlay unexplained_conflict stays 0.
+    reality_closure: New FTB stamp issued. Current LOCKED 20260812 remains historical.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-META-PM-NULL
+    source_pointers:
+      - P2-META-PM-NULL
+    pack: "09"
+    layer: L8
+    capability: CAP-TTG-GATEWAY
+    journey: JNY-TTG-PURCHASE
+    current_reality: >
+      Official /meta.primary_market_address NOW publishes NEW PM 0x882Ad (2026-08-18 live).
+      Historical null omit is SUPERSEDED as living remainder. Remaining debt = FTB overlay
+      still locks OLD PM 0xf7B7 vs living /meta NEW; www chrome still 10→10 ED.
+    expected_production_state: >
+      FTB overlay and living /meta stay documented as overlay vs lock. Do not invent L7≠L8 conflict.
+      Do not treat historical null as current Official truth.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P2
+    impact_user: LOW — TTG page may omit address
+    impact_money: NONE_DIRECT — proxy is live
+    impact_security: NONE
+    impact_data: L8_OMIT
+    impact_release: META_CONTRACT
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "/meta contract field add or documented omit. Forbidden: overwrite FTB, treat as PM not live."
+    verify_path: Official /meta now publishes NEW PM 0x882Ad; remaining = FTB overlay lock vs living /meta + www chrome 10→10 ED. Historical null omit SUPERSEDED as living remainder.
+    reality_closure: L8 either publishes PM address or omit stays explained. ≠ PM25 execute.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-ENG-SSOT-STALE
+    source_pointers:
+      - P2-ENG-SSOT-DUALWAIT-STALE
+    pack: "09"
+    layer: L8
+    capability: CAP-TTG-GATEWAY
+    journey: JNY-TTG-PURCHASE
+    current_reality: Engineering SSOT still narrates WAITING_TRACK2 / GOV-04 not live; recon 2026-08-15 T2/GOV-04 done=true.
+    expected_production_state: Living docs cite recon overlay; FTB lock table stays historical.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P3
+    impact_user: NONE
+    impact_money: NONE
+    impact_security: NONE
+    impact_data: NONE
+    impact_release: DOC_STALE — do not "fix" by rewriting FTB addresses
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "Doc pointer to overlay. Forbidden: FTB mutate, pretend GOV-04 still waiting."
+    verify_path: Engineering SSOT no longer says GOV-04 not live.
+    reality_closure: Doc/overlay aligned. L7 already done.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-STAGING-PIN
+    source_pointers:
+      - P2-STAGING-NOT-CURRENT-PIN
+    pack: "09"
+    layer: L8
+    capability: CAP-CMS-ANNOUNCE
+    journey: JNY-ADMIN-CMS
+    current_reality: July Candidate drift audit SUPERSEDED_SNAPSHOT; staging is orthogonal, never Official.
+    expected_production_state: Staging remains a side track. Do not pin Official to a superseded Candidate.
+    root_cause_class: ORTHOGONAL
+    severity: P3
+    impact_user: NONE_ON_WWW
+    impact_money: NONE
+    impact_security: NONE
+    impact_data: NONE
+    impact_release: ORTHOGONAL
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "CONFIRM_DESIGN. Forbidden: treat staging SHA drift as Official defect."
+    verify_path: CONFIRM_DESIGN — staging ≠ Official.
+    reality_closure: CONFIRM_DESIGN.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-PROPOSAL-3
+    source_pointers:
+      - P2-PROPOSAL-3-ORTHOGONAL
+      - GATE-PROPOSAL-3
+      - FE-GOVERNANCE
+    pack: "12"
+    layer: L7
+    capability: CAP-GOVERNANCE-PORTAL
+    journey: JNY-GOVERNANCE-QUEUE
+    current_reality: Proposal #3 is orthogonal to CI-02 and PM25. Not a money-path blocker.
+    expected_production_state: Proposal #3 stays on its own ladder. Do not merge into CI-02 or PM25.
+    root_cause_class: ORTHOGONAL
+    severity: P3
+    impact_user: GOVERNANCE_ONLY
+    impact_money: NONE_ON_1USDC
+    impact_security: NONE_DIRECT
+    impact_data: NONE
+    impact_release: ORTHOGONAL
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "Keep orthogonal. Forbidden: merge into CI-02/PM25 execute or 1 USDC Reality."
+    verify_path: GATE-PROPOSAL-3 remains independent in Pack 12.
+    reality_closure: Orthogonal confirmed. Not a Live money-path gap.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-ORDER-ID-JOIN
+    source_pointers:
+      - P2-ORDER-ID-JOIN
+      - DATA-ITINERARY-GENERATED
+      - JNY-TRAVELER-AI-ITINERARY
+    pack: "11"
+    layer: L5
+    capability: CAP-AI-ITINERARY
+    journey: JNY-TRAVELER-AI-ITINERARY
+    current_reality: AI itinerary draft not joined to order_id on Official logged-in evidence.
+    expected_production_state: Authenticated itinerary create joins a durable order_id.
+    root_cause_class: PRODUCT_DEBT
+    severity: P2
+    impact_user: PARTIAL — draft may not survive into book
+    impact_money: INDIRECT
+    impact_security: NONE
+    impact_data: JOIN — itinerary ↔ order
+    impact_release: NON_BLOCKING_ALONE
+    depends_on: [GAP-LOGIN-WWW-405]
+    blocked_by: [GAP-LOGIN-WWW-405]
+    fix_boundary: Data join after login works. Do not fake join in the UI.
+    verify_path: Official logged-in itinerary create returns order_id observed in orders list.
+    reality_closure: order_id join on Official. ≠ 1 USDC Reality.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-ACQUISITION-DOMAIN
+    source_pointers:
+      - P2-ACQUISITION-BACKEND-COARSE
+      - CAP-MARKET-ACQUISITION
+      - JNY-ACQUISITION-PUBLISH
+    pack: "10"
+    layer: L4
+    capability: CAP-MARKET-ACQUISITION
+    journey: JNY-ACQUISITION-PUBLISH
+    current_reality: Pack 01 CAP-MARKET-ACQUISITION backend_domain=ORDERS is too coarse vs PD-009.
+    expected_production_state: Map join names PD-009 acquisition domain without a 16th matrix.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P3
+    impact_user: NONE_DIRECT
+    impact_money: NONE_DIRECT
+    impact_security: NONE
+    impact_data: MAP_ONLY
+    impact_release: MAP
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "Pack 01/10 join label only. Forbidden: new matrix, Hub UI reopen."
+    verify_path: cap join cites acquisition_publish_gate / PD-009, not generic ORDERS only.
+    reality_closure: Map label accurate. Not a Live product gap by itself.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-CMS-NO-GP
+    source_pointers:
+      - P2-CMS-NO-GP
+      - CAP-CMS-ANNOUNCE
+    pack: "01"
+    layer: L0
+    capability: CAP-CMS-ANNOUNCE
+    journey: JNY-ADMIN-CMS
+    current_reality: CAP-CMS-ANNOUNCE gp dash. CMS is ops, not GP-01..08.
+    expected_production_state: CMS stays ops Golden Path dash. Confirm, do not invent GP-09.
+    root_cause_class: ORTHOGONAL
+    severity: P3
+    impact_user: NONE
+    impact_money: NONE
+    impact_security: NONE
+    impact_data: NONE
+    impact_release: CONFIRM_DESIGN
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "CONFIRM_DESIGN. Forbidden: add GP-09 or a 16th matrix for CMS."
+    verify_path: CONFIRM_DESIGN — CMS ops ≠ GP-01..08.
+    reality_closure: CONFIRM_DESIGN.
+    do_not_fix_this_wave: true
+    open: true
+
+  - gap_id: GAP-GUIDE-STAKE-PROJECTION
+    source_pointers:
+      - INC-L8-VS-L7
+      - CAP-COMMUNITY
+      - FE-DID-RANK
+    pack: "04"
+    layer: L8
+    capability: CAP-COMMUNITY
+    journey: JNY-GUIDE-FULFILL
+    current_reality: >
+      Guide stake DB vs chain may disagree (depth-audit INC-GUIDE-STAKE-DB-VS-CHAIN).
+      Pack 01 notes this is Pack 04/05, not a missing screen. Diagnose via INC-L8-VS-L7.
+    expected_production_state: L8 projection matches L7 stake; UI does not invent chain stake from DB alone.
+    root_cause_class: ARCHITECTURE_DEBT
+    severity: P2
+    impact_user: RANK_DISPLAY
+    impact_money: NONE_DIRECT
+    impact_security: NONE_DIRECT
+    impact_data: L8_VS_L7
+    impact_release: NON_BLOCKING_ALONE
+    depends_on: []
+    blocked_by: []
+    fix_boundary: "Indexer/projection. Forbidden: overwrite L7 because DB lags; do not treat as missing FE-DID-RANK."
+    verify_path: INC-L8-VS-L7 closed with L7=L8 stake evidence (depth-audit INC-GUIDE-STAKE-DB-VS-CHAIN).
+    reality_closure: Stake projection matches chain. ≠ Production GO.
+    do_not_fix_this_wave: true
+    open: true
+
+critical_path:
+  note: Suggestion only. Owner chooses execute order later. This wave does not start Local Fix.
+  steps:
+    - order: 1
+      gap_id: GAP-LOGIN-WWW-405
+      why: Unblocks Official traveler Action Works
+    - order: 2
+      gap_id: GAP-SEC-TOKEN-LOCALSTORAGE
+      why: Session hardening belongs with the login batch
+    - order: 3
+      gap_id: GAP-1USDC-HANDOFF
+      why: CLOSED_REALITY Owner A Track2 L7+L8 money-path; subsequent Official book hop GAP-E2E-JOURNEY CLOSED_REALITY; GO remaining = Owner written verdict
+    - order: 4
+      gap_id: GAP-E2E-JOURNEY
+      why: CLOSED_REALITY Official C2 non-money book→escrow UI hop; freeze required_before_go stays 8
+    - order: 5
+      gap_id: GAP-CI02-FR-CUTOVER
+      why: Legal WAIT then independent execute ladder after ETA
+    - order: 6
+      gap_id: GAP-PM25-UPGRADE
+      why: Legal WAIT; orthogonal to CI-02
+    - order: 7
+      gap_id: GAP-STEWARD-SEAT-VAULT
+      why: NOT_DEPLOYED Target; Owner deploy CI-01/CI-03
+    - order: 8
+      gap_id: GAP-FE-SCREEN-PARTIAL
+      why: After login; do not reopen FIVE-MAIN
+    - order: 9
+      gap_id: GAP-SEC-CORS
+      why: Verify Official env; escalate to DEFECT only if unset
+    - order: 10
+      gap_id: GAP-REL-IDENTITY-STAMP
+      why: New stamp cycle; never FTB←/meta
+    - order: 11
+      gap_id: GAP-FE-BFF-BYPASS
+      why: Official full-surface; Golden login PASS ≠ same-origin apiUrl; do not reopen BATCH-A
+
+repair_batches:
+  - batch_id: BATCH-A-SESSION
+    class_mix: [DEFECT]
+    gaps: [GAP-LOGIN-WWW-405, GAP-SEC-TOKEN-LOCALSTORAGE]
+    execute_when: CLOSED_REALITY 2026-08-15 Owner Official C2 Session chain
+    ladder: Local Fix → Tests → Staging → Official → Reality Evidence → Gap CLOSED
+  - batch_id: BATCH-2A-SURFACE-BFF
+    class_mix: [DEFECT]
+    gaps: [GAP-FE-BFF-BYPASS]
+    execute_when: Phase 2A Official full-surface matrix; pause-only-staring 1USDC not abandon; do not reopen BATCH-A
+    ladder: Local Fix → Tests → Staging → Official → Reality Evidence → Gap CLOSED
+  - batch_id: BATCH-B-MONEY-REALITY
+    class_mix: [REALITY_EVIDENCE]
+    gaps: [GAP-1USDC-HANDOFF, GAP-E2E-JOURNEY]
+    execute_when: HANDOFF money-path CLOSED_REALITY Owner A; GAP-E2E Official book/UI CLOSED_REALITY hop; independent of CI-02
+    ladder: Reality Evidence pack (not a missing page)
+  - batch_id: BATCH-C-TIMELOCK
+    class_mix: [WAITING_TIMELOCK]
+    gaps: [GAP-CI02-FR-CUTOVER, GAP-PM25-UPGRADE]
+    execute_when: After respective ETA + Owner auth; ladders stay independent
+    ladder: Timelock execute → Official cutover → L7/L8 evidence
+  - batch_id: BATCH-D-DEPLOY-REGION
+    class_mix: [NOT_DEPLOYED]
+    gaps: [GAP-STEWARD-SEAT-VAULT]
+    execute_when: Owner deploy auth for CI-01 then CI-03
+    ladder: Deploy → Wire → Official → Reality
+  - batch_id: BATCH-E-FRONTEND
+    class_mix: [PRODUCT_DEBT, ARCHITECTURE_DEBT, DEFECT]
+    gaps:
+      - GAP-FE-SCREEN-PARTIAL
+      - GAP-ADMIN-118
+      - GAP-RESPONSIVE
+      - GAP-LEGAL-404
+      - GAP-ME-PAYMENTS-404
+      - GAP-ORDER-ID-JOIN
+    execute_when: After BATCH-A or in parallel for LEGAL-404
+    ladder: Local Fix → Tests → Staging → Official
+  - batch_id: BATCH-F-SECURITY
+    class_mix: [ARCHITECTURE_DEBT]
+    gaps: [GAP-SEC-ADMIN-2FA, GAP-SEC-CONSOLE-OVERRIDE, GAP-SEC-CORS]
+    execute_when: Owner selects; CORS is verify-first
+    ladder: Env verify then Local Fix if Official unset
+  - batch_id: BATCH-G-RELEASE-STAMP
+    class_mix: [ARCHITECTURE_DEBT]
+    gaps:
+      - GAP-REL-IDENTITY-STAMP
+      - GAP-FTB-SR-STAMP-LAG
+      - GAP-META-PM-NULL
+      - GAP-ENG-SSOT-STALE
+      - GAP-GUIDE-STAKE-PROJECTION
+      - GAP-ACQUISITION-DOMAIN
+    execute_when: New stamp / overlay / map-label cycle; never FTB←/meta
+    ladder: Docs/Registry/overlay only unless a real L8 omit needs /meta contract
+  - batch_id: BATCH-H-CONFIRM
+    class_mix: [EXPECTED_SOLO, ORTHOGONAL]
+    gaps:
+      - GAP-SAFE-1OF1
+      - GAP-PROPOSAL-3
+      - GAP-STAGING-PIN
+      - GAP-FUTURE-APP
+      - GAP-CMS-NO-GP
+    execute_when: Owner CONFIRM_DESIGN
+    ladder: CONFIRM_DESIGN only — no FIX_TO_MATCH
+
+machine_keys:
+  P2A_UNCLASSIFIED_GAP: 0
+  P2A_WAIT_CLASSIFIED_AS_DEFECT: 0
+  P2A_TARGET_CLASSIFIED_AS_LIVE: 0
+  P2A_UNRESOLVED_POINTER: 0
+  P2A_AUDIT_MUTATED_RUNTIME: 0
+  P2A_SIXTEENTH_MATRIX: 0
+  PHASE2_GAP_AUDIT: CLOSED
+  PHASE2_EXECUTE: FORBIDDEN
+  PHASE_2A_FULL_MATRIX_CONVERGENCE: ACTIVE
+  PHASE_2B_PRODUCTION_GRADE_ARCHITECTURE_UPGRADE_REVIEW: FORBIDDEN
+  UNEXPLAINED_DRIFT: 0
+  PHASE_1_AS_IS_ARCHITECTURE_FROZEN: ISSUED
+  TT_PRODUCTION_GO: NO_GO
+  TT_COVERAGE_PERCENT: NOT_COMPUTED
+  OPEN_P0: 0
+  OPEN_GAPS: 23
+  CLOSED_GAPS: 5

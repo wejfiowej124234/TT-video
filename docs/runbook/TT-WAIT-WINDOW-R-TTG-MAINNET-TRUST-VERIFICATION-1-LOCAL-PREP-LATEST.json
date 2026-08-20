@@ -1,0 +1,60 @@
+{
+  "schema": "traveltrust.r_ttg_mainnet_trust_verification_1.v1",
+  "batch_id": "R-TTG-MAINNET-TRUST-VERIFICATION-1",
+  "status": "TOKEN_TRUST_GATE_PASS",
+  "phase": "AFTER_SEAL_PRE_GO",
+  "recorded_utc": "2026-08-12T00:54:00Z",
+  "tt_production_go": "NO_GO",
+  "token_trust_gate": "PASS",
+  "token_trust_gate_pass_ne_production_go": true,
+  "hard_gate_bytecode_mismatch_blocker": false,
+  "hard_gate_reeval": "PENDING",
+  "bytecode_full_match": true,
+  "forbid_redeploy": true,
+  "forbid_contract_mutation": true,
+  "pinned": {
+    "chain_id": 1,
+    "address": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",
+    "contract": "GovernanceVotesToken",
+    "source": "contracts/src/GovernanceVotesToken.sol"
+  },
+  "subgates": {
+    "bytecode_full_match": "PASS",
+    "supply_privilege_pass": "PASS",
+    "explorer_verified_etherscan_com": "PASS",
+    "explorer_sourcify_exact_match": "PASS",
+    "explorer_blockscout_fully_verified": "PASS"
+  },
+  "etherscan_recheck_20260812T0054Z": {
+    "contract_source_code_verified": true,
+    "format": "Solidity Standard Json-Input",
+    "compiler": "v0.8.19+commit.7dd6d404",
+    "optimization": true,
+    "runs": 200,
+    "contract_name": "GovernanceVotesToken",
+    "verify_and_publish_cta": false
+  },
+  "wallet_unverified_warning": "THIRD_PARTY_REINDEX_WAIT_AFTER_ETHERSCAN_PASS",
+  "next": [
+    "hard_gate_reeval_tt_production_go_stays_no_go",
+    "optional_name_tag_traveltrust_not_uniswap",
+    "optional_token_logo_via_update_token_info_after_owner_sign"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

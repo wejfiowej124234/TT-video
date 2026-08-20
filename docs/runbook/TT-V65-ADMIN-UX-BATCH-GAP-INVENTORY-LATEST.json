@@ -9,8 +9,8 @@
   "campaign": "V65 Admin UX Batch",
   "gate": "G005_CN_RUNTIME_UAT",
   "phase_rule": "frozen_batch_fix_then_one_cut",
-  "live_tip_baseline": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
-  "live_build_time": "2026-08-03T03:27:00Z",
+  "live_tip_baseline": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "live_build_time": "2026-08-03T04:19:09Z",
   "batch_tree": {
     "i18n": [
       "missing_zh_keys_scan_0",
@@ -98,7 +98,8 @@
       "status": "CLOSED_IN_BATCH",
       "severity": "P2",
       "title": "Docs tip sync",
-      "note": "no deploy"
+      "note": "no deploy",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G005",
@@ -115,7 +116,8 @@
       "fix_plan": "UAT closes G005; defects remain as P2 children",
       "owner_action": "manual_uat",
       "closed_at": "20260803T040941Z",
-      "close_reason": "Children G012–G043 registered as P2 with Route/Evidence/Owner/Fix Plan. Owner CN screenshots deferred to post-cut Runtime Evidence (not a Freeze blocker once children exist)."
+      "close_reason": "Children G012–G043 registered as P2 with Route/Evidence/Owner/Fix Plan. Owner CN screenshots deferred to post-cut Runtime Evidence (not a Freeze blocker once children exist).",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G006",
@@ -165,7 +167,8 @@
       "evidence": "I18N-COLLECT.json · frontend/locales/zh.ts pes3_admin_page_subtitle · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G013",
@@ -179,7 +182,8 @@
       "evidence": "zh.ts admin_business_superadmin_shortcut_title · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G014",
@@ -193,7 +197,8 @@
       "evidence": "I18N-COLLECT title_case · zh.ts steward keys · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G015",
@@ -207,7 +212,8 @@
       "evidence": "I18N-COLLECT snake_labels · family public-operations ×9 · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G016",
@@ -221,7 +227,8 @@
       "evidence": "I18N-COLLECT snake_labels · family rank ×5 · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G017",
@@ -235,7 +242,8 @@
       "evidence": "I18N-COLLECT snake_labels · family penalties ×5 · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G018",
@@ -249,7 +257,8 @@
       "evidence": "I18N-COLLECT snake_labels · family region ×3 · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G019",
@@ -263,7 +272,8 @@
       "evidence": "I18N-COLLECT en_residual_ops · finance · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G020",
@@ -277,7 +287,8 @@
       "evidence": "onboarding Admin copy scan · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G021",
@@ -291,7 +302,8 @@
       "evidence": "I18N-COLLECT en_residual_ops · official · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G022",
@@ -305,7 +317,8 @@
       "evidence": "users filter copy · collect residual · locale patched 20260803T040941Z",
       "owner": "Engineering",
       "fix_plan": "Locale-only applied in V65 Admin UX Batch Fix",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G023",
@@ -318,7 +331,9 @@
       "fix": "Wave Chinese fill; remainder may defer next Batch if over Freeze capacity",
       "evidence": "I18N-COLLECT prior · WAVE1_APPLIED_61_KEYS@20260803T040941Z",
       "owner": "Engineering",
-      "fix_plan": "Overflow → next V65 Admin UX Batch (not this cut)"
+      "fix_plan": "Overflow → next V65 Admin UX Batch (not this cut)",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G024",
@@ -331,7 +346,9 @@
       "fix": "UAT confirm; fix copy if leak",
       "evidence": "AdminOpsLeafDataSourceStrip.tsx · PENDING_OWNER screenshot · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Owner + Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G025",
@@ -345,7 +362,8 @@
       "evidence": "AdminConsoleRoleEffectiveStrip · mono source maintainer-only; product path uses Chinese source_product",
       "owner": "Engineering",
       "fix_plan": "CONFIRM_DESIGN · no Batch code change",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G026",
@@ -359,7 +377,8 @@
       "evidence": "adminP1UxFixes.contract · overview uses honesty_metrics not honesty_dev_metrics",
       "owner": "Engineering",
       "fix_plan": "CONFIRM_DESIGN · no Batch code change",
-      "closed_at": "20260803T040941Z"
+      "closed_at": "20260803T040941Z",
+      "shipped_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
     },
     {
       "id": "V65-UX-G027",
@@ -372,7 +391,9 @@
       "fix": "Chinese data-source only; raw Dev Tools",
       "evidence": "Ops Leaf strip · PENDING_OWNER screenshot · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Owner + Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G028",
@@ -385,7 +406,9 @@
       "fix": "Human primary columns; mono IDs secondary/collapsed",
       "evidence": "Admin finance/onboarding components · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G029",
@@ -398,7 +421,9 @@
       "fix": "Raise contrast to L5 token floor; check disabled invisibility",
       "evidence": "Real Visual dossier · PENDING_OWNER rescreen @ 87a5686f · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G030",
@@ -411,7 +436,9 @@
       "fix": "Raise meta contrast or lighten strip",
       "evidence": "PENDING_OWNER screenshot · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G031",
@@ -424,7 +451,9 @@
       "fix": "Keep outline + helper text on disabled",
       "evidence": "PENDING_OWNER UAT · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G032",
@@ -437,7 +466,9 @@
       "fix": "UAT confirm or CSS polish",
       "evidence": "PENDING_OWNER screenshot @ 87a5686f · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Owner",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G033",
@@ -450,7 +481,9 @@
       "fix": "Primary columns first; secondary collapsed",
       "evidence": "PENDING_OWNER UAT · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G034",
@@ -463,7 +496,9 @@
       "fix": "Unify section gap and title hierarchy",
       "evidence": "AdminHomeClient.tsx · PENDING_OWNER screenshot · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G035",
@@ -476,7 +511,9 @@
       "fix": "Chinese subtitles + consistent type scale",
       "evidence": "Coupled G012-G014 · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G036",
@@ -489,7 +526,9 @@
       "fix": "UAT confirm copy/IA; adjust if drift",
       "evidence": "admin_home_inbox_title · PENDING_OWNER screenshot · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Owner",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G037",
@@ -502,7 +541,9 @@
       "fix": "UAT; add/remove noise metrics",
       "evidence": "admin_home_kpi_title · PENDING_OWNER screenshot · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Owner",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G038",
@@ -515,7 +556,9 @@
       "fix": "UAT + remove engineering leak (G026)",
       "evidence": "admin_home_system_overview_title · PENDING_OWNER · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Owner + Engineering",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G039",
@@ -528,7 +571,9 @@
       "fix": "UAT; layout polish if drift",
       "evidence": "tip 87a5686f · PENDING_OWNER screenshot · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Owner",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G040",
@@ -541,7 +586,9 @@
       "fix": "Confirm design or reorder in Batch",
       "evidence": "AdminHomeClient.tsx · Workbench L5 SSOT · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Owner",
-      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch"
+      "fix_plan": "No fragment deploy; verify on Production after this cut · optional polish next Batch",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G041",
@@ -554,7 +601,9 @@
       "fix": "Pin Actions right + Chinese buttons",
       "evidence": "PENDING_OWNER UAT · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "Coupled locale closed in G015–G017; table density/IA confirm at Runtime Evidence"
+      "fix_plan": "Coupled locale closed in G015–G017; table density/IA confirm at Runtime Evidence",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G042",
@@ -567,7 +616,9 @@
       "fix": "Density reduce + Chinese actions",
       "evidence": "Coupled G017 · PENDING_OWNER · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "Coupled locale closed in G015–G017; table density/IA confirm at Runtime Evidence"
+      "fix_plan": "Coupled locale closed in G015–G017; table density/IA confirm at Runtime Evidence",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     },
     {
       "id": "V65-UX-G043",
@@ -580,7 +631,9 @@
       "fix": "Chinese columns + aligned actions",
       "evidence": "Coupled G016 · PENDING_OWNER · machine+code noted@20260803T040941Z; Owner CN shot at Runtime Evidence",
       "owner": "Engineering",
-      "fix_plan": "Coupled locale closed in G015–G017; table density/IA confirm at Runtime Evidence"
+      "fix_plan": "Coupled locale closed in G015–G017; table density/IA confirm at Runtime Evidence",
+      "live_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/"
     }
   ],
   "next_steps": [
@@ -608,5 +661,30 @@
     "batch_size_ok": true,
     "ready": true,
     "evaluated_at": "20260803T040941Z"
-  }
+  },
+  "cut_status": "CUT_SHIPPED_RUNTIME_VERIFIED",
+  "cut_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+  "runtime_evidence": "evidence/GO_v65_admin_ux_batch/20260803T042746Z/",
+  "tip_advance": {
+    "from": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
+    "to": "35872b406b622d9cc88cb5303222d5e5fedc29d5"
+  },
+  "runtime_stamp": "20260803T042746Z",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

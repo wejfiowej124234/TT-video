@@ -1,0 +1,36 @@
+# Official www · Product Surface FROZEN
+
+**SSOT:** [TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md](../../docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md) · [FREEZE LATEST](../../docs/runbook/TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.md)
+
+**Living baseline:** **TravelTrust Official · OPS-2026.08.20-v9** (`TT-OFFICIAL-OPS-20260820-V9`) · **TODAYS_OFFICIAL_STABLE**  
+**Owner lock:** `2026-08-20 15:20` Asia/Tokyo  
+**Live pin:** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · digest `sha256:b80bccb5…` · Next BUILD `fnX9UySJrp_w3J4PTApv6` · bootstrap **v8** (in image tag v9; misnamed `…-v8` tag is bootstrap v7 — do not restore) · Header login **OWNER_CONFIRMED** (C2) · Wave-0 **`WAVE_0_FULLY_CLOSED`**  
+**API:** `8df2ab21…` untouched by this freeze.  
+**`TT_PRODUCTION_GO`:** `NO_GO`  
+**GO 资格：** `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · 禁止自动签发 · 禁止无授权 bake www  
+
+**Not:** `V01` · bare `V1` · PSG Tag `v1.1.0-psg-go.20260717` · Production GO · misnamed `…-v8` image.  
+**SUPERSEDED as living Official:** prior day-stamp `TT-OFFICIAL-OPS-20260820` (wrong restore `…-v8`) · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` (2026-08-16).
+
+Identity SHA ≠ clean git checkout ≠ live product bytes. Composition = live tip home/traveltrust/auth + pin visual market/did-rank/community.
+
+**Restore:** `fly deploy --image` via `restore-tt-web-production-product-pin.sh` — **only v9** — never checkout.  
+**Gate:** `scripts/gates/check-official-www-product-surface-frozen.sh` — **`TT_SKIP_OFFICIAL_BASELINE_PIN=1` cannot bypass.**  
+**Web3 default:** chain + API `/meta`, not www bake.
+
+## Agent MUST NOT
+
+- Fly-deploy / bake `tt-web-prod` (`deploy-tt-web-production.sh`) without Owner unlock
+- Skip the product-surface gate with `TT_SKIP_OFFICIAL_BASELINE_PIN=1`
+- Change FIVE-MAIN structure/visual/layout (`/` · `/traveltrust` · `/market` · `/did-rank` · `/community/*`)
+- Change `/traveltrust/announcements` or homepage pulse ticker
+- Claim this baseline is Production GO / `V01` / bare `V1` / PSG Archive Tag
+- Restore misnamed `hybrid-live-auth-pin-nontarget-v8-20260820`
+- Rewrite living Official truth back to `daa5ae87` without Owner auth
+- Switch Official hop to NEW FeeRouter `0xb6bf…`
+
+## Web3 ladder (after this freeze)
+
+Do **not** redeploy already-live Money Path.  
+Remaining for Production GO = Owner written **GO** vs **continue NO_GO**.  
+Unlock only: Owner names a real error + explicit new-bake auth.

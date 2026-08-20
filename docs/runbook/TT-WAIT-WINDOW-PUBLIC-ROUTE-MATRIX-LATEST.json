@@ -1,0 +1,956 @@
+{
+  "schema": "traveltrust.wait_window_public_route_matrix.v1",
+  "status": "INVENTORY_SSOT_OFFICIAL_AND_TRACK1_FREEZE_LOCAL_PREP_ALLOWED",
+  "recorded_utc": "2026-08-11T02:40:36Z",
+  "parent_inventory": "TT-WAIT-WINDOW-EXTENDED-ISSUE-INVENTORY-LATEST",
+  "remediation_ladder": "TT-WAIT-WINDOW-EXTENDED-ISSUE-REMEDIATION-LADDER-LATEST",
+  "freeze_mode": "OFFICIAL_AND_TRACK1_FREEZE_LOCAL_PREP_ALLOWED",
+  "authorize_local_prep": true,
+  "authorize_official_deploy": false,
+  "currency_policy": "USDC_ONLY",
+  "web3_addresses": "FTB_IMMUTABLE",
+  "total_routes": 207,
+  "bucket_counts": {
+    "admin": 118,
+    "auth": 5,
+    "community": 18,
+    "governance": 14,
+    "identity_me": 21,
+    "market_guides": 9,
+    "orders_money": 10,
+    "other": 2,
+    "public_marketing": 10
+  },
+  "usdc_focus_routes": [
+    "/orders",
+    "/orders/[id]",
+    "/pay",
+    "/escrow/[id]",
+    "/escrow/[id]/chain",
+    "/disputes",
+    "/disputes/[id]",
+    "/me/payments",
+    "/guide",
+    "/admin/orders",
+    "/admin/orders/[id]",
+    "/admin/finance",
+    "/admin/disputes",
+    "/governance/distribution-claim",
+    "/governance/net-profit-ledger",
+    "/staking"
+  ],
+  "official_probe_sample": {
+    "/": "200",
+    "/traveltrust": "200",
+    "/traveltrust/announcements": "200",
+    "/market": "200",
+    "/did-rank": "200",
+    "/community": "200",
+    "/community/explore": "200",
+    "/guides": "200",
+    "/guide": "200",
+    "/auth/login": "200",
+    "/auth/register": "200",
+    "/auth/forgot-password": "200",
+    "/auth/reset-password": "200",
+    "/auth/verify-email": "200",
+    "/pay": "200",
+    "/orders": "200",
+    "/help": "200",
+    "/privacy": "200",
+    "/terms": "200",
+    "/trust": "200",
+    "/governance": "200",
+    "/governance/proposals": "200",
+    "/staking": "200",
+    "/provider/register": "200",
+    "/guide/register": "200",
+    "/steward/register": "200",
+    "/me": "200",
+    "/me/identities": "200",
+    "/me/payments": "404",
+    "/me/settings/trust": "200",
+    "/market/acquisition": "200",
+    "/market/provider": "200",
+    "/itinerary/new": "200",
+    "/disputes": "200",
+    "/discover": "307",
+    "/network": "200",
+    "/legal/privacy": "404",
+    "/legal/terms": "404",
+    "/admin": "307",
+    "/admin/orders": "307",
+    "/admin/disputes": "307"
+  },
+  "routes_by_bucket": {
+    "admin": [
+      {
+        "route": "/admin/alerts/incidents/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/alerts/incidents",
+        "official_http": null
+      },
+      {
+        "route": "/admin/api-versions",
+        "official_http": null
+      },
+      {
+        "route": "/admin/approvals/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/approvals",
+        "official_http": null
+      },
+      {
+        "route": "/admin/audit/logs/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/audit/operations",
+        "official_http": null
+      },
+      {
+        "route": "/admin/audit",
+        "official_http": null
+      },
+      {
+        "route": "/admin/auth-audit-events",
+        "official_http": null
+      },
+      {
+        "route": "/admin/backup",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/abuse-policy",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/appeals",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/appeals/review",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/comments/visibility",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/moderation/cases",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/penalties",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/policy-change-logs",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/ranking/snapshots",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/reports",
+        "official_http": null
+      },
+      {
+        "route": "/admin/community/risk-signals",
+        "official_http": null
+      },
+      {
+        "route": "/admin/compliance",
+        "official_http": null
+      },
+      {
+        "route": "/admin/compliance/requests/[requestId]/events",
+        "official_http": null
+      },
+      {
+        "route": "/admin/compliance/requests/[requestId]/update",
+        "official_http": null
+      },
+      {
+        "route": "/admin/compliance/requests",
+        "official_http": null
+      },
+      {
+        "route": "/admin/config",
+        "official_http": null
+      },
+      {
+        "route": "/admin/config/releases/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/config/releases",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/announcements",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/catalog-dashboard",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/cities",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/countries",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/country-market",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/geo-validation",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/hotel-tiers",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/import-operations",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/intercity-routes",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/landing-ambient",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/media-assets",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/poi-images/batches/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/poi-images",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/pois",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/pricing",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/publish-queue",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/revisions/compare",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/revisions",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/roadmap",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/seo",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/translation",
+        "official_http": null
+      },
+      {
+        "route": "/admin/content/transport-region-rules",
+        "official_http": null
+      },
+      {
+        "route": "/admin/conversion-analytics",
+        "official_http": null
+      },
+      {
+        "route": "/admin/cross-check",
+        "official_http": null
+      },
+      {
+        "route": "/admin/disputes/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/disputes",
+        "official_http": "307"
+      },
+      {
+        "route": "/admin/drift-summary",
+        "official_http": null
+      },
+      {
+        "route": "/admin/fee-router",
+        "official_http": null
+      },
+      {
+        "route": "/admin/finance",
+        "official_http": null
+      },
+      {
+        "route": "/admin/finance-reconciliation",
+        "official_http": null
+      },
+      {
+        "route": "/admin/finance-suite",
+        "official_http": null
+      },
+      {
+        "route": "/admin/flags",
+        "official_http": null
+      },
+      {
+        "route": "/admin/governance/execution-uat",
+        "official_http": null
+      },
+      {
+        "route": "/admin/growth/airdrop-campaigns",
+        "official_http": null
+      },
+      {
+        "route": "/admin/growth/analytics",
+        "official_http": null
+      },
+      {
+        "route": "/admin/growth/anti-fraud",
+        "official_http": null
+      },
+      {
+        "route": "/admin/growth/early-bird",
+        "official_http": null
+      },
+      {
+        "route": "/admin/growth/kol-center",
+        "official_http": null
+      },
+      {
+        "route": "/admin/growth",
+        "official_http": null
+      },
+      {
+        "route": "/admin/growth/referral-codes",
+        "official_http": null
+      },
+      {
+        "route": "/admin/growth/reward-ledger",
+        "official_http": null
+      },
+      {
+        "route": "/admin/guide-applications/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/guide-applications",
+        "official_http": null
+      },
+      {
+        "route": "/admin/guides/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/guides",
+        "official_http": null
+      },
+      {
+        "route": "/admin/inbox",
+        "official_http": null
+      },
+      {
+        "route": "/admin/indexer",
+        "official_http": null
+      },
+      {
+        "route": "/admin/indexer/reconcile/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/indexer/reconcile-reports",
+        "official_http": null
+      },
+      {
+        "route": "/admin/internal-tools/audits",
+        "official_http": null
+      },
+      {
+        "route": "/admin/jobs",
+        "official_http": null
+      },
+      {
+        "route": "/admin/lifecycle",
+        "official_http": null
+      },
+      {
+        "route": "/admin/media/access-logs",
+        "official_http": null
+      },
+      {
+        "route": "/admin/media/signed-url-tokens",
+        "official_http": null
+      },
+      {
+        "route": "/admin/net-profit-ledger",
+        "official_http": null
+      },
+      {
+        "route": "/admin/observability",
+        "official_http": null
+      },
+      {
+        "route": "/admin/official/accounts",
+        "official_http": null
+      },
+      {
+        "route": "/admin/official/cold-start",
+        "official_http": null
+      },
+      {
+        "route": "/admin/official/guides",
+        "official_http": null
+      },
+      {
+        "route": "/admin/official/itinerary-templates",
+        "official_http": null
+      },
+      {
+        "route": "/admin/official",
+        "official_http": null
+      },
+      {
+        "route": "/admin/official/public-operations",
+        "official_http": null
+      },
+      {
+        "route": "/admin/onboarding/compliance-audit",
+        "official_http": null
+      },
+      {
+        "route": "/admin/onboarding/entitlements/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/onboarding/entitlements",
+        "official_http": null
+      },
+      {
+        "route": "/admin/onboarding",
+        "official_http": null
+      },
+      {
+        "route": "/admin/onboarding/payment-events",
+        "official_http": null
+      },
+      {
+        "route": "/admin/onboarding/webhook-jobs",
+        "official_http": null
+      },
+      {
+        "route": "/admin/operator-guide",
+        "official_http": null
+      },
+      {
+        "route": "/admin/orders/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/orders",
+        "official_http": "307"
+      },
+      {
+        "route": "/admin",
+        "official_http": "307"
+      },
+      {
+        "route": "/admin/permissions",
+        "official_http": null
+      },
+      {
+        "route": "/admin/policies",
+        "official_http": null
+      },
+      {
+        "route": "/admin/provider-applications/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/provider-applications",
+        "official_http": null
+      },
+      {
+        "route": "/admin/region-share/reconcile",
+        "official_http": null
+      },
+      {
+        "route": "/admin/region-vault",
+        "official_http": null
+      },
+      {
+        "route": "/admin/reviews/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/reviews",
+        "official_http": null
+      },
+      {
+        "route": "/admin/scheduler/jobs",
+        "official_http": null
+      },
+      {
+        "route": "/admin/schema",
+        "official_http": null
+      },
+      {
+        "route": "/admin/secrets/metadata",
+        "official_http": null
+      },
+      {
+        "route": "/admin/steward-applications/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/steward-applications",
+        "official_http": null
+      },
+      {
+        "route": "/admin/tenants/scopes",
+        "official_http": null
+      },
+      {
+        "route": "/admin/trust-growth",
+        "official_http": null
+      },
+      {
+        "route": "/admin/users/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/admin/users",
+        "official_http": null
+      },
+      {
+        "route": "/admin/vacancy-ledger",
+        "official_http": null
+      }
+    ],
+    "auth": [
+      {
+        "route": "/auth/forgot-password",
+        "official_http": "200"
+      },
+      {
+        "route": "/auth/login",
+        "official_http": "200"
+      },
+      {
+        "route": "/auth/register",
+        "official_http": "200"
+      },
+      {
+        "route": "/auth/reset-password",
+        "official_http": "200"
+      },
+      {
+        "route": "/auth/verify-email",
+        "official_http": "200"
+      }
+    ],
+    "community": [
+      {
+        "route": "/community/activity",
+        "official_http": null
+      },
+      {
+        "route": "/community/explore",
+        "official_http": "200"
+      },
+      {
+        "route": "/community/feedback",
+        "official_http": null
+      },
+      {
+        "route": "/community/friends",
+        "official_http": null
+      },
+      {
+        "route": "/community/guidelines",
+        "official_http": null
+      },
+      {
+        "route": "/community/me/collects",
+        "official_http": null
+      },
+      {
+        "route": "/community/me/likes",
+        "official_http": null
+      },
+      {
+        "route": "/community/me",
+        "official_http": null
+      },
+      {
+        "route": "/community/me/posts",
+        "official_http": null
+      },
+      {
+        "route": "/community/me/reports/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/community/me/reports",
+        "official_http": null
+      },
+      {
+        "route": "/community/messages/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/community/messages",
+        "official_http": null
+      },
+      {
+        "route": "/community",
+        "official_http": "200"
+      },
+      {
+        "route": "/community/post/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/community/topic/[tag]",
+        "official_http": null
+      },
+      {
+        "route": "/community/tt",
+        "official_http": null
+      },
+      {
+        "route": "/community/user/[id]",
+        "official_http": null
+      }
+    ],
+    "governance": [
+      {
+        "route": "/governance/delegate",
+        "official_http": null
+      },
+      {
+        "route": "/governance/distribution-accruals/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/governance/distribution-accruals",
+        "official_http": null
+      },
+      {
+        "route": "/governance/distribution-claim",
+        "official_http": null
+      },
+      {
+        "route": "/governance/fee-routes",
+        "official_http": null
+      },
+      {
+        "route": "/governance/net-profit-ledger",
+        "official_http": null
+      },
+      {
+        "route": "/governance",
+        "official_http": "200"
+      },
+      {
+        "route": "/governance/params",
+        "official_http": null
+      },
+      {
+        "route": "/governance/proposals/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/governance/proposals/new",
+        "official_http": null
+      },
+      {
+        "route": "/governance/proposals",
+        "official_http": "200"
+      },
+      {
+        "route": "/governance/vacancy-ledger",
+        "official_http": null
+      },
+      {
+        "route": "/governance/vault-forwards",
+        "official_http": null
+      },
+      {
+        "route": "/staking",
+        "official_http": "200"
+      }
+    ],
+    "identity_me": [
+      {
+        "route": "/me/identities/acquisition/settings",
+        "official_http": null
+      },
+      {
+        "route": "/me/identities/guide/settings",
+        "official_http": null
+      },
+      {
+        "route": "/me/identities/merchant/settings",
+        "official_http": null
+      },
+      {
+        "route": "/me/identities",
+        "official_http": "200"
+      },
+      {
+        "route": "/me/identities/region-steward/settings",
+        "official_http": null
+      },
+      {
+        "route": "/me/onboarding",
+        "official_http": null
+      },
+      {
+        "route": "/me",
+        "official_http": "200"
+      },
+      {
+        "route": "/me/password",
+        "official_http": null
+      },
+      {
+        "route": "/me/publish",
+        "official_http": null
+      },
+      {
+        "route": "/me/referrals",
+        "official_http": null
+      },
+      {
+        "route": "/me/security",
+        "official_http": null
+      },
+      {
+        "route": "/me/settings/data",
+        "official_http": null
+      },
+      {
+        "route": "/me/settings/language",
+        "official_http": null
+      },
+      {
+        "route": "/me/settings/notifications-prefs",
+        "official_http": null
+      },
+      {
+        "route": "/me/settings",
+        "official_http": null
+      },
+      {
+        "route": "/me/settings/privacy",
+        "official_http": null
+      },
+      {
+        "route": "/me/settings/profile",
+        "official_http": null
+      },
+      {
+        "route": "/me/settings/trust",
+        "official_http": "200"
+      },
+      {
+        "route": "/provider",
+        "official_http": null
+      },
+      {
+        "route": "/provider/register",
+        "official_http": "200"
+      },
+      {
+        "route": "/steward/register",
+        "official_http": "200"
+      }
+    ],
+    "market_guides": [
+      {
+        "route": "/guide",
+        "official_http": "200"
+      },
+      {
+        "route": "/guide/register",
+        "official_http": "200"
+      },
+      {
+        "route": "/guides/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/guides",
+        "official_http": "200"
+      },
+      {
+        "route": "/market/acquisition/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/market/acquisition",
+        "official_http": "200"
+      },
+      {
+        "route": "/market",
+        "official_http": "200"
+      },
+      {
+        "route": "/market/provider",
+        "official_http": "200"
+      },
+      {
+        "route": "/market/provider/showcase/[id]",
+        "official_http": null
+      }
+    ],
+    "orders_money": [
+      {
+        "route": "/disputes/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/disputes",
+        "official_http": "200"
+      },
+      {
+        "route": "/escrow/[id]/chain",
+        "official_http": null
+      },
+      {
+        "route": "/escrow/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/escrow/[id]/proof",
+        "official_http": null
+      },
+      {
+        "route": "/escrow/[id]/rate",
+        "official_http": null
+      },
+      {
+        "route": "/orders/[id]",
+        "official_http": null
+      },
+      {
+        "route": "/orders/new",
+        "official_http": null
+      },
+      {
+        "route": "/orders",
+        "official_http": "200"
+      },
+      {
+        "route": "/pay",
+        "official_http": "200"
+      }
+    ],
+    "other": [
+      {
+        "route": "/discover",
+        "official_http": "307"
+      },
+      {
+        "route": "/network",
+        "official_http": "200"
+      }
+    ],
+    "public_marketing": [
+      {
+        "route": "/",
+        "official_http": "200"
+      },
+      {
+        "route": "/did-rank",
+        "official_http": "200"
+      },
+      {
+        "route": "/help",
+        "official_http": "200"
+      },
+      {
+        "route": "/itinerary/new",
+        "official_http": "200"
+      },
+      {
+        "route": "/privacy",
+        "official_http": "200"
+      },
+      {
+        "route": "/terms/community-guidelines",
+        "official_http": null
+      },
+      {
+        "route": "/terms",
+        "official_http": "200"
+      },
+      {
+        "route": "/traveltrust/announcements",
+        "official_http": "200"
+      },
+      {
+        "route": "/traveltrust",
+        "official_http": "200"
+      },
+      {
+        "route": "/trust",
+        "official_http": "200"
+      }
+    ]
+  },
+  "honesty": [
+    "enumeration_complete_admin_family_compressed_in_md",
+    "http_200_neq_functional_closure",
+    "phase1_freeze_neq_production_go",
+    "no_fix_during_freeze"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

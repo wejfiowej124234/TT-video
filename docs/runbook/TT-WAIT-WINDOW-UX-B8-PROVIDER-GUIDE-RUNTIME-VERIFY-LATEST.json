@@ -1,0 +1,103 @@
+{
+  "schema": "traveltrust.wait_window_ux_b8_provider_guide_runtime_verify.v1",
+  "batch": "B8-PROVIDER-GUIDE",
+  "verified_utc": "2026-08-10T12:12:00Z",
+  "official_runtime_verify": "PASS",
+  "batch_closed": true,
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "deploy": {
+    "app": "tt-web-prod",
+    "url": "https://www.web3-ttg.com",
+    "git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+    "build_time": "2026-08-10T12:01:49Z"
+  },
+  "checks": [
+    {
+      "id": "B8-PG-001",
+      "results": [
+        {
+          "url": "/provider/register",
+          "title": "Merchant onboarding | TravelTrust",
+          "result": "PASS"
+        },
+        {
+          "url": "/guide/register",
+          "title": "Guide registration | TravelTrust",
+          "result": "PASS"
+        },
+        {
+          "url": "/guide",
+          "title": "Guide dashboard | TravelTrust",
+          "result": "PASS"
+        },
+        {
+          "url": "/guides",
+          "title": "Guides | TravelTrust",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "B8-PG-002",
+      "url": "https://www.web3-ttg.com/guides",
+      "expect": "Owner UAT Guide absent",
+      "observed": "hasUat=false; list starts with public guides (Omar…)",
+      "result": "PASS"
+    },
+    {
+      "id": "B8-PG-003",
+      "decision": "ACCEPT",
+      "result": "CLOSED"
+    },
+    {
+      "id": "B8-PG-004",
+      "decision": "ACCEPT",
+      "result": "CLOSED"
+    },
+    {
+      "id": "B8-PG-005",
+      "decision": "ACCEPT",
+      "result": "CLOSED"
+    },
+    {
+      "id": "B8-PG-006",
+      "decision": "DEFER",
+      "note": "Public display names zh / mobile → B10"
+    },
+    {
+      "id": "B8-PG-007",
+      "decision": "DEFER",
+      "note": "JP locale not shipped"
+    }
+  ],
+  "frozen_untouched": [
+    "Mainnet Reality",
+    "Money Path",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "honesty": [
+    "B8 CLOSED ≠ Seal ≠ Production GO",
+    "Next batch B9 Community"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

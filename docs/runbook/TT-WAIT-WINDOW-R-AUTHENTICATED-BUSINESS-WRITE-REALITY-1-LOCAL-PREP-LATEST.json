@@ -1,0 +1,102 @@
+{
+  "schema": "traveltrust.wait_window_r_authenticated_business_write_reality_1.v1",
+  "batch_id": "R-AUTHENTICATED-BUSINESS-WRITE-REALITY-1",
+  "status": "RUNTIME_VERIFIED",
+  "recorded_utc": "2026-08-11T14:13:00Z",
+  "blocks_track1_finalize": false,
+  "tt_production_go": "NO_GO",
+  "owner_validated": false,
+  "closed": false,
+  "strategy": "MAXIMIZE_PRE_ETA_REMEDIATION · TRACK1_MONEY_PATH_FROZEN",
+  "eta_abort_utc": "2026-08-11T23:45:35Z",
+  "p0_owner_delete_rv": "CLOSED",
+  "latest_official_fe_image": "deployment-01KZRJ5J5MTTG3EG8Y80R2FRF9",
+  "latest_official_api_image": "deployment-01KZRBBXKDK3EJH2FM77B8WF9W",
+  "defects": [
+    {
+      "id": "R-ABW-UNLIKE-1",
+      "status": "RUNTIME_VERIFIED",
+      "blocks_track1_finalize": false,
+      "official_fe_cut": "deployment-01KZRDM8ZJH0P5T98V9M6KW023",
+      "note": "superseded_living_fe_tip_by_guide_idem_cut"
+    },
+    {
+      "id": "R-ABW-GUIDE-IDEM-1",
+      "status": "RUNTIME_VERIFIED",
+      "blocks_track1_finalize": false,
+      "defect": "PATCH /api/v1/me/guide-profile returned 400 missing_idempotency_key",
+      "fix": "writeRequestHeaders on patchMeGuideProfile + patchMeMerchantProfile",
+      "local_test": "meGuideMerchantProfile.idempotency.test.ts PASS",
+      "official_fe_cut": "deployment-01KZRJ5J5MTTG3EG8Y80R2FRF9",
+      "rv": {
+        "patch_status": 200,
+        "idempotency_headers": true,
+        "hard_refresh_persist": true,
+        "guides_list_marker": "R-ABW-GUIDE-RV 20260811T1411Z",
+        "guide_id": "2caceaae-96f2-4b17-82fc-a5f9ed83b779"
+      }
+    }
+  ],
+  "community_comment_rv": {
+    "status": "PASS",
+    "delete_comment": "N/A_CONFIRM_DESIGN_NO_USER_DELETE_ROUTE"
+  },
+  "traveler_non_funded_orders": {
+    "status": "PASS",
+    "cancelled_order_id": "f9ba6651-75f0-4a85-ae6d-85b2e5e23a9c",
+    "authz_cancel_get": 401,
+    "no_fabricated_funded_escrow": true
+  },
+  "post_cut_regression_guide_idem": {
+    "ocs_10x4": "PASS_OCS_10X4_REALITY",
+    "public_gates": "PASS",
+    "role_state_auth_no_token_401": [
+      "orders",
+      "provider/me",
+      "admin/users",
+      "community/me/posts",
+      "referrals",
+      "disputes",
+      "reviews",
+      "me/guide-profile",
+      "me/merchant-profile"
+    ]
+  },
+  "matrix": {
+    "community_create_delete": "PASS",
+    "community_feed_like_unlike": "PASS",
+    "community_comment": "PASS",
+    "traveler_non_funded_orders": "PASS",
+    "guide_provider_profile": "PASS",
+    "merchant_profile_rv": "N/A_NO_MERCHANT_APPLICATION_YET_CLIENT_FIXED_IN_SAME_CUT"
+  },
+  "track1_pin": {
+    "readyAt": 1786491935,
+    "done": false,
+    "usdc": "10000000",
+    "isEscrow": false
+  },
+  "after_seal": [
+    "R-MEDIA",
+    "Indexer",
+    "DB schema cleanup",
+    "community comment user DELETE feature"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

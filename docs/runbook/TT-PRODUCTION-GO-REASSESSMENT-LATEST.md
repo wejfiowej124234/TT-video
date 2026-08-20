@@ -7,6 +7,8 @@
 **Successor:** `TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH`（八项 REQUIRED_BEFORE_GO 窄闭环）  
 **Frontend:** `FROZEN_LATEST_PRODUCT_BASELINE` — 禁止改 UI/UX / checkout 旧 FE / www bake
 
+> **Living Product Truth（后置 · 不改写本冻结包）：** Official www = **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / `hybrid-live-auth-pin-nontarget-v9-20260820`) · historical `daa5ae87` SUPERSEDED · M07 **NOT this wave** · freeze `required_before_go=8` **永不改写**
+
 | 计数 | 值 |
 |------|----|
 | `required_before_go` | **8** |

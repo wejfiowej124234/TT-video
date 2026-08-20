@@ -1,0 +1,198 @@
+{
+  "schema": "traveltrust.wait_window_final_reality_audit.v1",
+  "status": "ACTIVE_CUT_QUEUE_HOLD_PRE_ETA_READ_ONLY_ASSURANCE_PASS_HOLD",
+  "recorded_utc": "2026-08-11T03:07:27Z",
+  "freeze_until_eta": "TT-WAIT-WINDOW-FREEZE-UNTIL-ETA-LATEST",
+  "freeze_mode": "CUT_QUEUE_HOLD_PRE_ETA_READ_ONLY",
+  "hold_lock": "TT-WAIT-WINDOW-CUT-QUEUE-HOLD-PRE-ETA-READ-ONLY-LATEST",
+  "preflight_snapshot": "TT-WAIT-WINDOW-TRACK1-PRE-ETA-READONLY-PREFLIGHT-LATEST",
+  "cut_queue": "TT-WAIT-WINDOW-SEAL-AFTER-OFFICIAL-CUT-QUEUE-LATEST",
+  "cut_queue_unlocked": false,
+  "prior_pack_must_be_closed_before_next": true,
+  "local_prep_new_batches": false,
+  "local_prep_allowed": false,
+  "product_code_mutations": false,
+  "official_runtime_mutations": false,
+  "official_deploy_allowed_now": false,
+  "post_seal_cut_order": [
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1"
+  ],
+  "file_overlap_none": true,
+  "execute_allowed_now": false,
+  "flip_production_go_authorized": false,
+  "pre_finalize_reality_assurance": "TT-WAIT-WINDOW-PRE-FINALIZE-REALITY-ASSURANCE-LATEST",
+  "pre_finalize_verdict": "PASS_HOLD_CUT_QUEUE_HOLD_PRE_ETA_READ_ONLY",
+  "hotfix_this_window": false,
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "truth": {
+    "web3": "mainnet_broadcast_chain_state",
+    "product": "https://www.web3-ttg.com",
+    "api": "https://api.web3-ttg.com"
+  },
+  "sop_local_prep": [
+    "CHECK",
+    "GAP",
+    "LOCAL_MIN_FIX",
+    "LOCAL_TEST",
+    "LOCAL_READY_NOT_DEPLOYED"
+  ],
+  "sop_post_seal": [
+    "OFFICIAL_CUT",
+    "RUNTIME_VERIFY",
+    "SSOT",
+    "STAGING_LOCAL_ALIGN"
+  ],
+  "local_prep_priority": [
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1",
+    "R-LEG-1"
+  ],
+  "batch_mark_before_seal": "LOCAL_READY_NOT_DEPLOYED",
+  "stop_product_work_at_eta": true,
+  "batch1_closed": "TT-WAIT-WINDOW-REALITY-AUDIT-B1-CLOSED-LATEST",
+  "batch2_closed": "TT-WAIT-WINDOW-REALITY-AUDIT-B2-CLOSED-LATEST",
+  "batch2_runtime_verify": "TT-WAIT-WINDOW-REALITY-AUDIT-B2-RUNTIME-VERIFY-LATEST",
+  "batch3_closed": "TT-WAIT-WINDOW-REALITY-AUDIT-B3-CLOSED-LATEST",
+  "batch3_inventory": "TT-WAIT-WINDOW-REALITY-AUDIT-B3-GAP-INVENTORY-LATEST",
+  "batch3_open_separate": [
+    "B3-G-007"
+  ],
+  "batch4_closed": "TT-WAIT-WINDOW-REALITY-AUDIT-B4-CLOSED-LATEST",
+  "batch4_inventory": "TT-WAIT-WINDOW-REALITY-AUDIT-B4-GAP-INVENTORY-LATEST",
+  "batch4_runtime_verify": "TT-WAIT-WINDOW-REALITY-AUDIT-B4-RUNTIME-VERIFY-LATEST",
+  "batch4_hold": [
+    "B4-G-008"
+  ],
+  "batch4_check_open": [
+    "B4-G-006",
+    "B4-G-009"
+  ],
+  "batch5_closed": "TT-WAIT-WINDOW-REALITY-AUDIT-B5-CLOSED-LATEST",
+  "batch5_inventory": "TT-WAIT-WINDOW-REALITY-AUDIT-B5-GAP-INVENTORY-LATEST",
+  "batch5_runtime_verify": "TT-WAIT-WINDOW-REALITY-AUDIT-B5-RUNTIME-VERIFY-LATEST",
+  "batch5_hold": [
+    "B5-G-008"
+  ],
+  "batch5_check_open": [
+    "B5-G-004",
+    "B5-G-005",
+    "B5-G-007"
+  ],
+  "batch5_coverage_gap": [
+    "B5-G-006"
+  ],
+  "historical_api_smoke_fail": "HISTORICAL_RESOLVED",
+  "batches": [
+    {
+      "id": 1,
+      "name": "commercial_user_journey",
+      "mode": "check_fix",
+      "status": "CLOSED"
+    },
+    {
+      "id": 2,
+      "name": "money_display_honesty",
+      "mode": "check_fix_no_fund_exec",
+      "status": "SEALED"
+    },
+    {
+      "id": 3,
+      "name": "fe_api_db_indexer_consistency",
+      "mode": "check_fix",
+      "status": "SEALED",
+      "open_separate": [
+        "B3-G-007"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "cross_layer_business_state_consistency",
+      "mode": "check_gap_blocking_minimal_fix",
+      "status": "SEALED",
+      "hold": [
+        "B4-G-008"
+      ],
+      "check_open": [
+        "B4-G-006",
+        "B4-G-009"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "cross_role_exception_path_deep_audit",
+      "mode": "check_gap_blocking_minimal_fix",
+      "status": "SEALED",
+      "owner_remap_from": "indexer_projection_deep",
+      "roles": [
+        "Traveler",
+        "Guide",
+        "Provider",
+        "Admin"
+      ],
+      "closed": [
+        "B5-G-001",
+        "B5-G-002",
+        "B5-G-003"
+      ],
+      "hold": [
+        "B5-G-008"
+      ],
+      "check_open": [
+        "B5-G-004",
+        "B5-G-005",
+        "B5-G-007"
+      ],
+      "coverage_gap": [
+        "B5-G-006"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "perf_stability",
+      "mode": "check_fix",
+      "status": "PENDING"
+    },
+    {
+      "id": 7,
+      "name": "security_rbac",
+      "mode": "check_fix",
+      "status": "PENDING"
+    },
+    {
+      "id": 8,
+      "name": "business_narrative_honesty",
+      "mode": "check_fix",
+      "status": "PENDING"
+    }
+  ],
+  "parent_eta_hold": "TT-WAIT-WINDOW-ETA-HOLD-PREFLIGHT-POLICY-LATEST",
+  "frozen_untouched": [
+    "Mainnet Reality",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

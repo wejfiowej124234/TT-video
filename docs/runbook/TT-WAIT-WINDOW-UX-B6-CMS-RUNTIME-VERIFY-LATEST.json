@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.wait_window_ux_b6_cms_runtime_verify.v1",
+  "batch": "B6-CMS",
+  "verified_utc": "2026-08-10T11:36:00Z",
+  "official_runtime_verify": "PASS",
+  "batch_closed": true,
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "deploy": {
+    "app": "tt-web-prod",
+    "url": "https://www.web3-ttg.com",
+    "git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+    "build_time": "2026-08-10T11:27:59Z",
+    "note": "Dirty working-tree LandingHeroForm bake into Docker; tip SHA unchanged"
+  },
+  "checks": [
+    {
+      "id": "B6-C-001",
+      "url": "https://www.web3-ttg.com/",
+      "locale": "en",
+      "expect": "Country chips EN labels (Japan, China, South Korea, …)",
+      "observed": "Japan · South Korea · Thailand · Singapore · France · United States · Australia · Spain · United Arab Emirates · China",
+      "result": "PASS"
+    },
+    {
+      "id": "B6-C-002",
+      "decision": "DEFER",
+      "note": "Official community card title still zh (东京摄影一日路线) — Content Accuracy / CMS content track, not this chip i18n batch"
+    }
+  ],
+  "frozen_untouched": [
+    "Mainnet Reality",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock",
+    "Admin RBAC",
+    "Escrow money path"
+  ],
+  "honesty": [
+    "B6 CLOSED ≠ Seal ≠ Production GO",
+    "B6 CLOSED ≠ CMS Content QA Country CLOSED",
+    "Official Runtime wins"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

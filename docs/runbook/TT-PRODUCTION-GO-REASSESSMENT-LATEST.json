@@ -25,6 +25,14 @@
     ]
   },
   "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE",
+  "living_product_truth_amendment": {
+    "name": "OPS-2026.08.20-v9",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "m07": "NOT_THIS_WAVE",
+    "note": "Living amendment only; freeze required_before_go=8 never rewrite; does not flip TT_PRODUCTION_GO"
+  },
   "frontend_lock": {
     "status": "FROZEN_LATEST_PRODUCT_BASELINE",
     "forbid_frontend_page_component_layout_css_font_color_interaction_i18n_asset_or_product_logic": true,

@@ -1,0 +1,97 @@
+{
+  "schema": "traveltrust.v65_final_truth_alignment_report.v1",
+  "key": "V65_FINAL_TRUTH_ALIGNMENT",
+  "title": "V65 Final Truth Alignment Report",
+  "stamp": "20260806T095406Z",
+  "verdict": "PASS",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "doctrine": "Upgrade Final Truth SSOT to V65 Production Reality (not V65 obeying legacy tips)",
+  "runtime_ssot": "V65_PRODUCTION_REALITY",
+  "composition": {
+    "v65_non_web3_baseline": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "production_api_git_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "production_web_git_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "web3_tip_unchanged": "ea71c577ce6f99696df33f9394cf96746edc843b",
+    "web3_pin_unchanged": "PSG-REL-20260720-WEB3-CAND-V2"
+  },
+  "live_probe": {
+    "checks": {
+      "health_200": true,
+      "api_sha_v65": true,
+      "web_sha_v65": true,
+      "deployment_profile_production": true,
+      "attestation_ok": true,
+      "psg_pin_web3_cand_v2": true,
+      "freeze_pin_present": true,
+      "freeze_pin_matches": true
+    },
+    "live": {
+      "api_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "web_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
+      "deployment_profile": "production",
+      "attestation_status": "ok",
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+      "contract_profile": "v311_fund_safety_candidate_v2",
+      "cms_baseline": "public_display_10x4 + catalog_bake=1"
+    },
+    "pin": {
+      "schema": "traveltrust.v65_production_candidate_freeze_pin.v1",
+      "candidate_id": "V65-PROD-CAND-20260802",
+      "unique_rc_id": "V65-PROD-RC-20260806",
+      "freeze_status": "FROZEN",
+      "stamp": "20260806T094900Z",
+      "api_git_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "web_git_sha": "106feef436f205c7286d789b8ff9704c0fb28f48",
+      "v65_baseline": "106feef436f205c7286d789b8ff9704c0fb28f48",
+      "composition_model": "unique_rc_dual_tip_fe_face",
+      "frozen_non_web3_lineage": "V65-PROD-CAND-20260802",
+      "lineage_composition_superseded": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "certificate_sha256": "56b034d8bcfd6b15e4e583dbfd87b58f6f9f44caa116ecc9fccddef8615da306",
+      "tt_production_go": "NO_GO",
+      "note": "Pin refreshed to Unique RC live Production tips (API 1915ec4d / FE 106feef4). Lineage candidate id retained; pre-upgrade composition 0e5d4389 SUPERSEDED as live cite. ≠ Production GO."
+    },
+    "status": "PASS"
+  },
+  "updated_ssots": [
+    "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json",
+    "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md",
+    "docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.json",
+    "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.json",
+    "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-V65-RUNTIME-LATEST.json",
+    "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md"
+  ],
+  "autofix_applied": [
+    "updated_TT_FINAL_TRUTH_BASELINE_LATEST",
+    "wrote_engineering_ssot_v65_runtime_overlay",
+    "patched_TT_FINAL_RELEASE_BASELINE_v65_runtime_face"
+  ],
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true
+  },
+  "honesty": {
+    "alignment_is_not_production_go": true,
+    "legacy_tips_superseded_as_runtime_ssot": true,
+    "web3_orthogonal_locked": true
+  },
+  "report_sha256": "02a83e5a3bdbe109ba155eed8c0511f7ceb9b7d145bf8b37fe8dae89b4bc782f",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

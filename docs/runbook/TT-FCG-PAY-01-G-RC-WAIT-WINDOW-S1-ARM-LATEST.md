@@ -6,6 +6,8 @@
 **Board：** [`PSG-COMPLETION-MATRIX-EMPIRICAL-BOARD-LATEST.json`](../../evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/PSG-COMPLETION-MATRIX-EMPIRICAL-BOARD-LATEST.json)  
 **L3 Prep（并行·不替代 L5）：** [`L3-SECURITY-PREP-PARALLEL-LATEST.json`](../../evidence/GO_phase2_fcg_full_capability_v2_sepolia/pending/L3-SECURITY-PREP-PARALLEL-LATEST.json)
 
+> **Official 产品真源（FTB Product Truth · OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **≠** git checkout · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` SUPERSEDED · M07 **NOT this wave** · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
 ```text
 ACTIVE: 未切换（v311 baseline）
 L5: EMPIRICAL_PARTIAL · l5_pass=false

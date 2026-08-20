@@ -1,0 +1,176 @@
+{
+  "schema": "traveltrust.wait_window_track1_pre_eta_readonly_preflight.v1",
+  "status": "PRE_ETA_HOLD_NOT_EXECUTE",
+  "mode": "FAIL_CLOSED_READ_ONLY",
+  "recorded_utc": "2026-08-11T03:14:19Z",
+  "wall_clock_utc": "2026-08-11T03:14:19Z",
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "before_eta": true,
+  "execute_authorized": false,
+  "anomaly_policy": "RECORD_ONLY_NO_FIX",
+  "product_code_mutations": "NONE",
+  "cut_queue_manifest_mutations": "NONE",
+  "official_runtime_mutations": "NONE",
+  "on_chain_mutations": "NONE",
+  "rpc": "https://ethereum.publicnode.com",
+  "block_number": 25729004,
+  "base_fee_wei": 46238402,
+  "pinned": {
+    "timelock": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "settlement_router": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "fee_router": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+    "escrow": "0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6",
+    "opid": "0xe1d51e09d8c5df11bc83330d5d6c545d3431b3107d6de7652f2c5d840890c116",
+    "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "order_id_bytes32": "0x764cae8c7bfa1a861f82235a982ece4cef1f3e8788826d2ba1db9d084ededda5",
+    "timelock_admin_safe": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "wallet_a_predetermined_executor": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+  },
+  "pf05_detail": "TT-WAIT-WINDOW-TRACK1-PF05-EXECUTOR-GAS-READONLY-LATEST",
+  "checklist": [
+    {
+      "id": "PF-01",
+      "item": "wall_clock_gte_eta",
+      "observed": "2026-08-11T03:14:19Z < 2026-08-11T23:45:35Z",
+      "verdict": "HOLD_BEFORE_ETA",
+      "blocks_execute": true,
+      "note": "Expected before ETA; not a defect"
+    },
+    {
+      "id": "PF-02",
+      "item": "timelock_opid_readyAt_done",
+      "observed": {
+        "opid": "0xe1d51e09d8c5df11bc83330d5d6c545d3431b3107d6de7652f2c5d840890c116",
+        "readyAt_unix": 1786491935,
+        "done": false,
+        "target": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+        "value": 0,
+        "data_decoded": "setEscrow(0x9996FBD5AdB1CaFC2C34396e547a7BC752f4B8d6, true)",
+        "readyAt_matches_eta": true
+      },
+      "verdict": "PASS_PRE_ETA_STATE",
+      "blocks_execute": false
+    },
+    {
+      "id": "PF-03",
+      "item": "escrow_funded_status_and_amount",
+      "observed": {
+        "escrow_status_uint8": 2,
+        "usdc_balance_raw": "10000000",
+        "usdc_balance_human": "10.000000",
+        "expected_human": "10 USDC"
+      },
+      "verdict": "PASS",
+      "blocks_execute": false
+    },
+    {
+      "id": "PF-04",
+      "item": "isEscrow_pre_state",
+      "observed": {
+        "settlement_router": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+        "isEscrow": false,
+        "expected_before_execute": false
+      },
+      "verdict": "PASS",
+      "blocks_execute": false
+    },
+    {
+      "id": "PF-05",
+      "item": "safe_exec_wallet_gas",
+      "observed": {
+        "execute_permission_model": "PERMISSIONLESS_ANY_CALLER",
+        "source": "contracts/src/GovernanceTimelock.sol#execute",
+        "admin_role": "schedule_only",
+        "timelock_admin_safe": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+        "safe_eth_wei": "0",
+        "safe_required_for_execute": false,
+        "predetermined_executor_wallet_a": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+        "wallet_a_eth_wei": "334069075949911771",
+        "wallet_a_eth": "0.334069",
+        "base_fee_wei": 46238402,
+        "conservative_gas_budget_eth_at_50gwei_150k": "0.007500",
+        "gas_headroom_ge_10x": true,
+        "eth_call_execute_revert": "TooEarly()",
+        "eth_call_selector": "0x085de625",
+        "eth_call_meaning": "path reaches time gate; not OnlyAdmin/UnknownOperation; no state change",
+        "allowedExecutionTarget_SR": true,
+        "owner_pk_custody": "OUT_OF_BAND_OWNER_OPERATIONAL_ASSUMED_AT_ETA"
+      },
+      "verdict": "PASS",
+      "blocks_execute": false,
+      "note": "On-chain permission + predetermined Wallet A gas evidenced; PK presence remains Owner ETA operational check (not chain UNKNOWN)"
+    },
+    {
+      "id": "PF-06",
+      "item": "wired_settlement_fee_addresses",
+      "observed": {
+        "settlement_router_pinned": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+        "fee_router_pinned": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+        "timelock_pinned": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+        "usdc_pinned": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "op_target_matches_SR": true,
+        "chain_call_sr_ok": true
+      },
+      "verdict": "PASS_PIN_MATCH",
+      "blocks_execute": false
+    },
+    {
+      "id": "PF-07",
+      "item": "evidence_landing",
+      "observed": {
+        "preflight": "TT-WAIT-WINDOW-TRACK1-PRE-ETA-READONLY-PREFLIGHT-LATEST",
+        "pf05_detail": "TT-WAIT-WINDOW-TRACK1-PF05-EXECUTOR-GAS-READONLY-LATEST",
+        "finalize_template": "docs/runbook/templates/mainnet-money-path/OWNER-TRACK1-REALITY-FINALIZE-EVIDENCE.md",
+        "cut_queue_hold": "TT-WAIT-WINDOW-CUT-QUEUE-HOLD-PRE-ETA-READ-ONLY-LATEST"
+      },
+      "verdict": "PASS",
+      "blocks_execute": false
+    }
+  ],
+  "anomalies_recorded": [
+    {
+      "id": "A-01",
+      "item": "PF-01",
+      "detail": "Wall clock still BEFORE_ETA (~20.5h); execute forbidden — expected",
+      "action": "RECORD_ONLY_NO_FIX"
+    }
+  ],
+  "anomalies_closed": [
+    {
+      "id": "A-02",
+      "item": "PF-05",
+      "prior": "UNKNOWN_RECORD_ONLY",
+      "now": "PASS",
+      "closed_utc": "2026-08-11T03:14:19Z"
+    }
+  ],
+  "overall_verdict": "PRE_ETA_HOLD_NOT_EXECUTE",
+  "blocking_items": [
+    "PF-01"
+  ],
+  "next_action": "remain_cut_queue_hold_at_eta_regenerate_fresh_preflight_require_PF01_to_PF07_all_pass_before_execute",
+  "honesty": [
+    "this_snapshot_is_not_execute_authorization",
+    "PF05_PASS_does_not_waive_PF01",
+    "Seal_after_serial_still_locked",
+    "TT_PRODUCTION_GO_remains_NO_GO",
+    "no_tx_sent_no_state_change"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

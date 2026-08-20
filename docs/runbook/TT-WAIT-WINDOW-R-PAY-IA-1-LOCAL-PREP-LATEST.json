@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.wait_window_r_pay_ia_1_local_prep.v1",
+  "batch_id": "R-PAY-IA-1",
+  "status": "CLOSED",
+  "closed_utc": "2026-08-11T04:30:00Z",
+  "strategy": "TT-WAIT-WINDOW-MAXIMIZE-PRE-ETA-REMEDIATION-LATEST",
+  "blocks_track1_finalize": false,
+  "opens_after": "R-USDC-1_CLOSED",
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "ia_decision": "REDIRECT_HONEST_DEGRADE",
+  "ia_ssot": {
+    "orders": "/orders",
+    "pay": "/pay?orderId=",
+    "escrow": "/escrow/[id]",
+    "me_payments": "redirect_to_/orders_not_product_hub"
+  },
+  "official_rv": {
+    "path": "/me/payments",
+    "http": 307,
+    "location": "/orders",
+    "verified_utc": "2026-08-11T04:29:46Z"
+  },
+  "deploy_shared_with": "R-USDC-1_deployment-01KZQGTP7YAF657CNYANCZXSCT",
+  "local_tests": "4 files / 21 passed",
+  "next_pack": "R-ADMIN-1",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

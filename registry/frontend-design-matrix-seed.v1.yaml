@@ -1,0 +1,768 @@
+# Pack 02 · Frontend Screen / Route Architecture
+# Human: docs/runbook/TT-FRONTEND-SCREEN-ROUTE-ARCHITECTURE-LATEST.md
+# Gate:  python scripts/dev/check-frontend-screen-route-architecture.py
+# Maps over Official www AS-IS + Public Route Matrix 207. Does not copy Pack 01/03–13.
+# Forbidden this wave: fix UI/405, change FIVE-MAIN structure, treat Target as Live,
+# mutate FTB/runtime/Web3/RBAC/money, enter Phase 2.
+
+schema: traveltrust.frontend_screen_route_architecture.v1
+version: 1
+effective_utc: "2026-08-15"
+status: PACK02_FRONTEND_SCREEN_DEEPENED
+pack_id: "02"
+depth_grade: DEEP_PARTIAL
+tt_production_go: NO_GO
+mutation: READ_ONLY_INVENTORY
+phase: PHASE1_AS_IS
+ftb_lock: READ_ONLY_20260812
+human_doc: docs/runbook/TT-FRONTEND-SCREEN-ROUTE-ARCHITECTURE-LATEST.md
+overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+official_surface: https://www.web3-ttg.com
+official_api: https://api.web3-ttg.com
+route_matrix_ssot: docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.json
+route_matrix_human: docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md
+five_main_freeze: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+pack01: CLOSED
+pack03: CLOSED
+pack04: CLOSED
+pack05: CLOSED
+pack06: CLOSED
+pack07: CLOSED
+pack08: CLOSED
+pack09: CLOSED
+pack10: CLOSED
+pack11: CLOSED
+pack12: CLOSED
+pack13: CLOSED
+m2_shallow_frontend: 0
+m2_unresolved_route_pointer: 0
+m2_unresolved_action_capability: 0
+m2_ambiguous_screen_runtime_status: 0
+unexplained_frontend_gap: 0
+stop_after: PACK02
+next_pack_forbidden_this_wave: ["PHASE2"]
+ci02_pm25_merge: FORBIDDEN
+phase2_upgrade: FORBIDDEN
+do_not_expand_to_sixteenth_matrix: true
+total_routes_inventoried: 207
+admin_routes: 118
+living_ssot:
+  - docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.json
+  - docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md
+  - frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+  - registry/product-capability-matrix.v1.yaml
+  - registry/project-cross-maps-10-13.v1.yaml
+  - docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+machine_keys:
+  M2_SHALLOW_FRONTEND: 0
+  M2_UNRESOLVED_ROUTE_POINTER: 0
+  M2_UNRESOLVED_ACTION_CAPABILITY: 0
+  M2_AMBIGUOUS_SCREEN_RUNTIME_STATUS: 0
+  UNEXPLAINED_FRONTEND_GAP: 0
+  TT_PRODUCTION_GO: NO_GO
+
+node_fields:
+  - fe_id
+  - product_domain
+  - route
+  - screen_page
+  - layout_shell
+  - section
+  - component
+  - user_action
+  - capability
+  - api_data_dependency
+  - auth_role_boundary
+  - desktop_mobile_state
+  - loading_empty_error_disabled
+  - runtime_status
+  - evidence
+  - known_gap
+  - cites
+
+hard_split: >
+  Route Exists ≠ Screen Complete ≠ Action Works ≠ E2E Closed.
+  Official www is Frontend AS-IS. FIVE-MAIN structure frozen — do not change to green the matrix.
+  www POST /auth/login historical 405 SUPERSEDED (now ACTION_WIRED). Steward TARGET_NOT_LIVE.
+  PM live 10→10 ≠ $25 WAIT ≠ 10→0.4 Reality. Admin 118 is a domain not a 16th matrix.
+  Future App is DESIGN_ONLY L0. Do not copy Pack 01/03–13 technical matrices.
+  TT_PRODUCTION_GO=NO_GO.
+
+runtime_status_enum:
+  - ROUTE_EXISTS
+  - SCREEN_PARTIAL
+  - ACTION_WIRED
+  - ACTION_BLOCKED
+  - TARGET_NOT_LIVE
+  - DESIGN_ONLY
+
+completeness_enum:
+  - ROUTE_EXISTS
+  - SCREEN_PARTIAL
+  - ACTION_WIRED
+  - ACTION_BLOCKED
+  - TARGET_NOT_LIVE
+  - DESIGN_ONLY
+  - E2E_CLOSED
+
+note: Phase 2 forbidden this wave. Do not fix UI or 405. Target ≠ Live. FIVE-MAIN frozen.
+
+phase2_backlog:
+  - id: P2-LOGIN-405
+    class: ACTION_WIRED
+    fact: Historical Official www POST /auth/login 405 SUPERSEDED; live 200 HttpOnly Owner C2; GAP-LOGIN CLOSED_REALITY
+    do_not_fix_this_wave: true
+  - id: P2-STEWARD-TARGET
+    class: TARGET_NOT_LIVE
+    fact: /steward/register route exists; Seat/Vault Target ≠ Live
+    do_not_fix_this_wave: true
+  - id: P2-PM25-WAIT
+    class: SCREEN_PARTIAL
+    fact: /traveltrust TTG copy live at 10→10; Official /meta NEW PM 100_000; CMS 25T pulse; $25 WAIT is www chrome bake FORBIDDEN
+    do_not_fix_this_wave: true
+  - id: P2-1USDC-REALITY
+    class: SCREEN_PARTIAL
+    fact: Escrow draft shell frozen; Track2 1 USDC Reality HANDOFF
+    do_not_fix_this_wave: true
+  - id: P2-ADMIN-118-SCREENS
+    class: ROUTE_EXISTS
+    fact: Admin 118 routes exist; screens not individually E2E; 307 login wall unauth
+    do_not_fix_this_wave: true
+  - id: P2-RESPONSIVE-I18N
+    class: SCREEN_PARTIAL
+    fact: Modal/Desktop_Mobile columns were empty; Official mobile NOT_PROBED
+    do_not_fix_this_wave: true
+  - id: P2-LEGAL-404
+    class: ROUTE_EXISTS
+    fact: /legal/privacy and /legal/terms Official 404; /privacy /terms 200
+    do_not_fix_this_wave: true
+  - id: P2-ME-PAYMENTS-404
+    class: ROUTE_EXISTS
+    fact: /me/payments Official 404; not in 207 happy path
+    do_not_fix_this_wave: true
+  - id: P2-FUTURE-APP-L0
+    class: DESIGN_ONLY
+    fact: Future App is another L0; reuses GP-01..GP-08; no Official route
+    do_not_fix_this_wave: true
+  - id: P2-PHASE2-NOT-STARTED
+    class: STOP
+    fact: Phase 2 Production-Grade Review forbidden
+    do_not_fix_this_wave: true
+
+bucket_join:
+  public_marketing:
+    count: 10
+    completeness: SCREEN_PARTIAL
+    fe_ids: [FE-HOME, FE-TRAVELTRUST, FE-DID-RANK, FE-ITINERARY, FE-LEGAL, FE-CMS-ANNOUNCE]
+  market_guides:
+    count: 9
+    completeness: SCREEN_PARTIAL
+    fe_ids: [FE-MARKET, FE-GUIDES, FE-GUIDE-DASH, FE-MARKET-PROVIDER, FE-MARKET-ACQUISITION]
+  community:
+    count: 18
+    completeness: SCREEN_PARTIAL
+    fe_ids: [FE-COMMUNITY, FE-COMMUNITY-MESSAGES]
+  orders_money:
+    count: 10
+    completeness: SCREEN_PARTIAL
+    fe_ids: [FE-ORDERS, FE-ESCROW, FE-DISPUTES, FE-PAY]
+  auth:
+    count: 5
+    completeness: ACTION_WIRED
+    fe_ids: [FE-AUTH-LOGIN, FE-AUTH-REGISTER]
+  identity_me:
+    count: 21
+    completeness: SCREEN_PARTIAL
+    fe_ids: [FE-ME, FE-ME-IDENTITIES, FE-PROVIDER-REGISTER, FE-STEWARD, FE-GROWTH]
+  governance:
+    count: 14
+    completeness: SCREEN_PARTIAL
+    fe_ids: [FE-GOVERNANCE, FE-TRAVELTRUST]
+  other:
+    count: 2
+    completeness: ROUTE_EXISTS
+    fe_ids: [FE-HOME]
+  admin:
+    count: 118
+    completeness: ROUTE_EXISTS
+    fe_ids: [FE-ADMIN-CMS, FE-ADMIN-OPS, FE-ADMIN-FINANCE, FE-ADMIN-118-FAMILY]
+
+admin_prefix_join:
+  default: FE-ADMIN-118-FAMILY
+  content: FE-ADMIN-CMS
+  official: FE-ADMIN-CMS
+  media: FE-ADMIN-CMS
+  orders: FE-ADMIN-OPS
+  disputes: FE-ADMIN-OPS
+  users: FE-ADMIN-OPS
+  inbox: FE-ADMIN-OPS
+  guides: FE-ADMIN-OPS
+  guide-applications: FE-ADMIN-OPS
+  provider-applications: FE-ADMIN-OPS
+  steward-applications: FE-ADMIN-OPS
+  reviews: FE-ADMIN-OPS
+  approvals: FE-ADMIN-OPS
+  finance: FE-ADMIN-FINANCE
+  finance-reconciliation: FE-ADMIN-FINANCE
+  finance-suite: FE-ADMIN-FINANCE
+  fee-router: FE-ADMIN-FINANCE
+  net-profit-ledger: FE-ADMIN-FINANCE
+
+screens:
+  - fe_id: FE-HOME
+    product_domain: PUBLIC
+    route: /
+    screen_page: homepage hero
+    layout_shell: five-main FROZEN_①
+    section: AI itinerary + CMS slot + nav
+    component: landing hero
+    user_action: HOME.ITINERARY.CREATE
+    capability: CAP-AI-ITINERARY
+    api_data_dependency: DATA-ITINERARY-GENERATED DATA-CMS-ANNOUNCEMENT DATA-CATALOG-GEO
+    auth_role_boundary: pub GET; create needs CAP-AUTH-SESSION
+    desktop_mobile_state: ① desktop lock; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; create blocked by www 405
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+    known_gap: Route Exists and public Screen; Action Works false until login; not E2E Closed
+    cites: CAP-AI-ITINERARY CAP-CMS-ANNOUNCE CAP-I18N JNY-TRAVELER-AI-ITINERARY CAP-AUTH-SESSION INC-LOGIN REL-OFFICIAL-TRAFFIC
+
+  - fe_id: FE-TRAVELTRUST
+    product_domain: TTG_GATEWAY
+    route: /traveltrust
+    screen_page: five-role + TTG vs USDC copy
+    layout_shell: five-main FROZEN_①
+    section: TTG gateway disclosure
+    component: TTG quote entry
+    user_action: HOME.TTG_PURCHASE.SUBMIT
+    capability: CAP-TTG-GATEWAY
+    api_data_dependency: DATA-PM-PRICE-LIVE DATA-PM-PRICE-TARGET W3-PM-IMPL-GOV04
+    auth_role_boundary: pub read; quote 401 without Bearer
+    desktop_mobile_state: ① desktop lock; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; quote STRICT_SESSION_GATE; $25 WAIT www chrome bake
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+    known_gap: live www chrome 10→10 GOV-04 ED; Official /meta NEW PM 100_000; CMS 25T pulse; $25 WAIT is www bake FORBIDDEN; do not draw 10→0.4 Live
+    cites: CAP-TTG-GATEWAY JNY-TTG-PURCHASE GATE-PM25-ETA GATE-PM-10-TO-04-REALITY INC-PM-TTG W3-PM-IMPL-GOV04 W3-PM-IMPL-25 DATA-PM-PRICE-LIVE REL-PM25
+
+  - fe_id: FE-MARKET
+    product_domain: GUIDE
+    route: /market
+    screen_page: market three subsites
+    layout_shell: five-main FROZEN_①
+    section: 旅行预约 / 商家 / 旅行收购
+    component: UnifiedItineraryList
+    user_action: GUIDES.LIST.VIEW
+    capability: CAP-MARKET-GUIDE-BOOK
+    api_data_dependency: DATA-GUIDE-PROFILE DATA-ORDER
+    auth_role_boundary: pub catalog; book needs session
+    desktop_mobile_state: ① MARKET-L5 desktop; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; book blocked by GAP-FE-BFF-BYPASS + 1 USDC projection/UI
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+    known_gap: catalog Action-wired for read; GAP-FE-BFF-BYPASS CLOSED_REALITY; 1 USDC projection/UI unverified
+    cites: CAP-MARKET-GUIDE-BOOK JNY-TRAVELER-GUIDE-BOOK GATE-1USDC-REALITY CAP-AUTH-SESSION INC-LOGIN REL-ENV-OFFICIAL-WEB
+
+  - fe_id: FE-DID-RANK
+    product_domain: DID_RANK
+    route: /did-rank
+    screen_page: DID rank
+    layout_shell: five-main FROZEN_①
+    section: guides rank
+    component: DidRank list
+    user_action: DID_RANK.VIEW
+    capability: CAP-DID-RANK
+    api_data_dependency: DATA-DID-RANK
+    auth_role_boundary: pub GET
+    desktop_mobile_state: ① freeze; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; empty projection is data not missing page
+    runtime_status: ACTION_WIRED
+    evidence: frontend/evidence/GO_local_marketing_front_closure/DID-RANK-PHASE1-FREEZE.md
+    known_gap: public read works; stake DB≠chain is Pack 04/05 not a missing screen
+    cites: CAP-DID-RANK JNY-DID-RANK-PUBLIC DATA-DID-RANK REL-OFFICIAL-TRAFFIC
+
+  - fe_id: FE-COMMUNITY
+    product_domain: COMMUNITY
+    route: /community
+    screen_page: community feed
+    layout_shell: five-main FROZEN_①
+    section: feed explore publish
+    component: community shell
+    user_action: COMMUNITY.POST.CREATE
+    capability: CAP-COMMUNITY
+    api_data_dependency: DATA-COMMUNITY-POST DATA-MEDIA-OBJECT
+    auth_role_boundary: pub feed; write needs session
+    desktop_mobile_state: ① shell freeze; mobile/search DEFER
+    loading_empty_error_disabled: GET 200; identity pills 向导/商家/主理人/游客 in Official bundle (historical hop FE 2ba08bd4; living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED))
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_marketing_front_closure/COMMUNITY-PHASE1-FREEZE.md
+    known_gap: Official lineage restore 9959ae50 restored 3e600076 identity/delete UI; WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY on historical hop 2ba08bd4 (Sheet QR, no 未配置); living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED); write still not E2E Closed; GAP-LOGIN CLOSED_REALITY
+    cites: CAP-COMMUNITY JNY-COMMUNITY-POST CAP-AUTH-SESSION DATA-COMMUNITY-POST INC-LOGIN REL-OFFICIAL-TRAFFIC
+
+  - fe_id: FE-COMMUNITY-MESSAGES
+    product_domain: COMMUNITY
+    route: /community/messages
+    screen_page: community inbox
+    layout_shell: five-main FROZEN_①
+    section: messages thread
+    component: community DM
+    user_action: COMMUNITY.INBOX.OPEN
+    capability: CAP-COMMUNITY
+    api_data_dependency: DATA-COMMUNITY-DM
+    auth_role_boundary: auth
+    desktop_mobile_state: ① shell; Official mobile NOT_PROBED
+    loading_empty_error_disabled: unauth not probed; DM ≠ DATA-ORDER-MESSAGE
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_marketing_front_closure/COMMUNITY-PHASE1-FREEZE.md
+    known_gap: 18 community routes exist; write/inbox not E2E Closed
+    cites: CAP-COMMUNITY JNY-COMMUNITY-POST DATA-COMMUNITY-DM DATA-ORDER-MESSAGE CAP-AUTH-SESSION INC-LOGIN
+
+  - fe_id: FE-AUTH-LOGIN
+    product_domain: AUTH
+    route: /auth/login
+    screen_page: login
+    layout_shell: AuthL5 FROZEN_①
+    section: credentials form
+    component: AuthLoginForm
+    user_action: AUTH.LOGIN.SUBMIT
+    capability: CAP-AUTH-SESSION
+    api_data_dependency: DATA-SESSION SEC-SESSION-BEARER DEP-LOGIN-WWW-405
+    auth_role_boundary: pub GET; POST must hit API origin not Next page
+    desktop_mobile_state: ① freeze; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; www POST 200 Owner C2 (historical 405 SUPERSEDED)
+    runtime_status: ACTION_WIRED
+    evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.md
+    known_gap: GAP-LOGIN-WWW-405 CLOSED_REALITY; GAP-FE-BFF-BYPASS CLOSED_REALITY; Official FE 9959ae50 C2 /me 200; not traveler E2E
+    cites: CAP-AUTH-SESSION JNY-TRAVELER-LOGIN DEP-LOGIN-WWW-405 INC-LOGIN SEC-SESSION-BEARER SEC-STRICT-SESSION-GATE REL-PROBE-UAT DATA-SESSION
+
+  - fe_id: FE-AUTH-REGISTER
+    product_domain: AUTH
+    route: /auth/register
+    screen_page: register
+    layout_shell: AuthL5 FROZEN_①
+    section: register form + provider step-1
+    component: AuthRegisterForm
+    user_action: AUTH.REGISTER.SUBMIT
+    capability: CAP-AUTH-SESSION
+    api_data_dependency: DATA-USER-ACCOUNT DATA-SESSION
+    auth_role_boundary: pub
+    desktop_mobile_state: ① freeze; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; submit depends on API origin not www 405 path
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_auth_l5/AUTH-REGISTER-UI-FREEZE.md
+    known_gap: five auth routes exist; OTP/reset POST_GO_QUEUE; not E2E Closed
+    cites: CAP-AUTH-SESSION JNY-TRAVELER-LOGIN DATA-USER-ACCOUNT CAP-ONBOARDING-FIAT INC-LOGIN REL-ENV-OFFICIAL-WEB
+
+  - fe_id: FE-ITINERARY
+    product_domain: AI_ITINERARY
+    route: /itinerary/new
+    screen_page: itinerary create
+    layout_shell: marketing layout
+    section: create form
+    component: itinerary new
+    user_action: HOME.ITINERARY.CREATE
+    capability: CAP-AI-ITINERARY
+    api_data_dependency: DATA-ITINERARY-DRAFT DATA-ITINERARY-GENERATED
+    auth_role_boundary: pub/auth; POST needs session
+    desktop_mobile_state: 维护; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; create 401/405
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+    known_gap: hero create 1x is homepage; this route is extra entry; not E2E Closed
+    cites: CAP-AI-ITINERARY JNY-TRAVELER-AI-ITINERARY DATA-ITINERARY-GENERATED CAP-AUTH-SESSION INC-LOGIN
+
+  - fe_id: FE-ME
+    product_domain: TRAVELER
+    route: /me
+    screen_page: me hub
+    layout_shell: me layout
+    section: identities settings referrals
+    component: MeHub
+    user_action: ME.HUB.OPEN
+    capability: CAP-GROWTH
+    api_data_dependency: DATA-USER-ACCOUNT DATA-SESSION
+    auth_role_boundary: auth
+    desktop_mobile_state: 维护; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200 unauth may still render; writes need session
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md
+    known_gap: 21 identity_me routes exist; /me/payments Official 404
+    cites: CAP-GROWTH JNY-TRAVELER-LOGIN CAP-AUTH-SESSION INC-LOGIN DATA-USER-ACCOUNT DATA-REFERRAL
+
+  - fe_id: FE-GUIDES
+    product_domain: GUIDE
+    route: /guides
+    screen_page: guides catalog
+    layout_shell: marketing layout
+    section: guide cards
+    component: GuidesList
+    user_action: GUIDES.LIST.VIEW
+    capability: CAP-MARKET-GUIDE-BOOK
+    api_data_dependency: DATA-GUIDE-PROFILE
+    auth_role_boundary: pub GET
+    desktop_mobile_state: 维护; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200 items nonempty
+    runtime_status: ACTION_WIRED
+    evidence: frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+    known_gap: list read works; /guides/[id] official_http null; book still 405
+    cites: CAP-MARKET-GUIDE-BOOK JNY-TRAVELER-GUIDE-BOOK DATA-GUIDE-PROFILE REL-ENV-OFFICIAL-WEB
+
+  - fe_id: FE-GUIDE-DASH
+    product_domain: GUIDE
+    route: /guide
+    screen_page: guide reception
+    layout_shell: role layout
+    section: inbound orders
+    component: GuideDesk
+    user_action: GUIDE.FULFILL.OPEN
+    capability: CAP-MARKET-GUIDE-BOOK
+    api_data_dependency: DATA-ORDER DATA-ORDER-MESSAGE
+    auth_role_boundary: role guide
+    desktop_mobile_state: 维护; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; fulfill needs session
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+    known_gap: reception empty coverage; not E2E Closed
+    cites: CAP-MARKET-GUIDE-BOOK JNY-GUIDE-FULFILL DATA-ORDER CAP-AUTH-SESSION INC-LOGIN
+
+  - fe_id: FE-PROVIDER-REGISTER
+    product_domain: PROVIDER
+    route: /provider/register
+    screen_page: provider onboarding
+    layout_shell: Provider L5 FROZEN_①
+    section: apply + gate panels
+    component: ProviderRegister
+    user_action: PROVIDER.APPLY.SUBMIT
+    capability: CAP-MARKET-PROVIDER
+    api_data_dependency: DATA-PROVIDER-APPLICATION DATA-ONBOARDING-ENTITLEMENT
+    auth_role_boundary: pub/auth; apply needs session
+    desktop_mobile_state: ① freeze; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; submit 405/401
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_provider_register_closure/PROVIDER-REGISTER-UI-FREEZE.md
+    known_gap: UI freeze ①; Official apply not E2E Closed; fiat orthogonal
+    cites: CAP-MARKET-PROVIDER JNY-PROVIDER-ONBOARD CAP-ONBOARDING-FIAT CAP-AUTH-SESSION INC-LOGIN DATA-PROVIDER-APPLICATION
+
+  - fe_id: FE-MARKET-PROVIDER
+    product_domain: PROVIDER
+    route: /market/provider
+    screen_page: merchant subsite
+    layout_shell: market L5
+    section: 商家 listings
+    component: market provider grid
+    user_action: PROVIDER.LIST.VIEW
+    capability: CAP-MARKET-PROVIDER
+    api_data_dependency: DATA-PROVIDER-APPLICATION DATA-ORDER
+    auth_role_boundary: pub/role
+    desktop_mobile_state: ① 子站; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+    known_gap: listing read; publish/apply still session/405
+    cites: CAP-MARKET-PROVIDER JNY-PROVIDER-ONBOARD CAP-AUTH-SESSION REL-ENV-OFFICIAL-WEB
+
+  - fe_id: FE-MARKET-ACQUISITION
+    product_domain: ACQUISITION
+    route: /market/acquisition
+    screen_page: acquisition subsite
+    layout_shell: Hub UI frozen ①
+    section: acquisition listings
+    component: AcquisitionHub
+    user_action: ACQUISITION.LIST.VIEW
+    capability: CAP-MARKET-ACQUISITION
+    api_data_dependency: DATA-ORDER DATA-ONBOARDING-ENTITLEMENT
+    auth_role_boundary: role; publish needs identities trust
+    desktop_mobile_state: ①; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; publish 405/401
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md
+    known_gap: PD-009 Hub frozen; bond/listing ②③; not E2E Closed
+    cites: CAP-MARKET-ACQUISITION JNY-ACQUISITION-PUBLISH CAP-AUTH-SESSION CAP-ADMIN-FOUR-CENTERS INC-LOGIN
+
+  - fe_id: FE-ME-IDENTITIES
+    product_domain: ACQUISITION
+    route: /me/identities
+    screen_page: identities hub
+    layout_shell: ME-IDENTITIES-UI-FREEZE
+    section: four-role identities
+    component: IdentitiesHub
+    user_action: ME.IDENTITIES.ENTER_SUBSITE
+    capability: CAP-MARKET-ACQUISITION
+    api_data_dependency: DATA-USER-ACCOUNT DATA-ONBOARDING-ENTITLEMENT
+    auth_role_boundary: auth
+    desktop_mobile_state: ① Hub lock; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; enter subsite needs session
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md
+    known_gap: settings child routes official_http null; not E2E Closed
+    cites: CAP-MARKET-ACQUISITION JNY-ACQUISITION-PUBLISH CAP-AUTH-SESSION INC-LOGIN DATA-USER-ACCOUNT
+
+  - fe_id: FE-ESCROW
+    product_domain: ORDER_ESCROW
+    route: /escrow/[id]
+    screen_page: escrow order
+    layout_shell: draft Experience FROZEN_①; chain page NOT_FROZEN
+    section: status + messages
+    component: EscrowDetail
+    user_action: ESCROW.OPEN
+    capability: CAP-ESCROW-USDC
+    api_data_dependency: DATA-ORDER DATA-ESCROW-CHAIN DATA-ESCROW-PROJECTION
+    auth_role_boundary: auth
+    desktop_mobile_state: draft shell lock; Official mobile NOT_PROBED
+    loading_empty_error_disabled: official_http null; session required
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md
+    known_gap: draft Screen Complete ①; on-chain page not frozen; 1 USDC HANDOFF ≠ E2E Closed
+    cites: CAP-ESCROW-USDC JNY-ESCROW-RELEASE-REFUND GATE-1USDC-REALITY INC-MONEY-SETTLEMENT S01 W3-SR-FT W3-FR-OLD CAP-AUTH-SESSION
+
+  - fe_id: FE-ORDERS
+    product_domain: ORDER_ESCROW
+    route: /orders
+    screen_page: order list
+    layout_shell: L5 维护
+    section: USDC orders
+    component: OrdersList
+    user_action: ORDERS.LIST.VIEW
+    capability: CAP-ESCROW-USDC
+    api_data_dependency: DATA-ORDER
+    auth_role_boundary: auth
+    desktop_mobile_state: 维护; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; list may be empty unauth
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md
+    known_gap: USDC_ONLY list; create/book blocked by 405
+    cites: CAP-ESCROW-USDC JNY-TRAVELER-GUIDE-BOOK DATA-ORDER CAP-AUTH-SESSION INC-LOGIN
+
+  - fe_id: FE-DISPUTES
+    product_domain: DISPUTE
+    route: /disputes
+    screen_page: disputes
+    layout_shell: 维护
+    section: dispute list
+    component: DisputesList
+    user_action: DISPUTES.OPEN
+    capability: CAP-DISPUTES
+    api_data_dependency: DATA-DISPUTE DATA-ORDER
+    auth_role_boundary: auth
+    desktop_mobile_state: 维护; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; write needs session
+    runtime_status: SCREEN_PARTIAL
+    evidence: registry/data-truth-matrix.v1.yaml
+    known_gap: route exists; not a missing L7 dispute contract; 405
+    cites: CAP-DISPUTES JNY-ESCROW-RELEASE-REFUND DATA-DISPUTE CAP-ESCROW-USDC CAP-AUTH-SESSION INC-LOGIN
+
+  - fe_id: FE-PAY
+    product_domain: ORDER_ESCROW
+    route: /pay
+    screen_page: pay hub
+    layout_shell: Pay hub ①
+    section: USDC pay
+    component: PayHub
+    user_action: PAY.SUBMIT
+    capability: CAP-ESCROW-USDC
+    api_data_dependency: DATA-ORDER DATA-ESCROW-CHAIN
+    auth_role_boundary: auth
+    desktop_mobile_state: ①; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; pay needs session
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md
+    known_gap: USDC_ONLY; not TTG rail; not E2E Closed
+    cites: CAP-ESCROW-USDC JNY-ESCROW-RELEASE-REFUND DATA-ORDER CAP-AUTH-SESSION S01 REL-ENV-OFFICIAL-WEB
+
+  - fe_id: FE-GOVERNANCE
+    product_domain: GOVERNANCE
+    route: /governance
+    screen_page: governance portal
+    layout_shell: ① 收口维护
+    section: proposals queue
+    component: GovernanceHub
+    user_action: GOVERNANCE.QUEUE.VIEW
+    capability: CAP-GOVERNANCE-PORTAL
+    api_data_dependency: W3-GOVERNOR W3-TIMELOCK DATA-PM-PRICE-LIVE
+    auth_role_boundary: pub/auth
+    desktop_mobile_state: ①; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; vote/claim not Official live
+    runtime_status: SCREEN_PARTIAL
+    evidence: registry/governance-economic-matrix.v1.yaml
+    known_gap: "portal live; Proposal #3 orthogonal; CI-02/PM25 WAIT; not E2E Closed"
+    cites: CAP-GOVERNANCE-PORTAL JNY-GOVERNANCE-QUEUE GATE-PROPOSAL-3 INC-TIMELOCK-WAIT AUTH-PROPOSAL-3-ORTHOGONAL GATE-CI02-ETA GATE-PM25-ETA W3-GOVERNOR
+
+  - fe_id: FE-STEWARD
+    product_domain: REGION_STEWARD
+    route: /steward/register
+    screen_page: steward apply
+    layout_shell: five-role / register FROZEN_①
+    section: seat apply copy
+    component: StewardRegister
+    user_action: STEWARD.APPLY.SUBMIT
+    capability: CAP-REGION-STEWARD
+    api_data_dependency: W3-SEAT-REGISTRY W3-REGION-VAULT DATA-ONBOARDING-ENTITLEMENT
+    auth_role_boundary: pub GET; Seat Claim is not this form
+    desktop_mobile_state: ①; Official mobile NOT_PROBED
+    loading_empty_error_disabled: GET 200; Seat/Vault NOT_DEPLOYED
+    runtime_status: TARGET_NOT_LIVE
+    evidence: registry/web3-contract-architecture-matrix.v1.yaml
+    known_gap: Route Exists; Target ≠ Live; do not draw Official Seat Claim
+    cites: CAP-REGION-STEWARD JNY-REGION-STEWARD-CLAIM GATE-SEAT-CI01 GATE-VAULT-CI03 DEP-S05-REGION-83 INC-STEWARD-NOT-DEPLOYED W3-SEAT-REGISTRY AUTH-STEWARD-CLAIM REL-JP-VAULT
+
+  - fe_id: FE-ADMIN-CMS
+    product_domain: ADMIN
+    route: /admin/content
+    screen_page: Admin CMS content
+    layout_shell: Admin AUTH_GATED
+    section: content 23 routes
+    component: AdminContent
+    user_action: ADMIN.CMS.PUBLISH
+    capability: CAP-CMS-ANNOUNCE
+    api_data_dependency: DATA-CMS-ANNOUNCEMENT DATA-MEDIA-OBJECT SEC-CMS-OCS
+    auth_role_boundary: admin SuperAdmin; unauth 307
+    desktop_mobile_state: ADMIN; Official mobile NOT_PROBED
+    loading_empty_error_disabled: unauth 307; publish ≠ Web3 execute
+    runtime_status: ROUTE_EXISTS
+    evidence: data/catalog/cms-asset-matrix.v1.yaml
+    known_gap: content/official/media routes exist; screens not individually E2E
+    cites: CAP-CMS-ANNOUNCE CAP-ADMIN-FOUR-CENTERS JNY-ADMIN-CMS INC-CMS-OBJECT INC-ADMIN SEC-CMS-OCS AUTH-CMS-PUBLISH
+
+  - fe_id: FE-ADMIN-OPS
+    product_domain: ADMIN
+    route: /admin/orders
+    screen_page: Admin ops orders/users
+    layout_shell: Admin AUTH_GATED
+    section: orders disputes users inbox
+    component: AdminOrders
+    user_action: ADMIN.ORDERS.VIEW
+    capability: CAP-ADMIN-FOUR-CENTERS
+    api_data_dependency: DATA-ORDER DATA-DISPUTE SEC-SUPERADMIN
+    auth_role_boundary: admin; unauth 307
+    desktop_mobile_state: ADMIN; Official mobile NOT_PROBED
+    loading_empty_error_disabled: Official unauth 307 login wall
+    runtime_status: ROUTE_EXISTS
+    evidence: registry/security-identity-authority-matrix.v1.yaml
+    known_gap: ops family Route Exists; USDC H3 Cert UAT later; not E2E Closed
+    cites: CAP-ADMIN-FOUR-CENTERS JNY-ADMIN-CMS INC-ADMIN INC-403 SEC-SUPERADMIN DATA-ORDER CAP-ESCROW-USDC
+
+  - fe_id: FE-ADMIN-FINANCE
+    product_domain: ADMIN
+    route: /admin/finance
+    screen_page: Admin finance
+    layout_shell: Admin AUTH_GATED
+    section: finance fee-router reconciliation
+    component: AdminFinance
+    user_action: ADMIN.FINANCE.VIEW
+    capability: CAP-ADMIN-FOUR-CENTERS
+    api_data_dependency: DATA-ORDER W3-FR-OLD S04
+    auth_role_boundary: admin; unauth 307
+    desktop_mobile_state: ADMIN; Official mobile NOT_PROBED
+    loading_empty_error_disabled: 307 unauth; USER_FUNDS=0
+    runtime_status: ROUTE_EXISTS
+    evidence: registry/commercial-money-lifecycle-matrix.v1.yaml
+    known_gap: finance routes exist; not Official money Reality; not E2E Closed
+    cites: CAP-ADMIN-FOUR-CENTERS INC-ADMIN S04 W3-FR-OLD REL-FR-OLD CAP-ESCROW-USDC SEC-SUPERADMIN
+
+  - fe_id: FE-ADMIN-118-FAMILY
+    product_domain: ADMIN
+    route: /admin/*
+    screen_page: Admin 118 remainder
+    layout_shell: Admin AUTH_GATED
+    section: growth onboarding indexer config secrets
+    component: AdminRemainder
+    user_action: ADMIN.FAMILY.OPEN
+    capability: CAP-ADMIN-FOUR-CENTERS
+    api_data_dependency: SEC-SUPERADMIN AUTH-CMS-PUBLISH
+    auth_role_boundary: admin; unauth 307
+    desktop_mobile_state: ADMIN 118 domain not 16th matrix
+    loading_empty_error_disabled: 118 Route Exists; screens not individually complete
+    runtime_status: ROUTE_EXISTS
+    evidence: docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md
+    known_gap: 118 enumerated; remainder mapped here; Action Works and E2E Closed false
+    cites: CAP-ADMIN-FOUR-CENTERS JNY-ADMIN-CMS INC-ADMIN INC-403 SEC-SUPERADMIN REL-ENV-OFFICIAL-WEB
+
+  - fe_id: FE-LEGAL
+    product_domain: LEGAL
+    route: /trust
+    screen_page: trust / help / terms
+    layout_shell: marketing footer
+    section: legal links
+    component: TrustCenter
+    user_action: LEGAL.READ
+    capability: CAP-LEGAL-TRUST
+    api_data_dependency: REL-ENV-OFFICIAL-WEB
+    auth_role_boundary: pub
+    desktop_mobile_state: 维护; Official mobile NOT_PROBED
+    loading_empty_error_disabled: /trust /privacy /terms 200; /legal/privacy /legal/terms 404
+    runtime_status: SCREEN_PARTIAL
+    evidence: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+    known_gap: dual-path 404 is Official AS-IS; not E2E Closed for legal signoff
+    cites: CAP-LEGAL-TRUST REL-ENV-OFFICIAL-WEB REL-OFFICIAL-TRAFFIC
+
+  - fe_id: FE-I18N
+    product_domain: I18N
+    route: /
+    screen_page: header language
+    layout_shell: five-main chrome
+    section: header
+    component: LanguageButton
+    user_action: I18N.SWITCH
+    capability: CAP-I18N
+    api_data_dependency: REL-ENV-OFFICIAL-WEB
+    auth_role_boundary: pub
+    desktop_mobile_state: button present; locale completeness NOT_PROBED
+    loading_empty_error_disabled: control present; not a structure reopen
+    runtime_status: ACTION_WIRED
+    evidence: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+    known_gap: i18n chrome exists; do not reopen FIVE-MAIN layout; settings/language DEFER
+    cites: CAP-I18N REL-ENV-OFFICIAL-WEB REL-OFFICIAL-TRAFFIC
+
+  - fe_id: FE-CMS-ANNOUNCE
+    product_domain: CMS
+    route: /
+    screen_page: homepage CMS slot
+    layout_shell: five-main
+    section: announcements
+    component: CmsSlot
+    user_action: CMS.ANNOUNCE.READ
+    capability: CAP-CMS-ANNOUNCE
+    api_data_dependency: DATA-CMS-ANNOUNCEMENT DATA-MEDIA-OBJECT
+    auth_role_boundary: pub read; Admin publish
+    desktop_mobile_state: ①; Official mobile NOT_PROBED
+    loading_empty_error_disabled: no static fallback Official
+    runtime_status: ACTION_WIRED
+    evidence: data/catalog/cms-asset-matrix.v1.yaml
+    known_gap: gp dash expected; Admin 118 publish screens remain ROUTE_EXISTS
+    cites: CAP-CMS-ANNOUNCE JNY-ADMIN-CMS DATA-CMS-ANNOUNCEMENT INC-CMS-OBJECT SEC-CMS-OCS AUTH-CMS-PUBLISH
+
+  - fe_id: FE-GROWTH
+    product_domain: GROWTH
+    route: /me/referrals
+    screen_page: referrals
+    layout_shell: me layout
+    section: referral list
+    component: Referrals
+    user_action: GROWTH.REFERRAL.VIEW
+    capability: CAP-GROWTH
+    api_data_dependency: DATA-REFERRAL DATA-SESSION
+    auth_role_boundary: auth
+    desktop_mobile_state: 维护; Official mobile NOT_PROBED
+    loading_empty_error_disabled: official_http null; 405/401
+    runtime_status: SCREEN_PARTIAL
+    evidence: registry/data-truth-matrix.v1.yaml
+    known_gap: route exists; not L7; login 405
+    cites: CAP-GROWTH JNY-TRAVELER-LOGIN DATA-REFERRAL CAP-AUTH-SESSION INC-LOGIN
+
+  - fe_id: FE-FUTURE-APP
+    product_domain: FUTURE_APP
+    route: DESIGN_ONLY
+    screen_page: future app L0
+    layout_shell: not Official www
+    section: none
+    component: none
+    user_action: NONE_FUTURE_L0
+    capability: DESIGN_ONLY
+    api_data_dependency: DESIGN_ONLY
+    auth_role_boundary: DESIGN_ONLY
+    desktop_mobile_state: DESIGN_ONLY
+    loading_empty_error_disabled: no Official route
+    runtime_status: DESIGN_ONLY
+    evidence: registry/backend-truth-architecture.v1.yaml
+    known_gap: another L0; reuses GP-01..GP-08; not a 16th matrix
+    cites: CAP-I18N REL-ENV-OFFICIAL-WEB

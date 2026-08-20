@@ -1,0 +1,277 @@
+{
+  "schema": "traveltrust.production_go_reassessment_cycle2.v1",
+  "machine_key": "TT_PRODUCTION_GO_REASSESSMENT_CYCLE2",
+  "stamp": "TT_PRODUCTION_GO_REASSESSMENT_CYCLE2_READY_FOR_OWNER_PRODUCTION_GO_VERDICT",
+  "status": "READY_FOR_OWNER_PRODUCTION_GO_VERDICT",
+  "stop": true,
+  "read_only": true,
+  "issued_at_utc": "2026-08-18T07:00:00Z",
+  "owner_auth_this_turn": "OPEN_NEW_TT_PRODUCTION_GO_REASSESSMENT_READ_ONLY_CITE_FREEZE_94785A66",
+  "cite_stop_freeze": {
+    "human": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.md",
+    "machine": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.json",
+    "status": "TT_PRODUCTION_GO_REASSESSMENT_STOP",
+    "freeze_sha": "94785a66",
+    "frozen_at_utc": "2026-08-18T04:00:00Z",
+    "required_before_go": 8,
+    "hard_gate": "REFUSED",
+    "do_not_rewrite_counts_to_look_greener": true,
+    "frozen_as_final_closure_unique_entry": true,
+    "note": "Historical unique Final Closure entry. Cycle2 must cite these counts. Must not rewrite freeze pack required_before_go from 8 to 0."
+  },
+  "cite_final_closure_batch": {
+    "human": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.md",
+    "machine": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.json",
+    "batch_remaining": 0,
+    "gap_e2e_journey": "CLOSED",
+    "axis14": "PASS"
+  },
+  "frontend_product_baseline": "FROZEN_LATEST_PRODUCT_BASELINE",
+  "frontend_lock": {
+    "status": "FROZEN_LATEST_PRODUCT_BASELINE",
+    "forbid_frontend_page_component_layout_css_font_color_interaction_i18n_asset_or_product_logic": true,
+    "forbid_checkout_rollback_reset_to_old_fe_tip": true,
+    "forbid_web_rebuild_bake_deploy": true,
+    "copy_text_in_docs_registry_backend_allowed": true,
+    "copy_that_requires_official_www_bake": false,
+    "if_task_requires_frontend_change_or_reship": "STOP_AND_REPORT"
+  },
+  "tt_production_go": "NO_GO",
+  "owner_production_go_verdict": "NOT_THIS_TURN",
+  "auto_issue_production_go": false,
+  "next_step": "OWNER_WRITTEN_GO_OR_CONTINUE_NO_GO_NOT_TECH_FIX",
+  "official_product_truth": {
+    "web": "https://www.web3-ttg.com",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "identity_sha_is_not_product_bytes": true,
+    "must_not_git_checkout_as_live": true,
+    "superseded_www_pin": {
+      "git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "build_time": "2026-08-16T15:15:49Z",
+      "fly_image": "registry.fly.io/tt-web-prod:deployment-01M05JAAXJPTRZJAQEJ4JJWQMK"
+    },
+    "rolled_back_m07_overlay": {
+      "git_sha": "2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
+      "image": "hybrid-live-auth-pin-nontarget-v9-m07-unlock-20260820",
+      "status": "ROLLED_BACK_NOT_LIVING"
+    },
+    "historical_live_fe_superseded_as_product_truth": [
+      "2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8",
+      "3e600076eab6613b55484852197921cb5c622f7e",
+      "9959ae506c0ccaf65c6d191fbe32fe5f18815f31",
+      "daa5ae87b8c1af548c6beff6dd3451e5d386acf2"
+    ],
+    "last_live_observe_utc": "2026-08-20T09:05:14Z",
+    "observe_matches_pin": true,
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "freeze_required_before_go": 8,
+  "current_required_before_go": 0,
+  "unexplained_drift": 0,
+  "hard_gate_freeze_pack": "REFUSED",
+  "hard_gate_entry": "PASS",
+  "hard_gate_live": {
+    "script": "bash scripts/gates/check-mainnet-cutover-hard-gate.sh",
+    "exit": 0,
+    "verdict": "AUTHORIZED_FOR_WAVE",
+    "cutover": "CUTOVER_HARD_GATE_PASS",
+    "open_axes": [],
+    "open_axis_count": 0,
+    "full_go": false,
+    "user_funds_enabled": false,
+    "registry_ssot_verdict_stays": "REFUSED",
+    "cited_do_not_rerun_closed_campaigns": true,
+    "note": "Living file-evidence gate. AUTHORIZED_FOR_WAVE is Hard Gate entry PASS for this Cycle2. Not FULL_GO. Not TT_PRODUCTION_GO. Registry SSOT current_verdict stays REFUSED. Do not recast L7, do not repeat 1 USDC, do not bake Frozen Web, do not execute CI-02 B."
+  },
+  "entry_to_owner_go_verdict": {
+    "required": {
+      "current_required_before_go": 0,
+      "unexplained_drift": 0,
+      "hard_gate_entry": "PASS",
+      "tt_psg_production_cert": "PASS",
+      "gap_e2e_journey": "CLOSED",
+      "axis14": "PASS"
+    },
+    "this_turn_meets_entry": true,
+    "owner_must_write_verdict": true,
+    "must_not_auto_flip_tt_production_go": true,
+    "reason": "Freeze unique entry stays required_before_go=8. Current eligibility: batch remaining=0, GAP-E2E-JOURNEY=CLOSED, AXIS-14=PASS, living Hard Gate open_axes=0 AUTHORIZED_FOR_WAVE, unexplained_drift=0, TT_PSG_PRODUCTION_CERT=PASS. Output READY_FOR_OWNER_PRODUCTION_GO_VERDICT and STOP. Owner written verdict still required. TT_PRODUCTION_GO stays NO_GO."
+  },
+  "current_eight_from_freeze": [
+    {
+      "id": "AXIS-09",
+      "freeze_residual_id": "HG_AXIS_09_READINESS_P0_STAMP",
+      "current_class": "ALREADY_CLOSED",
+      "status": "CLOSED",
+      "cite": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH"
+    },
+    {
+      "id": "FTB_STAMP_LAG_CLUSTER",
+      "freeze_residual_id": "FTB_STAMP_LAG_CLUSTER",
+      "current_class": "ALREADY_CLOSED",
+      "status": "CLOSED",
+      "cite": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH"
+    },
+    {
+      "id": "TT_PSG_PRODUCTION_CERT",
+      "freeze_residual_id": "TT_PSG_PRODUCTION_CERT",
+      "current_class": "ALREADY_CLOSED",
+      "status": "CLOSED",
+      "cite": "registry/psg-phase-b-production-cert.v1.yaml status=PASS"
+    },
+    {
+      "id": "AXIS-08",
+      "freeze_residual_id": "HG_AXIS_08_R01_OR_OWNER_RESIDUAL",
+      "current_class": "ALREADY_CLOSED",
+      "status": "CLOSED",
+      "cite": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH"
+    },
+    {
+      "id": "AXIS-11",
+      "freeze_residual_id": "HG_AXIS_11_DEPLOYMENT_PACKAGE",
+      "current_class": "ALREADY_CLOSED",
+      "status": "CLOSED",
+      "cite": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH"
+    },
+    {
+      "id": "AXIS-12",
+      "freeze_residual_id": "HG_AXIS_12_SHADOW_LAUNCH_GO",
+      "current_class": "ALREADY_CLOSED",
+      "status": "CLOSED",
+      "cite": "TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH"
+    },
+    {
+      "id": "GAP-E2E-JOURNEY",
+      "freeze_residual_id": "GAP_E2E_JOURNEY",
+      "current_class": "ALREADY_CLOSED",
+      "status": "CLOSED",
+      "order_uuid": "7d91f354-af9d-461c-8790-b70a597751af",
+      "cite": "docs/runbook/TT-GAP-E2E-JOURNEY-OFFICIAL-C2-NONMONEY-LATEST.json"
+    },
+    {
+      "id": "AXIS-14",
+      "freeze_residual_id": "HG_AXIS_14_OWNER_CUTOVER_AUTH",
+      "current_class": "ALREADY_CLOSED",
+      "status": "CLOSED",
+      "verdict": "AUTHORIZED_FOR_WAVE",
+      "cite": "docs/runbook/TT-AXIS-14-HARD-GATE-PASS-LATEST.json"
+    }
+  ],
+  "cite_do_not_recast": {
+    "final_reality_release_certification": {
+      "human": "docs/runbook/TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md",
+      "machine": "docs/runbook/TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.json",
+      "status": "FINAL_REALITY_RELEASE_CERTIFICATION_PASS",
+      "issued_at_utc": "2026-08-18T03:20:00Z",
+      "blocking_p0_p1": 0,
+      "unexplained_drift": 0
+    },
+    "v8_mainnet_reality_consistency": {
+      "status": "PASS_STOP",
+      "issued_at_utc": "2026-08-18T03:00:00Z"
+    },
+    "official_runtime": {
+      "www_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "www_build_time": "2026-08-20T00:51:57Z",
+      "www_name": "OPS-2026.08.20-v9",
+      "www_image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+      "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "api_meta_chain_id": 1,
+      "do_not_bake_www": true
+    },
+    "living_ftb": {
+      "status": "ACTIVE_UNIQUE_SSOT",
+      "cycle": "TT_FINAL_TRUTH_BASELINE_V8_CYCLE_20260818",
+      "tt_production_go": "NO_GO",
+      "phase_now_stays": "FTB_V8_CYCLE_ACTIVE_PRODUCTION_GO_REASSESSMENT_STOP_REQUIRED_BEFORE_GO_OPEN"
+    },
+    "phase_2a": {
+      "unexplained_drift": 0,
+      "phase_2b": "FORBIDDEN"
+    },
+    "gap_1usdc_owner_a": {
+      "human": "docs/runbook/TT-GAP-1USDC-HANDOFF-OWNER-CLASSIFY-A-LATEST.md",
+      "status": "CLOSED_REALITY",
+      "do_not_repeat_real_money": true
+    }
+  },
+  "honest_not_current_required_before_go": [
+    {
+      "id": "OWNER_WRITTEN_PRODUCTION_GO_VERDICT",
+      "class": "OWNER_ACTION_REQUIRED",
+      "fact": "Cycle2 stops at READY_FOR_OWNER_PRODUCTION_GO_VERDICT. Owner must write GO or refuse. Agent must not auto-issue TT_PRODUCTION_GO."
+    },
+    {
+      "id": "USER_FUNDS_AND_PM_TRADING_SWITCH",
+      "class": "OWNER_ACCEPTED_ED",
+      "fact": "user_funds_enabled=false and primary_market_trading_enabled=false remain the Owner GO switch. Stay false until Owner written Production GO."
+    },
+    {
+      "id": "HARD_GATE_REGISTRY_SSOT_REFUSED",
+      "class": "OWNER_ACCEPTED_ED",
+      "fact": "registry/mainnet-cutover-hard-gate.v1.yaml current_verdict stays REFUSED (candidate-v2 gate). Living evidence AUTHORIZED_FOR_WAVE. Not unexplained drift."
+    },
+    {
+      "id": "CURRENT_PRODUCTION_SCOPE_SEPOLIA",
+      "class": "OWNER_ACCEPTED_ED",
+      "fact": "web3-mainnet-production-readiness-gate current_production_scope remains PRODUCTION_SCOPE_SEPOLIA while mainnet_cutover_authorized=true. Expected until Owner GO. Do not flip scope here."
+    },
+    {
+      "id": "FROZEN_WWW_AND_DUAL_SR",
+      "class": "OWNER_ACCEPTED_ED",
+      "fact": "Living www = OPS-2026.08.20-v9 (3e356617). Historical freeze-era Expected Difference was Frozen www daa5ae87 vs NEW API + Track1 SR 0xe5C3 KEEP vs live /meta SR-FT 0xD1DA (CONFIRM_DESIGN). Do not bake www to look green. Do not swap KEEP SR. M07 overlay ROLLED_BACK_NOT_LIVING."
+    },
+    {
+      "id": "CI02_B_BITGET_83_SEAT_VAULT",
+      "class": "DEFERRED_POST_GO",
+      "fact": "CI-02 B, Bitget HOLD, 83 RegionVault, Seat/Vault, PM $25 remain deferred independent tracks. Must not unwind Bitget V8 pin."
+    }
+  ],
+  "do_not_rerun_closed": [
+    "v8_mainnet_reality_consistency",
+    "money_path_redeploy",
+    "repeat_1_usdc_real_money",
+    "ci02_hop_b",
+    "frozen_web_bake",
+    "resend_setGovernor",
+    "overwrite_ftb_20260812",
+    "recast_consistency_issued_at",
+    "rewrite_stop_required_before_go"
+  ],
+  "token_risk_bitget": {
+    "class": "DEFERRED_POST_GO",
+    "independent_track": true,
+    "must_not_unwind_v8_pin": true,
+    "must_not_become_v8_rollback_condition": true
+  },
+  "forbidden": [
+    "claim_production_go",
+    "auto_flip_tt_production_go",
+    "auto_issue_production_go",
+    "rewrite_stop_required_before_go",
+    "hard_gate_full_go_paper",
+    "www_bake",
+    "resend_setGovernor",
+    "ci02_hop_b_execute",
+    "money_path_redeploy",
+    "repeat_1_usdc_real_money",
+    "overwrite_ftb_20260812",
+    "recast_consistency_issued_at",
+    "bitget_unwind_v8_pin",
+    "rerun_closed_v8_2b_1usdc_ci02",
+    "frontend_ui_ux_change",
+    "web_rebuild_bake_deploy",
+    "checkout_old_fe_tip",
+    "money_split_or_relocate",
+    "repeat_deploy"
+  ],
+  "next": "OWNER_WRITTEN_PRODUCTION_GO_VERDICT",
+  "next_session_starts_at": "READY_FOR_OWNER_PRODUCTION_GO_VERDICT_STOP_NO_AUTO_GO",
+  "machine_line": "TT_PRODUCTION_GO_REASSESSMENT_CYCLE2: READY_FOR_OWNER_PRODUCTION_GO_VERDICT freeze_required_before_go=8 current_required_before_go=0 unexplained_drift=0 hard_gate_entry=PASS tt_production_go=NO_GO owner_go_verdict=NOT_THIS_TURN"
+}

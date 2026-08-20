@@ -1,0 +1,16 @@
+{
+  "schema": "traveltrust.ops_v9_restore_after_m07.v1",
+  "status": "OPS_V9_RESTORED",
+  "utc": "2026-08-20T08:55:00Z",
+  "living_baseline": "TravelTrust Official · OPS-2026.08.20-v9",
+  "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+  "www_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "www_build_time": "2026-08-20T00:51:57Z",
+  "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+  "m07_overlay_git_sha": "2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
+  "m07_overlay_image": "hybrid-live-auth-pin-nontarget-v9-m07-unlock-20260820",
+  "m07_status": "ROLLED_BACK_NOT_LIVING",
+  "tt_production_go": "NO_GO",
+  "unlock_ssr_titles": ["Unlock schedule", "TTG public unlock"],
+  "session_bootstrap": "v8"
+}

@@ -7,6 +7,8 @@
 **Token Risk (independent):** [TT-TTG-V8-TOKEN-RISK-INDEX-HOLD-RESCAN-LATEST.md](./TT-TTG-V8-TOKEN-RISK-INDEX-HOLD-RESCAN-LATEST.md)  
 **`TT_PRODUCTION_GO`:** `NO_GO`
 
+> **Living Product Truth（后置）：** Official www = **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z`) · historical cert-era `daa5ae87` SUPERSEDED as living Official · M07 **NOT this wave** · 本证 `PASS_STOP` 不重开
+
 阶段口径：**③ 只读真源收口**（Living Registry Official 槽 · Official API `/meta` + quote · Mainnet L7）。本证签发时 **不是** FTB 吸收。**不是** Production GO。**不是** www bake。禁止迁币 / 拆仓 / 再发 `setGovernor` / 切 NEW FeeRouter / 用 Bitget HOLD 回滚 V8 针。
 
 **Successor（Owner 另闸 · `2026-08-18T03:15:00Z` · 不改本证 `issued_at_utc`）：** Owner 选择 **另立 NEW FTB Cycle 吸收 V8，不覆盖 FTB `20260812`**。父本 [`TT-FINAL-TRUTH-BASELINE-20260812`](./TT-FINAL-TRUTH-BASELINE-20260812.md) = immutable historical。Living [`TT-FINAL-TRUTH-BASELINE-LATEST`](./TT-FINAL-TRUTH-BASELINE-LATEST.md) = V8 Cycle Active Truth。本证仍是 `PASS_STOP` 引用，**禁止**重跑 L7 再证明一遍。Final Reality / Release Certification 已 [`PASS`](./TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md)（`2026-08-18T03:20:00Z` · `blocking_p0_p1=0`）。下一闸 = Production GO 重评（未做）。Bitget HOLD 继续独立，**不得** unwind V8 针。

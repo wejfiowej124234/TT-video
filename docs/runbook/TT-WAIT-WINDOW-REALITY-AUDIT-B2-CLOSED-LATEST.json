@@ -1,0 +1,64 @@
+{
+  "schema": "traveltrust.wait_window_reality_audit_b2_closed.v1",
+  "status": "BATCH_2_SEALED",
+  "recorded_utc": "2026-08-10T15:33:22Z",
+  "sealed_utc": "2026-08-10T15:44:40Z",
+  "parent": "TT-WAIT-WINDOW-FINAL-REALITY-AUDIT-LATEST",
+  "runtime_verify": "TT-WAIT-WINDOW-REALITY-AUDIT-B2-RUNTIME-VERIFY-LATEST",
+  "runtime_verify_verdict": "PASS",
+  "deploy": {
+    "app": "tt-web-prod",
+    "script": "scripts/dev/deploy-tt-web-production.sh",
+    "remote_build": true,
+    "reported_git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+    "official": "https://www.web3-ttg.com"
+  },
+  "verified_fix_now": [
+    "B2-G-001",
+    "B2-G-002",
+    "B2-G-003"
+  ],
+  "open_carry": [
+    {
+      "id": "B2-G-004",
+      "to": "B3"
+    },
+    {
+      "id": "B2-G-007",
+      "to": "B6"
+    }
+  ],
+  "accept": [
+    "B2-G-005",
+    "B2-G-006"
+  ],
+  "runtime_verify_summary": {
+    "market_guest_orders_count": 0,
+    "draft_money_pollution_cleared": true,
+    "empty_copy": "No orders to match yet",
+    "guides_rate_count": 10,
+    "escrow_0x_contract_hint": true,
+    "discover_api_draft_count": 17,
+    "discover_api_carry": "B3"
+  },
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "next_batch": 3,
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

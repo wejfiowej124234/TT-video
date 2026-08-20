@@ -1,0 +1,789 @@
+# TravelTrust · Project Architecture Taxonomy (00–14)
+#
+# Human: docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.md
+# JSON:  docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.json
+# Gate:  python scripts/dev/check-project-architecture-taxonomy.py
+#
+# These packs are MAPS OVER TRUTH. They do not replace Final Truth / 04 / 14 /
+# Registry / Official runtime. Do not invent a 15th SSOT.
+# Coverage % on pack 14 is MACHINE_ONLY and currently NOT_COMPUTED.
+
+schema: traveltrust.project_architecture_taxonomy.v1
+version: 1
+effective_utc: "2026-08-15"
+status: CONTENT_SEEDED_MAPS_OVER_TRUTH
+tt_production_go: NO_GO
+owner: Sebastian Ward
+official_surface: https://www.web3-ttg.com
+official_api: https://api.web3-ttg.com
+
+machine_keys:
+  TT_PROJECT_ARCHITECTURE_TAXONOMY: FROZEN
+  TT_MAPS_ARE_NOT_NEW_SSOT: ENFORCED
+  TT_COVERAGE_PERCENT: NOT_COMPUTED
+  TT_PACK_DEPTH_AUDIT: ACTIVE
+  TT_L7_L8_RECON: ACTIVE
+  TT_PHASE1_AS_IS_PRINCIPLE: FROZEN
+  TT_PHASE1_AS_IS_ARCHITECTURE_FROZEN: ISSUED
+  TT_PHASE_2A_FULL_MATRIX_CONVERGENCE: ACTIVE
+  TT_PHASE_2B_UPGRADE_REVIEW: FORBIDDEN
+  TT_PRODUCTION_GO: NO_GO
+
+human_doc: docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.md
+json_companion: docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.json
+depth_audit: registry/project-pack-depth-audit.v1.yaml
+depth_audit_human: docs/runbook/TT-PROJECT-PACK-DEPTH-AUDIT-LATEST.md
+l7_l8_recon: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+l7_l8_recon_human: docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
+backend_matrix: registry/backend-truth-architecture.v1.yaml
+frontend_matrix: docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md
+product_flow_matrix: registry/business-flow-matrix.v1.yaml
+cms_ops: data/catalog/cms-asset-matrix.v1.yaml
+ftb: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+mainnet_registry: registry/mainnet-address-registry.v1.yaml
+http_ssot: docs/spec/04-后端与API.md
+abi_ssot: docs/spec/14-合约-API-ABI-前后端对齐.md
+birdseye: docs/spec/18-TravelTrust-全系统架构图.md
+auth_trace: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+admin_rbac: registry/admin-rbac-permissions.v1.yaml
+phase_2a: registry/phase-2a-full-matrix-convergence.v1.yaml
+phase_2a_human: docs/runbook/TT-PHASE-2A-FULL-MATRIX-CONVERGENCE-LATEST.md
+grounded_83: evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-83-GROUNDED-LATEST.md
+user_spine: docs/runbook/TT-9625-golden-path-system-spine.md
+
+role: MAPS_OVER_TRUTH
+not_a_new_ssot: true
+super_matrix_forbidden: true
+
+hard_rules:
+  - id: MAPS_OVER_TRUTH
+    text: >
+      Packs 00–14 organize existing truth. Living SSOTs remain FTB, 04, 14,
+      Registry, Official /meta, CMS ops matrix. These maps must not become a
+      competing source of addresses, ABI, or GO.
+  - id: ONE_MATRIX_ONE_QUESTION
+    text: Do not dump Product + Frontend + Backend + Data + Web3 + Governance into one mega-matrix.
+  - id: UNIFIED_IDS
+    text: Cross-pack join is by SYS / M / X / CAP / PAGE / API / DATA / W3 / GOV / SEC / REL IDs.
+  - id: NO_AI_COVERAGE_PERCENT
+    text: >
+      Pack 14 single product/reality/GO percentages stay NOT_COMPUTED.
+      Plane counts and histograms are machine-computed from pack 01–13
+      status machines. Never invent a product 100% from map closure.
+  - id: OFFICIAL_IS_LIVE_SURFACE
+    text: >
+      Inventory and gap claims use Official www + api.web3-ttg.com.
+      Login problems do not authorize skipping Official as the live surface.
+  - id: L7_NE_L8
+    text: Chain occurrence (L7 / pack 05) is not Indexer /meta / FTB proof (L8 / pack 09).
+  - id: TWO_WEB3_MATRICES
+    text: Pack 05 = contract architecture. Pack 06 = commercial money lifecycle. Do not mix.
+  - id: TWO_MONEY_RAILS
+    text: USDC escrow (product) and TTG PrimaryMarket (governance) are different rails. Fiat/Stripe is orthogonal.
+  - id: LOCATE_THEN_EDIT
+    text: Symptom → pack → layer/domain → then edit. Login failure is GP-01 / INC-LOGIN, not DB reset.
+  - id: THIS_WAVE_NO_GO
+    text: This taxonomy wave MUST NOT mutate FTB addresses, /meta contract, Indexer, Timelock/Governor/PM live params, or TT_PRODUCTION_GO.
+  - id: THREE_TRUTH_PLANES
+    text: >
+      Official www/API/Admin/DB is the primary evidence surface for current product
+      reality, not the highest truth for every fact. Web3 facts are L7 chain +
+      Timelock. FTB is the freeze/rules baseline. Indexer and /meta are L8.
+      Do not overwrite L7 because an Official field lags.
+  - id: MATRIX_FOLLOWS_REALITY
+    text: >
+      Matrices obey Reality. Do not homogenize Web3 lifecycle to look neat.
+      OFFICIAL_LIVE, DEPLOYED, SCHEDULED_WAITING_ETA, DEPLOYED_NOT_WIRED,
+      NOT_DEPLOYED, SUPERSEDED, REALITY_VERIFIED, CLOSED_REALITY stay distinct.
+  - id: PHASE1_AS_IS_NO_GREENWASH
+    text: >
+      Phase 1 records 2026-08 Official AS-IS. Do not fix www /auth/login 405
+      (or any other breakpoint) in Phase 1 just to turn a journey green.
+  - id: PACK12_NAVIGABLE_DAG_REQUIRED
+    text: >
+      Pack 12 DEP-*/GATE-* traffic-light DAG is retained. It turns static
+      matrices into a navigable engineering map. Do not delete or collapse it.
+  - id: PHASE2_ONLY_PRODUCTION_REVIEW
+    text: >
+      Phase 2 is Production-Grade Review: AS-IS → Requirement → GAP → Severity →
+      Architecture Decision → Fix → Test → Staging → Official → Reality Evidence.
+      Phase 1 must not pretend that review has started.
+
+perspectives:
+  - id: PRODUCT
+    question: What capabilities do we provide?
+    packs: ["01", "11"]
+  - id: ENGINEERING
+    question: How are frontend, backend, data, and Web3 implemented?
+    packs: ["02", "03", "04", "05", "06", "10"]
+  - id: CONTROL
+    question: Who can change what?
+    packs: ["07", "08"]
+  - id: RELEASE
+    question: Is it really live, real-money verified, and evidenced?
+    packs: ["09", "12", "13", "14"]
+
+systems:
+  - id: SYS-A
+    name: Product / Business
+    question: 产品能力与业务流程
+    packs: ["01", "11"]
+  - id: SYS-B
+    name: Frontend
+    question: 页面 / Section / Action / UIUX
+    packs: ["02", "10"]
+  - id: SYS-C
+    name: Backend
+    question: API / Auth / Domain / DB / Runtime
+    packs: ["03", "10"]
+  - id: SYS-D
+    name: Data
+    question: DB / CMS / Media / Indexer / 数据真源
+    packs: ["04"]
+  - id: SYS-E
+    name: Web3 / Money
+    question: Escrow / Settlement / FeeRouter / PM / Vault
+    packs: ["05", "06"]
+  - id: SYS-F
+    name: Governance
+    question: TTG / Seat / Governor / Timelock / Treasury
+    packs: ["07"]
+  - id: SYS-G
+    name: Security / Permission
+    question: RBAC / Wallet / Safe / Contract Authority / Secrets
+    packs: ["08"]
+  - id: SYS-H
+    name: Release / Runtime
+    question: Local → Staging → Official → Mainnet
+    packs: ["09"]
+  - id: SYS-I
+    name: Evidence / Final Truth
+    question: SSOT / Registry / Reality / Hard Gate / GO
+    packs: ["09", "14"]
+
+id_prefixes:
+  SYS: systems A–I
+  M: matrices 1–8
+  X: connector maps 10–12
+  P: packs 13–14
+  CAP: product capability
+  PAGE: frontend route/page
+  API: backend route
+  DATA: data object
+  W3: contract
+  GOV: governance object
+  SEC: identity/authority
+  REL: release/evidence state
+
+status_lifecycle:
+  - DESIGN
+  - CODE
+  - UNIT_PASS
+  - INTEGRATION_PASS
+  - STAGING_PASS
+  - DEPLOYED
+  - WIRED
+  - OFFICIAL_LIVE
+  - REAL_MONEY_REALITY
+  - CLOSED_REALITY
+  - HARD_GATE_PASS
+  - BLOCKED
+  - DEFERRED
+  - LEGACY
+
+fill_status_enum:
+  - TAXONOMY_FROZEN_CONTENT_EMPTY
+  - SEEDED_FROM_EXISTING_SSOT
+  - CONTENT_IN_PROGRESS
+  - CONTENT_FROZEN
+  - CONTENT_SEEDED_MAPS_OVER_TRUTH
+
+# Seeded row ≠ 9-field node. Do not treat fill_status=SEEDED as coverage.
+depth_grade_enum:
+  - NAV_ONLY
+  - DEEP_PARTIAL
+  - SHALLOW_SEEDED
+  - NEEDS_DEEPENING
+  - POINTER_ONLY
+  - COUNTS_ONLY
+
+# 00–14 directory. Duties frozen. Content empty except 03 seeded from BTA.
+packs:
+  - id: "00"
+    name: PROJECT MASTER MAP
+    question: 整个 TravelTrust 由哪几套系统组成？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: NAV_ONLY
+    living_ssot:
+      - docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.md
+      - registry/project-final-master-map.v1.yaml
+      - scripts/dev/check-project-final-master-map.py
+      - registry/project-architecture-taxonomy.v1.yaml
+      - registry/project-pack-depth-audit.v1.yaml
+      - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      - docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
+    notes: >
+      NAV_ONLY directory assembled. PHASE_1_AS_IS_ARCHITECTURE_FROZEN remains ISSUED.
+      Not a 9-field product matrix. Pack 01–14 CLOSED. Phase 2 execute FORBIDDEN.
+      Phase 2 Gap Audit is overlay register only and must not unfreeze this pack.
+  - id: "01"
+    matrix: M1
+    name: PRODUCT CAPABILITY MATRIX
+    question: TravelTrust 到底有哪些业务能力？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/product-capability-matrix.v1.yaml
+      - docs/runbook/TT-PRODUCT-BUSINESS-ARCHITECTURE-LATEST.md
+      - scripts/dev/check-product-business-architecture.py
+      - registry/business-flow-matrix.v1.yaml
+    required_domains:
+      - AI_ITINERARY
+      - FIVE_ROLES
+      - MARKET_THREE_SUBSITES
+      - DID_RANK
+      - COMMUNITY
+      - CMS_ANNOUNCEMENTS
+      - DISPUTES
+      - MESSAGES
+      - LEGAL_TRUST_HELP
+      - I18N
+      - ADMIN_FOUR_CENTERS
+      - ONBOARDING_FIAT_ORTHOGONAL
+      - GROWTH_REFERRALS
+    notes: >
+      19 CAP rows · fifteen_product_fields · M1_SHALLOW_PRODUCT=0.
+      Official AS-IS: www 405 PARTIAL · Steward TARGET_NOT_LIVE · PM www chrome 10→10 ED · Official /meta NEW PM 100_000 · $25 WAIT is www bake.
+      Pack 01 CLOSED. Pack 02 is an independent later Phase 1 wave. Phase 2 forbidden.
+  - id: "02"
+    matrix: M2
+    name: FRONTEND DESIGN MATRIX
+    question: 用户看到什么、点什么？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.json
+      - docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md
+      - registry/frontend-design-matrix-seed.v1.yaml
+      - docs/runbook/TT-FRONTEND-SCREEN-ROUTE-ARCHITECTURE-LATEST.md
+      - scripts/dev/check-frontend-screen-route-architecture.py
+      - frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+    required_domains:
+      - FIVE_MAIN
+      - AUTH
+      - ADMIN_118
+      - FUTURE_APP_AS_L0
+    notes: >
+      31 FE-* screens · seventeen_frontend_fields · 207 routes / Admin 118 census.
+      Route Exists ≠ Screen Complete ≠ Action Works ≠ E2E Closed.
+      www 405 ACTION_BLOCKED · Steward TARGET_NOT_LIVE · PM www chrome 10→10 ED · $25 WAIT www bake.
+      M2_SHALLOW_FRONTEND=0. Pack 02 CLOSED this wave. Phase 2 forbidden.
+      Admin 118 is a domain, not a 16th matrix. FIVE-MAIN structure frozen.
+  - id: "03"
+    matrix: M3
+    name: BACKEND ARCHITECTURE AND RUNTIME MATRIX
+    question: 请求经过哪里、哪里会坏？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/backend-truth-architecture.v1.yaml
+      - docs/spec/04-后端与API.md
+      - crates/api/src/routes/mod.rs
+    notes: Reuse BTA L0–L8. Do not fork a second backend spine.
+  - id: "04"
+    matrix: M4
+    name: DATA TRUTH AND STORAGE MATRIX
+    question: 数据到底在哪里、谁是真源？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/data-truth-matrix.v1.yaml
+      - docs/runbook/TT-DATA-TRUTH-MATRIX-LATEST.md
+      - crates/api/migrations
+      - crates/api/src/db
+    row_schema:
+      - data_id
+      - purpose
+      - producer
+      - authoritative_ssot
+      - physical_storage
+      - projection
+      - mutation_authority
+      - consumer
+      - retention
+      - dependencies
+      - health_probe
+      - failure_classes
+      - security_boundary
+      - evidence
+      - status
+    required_domains:
+      - POSTGRES
+      - SESSIONS
+      - CMS_METADATA
+      - CATALOG
+      - TIGRIS_OBJECT
+      - INDEXER_PROJECTION
+      - CACHE
+      - CHAIN_RUNTIME
+      - REGISTRY_CANDIDATE
+      - META_IDENTITY
+      - CONTENT_OWNERSHIP_CMS_OCS_PUBLICOPS_API
+    notes: >
+      Fourteen-field rows from migrations + db/*. ChainOffStore is RAM cache not a table.
+      L7 ≠ L8 ≠ PG ≠ object metadata. M4_SHALLOW_ROW=0. Pack 04 CLOSED.
+      CI-02 / PM $25 stay on independent execute ladders.
+  - id: "05"
+    matrix: M5
+    name: WEB3 CONTRACT ARCHITECTURE MATRIX
+    question: 有哪些合约，它们怎么依赖？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/web3-contract-architecture-matrix.v1.yaml
+      - docs/runbook/TT-WEB3-CONTRACT-ARCHITECTURE-MATRIX-LATEST.md
+      - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      - docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    lifecycle:
+      - NOT_DEPLOYED
+      - DEPLOYED
+      - WIRED
+      - OFFICIAL_LIVE
+      - SCHEDULED_WAITING_ETA
+      - SUPERSEDED
+      - LEGACY
+      - CLOSED_REALITY
+    notes: >
+      Nine-field nodes from recon overlay + Official /meta + Timelock ops.
+      FTB 20260812 is lock table, not living Official-create pointer.
+      Money-path dollars live in pack 06. Seat/Vault remain NOT_DEPLOYED.
+      M5_SHALLOW_NODE=0. Pack 05 CLOSED.
+  - id: "06"
+    matrix: M6
+    name: COMMERCIAL MONEY LIFECYCLE MATRIX
+    question: 一美元从用户钱包进入以后最后去了哪里？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/commercial-money-lifecycle-matrix.v1.yaml
+      - docs/runbook/TT-COMMERCIAL-MONEY-LIFECYCLE-MATRIX-LATEST.md
+      - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      - docs/spec/83-区域治理与收益分配-协议白皮书.md
+      - docs/spec/governance-token/fund-flow-ssot.v1.md
+    required_domains:
+      - USDC_ESCROW_RAIL
+      - FEE_ROUTER_FOUR_WAY
+      - REGION_83_TARGET
+      - TTG_PRIMARY_MARKET_RAIL
+      - GOVERNANCE_SPEND
+      - FIAT_STRIPE_ORTHOGONAL
+      - CONSERVATION_PROJECTION
+    notes: >
+      Fourteen S01–S14 hops expanded. M6_SHALLOW_FLOW=0.
+      Living: Wired→SR-FT→OLD FR→Safe/P4Cap INTERIM. PM GOV-04 1e18.
+      TARGET_NOT_LIVE: Seat/Vault/Claim/S10. SCHEDULED: CI-02 / PM $25.
+      Pack 06 CLOSED. Pack 07 is a later independent wave. TT_PRODUCTION_GO=NO_GO.
+  - id: "07"
+    matrix: M7
+    name: GOVERNANCE MUTATION AUTHORITY MATRIX
+    question: 谁能决定什么、用什么入口改、在哪一层生效？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/governance-economic-matrix.v1.yaml
+      - docs/runbook/TT-GOVERNANCE-MUTATION-AUTHORITY-MATRIX-LATEST.md
+      - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      - registry/admin-rbac-permissions.v1.yaml
+      - crates/api/src/routes/admin/admin_rbac.rs
+      - docs/runbook/TT-AXIS05-ROLES-MATRIX-REALITY-VERIFY-LATEST.md
+    required_domains:
+      - TTG_SUPPLY_ALLOCATION_PRICE_VOTING
+      - REGION_STEWARD_SEAT
+      - PROPOSAL_VOTE_QUORUM
+      - GOVERNOR_TIMELOCK_SAFE
+      - P4CAP
+      - ADMIN_RBAC
+      - CMS_OCS_PUBLISH
+      - INDEXER_READONLY
+      - REGISTRY_FTB_LOCK
+    notes: >
+      24 authority hops. READ ≠ MUTATE ≠ ADMIN ≠ GOVERN ≠ EXECUTE.
+      M7_SHALLOW_AUTHORITY=0. Proposal #3 / Seat Claim not Official.
+      Pack 07 CLOSED. Pack 08 is an independent later wave.
+      TT_PRODUCTION_GO=NO_GO.
+  - id: "08"
+    matrix: M8
+    name: SECURITY IDENTITY ACCESS MATRIX
+    question: 身份如何被证明、会话如何划界、谁在哪一层有权碰资源？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/security-identity-authority-matrix.v1.yaml
+      - docs/runbook/TT-SECURITY-IDENTITY-ACCESS-MATRIX-LATEST.md
+      - docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+      - registry/admin-rbac-permissions.v1.yaml
+      - crates/api/src/routes/admin/admin_rbac.rs
+      - crates/api/src/middleware/timeout_cors.rs
+      - crates/api/src/middleware/auth_pause_metrics/mod.rs
+      - frontend/lib/server/proxyTraveltrustApi.ts
+    chain:
+      - Identity
+      - Authentication
+      - Session
+      - Authorization
+      - Capability
+      - Resource
+      - Security Boundary
+      - Trust Boundary
+      - Secret/Credential
+      - Attack Surface
+      - Failure Class
+      - Probe
+      - Evidence
+      - Runtime Status
+    required_domains:
+      - SESSION_PLUS_WALLET_HYBRID
+      - STRICT_SESSION_GATE
+      - ADMIN_RBAC
+      - TIMELOCK_SAFE
+      - CONTRACT_ALLOWLIST
+      - SECRETS
+      - INDEXER_READONLY
+      - CORS_CSRF_PROXY
+    notes: >
+      24 security hops. Session ≠ Wallet. RBAC ≠ L7 owner. Safe 1/1 ≠ team approval.
+      Admin publish ≠ Web3 execute. M8_SHALLOW_SECURITY=0.
+      Pack 08 CLOSED. Pack 09 is an independent later wave.
+      TT_PRODUCTION_GO=NO_GO.
+  - id: "09"
+    matrix: M9
+    name: RELEASE RUNTIME EVIDENCE MATRIX
+    question: 代码什么时候才叫真正完成？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/release-runtime-evidence-matrix.v1.yaml
+      - docs/runbook/TT-RELEASE-RUNTIME-EVIDENCE-MATRIX-LATEST.md
+      - docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+      - docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md
+      - docs/runbook/TT-V65-PRODUCTION-RELEASE-INTEGRITY-LATEST.md
+      - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+      - docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+    required_domains:
+      - LOCAL_TEST_STAGING_OFFICIAL_MAINNET
+      - DUAL_TRACK_OFFICIAL_VS_SEPOLIA_DEMOTED
+      - CFG_PER_FROZEN_CHAPTER
+      - HARD_GATE_GO
+    notes: >
+      24 release hops. CODE_READY ≠ BUILT ≠ DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE
+      ≠ REALITY_VERIFIED ≠ CLOSED_REALITY. ① ≠ ② ≠ ③.
+      CI-02 / PM $25 stay DEPLOYED not Official. M9_SHALLOW_RELEASE_NODE=0.
+      Pack 09 CLOSED. Pack 10 is an independent later wave. TT_PRODUCTION_GO=NO_GO.
+  - id: "10"
+    connector: X10
+    name: CROSS LAYER CAPABILITY MAP
+    question: 一项能力如何贯穿 Product→FE→BE→Data→Web3→Money→Authority→Security→Release？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/project-cross-maps-10-13.v1.yaml
+      - docs/runbook/TT-CROSS-LAYER-CAPABILITY-MAP-LATEST.md
+      - registry/backend-truth-architecture.v1.yaml
+      - registry/product-capability-matrix.v1.yaml
+      - registry/frontend-design-matrix-seed.v1.yaml
+    notes: >
+      20 CAP joins (18 Pack 01 + CAP-AUTH-SESSION join key + CAP-ESCROW-SETTLEMENT alias).
+      Pointers reuse Pack 03–09 IDs only. Steward TARGET_NOT_LIVE. Login 405 cited.
+      M10_SHALLOW_CAPABILITY=0. Pack 10 CLOSED. Pack 11 is an independent later wave.
+      TT_PRODUCTION_GO=NO_GO.
+  - id: "11"
+    connector: X11
+    name: END-TO-END USER SYSTEM JOURNEY ARCHITECTURE
+    question: 一条真人业务从点击走到钱与投影？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/project-cross-maps-10-13.v1.yaml
+      - docs/runbook/TT-END-TO-END-USER-SYSTEM-JOURNEY-ARCHITECTURE-LATEST.md
+      - docs/runbook/TT-9625-golden-path-system-spine.md
+    notes: >
+      14 JNY-* hops cite Pack 10 CAP-* and Pack 03–09 IDs only.
+      OFFICIAL_LIVE ≠ END_TO_END_CLOSED_REALITY. Steward TARGET_NOT_LIVE.
+      No-L7 journeys use NONE_NOT_L7. M11_SHALLOW_JOURNEY=0.
+      Pack 11 CLOSED. Pack 12 is an independent later wave. TT_PRODUCTION_GO=NO_GO.
+  - id: "12"
+    connector: X12
+    name: DEPENDENCY BLOCKER GATE ARCHITECTURE
+    question: 现在为什么不能做下一步？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/project-cross-maps-10-13.v1.yaml
+      - docs/runbook/TT-DEPENDENCY-BLOCKER-GATE-ARCHITECTURE-LATEST.md
+      - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    notes: >
+      16 DEP-*/GATE-* nodes. TIMELOCK_ETA ≠ OWNER_AUTH ≠ NOT_DEPLOYED ≠ REALITY_EVIDENCE.
+      Proposal #3 ≠ CI-02 ≠ PM25. 10→0.4 is Reality after $25 execute.
+      M12_SHALLOW_DEPENDENCY=0. DEPENDENCY_CYCLE=0.
+      Pack 12 CLOSED. Pack 13 is an independent later wave. TT_PRODUCTION_GO=NO_GO.
+  - id: "13"
+    pack: P13
+    name: INCIDENT DIAGNOSTIC ARCHITECTURE
+    question: 这个故障先查哪一层？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: DEEP_PARTIAL
+    living_ssot:
+      - registry/project-cross-maps-10-13.v1.yaml
+      - docs/runbook/TT-INCIDENT-DIAGNOSTIC-ARCHITECTURE-LATEST.md
+      - registry/backend-truth-architecture.v1.yaml
+    notes: >
+      16 INC-* trees. Locate layer first. Login 405 is L3 not DB.
+      Timelock WAIT ≠ code fault. DEPLOYED ≠ WIRED. L8 must not overwrite L7.
+      M13_SHALLOW_INCIDENT=0. Pack 13 CLOSED this wave. Phase 2 forbidden.
+      TT_PRODUCTION_GO=NO_GO.
+  - id: "14"
+    pack: P14
+    name: MASTER COVERAGE DASHBOARD
+    question: 今天各系统覆盖、Reality、Open P0/P1、当前闸口是什么？
+    fill_status: SEEDED_FROM_EXISTING_SSOT
+    depth_grade: COUNTS_ONLY
+    living_ssot:
+      - registry/project-coverage-dashboard.v1.yaml
+      - docs/runbook/TT-PROJECT-MASTER-COVERAGE-DASHBOARD-LATEST.json
+      - docs/runbook/TT-PROJECT-ARCHITECTURE-COVERAGE-DASHBOARD-LATEST.md
+      - scripts/dev/check-project-coverage-dashboard.py
+    coverage_percent: NOT_COMPUTED
+    notes: >
+      Single product/reality/GO percent stays NOT_COMPUTED. Plane counts and
+      histograms are machine-computed. packs_seeded=15 is not coverage.
+      ARCHITECTURE_MAP_COMPLETE ≠ OFFICIAL_LIVE ≠ REALITY_VERIFIED ≠
+      CLOSED_REALITY ≠ PRODUCTION_GO. M14=0. Pack 14 CLOSED this wave.
+
+# Do not explode into extra matrices. Missing product lands as required_domains.
+forbidden_new_matrices:
+  - CMS_MATRIX
+  - ADMIN_MATRIX
+  - I18N_MATRIX
+  - MOBILE_APP_MATRIX
+  - OBSERVABILITY_MATRIX
+  - CONFIG_CFG_MATRIX
+  - LEGAL_MATRIX
+  - FIAT_STRIPE_MATRIX
+  - SUPER_MATRIX
+
+# Honest gaps vs "Frontend + Backend only". Covered by required_domains above.
+gap_review:
+  verdict: USER_00_14_DIRECTION_CORRECT
+  extra_matrix_needed: false
+  must_not_lose:
+    - Official AI itinerary hero
+    - CMS content ops ACTIVE mainline
+    - Admin 118 routes
+    - Dual money rails USDC vs TTG
+    - Hybrid Session + Wallet
+    - Content ownership CMS vs OCS vs Public Ops vs API
+    - Dual-track Official mainnet vs Sepolia DEMOTED
+    - /meta vs FTB address observation (L8)
+    - Disputes / messages / DID-rank / legal disclosure
+    - Fiat onboarding orthogonal to USDC escrow
+  fill_order:
+    - "00"
+    - "03"
+    - "04"
+    - "08"
+    - "02"
+    - "01"
+    - "05"
+    - "06"
+    - "07"
+    - "09"
+    - "10"
+    - "11"
+    - "12"
+    - "13"
+    - "14"
+
+official_observation_20260815:
+  surface: https://www.web3-ttg.com
+  api: https://api.web3-ttg.com
+  login_not_used_as_happy_path: false
+  login_closed_reality_owner_c2: true
+  pages_seen:
+    - id: PAGE.HOME
+      path: /
+      notes: 定制旅行 / 自由市场 / 排行榜 / TT社区 · CMS 公告无静态 fallback · AI 行程 10 国
+    - id: PAGE.MARKET
+      path: /market
+      notes: 子站 旅行预约 / 商家 / 旅行收购 · 日本东京草稿单可见
+    - id: PAGE.TRAVELTRUST
+      path: /traveltrust
+      notes: 五角色 · TTG 兑换网关与 USDC 托管分轨披露 · candidate/$25 vs live 1e18 dual disclosure
+    - id: PAGE.COMMUNITY
+      path: /community
+      notes: 动态/发现/消息/好友 · 未登录钱包按钮 disabled
+    - id: PAGE.DID_RANK
+      path: /did-rank
+      notes: GET /did-rank 200 · GET /api/v1/did-rank/guides 200（种子曾写 not_probed，已纠正）
+    - id: PAGE.AUTH_LOGIN
+      path: /auth/login
+      notes: 页面存在 · BATCH-A CLOSED_REALITY · Owner Official C2 Session · 禁止回流
+  api_probes:
+    - { id: API.META, method: GET, url: https://api.web3-ttg.com/meta, result: "200 chain_id=1 pause.enabled=false indexer.lag=0 checkpoint=25759530 source=runtime psg=MAINNET-OFFICIAL-LIVE-PARTIAL" }
+    - { id: API.ME_WWW, method: GET, url: https://www.web3-ttg.com/api/v1/me, result: "401 without Bearer (L2 proxy 503 closed; L4 expected)" }
+    - { id: API.LOGIN_WWW, method: POST, url: https://www.web3-ttg.com/auth/login, result: "200 Owner Official C2 · historical 405 SUPERSEDED · INC-LOGIN L3 closed" }
+    - { id: API.GUIDES, method: GET, url: https://www.web3-ttg.com/api/v1/guides, result: "200 items_nonempty" }
+    - { id: API.DID_RANK, method: GET, url: https://www.web3-ttg.com/api/v1/did-rank/guides, result: "200" }
+    - { id: API.COMMUNITY_FEED, method: GET, url: https://www.web3-ttg.com/api/v1/community/feed, result: "200" }
+    - { id: API.DISCOVER, method: GET, url: https://www.web3-ttg.com/api/v1/discover/orders, result: "200" }
+    - { id: API.TTG_QUOTE, method: GET, url: https://www.web3-ttg.com/api/v1/governance/ttg-exchange/quote, result: "401 STRICT_SESSION_GATE=1" }
+  meta_l8_note: >
+    After Track2 T1/T2 execute (2026-08-14), L7 Wired.settlementRouter and L8 /meta.settlement_router
+    are both SR-FT. FTB 20260812 LOCKED table still lists Track1 SR as Official live — stamp lag,
+    not L8≠L7. Do not rewrite FTB from /meta. Living overlay:
+    registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml.
+
+# Pack 03 inventory start — map api_router() onto BTA domains. Not a second spine.
+m3_inventory_seed:
+  source: crates/api/src/routes/mod.rs
+  bta_domains_now:
+    - AUTH
+    - COMMUNITY
+    - CMS
+    - MEDIA
+    - ORDERS
+    - ESCROW
+    - SETTLEMENT
+    - TTG_MARKET
+    - STEWARD
+    - GOVERNANCE
+    - ADMIN
+    - PLATFORM
+    - ITINERARY
+    - DISPUTES
+    - MESSAGES
+    - DID_RANK
+    - ONBOARDING
+    - GROWTH
+    - GUIDES
+    - PROVIDER
+  api_router_modules:
+    - { module: health_meta, bta_domain: PLATFORM, gap: false }
+    - { module: auth, bta_domain: AUTH, gap: false }
+    - { module: catalog, bta_domain: CMS, gap: false, note: catalog ownership also in pack 04 DATA-CATALOG-GEO }
+    - { module: growth, bta_domain: GROWTH, gap: false }
+    - { module: official, bta_domain: CMS, gap: false }
+    - { module: admin, bta_domain: ADMIN, gap: false }
+    - { module: me, bta_domain: AUTH, gap: false }
+    - { module: me_security, bta_domain: AUTH, gap: false, note: pack 08 }
+    - { module: me_subroutes, bta_domain: AUTH, gap: false }
+    - { module: me_referrals, bta_domain: GROWTH, gap: false }
+    - { module: me_market_bookmarks, bta_domain: ORDERS, gap: false }
+    - { module: guides, bta_domain: GUIDES, gap: false }
+    - { module: orders, bta_domain: ORDERS, gap: false }
+    - { module: traveltrust_page, bta_domain: PLATFORM, gap: false }
+    - { module: public_announcements, bta_domain: CMS, gap: false }
+    - { module: public_roadmap, bta_domain: PLATFORM, gap: false }
+    - { module: itineraries, bta_domain: ITINERARY, gap: false, official: homepage hero }
+    - { module: discover, bta_domain: ORDERS, gap: false }
+    - { module: messages, bta_domain: MESSAGES, gap: false }
+    - { module: disputes, bta_domain: DISPUTES, gap: false }
+    - { module: evidence, bta_domain: PLATFORM, gap: false }
+    - { module: media, bta_domain: MEDIA, gap: false }
+    - { module: platform_media, bta_domain: MEDIA, gap: false }
+    - { module: intents, bta_domain: ORDERS, gap: false }
+    - { module: community, bta_domain: COMMUNITY, gap: false }
+    - { module: onboarding, bta_domain: ONBOARDING, gap: false }
+    - { module: hooks, bta_domain: ONBOARDING, gap: false, note: Stripe/fiat orthogonal rail }
+    - { module: provider_applications, bta_domain: PROVIDER, gap: false }
+    - { module: market_subsite, bta_domain: ORDERS, gap: false }
+    - { module: country_ledger_jurisdiction, bta_domain: GOVERNANCE, gap: false }
+    - { module: did_rank, bta_domain: DID_RANK, gap: false }
+    - { module: governance, bta_domain: GOVERNANCE, gap: false }
+    - { module: steward, bta_domain: STEWARD, gap: false }
+    - { module: redemption, bta_domain: TTG_MARKET, gap: false }
+    - { module: trust_growth, bta_domain: GROWTH, gap: false }
+    - { module: internal, bta_domain: PLATFORM, gap: false }
+  next_fill: >
+    Pack 00 remains PHASE_1_AS_IS_ARCHITECTURE_FROZEN (M00=0). Pack 01–14 CLOSED.
+    Phase 2 Gap Audit is CLOSED. Phase 2A full-matrix convergence is ACTIVE.
+    Official FE lineage restore 9959ae50 CLOSED_REALITY (3e600076 + Session/BFF; API 80eed10f kept).
+    WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY on historical hop Official FE 2ba08bd4
+    (Dockerfile ARG/ENV; Sheet QR; living Official www pin OPS-2026.08.20-v9 (`3e356617`; historical daa5ae87 SUPERSEDED); not a 16th gap). Phase 2B architecture upgrade remains FORBIDDEN.
+    CI-02 / PM $25 remain independent Timelock ladders. Do not mutate FTB from /meta or flip GO.
+
+mutation_policy:
+  this_wave: PHASE_2A_FULL_MATRIX_CONVERGENCE
+  may_edit:
+    - registry/project-architecture-taxonomy.v1.yaml
+    - registry/project-pack-depth-audit.v1.yaml
+    - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    - docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md
+    - scripts/dev/check-l7-l8-reality-reconciliation.py
+    - docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.md
+    - docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.json
+    - docs/runbook/TT-PROJECT-PACK-DEPTH-AUDIT-LATEST.md
+    - docs/runbook/TT-DATA-TRUTH-MATRIX-LATEST.md
+    - docs/runbook/TT-PROJECT-MASTER-COVERAGE-DASHBOARD-LATEST.json
+    - scripts/dev/check-project-architecture-taxonomy.py
+    - scripts/dev/emit-project-master-coverage-dashboard.py
+    - .cursor/rules/traveltrust-project-master-map.mdc
+    - registry/phase-2a-full-matrix-convergence.v1.yaml
+    - docs/runbook/TT-PHASE-2A-FULL-MATRIX-CONVERGENCE-LATEST.md
+    - scripts/dev/check-phase-2a-full-matrix-convergence.py
+    - registry/phase2-production-grade-gap-register.v1.yaml
+    - docs/runbook/TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.md
+    - scripts/dev/check-phase2-production-grade-gap-audit.py
+    - registry/backend-truth-architecture.v1.yaml
+    - docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md
+    - registry/web3-contract-architecture-matrix.v1.yaml
+    - docs/runbook/TT-WEB3-CONTRACT-ARCHITECTURE-MATRIX-LATEST.md
+    - scripts/dev/check-web3-contract-architecture-matrix.py
+    - registry/data-truth-matrix.v1.yaml
+    - docs/runbook/TT-DATA-TRUTH-MATRIX-LATEST.md
+    - scripts/dev/check-data-truth-matrix.py
+    - registry/commercial-money-lifecycle-matrix.v1.yaml
+    - docs/runbook/TT-COMMERCIAL-MONEY-LIFECYCLE-MATRIX-LATEST.md
+    - scripts/dev/check-commercial-money-lifecycle-matrix.py
+    - registry/governance-economic-matrix.v1.yaml
+    - docs/runbook/TT-GOVERNANCE-MUTATION-AUTHORITY-MATRIX-LATEST.md
+    - scripts/dev/check-governance-mutation-authority-matrix.py
+    - registry/security-identity-authority-matrix.v1.yaml
+    - docs/runbook/TT-SECURITY-IDENTITY-ACCESS-MATRIX-LATEST.md
+    - scripts/dev/check-security-identity-authority-matrix.py
+    - registry/release-runtime-evidence-matrix.v1.yaml
+    - docs/runbook/TT-RELEASE-RUNTIME-EVIDENCE-MATRIX-LATEST.md
+    - scripts/dev/check-release-runtime-evidence-matrix.py
+    - registry/project-cross-maps-10-13.v1.yaml
+    - docs/runbook/TT-CROSS-LAYER-CAPABILITY-MAP-LATEST.md
+    - scripts/dev/check-cross-layer-capability-map.py
+    - docs/runbook/TT-END-TO-END-USER-SYSTEM-JOURNEY-ARCHITECTURE-LATEST.md
+    - scripts/dev/check-end-to-end-journey-architecture.py
+    - docs/runbook/TT-DEPENDENCY-BLOCKER-GATE-ARCHITECTURE-LATEST.md
+    - scripts/dev/check-dependency-blocker-gate-architecture.py
+    - docs/runbook/TT-INCIDENT-DIAGNOSTIC-ARCHITECTURE-LATEST.md
+    - scripts/dev/check-incident-diagnostic-architecture.py
+    - registry/product-capability-matrix.v1.yaml
+    - docs/runbook/TT-PRODUCT-BUSINESS-ARCHITECTURE-LATEST.md
+    - scripts/dev/check-product-business-architecture.py
+    - docs/runbook/TT-FRONTEND-SCREEN-ROUTE-ARCHITECTURE-LATEST.md
+    - scripts/dev/check-frontend-screen-route-architecture.py
+    - registry/frontend-design-matrix-seed.v1.yaml
+    - registry/project-coverage-dashboard.v1.yaml
+    - docs/runbook/TT-PROJECT-ARCHITECTURE-COVERAGE-DASHBOARD-LATEST.md
+    - scripts/dev/check-project-coverage-dashboard.py
+    - registry/project-final-master-map.v1.yaml
+    - scripts/dev/check-project-final-master-map.py
+    - registry/phase2-production-grade-gap-register.v1.yaml
+    - scripts/dev/check-phase2-production-grade-gap-audit.py
+    - docs/runbook/TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.md
+    - registry/mainnet-address-registry.v1.yaml
+  must_not_mutate:
+    - Web3 contract addresses / FTB
+    - GET /meta contract
+    - TT_PRODUCTION_GO
+    - Hard Gate
+    - Indexer checkpoint semantics
+    - Timelock / Governor / PrimaryMarket live params
+    - Admin RBAC / Safe owners
+    - Runtime secrets / credentials
+    - CMS pipeline architecture

@@ -52,9 +52,11 @@ FTB 20260812（immutable parent）
 
 **结论：Expected Difference · 不是本闸 Defect / Drift。**
 
-Live `https://www.web3-ttg.com/api/release-identity` = freeze pin：`git_sha=daa5ae87b8c1af548c6beff6dd3451e5d386acf2` · `build_time=2026-08-16T15:15:49Z`。Living FTB Product Truth 已写死：API 必须对齐 NEW ACTIVE；www = 冻结 OLD bake。Consistency cert 已 `CONFIRM_DESIGN`。**禁止 bake** 来刷绿本证。
+**本闸冻结观察（不可改写）：** 当时 Live `https://www.web3-ttg.com/api/release-identity` = `git_sha=daa5ae87…` · `build_time=2026-08-16T15:15:49Z`。Consistency cert 已 `CONFIRM_DESIGN`（Expected Difference · 非 Defect）。
 
-Production GO 重评仍须 Owner **书面接受**该产品面分裂，或另开真实错误解锁 bake。那是下一闸输入，不是本闸未解释 drift。
+**Living FTB Product Truth（后置对齐 · 非改写本闸 PASS）：** www = **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z` / image `hybrid-live-auth-pin-nontarget-v9-20260820` / bootstrap v8)；historical `daa5ae87` SUPERSEDED as living Official；API 仍须对齐 NEW ACTIVE。**禁止 bake** 来刷绿本证；M07 overlay **ROLLED_BACK_NOT_LIVING**。
+
+Production GO 重评仍须 Owner **书面裁决** GO vs 继续 NO_GO。那是下一闸输入，不是本闸未解释 drift。
 
 ### 1.2 Money Path / CI-02 是否仍构成最终 GO blocker
 
@@ -108,12 +110,13 @@ Living FTB 仍印 `P0_COMMERCIAL_MONEY_PATH_BLOCKER: true` 与 nested Track2 `WA
 
 | 输入 | 为何仍留给 GO 重评 |
 |------|-------------------|
-| Frozen www | Expected Difference · 须 Owner 接受或解锁 bake |
-| `GAP-E2E-JOURNEY` | Official traveler book/UI 残差（Owner A 已从 1 USDC hop 拆出）· GO 政策仍计 OPEN P1 |
-| CI-02 B | 独立未来 hop · FTB KEEP OLD FR |
+| Frozen www（本闸 ED） | 冻结观察 pin `daa5ae87` / `2026-08-16T15:15:49Z` · **CONFIRM_DESIGN** · 非 Defect |
+| Living Product Truth | **OPS-2026.08.20-v9** (`3e356617` / `2026-08-20T00:51:57Z`) · historical `daa5ae87` SUPERSEDED · **禁止** bake 刷绿 · M07 ROLLED_BACK |
+| `GAP-E2E-JOURNEY` | Official C2 非资金 hop **CLOSED_REALITY**（UUID `7d91f354-…`）· **不是**本证 `issued_at` 重开 · GO 剩余 = Owner 书面裁决 |
+| CI-02 B | 独立未来 hop · FTB KEEP OLD FR · **禁止**当 GO remaining 技术修复 |
 | FTB P0 印记滞后 | 不在本证改布尔 |
 | 83 RegionVault | Target ≠ Live |
-| Hard Gate / `TT_PRODUCTION_GO` | **下一闸** |
+| Hard Gate / `TT_PRODUCTION_GO` | Cycle2 `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · 下一步 Owner 书面 **GO** 或 **继续 NO_GO** · **禁止自动签发** |
 
 ---
 

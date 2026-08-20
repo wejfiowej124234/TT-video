@@ -1,0 +1,255 @@
+{
+  "schema": "traveltrust.phase1_architecture_completeness_reverse_audit.v1",
+  "generated_utc": "2026-08-18T07:56:10Z",
+  "status": "PHASE_1_ARCHITECTURE_COMPLETENESS_REVERSE_AUDIT_CLOSED",
+  "baseline": "PHASE_1_AS_IS_ARCHITECTURE_FROZEN",
+  "baseline_status": "ISSUED",
+  "tt_production_go": "NO_GO",
+  "phase2_execute": "FORBIDDEN",
+  "add_matrix": "FORBIDDEN",
+  "fix_findings": "FORBIDDEN",
+  "coverage_percent": "NOT_COMPUTED",
+  "stop_after": "PHASE_1_ARCHITECTURE_COMPLETENESS_REVERSE_AUDIT",
+  "next_pack_forbidden_this_wave": [
+    "PHASE2_EXECUTE",
+    "ADD_MATRIX",
+    "MUTATE_PHASE1_FREEZE",
+    "FIX_FINDINGS"
+  ],
+  "dimension_count": 32,
+  "coverage_gap_count": 18,
+  "redundant_count": 6,
+  "missing_architecture_candidates": 1,
+  "missing_architecture_added": 0,
+  "by_dimension_class": {
+    "NEEDS_DEEPENING": 17,
+    "MISSING_ARCHITECTURE": 1,
+    "REDUNDANT": 0,
+    "COVERED": 14
+  },
+  "dimension_ids": [
+    "DIM-ADMIN",
+    "DIM-AI-ITINERARY",
+    "DIM-API-MODULES",
+    "DIM-AUDIT-LOG",
+    "DIM-CACHE-QUEUE-ASYNC",
+    "DIM-CMS-CONTENT-OPS",
+    "DIM-COMMUNITY",
+    "DIM-CONFIG-SECRETS",
+    "DIM-DB-OBJECT",
+    "DIM-DR-BACKUP",
+    "DIM-FIVE-ROLES",
+    "DIM-FUTURE-APP",
+    "DIM-GOV-TIMELOCK-SAFE",
+    "DIM-GOVERNANCE-UI",
+    "DIM-I18N",
+    "DIM-IDENTITY-RBAC",
+    "DIM-INDEXER",
+    "DIM-LEGAL",
+    "DIM-LOGIN-SESSION",
+    "DIM-MARKET",
+    "DIM-MEDIA",
+    "DIM-MONEY-USDC-TTG-FEE-COUNTRY",
+    "DIM-NOTIFICATIONS",
+    "DIM-OBSERVABILITY",
+    "DIM-PERF-RATELIMIT",
+    "DIM-PUBLIC-ROUTES",
+    "DIM-REGION-STEWARD",
+    "DIM-RELEASE-ROLLBACK",
+    "DIM-RETENTION-PRIVACY",
+    "DIM-SEARCH",
+    "DIM-THIRD-PARTY",
+    "DIM-WEB3-CONTRACTS"
+  ],
+  "coverage_gap_ids": [
+    "CG-01-CMS-WAVE",
+    "CG-01-NOTIFICATIONS",
+    "CG-02-LEAF-ACTIONS",
+    "CG-02-OFFICIAL-404-LEAVES",
+    "CG-02-ROUTE-CENSUS-STALE",
+    "CG-03-ASYNC-WORKERS",
+    "CG-03-CMS-ADMIN-L3",
+    "CG-04-CONTENT-QA-LOCK",
+    "CG-04-NOTIFICATION-AUDIT-SEARCH",
+    "CG-05-INDEXER-L8-PLANE",
+    "CG-06-COUNTRY-LEDGER-JOIN",
+    "CG-08-ENV-SECRET-INVENTORY",
+    "CG-09-OBS-BACKUP-RPO",
+    "CG-10-CMS-MATRIX-ISLAND",
+    "CG-11-NOTIFICATION-JNY",
+    "CG-12-THIRD-PARTY-DEP",
+    "CG-13-CONTENT-QA-INC",
+    "CG-14-CMS-OPS-PLANE"
+  ],
+  "redundant_ids": [
+    "RD-9625-VS-11",
+    "RD-BTA-INC-VS-13",
+    "RD-BUSINESS-FLOW-VS-01-11",
+    "RD-DEPTH-AUDIT-VS-14",
+    "RD-P2-BACKLOG-VS-GAP-REGISTER",
+    "RD-PUBLIC-ROUTE-MATRIX-AS-SECOND-FE"
+  ],
+  "candidate_ids": [
+    "MAC-01-CMS-CONTENT-OPS"
+  ],
+  "ci02_ladder": "SCHEDULED_WAITING_ETA",
+  "pm25_ladder": "SCHEDULED_WAITING_ETA",
+  "official_reprobe": {
+    "api_meta": {
+      "http": 200,
+      "git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "deployed_at": "2026-08-12T23:44:18Z",
+      "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL"
+    },
+    "www_post_auth_login": {
+      "http": 405,
+      "allow": "GET",
+      "layer": "L3"
+    },
+    "legal_privacy_alias": {
+      "path": "/legal/privacy",
+      "http": 404
+    },
+    "legal_terms_alias": {
+      "path": "/legal/terms",
+      "http": 404
+    },
+    "privacy": {
+      "path": "/privacy",
+      "http": 200
+    },
+    "terms": {
+      "path": "/terms",
+      "http": 200
+    },
+    "steward_root": {
+      "path": "/steward",
+      "http": 404
+    },
+    "steward_register": {
+      "path": "/steward/register",
+      "http": 200
+    },
+    "me_payments": {
+      "path": "/me/payments",
+      "http": 404
+    },
+    "admin_root": {
+      "path": "/admin",
+      "http": 200,
+      "census_20260811": "307"
+    },
+    "discover": {
+      "path": "/discover",
+      "http": 200,
+      "census_20260811": "307"
+    },
+    "notifications_prefs": {
+      "path": "/me/settings/notifications-prefs",
+      "http": 200
+    },
+    "language_settings": {
+      "path": "/me/settings/language",
+      "http": 200
+    },
+    "community_messages": {
+      "path": "/community/messages",
+      "http": 200
+    },
+    "community_feed": {
+      "path": "/api/v1/community/feed",
+      "http": 200
+    },
+    "guides": {
+      "path": "/api/v1/guides",
+      "http": 200
+    },
+    "ci02_ladder": "SCHEDULED_WAITING_ETA",
+    "pm25_ladder": "SCHEDULED_WAITING_ETA"
+  },
+  "recommended_final_directory": {
+    "keep": [
+      "00 PROJECT MASTER MAP",
+      "01 PRODUCT CAPABILITY MATRIX",
+      "02 FRONTEND DESIGN MATRIX",
+      "03 BACKEND ARCHITECTURE AND RUNTIME MATRIX (BTA L0–L8)",
+      "04 DATA TRUTH AND STORAGE MATRIX",
+      "05 WEB3 CONTRACT ARCHITECTURE MATRIX",
+      "06 COMMERCIAL MONEY LIFECYCLE MATRIX",
+      "07 GOVERNANCE MUTATION AUTHORITY MATRIX",
+      "08 SECURITY IDENTITY ACCESS MATRIX",
+      "09 RELEASE RUNTIME EVIDENCE MATRIX",
+      "10 FRONTEND ↔ BACKEND CAPABILITY MAP",
+      "11 END-TO-END GOLDEN JOURNEYS",
+      "12 DEPENDENCY / BLOCKER GRAPH",
+      "13 INCIDENT DIAGNOSTIC TREES",
+      "14 MASTER COVERAGE DASHBOARD"
+    ],
+    "overlays_not_packs": [
+      "L7-L8 contract/runtime/reality reconciliation",
+      "Phase 2 Production-Grade Gap Register (execute FORBIDDEN this wave)",
+      "Phase 1 Architecture Completeness Reverse Audit (this overlay)",
+      "Pack Depth Audit"
+    ],
+    "living_ssot_not_packs": [
+      "FTB / mainnet-address-registry",
+      "spec 04 HTTP / spec 14 ABI",
+      "cms-asset-matrix (ops workbench; MAC-01 Owner decision)",
+      "admin-rbac-permissions",
+      "Public Route Matrix (census POINTER under Pack 02)"
+    ],
+    "do_not_add": [
+      "CMS_MATRIX as a 16th product matrix this wave",
+      "ADMIN_MATRIX",
+      "I18N_MATRIX",
+      "MOBILE_APP_MATRIX",
+      "OBSERVABILITY_MATRIX",
+      "CONFIG_CFG_MATRIX",
+      "LEGAL_MATRIX",
+      "FIAT_STRIPE_MATRIX",
+      "SUPER_MATRIX"
+    ],
+    "owner_decision_only": [
+      "MAC-01-CMS-CONTENT-OPS (join-key deepening vs dedicated content-ops architecture)"
+    ],
+    "ci02_pm25": {
+      "CI-02": "SCHEDULED_WAITING_ETA",
+      "PM25": "SCHEDULED_WAITING_ETA",
+      "note": "independent ladders unchanged; not this audit's scope"
+    }
+  },
+  "machine_keys": {
+    "P1R_COVERAGE_GAPS": 18,
+    "P1R_MISSING_ARCHITECTURE_CANDIDATES": 1,
+    "P1R_MISSING_ARCHITECTURE_ADDED": 0,
+    "P1R_REDUNDANT": 6,
+    "P1R_DIMENSIONS": 32,
+    "P1R_SIXTEENTH_MATRIX": 0,
+    "P1R_FREEZE_MUTATED": 0,
+    "P1R_RUNTIME_MUTATED": 0,
+    "PHASE_1_AS_IS_ARCHITECTURE_FROZEN": "ISSUED",
+    "PHASE2_EXECUTE": "FORBIDDEN",
+    "CI02_LADDER": "SCHEDULED_WAITING_ETA",
+    "PM25_LADDER": "SCHEDULED_WAITING_ETA",
+    "TT_PRODUCTION_GO": "NO_GO",
+    "STOP_AFTER": "PHASE_1_ARCHITECTURE_COMPLETENESS_REVERSE_AUDIT"
+  },
+  "gate": "python scripts/dev/check-phase1-architecture-completeness-reverse-audit.py",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

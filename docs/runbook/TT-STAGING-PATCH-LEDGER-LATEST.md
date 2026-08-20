@@ -1,5 +1,11 @@
 # TT · Staging Patch Ledger（LATEST）
 
+> **Official living contrast (Wave-D1 · 2026-08-20):** Track A Official www = **OPS-2026.08.20-v9**  
+> (`3e356617…` / `hybrid-live-auth-pin-nontarget-v9-20260820` / bootstrap v8) —  
+> SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md).  
+> **This Ledger = Track B only.** Staging ≠ Official. Do not claim Staging isomorphic to V9 without Owner D4 deploy auth.  
+> Wave-D2 probe: Staging `git_sha=2ba08bd4…` · `build_time=2026-08-15T12:30:19Z` · pin `PSG-REL-20260720-WEB3-CAND-V2` · home/traveltrust HTTP 200 · bootstrap **not** v8.
+
 > **ARCHIVED_OR_SUPERSEDED under FINAL RELEASE** · Active = Candidate v2 @ `97289a71` · pin `PSG-REL-20260720-WEB3-CAND-V2` · FG-15-B **ELAPSED** · not release mainline.  
 > tip `652bbab5` / RUNNING / wait-window wording below = **SUPERSEDED_SNAPSHOT** · cert **FORBIDDEN** until FINAL RELEASE `freeze_status=FROZEN`.
 
@@ -58,9 +64,11 @@
 | **016** | Batch-12 Admin：工作台+目录满分 · **FINAL CLOSED FROZEN** · 走廊 Release Gate CERT | Web/Docs | bake `2026-07-26T05:32:42Z` | N | N | **FINAL CLOSED · FROZEN** · 40/40 · OPEN=0 · CERT_PASS · **≠ Owner 发布级** · **≠** GO | DEFERRED | bug_fix | CLOSED（Batch-12 FINAL · Owner 开 Batch-13） |
 | **017** | Batch-13 Admin：**CONTENT_PREP** · HU-478～567 · 叶页13～21（财务13最低 · 平台设置20） · FIX_NOT_STARTED | Docs | WORKTREE | N | N | Owner：**未达发布级** · OPEN=90 · CF1～CF12 · FN1～FN12 · 订单满分在册 · `FINANCE_WRITE` FORBIDDEN · 禁 HG 解锁 · 只记不改 · Hard Gate LOCKED · **≠** GO | DEFERRED | bug_fix | OPEN（Content-prep · 待「开始第 13 批集体改」） |
 | **018** | Track B six-fix Studio FE + platform cover Local SSOT（HU-007-B · z-410 · assertive publish · media limits · `cover_media_asset_id`） | Web/API/Docs | WORKTREE · cite tip `ea71c577` | N | N | **① Local PASS** vitest 12 · cargo media_service 2 · Staging Deploy **not** this session · B-MEDIA still WAITING_OWNER_CF · **≠** GO | DEFERRED | bug_fix | OPEN（class 2 Local · 待 Owner Staging Deploy） |
+| **019** | V65 Batch3 Cut B Remaining · R022/R030/R032 FE honesty | Web | tip `5e9927be…` | N | N | Content Hub queue CTA de-dupe + Ops empty-tile honesty · publish-queue action honesty · Finance Suite TARGET matrix · Staging Web only · API tip Expected Difference · **≠** GO | DEFERRED | bug_fix | SMOKE_PASS（20260806T003800Z · tip 5e9927be · R022/R030/R032 CLOSED · ≠ Cut C · ≠ GO） |
 
 ### 备注
 
+- **019** = V65 Batch3 Cut B Remaining FE tip `5e9927bef60d7dc44e6a9f14426bcab0cb075561` · R022/R030/R032 · Staging Web only · API tip Expected Difference · Evidence `evidence/GO_v65_prod_003_batch3_cut_b_remaining/` · **≠** Cut C · **≠** Production GO · `TT_PRODUCTION_GO=NO_GO`。
 - **018** = Track B Staging Reality six-fix · PCR `PCR-20260727-TRACK-B-STAGING-REALITY-SIX-FIX` · Evidence `20260727T081945Z-staging-reality-six-fix-local/` · **≠** B-MEDIA CLOSED · **≠** Blocking−1 · **禁止** Batch-9 `ADMIN_HOME_CARDS` refill · Living score **no uplift**。  
 - **014 / 013 / 012 / 011 / 010 / 009 / 008** 真源落点：**Product / Release Baseline**（活面）+ **Engineering SSOT**（Track B runtime cite）· Final Truth / Candidate / V3.1.1 / EGM / Governance / Hard Gate / Cutover = **cite-only** · **≠** Production GO。  
 - **017** = Batch-13 **CONTENT_PREP**（[`BATCH13-OPEN`](./TT-BATCH13-OPEN-RECORDING-LATEST.md) · [`FAST-PATH`](./TT-BATCH13-FAST-PATH-REMEDIATION-PLAN-LATEST.md) **FP-A→E** · [`FINAL-TRUTH-CITE`](./TT-BATCH13-FINAL-TRUTH-BASELINE-CITE-LATEST.md) tip immobile · OPEN=90 · **② 可满分** · **禁资金写 / 禁 HG 解锁** · FIX_NOT_STARTED · 发布级=**NO** · Hard Gate **LOCKED** · **≠** GO）。

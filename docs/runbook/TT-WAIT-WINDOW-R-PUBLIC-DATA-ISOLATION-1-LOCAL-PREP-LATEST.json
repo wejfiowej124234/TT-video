@@ -1,0 +1,107 @@
+{
+  "schema": "traveltrust.wait_window_r_public_data_isolation_1.v1",
+  "batch_id": "R-PUBLIC-DATA-ISOLATION-1",
+  "status": "INVENTORY_OPEN · CHILD_PACKS_PARTIAL_CLOSED",
+  "recorded_utc": "2026-08-11T08:02:00Z",
+  "inventory_round": 4,
+  "blocks_track1_finalize": false,
+  "tt_production_go": "NO_GO",
+  "seal": false,
+  "doctrine": {
+    "rule_id": "PUBLIC_SURFACE_ELIGIBILITY_FAIL_CLOSED_V1"
+  },
+  "probe_vs_closed_rule": "PROBE_CLEAN never equals CLOSED without Production-forced server eligibility + list/detail parity",
+  "latest_official_api_image": "deployment-01KZQX0AK0QW5A92JBB7B00N8E",
+  "cross_pack_regression_gate": {
+    "script": "scripts/gates/check-official-public-gates-regression.sh",
+    "wired_into": "scripts/dev/phase3-production-fly-deploy-and-sync.sh",
+    "post_cut_result": "PASS"
+  },
+  "child_packs": {
+    "R-PUBLIC-GUIDES-DETAIL-PARITY-1": "CLOSED",
+    "R-PUBLIC-DISCOVER-FORCE-1": "CLOSED",
+    "R-PUBLIC-COMMUNITY-GOVERNED-FEED-1": "CLOSED",
+    "R-PUBLIC-COMMUNITY-BEYOND-FEED-1": "CLOSED",
+    "R-PUBLIC-COLD-START-GOVERNED-1": "CLOSED"
+  },
+  "domains": [
+    {
+      "id": "market_provider_acquisition",
+      "risk": "CLOSED_OK"
+    },
+    {
+      "id": "guides",
+      "risk": "CLOSED_OK_THIS_WAVE"
+    },
+    {
+      "id": "orders_discover",
+      "risk": "CLOSED_OK_THIS_WAVE"
+    },
+    {
+      "id": "community_feed",
+      "risk": "CLOSED_OK_THIS_WAVE"
+    },
+    {
+      "id": "community_beyond_feed",
+      "risk": "CLOSED_OK_THIS_WAVE"
+    },
+    {
+      "id": "cms_official",
+      "risk": "CLOSED_OK"
+    },
+    {
+      "id": "cold_start_consumer",
+      "risk": "CLOSED_OK_WIRING · PROBE_CLEAN_EMPTY"
+    },
+    {
+      "id": "growth_referral_validate",
+      "risk": "PROBE_CLEAN"
+    },
+    {
+      "id": "governance_public",
+      "risk": "NEEDS_PROBE"
+    },
+    {
+      "id": "admin_to_public",
+      "risk": "CLOSED_OK_THIS_WAVE",
+      "evidence": "ADMIN-PUBLIC-FULL-MATRIX-1 ADMIN_PUBLIC_FULL_MATRIX_CLOSED"
+    },
+    {
+      "id": "indexer_projection",
+      "risk": "AFTER_SEAL_DB"
+    },
+    {
+      "id": "r_media_1",
+      "risk": "LOCAL_READY_AFTER_SEAL"
+    }
+  ],
+  "open_gaps_priority": [
+    "governance_public_runtime_and_mvp_empty_on_production",
+    "referral_validate_production_force_optional_if_active_uat_codes_appear",
+    "admin_to_public_matrix_AFTER_SEAL",
+    "indexer_and_r_media_AFTER_SEAL"
+  ],
+  "track1_post": {
+    "readyAt": 1786491935,
+    "done": false,
+    "usdc": "10000000",
+    "isEscrow": false
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

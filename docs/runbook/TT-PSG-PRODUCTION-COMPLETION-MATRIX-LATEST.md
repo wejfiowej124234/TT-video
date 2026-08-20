@@ -1,7 +1,7 @@
 # TT · PSG Production Completion Matrix（统一终局矩阵）
 
 **Machine:** `TT_PSG_PRODUCTION_COMPLETION_MATRIX`  
-**Status:** **ACTIVE_SSOT · FRAMEWORK_FROZEN · WAIT_WINDOW_NARROW** · `2026-07-19`  
+**Status:** **SUPERSEDED_AS_LIVING_OFFICIAL_PRODUCT_AND_GO_ELIGIBILITY** · historical `2026-07-19` framework only · living Official = **OPS-2026.08.20-v9** (`3e356617`; historical `daa5ae87` SUPERSEDED) · Cycle2 `READY_FOR_OWNER_PRODUCTION_GO_VERDICT`  
 **机读：** [`registry/psg-production-completion-matrix.v1.yaml`](../../registry/psg-production-completion-matrix.v1.yaml)  
 **Definition：** [Completion Definition](./TT-PSG-PRODUCTION-COMPLETION-DEFINITION-LATEST.md)  
 **Constitution：** [V3.1.1 · PSG Completion](../spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md#psg-production-completion)
@@ -19,6 +19,9 @@ WAIT_WINDOW HOLD · 无新增工作 · dirty/commit/SHA 均不动
 ```
 
 ---
+
+> **Official 产品真源（FTB Product Truth · OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **≠** git checkout · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` SUPERSEDED · M07 overlay ROLLED_BACK · **≠** Candidate v2 · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+> **GO 资格（Cycle2 overlay · 不改 freeze 8）：** `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · freeze unique entry `STOP` `required_before_go=8` · `current_required_before_go=0` · 下一步 = Owner 书面 **GO** 或 **继续 NO_GO**（`NOT_THIS_TURN`）· `TT_PRODUCTION_GO=NO_GO` · **禁止自动签发** · **禁止 bake www**
 
 ## 0 · 统一五层
 

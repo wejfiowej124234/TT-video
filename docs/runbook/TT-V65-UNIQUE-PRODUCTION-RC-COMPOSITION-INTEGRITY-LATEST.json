@@ -1,0 +1,101 @@
+{
+  "schema": "TT_V65_UNIQUE_PRODUCTION_RC_COMPOSITION_INTEGRITY_V1",
+  "stamp": "20260806T082950Z",
+  "rc_id": "V65-PROD-RC-20260806",
+  "status": "PASS",
+  "tt_production_go": "NO_GO",
+  "checks": [
+    {
+      "id": "BASELINE_SOLE_NON_WEB3",
+      "pass": true,
+      "expected": "V65-PROD-CAND-20260802",
+      "actual": "V65-PROD-CAND-20260802",
+      "note": "Sole Non-Web3 Production Runtime Baseline"
+    },
+    {
+      "id": "FE_TIP_CUT_C_MATCH",
+      "pass": true,
+      "expected": "106feef436f205c7286d789b8ff9704c0fb28f48",
+      "actual": "106feef436f205c7286d789b8ff9704c0fb28f48",
+      "fe_match": true,
+      "note": "Bound Cut C Staging-verified FE tip MATCH=True"
+    },
+    {
+      "id": "API_TIP_CUT_C_BOUND",
+      "pass": true,
+      "expected": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "actual": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "note": "Bound Cut C Staging-verified API tip"
+    },
+    {
+      "id": "REJECT_STAGING_TEMP_TIP",
+      "pass": true,
+      "rejected": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+      "note": "eng summary fe_staging_tip must NOT become Production RC tip"
+    },
+    {
+      "id": "REJECT_WORKTREE_HEAD",
+      "pass": true,
+      "rejected": "dd72da52c1920189cfb79f8ad49e288ee3e9e764",
+      "note": "Current worktree HEAD must NOT bind as RC tip"
+    },
+    {
+      "id": "REJECT_LIVE_PROD_OLD_ARTIFACT",
+      "pass": true,
+      "rejected": [
+        "31ce39490a35c3038928c0d42bcd8de909388512",
+        "0e5d438916f29395b9cbfbc376be70723e3b0848"
+      ],
+      "note": "Live production / composition SHAs are older artifacts — NOT RC tips"
+    },
+    {
+      "id": "WEB3_ORTHOGONAL_UNTOUCHED",
+      "pass": true,
+      "web3_freeze": "PSG-REL-20260720-WEB3-CAND-V2",
+      "touched": false,
+      "note": "Cite only — do not modify / migrate / mix into Non-Web3 RC"
+    },
+    {
+      "id": "EVIDENCE_BOUND",
+      "pass": true,
+      "smoke_stamp": "20260806T075010Z",
+      "residual_close_stamp": "20260806T075500Z",
+      "cut_c_owner_sign_off": "20260806T081200Z",
+      "residuals_closed": 11
+    },
+    {
+      "id": "NO_PRODUCTION_DEPLOY",
+      "pass": true,
+      "deployed": false,
+      "note": "RC draft/mint only — Production Deploy is RC-E-06"
+    },
+    {
+      "id": "NO_GO_FLIP",
+      "pass": true,
+      "tt_production_go": "NO_GO"
+    }
+  ],
+  "verdict": "COMPOSITION_INTEGRITY_PASS",
+  "rc_e_06_preparation_cite": {
+    "stamp": "20260806T083356Z",
+    "ssot": "docs/runbook/TT-V65-RC-E-06-PRODUCTION-DEPLOY-UAT-PREPARATION-LATEST.json",
+    "note": "Prep cites this integrity pack; integrity verdict unchanged COMPOSITION_INTEGRITY_PASS"
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

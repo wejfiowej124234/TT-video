@@ -1,0 +1,796 @@
+{
+  "schema": "traveltrust.v65_production_hardening_final.v1",
+  "key": "V65_PRODUCTION_HARDENING_FINAL",
+  "title": "V65 Production Hardening Final Sweep",
+  "stamp": "20260802T151249Z",
+  "verdict": "PASS",
+  "closure_status": "PRODUCTION_HARDENING_FINAL_MACHINE_PASS_WITH_P1_BACKLOG",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "no_junk_admin_entrances": true,
+    "csp_enforce_owner_gated": true
+  },
+  "dimensions": {
+    "page_states_sample": [
+      {
+        "route": "/",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": true
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/admin",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/auth/login",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/auth/register",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": true
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/community",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/did-rank",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": false,
+          "permission": false
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/disputes",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/governance",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": true
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/guide/register",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/guides",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": true
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/market",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/me",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/orders",
+        "states": {
+          "loading": true,
+          "empty": true,
+          "error": true,
+          "permission": true
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/provider/register",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false
+        },
+        "honesty_bad": []
+      },
+      {
+        "route": "/traveltrust",
+        "states": {
+          "loading": true,
+          "empty": false,
+          "error": true,
+          "permission": false
+        },
+        "honesty_bad": []
+      }
+    ],
+    "content_reality": [
+      {
+        "id": "homepage",
+        "route": "/",
+        "fe": true,
+        "api": true,
+        "admin": true,
+        "status": "PASS"
+      },
+      {
+        "id": "market",
+        "route": "/market",
+        "fe": true,
+        "api": true,
+        "admin": true,
+        "status": "PASS"
+      },
+      {
+        "id": "guides",
+        "route": "/guides",
+        "fe": true,
+        "api": true,
+        "admin": true,
+        "status": "PASS"
+      },
+      {
+        "id": "community",
+        "route": "/community",
+        "fe": true,
+        "api": true,
+        "admin": true,
+        "status": "PASS"
+      },
+      {
+        "id": "official",
+        "route": "/traveltrust",
+        "fe": true,
+        "api": true,
+        "admin": true,
+        "status": "PASS"
+      },
+      {
+        "id": "growth",
+        "route": "/me",
+        "fe": true,
+        "api": true,
+        "admin": true,
+        "status": "PASS"
+      }
+    ],
+    "mobile": [
+      {
+        "surface": "frontend/app/auth/register",
+        "touch_targets": true,
+        "overflow_handled": true,
+        "forms": true,
+        "status": "PASS"
+      },
+      {
+        "surface": "frontend/app/guide/register",
+        "touch_targets": true,
+        "overflow_handled": true,
+        "forms": true,
+        "status": "PASS"
+      },
+      {
+        "surface": "frontend/app/provider/register",
+        "touch_targets": true,
+        "overflow_handled": true,
+        "forms": true,
+        "status": "PASS"
+      },
+      {
+        "surface": "root_layout_viewport",
+        "viewport_signal": true,
+        "status": "PASS"
+      }
+    ],
+    "csp": {
+      "code_report_only_present": true,
+      "registry_present": true,
+      "registry": "registry/v65-csp-report-only-policy.v1.json",
+      "enforce_forbidden_until_owner": true,
+      "status": "PASS"
+    },
+    "live": [
+      {
+        "route": "/",
+        "http": 200,
+        "ttfb_ms": 4742.0,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin",
+        "http": 200,
+        "ttfb_ms": 7863.5,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin/alerts/incidents",
+        "http": 200,
+        "ttfb_ms": 10129.2,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin/alerts/incidents/[id]",
+        "http": 200,
+        "ttfb_ms": 6500.0,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin/api-versions",
+        "http": 200,
+        "ttfb_ms": 11919.3,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin/approvals",
+        "http": 200,
+        "ttfb_ms": 13267.7,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin/approvals/[id]",
+        "http": 200,
+        "ttfb_ms": 11048.6,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin/audit",
+        "http": 200,
+        "ttfb_ms": 13262.9,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin/audit/logs/[id]",
+        "http": 200,
+        "ttfb_ms": 12712.2,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/admin/audit/operations",
+        "http": 200,
+        "ttfb_ms": 6432.0,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/auth/forgot-password",
+        "http": 200,
+        "ttfb_ms": 10508.2,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/auth/login",
+        "http": 200,
+        "ttfb_ms": 4407.2,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/auth/register",
+        "http": 200,
+        "ttfb_ms": 5170.4,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/auth/reset-password",
+        "http": 200,
+        "ttfb_ms": 6637.4,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/auth/verify-email",
+        "http": 200,
+        "ttfb_ms": 7856.5,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community",
+        "http": 200,
+        "ttfb_ms": 6651.9,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/activity",
+        "http": 200,
+        "ttfb_ms": 5837.8,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/explore",
+        "http": 200,
+        "ttfb_ms": 3977.7,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/feedback",
+        "http": 200,
+        "ttfb_ms": 3451.3,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/friends",
+        "http": 200,
+        "ttfb_ms": 10442.7,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/guidelines",
+        "http": 200,
+        "ttfb_ms": 11017.3,
+        "pass": true,
+        "slow": true,
+        "very_slow": true,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/me",
+        "http": 200,
+        "ttfb_ms": 3537.5,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/me/collects",
+        "http": 200,
+        "ttfb_ms": 9107.5,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/me/likes",
+        "http": 200,
+        "ttfb_ms": 8998.3,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/community/me/posts",
+        "http": 200,
+        "ttfb_ms": 5005.9,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/did-rank",
+        "http": 200,
+        "ttfb_ms": 6121.3,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/disputes",
+        "http": 200,
+        "ttfb_ms": 3783.8,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/governance",
+        "http": 200,
+        "ttfb_ms": 3171.4,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/guide/register",
+        "http": 200,
+        "ttfb_ms": 2715.8,
+        "pass": true,
+        "slow": false,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/guides",
+        "http": 200,
+        "ttfb_ms": 4599.4,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/market",
+        "http": 200,
+        "ttfb_ms": 4066.6,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/me",
+        "http": 200,
+        "ttfb_ms": 2374.9,
+        "pass": true,
+        "slow": false,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/orders",
+        "http": 200,
+        "ttfb_ms": 3250.8,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/provider/register",
+        "http": 200,
+        "ttfb_ms": 2133.0,
+        "pass": true,
+        "slow": false,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      },
+      {
+        "route": "/traveltrust",
+        "http": 200,
+        "ttfb_ms": 9119.0,
+        "pass": true,
+        "slow": true,
+        "very_slow": false,
+        "white_screen_suspect": false,
+        "react_crash_suspect": false,
+        "bare_json_suspect": false,
+        "english_error_leak": false,
+        "csp_report_only": false,
+        "csp_enforce": false
+      }
+    ],
+    "cta_focus_gaps": []
+  },
+  "summary": {
+    "fe_pages": 207,
+    "live_probed": 35,
+    "p0_gaps": 0,
+    "p1_gaps": 1,
+    "warn_gaps": 49,
+    "content_pass": 6,
+    "content_total": 6,
+    "csp_code": "PASS",
+    "csp_live_report_only": false
+  },
+  "autofix_applied": [
+    "market_api_error_permission_shells",
+    "disputes_l5_empty_state",
+    "orders_empty_markers",
+    "csp_report_only_next_config",
+    "csp_policy_registry"
+  ],
+  "honesty": {
+    "machine_pass_not_human_uat": true,
+    "csp_live_requires_web_redeploy": true,
+    "ttfb_not_lab_lcp": true,
+    "not_production_go": true
+  },
+  "report_sha256": "d899f6300a073282be0a80d0cffb4baa163123fe97bfbd461d8a34ef455daa7d",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

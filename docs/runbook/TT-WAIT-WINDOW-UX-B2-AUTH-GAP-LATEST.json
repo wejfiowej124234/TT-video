@@ -1,0 +1,62 @@
+{
+  "schema": "traveltrust.wait_window_ux_b2_auth_gap.v1",
+  "batch": "B2-AUTH",
+  "recorded_utc": "2026-08-10T10:45:00Z",
+  "phase": "CLOSED",
+  "official_runtime_verify": "PASS",
+  "batch_closed": true,
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "local_vitest": {
+    "pass": "13/13"
+  },
+  "deploy": {
+    "app": "tt-web-prod",
+    "git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+    "build_time_utc": "2026-08-10T10:35:57Z"
+  },
+  "runtime_verify": "TT-WAIT-WINDOW-UX-B2-AUTH-RUNTIME-VERIFY-LATEST.json",
+  "fixed_and_verified": [
+    {
+      "id": "B2-A-002",
+      "priority": "P0",
+      "status": "CLOSED"
+    },
+    {
+      "id": "B2-A-001",
+      "priority": "P1",
+      "status": "CLOSED"
+    },
+    {
+      "id": "B2-A-003",
+      "priority": "P1",
+      "status": "CLOSED"
+    }
+  ],
+  "unchanged_accept_defer": [
+    "B2-A-004",
+    "B2-A-005"
+  ],
+  "next": "B3 Orders CHECK → GAP",
+  "honesty": [
+    "B2 CLOSED ≠ full-site UX CLOSED ≠ Seal ≠ GO",
+    "No Mainnet Web3 / FTB / Registry / Wired / Track1 mutation"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

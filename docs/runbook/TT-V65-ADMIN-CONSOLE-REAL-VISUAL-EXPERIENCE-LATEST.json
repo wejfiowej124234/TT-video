@@ -1,0 +1,129 @@
+{
+  "schema": "traveltrust.v65_admin_console_real_visual_experience.v1",
+  "stamp": "20260803T011447Z",
+  "generated_at": "2026-08-03T01:14:55Z",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "verdict": "V65_ADMIN_REAL_VISUAL_MACHINE_PASS",
+  "closure_status": "ADMIN_REAL_VISUAL_EXPERIENCE_MACHINE_PASS",
+  "tt_production_go": "NO_GO",
+  "pins": {
+    "ok": true,
+    "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "web": "075a295fbf5138777dd957feea4d885004a6a953",
+    "candidate_id": "V65-PROD-CAND-20260802",
+    "tt_production_go": "NO_GO",
+    "web3_pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "expected": {
+      "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web": "075a295fbf5138777dd957feea4d885004a6a953",
+      "candidate_id": "V65-PROD-CAND-20260802",
+      "tt_production_go": "NO_GO"
+    }
+  },
+  "dimensions": {
+    "PinIntegrity": {
+      "status": "PASS",
+      "composition": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "api": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web": "075a295fbf5138777dd957feea4d885004a6a953",
+      "tt_production_go": "NO_GO"
+    },
+    "WorkbenchVisualMaster": {
+      "status": "PASS",
+      "master": "AdminHomeClient + adminDesignSystemBaseline + adminUi tokens",
+      "layout_driver": "inbox_focus_product_baseline_default",
+      "shell_root": "AdminCapabilitiesShell",
+      "reference_score": {
+        "scores": {
+          "color_contrast": 8.8,
+          "typography_hierarchy": 10.0,
+          "layout_density": 8.5,
+          "information_hierarchy": 9.0,
+          "ops_language": 9.0,
+          "i18n_leak": 10.0,
+          "component_consistency": 9.0,
+          "table_form_ux": 9.0,
+          "empty_error_guidance": 9.0,
+          "operation_path_clarity": 9.0
+        },
+        "page_score": 91.3,
+        "min_dim": 8.5,
+        "failed_dims": [],
+        "l5_pass": true,
+        "bare_keys": [],
+        "hard_english": false,
+        "bare_key_ui": false,
+        "weak_contrast_hits": 6,
+        "remapped_muted_hits": 5,
+        "hard_contrast_hits": 1,
+        "strong_contrast_hits": 55,
+        "shell_ok": true,
+        "tokens_ok": true
+      }
+    },
+    "PageLevelUxScore": {
+      "status": "PASS",
+      "page_count": 118,
+      "pages_l5_pass": 118,
+      "avg_page_score": 92.4,
+      "bar": 85
+    },
+    "LiveBrowserGate": {
+      "status": "PASS",
+      "auth_gated": true,
+      "final_url": "https://www.web3-ttg.com/auth/login?returnUrl=%2Fadmin",
+      "http_status": 200
+    },
+    "I18nVisualLeak": {
+      "status": "PASS"
+    },
+    "ContrastRisk": {
+      "status": "PASS"
+    }
+  },
+  "live_probe": {
+    "web_base": "https://www.web3-ttg.com",
+    "admin_url": "https://www.web3-ttg.com/admin",
+    "auth_gated": true,
+    "admin_console_reachable_without_session": false,
+    "login_visual_sample": {
+      "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+    },
+    "status": "AUTH_GATED_DOCUMENTED",
+    "http_status": 200,
+    "final_url": "https://www.web3-ttg.com/auth/login?returnUrl=%2Fadmin",
+    "honesty": "Live Admin console requires authenticated session. Page-level visual scores are source-tree (route + one-hop + state shells). Login entry is sampled as the public visual gate."
+  },
+  "summary": {
+    "page_count": 118,
+    "pages_l5_pass": 118,
+    "pages_l5_fail": 0,
+    "avg_page_score": 92.4,
+    "l5_bar": 85,
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "p2_gaps": 0,
+    "gap_total": 0,
+    "modules": 14
+  },
+  "honest_boundary": "Machine PASS/GAP ≠ authenticated console UAT ≠ Owner Sign-off ≠ Production GO. Composition/API/Web pins unchanged. Sidebar/IA frozen. Web3 untouched.",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

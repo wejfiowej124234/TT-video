@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.wait_window_r_owner_observed_reality_1.v1",
+  "batch_id": "R-OWNER-OBSERVED-REALITY-1",
+  "status": "CLOSED",
+  "pipeline_blocking": false,
+  "recorded_utc": "2026-08-11T12:35:00Z",
+  "blocks_track1_finalize": false,
+  "tt_production_go": "NO_GO",
+  "closed": true,
+  "seal": false,
+  "strategy": "MAXIMIZE_PRE_ETA_REMEDIATION · TRACK1_MONEY_PATH_FROZEN",
+  "eta_abort_utc": "2026-08-11T23:45:35Z",
+  "readyAt": 1786491935,
+  "official_cut": "deployment-01KZR3RE2BM3Q4TYCCKQZNCDZC",
+  "human_delete_rv": {
+    "status": "PASS",
+    "stamp_utc": "2026-08-11T12:35:00Z",
+    "owner_session": "TTG Official",
+    "create_type": "photo",
+    "text_ban_note": "R-COMM-TEXT-BAN-1 · used ephemeral photo instead of plain text",
+    "caption_marker": "R-OWNER-DELETE-RV ephemeral 20260811T1228Z — safe to delete",
+    "post_id": "360ab3f4-2c97-4e9b-bf48-65e0cc0dea2e",
+    "my_posts_after_delete_n": 3,
+    "preserved_owner_video_posts": true,
+    "feed_marker_absent": true,
+    "detail_api": {
+      "method": "GET",
+      "path": "/api/v1/community/posts/360ab3f4-2c97-4e9b-bf48-65e0cc0dea2e",
+      "http": 404,
+      "error": "post_not_found"
+    },
+    "hard_refresh_still_absent": true,
+    "fe_detail_ux": "SOFT_ERROR_BANNER_REDIRECT_FEED · API_404_CONTRACT_OK"
+  },
+  "official_runtime_findings": {
+    "community_feed_not_empty": true,
+    "feed_posts_n_post_cut": 3,
+    "ocs_community_feed_highlights_visible": true,
+    "cms_wiped_claim": "FALSE · data present; pre-cut visibility = UAT probe leak + legacy cover 404",
+    "text_chip_vs_test": "locale community_type_text = Text (not Test)",
+    "immersive_translate_console": "BROWSER_EXTENSION_NOISE",
+    "legacy_jpg_cover_404": [
+      "/api/v1/uploads/community-posts/ca438fb3-ea0b-4bde-8fcc-a5d25a947e5a.jpg",
+      "/api/v1/uploads/community-posts/16e8fc19-f0c7-4d80-a3e9-a51e12722c25.jpg",
+      "/api/v1/uploads/community-posts/2441880f-d4dc-485f-9b99-f15625dbce10.jpg"
+    ]
+  },
+  "items": {
+    "delete_full_chain": {
+      "status": "CLOSED · HUMAN_DELETE_RV_PASS",
+      "post_id": "360ab3f4-2c97-4e9b-bf48-65e0cc0dea2e",
+      "stamp_utc": "2026-08-11T12:35:00Z"
+    },
+    "cms_community_visibility": {
+      "status": "OFFICIAL_RV_PASS"
+    },
+    "legacy_jpg_404": {
+      "status": "INVENTORY_ONLY · AFTER_SEAL_FOR_OBJECT_REPAIR",
+      "destructive_batch": "FAIL_CLOSED"
+    },
+    "human_retest_noise": {
+      "status": "PASS",
+      "immersive_translate": "IGNORE_EXTENSION",
+      "text_vs_test": "CONFIRMED_TEXT",
+      "delete_comment_upload": "DELETE_RV_PASS"
+    },
+    "public_uat_leak_beyond_market": {
+      "status": "OFFICIAL_RV_PASS"
+    }
+  },
+  "track1_pin": {
+    "readyAt": 1786491935,
+    "done": false,
+    "usdc": "10000000",
+    "isEscrow": false,
+    "stamp_utc": "2026-08-11T12:35:00Z"
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

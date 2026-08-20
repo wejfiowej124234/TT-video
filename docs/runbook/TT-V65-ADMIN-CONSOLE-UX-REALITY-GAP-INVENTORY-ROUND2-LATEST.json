@@ -1,0 +1,370 @@
+{
+  "schema": "tt.v65.admin_console.ux_reality_gap_inventory.round2.v1",
+  "track": "V65_ADMIN_CONSOLE_UX_REALITY_ROUND2",
+  "prv_phase": "PRV-3b_READY_FOR_OWNER_UAT",
+  "stamp_utc": "20260803T100228Z",
+  "generated_at": "2026-08-03T10:02:28Z",
+  "tip_sha": "4809b03947fa8f58f78c25927ba03bdd445e765f",
+  "tip_short": "4809b039",
+  "production_runtime": {
+    "unchanged": false,
+    "tip_live": "4809b03947fa8f58f78c25927ba03bdd445e765f",
+    "prior_tip": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+    "redeploy": "DONE",
+    "unified_cut_stamp": "20260803T100228Z",
+    "tt_production_go": "NO_GO"
+  },
+  "scope": {
+    "sidebar_leaves": 12,
+    "sidebar_routes": [
+      "/admin",
+      "/admin/inbox",
+      "/admin/users",
+      "/admin/guides",
+      "/admin/orders",
+      "/admin/disputes",
+      "/admin/onboarding",
+      "/admin/content",
+      "/admin/official",
+      "/admin/growth",
+      "/admin/finance-suite",
+      "/admin/config"
+    ],
+    "hub_children": 49,
+    "detail_routes": 5,
+    "matrix_rows_total": 66,
+    "matrix_ref": "docs/runbook/TT-V65-ADMIN-CONSOLE-PRODUCTION-REALITY-MATRIX-LATEST.json",
+    "audit_dims": [
+      "A_runtime",
+      "B_product_ux",
+      "C_design_system",
+      "D_l5_workbench",
+      "E_accessibility"
+    ]
+  },
+  "method": {
+    "owner_visual_browse": true,
+    "static_code_scan": true,
+    "matrix_crosswalk": true,
+    "live_screenshot_automation": false,
+    "fragment_ui_fixes": false,
+    "note": "Unified Cut Redeploy DONE — Production tip advanced to 4809b039; PRV-3b Owner UAT next; still NO_GO"
+  },
+  "prior_machine_audit_honesty": {
+    "enterprise_l5_hardening": {
+      "stamp": "20260803T013656Z",
+      "verdict": "V65_ADMIN_ENTERPRISE_L5_UX_REALITY_HARDENING_MACHINE_PASS",
+      "pages_l5_pass": 118,
+      "avg_page_score": 92.4,
+      "round2_classification": "STRUCTURE_SCAN_ONLY",
+      "superseded_for_visual_closure": true
+    },
+    "message_zh": "机器 L5 Audit 覆盖了结构/部分 i18n，未覆盖真实视觉质量（对比度/母版对齐/信息层级）。Round 2 以 Owner 浏览 + 代码旁证重开 UX Gap。"
+  },
+  "code_scan": {
+    "text_ink_500": {
+      "lines": 239,
+      "files": 1
+    },
+    "text_slate_400": {
+      "lines": 31,
+      "files": 1
+    },
+    "text_ink_400": {
+      "lines": 10,
+      "files": 1
+    },
+    "postgres_literal": {
+      "lines": 0,
+      "files": 0
+    },
+    "meta_source_surface": {
+      "lines": 5,
+      "files": 1
+    },
+    "ops_leaf_data_source_strip_present": true
+  },
+  "totals": {
+    "gaps_total": 7,
+    "open": 0,
+    "closed_local": 7,
+    "parked_runtime_bug": 0,
+    "parked_runtime_bug_tip_still_live": 2,
+    "p0": 0,
+    "p1": 4,
+    "p2": 3,
+    "closed": 7,
+    "blocks_visual_closure": 0,
+    "blocks_production_go": true,
+    "fragment_fixes": 0
+  },
+  "items": [
+    {
+      "id": "UX-R2-G001",
+      "status": "CLOSED_LOCAL_IN_BATCH_CUT",
+      "severity": "P1",
+      "class": "E_accessibility",
+      "dims": [
+        "E_accessibility",
+        "C_design_system"
+      ],
+      "title": "Dark-theme text contrast failure (labels / placeholders / table headers / helper / disabled)",
+      "scope": "ADMIN_CONSOLE_GLOBAL",
+      "owner_evidence": "Owner Production screenshots — form labels, placeholders, table headers, helper copy, disabled text near background; users must zoom to operate",
+      "code_evidence": {
+        "text_ink_500": {
+          "lines": 239,
+          "files": 1
+        },
+        "text_slate_400": {
+          "lines": 31,
+          "files": 1
+        },
+        "text_ink_400": {
+          "lines": 10,
+          "files": 1
+        },
+        "note": "adminUi claims zone remaps for some muted tokens; Owner browse still fails AA readability on Production tip — treat as visual reality gap, not closed by token presence alone"
+      },
+      "disposition": "BATCH_UX_HARDENING",
+      "forbidden_now": [
+        "fragment_page_fix",
+        "production_redeploy_hotfix"
+      ],
+      "local_closed_stamp": "20260803T094500Z",
+      "production_tip_status": "STILL_DEFECT_UNTIL_CUT",
+      "batch_ux_hardening": "LOCAL_VERIFY_PASS"
+    },
+    {
+      "id": "UX-R2-G002",
+      "status": "CLOSED_LOCAL_IN_BATCH_CUT",
+      "severity": "P2",
+      "class": "C_design_system",
+      "dims": [
+        "C_design_system",
+        "D_l5_workbench"
+      ],
+      "title": "Design System drift — Workbench L5 not sole visual master across Announcements / Official Ops / hubs",
+      "scope": "ADMIN_CONSOLE_GLOBAL",
+      "owner_evidence": "Announcements reads as raw CRUD stack; Official Ops looks like multi-era component collage; inconsistent spacing, card radius, typography, buttons, section hierarchy",
+      "code_evidence": {
+        "workbench_ssot_claim": "AdminHomeClient + adminDesignSystemBaseline + adminUi",
+        "matrix_ux_workbench_l5": "majority rows still verdict_gap on ux_workbench_l5 / typography_contrast_spacing"
+      },
+      "disposition": "BATCH_UX_HARDENING",
+      "forbidden_now": [
+        "fragment_page_fix",
+        "one_page_ship"
+      ],
+      "local_closed_stamp": "20260803T094500Z",
+      "production_tip_status": "STILL_DEFECT_UNTIL_CUT",
+      "batch_ux_hardening": "LOCAL_VERIFY_PASS"
+    },
+    {
+      "id": "UX-R2-G003",
+      "status": "CLOSED_LOCAL_IN_BATCH_CUT",
+      "severity": "P1",
+      "class": "B_product_ux",
+      "dims": [
+        "B_product_ux",
+        "D_l5_workbench"
+      ],
+      "title": "Operational language leakage — engineering fields shown to operators",
+      "scope": "ADMIN_CONSOLE_GLOBAL",
+      "owner_evidence": "Ops Leaf Data Source Title / meta_source / source postgres class strings observed in operator UI",
+      "code_evidence": {
+        "ops_leaf_strip": true,
+        "postgres_literal": {
+          "lines": 0,
+          "files": 0
+        },
+        "meta_source_surface": {
+          "lines": 5,
+          "files": 1
+        },
+        "should_show_ops": [
+          "数据来源",
+          "同步状态",
+          "最后更新时间"
+        ],
+        "must_not_show": [
+          "postgres.* table paths as primary copy",
+          "raw meta_read_source enum as title"
+        ]
+      },
+      "disposition": "BATCH_UX_HARDENING",
+      "forbidden_now": [
+        "fragment_page_fix"
+      ],
+      "local_closed_stamp": "20260803T094500Z",
+      "production_tip_status": "STILL_DEFECT_UNTIL_CUT",
+      "batch_ux_hardening": "LOCAL_VERIFY_PASS"
+    },
+    {
+      "id": "UX-R2-G004",
+      "status": "CLOSED_LOCAL_IN_BATCH_CUT",
+      "severity": "P2",
+      "class": "B_product_ux",
+      "dims": [
+        "B_product_ux",
+        "D_l5_workbench"
+      ],
+      "title": "Information hierarchy failure — tech/metadata mixed with business status",
+      "scope": "ADMIN_CONSOLE_GLOBAL",
+      "owner_evidence": "L5 Admin should layer: (1) business status / KPIs / queue (2) actions / filters / lists (3) tech metadata / debug — many pages collapse layers",
+      "code_evidence": {
+        "target_ia": [
+          "L1_business_status",
+          "L2_ops_actions_lists",
+          "L3_tech_metadata"
+        ]
+      },
+      "disposition": "BATCH_UX_HARDENING",
+      "forbidden_now": [
+        "fragment_page_fix"
+      ],
+      "local_closed_stamp": "20260803T094500Z",
+      "production_tip_status": "STILL_DEFECT_UNTIL_CUT",
+      "batch_ux_hardening": "LOCAL_VERIFY_PASS"
+    },
+    {
+      "id": "UX-R2-G005",
+      "status": "CLOSED_LOCAL_HONESTY",
+      "severity": "P2",
+      "class": "C_process_honesty",
+      "dims": [
+        "A_runtime",
+        "B_product_ux",
+        "C_design_system",
+        "D_l5_workbench",
+        "E_accessibility"
+      ],
+      "title": "Prior machine L5 / Real-Visual MACHINE_PASS insufficient for visual UX reality",
+      "scope": "META_AUDIT_DEPTH",
+      "owner_evidence": "118/118 PASS · avg 92.4 claimed; Owner browse finds contrast / DS drift / IA / ops-language failures",
+      "code_evidence": {
+        "prior_enterprise_l5_verdict": "V65_ADMIN_ENTERPRISE_L5_UX_REALITY_HARDENING_MACHINE_PASS",
+        "prior_stamp": "20260803T013656Z",
+        "prior_pages_l5_pass": 118,
+        "prior_avg": 92.4,
+        "honesty": "STRUCTURE_AND_I18N_SCAN ≠ REAL_VISUAL_QUALITY — SUPERSEDES prior visual closure claims for Round 2"
+      },
+      "disposition": "HONESTY_SUPERSESSION",
+      "forbidden_now": [
+        "cite_prior_machine_pass_as_visual_closed"
+      ],
+      "local_closed_stamp": "20260803T094500Z",
+      "production_tip_status": "HONESTY_SUPERSESSION_ACTIVE",
+      "batch_ux_hardening": "LOCAL_VERIFY_PASS"
+    },
+    {
+      "id": "UX-R2-G006",
+      "status": "CLOSED_LOCAL_IN_BATCH_CUT",
+      "severity": "P1",
+      "class": "A_runtime",
+      "dims": [
+        "A_runtime"
+      ],
+      "title": "Finance Suite crash still LIVE on Production tip (e is not iterable) — Redeploy deferred",
+      "scope": "/admin/finance-suite",
+      "owner_evidence": "Runtime Bug class; Batch-A CLOSED_LOCAL_CODE only — tip 35872b40 still lacks PEER export",
+      "code_evidence": {
+        "cross_ref": "V65-PR-G002",
+        "tip_sha": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+        "redeploy": "DEFERRED_UNTIL_BATCH_UX_CUT"
+      },
+      "disposition": "PARK_UNTIL_UNIFIED_CUT",
+      "forbidden_now": [
+        "fragment_finance_only_redeploy"
+      ],
+      "local_closed_stamp": "20260803T094500Z",
+      "production_tip_status": "STILL_DEFECT_UNTIL_CUT",
+      "batch_ux_hardening": "LOCAL_VERIFY_PASS"
+    },
+    {
+      "id": "UX-R2-G007",
+      "status": "CLOSED_LOCAL_IN_BATCH_CUT",
+      "severity": "P1",
+      "class": "A_runtime",
+      "dims": [
+        "A_runtime"
+      ],
+      "title": "CDN / next/image remotePatterns gap (400) — Redeploy deferred with Finance",
+      "scope": "ADMIN_MEDIA_SURFACES",
+      "owner_evidence": "Runtime Bug class orthogonal to UX Design System; keep with Finance in next unified Cut — do not solo hotfix Redeploy now",
+      "code_evidence": {
+        "redeploy": "DEFERRED_UNTIL_BATCH_UX_CUT"
+      },
+      "disposition": "PARK_UNTIL_UNIFIED_CUT",
+      "forbidden_now": [
+        "fragment_cdn_only_redeploy"
+      ],
+      "local_closed_stamp": "20260803T094500Z",
+      "production_tip_status": "STILL_DEFECT_UNTIL_CUT",
+      "batch_ux_hardening": "LOCAL_VERIFY_PASS"
+    }
+  ],
+  "next_allowed": [
+    "prv3b_owner_uat"
+  ],
+  "forbidden": [
+    "fragmented_one_page_ux_fix",
+    "production_redeploy_hotfix_now",
+    "claim_visual_machine_pass",
+    "cite_118_92_4_as_ux_closed",
+    "v65.x_branch",
+    "sidebar_ia_change",
+    "web3_pin_change",
+    "tt_production_go_flip"
+  ],
+  "batch_plan_skeleton": {
+    "name": "V65_ADMIN_CONSOLE_BATCH_UX_HARDENING",
+    "order": [
+      "contrast_token_floor_aa_dark",
+      "workbench_l5_master_alignment",
+      "ops_language_strip_rewrite",
+      "information_architecture_layers",
+      "parked_runtime_bugs_finance_cdn_in_same_cut",
+      "local_full_verify",
+      "single_release_cut",
+      "production_runtime_update",
+      "prv3"
+    ]
+  },
+  "honesty": [
+    "Unified Cut Batch UX G001-G007 landed on Production tip 4809b039",
+    "① Local closed ≠ Owner UAT PASS — PRV-3b still required",
+    "Prior 118/118 · avg 92.4 = STRUCTURE_SCAN_ONLY (G005)",
+    "API tip 6e76a299 Expected Difference (Web Cut only)",
+    "TT_PRODUCTION_GO: NO_GO until PRV-3b Owner UAT PASS"
+  ],
+  "inventory_freeze_stamp": "20260803T092401Z",
+  "batch_ux_hardening": {
+    "status": "UNIFIED_CUT_PRODUCTION_LANDED",
+    "stamp": "20260803T094500Z",
+    "unified_cut_stamp": "20260803T100228Z",
+    "tip_sha": "4809b03947fa8f58f78c25927ba03bdd445e765f",
+    "redeploy": "DONE",
+    "prv3": "SUPERSEDED",
+    "prv3b": "READY_FOR_OWNER_UAT",
+    "evidence": "evidence/GO_v65_unified_cut_redeploy/20260803T100228Z",
+    "local_evidence": "evidence/GO_v65_admin_console_batch_ux_hardening/20260803T094500Z"
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,0 +1,1253 @@
+{
+  "schema": "traveltrust.v65_product_capability_reality_closure.v1",
+  "key": "V65_PRODUCT_CAPABILITY_REALITY_CLOSURE",
+  "title": "V65 Product Capability Reality Closure Deep Audit",
+  "stamp": "20260802T143114Z",
+  "verdict": "PASS",
+  "capability_status": "PRODUCTION_CAPABILITY_COMPLETE_MACHINE_SLICE",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "machine_pass_not_human_uat": true
+  },
+  "identity": {
+    "id": "PCR-00",
+    "title": "Candidate identity",
+    "status": "PASS",
+    "checks": {
+      "health_200": true,
+      "api_sha": true,
+      "web_sha": true,
+      "inventory_present": true,
+      "final_truth_runtime_is_v65": true
+    },
+    "live": {
+      "api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+      "web_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+    }
+  },
+  "summary": {
+    "features_audited": 25,
+    "pass": 25,
+    "warn": 0,
+    "fail": 0,
+    "p0_gaps": 0,
+    "p1_gaps": 0,
+    "warn_gaps": 0
+  },
+  "feature_matrix": [
+    {
+      "feature": "FEAT-CMS-ANNOUNCEMENT",
+      "name": "CMS Home Announcements",
+      "domain": "cms",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-CMS-ROADMAP",
+      "name": "Public Product Roadmap",
+      "domain": "cms",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "—",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-MARKET-DISCOVER",
+      "name": "Market Discover Orders",
+      "domain": "market",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-MARKET-BOOKMARKS",
+      "name": "Market Travel Bookmarks",
+      "domain": "market",
+      "frontend_user": "✅",
+      "frontend_admin": "—",
+      "api_user": "✅",
+      "api_admin": "—",
+      "database": "✅",
+      "admin_ops": "SKIP",
+      "permission": "—",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-DID-RANK",
+      "name": "DID Rank Public Boards",
+      "domain": "did_rank",
+      "frontend_user": "✅",
+      "frontend_admin": "—",
+      "api_user": "✅",
+      "api_admin": "—",
+      "database": "—",
+      "admin_ops": "SKIP",
+      "permission": "—",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-GUIDES-PUBLIC",
+      "name": "Public Guides Listing",
+      "domain": "guide",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-GUIDE-APPLY",
+      "name": "Guide Role Application",
+      "domain": "guide",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "✅",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-PROVIDER-APPLY",
+      "name": "Provider Onboarding Application",
+      "domain": "provider",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "✅",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-ACQUISITION",
+      "name": "Travel Acquisition Hub",
+      "domain": "acquisition",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-ORDERS",
+      "name": "Traveler Orders",
+      "domain": "orders",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "✅",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-DISPUTES",
+      "name": "Order Disputes",
+      "domain": "disputes",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "✅",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-REVIEWS",
+      "name": "Reviews",
+      "domain": "reviews",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-COMMUNITY-FEED",
+      "name": "Community Feed",
+      "domain": "community",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-COMMUNITY-REPORTS",
+      "name": "Community Reports / Moderation",
+      "domain": "community",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "✅",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-COMMUNITY-APPEALS",
+      "name": "Community Appeals",
+      "domain": "community",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-SECURITY-NOTIFICATIONS",
+      "name": "User Security Notifications",
+      "domain": "notifications",
+      "frontend_user": "—",
+      "frontend_admin": "—",
+      "api_user": "✅",
+      "api_admin": "—",
+      "database": "✅",
+      "admin_ops": "SKIP",
+      "permission": "—",
+      "audit": "—",
+      "notification": "✅",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-AUTH-REGISTER-LOGIN",
+      "name": "Auth Register / Login",
+      "domain": "auth",
+      "frontend_user": "✅",
+      "frontend_admin": "—",
+      "api_user": "✅",
+      "api_admin": "—",
+      "database": "✅",
+      "admin_ops": "SKIP",
+      "permission": "—",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-ADMIN-USERS",
+      "name": "Admin User Management",
+      "domain": "admin_users",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "✅",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-ADMIN-FINANCE",
+      "name": "Admin Finance Summary",
+      "domain": "finance",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "—",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-ADMIN-AUDIT",
+      "name": "Admin Audit Logs",
+      "domain": "audit",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "✅",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-ADMIN-APPROVALS",
+      "name": "Admin Approvals Queue",
+      "domain": "approvals",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "✅",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-ADMIN-CAPABILITIES",
+      "name": "Admin Capabilities / RBAC",
+      "domain": "rbac",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "—",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-ADMIN-INBOX",
+      "name": "Admin Unified Inbox",
+      "domain": "admin_ops",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "—",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-STEWARD-APPLY",
+      "name": "Region Steward Applications",
+      "domain": "steward",
+      "frontend_user": "—",
+      "frontend_admin": "✅",
+      "api_user": "—",
+      "api_admin": "✅",
+      "database": "✅",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "—",
+      "status": "PASS"
+    },
+    {
+      "feature": "FEAT-GOVERNANCE-PROPOSALS",
+      "name": "Governance Proposals (user)",
+      "domain": "governance",
+      "frontend_user": "✅",
+      "frontend_admin": "✅",
+      "api_user": "✅",
+      "api_admin": "—",
+      "database": "—",
+      "admin_ops": "✅",
+      "permission": "✅",
+      "audit": "—",
+      "notification": "—",
+      "user_visibility": "✅",
+      "status": "PASS"
+    }
+  ],
+  "features": {
+    "FEAT-CMS-ANNOUNCEMENT": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-CMS-ANNOUNCEMENT",
+        "name": "CMS Home Announcements",
+        "domain": "cms",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-CMS-ROADMAP": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-CMS-ROADMAP",
+        "name": "Public Product Roadmap",
+        "domain": "cms",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "—",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-MARKET-DISCOVER": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-MARKET-DISCOVER",
+        "name": "Market Discover Orders",
+        "domain": "market",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-MARKET-BOOKMARKS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-MARKET-BOOKMARKS",
+        "name": "Market Travel Bookmarks",
+        "domain": "market",
+        "frontend_user": "✅",
+        "frontend_admin": "—",
+        "api_user": "✅",
+        "api_admin": "—",
+        "database": "✅",
+        "admin_ops": "SKIP",
+        "permission": "—",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-DID-RANK": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-DID-RANK",
+        "name": "DID Rank Public Boards",
+        "domain": "did_rank",
+        "frontend_user": "✅",
+        "frontend_admin": "—",
+        "api_user": "✅",
+        "api_admin": "—",
+        "database": "—",
+        "admin_ops": "SKIP",
+        "permission": "—",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-GUIDES-PUBLIC": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-GUIDES-PUBLIC",
+        "name": "Public Guides Listing",
+        "domain": "guide",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-GUIDE-APPLY": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-GUIDE-APPLY",
+        "name": "Guide Role Application",
+        "domain": "guide",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "✅",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-PROVIDER-APPLY": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-PROVIDER-APPLY",
+        "name": "Provider Onboarding Application",
+        "domain": "provider",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "✅",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-ACQUISITION": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-ACQUISITION",
+        "name": "Travel Acquisition Hub",
+        "domain": "acquisition",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-ORDERS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-ORDERS",
+        "name": "Traveler Orders",
+        "domain": "orders",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "✅",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-DISPUTES": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-DISPUTES",
+        "name": "Order Disputes",
+        "domain": "disputes",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "✅",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-REVIEWS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-REVIEWS",
+        "name": "Reviews",
+        "domain": "reviews",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-COMMUNITY-FEED": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-COMMUNITY-FEED",
+        "name": "Community Feed",
+        "domain": "community",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-COMMUNITY-REPORTS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-COMMUNITY-REPORTS",
+        "name": "Community Reports / Moderation",
+        "domain": "community",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "✅",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-COMMUNITY-APPEALS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-COMMUNITY-APPEALS",
+        "name": "Community Appeals",
+        "domain": "community",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-SECURITY-NOTIFICATIONS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-SECURITY-NOTIFICATIONS",
+        "name": "User Security Notifications",
+        "domain": "notifications",
+        "frontend_user": "—",
+        "frontend_admin": "—",
+        "api_user": "✅",
+        "api_admin": "—",
+        "database": "✅",
+        "admin_ops": "SKIP",
+        "permission": "—",
+        "audit": "—",
+        "notification": "✅",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-AUTH-REGISTER-LOGIN": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-AUTH-REGISTER-LOGIN",
+        "name": "Auth Register / Login",
+        "domain": "auth",
+        "frontend_user": "✅",
+        "frontend_admin": "—",
+        "api_user": "✅",
+        "api_admin": "—",
+        "database": "✅",
+        "admin_ops": "SKIP",
+        "permission": "—",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    },
+    "FEAT-ADMIN-USERS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-ADMIN-USERS",
+        "name": "Admin User Management",
+        "domain": "admin_users",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "✅",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-ADMIN-FINANCE": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-ADMIN-FINANCE",
+        "name": "Admin Finance Summary",
+        "domain": "finance",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "—",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-ADMIN-AUDIT": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-ADMIN-AUDIT",
+        "name": "Admin Audit Logs",
+        "domain": "audit",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "✅",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-ADMIN-APPROVALS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-ADMIN-APPROVALS",
+        "name": "Admin Approvals Queue",
+        "domain": "approvals",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "✅",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-ADMIN-CAPABILITIES": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-ADMIN-CAPABILITIES",
+        "name": "Admin Capabilities / RBAC",
+        "domain": "rbac",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "—",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-ADMIN-INBOX": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-ADMIN-INBOX",
+        "name": "Admin Unified Inbox",
+        "domain": "admin_ops",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "—",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-STEWARD-APPLY": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-STEWARD-APPLY",
+        "name": "Region Steward Applications",
+        "domain": "steward",
+        "frontend_user": "—",
+        "frontend_admin": "✅",
+        "api_user": "—",
+        "api_admin": "✅",
+        "database": "✅",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "—",
+        "status": "PASS"
+      }
+    },
+    "FEAT-GOVERNANCE-PROPOSALS": {
+      "status": "PASS",
+      "gaps": [],
+      "matrix_row": {
+        "feature": "FEAT-GOVERNANCE-PROPOSALS",
+        "name": "Governance Proposals (user)",
+        "domain": "governance",
+        "frontend_user": "✅",
+        "frontend_admin": "✅",
+        "api_user": "✅",
+        "api_admin": "—",
+        "database": "—",
+        "admin_ops": "✅",
+        "permission": "✅",
+        "audit": "—",
+        "notification": "—",
+        "user_visibility": "✅",
+        "status": "PASS"
+      }
+    }
+  },
+  "repo_fake_scan": {
+    "id": "L5-REPO",
+    "title": "Repo-wide fake/half-feature sample",
+    "hit_count": 24,
+    "p0ish_count": 0,
+    "hits_sample": [
+      {
+        "file": "frontend/app/community/feedback/CommunityFeedbackPostModal.tsx",
+        "line": 152,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"community_feedback_content_placeholder\")}"
+      },
+      {
+        "file": "frontend/app/community/feedback/CommunityFeedbackPostModal.tsx",
+        "line": 163,
+        "label": "placeholder",
+        "snippet": "className={`w-full rounded-[var(--radius-md)] border bg-ink-800/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 focus:outline-none focus-visib"
+      },
+      {
+        "file": "frontend/app/community/feedback/page.tsx",
+        "line": 708,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"community_feedback_content_placeholder\")}"
+      },
+      {
+        "file": "frontend/app/community/feedback/page.tsx",
+        "line": 719,
+        "label": "placeholder",
+        "snippet": "className={`w-full rounded-[var(--radius-md)] border bg-slate-800/80 px-3 py-2 text-small text-slate-200 placeholder:text-slate-400 focus:outline-none focus-vis"
+      },
+      {
+        "file": "frontend/app/admin/content/AdminContentHubMain.tsx",
+        "line": 177,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"admin_content_hub_tile_search_placeholder\")}"
+      },
+      {
+        "file": "frontend/app/admin/content/announcements/AdminContentAnnouncementsPageMain.tsx",
+        "line": 191,
+        "label": "placeholder",
+        "snippet": "placeholder=\"/traveltrust\""
+      },
+      {
+        "file": "frontend/app/admin/content/revisions/compare/AdminContentRevisionComparePageMain.tsx",
+        "line": 68,
+        "label": "placeholder",
+        "snippet": "placeholder=\"entity_id (uuid)\""
+      },
+      {
+        "file": "frontend/app/admin/content/revisions/compare/AdminContentRevisionComparePageMain.tsx",
+        "line": 74,
+        "label": "placeholder",
+        "snippet": "placeholder=\"vA\""
+      },
+      {
+        "file": "frontend/app/admin/content/revisions/compare/AdminContentRevisionComparePageMain.tsx",
+        "line": 80,
+        "label": "placeholder",
+        "snippet": "placeholder=\"vB\""
+      },
+      {
+        "file": "frontend/app/guide/register/GuideRegisterDidIdentityCard.tsx",
+        "line": 275,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"guideRegister_placeholderPassport\")}"
+      },
+      {
+        "file": "frontend/app/guide/register/GuideRegisterDidIdentityCard.tsx",
+        "line": 311,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"guideRegister_placeholderPassportNum\")}"
+      },
+      {
+        "file": "frontend/app/guide/register/GuideRegisterDidIdentityCard.tsx",
+        "line": 421,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"guideRegister_licenseUrlPlaceholder\")}"
+      },
+      {
+        "file": "frontend/app/guide/register/GuideRegisterServiceFields.tsx",
+        "line": 125,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"guideRegister_placeholderCity\")}"
+      },
+      {
+        "file": "frontend/app/guide/register/GuideRegisterServiceFields.tsx",
+        "line": 173,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"guideRegister_placeholderBio\")}"
+      },
+      {
+        "file": "frontend/app/guide/register/GuideRegisterWalletStepFlow.tsx",
+        "line": 83,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"guideRegister_placeholderWallet\")}"
+      },
+      {
+        "file": "frontend/app/provider/register/ProviderRegisterMainForm.tsx",
+        "line": 365,
+        "label": "placeholder",
+        "snippet": "placeholder={city}"
+      },
+      {
+        "file": "frontend/app/provider/register/ProviderRegisterMainForm.tsx",
+        "line": 449,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"providerRegister_categoriesPlaceholder\")}"
+      },
+      {
+        "file": "frontend/components/landing/LandingHeroCityField.tsx",
+        "line": 13,
+        "label": "placeholder",
+        "snippet": "/** 未选国家时强化 placeholder 可读性 */"
+      },
+      {
+        "file": "frontend/components/landing/LandingHeroCityField.tsx",
+        "line": 63,
+        "label": "placeholder",
+        "snippet": "placeholder={country ? t(\"landing_cities_placeholder\") : t(\"market_selectCountryFirst\")}"
+      },
+      {
+        "file": "frontend/components/landing/LandingHeroCityField.tsx",
+        "line": 68,
+        "label": "placeholder",
+        "snippet": "? \"border-ref-sun/35 placeholder:text-ref-sun placeholder:opacity-95 [placeholder-color:var(--ref-sun)]\""
+      },
+      {
+        "file": "frontend/components/landing/LandingHeroCityField.tsx",
+        "line": 69,
+        "label": "placeholder",
+        "snippet": ": \"border-white/30 placeholder:text-white/55\""
+      },
+      {
+        "file": "frontend/components/landing/LandingHeroForm.tsx",
+        "line": 453,
+        "label": "placeholder",
+        "snippet": "className=\"flex min-h-[44px] min-w-0 w-full flex-1 items-center gap-2 rounded-[var(--radius-md)] border-0 bg-white/10 px-2.5 py-2 text-left text-small text-whit"
+      },
+      {
+        "file": "frontend/components/landing/LandingHeroForm.tsx",
+        "line": 564,
+        "label": "placeholder",
+        "snippet": "placeholder={t(\"landing_budget_placeholder\")}"
+      },
+      {
+        "file": "frontend/components/landing/UnlockModal.test.tsx",
+        "line": 9,
+        "label": "mock_ident",
+        "snippet": "vi.mock(\"@/components/LocaleProvider\", () => ({"
+      }
+    ],
+    "status": "PASS"
+  },
+  "gap_inventory": [],
+  "autofix_applied": [],
+  "l8_ux_info": [
+    {
+      "feature_id": "FEAT-CMS-ROADMAP",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-MARKET-DISCOVER",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-DID-RANK",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-REVIEWS",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-COMMUNITY-APPEALS",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-ADMIN-USERS",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-ADMIN-FINANCE",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-ADMIN-AUDIT",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-ADMIN-APPROVALS",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-ADMIN-CAPABILITIES",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-ADMIN-INBOX",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "feature_id": "FEAT-STEWARD-APPLY",
+      "class": "L5_STATE_MACHINE_THIN",
+      "severity": "INFO",
+      "missing": [
+        "loading",
+        "empty",
+        "error"
+      ]
+    }
+  ],
+  "honesty": {
+    "capability_complete_is_not_production_go": true,
+    "capability_complete_is_machine_critical_slice": true,
+    "human_uat_still_required": true,
+    "inventory_is_critical_slice_not_every_route": true,
+    "l8_is_heuristic_not_visual_qa": true,
+    "frozen_tips_not_redeployed": true
+  },
+  "report_sha256": "07e9d26fb0569cc10200c14b7c547930a445e0b93d1b08939fa4cdea61509965",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

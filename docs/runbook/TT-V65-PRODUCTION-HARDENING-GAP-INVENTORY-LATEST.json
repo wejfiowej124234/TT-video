@@ -1,0 +1,382 @@
+{
+  "schema": "traveltrust.v65_production_hardening_gap_inventory.v1",
+  "stamp": "20260802T151249Z",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "p0": [],
+  "p1": [
+    {
+      "class": "CSP_REPORT_ONLY_NOT_LIVE_YET",
+      "severity": "P1",
+      "disposition": "NEEDS_WEB_REDEPLOY",
+      "note": "Code has Report-Only; frozen tip 075a295f may not include it until next web deploy — do not force tip mutate"
+    }
+  ],
+  "warn": [
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/auth/forgot-password",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/auth/login",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/auth/register",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/auth/reset-password",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/auth/verify-email",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/community",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/did-rank",
+      "missing": [
+        "error"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/disputes/[id]",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/governance",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/guide/register",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/guides/[id]",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/guides",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/me",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/orders/[id]",
+      "missing": [
+        "empty",
+        "error"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/orders/new",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/provider/register",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PAGE_STATE_INCOMPLETE",
+      "severity": "WARN",
+      "route": "/traveltrust",
+      "missing": [
+        "empty"
+      ]
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/",
+      "ttfb_ms": 4742.0
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/admin",
+      "ttfb_ms": 7863.5
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/admin/alerts/incidents",
+      "ttfb_ms": 10129.2,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/admin/alerts/incidents/[id]",
+      "ttfb_ms": 6500.0
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/admin/api-versions",
+      "ttfb_ms": 11919.3,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/admin/approvals",
+      "ttfb_ms": 13267.7,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/admin/approvals/[id]",
+      "ttfb_ms": 11048.6,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/admin/audit",
+      "ttfb_ms": 13262.9,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/admin/audit/logs/[id]",
+      "ttfb_ms": 12712.2,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/admin/audit/operations",
+      "ttfb_ms": 6432.0
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/auth/forgot-password",
+      "ttfb_ms": 10508.2,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/auth/login",
+      "ttfb_ms": 4407.2
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/auth/register",
+      "ttfb_ms": 5170.4
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/auth/reset-password",
+      "ttfb_ms": 6637.4
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/auth/verify-email",
+      "ttfb_ms": 7856.5
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/community",
+      "ttfb_ms": 6651.9
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/community/activity",
+      "ttfb_ms": 5837.8
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/community/explore",
+      "ttfb_ms": 3977.7
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/community/feedback",
+      "ttfb_ms": 3451.3
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/community/friends",
+      "ttfb_ms": 10442.7,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_VERY_SLOW",
+      "severity": "WARN",
+      "route": "/community/guidelines",
+      "ttfb_ms": 11017.3,
+      "note": "Machine TTFB; cold start common — field LCP still required"
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/community/me",
+      "ttfb_ms": 3537.5
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/community/me/collects",
+      "ttfb_ms": 9107.5
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/community/me/likes",
+      "ttfb_ms": 8998.3
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/community/me/posts",
+      "ttfb_ms": 5005.9
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/did-rank",
+      "ttfb_ms": 6121.3
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/disputes",
+      "ttfb_ms": 3783.8
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/governance",
+      "ttfb_ms": 3171.4
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/guides",
+      "ttfb_ms": 4599.4
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/market",
+      "ttfb_ms": 4066.6
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/orders",
+      "ttfb_ms": 3250.8
+    },
+    {
+      "class": "PERF_TTFB_ELEVATED",
+      "severity": "WARN",
+      "route": "/traveltrust",
+      "ttfb_ms": 9119.0
+    }
+  ],
+  "counts": {
+    "fe_pages": 207,
+    "live_probed": 35,
+    "p0_gaps": 0,
+    "p1_gaps": 1,
+    "warn_gaps": 49,
+    "content_pass": 6,
+    "content_total": 6,
+    "csp_code": "PASS",
+    "csp_live_report_only": false
+  },
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

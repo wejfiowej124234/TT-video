@@ -1,0 +1,222 @@
+{
+  "schema": "traveltrust.fresh_hard_gate_axis_closure_1.v1",
+  "pack": "FRESH_HARD_GATE_AXIS_CLOSURE-1",
+  "stamp_utc": "2026-08-12T10:10:00Z",
+  "status": "AXIS_CLOSURE_CLASSIFIED_BLOCKED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "owner_production_go_decision": "NOT_ENTERED",
+  "opened_by": "FRESH_HARD_GATE_REEVAL_REFUSED",
+  "adjudication_inputs_only": [
+    "Mainnet_Chain_Reality",
+    "Final_Truth_Baseline",
+    "Canonical_Hard_Gate"
+  ],
+  "forbidden": [
+    "weaken_gate_for_green",
+    "invent_evidence",
+    "rerun_sealed_Track1",
+    "redeploy_or_mutate_existing_Mainnet_for_greens"
+  ],
+  "money_path_commercial": {
+    "owner_rule": "Timelock_48h_governance_config_only__bilateral_complete_then_immediate_release",
+    "P0_COMMERCIAL_MONEY_PATH_BLOCKER": true,
+    "stop_go": true,
+    "official_live_settlement_router": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "official_path": "per_escrow_setEscrow_via_Timelock_owner",
+    "escrow_release_code_immediate_after_bilateral": true,
+    "ordinary_new_order_needs_per_order_timelock_allowlist_on_official": true,
+    "track2_factory_trust_product_fix": "SettlementRouterFactoryTrust_once_setTrustedFactory",
+    "track2_official_live": false,
+    "reality_checks_utc": "2026-08-12T08:19:27Z",
+    "reality_checks": {
+      "escrow_0x9996_isEscrow_on_SR": true,
+      "SR_owner_is_Timelock": true,
+      "timelock_admin_safe": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+      "safe_threshold": 1,
+      "safe_owners": [
+        "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+      ]
+    }
+  },
+  "fee_router_track2_83_vs_hard_gate": {
+    "FeeRouter_four_bucket_Timelock_distribute": {
+      "hard_gate_axis_required": false,
+      "classification": "UNAUTHORIZED_LATER_TRACK"
+    },
+    "Track2_FactoryTrust": {
+      "hard_gate_axis_required": false,
+      "classification": "P0_COMMERCIAL_INDEPENDENT_OF_AXIS_TABLE",
+      "official_live": false
+    },
+    "83_RegionVault_Snapshot_Claim": {
+      "hard_gate_axis_required": false,
+      "classification": "UNAUTHORIZED_LATER_TRACK"
+    },
+    "community_comment_residual": {
+      "hard_gate_axis_required": false,
+      "classification": "INDEPENDENT_RESIDUAL_NO_QUEUE_JUMP"
+    }
+  },
+  "open_axes": [
+    "AXIS-05",
+    "AXIS-07",
+    "AXIS-08",
+    "AXIS-09",
+    "AXIS-11",
+    "AXIS-12",
+    "AXIS-14"
+  ],
+  "axes": [
+    {
+      "id": "AXIS-05",
+      "exact_fail": "safe_address empty/TBD; roles_matrix_verified not true|PASS",
+      "artifact": "evidence/GO_production_readiness/mainnet-cutover-hard-gate/SAFE-ROLES-VERIFIED-LATEST.json",
+      "artifact_state": {
+        "verdict": "INCOMPLETE_PENDING_OWNER_ROLES_MATRIX",
+        "safe_address": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+        "threshold": 1,
+        "owners": [
+          "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+        ],
+        "roles_matrix_verified": false
+      },
+      "classify": [
+        "TRUE_BLOCKER"
+      ],
+      "minimal_fix": "Owner verify roles_matrix and accept 1/1 — do not hand-edit verified=true",
+      "closed": false,
+      "note": "Reality address fill done 2026-08-12T10:10:00Z under dual-wait; AXIS-05 still not PASS"
+    },
+    {
+      "id": "AXIS-07",
+      "exact_fail": "secrets_verified|infra_verified|dns_verified|monitoring_verified not true|PASS",
+      "artifact": "evidence/GO_production_readiness/mainnet-cutover-hard-gate/OPS-SURFACE-VERIFIED-LATEST.json",
+      "artifact_state": {
+        "verdict": "INCOMPLETE",
+        "secrets_verified": false,
+        "infra_verified": false,
+        "dns_verified": false,
+        "monitoring_verified": false,
+        "rollback_verified": true
+      },
+      "classify": [
+        "TRUE_BLOCKER"
+      ],
+      "minimal_fix": "Owner/prod Reality probes for secrets/infra/DNS/monitoring",
+      "closed": false
+    },
+    {
+      "id": "AXIS-08",
+      "exact_fail": "need R01 PASS OR OWNER-RESIDUAL-RISK-SIGNOFF signed",
+      "artifact_state": {
+        "R01": "MISSING",
+        "residual_verdict": "DRAFT_UNSIGNED",
+        "owner_signed": false
+      },
+      "classify": [
+        "TRUE_BLOCKER"
+      ],
+      "minimal_fix": "Prefer R-01 third-party audit PASS; else Owner signed residual",
+      "closed": false
+    },
+    {
+      "id": "AXIS-09",
+      "exact_fail": "readiness p0!=0 or verdict=WEB3_MAINNET_PRODUCTION_BLOCKED",
+      "artifact": "evidence/GO_production_readiness/web3-mainnet-audit/WEB3-MAINNET-PRODUCTION-READINESS-LATEST.json",
+      "artifact_state": {
+        "verdict": "WEB3_MAINNET_PRODUCTION_BLOCKED",
+        "p0": 1,
+        "p0_id": "MN-P0-006",
+        "p0_title": "R-01 third-party contract audit OPEN (GAP-99-01)"
+      },
+      "classify": [
+        "TRUE_BLOCKER"
+      ],
+      "minimal_fix": "Truly close MN-P0-006 / re-audit to p0=0 — no paper zero",
+      "closed": false
+    },
+    {
+      "id": "AXIS-11",
+      "exact_fail": "mainnet deployment package gate FAIL (RULE-DEPLOY-001)",
+      "artifact_state": {
+        "MAINNET-DEPLOYMENT-PACKAGE-LATEST.json": false,
+        "PREP_exists": true
+      },
+      "classify": [
+        "COVERAGE_GAP"
+      ],
+      "minimal_fix": "generate-mainnet-deployment-package.cjs only if WEB3_FREEZE_PASS",
+      "closed": false
+    },
+    {
+      "id": "AXIS-12",
+      "exact_fail": "no Shadow run with GO + chain_id=1 + four JSON",
+      "artifact_state": {
+        "newest_non_template": "evidence/mainnet_shadow_launch/run_20260417T005952Z",
+        "shadow_launch_verdict": "NO_GO",
+        "missing": [
+          "indexer_tick.json",
+          "indexer_replay.json",
+          "indexer_reconcile.json",
+          "overview.json"
+        ]
+      },
+      "classify": [
+        "TRUE_BLOCKER",
+        "COVERAGE_GAP"
+      ],
+      "minimal_fix": "Real Shadow Launch GO run — reject TEMPLATE/NO_GO scaffolds",
+      "closed": false
+    },
+    {
+      "id": "AXIS-14",
+      "exact_fail": "registry mainnet_cutover_authorized=false; missing OWNER-CUTOVER-AUTH-LATEST.json",
+      "artifact_state": {
+        "registry_mainnet_cutover_authorized": false,
+        "OWNER-CUTOVER-AUTH-LATEST.json": false
+      },
+      "classify": [
+        "TRUE_BLOCKER"
+      ],
+      "minimal_fix": "Owner auth ONLY after all other open axes + commercial P0 closed — do not flip early for green",
+      "closed": false
+    }
+  ],
+  "canonical_hard_gate": {
+    "script": "scripts/gates/check-mainnet-cutover-hard-gate.sh",
+    "expected_until_closed": "REFUSED",
+    "pass_required_before_owner_go_decision": true
+  },
+  "next_serial": [
+    "Owner_authorize_Track2_Official_cutover_to_clear_P0_COMMERCIAL",
+    "AXIS-05_reality_fill_plus_roles",
+    "AXIS-07_prod_probes",
+    "AXIS-08_R01_or_signed_residual",
+    "AXIS-09_p0_zero",
+    "AXIS-11_generate_package",
+    "AXIS-12_shadow_GO",
+    "AXIS-14_owner_auth_last",
+    "rerun_canonical_hard_gate",
+    "only_then_OWNER_PRODUCTION_GO_DECISION"
+  ],
+  "dual_wait": "DUAL_WAIT_FROZEN",
+  "dual_wait_ssot": "docs/runbook/TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md",
+  "prep_board": "docs/runbook/TT-DUAL-WAIT-OFFICIAL-WEB3-AXIS-PREP-BOARD-LATEST.md",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,46 +1,112 @@
 {
   "schema": "traveltrust.official_www_product_surface_freeze.v1",
   "status": "OFFICIAL_WWW_PRODUCT_SURFACE_FROZEN",
-  "stamp_utc": "2026-08-17T02:36:00Z",
+  "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+  "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+  "stamp_utc": "2026-08-20T06:20:00Z",
+  "owner_lock_wall_clock": "2026-08-20T15:20:00+09:00",
   "tt_production_go": "NO_GO",
+  "stable_day_pin": {
+    "calendar": "2026-08-20",
+    "role": "TODAYS_OFFICIAL_STABLE",
+    "fly_image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "session_bootstrap": "v8",
+    "note": "OPS-v9 is the immutable Official living product truth for this freeze window. M07 pin-overlay bake (2551fafd / …-v9-m07-unlock) is NOT living Official — rolled back. Bootstrap v8. TT_PRODUCTION_GO=NO_GO."
+  },
+  "supersedes_as_living_official_product_surface": [
+    {
+      "git_sha": "2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
+      "build_time": "2026-08-20T08:15:14Z",
+      "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-m07-unlock-20260820",
+      "note": "M07 Unlock pin-overlay · SUPERSEDED as living Official · keep image for archaeology only · do not restore as OPS-v9"
+    },
+    {
+      "baseline_id": "TT-OFFICIAL-OPS-20260820",
+      "external_name": "TravelTrust Official · OPS-2026.08.20",
+      "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v8-20260820",
+      "note": "Pre-v9 living stamp SUPERSEDED: misnamed …-v8 tag carried bootstrap v7 and broke Header login"
+    },
+    {
+      "git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "build_time": "2026-08-16T15:15:49Z",
+      "fly_image": "registry.fly.io/tt-web-prod:deployment-01M05JAAXJPTRZJAQEJ4JJWQMK",
+      "note": "2026-08-16 Official pin SUPERSEDED as living product truth"
+    }
+  ],
+  "not_this_baseline": [
+    "V01",
+    "bare V1",
+    "v1.1.0-psg-go.20260717 (PSG Archive plane — immutable, not Official living surface)",
+    "hybrid-live-auth-pin-nontarget-v8-20260820 (misnamed; bootstrap v7 — do not restore)",
+    "hybrid-live-auth-pin-nontarget-v9-m07-unlock-20260820 (M07 overlay — not OPS-v9)"
+  ],
   "live": {
     "web": "https://www.web3-ttg.com",
     "release_identity_url": "https://www.web3-ttg.com/api/release-identity",
-    "git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
-    "artifact_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
-    "build_time": "2026-08-16T15:15:49Z",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "artifact_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
     "identity_source": "docker-bake",
     "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
-    "fly_image": "registry.fly.io/tt-web-prod:deployment-01M05JAAXJPTRZJAQEJ4JJWQMK",
-    "note": "Identity SHA != clean git checkout. Live image is the 2026-08-16T15:15:49Z Official pin (uncommitted product bytes after daa5ae87). Do not treat later ABI bakes 01:11:08Z / 02:11:29Z as live."
+    "contract_profile": "mainnet_deployed_official_partial",
+    "database_baseline": "production_surface",
+    "cms_baseline": "public_display_10x4 + catalog_bake=1",
+    "next_build_id": "fnX9UySJrp_w3J4PTApv6",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_image_digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+    "session_bootstrap": "v8",
+    "session_bootstrap_note": "Image tag v9 carries bootstrap v8 (SKIP_ME_FETCH=0). Misnamed tag hybrid-…-v8 still had bootstrap v7 and breaks Header login hydrate.",
+    "composition": {
+      "live_tip_routes": ["/", "/traveltrust", "/auth"],
+      "pin_visual_routes": ["/market", "/did-rank", "/community"],
+      "pin_visual_source": "2026-08-16 Official visual lock (o37WNTNObGxE3TiJPI7Sl)"
+    },
+    "note": "TravelTrust Official · OPS-2026.08.20-v9 is the unique living Official product truth. Identity SHA != clean git checkout of visual pin. Not Production GO. M07 must not rewrite this pin name or bytes."
+  },
+  "last_live_observe": {
+    "utc": "2026-08-20T08:55:00Z",
+    "wave": "OPS_V9_RESTORE_AFTER_M07_OVERLAY",
+    "www_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "www_build_time": "2026-08-20T00:51:57Z",
+    "www_identity_source": "docker-bake",
+    "www_psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+    "fly_image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "matches_pin": true,
+    "bootstrap_public_head": "v8",
+    "home_http": 200,
+    "login_http": 200,
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "header_login": "OWNER_CONFIRMED",
+    "header_login_account": "C2",
+    "header_login_method": "hard_refresh_official_www",
+    "header_login_owner_note": "Owner confirmed Header hydrate + user menu after C2 login on OPS-v9",
+    "m07_overlay": "ROLLED_BACK_NOT_LIVING"
+  },
+  "go_eligibility_overlay": {
+    "status": "READY_FOR_OWNER_PRODUCTION_GO_VERDICT",
+    "owner_production_go_verdict": "NOT_THIS_TURN",
+    "next_step": "OWNER_WRITTEN_GO_OR_CONTINUE_NO_GO_NOT_TECH_FIX",
+    "auto_issue_production_go": false,
+    "tt_production_go": "NO_GO"
   },
   "identity_sha_is_not_product_bytes": true,
   "restore": {
-    "handle": "registry.fly.io/tt-web-prod:deployment-01M05JAAXJPTRZJAQEJ4JJWQMK",
+    "handle": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
     "command": "TT_OFFICIAL_WWW_RESTORE_PIN=1 bash scripts/dev/restore-tt-web-production-product-pin.sh",
     "check_only": "bash scripts/dev/restore-tt-web-production-product-pin.sh --check-only",
+    "post_restore_required": "Restore living handle hybrid-live-auth-pin-nontarget-v9-20260820 (OPS-v9, bootstrap v8). Do not restore misnamed …-v8. Do not restore …-v9-m07-unlock as OPS-v9.",
     "must_not": [
+      "git checkout 3e356617",
       "git checkout daa5ae87",
+      "git checkout 2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
       "deploy-tt-web-production.sh",
-      "rebuild Next from any git tree"
-    ],
-    "restore_verified": {
-      "verdict": "OFFICIAL_WWW_PRODUCT_PIN_RESTORED_STOP",
-      "stamp_utc": "2026-08-17T04:12:55Z",
-      "tt_production_go": "NO_GO",
-      "www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
-      "www_build_time": "2026-08-16T15:15:49Z",
-      "apex_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
-      "apex_build_time": "2026-08-16T15:15:49Z",
-      "announcement_chips": ["all", "product", "campaign", "governance", "protocol_status"],
-      "home_pulse_ticker": true,
-      "five_main_http_200": true,
-      "evidence": "evidence/GO_official_www_product_surface/OFFICIAL-WWW-PRODUCT-PIN-RESTORED-STOP.json",
-      "stop": true
-    }
+      "rebuild Next from any git tree",
+      "restore hybrid-live-auth-pin-nontarget-v8-20260820",
+      "restore hybrid-live-auth-pin-nontarget-v9-m07-unlock-20260820 as OPS-v9"
+    ]
   },
   "bake_isolation": {
-    "isolation_stamp_utc": "2026-08-17T04:00:00Z",
     "gate": "scripts/gates/check-official-www-product-surface-frozen.sh",
     "tt_skip_official_baseline_pin_cannot_bypass": true,
     "classes": {
@@ -51,8 +117,8 @@
       },
       "web3_overlay": {
         "script": "scripts/dev/deploy-tt-web-production-web3-overlay.sh",
-        "frozen_default": "FORBIDDEN (Docker COPY . ./ replaces live image bytes)",
-        "unlock": "TT_OFFICIAL_WEB3_OVERLAY_FROM_GIT=1 + TT_OFFICIAL_WEB3_OVERLAY_UNLOCK=1 + TT_OFFICIAL_WEB3_OVERLAY_DEPLOY=1"
+        "frozen_default": "FORBIDDEN",
+        "unlock": "TT_OFFICIAL_WEB3_OVERLAY_FROM_GIT=1 + Owner unlock"
       },
       "restore_image": {
         "script": "scripts/dev/restore-tt-web-production-product-pin.sh",
@@ -60,33 +126,7 @@
         "method": "fly deploy --image"
       }
     },
-    "allowlist": [
-      "contracts/abi/",
-      "frontend/dapp/abis/",
-      "frontend/lib/escrowFactoryEnv.ts",
-      "frontend/lib/governance/primaryMarketRuntimePriceSsot.ts",
-      "deploy/fly/tt-web-prod/build.env.local",
-      "frontend/.env.mainnet.local",
-      "frontend/public/tt-release-identity.bake.json"
-    ],
-    "forbidden_worktrees": [
-      "ugc-translate",
-      "batch-a-session",
-      "r-comm-identity",
-      ".worktrees/* except official-www-web3-overlay"
-    ],
     "web3_default": "chain + API /meta — not www bake"
-  },
-  "product_fingerprint": {
-    "live_image": "5 announcement chips including 活动; pulse ticker; Admin workbench",
-    "committed_daa5ae87_tree": "4 chips (全部 / 产品 / 治理 / 协议) — checkout strips live product",
-    "verify": "GET /api/release-identity git_sha + build_time must match live pin"
-  },
-  "hops_unchanged": {
-    "escrow_factory_v2_wired": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
-    "fee_router_official": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
-    "settlement_router_bake_pin": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
-    "new_fee_router_forbidden_until_ci02_cutover": "0xb6bfEDA39D242395a132AB9340bA4A17ce757655"
   },
   "api_untouched": {
     "meta_build_url": "https://api.web3-ttg.com/meta/build",
@@ -97,53 +137,22 @@
     "FIVE-MAIN structure",
     "/traveltrust/announcements",
     "homepage pulse ticker",
-    "admin workbench bake (inbox + on-chain fund rings + Official addresses)"
+    "market / did-rank / community visual pin from 08-16",
+    "Header session hydrate via bootstrap v8 in image v9",
+    "OPS-2026.08.20-v9 identity / image handle (do not silently rename to M07)"
   ],
   "forbidden": [
     "deploy-tt-web-production.sh",
-    "fly tt-web-prod bake",
+    "fly tt-web-prod full bake without Owner unlock",
     "FIVE-MAIN structure/visual/layout change",
-    "announcements/ticker change",
-    "reopen BATCH-A Session/BFF/WalletConnect bake",
-    "overwrite pin from living tree",
-    "checkout daa5ae87 as rollback (strips live 5-chip hub)",
-    "TT_SKIP_OFFICIAL_BASELINE_PIN=1 as product-surface bypass",
-    "stamp TRAVELTRUST_GIT_SHA=daa5ae87 over dirty/overlay bytes",
     "claim Production GO",
-    "switch Official hop to NEW FeeRouter"
+    "call this baseline V01 or bare V1",
+    "equate this baseline to v1.1.0-psg-go.20260717",
+    "rewrite living Official truth back to daa5ae87 without Owner auth",
+    "restore misnamed hybrid-…-v8 image as living Official",
+    "claim M07 overlay bake as TravelTrust Official · OPS-2026.08.20-v9"
   ],
-  "web3_ladder": {
-    "do_not_redeploy": [
-      "Wired 0xEE0BE3",
-      "SR-FT 0xD1DA",
-      "OLD FeeRouter 0x2aF47C",
-      "T1 done=true",
-      "T2 done=true",
-      "GOV-04 PM impl 0xB3bC live 10-to-10",
-      "1 USDC L7 PASS escrow 0x45B28A",
-      "CI-02 A setSeatRoutingConfig EXECUTED"
-    ],
-    "remaining_independent": [
-      {
-        "id": "CI-02-B",
-        "op": "SR-FT.setFeeRouter(NEW)",
-        "status": "ABORTED_NOT_SCHEDULED",
-        "done": false,
-        "action": "Owner-auth Safe → Timelock.schedule then 48h then separate execute"
-      },
-      {
-        "id": "PM25",
-        "opId": "0xb7d2a7c37a6f8aca08d41a1f0c54ded6d83429a918cda89b9271aaad0b551b12",
-        "eta_utc": "2026-08-16T16:20:23Z",
-        "done": false,
-        "action": "Owner-auth execute; do not merge with CI-02"
-      },
-      {
-        "id": "GAP-1USDC-HANDOFF",
-        "status": "L7_PASS_L8_CHECKPOINT_CAUGHT_UI_UNVERIFIED",
-        "action": "Projection/UI verify only; no second real-money tx"
-      }
-    ],
-    "not_this_wave": ["Seat", "RegionVault", "Proposal #3"]
-  }
+  "human_ssot": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md",
+  "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md",
+  "convergence_evidence": "evidence/GO_official_www_product_surface/WAVE-0-TO-D-OPS-V9-CONVERGENCE-20260820.md"
 }

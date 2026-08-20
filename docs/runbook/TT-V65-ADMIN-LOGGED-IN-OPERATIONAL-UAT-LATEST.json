@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.v65_admin_logged_in_operational_uat_latest.v1",
+  "machine_key": "TT_V65_ADMIN_LOGGED_IN_OPERATIONAL_UAT",
+  "stamp": "20260804T125555Z",
+  "tip": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+  "hosts": {
+    "api": "https://api.web3-ttg.com",
+    "web": "https://www.web3-ttg.com"
+  },
+  "auth_status": "LOGGED_IN",
+  "uat_status": "OWNER_VALIDATED",
+  "result": "PASS",
+  "owner_validated": true,
+  "tt_production_go": "NO_GO",
+  "evidence": "D:/TravelTrust-V1.1/evidence/GO_v65_prod_003_prv3b_owner_uat/20260804T124327Z",
+  "checklist_summary": {
+    "pass": 6,
+    "fail": 0,
+    "partial": 2,
+    "blocker": null,
+    "critical_path": "REVIEW_CLOSED_LOOP",
+    "critical_path_result": "PASS"
+  },
+  "honesty": {
+    "not_owner_validated": false,
+    "not_frozen": true,
+    "not_production_go": true,
+    "owner_validated_is_not_production_go": true,
+    "freeze_ssot_ftb_pending": true
+  },
+  "note": "PRV-3b critical-path re-UAT PASS tip 16f29c7e; OWNER_VALIDATED; TT_PRODUCTION_GO=NO_GO; Freeze/SSOT/FTB pending",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

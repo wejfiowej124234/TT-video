@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.wait_window_r_mkt_uat_leak_1.v1",
+  "batch_id": "R-MKT-UAT-LEAK-1",
+  "status": "CLOSED",
+  "recorded_utc": "2026-08-11T06:50:00Z",
+  "blocks_track1_finalize": false,
+  "tt_production_go": "NO_GO",
+  "closed": true,
+  "seal": false,
+  "migration_checksum_blocker": {
+    "status": "CLEARED",
+    "root_cause": "worktree_CRLF_pollution_of_published_migrations",
+    "focus_version": "20260708120000",
+    "focus_file": "crates/api/migrations/20260708120000_orders_service_completion_bilateral.sql",
+    "prod_ledger_match": "HEAD_LF_sha384_5d859f03faa47a80f0ae4006f8d49620ec004213eb726151bbb61ed2beffd2680a3674d6f0fc686554ddd306e9da0efb",
+    "worktree_polluted_sha384_prefix": "f7a3053aba6c6d3655db9d066acb5c4a",
+    "actions_forbidden_honored": [
+      "no_prod_sqlx_migrations_mutate",
+      "no_delete_rewrite_prod_migration_history",
+      "no_new_migration_to_mask_drift"
+    ],
+    "restore": "git_checkout_HEAD_immutable_LF_bytes_for_13_CRLF_dirty_files",
+    "gates": {
+      "check_sqlx_migration_lf_integrity": "PASS",
+      "RI_01_REQUIRE_DB": "PASS_direct_sqlx_ledger_0_drift"
+    },
+    "prevention": {
+      "gitattributes": "crates/api/migrations/*.sql text eol=lf",
+      "gate_script": "scripts/gates/check-sqlx-migration-lf-integrity.sh",
+      "wired_into": "scripts/dev/phase3-production-fly-deploy-and-sync.sh"
+    }
+  },
+  "official_api_cut": {
+    "app": "tt-api-prod",
+    "image": "deployment-01KZQQZQCF1RYAHPD07SPRTVBH",
+    "from": "clean_worktree_D:/TravelTrust-R-MKT-api-cut",
+    "overlay": [
+      "crates/api/src/chain_off/market_public_surface.rs",
+      "crates/api/src/routes/market_subsite.rs"
+    ],
+    "boot_log": "database: connected and migrations applied",
+    "health": 200,
+    "meta": 200,
+    "prior_failed_image": "deployment-01KZQJ0C2SHJNED2KW0F0FEX80",
+    "prior_rollback_image": "deployment-01KZPAYFV5K6A5QTB7RP8TBVNC"
+  },
+  "runtime_verify_listings": {
+    "endpoint": "GET /api/v1/market/provider/listings",
+    "before_count": 25,
+    "before_uat_v65": 15,
+    "after_count": 10,
+    "after_uat_family": 0,
+    "real_merchant_kept": true,
+    "verdict": "PASS"
+  },
+  "official_fe_cut": {
+    "app": "tt-web-prod",
+    "image": "deployment-01KZQRRT3E204TKDW7Y0R1W9NF",
+    "git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+    "role": "defense_in_depth_only_not_ssot",
+    "from": "clean_worktree_D:/TravelTrust-R-MKT-fe-cut"
+  },
+  "track1_post": {
+    "readyAt": 1786491935,
+    "done": false,
+    "usdc_balance": "10000000",
+    "isEscrow": false,
+    "undisturbed": true
+  },
+  "server_side_eligibility": true,
+  "fe_only_not_final": true,
+  "local_tests": {
+    "rust_automation_uat_v65": "PASS",
+    "vitest_marketPublicListingGate": "2 PASS"
+  },
+  "next": "R-COMM-TEXT-BAN-1",
+  "r_comm_text_ban_1": "UNBLOCKED_FOR_START",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,0 +1,31 @@
+{
+  "title": "OPS-2026.08.20-v9 living matrix / LATEST banner alignment",
+  "stamp_utc": "2026-08-20T09:10:00Z",
+  "product_truth": {
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51"
+  },
+  "superseded": {
+    "www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "fly_deployment": "deployment-01M05JAAXJPTRZJAQEJ4JJWQMK"
+  },
+  "rolled_back_not_living": {
+    "m07_overlay_git_sha": "2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
+    "m07_image": "hybrid-live-auth-pin-nontarget-v9-m07-unlock-20260820"
+  },
+  "scope": "Docs/Registry living matrix + LATEST banners only. No www bake. No TT_PRODUCTION_GO flip. Parent FTB 20260812 untouched.",
+  "bulk_align_files": 51,
+  "verify": {
+    "live_release_identity_match": true,
+    "engineering_ssot_anchor_gate": "PASS",
+    "traveltrust_home_module_registry": "PASS",
+    "restore_check_only": "PASS",
+    "registry_living_official_www_daa5ae87": 0,
+    "tt_production_go": "NO_GO"
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "schema": "traveltrust.v65_pre_go_readiness_report.v1",
+  "key": "V65_PRE_GO_READINESS",
+  "title": "V65 Pre-GO Readiness Report",
+  "stamp": "20260802T140523Z",
+  "verdict": "PASS",
+  "go_review_materials_package": "READY",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "tt_production_go": "NO_GO",
+  "immutable_rules": {
+    "no_candidate_code_modification": true,
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze_untouched": true,
+    "human_uat_not_executed_by_audit": true,
+    "tt_production_go_not_flipped": true,
+    "no_premature_release": true
+  },
+  "sections": {
+    "PG-01": {
+      "id": "PG-01",
+      "title": "Frozen candidate identity (no code change)",
+      "status": "PASS",
+      "checks": {
+        "freeze_pin_frozen": true,
+        "freeze_cert_pass": true,
+        "pin_api_sha": true,
+        "pin_web_sha": true,
+        "live_api_matches_pin": true,
+        "live_web_matches_pin": true,
+        "api_health_200": true,
+        "tt_production_go_no_go_in_pin": true,
+        "candidate_code_not_modified_by_this_audit": true
+      },
+      "live": {
+        "api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+        "web_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+      }
+    },
+    "PG-02": {
+      "id": "PG-02",
+      "title": "Machine / Config / Runtime gates",
+      "status": "PASS",
+      "checks": {
+        "release_integrity_pass": true,
+        "configuration_integrity_pass": true,
+        "cms_reality_closure_pass": true,
+        "ri_ssot_present": true,
+        "cfg_ssot_present": true,
+        "cms_ssot_present": true,
+        "live_cors_www": true,
+        "live_health": true
+      },
+      "cited": {
+        "ri_stamp": "20260802T133602Z",
+        "cfg_stamp": "20260802T140239Z",
+        "cms_stamp": "20260802T131931Z"
+      }
+    },
+    "PG-03": {
+      "id": "PG-03",
+      "title": "Human UAT preparation completeness",
+      "status": "PASS",
+      "checks": {
+        "prep_materials_present": true,
+        "human_uat_not_substituted_by_machine": true
+      },
+      "materials": {
+        "go_live_checklist": true,
+        "human_acceptance_report": true,
+        "owner_final_human_queue": true,
+        "manual_uat_readme": true,
+        "solo_workflow": true
+      },
+      "open_human_gates": [
+        {
+          "gate": "HUMAN_UAT_EXECUTION_AND_SIGNOFF",
+          "status": "OPEN",
+          "signed_path": null,
+          "note": "Prep materials ≠ executed UAT; required before Production GO"
+        }
+      ]
+    },
+    "PG-04": {
+      "id": "PG-04",
+      "title": "Owner Sign-off materials",
+      "status": "PASS",
+      "checks": {
+        "materials_present": true
+      },
+      "materials": {
+        "owner_signoff_package_template": true,
+        "production_go_decision_package": true,
+        "production_readiness_report": true,
+        "solo_workflow_w5": true,
+        "freeze_certificate": true
+      },
+      "open_human_gates": [
+        {
+          "gate": "OWNER_SIGNOFF_FOR_PRODUCTION_GO",
+          "status": "OPEN",
+          "path": null,
+          "note": "W5 time-separated recheck required before Sign-off (Solo Workflow)"
+        }
+      ]
+    },
+    "PG-05": {
+      "id": "PG-05",
+      "title": "Live Payment Launch Checklist",
+      "status": "PASS",
+      "checks": {
+        "checklists_present": true,
+        "runtime_chain_sepolia_not_mainnet": true,
+        "web3_mainnet_untouched": true
+      },
+      "materials": {
+        "usdc_master_checklist": true,
+        "usdc_registry": true,
+        "payment_readiness_web3": true,
+        "go_live_checklist": true
+      },
+      "runtime_chain_id": "11155111",
+      "open_human_gates": [
+        {
+          "gate": "LIVE_PAYMENT_COMMERCIAL_LAUNCH_SIGNOFF",
+          "status": "OPEN",
+          "note": "Sepolia scope checklists present; commercial Live PSP / mainnet cutover NOT authorized"
+        }
+      ]
+    },
+    "PG-06": {
+      "id": "PG-06",
+      "title": "Production Runbook / Rollback / Incident / Support·Ops",
+      "status": "PASS",
+      "checks": {
+        "runbook_materials_present": true,
+        "incident_response_surface_present": true,
+        "support_ops_surface_present": true,
+        "rollback_plan_or_drill_surface_present": true
+      },
+      "materials": {
+        "phase3_production_prep": true,
+        "ops_runbook": true,
+        "rollback_template": true,
+        "rollback_drill_script": true,
+        "pi3_infra_prep": true,
+        "go_live_checklist_rollback_section": true,
+        "production_readiness_report": true
+      },
+      "incident_path": "docs/runbook/TT-PRODUCTION-READINESS-REGISTER-LATEST.md",
+      "support_path": "docs/runbook/TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md",
+      "rollback_drill_evidence_sample": [],
+      "open_human_gates": [
+        {
+          "gate": "OWNER_ROLLBACK_DRILL_CURRENCY",
+          "status": "OPEN",
+          "note": "Script/templates present; Owner should confirm latest prod rollback drill currency before GO"
+        }
+      ]
+    },
+    "PG-07": {
+      "id": "PG-07",
+      "title": "Release Evidence completeness",
+      "status": "PASS",
+      "checks": {
+        "core_ssot_present": true,
+        "freeze_evidence_dir": true,
+        "certificate_sha256_present": true,
+        "tt_production_go_remains_no_go": true
+      },
+      "artifacts": {
+        "freeze_cert_json": true,
+        "freeze_pin": true,
+        "ri_latest": true,
+        "cfg_latest": true,
+        "cms_latest": true,
+        "freeze_evidence_dir": true
+      },
+      "certificate_sha256": "6b0e47714bc7af1dd59fa0ef436ecba25835af5e7213dd5a687c000ae38d6235"
+    },
+    "PG-08": {
+      "id": "PG-08",
+      "title": "Governance gates (no premature GO)",
+      "status": "PASS",
+      "checks": {
+        "admin_ia_ui_freeze_untouched": true,
+        "web3_mainnet_untouched": true,
+        "tt_production_go_not_flipped": true,
+        "solo_workflow_documented": true,
+        "alignment_expected_difference_policy": true,
+        "psg_pin_frozen_web3_cand_v2": true,
+        "psg_release_version_cited": true
+      },
+      "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2"
+    }
+  },
+  "open_human_gates": [
+    {
+      "gate": "HUMAN_UAT_EXECUTION_AND_SIGNOFF",
+      "status": "OPEN",
+      "signed_path": null,
+      "note": "Prep materials ≠ executed UAT; required before Production GO"
+    },
+    {
+      "gate": "OWNER_SIGNOFF_FOR_PRODUCTION_GO",
+      "status": "OPEN",
+      "path": null,
+      "note": "W5 time-separated recheck required before Sign-off (Solo Workflow)"
+    },
+    {
+      "gate": "LIVE_PAYMENT_COMMERCIAL_LAUNCH_SIGNOFF",
+      "status": "OPEN",
+      "note": "Sepolia scope checklists present; commercial Live PSP / mainnet cutover NOT authorized"
+    },
+    {
+      "gate": "OWNER_ROLLBACK_DRILL_CURRENCY",
+      "status": "OPEN",
+      "note": "Script/templates present; Owner should confirm latest prod rollback drill currency before GO"
+    }
+  ],
+  "pre_go_readiness": {
+    "machine_config_runtime_governance_package": "PASS",
+    "go_review_materials_package": "READY",
+    "open_human_gate_count": 4,
+    "production_go_allowed": false,
+    "tt_production_go": "NO_GO"
+  },
+  "fail_sections": [],
+  "honesty": {
+    "pre_go_ready_is_not_production_go": true,
+    "human_uat_still_required": true,
+    "owner_signoff_still_required": true,
+    "live_payment_commercial_still_required": true,
+    "w5_time_separated_recheck_required": true
+  },
+  "next_allowed": [
+    "Owner execute Human UAT against frozen candidate (separate session)",
+    "Complete Live Payment Launch checklist Owner review (Sepolia scope)",
+    "W5 time-separated recheck → Owner Sign-off package",
+    "Only then open Production GO Review decision (still may stay NO_GO)"
+  ],
+  "forbidden_now": [
+    "Flip TT_PRODUCTION_GO",
+    "Mainnet cutover / real ETH wave",
+    "Admin IA/UI Freeze redesign",
+    "Treat this report as Production GO"
+  ],
+  "report_sha256": "c62c31c381f14e323d17361dcd7330de1ba20c17a2fdeb99f5d15ddcd44fc233",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

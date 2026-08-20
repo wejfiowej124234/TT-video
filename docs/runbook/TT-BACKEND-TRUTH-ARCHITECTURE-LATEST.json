@@ -1,0 +1,251 @@
+{
+  "schema": "traveltrust.backend_truth_architecture.v1.json",
+  "status": "ACTIVE_ARCHITECTURE_SSOT",
+  "recorded_utc": "2026-08-18T06:10:55Z",
+  "yaml": "registry/backend-truth-architecture.v1.yaml",
+  "human": "docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md",
+  "tt_production_go": "NO_GO",
+  "machine_keys": {
+    "TT_BACKEND_TRUTH_ARCHITECTURE": "ACTIVE",
+    "TT_BACKEND_TRUTH_LOCATE_LAYER_FIRST": "ENFORCED",
+    "TT_PRODUCTION_GO": "NO_GO",
+    "M3_SHALLOW_NODE": 0,
+    "M3_UNRESOLVED_POINTER": 0,
+    "TT_PACK03_NINE_FIELD": "ACTIVE"
+  },
+  "mutation_policy": "PACK03_NINE_FIELD_DEEPEN",
+  "hard_rules": [
+    "LOCATE_LAYER_BEFORE_EDIT",
+    "L7_IS_NOT_EXTERNAL",
+    "L7_NE_L8",
+    "STATUS_IS_NOT_PASS_FAIL",
+    "FRONTEND_ACTION_HAS_BACKEND_KEY",
+    "APP_REUSES_GOLDEN_PATHS"
+  ],
+  "layers": [
+    {
+      "id": "L0",
+      "name": "Client / Consumer"
+    },
+    {
+      "id": "L1",
+      "name": "Edge / Network"
+    },
+    {
+      "id": "L2",
+      "name": "BFF / Proxy / Origin Routing"
+    },
+    {
+      "id": "L3",
+      "name": "API Surface / Contract"
+    },
+    {
+      "id": "L4",
+      "name": "Request Control / Middleware"
+    },
+    {
+      "id": "L5",
+      "name": "Identity / Authorization / Domain"
+    },
+    {
+      "id": "L6",
+      "name": "Persistence / Internal Data"
+    },
+    {
+      "id": "L7",
+      "name": "Web3 Runtime / Money Path"
+    },
+    {
+      "id": "L8",
+      "name": "Projection / Runtime Truth / Release"
+    }
+  ],
+  "domains": [
+    "AUTH",
+    "COMMUNITY",
+    "CMS",
+    "MEDIA",
+    "ORDERS",
+    "ESCROW",
+    "SETTLEMENT",
+    "TTG_MARKET",
+    "STEWARD",
+    "GOVERNANCE",
+    "ADMIN",
+    "PLATFORM",
+    "ITINERARY",
+    "DISPUTES",
+    "MESSAGES",
+    "DID_RANK",
+    "ONBOARDING",
+    "GROWTH",
+    "GUIDES",
+    "PROVIDER"
+  ],
+  "golden_paths": [
+    {
+      "id": "GP-01",
+      "name": "Login / Session"
+    },
+    {
+      "id": "GP-02",
+      "name": "Community Write"
+    },
+    {
+      "id": "GP-03",
+      "name": "Media Upload"
+    },
+    {
+      "id": "GP-04",
+      "name": "Order → Escrow"
+    },
+    {
+      "id": "GP-05",
+      "name": "Settlement → Fee"
+    },
+    {
+      "id": "GP-06",
+      "name": "USDC → TTG"
+    },
+    {
+      "id": "GP-07",
+      "name": "Region Fee → Vault/P4Cap → Claim"
+    },
+    {
+      "id": "GP-08",
+      "name": "Governance → Timelock → Spend"
+    }
+  ],
+  "incident_trees": [
+    "INC-403",
+    "INC-404-405",
+    "INC-418",
+    "INC-429",
+    "INC-500-503",
+    "INC-CHAIN-TX-FAIL",
+    "INC-DB-DRIFT",
+    "INC-INDEXER-LAG",
+    "INC-LOGIN"
+  ],
+  "capability_map": [
+    {
+      "frontend": "AUTH.LOGIN.SUBMIT",
+      "backend": "GP-01.AUTH.LOGIN"
+    },
+    {
+      "frontend": "AUTH.SESSION.HYDRATE",
+      "backend": "GP-01.AUTH.ME"
+    },
+    {
+      "frontend": "COMMUNITY.COMMENT.REPLY",
+      "backend": "COMMUNITY.POST_COMMENT"
+    },
+    {
+      "frontend": "COMMUNITY.POST.CREATE",
+      "backend": "COMMUNITY.CREATE_POST"
+    },
+    {
+      "frontend": "COMMUNITY.MEDIA.UPLOAD",
+      "backend": "GP-03.MEDIA.UPLOAD"
+    },
+    {
+      "frontend": "HOME.TTG_PURCHASE.SUBMIT",
+      "backend": "GP-06.PM.PURCHASE"
+    },
+    {
+      "frontend": "HOME.ITINERARY.CREATE",
+      "backend": "ITINERARY.CREATE"
+    },
+    {
+      "frontend": "ITINERARY.CUSTOM.CREATE",
+      "backend": "ITINERARY.CUSTOM"
+    },
+    {
+      "frontend": "ORDERS.CREATE.SUBMIT",
+      "backend": "GP-04.ORDERS.CREATE"
+    },
+    {
+      "frontend": "GUIDES.LIST.VIEW",
+      "backend": "GUIDES.LIST"
+    },
+    {
+      "frontend": "DID_RANK.VIEW",
+      "backend": "DID_RANK.LIST"
+    },
+    {
+      "frontend": "DISPUTES.OPEN",
+      "backend": "DISPUTES.CREATE"
+    },
+    {
+      "frontend": "ORDER.MESSAGE.SEND",
+      "backend": "MESSAGES.POST"
+    },
+    {
+      "frontend": "COMMUNITY.INBOX.OPEN",
+      "backend": "COMMUNITY.CONVERSATIONS"
+    },
+    {
+      "frontend": "ONBOARDING.QUOTE.VIEW",
+      "backend": "ONBOARDING.QUOTE"
+    },
+    {
+      "frontend": "PROVIDER.APPLY.SUBMIT",
+      "backend": "PROVIDER.APPLICATIONS"
+    },
+    {
+      "frontend": "GROWTH.REFERRALS.VIEW",
+      "backend": "GROWTH.ME_REFERRALS"
+    },
+    {
+      "frontend": "ESCROW.RELEASE.SUBMIT",
+      "backend": "GP-05.SETTLEMENT.RELEASE"
+    },
+    {
+      "frontend": "STEWARD.CLAIM.SUBMIT",
+      "backend": "GP-07.STEWARD.CLAIM"
+    },
+    {
+      "frontend": "GOVERNANCE.PROPOSAL.QUEUE",
+      "backend": "GP-08.GOV.QUEUE"
+    },
+    {
+      "frontend": "ADMIN.RBAC.ACTION",
+      "backend": "ADMIN.RBAC"
+    }
+  ],
+  "node_count": 51,
+  "m3_shallow_node": 0,
+  "m3_unresolved_pointer": 0,
+  "status_enum": [
+    "DESIGN_ONLY",
+    "IMPLEMENTED",
+    "UNIT_PASS",
+    "DEPLOYED",
+    "DEPLOYED_NOT_WIRED",
+    "WIRED",
+    "PRODUCT_READY_WAITING_RUNTIME",
+    "OFFICIAL_LIVE",
+    "CLOSED_REALITY",
+    "DEFERRED",
+    "LEGACY",
+    "BLOCKED"
+  ],
+  "gate": "python scripts/dev/check-backend-truth-architecture.py",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

@@ -1,0 +1,44 @@
+---
+description: Project Master Map 00–14 — maps over truth, not a new SSOT; freeze taxonomy before filling matrices; Official is the live surface.
+alwaysApply: true
+---
+
+# TravelTrust Project Master Map（00–14）
+
+**SSOT (map, not truth):** [TT-PROJECT-MASTER-MAP-LATEST.md](../../docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.md) · [registry/project-architecture-taxonomy.v1.yaml](../../registry/project-architecture-taxonomy.v1.yaml)
+
+Living truth remains **FTB / 04 / 14 / Registry / Official `/meta` / L7 chain**. These packs **organize** that truth. Do not create a competing SSOT or a super-matrix.
+
+## Phase 1 总原则（FROZEN）
+
+Phase 1 draws **AS-IS** with 100% honesty. Phase 2 is Production-Grade Review. **Matrices follow Reality.**
+
+**THREE_TRUTH_PLANES:**
+
+| Plane | Role |
+|-------|------|
+| Official www/API/Admin/DB | Current **product reality** evidence surface — not highest truth for every fact |
+| Web3 L7 + Timelock | **Highest truth** for chain facts |
+| FTB / Registry | Freeze / rules anchor |
+
+Indexer and `/meta` are **L8**. Do not overwrite L7 because an Official field lags. Do not overwrite FTB from `/meta` or the reverse.
+
+Pack 12 DEP-*/GATE-* **traffic-light DAG is required**. Pack 13 INC-* diagnostic trees are required. Do not delete or collapse them. Do not start Phase 2 this wave. Do not fix `www /auth/login` 405 in Phase 1 just to green a journey. Do not change FIVE-MAIN structure to green Pack 02.
+
+## Packs
+
+`00` Master Map · `01` Product · `02` Frontend · `03` Backend (BTA) · `04` Data Truth · `05` Web3 Architecture · `06` Money Lifecycle · `07` Governance · `08` Security · `09` Release/Evidence · `10` FE↔BE map · `11` Journeys · `12` Blockers · `13` Incidents · `14` Coverage dashboard
+
+## Hard rules
+
+1. **One matrix, one question.** Contract graph ≠ dollar path ≠ who can change the system.
+2. **Do not add a 16th matrix** (no CMS/Admin/i18n/Mobile/Observability/CFG/Legal/Fiat matrix). Missing product = `required_domains` inside 01–09.
+3. **Official `https://www.web3-ttg.com` is the live product surface.** Login bugs go to GP-01 / pack 08 — do not switch source to local pages. Record 405 as AS-IS.
+4. **Pack 14 percentages = machine-only.** If not computed, write `NOT_COMPUTED`. Never invent %.
+5. **L7 ≠ L8.** `DEPLOYED ≠ WIRED ≠ DEPLOYED_NOT_WIRED ≠ OFFICIAL_LIVE ≠ REALITY_VERIFIED ≠ CLOSED_REALITY ≠ SCHEDULED_WAITING_ETA ≠ SUPERSEDED ≠ NOT_DEPLOYED`.
+6. This map **must not** mutate FTB addresses, `/meta`, Indexer, Timelock/Governor/PM live params, or `TT_PRODUCTION_GO`.
+7. **Seeded row ≠ 9-field node.** Grade packs `SHALLOW_SEEDED` / `NEEDS_DEEPENING` / `POINTER_ONLY`. Do not add a 16th matrix. Depth SSOT: [TT-PROJECT-PACK-DEPTH-AUDIT-LATEST.md](../../docs/runbook/TT-PROJECT-PACK-DEPTH-AUDIT-LATEST.md).
+8. Pack 14 `packs_seeded` counts rows, not coverage. Single product/reality/GO percent stays `NOT_COMPUTED`. Plane counts come from matrix status machines.
+9. **Pack 00 remains PHASE_1_AS_IS_ARCHITECTURE_FROZEN** (`M00_UNRESOLVED_PACK=0`). Pack 01–14 CLOSED. **Phase 2 Gap Audit is CLOSED.** **Phase 2A full-matrix convergence is ACTIVE** (close classified gaps via evidence ladder; not a 16th matrix). **Phase 2B architecture upgrade is FORBIDDEN** until 2A exit (`UNEXPLAINED_DRIFT=0` and key-path Reality closed). Do **not** reopen BATCH-A Session. Official product truth = **OPS-2026.08.20-v9** identity `3e356617` / `2026-08-20T00:51:57Z` / image `hybrid-live-auth-pin-nontarget-v9-20260820` / bootstrap v8 (≠ git checkout; historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` SUPERSEDED as live; SSOT [TT-OFFICIAL-LIVING-PIN-INDEX-LATEST](../../docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)). Cycle2 `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` — next is Owner written GO vs continue NO_GO; do not auto-issue GO. Do not execute CI-02 hop B / do not bake www without Owner auth (ladders stay independent; PM $25 L7 execute is historically CLOSED). Do not deploy Seat/Vault. Do not change FIVE-MAIN structure. Do not treat WAIT as a defect. Do not treat Target as Live. Do not treat map-complete as product 100% / Reality / Production GO. Overlay: [TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md](../../docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md) · Gap Register: [TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.md](../../docs/runbook/TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.md) · 2A: [TT-PHASE-2A-FULL-MATRIX-CONVERGENCE-LATEST.md](../../docs/runbook/TT-PHASE-2A-FULL-MATRIX-CONVERGENCE-LATEST.md). Do not overwrite FTB from `/meta` or the reverse.
+
+Backend layer locate-first remains [.cursor/rules/traveltrust-backend-truth-architecture.mdc](./traveltrust-backend-truth-architecture.mdc).

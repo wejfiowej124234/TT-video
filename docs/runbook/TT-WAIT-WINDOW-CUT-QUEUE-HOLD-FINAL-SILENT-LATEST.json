@@ -1,0 +1,124 @@
+{
+  "schema": "traveltrust.wait_window_cut_queue_hold_final_silent.v1",
+  "status": "CUT_QUEUE_HOLD_PRE_ETA_READ_ONLY_FINAL_SILENT",
+  "recorded_utc": "2026-08-11T03:19:26Z",
+  "wall_clock_utc": "2026-08-11T03:19:26Z",
+  "before_eta": true,
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "ready_at_unix": 1786491935,
+  "hours_to_eta_approx": 20.44,
+  "tt_production_go": "NO_GO",
+  "flip_production_go_authorized": false,
+  "cut_queue_unlocked": false,
+  "unlock_requires": "REALITY_EVIDENCE_SEAL_PASS",
+  "owner_one_liner": "FINAL SILENT HOLD: PF-05 closed (permissionless execute + Wallet A gas + TooEarly() no-state sim); before ETA forbid any code/Official Runtime/29-file manifest/FTB/Registry/Wired/Timelock/on-chain changes and stop unnecessary large audits; at 2026-08-11T23:45:35Z refetch chain time+state → fresh Preflight PF-01..07; only if ALL PASS and op done=false and Escrow Funded 10 USDC and payload/address/balance no drift → serial execute→receipt finality→event+isEscrow=true→release→fund/event verify→Settlement/Fee reconcile→Reality Seal→Hard Gate; any revert/receipt anomaly/drift/FAIL/UNKNOWN → STOP preserve scene; forbid skip/green-fabricate/TrustedFactory early/unlock Cut/flip GO; after Seal only cut R-USDC-1→R-PAY-IA-1→R-ADMIN-1; Seal≠TT_PRODUCTION_GO",
+  "pf05_closed": {
+    "status": "PASS",
+    "evidence": "TT-WAIT-WINDOW-TRACK1-PF05-EXECUTOR-GAS-READONLY-LATEST",
+    "closed_by": [
+      "permissionless_GovernanceTimelock.execute",
+      "Wallet_A_gas_0.334_ETH",
+      "eth_call_TooEarly_no_state_change"
+    ]
+  },
+  "last_preflight": {
+    "artifact": "TT-WAIT-WINDOW-TRACK1-PRE-ETA-READONLY-PREFLIGHT-LATEST",
+    "stamp_utc": "2026-08-11T03:14:19Z",
+    "overall": "PRE_ETA_HOLD_NOT_EXECUTE",
+    "blocking": [
+      "PF-01"
+    ],
+    "pf05": "PASS",
+    "note": "Stale at ETA — must regenerate fresh; do not reuse as execute auth"
+  },
+  "eta_before_forbidden": [
+    "product_code_add_or_modify",
+    "official_runtime_mutate",
+    "29_file_manifest_mutate",
+    "ftb_mutate",
+    "registry_mutate",
+    "wired_mutate",
+    "timelock_mutate_or_execute",
+    "on_chain_state_change",
+    "unnecessary_large_audits",
+    "repeat_pf05_resolution",
+    "unlock_cut_queue",
+    "trusted_factory",
+    "tt_production_go",
+    "fabricate_green_evidence"
+  ],
+  "eta_before_allowed": [
+    "wall_clock_idle_wait",
+    "optional_minimal_ssot_status_pointer_only_if_owner_asks"
+  ],
+  "at_eta_required": {
+    "fresh_preflight": true,
+    "refetch_chain_time_and_state": true,
+    "reverify_pf_01_to_07": true,
+    "all_pass_required": true,
+    "op_done_must_be_false": true,
+    "escrow_must_remain_funded_10_usdc": true,
+    "no_drift_payload_address_balance": true
+  },
+  "post_eta_serial_track1_exclusive": [
+    "Timelock.execute",
+    "wait_receipt_finality",
+    "verify_event_and_isEscrow_true",
+    "Escrow.release",
+    "verify_fund_state_and_events",
+    "Settlement_Fee_actual_balance_and_event_reconcile",
+    "Reality_Evidence_Seal",
+    "Hard_Gate_reeval"
+  ],
+  "stop_triggers": [
+    "revert",
+    "receipt_anomaly",
+    "state_drift",
+    "amount_drift",
+    "address_drift",
+    "FAIL",
+    "UNKNOWN"
+  ],
+  "on_stop": "PRESERVE_SCENE_NO_SKIP_NO_GREEN_FABRICATE",
+  "post_stop_forbidden": [
+    "skip_step",
+    "fabricate_green_evidence",
+    "early_TrustedFactory",
+    "unlock_cut_queue",
+    "flip_tt_production_go"
+  ],
+  "post_seal_cut": {
+    "order": [
+      "R-USDC-1",
+      "R-PAY-IA-1",
+      "R-ADMIN-1"
+    ],
+    "prior_pack_must_be_closed": true,
+    "seal_equals_production_go": false
+  },
+  "hold_lock": "TT-WAIT-WINDOW-CUT-QUEUE-HOLD-PRE-ETA-READ-ONLY-LATEST",
+  "freeze": "TT-WAIT-WINDOW-FREEZE-UNTIL-ETA-LATEST",
+  "honesty": [
+    "FINAL_SILENT != execute_authorization",
+    "last_preflight_stamp_not_fresh_at_eta",
+    "Reality_Seal != TT_PRODUCTION_GO",
+    "PF05_PASS_does_not_waive_ETA_fresh_preflight"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

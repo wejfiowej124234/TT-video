@@ -1,0 +1,617 @@
+{
+  "stamp_utc": "2026-08-20T09:19:27Z",
+  "machine_key": "OFFICIAL_V9_WORKSPACE_CLEAN",
+  "official_v9_recovery_master": {
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "role": "UNIQUE_PRODUCT_TRUTH_AND_RECOVERY_MASTER",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_image_digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "identity_source": "docker-bake",
+    "identity_sha_is_not_clean_checkout_product_bytes": true,
+    "restore_only": "TT_OFFICIAL_WWW_RESTORE_PIN=1 bash scripts/dev/restore-tt-web-production-product-pin.sh",
+    "forbid": [
+      "git checkout 3e356617 as Official product restore",
+      "restore from dirty tip / non-V9 bake tree",
+      "restore hybrid-live-auth-pin-nontarget-v9-m07-unlock as OPS-v9",
+      "mutate FTB / Web3 addresses / TT_PRODUCTION_GO"
+    ],
+    "modules_ssot": "registry/traveltrust-home-module-registry.v1.yaml",
+    "modules_note": "M07 LOCAL_ONLY_PENDING; production M07 absent; FAQ DEPRECATED; other traveltrust modules CANONICAL_ACTIVE per registry",
+    "runtime_verified_utc": "2026-08-20T09:19:27Z",
+    "tt_production_go": "NO_GO"
+  },
+  "main_tree": {
+    "path": "D:/TravelTrust-V1.1",
+    "branch": "release/inbox-focus-product-truth-1ff71858",
+    "head": "f73e40c140f0cf6ee2259dcb3aea586bc742ea6d",
+    "dirty_porcelain_count_at_scan": 2038,
+    "class": "ACTIVE_MAIN_TO_CLEAN",
+    "archive_plan": "branch archive/pre-official-v9-workspace-clean-f73e40c1 + stash -u ARCHIVE_DIRTY_PRE_OFFICIAL_V9_WORKSPACE_CLEAN"
+  },
+  "target_topology": {
+    "active_main": "D:/TravelTrust-V1.1",
+    "feature_worktrees": [],
+    "unique_release_worktree": {
+      "path": "D:/TravelTrust-official-ops-v9-release",
+      "branch": "release/official-ops-v9-workspace-baseline",
+      "cite_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "note": "Clean engineering cite of identity SHA. Official product restore remains Fly image handle, not git checkout."
+    }
+  },
+  "worktrees": [
+    {
+      "path": "D:/TravelTrust-V1.1",
+      "detached": false,
+      "branch": "release/inbox-focus-product-truth-1ff71858",
+      "head": "f73e40c140f0cf6ee2259dcb3aea586bc742ea6d",
+      "class": "ACTIVE_MAIN"
+    },
+    {
+      "path": "D:/CursorUserData/.cursor/worktrees/tt-rc-ea71c577",
+      "detached": true,
+      "branch": null,
+      "head": "ea71c577ce6f99696df33f9394cf96746edc843b",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/dev/temp/tt-w0-align-deploy",
+      "detached": true,
+      "branch": null,
+      "head": "7c84ca23993df43d1a1d9b3394cd5901978147df",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/dev/temp/tt-w3-clean-deploy",
+      "detached": true,
+      "branch": null,
+      "head": "a9730cdaadb33e71059079a93e6a25a8e434b5be",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/dev/temp/tt-w3-deploy-pristine",
+      "detached": true,
+      "branch": null,
+      "head": "a9730cdaadb33e71059079a93e6a25a8e434b5be",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/dev/temp/tt-w3-sec-deploy",
+      "detached": true,
+      "branch": null,
+      "head": "a9730cdaadb33e71059079a93e6a25a8e434b5be",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/dev/temp/tt-web-acl-tip-6b85bde9",
+      "detached": true,
+      "branch": null,
+      "head": "6b85bde9773788638c4d8cf031dfe48ef56d1706",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/dev/temp/tt-web-p1-050607-bake",
+      "detached": true,
+      "branch": null,
+      "head": "3b310ca856ce2850b37a6f993f8c5649e87903b1",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/dev/temp/tt-web-rc-tip-1ed03a9a",
+      "detached": true,
+      "branch": null,
+      "head": "1ed03a9a959d2404fd561a72dc724b59ecf1635e",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/dev/temp/tt-web-tip-align-40416",
+      "detached": true,
+      "branch": null,
+      "head": "a9730cdaadb33e71059079a93e6a25a8e434b5be",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-ACQ-PUBLIC-FIX",
+      "detached": false,
+      "branch": "fix/acq-public-surface-minimal",
+      "head": "e00b80672047b798eb882135ea69dd60385af597",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-AXIS07-api-cut",
+      "detached": false,
+      "branch": "cut/axis07-attestation-clean-1",
+      "head": "18671cd370a09a3e7baf618ccdd0f6c2b06d8fcf",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-bake-1ff71858",
+      "detached": true,
+      "branch": null,
+      "head": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-clean-1ff71858",
+      "detached": true,
+      "branch": null,
+      "head": "de6105a850e3acf8f7bae7a9105d1cb9d42c3a24",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-COMMUNITY-CRASH-HOTFIX-1",
+      "detached": false,
+      "branch": "cut/community-crash-hotfix-1",
+      "head": "6d8859c9db57d9ae93e0ae8c11cf4daa2f3adf78",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-coverage-deploy-wt",
+      "detached": true,
+      "branch": null,
+      "head": "f8181b63507fe339e23a1e5285c4242a8bb3507e",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-fe-cut-892650f7",
+      "detached": true,
+      "branch": null,
+      "head": "892650f7f3c3c47c93df321ed03aa68c0f9f22c4",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-fe-lineage-fwd-1",
+      "detached": false,
+      "branch": "fix/official-fe-lineage-regression-bff-fwd-1",
+      "head": "c5ac3339b6a3fca496bd6a5775e0d286a9517a3c",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-m07-unlock-ops-v9-ready",
+      "detached": false,
+      "branch": "release/m07-unlock-ops-v9-ready",
+      "head": "4495d68ebf1447e1575d0fa2699732dd310d581c",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-m07-unlock-pin-overlay",
+      "detached": false,
+      "branch": "release/m07-unlock-ops-v9-pin-overlay",
+      "head": "1a00cfbb3aa54b2cf094548c3bf68d5e55c98528",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-official-traveltrust-body-only",
+      "detached": false,
+      "branch": "release/official-traveltrust-body-only-20260820",
+      "head": "ed09ace0a143bf2c159bf2a8b93dc6e2aa0cbc53",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-ofr-h106-comment-dup-parent",
+      "detached": false,
+      "branch": "ofr/h106-comment-dup-parent",
+      "head": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-PF-RC2-scoped",
+      "detached": false,
+      "branch": "rc2/platform-financial-step4-staging",
+      "head": "231ceb211753891909e4a2b49028a870f1f68310",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-api-cut",
+      "detached": true,
+      "branch": null,
+      "head": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-api-sort-cut",
+      "detached": false,
+      "branch": "cut/r-comm-comment-sort-api-1",
+      "head": "7a53d3c7740d7994d350f644778519fadb0950e6",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-comment-delete-api-cut",
+      "detached": false,
+      "branch": "cut/r-comm-comment-delete-api-1",
+      "head": "80eed10fd21959ae03f65bb446ee2a4598a010f7",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-cors-cut",
+      "detached": false,
+      "branch": "cut/r-comm-cors-outermost-1",
+      "head": "15cfe52dc09735c0198656d861ccdd8ee3db0852",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-fe-cdn-cut",
+      "detached": false,
+      "branch": "cut/r-comm-fe-cdn-remotepattern-1",
+      "head": "27e209eabcb5d1348d70093e65748a4b09003f42",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-fe-comment-actions-cut",
+      "detached": false,
+      "branch": "cut/r-comm-comment-actions-1",
+      "head": "6add87584d4678d7eb58dfb32d5d66d4c4fe7011",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-fe-cut",
+      "detached": true,
+      "branch": null,
+      "head": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-fe-sort-cut",
+      "detached": false,
+      "branch": "cut/r-comm-comment-identity-fe-1",
+      "head": "f854041318dfbd45b744aec49ebd02d7c4b79bcc",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-R-COMM-ocs-identity-fe-cut",
+      "detached": false,
+      "branch": "cut/r-comm-ocs-identity-fe-1",
+      "head": "3e600076eab6613b55484852197921cb5c622f7e",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-R-MKT-api-cut",
+      "detached": true,
+      "branch": null,
+      "head": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-R-MKT-fe-cut",
+      "detached": true,
+      "branch": null,
+      "head": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-R-PUBLIC-api-cut",
+      "detached": true,
+      "branch": null,
+      "head": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-recon-official-runtime-baseline-1",
+      "detached": false,
+      "branch": "recon/official-runtime-baseline-1",
+      "head": "6d7a6ce365d325f09518df9d77a840cd7edc046b",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-release-home-only",
+      "detached": false,
+      "branch": "release/home-only-from-pin-daa5ae87",
+      "head": "a3601957a0d68ec82b2e73fcd36d8435df512fdb",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-release-traveltrust-home-body",
+      "detached": false,
+      "branch": "release/traveltrust-home-body-extract-20260819",
+      "head": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-release-www-body-daa5ae87",
+      "detached": false,
+      "branch": "release/www-body-from-pin-daa5ae87",
+      "head": "143b78dbe6e2731404d1f562e5fadc5c7acdfe1d",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-tip-35872b40-deploy",
+      "detached": true,
+      "branch": null,
+      "head": "35872b406b622d9cc88cb5303222d5e5fedc29d5",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.fpc-b40-check-worktree",
+      "detached": true,
+      "branch": null,
+      "head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.fpc-b40-docker-test",
+      "detached": true,
+      "branch": null,
+      "head": "9a73a8de977d2b6d67ddca20ef953da6135ccd7b",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-b14-deploy-a6f481c3",
+      "detached": true,
+      "branch": null,
+      "head": "a6f481c3fa551e44a0e4e4ae9e950e6723ff6f06",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-b14-final-closure-bake",
+      "detached": true,
+      "branch": null,
+      "head": "8dfaff51a252244520fdc533d071add12cf26c06",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-b14-reality-79149b66",
+      "detached": true,
+      "branch": null,
+      "head": "79149b664d11a4ae450fd9a349be1226d8822293",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-b14-reality-api-crlf",
+      "detached": true,
+      "branch": null,
+      "head": "79149b664d11a4ae450fd9a349be1226d8822293",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-b14-recover-5d73c50d",
+      "detached": true,
+      "branch": null,
+      "head": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-b14-recover-crlf",
+      "detached": true,
+      "branch": null,
+      "head": "5d73c50dac01f2d5440d5d6e9560a0ee2c461316",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-bake-visibility-sync",
+      "detached": true,
+      "branch": null,
+      "head": "72c764a32407062f19e7f16e11294f94ac4c3f3f",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-cut-b-fe-05158f5c",
+      "detached": true,
+      "branch": null,
+      "head": "5e9927bef60d7dc44e6a9f14426bcab0cb075561",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-finance-peer-hotfix",
+      "detached": false,
+      "branch": "hotfix/finance-peer-nav-a994db63",
+      "head": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-perf-deploy-f123",
+      "detached": true,
+      "branch": null,
+      "head": "f123f691b3f458d8edee8d569f0e5375dafe7529",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-prod-inbox-focus-bake-1ff71858",
+      "detached": true,
+      "branch": null,
+      "head": "1ff71858f603229fc1aed283a5fdc9fddf0ef360",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-rc-worktree-ea71c577",
+      "detached": true,
+      "branch": null,
+      "head": "ea71c577ce6f99696df33f9394cf96746edc843b",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-admin-ux-cut-35872b40",
+      "detached": false,
+      "branch": "cut/v65-admin-batch-ux-unified",
+      "head": "0cc49f0b78d23de16a1ba48b118d015f562b734c",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-b3-cut-c-eng-staging",
+      "detached": true,
+      "branch": null,
+      "head": "106feef436f205c7286d789b8ff9704c0fb28f48",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-b3-cutb-eng-wave",
+      "detached": true,
+      "branch": null,
+      "head": "241969c065a2efb43d2872e6135ef4b4ad8dc6f2",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-b3-cutb-od-d41ddc38",
+      "detached": true,
+      "branch": null,
+      "head": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-b3-w1-staging",
+      "detached": true,
+      "branch": null,
+      "head": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-cut-a-staging",
+      "detached": true,
+      "branch": null,
+      "head": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-cut-b-staging",
+      "detached": true,
+      "branch": null,
+      "head": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-b3-r006-cut",
+      "detached": true,
+      "branch": null,
+      "head": "eb9ed5b8d65a3531d96b29f66d064529b73f178d",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-b3-r006-idem-16f29c7e",
+      "detached": true,
+      "branch": null,
+      "head": "16f29c7ea78b3a718e6b3763513932a8ea32b9d5",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-deploy-pin-c599a9f9",
+      "detached": true,
+      "branch": null,
+      "head": "c599a9f9c1e0f6363e863effda1b440989000434",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-reconcile",
+      "detached": false,
+      "branch": "cut/v65-prod-003-product-line-reconcile",
+      "head": "33d94fee6f286d7c99a85958b311af303f866080",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-wave-b",
+      "detached": false,
+      "branch": "cut/v65-prod-003-wave-b-workbench",
+      "head": "3d1cca13b319c7f179817fc91c6033378ade6348",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-prod-003-wave-e-cut",
+      "detached": true,
+      "branch": null,
+      "head": "31ce39490a35c3038928c0d42bcd8de909388512",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-rc-e06-api-1915ec4d",
+      "detached": true,
+      "branch": null,
+      "head": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-v65-rc-e06-fe-106feef4",
+      "detached": true,
+      "branch": null,
+      "head": "106feef436f205c7286d789b8ff9704c0fb28f48",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-wb-polish-87a5686f",
+      "detached": true,
+      "branch": null,
+      "head": "87a5686f7a6f77e94075d25a5f4bc036ef3a71d9",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/batch-a-session-staging",
+      "detached": false,
+      "branch": "batch-a-session-staging",
+      "head": "d5303513f465572bc78db76396b0dfb336b0e6cd",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/meta-durable-api-tip",
+      "detached": true,
+      "branch": null,
+      "head": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/r-comm-identity-cut",
+      "detached": false,
+      "branch": "cut/r-comm-comment-identity-sort-contrast-1",
+      "head": "2b8d846a7f32a551a8c434acc3137eb1dc6579ae",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/r-comm-identity-restore-bff",
+      "detached": true,
+      "branch": null,
+      "head": "f854041318dfbd45b744aec49ebd02d7c4b79bcc",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/traveltrust-home-body-release",
+      "detached": false,
+      "branch": "release/traveltrust-scoped-body-20260819",
+      "head": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/ttg-v8-runtime-cutover-api",
+      "detached": true,
+      "branch": null,
+      "head": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "class": "DELETE_CANDIDATE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/ugc-translate-official-api",
+      "detached": false,
+      "branch": "hotfix/ugc-translate-official-api",
+      "head": "25049e4c951f6b1147e0b521e8ef003e840baa56",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/ugc-translate-official-fe",
+      "detached": false,
+      "branch": "hotfix/ugc-translate-official-fe",
+      "head": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1-wt-w1-auth",
+      "detached": false,
+      "branch": "feature/w1-auth-production-harden",
+      "head": "31e846106795432cfc46e0df980d9b5b1fad2642",
+      "class": "ARCHIVE_REMOVE_WORKTREE"
+    }
+  ],
+  "counts": {
+    "worktrees_total": 79,
+    "DELETE_CANDIDATE": 49,
+    "ARCHIVE_REMOVE_WORKTREE": 29,
+    "ACTIVE_MAIN": 1
+  },
+  "stash_count": 34,
+  "local_branch_count": 41,
+  "forbid": [
+    "git checkout 3e356617 as Official product restore",
+    "restore from dirty tip / non-V9 bake tree",
+    "restore hybrid-live-auth-pin-nontarget-v9-m07-unlock as OPS-v9",
+    "mutate FTB / Web3 addresses / TT_PRODUCTION_GO"
+  ]
+}

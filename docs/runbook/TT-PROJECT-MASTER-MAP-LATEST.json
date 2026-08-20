@@ -1,0 +1,215 @@
+{
+  "schema": "traveltrust.project_architecture_taxonomy.v1.json",
+  "status": "CONTENT_SEEDED_MAPS_OVER_TRUTH",
+  "recorded_utc": "2026-08-18T07:55:27Z",
+  "yaml": "registry/project-architecture-taxonomy.v1.yaml",
+  "human": "docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.md",
+  "dashboard": "docs/runbook/TT-PROJECT-MASTER-COVERAGE-DASHBOARD-LATEST.json",
+  "tt_production_go": "NO_GO",
+  "machine_keys": {
+    "TT_PROJECT_ARCHITECTURE_TAXONOMY": "FROZEN",
+    "TT_MAPS_ARE_NOT_NEW_SSOT": "ENFORCED",
+    "TT_COVERAGE_PERCENT": "NOT_COMPUTED",
+    "TT_PACK_DEPTH_AUDIT": "ACTIVE",
+    "TT_L7_L8_RECON": "ACTIVE",
+    "TT_PHASE1_AS_IS_PRINCIPLE": "FROZEN",
+    "TT_PHASE1_AS_IS_ARCHITECTURE_FROZEN": "ISSUED",
+    "TT_PHASE_2A_FULL_MATRIX_CONVERGENCE": "ACTIVE",
+    "TT_PHASE_2B_UPGRADE_REVIEW": "FORBIDDEN",
+    "TT_PRODUCTION_GO": "NO_GO"
+  },
+  "role": "MAPS_OVER_TRUTH",
+  "not_a_new_ssot": true,
+  "systems": [
+    {
+      "id": "SYS-A",
+      "name": "Product / Business"
+    },
+    {
+      "id": "SYS-B",
+      "name": "Frontend"
+    },
+    {
+      "id": "SYS-C",
+      "name": "Backend"
+    },
+    {
+      "id": "SYS-D",
+      "name": "Data"
+    },
+    {
+      "id": "SYS-E",
+      "name": "Web3 / Money"
+    },
+    {
+      "id": "SYS-F",
+      "name": "Governance"
+    },
+    {
+      "id": "SYS-G",
+      "name": "Security / Permission"
+    },
+    {
+      "id": "SYS-H",
+      "name": "Release / Runtime"
+    },
+    {
+      "id": "SYS-I",
+      "name": "Evidence / Final Truth"
+    }
+  ],
+  "packs": [
+    {
+      "id": "00",
+      "name": "PROJECT MASTER MAP",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "NAV_ONLY",
+      "matrix": null,
+      "connector": null
+    },
+    {
+      "id": "01",
+      "name": "PRODUCT CAPABILITY MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M1",
+      "connector": null
+    },
+    {
+      "id": "02",
+      "name": "FRONTEND DESIGN MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M2",
+      "connector": null
+    },
+    {
+      "id": "03",
+      "name": "BACKEND ARCHITECTURE AND RUNTIME MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M3",
+      "connector": null
+    },
+    {
+      "id": "04",
+      "name": "DATA TRUTH AND STORAGE MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M4",
+      "connector": null
+    },
+    {
+      "id": "05",
+      "name": "WEB3 CONTRACT ARCHITECTURE MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M5",
+      "connector": null
+    },
+    {
+      "id": "06",
+      "name": "COMMERCIAL MONEY LIFECYCLE MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M6",
+      "connector": null
+    },
+    {
+      "id": "07",
+      "name": "GOVERNANCE MUTATION AUTHORITY MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M7",
+      "connector": null
+    },
+    {
+      "id": "08",
+      "name": "SECURITY IDENTITY ACCESS MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M8",
+      "connector": null
+    },
+    {
+      "id": "09",
+      "name": "RELEASE RUNTIME EVIDENCE MATRIX",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": "M9",
+      "connector": null
+    },
+    {
+      "id": "10",
+      "name": "CROSS LAYER CAPABILITY MAP",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": null,
+      "connector": "X10"
+    },
+    {
+      "id": "11",
+      "name": "END-TO-END USER SYSTEM JOURNEY ARCHITECTURE",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": null,
+      "connector": "X11"
+    },
+    {
+      "id": "12",
+      "name": "DEPENDENCY BLOCKER GATE ARCHITECTURE",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": null,
+      "connector": "X12"
+    },
+    {
+      "id": "13",
+      "name": "INCIDENT DIAGNOSTIC ARCHITECTURE",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "DEEP_PARTIAL",
+      "matrix": null,
+      "connector": null
+    },
+    {
+      "id": "14",
+      "name": "MASTER COVERAGE DASHBOARD",
+      "fill_status": "SEEDED_FROM_EXISTING_SSOT",
+      "depth_grade": "COUNTS_ONLY",
+      "matrix": null,
+      "connector": null
+    }
+  ],
+  "depth_audit": "registry/project-pack-depth-audit.v1.yaml",
+  "perspectives": [
+    "PRODUCT",
+    "ENGINEERING",
+    "CONTROL",
+    "RELEASE"
+  ],
+  "gap_review": "USER_00_14_DIRECTION_CORRECT",
+  "extra_matrix_needed": false,
+  "coverage_percent": "NOT_COMPUTED",
+  "m3_module_count": 36,
+  "m3_gap_modules": [],
+  "data_truth_rows": 23,
+  "official_surface": "https://www.web3-ttg.com",
+  "gate": "python scripts/dev/check-project-architecture-taxonomy.py",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

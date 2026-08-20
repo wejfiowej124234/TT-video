@@ -1,0 +1,86 @@
+{
+  "schema_version": "v65.rc_e06.production_deploy_uat.v1",
+  "machine_key": "TT_V65_RC_E_06_PRODUCTION_DEPLOY_UAT_PREPARATION",
+  "document_title": "TT-V65-RC-E-06 Production Deploy + Runtime Verification (UAT OPEN)",
+  "stamp_utc": "20260806T090059Z",
+  "generated_at_utc": "2026-08-06T09:15:27Z",
+  "phase_lane": "③ RC-E-06 · Unique RC deployed · Runtime Verification agent PASS (tip-match) · Owner Human UAT OPEN · TT_PRODUCTION_GO=NO_GO",
+  "unique_rc_id": "V65-PROD-RC-20260806",
+  "status": "RC_E_06_DEPLOYED_AWAITING_ZHENWANG_UAT",
+  "verdict": "RC_E_06_DEPLOYED_AWAITING_ZHENWANG_UAT",
+  "preparation_stamp_utc": "20260806T083356Z",
+  "production_deployed": true,
+  "deploy_executed": true,
+  "frozen_non_web3_baseline": "V65-PROD-CAND-20260802",
+  "web3_freeze_orthogonal": "PSG-REL-20260720-WEB3-CAND-V2",
+  "bound_tips": {
+    "frontend": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "api": "1915ec4da828e0139e90a85cd321415fdb6e53d9"
+  },
+  "reject_shas": {
+    "staging_temp_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+    "worktree_living_head": "dd72da52c1920189cfb79f8ad49e288ee3e9e764",
+    "pre_upgrade_live_api_web": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "pre_upgrade_live_composition": "0e5d438916f29395b9cbfbc376be70723e3b0848"
+  },
+  "deploy_windows": {
+    "api_start_utc": "20260806T084554Z",
+    "api_end_utc": "20260806T084934Z",
+    "api_exit": 0,
+    "fe_end_utc": "20260806T090016Z",
+    "fe_exit": 0,
+    "fe_attempt1_fail": "missing node_modules → Admin Inbox channel runtime parity vitest",
+    "fe_remediation": "npm ci in .tmp-v65-rc-e06-fe-106feef4/frontend; retry without TT_SKIP_ADMIN_INBOX_CHANNEL_RUNTIME_PARITY"
+  },
+  "worktrees_used": {
+    "api": "D:/TravelTrust-V1.1/.tmp-v65-rc-e06-api-1915ec4d",
+    "fe": "D:/TravelTrust-V1.1/.tmp-v65-rc-e06-fe-106feef4",
+    "note": "Worktrees pin immutable SHAs for bake; living HEAD was never the RC tip"
+  },
+  "live_tip_match": {
+    "api": true,
+    "frontend": true
+  },
+  "runtime_verification": {
+    "stamp": "20260806T090059Z",
+    "agent_verdict": "AGENT_TIP_MATCH_PASS",
+    "path": "evidence/GO_v65_rc_evaluation/20260806T090059Z/RUNTIME-VERIFICATION.json"
+  },
+  "owner_human_uat": {
+    "status": "OPEN",
+    "UAT_01_Admin": "AGENT_HTTP_SMOKE_ONLY · Owner attestation PENDING",
+    "UAT_02_Business": "Owner-only PENDING",
+    "UAT_03_Data_consistency": "Owner-only PENDING",
+    "UAT_04_UI_UX": "Owner-only PENDING",
+    "UAT_05_Runtime_Truth": "Agent tip-match PASS supports · Owner final PENDING"
+  },
+  "tt_production_go": "NO_GO",
+  "composition_integrity_mint_stamp": "20260806T082950Z",
+  "cut_c_signoff_stamp": "20260806T081200Z",
+  "honesty": [
+    "Agent tip-match != Owner Human UAT PASS != Production GO",
+    "Do not redeploy reject SHAs or Staging tip",
+    "Keep TT_PRODUCTION_GO=NO_GO until Owner decides after zhenwang UAT"
+  ],
+  "gates_next": [
+    "Owner zhenwang Human UAT UAT-01～05",
+    "Owner Production GO decision"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

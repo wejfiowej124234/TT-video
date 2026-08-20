@@ -1,0 +1,92 @@
+{
+  "schema_version": "v65.unique_production_rc.v1",
+  "machine_key": "TT_V65_UNIQUE_PRODUCTION_RC",
+  "stamp_utc": "20260806T090059Z",
+  "generated_at_utc": "2026-08-06T09:15:27Z",
+  "phase_lane": "③ Unique Production RC · DEPLOYED on Production · Owner Human UAT OPEN · TT_PRODUCTION_GO=NO_GO",
+  "unique_rc_id": "V65-PROD-RC-20260806",
+  "status": "UNIQUE_RC_PRODUCTION_DEPLOYED_UAT_OPEN",
+  "verdict": "UNIQUE_RC_PRODUCTION_DEPLOYED_UAT_OPEN",
+  "frozen_non_web3_baseline": "V65-PROD-CAND-20260802",
+  "web3_freeze_orthogonal": {
+    "pin": "PSG-REL-20260720-WEB3-CAND-V2",
+    "policy": "independent_freeze_do_not_modify_migrate_or_mix"
+  },
+  "bound_tips": {
+    "frontend": "106feef436f205c7286d789b8ff9704c0fb28f48",
+    "api": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "ancestry_note": "API tip is ancestor of FE tip; do not deploy living HEAD or Staging tip"
+  },
+  "reject_shas_never_bind_or_deploy": {
+    "staging_temp_tip": "d41ddc388ad04fe5ed010a2a4d8b86a5467d70e7",
+    "worktree_living_head": "dd72da52c1920189cfb79f8ad49e288ee3e9e764",
+    "pre_upgrade_live_api_web": "31ce39490a35c3038928c0d42bcd8de909388512",
+    "pre_upgrade_live_composition": "0e5d438916f29395b9cbfbc376be70723e3b0848"
+  },
+  "composition_integrity": {
+    "verdict": "COMPOSITION_INTEGRITY_PASS",
+    "mint_stamp": "20260806T082950Z"
+  },
+  "cut_c_staging_owner_signoff_stamp": "20260806T081200Z",
+  "rc_e06_preparation_stamp": "20260806T083356Z",
+  "production_deploy": {
+    "executed": true,
+    "api_deploy_end_utc": "20260806T084934Z",
+    "fe_deploy_end_utc": "20260806T090016Z",
+    "api_live_tip_match": true,
+    "fe_live_tip_match": true,
+    "runtime_verification_stamp": "20260806T090059Z"
+  },
+  "owner_human_uat": {
+    "status": "OPEN",
+    "agent_probe_only": true,
+    "cases_pending_owner": [
+      "UAT-01",
+      "UAT-02",
+      "UAT-03",
+      "UAT-04",
+      "UAT-05"
+    ]
+  },
+  "tt_production_go": "NO_GO",
+  "gates": {
+    "done": [
+      "Cut C Staging Owner Sign-off",
+      "RC mint E-03～05 / Composition Integrity PASS",
+      "RC-E-06 Preparation",
+      "RC-E-06 Production Upgrade (API+FE Unique RC only)",
+      "Agent Production Runtime tip-match probes"
+    ],
+    "next": [
+      "Owner execute zhenwang Human UAT five dims (Admin · business closed-loop · UI/UX · data consistency · Runtime Truth)",
+      "Owner final Production GO decision (keep NO_GO until then)"
+    ]
+  },
+  "honesty": [
+    "Agent Runtime Truth tip-match != Human UAT PASS != Production GO",
+    "Staging tip / old Artifact / worktree living HEAD remain REJECT for bind/deploy",
+    "Web3 Freeze remains orthogonal and unmodified"
+  ],
+  "evidence": {
+    "runtime_verification": "evidence/GO_v65_rc_evaluation/20260806T090059Z/RUNTIME-VERIFICATION.json",
+    "pack": "evidence/GO_v65_rc_evaluation/20260806T090059Z/"
+  },
+  "branch": "release/inbox-focus-product-truth-1ff71858",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

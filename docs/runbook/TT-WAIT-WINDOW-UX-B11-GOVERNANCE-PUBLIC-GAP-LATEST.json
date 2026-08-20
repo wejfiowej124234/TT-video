@@ -1,0 +1,79 @@
+{
+  "schema": "traveltrust.wait_window_ux_b11_governance_public_gap.v1",
+  "batch": "B11-GOVERNANCE-PUBLIC",
+  "recorded_utc": "2026-08-10T13:25:00Z",
+  "closed_utc": "2026-08-10T13:55:00Z",
+  "phase": "CLOSED",
+  "official_runtime_verify": "PASS",
+  "batch_closed": true,
+  "tt_production_go": "NO_GO",
+  "gaps": [
+    {
+      "id": "B11-G-001",
+      "priority": "P0",
+      "decision": "CLOSED",
+      "summary": "EN document.title via GovernanceLocaleDocumentTitle + route meta map"
+    },
+    {
+      "id": "B11-G-002",
+      "priority": "P2",
+      "decision": "ACCEPT",
+      "summary": "Hub honesty PARTIAL / Timelock wait / Sepolia demoted"
+    },
+    {
+      "id": "B11-G-003",
+      "priority": "P2",
+      "decision": "ACCEPT",
+      "summary": "Proposals empty + status filters + projection honesty"
+    },
+    {
+      "id": "B11-G-004",
+      "priority": "P2",
+      "decision": "ACCEPT",
+      "summary": "TTG params disclosure not live / not GO"
+    },
+    {
+      "id": "B11-G-005",
+      "priority": "P2",
+      "decision": "ACCEPT",
+      "summary": "No false Sepolia explorer as Official mainnet"
+    },
+    {
+      "id": "B11-G-006",
+      "priority": "P2",
+      "decision": "DEFER",
+      "summary": "Mobile polish · fee-routes deep load · ledger meta keys"
+    }
+  ],
+  "frozen_untouched": [
+    "Governor execute",
+    "Timelock",
+    "Mainnet Web3",
+    "Money Path",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "honesty": [
+    "CLOSED ≠ Seal ≠ GO",
+    "Next: Official UX Batch Closure → wait ETA → Track1 Finalize"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

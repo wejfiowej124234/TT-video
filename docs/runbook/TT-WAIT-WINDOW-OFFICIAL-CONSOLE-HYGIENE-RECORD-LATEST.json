@@ -1,0 +1,105 @@
+{
+  "schema": "traveltrust.wait_window_official_console_hygiene_record.v1",
+  "status": "RECORD_ONLY_PRE_ETA_READ_ONLY_NO_FIX",
+  "recorded_utc": "2026-08-11T04:12:00Z",
+  "before_eta": true,
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "wave3_stop": true,
+  "product_code_mutations": "NONE",
+  "official_runtime_mutations": "NONE",
+  "cut_queue_mutations": "NONE",
+  "default_path": "B_MAXIMIZE_REMEDIATION",
+  "owner_override_required_for_official_fix": true,
+  "ftb_unique_ssot": "TT-FINAL-TRUTH-BASELINE-LATEST",
+  "findings": [
+    {
+      "id": "OCH-01",
+      "class": "EXPECTED_DIFFERENCE",
+      "symptom": "Immersive Translate dynamic-i18n version mismatch",
+      "ours": false,
+      "blocks_track1_finalize": false
+    },
+    {
+      "id": "OCH-02",
+      "class": "KNOWN_GAP",
+      "symptom": "PATCH /orders/{id}/guide 409 Conflict",
+      "pack": "POST_SEAL_ORDER_GUIDE_409_UX",
+      "blocks_track1_finalize": false
+    },
+    {
+      "id": "OCH-03",
+      "class": "COVERED_BY_READY_PACK",
+      "symptom": "community-posts jpg 404",
+      "pack": "R-MEDIA-1",
+      "blocks_track1_finalize": false
+    },
+    {
+      "id": "OCH-04",
+      "class": "KNOWN_GAP",
+      "symptom": "POST comments 429 + comment_duplicate",
+      "pack": "POST_SEAL_COMMENT_DEDUP_UX",
+      "blocks_track1_finalize": false
+    },
+    {
+      "id": "OCH-05",
+      "class": "NEW_GAP",
+      "symptom": "community text-only publish still allowed",
+      "pack": "R-COMM-TEXT-BAN-1",
+      "scope": [
+        "FE",
+        "API",
+        "DB_policy",
+        "e2e"
+      ],
+      "blocks_track1_finalize": false
+    },
+    {
+      "id": "OCH-06",
+      "class": "NEW_GAP",
+      "symptom": "market provider cards titled uat-v65-*Z shop on Official",
+      "not": [
+        "CMS_ambient",
+        "COS_primary"
+      ],
+      "likely": "UAT_or_test_account_market_listings_leak",
+      "should_exist_on_official_public": false,
+      "pack": "R-MKT-UAT-LEAK-1",
+      "uat_ref": "UAT-04",
+      "blocks_track1_finalize": false
+    }
+  ],
+  "correct_order": [
+    "Track1_ETA_fresh_Preflight",
+    "execute_release_Settlement_Fee_Reality_Seal",
+    "Cut_Queue_R-USDC-1_R-PAY-IA-1_R-ADMIN-1",
+    "R-MEDIA-1_SEPARATE",
+    "R-COMM-TEXT-BAN-1",
+    "R-MKT-UAT-LEAK-1",
+    "Official_Cut_RV_SSOT",
+    "then_Staging_Local_align"
+  ],
+  "honesty": {
+    "record_ne_fix": true,
+    "seal_ne_go": true,
+    "tt_production_go": "NO_GO"
+  },
+  "active_pack": "R-USDC-1",
+  "strategy_active": "MAXIMIZE_PRE_ETA_REMEDIATION",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

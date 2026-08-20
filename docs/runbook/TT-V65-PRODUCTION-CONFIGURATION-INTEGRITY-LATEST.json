@@ -1,0 +1,620 @@
+{
+  "schema": "traveltrust.v65_production_configuration_integrity.v1",
+  "key": "V65_PRODUCTION_CONFIGURATION_INTEGRITY",
+  "title": "V65 Production Configuration Integrity Final Audit",
+  "stamp": "20260802T140239Z",
+  "verdict": "PASS",
+  "lock_status": "LOCKED",
+  "candidate_id": "V65-PROD-CAND-20260802",
+  "composition": {
+    "v65_non_web3_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+    "production_api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+    "production_web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953"
+  },
+  "immutable_rules": {
+    "tt_production_go": "NO_GO_UNCHANGED",
+    "web3_mainnet_untouched": true,
+    "admin_ia_ui_freeze": true,
+    "human_uat_not_executed": true,
+    "no_secret_values_in_evidence": true
+  },
+  "sections": {
+    "CFG-01": {
+      "id": "CFG-01",
+      "title": "Candidate identity + freeze pin",
+      "status": "PASS",
+      "checks": {
+        "api_health_200": true,
+        "api_sha_matches_candidate": true,
+        "web_sha_matches_candidate": true,
+        "freeze_pin_present": true,
+        "freeze_pin_tt_production_go_no_go": true,
+        "deployment_profile_production": true,
+        "attestation_ok": true
+      },
+      "live": {
+        "api_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+        "web_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+        "psg": "PSG-REL-20260720-WEB3-CAND-V2"
+      },
+      "pin": {
+        "candidate_id": "V65-PROD-CAND-20260802",
+        "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+        "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+        "tt_production_go": "NO_GO"
+      }
+    },
+    "CFG-02": {
+      "id": "CFG-02",
+      "title": "CORS_ORIGINS + domain allowlist",
+      "status": "PASS",
+      "checks": {
+        "required_origins_live_acao": true,
+        "local_env_has_required_origins": true,
+        "no_wildcard": true,
+        "evil_origin_rejected": true
+      },
+      "probes": [
+        {
+          "origin": "https://www.web3-ttg.com",
+          "path": "/api/v1/me",
+          "http": 200,
+          "acao": "https://www.web3-ttg.com",
+          "pass": true
+        },
+        {
+          "origin": "https://web3-ttg.com",
+          "path": "/api/v1/me",
+          "http": 200,
+          "acao": "https://web3-ttg.com",
+          "pass": true
+        },
+        {
+          "origin": "https://tt-web-prod.fly.dev",
+          "path": "/api/v1/me",
+          "http": 200,
+          "acao": "https://tt-web-prod.fly.dev",
+          "pass": true
+        },
+        {
+          "origin": "https://www.web3-ttg.com",
+          "path": "/meta?compact=1",
+          "http": 200,
+          "acao": "https://www.web3-ttg.com",
+          "pass": true
+        }
+      ],
+      "negative_probe": {
+        "origin": "https://evil.example",
+        "path": "/api/v1/me",
+        "http": 200,
+        "acao": null,
+        "pass": false
+      },
+      "local_cors_origins": [
+        "https://www.web3-ttg.com",
+        "https://web3-ttg.com",
+        "https://tt-web-prod.fly.dev"
+      ],
+      "required_cors": [
+        "https://www.web3-ttg.com",
+        "https://web3-ttg.com",
+        "https://tt-web-prod.fly.dev"
+      ],
+      "drifts": [],
+      "autofix": []
+    },
+    "CFG-03": {
+      "id": "CFG-03",
+      "title": "Cookie / Security Headers",
+      "status": "PASS",
+      "checks": {
+        "web_home_200": true,
+        "web_home_hsts": true,
+        "web_admin_200": true,
+        "web_admin_hsts": true,
+        "web_market_200": true,
+        "web_market_hsts": true,
+        "web_login_200": true,
+        "web_login_hsts": true,
+        "home_no_unexpected_session_cookie_required": true
+      },
+      "samples": {
+        "web_home": {
+          "http": 200,
+          "strict-transport-security": "max-age=31536000; includeSubDomains",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "content-security-policy": null,
+          "set-cookie_present": false
+        },
+        "web_admin": {
+          "http": 200,
+          "strict-transport-security": "max-age=31536000; includeSubDomains",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "content-security-policy": null,
+          "set-cookie_present": false
+        },
+        "web_market": {
+          "http": 200,
+          "strict-transport-security": "max-age=31536000; includeSubDomains",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "content-security-policy": null,
+          "set-cookie_present": false
+        },
+        "web_login": {
+          "http": 200,
+          "strict-transport-security": "max-age=31536000; includeSubDomains",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "content-security-policy": null,
+          "set-cookie_present": false
+        },
+        "api_meta": {
+          "http": 200,
+          "strict-transport-security": "max-age=31536000; includeSubDomains",
+          "x-frame-options": "DENY",
+          "x-content-type-options": "nosniff",
+          "content-security-policy": null,
+          "set-cookie_present": false
+        }
+      },
+      "note": "Unauthenticated surface; session cookie Secure/HttpOnly verified when login sets cookies (auth flow section).",
+      "home_set_cookie": false
+    },
+    "CFG-04": {
+      "id": "CFG-04",
+      "title": "Env / FeatureFlags / Email / Storage / Payment / Notification",
+      "status": "PASS",
+      "checks": {
+        "seed_test_accounts_off": true,
+        "strict_ssot_true": true,
+        "require_idempotency_true": true,
+        "strict_session_gate_true": true,
+        "internal_api_secret_configured": true,
+        "deployment_profile_production": true,
+        "chain_id_sepolia": true,
+        "pause_disabled": true,
+        "required_fly_secrets_present": true,
+        "email_transport_secret_present": true,
+        "storage_community_s3_present": true,
+        "storage_avatar_s3_present": true,
+        "payment_settlement_token_present": true,
+        "stripe_onboarding_keys_present_optional": true,
+        "notification_email_from_present": true
+      },
+      "fly_secret_count": 76,
+      "missing_required_fly_secrets": [],
+      "local_vs_fly_presence": {
+        "fly_minus_local_sample": [
+          "AWS_ACCESS_KEY_ID",
+          "AWS_SECRET_ACCESS_KEY",
+          "COMMUNITY_MEDIA_S3_BUCKET",
+          "COMMUNITY_MEDIA_S3_ENDPOINT",
+          "COMMUNITY_MEDIA_S3_FORCE_PATH_STYLE",
+          "COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL",
+          "COMMUNITY_MEDIA_S3_REGION",
+          "ESCROW_FACTORY_V2_ADDRESS",
+          "GOVERNANCE_TIMELOCK_ADDRESS",
+          "GOVERNANCE_VOTES_TOKEN_ADDRESS",
+          "HSTS",
+          "MAINNET_RPC_URL",
+          "OUTBOX_WORKER",
+          "PAYMENT_TOKEN_ADDRESS",
+          "PRIMARY_MARKET_ADDRESS",
+          "PRODUCTION_SCOPE",
+          "PROFILE_AVATAR_PUBLIC_BASE_URL",
+          "PROFILE_AVATAR_S3_BUCKET",
+          "PROFILE_AVATAR_S3_ENDPOINT",
+          "PROFILE_AVATAR_S3_FORCE_PATH_STYLE",
+          "PROFILE_AVATAR_S3_KEY_PREFIX",
+          "PROFILE_AVATAR_S3_REGION",
+          "RPC_URL_MAINNET",
+          "SETTLEMENT_TOKEN",
+          "TIMELOCK_ADMIN_ADDRESS",
+          "TRAVELTRUST_AUTH_EMAIL_E2E_LOG_URL_IN_RESPONSE",
+          "TRAVELTRUST_AUTH_REGISTER_REQUIRE_CODE",
+          "TRAVELTRUST_AUTH_TOKEN_PEPPER",
+          "TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES",
+          "TRAVELTRUST_COMMUNITY_PUBLIC_SHOWCASE",
+          "TRAVELTRUST_EMAIL_BRAND_MARK_URL",
+          "TRAVELTRUST_EMAIL_TRANSPORT",
+          "TRAVELTRUST_FULL_GO",
+          "TRAVELTRUST_MARKET_PUBLIC_SHOWCASE",
+          "TRAVELTRUST_ONBOARDING_STRIPE_AMOUNT_MINOR",
+          "TRAVELTRUST_ONBOARDING_STRIPE_CHECKOUT",
+          "TRAVELTRUST_PRIMARY_MARKET_TRADING_ENABLED",
+          "TRAVELTRUST_PUBLIC_APP_BASE_URL",
+          "TRAVELTRUST_PUBLIC_APP_BASE_URL_ALLOWLIST",
+          "TRAVELTRUST_REAL_ETH_WAVE"
+        ],
+        "local_minus_fly_sample": [
+          "FLY_PROD_API_APP",
+          "FLY_PROD_PG_APP",
+          "FLY_PROD_WEB_APP",
+          "LEGACY_TREASURY_ADDRESS",
+          "P3_CHAIN_OFF",
+          "PROD_API_BASE",
+          "PROD_WEB_BASE",
+          "REGION_VAULT_ADDRESS"
+        ],
+        "local_key_count": 38,
+        "staging_local_key_count": 0
+      },
+      "showcase_secret_names_present": {
+        "community": true,
+        "market": true,
+        "note": "Names present on Fly; runtime must keep showcase off (verified via CF-03 pattern in freeze)"
+      },
+      "staging_prod_runtime_diff": {
+        "deployment_profile": {
+          "prod": "production",
+          "staging": "staging",
+          "class": "EXPECTED_DIFFERENCE"
+        },
+        "git_sha": {
+          "prod": "6e76a299dfbeac8f412923533d56e00efaae0893",
+          "staging": "6929606a2d66bc1e187c0e63373b35a03d10a286",
+          "class": "EXPECTED_DIFFERENCE"
+        }
+      },
+      "drifts": [
+        {
+          "class": "STAGING_LOCAL_ENV_ABSENT",
+          "note": "scripts/dev/.env.staging.local absent — Local→Staging key diff limited to runtime meta",
+          "severity": "WARN"
+        }
+      ],
+      "autofix": [],
+      "chain_contracts_sample": {
+        "escrow_factory_address": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
+        "fee_router_address": "0x81A8009210c5215100564c6E4123F672c4459306",
+        "registry_address": "0xc50913e154f850583D0afbE9158a75E0e2167AAb",
+        "guide_staking_address": "0x5bdACF35292bDd681103BBb50865d8D2Fd49653f"
+      }
+    },
+    "CFG-05": {
+      "id": "CFG-05",
+      "title": "CMS / RBAC / Runtime Meta",
+      "status": "PASS",
+      "checks": {
+        "cms_for_home_true": true,
+        "cms_source_cms": true,
+        "cms_items_list": true,
+        "cms_cache_max_age_60": true,
+        "rbac_all_gated": true,
+        "meta_database_connected": true,
+        "meta_service_traveltrust_api": true,
+        "product_roles_present": true
+      },
+      "cms": {
+        "for_home": true,
+        "source": "cms",
+        "items": 3,
+        "cache_control": "public, max-age=60, stale-while-revalidate=120"
+      },
+      "rbac_probes": [
+        {
+          "name": "me",
+          "http": 401,
+          "pass": true
+        },
+        {
+          "name": "admin_capabilities",
+          "http": 401,
+          "pass": true
+        },
+        {
+          "name": "admin_finance",
+          "http": 401,
+          "pass": true
+        },
+        {
+          "name": "admin_content_announcements",
+          "http": 401,
+          "pass": true
+        },
+        {
+          "name": "admin_ops",
+          "http": 401,
+          "pass": true
+        },
+        {
+          "name": "internal_indexer",
+          "http": 403,
+          "pass": true
+        },
+        {
+          "name": "avatar_upload_url",
+          "http": 401,
+          "pass": true
+        }
+      ],
+      "meta_top_keys_sample": [
+        "admin_exports",
+        "api_version",
+        "auth",
+        "authority",
+        "build",
+        "chain",
+        "chargeback_policy",
+        "database",
+        "database_connected",
+        "defaults",
+        "did_rank",
+        "discover",
+        "dispute_open",
+        "dispute_resolve",
+        "dual_write",
+        "evidence",
+        "finality_n",
+        "governance",
+        "guides",
+        "idempotency_cache",
+        "indexer",
+        "itineraries",
+        "meta_top_keys",
+        "meta_top_keys_contract_728",
+        "order_messages",
+        "orders",
+        "outbox",
+        "pause",
+        "product_countries",
+        "product_roles",
+        "rate_limits",
+        "reviews",
+        "seed_test_accounts",
+        "service",
+        "ssot",
+        "ssot_version",
+        "strict_mode"
+      ]
+    },
+    "CFG-06": {
+      "id": "CFG-06",
+      "title": "Public-domain browser chains (OPTIONS/GET/POST)",
+      "status": "PASS",
+      "chains": [
+        {
+          "chain": "admin_cors_browser",
+          "status": "PASS",
+          "steps": [
+            {
+              "step": "GET /admin",
+              "http": 200,
+              "pass": true
+            },
+            {
+              "step": "OPTIONS /me",
+              "http": 200,
+              "acao": "https://www.web3-ttg.com",
+              "pass": true
+            },
+            {
+              "step": "OPTIONS /admin/capabilities",
+              "http": 200,
+              "acao": "https://www.web3-ttg.com",
+              "pass": true
+            },
+            {
+              "step": "GET /meta Origin=www",
+              "http": 200,
+              "acao": "https://www.web3-ttg.com",
+              "pass": true
+            },
+            {
+              "step": "admin_hsts",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "chain": "user_page/",
+          "status": "PASS",
+          "steps": [
+            {
+              "step": "GET /",
+              "http": 200,
+              "pass": true
+            }
+          ]
+        },
+        {
+          "chain": "user_page/market",
+          "status": "PASS",
+          "steps": [
+            {
+              "step": "GET /market",
+              "http": 200,
+              "pass": true
+            }
+          ]
+        },
+        {
+          "chain": "user_page/did-rank",
+          "status": "PASS",
+          "steps": [
+            {
+              "step": "GET /did-rank",
+              "http": 200,
+              "pass": true
+            }
+          ]
+        },
+        {
+          "chain": "user_page/community",
+          "status": "PASS",
+          "steps": [
+            {
+              "step": "GET /community",
+              "http": 200,
+              "pass": true
+            }
+          ]
+        },
+        {
+          "chain": "auth_flow_surface",
+          "status": "PASS",
+          "steps": [
+            {
+              "step": "GET /auth/login",
+              "http": 200,
+              "pass": true
+            },
+            {
+              "step": "GET /auth/register",
+              "http": 200,
+              "pass": true
+            },
+            {
+              "step": "OPTIONS POST /auth/register",
+              "http": 200,
+              "acao": "https://www.web3-ttg.com",
+              "pass": true
+            },
+            {
+              "step": "OPTIONS POST /auth/login",
+              "http": 200,
+              "acao": "https://www.web3-ttg.com",
+              "pass": true
+            },
+            {
+              "step": "POST /auth/register empty (expect 4xx + ACAO)",
+              "http": 422,
+              "acao": "https://www.web3-ttg.com",
+              "pass": true
+            }
+          ]
+        },
+        {
+          "chain": "cms_public_home",
+          "status": "PASS",
+          "steps": [
+            {
+              "step": "GET announcements?for_home=1",
+              "http": 200,
+              "pass": true,
+              "acao": "https://www.web3-ttg.com"
+            }
+          ]
+        },
+        {
+          "chain": "upload_auth_gate",
+          "status": "PASS",
+          "steps": [
+            {
+              "step": "OPTIONS /me (upload preflight family)",
+              "http": 200,
+              "acao": "https://www.web3-ttg.com",
+              "pass": true
+            },
+            {
+              "step": "POST avatar upload-url unauth (gated)",
+              "http": 401,
+              "acao": null,
+              "pass": true,
+              "note": "ACAO may be absent on early auth 401 — WARN tracked in drifts"
+            },
+            {
+              "step": "POST avatar upload-url Bearer-invalid (ACAO expected)",
+              "http": 404,
+              "acao": "https://www.web3-ttg.com",
+              "pass": true
+            }
+          ],
+          "warnings": [
+            {
+              "class": "CORS_MISSING_ON_EARLY_AUTH_401",
+              "severity": "WARN",
+              "note": "auth_placeholder early 401 bypasses CorsLayer; fix=move CORS outer; requires new API candidate SHA"
+            }
+          ]
+        }
+      ],
+      "fail_chains": [],
+      "drifts": [
+        {
+          "chain": "upload_auth_gate",
+          "class": "CORS_MISSING_ON_EARLY_AUTH_401",
+          "severity": "WARN",
+          "note": "auth_placeholder early 401 bypasses CorsLayer; fix=move CORS outer; requires new API candidate SHA"
+        }
+      ]
+    },
+    "CFG-07": {
+      "id": "CFG-07",
+      "title": "Configuration lock manifest",
+      "status": "PASS",
+      "locked": {
+        "candidate_id": "V65-PROD-CAND-20260802",
+        "v65_baseline": "0e5d438916f29395b9cbfbc376be70723e3b0848",
+        "api_git_sha": "6e76a299dfbeac8f412923533d56e00efaae0893",
+        "web_git_sha": "075a295fbf5138777dd957feea4d885004a6a953",
+        "cors_origins_required": [
+          "https://www.web3-ttg.com",
+          "https://web3-ttg.com",
+          "https://tt-web-prod.fly.dev"
+        ],
+        "hosts": {
+          "web": "https://tt-web-prod.fly.dev",
+          "api": "https://tt-api-prod.fly.dev"
+        },
+        "tt_production_go": "NO_GO",
+        "web3_mainnet": "UNTOUCHED",
+        "admin_ia_ui_freeze": "UNTOUCHED"
+      },
+      "section_statuses": {
+        "CFG-01": "PASS",
+        "CFG-02": "PASS",
+        "CFG-03": "PASS",
+        "CFG-04": "PASS",
+        "CFG-05": "PASS",
+        "CFG-06": "PASS"
+      },
+      "autofix_applied": []
+    }
+  },
+  "config_drift_evidence": [
+    {
+      "section": "CFG-04",
+      "class": "STAGING_LOCAL_ENV_ABSENT",
+      "note": "scripts/dev/.env.staging.local absent — Local→Staging key diff limited to runtime meta",
+      "severity": "WARN"
+    },
+    {
+      "section": "CFG-06",
+      "chain": "upload_auth_gate",
+      "class": "CORS_MISSING_ON_EARLY_AUTH_401",
+      "severity": "WARN",
+      "note": "auth_placeholder early 401 bypasses CorsLayer; fix=move CORS outer; requires new API candidate SHA"
+    }
+  ],
+  "fail_sections": [],
+  "autofix_applied": [],
+  "honesty": {
+    "configuration_lock_is_not_production_go": true,
+    "cors_hotfix_may_precede_this_audit": true,
+    "secret_values_never_exported": true,
+    "staging_local_env_optional": true
+  },
+  "report_sha256": "8241ccad3fcdea9ffe0d867d34c0441fe48fd67ebccb70547d4ddef2e3087fa4",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

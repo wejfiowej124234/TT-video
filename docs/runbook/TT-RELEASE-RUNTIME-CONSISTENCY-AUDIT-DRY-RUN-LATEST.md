@@ -10,6 +10,8 @@
 **Staging API `/meta`:** `f8181b63507fe339e23a1e5285c4242a8bb3507e`  
 **Parent freeze:** [Discovery Freeze](./TT-WAIT-ETA-DISCOVERY-FREEZE-LATEST.md) · [Runtime Drift](./TT-RELEASE-RUNTIME-DRIFT-AUDIT-DRY-RUN-LATEST.md)
 
+> **Official 产品真源（FTB Product Truth · OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **≠** git checkout · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` SUPERSEDED · M07 **NOT this wave** · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)
+
 ```text
 目标：找出「代码/证据以为是 A · 运行仍是 B」→ Formal Baseline 后独立 PCR
 禁止：改 Candidate · redeploy · 修码 · 动 L5/S7 · 塞进 PSG-REL-20260720-WEB3-CAND-V2 收口

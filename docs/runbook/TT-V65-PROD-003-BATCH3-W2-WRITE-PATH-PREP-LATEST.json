@@ -1,0 +1,460 @@
+{
+  "schema": "traveltrust.v65_prod_003_batch3_w2_write_path_prep.v1",
+  "machine_key": "TT_V65_PROD_003_BATCH3_W2_WRITE_PATH_PREP",
+  "stamp": "20260805T043000Z",
+  "wave": "W2_WRITE_PATH_HARDENING",
+  "phase": "PREP_SUPERSEDED_BY_DESIGN_CONFIRM",
+  "tt_production_go": "NO_GO",
+  "enterprise_l5_production_ready": false,
+  "claim": "W2_PREP_SUPERSEDED_DESIGN_CONFIRMED",
+  "design_confirm": {
+    "stamp": "20260805T043612Z",
+    "phase": "DESIGN_CONFIRMED_CODE_UNLOCKED",
+    "claim": "W2_DESIGN_CONFIRMED_IMPLEMENTATION_UNLOCKED",
+    "ssot": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.json",
+    "md": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.md",
+    "code_unlocked": true,
+    "code_started": false
+  },
+  "honesty": {
+    "w1_closed": true,
+    "w2_design_confirmed": true,
+    "w2_code_unlocked": true,
+    "w2_code_started": false,
+    "w2_staging_pass": false,
+    "w2_residuals_closed": false,
+    "batch3_full_closed": false,
+    "docs_alone_not_closed": true,
+    "tt_production_go": "NO_GO",
+    "no_production_mutate": true,
+    "no_new_audit_pass": true
+  },
+  "process_template_from_w1": {
+    "ladder": [
+      "① Local Fix + tests",
+      "② Staging Deploy",
+      "③ Targeted Runtime Verification",
+      "④ Evidence stamp",
+      "⑤ Residual Close (per-ID)"
+    ],
+    "w1_reference": {
+      "status": "CLOSED",
+      "stamp": "20260805T041800Z",
+      "evidence": "evidence/GO_v65_prod_003_batch3_w1_country_catalog/20260805T041416Z",
+      "ids": [
+        "V65-PROD-003-B3-R016",
+        "V65-PROD-003-B3-R020"
+      ]
+    },
+    "gate_before_code": "SATISFIED — Design Confirm 20260805T043612Z (DC-01～DC-06)"
+  },
+  "order": [
+    "R059",
+    "R060",
+    "R061",
+    "R062"
+  ],
+  "residuals": {
+    "V65-PROD-003-B3-R059": {
+      "priority": "P1",
+      "status": "OPEN",
+      "cut_class": "FE+API",
+      "title": "Steward/acquisition-suspend/guide-registration FE 写路径缺 Idempotency-Key"
+    },
+    "V65-PROD-003-B3-R060": {
+      "priority": "P1",
+      "status": "OPEN",
+      "cut_class": "FE_ONLY→API_gate",
+      "title": "CMS 公告写每次 mint 新 Idempotency-Key"
+    },
+    "V65-PROD-003-B3-R061": {
+      "priority": "P1",
+      "status": "OPEN",
+      "cut_class": "API",
+      "title": "Admin critical-write 分类器漏 reject/CMS/审阅 PATCH"
+    },
+    "V65-PROD-003-B3-R062": {
+      "priority": "P1",
+      "status": "OPEN",
+      "cut_class": "API",
+      "title": "角色变更请求创建欠服端写权限闸"
+    }
+  },
+  "critical_write_surfaces": [
+    {
+      "surface_id": "W2-S-STEWARD-REVIEW",
+      "residual": "R059",
+      "method": "PATCH",
+      "client": "frontend/lib/apiClient/adminStewardApplication.ts",
+      "current_headers": [
+        "Content-Type",
+        "x-request-id",
+        "auth"
+      ],
+      "idempotency_today": "MISSING",
+      "classifier_today": "NOT_IN_is_admin_critical_write_path",
+      "in_scope_w2": true
+    },
+    {
+      "surface_id": "W2-S-ACQUISITION-SUSPEND",
+      "residual": "R059",
+      "method": "PATCH|POST",
+      "client": "frontend/lib/apiClient/adminAcquisitionPublishSuspend.ts",
+      "current_headers": [
+        "Content-Type",
+        "x-request-id",
+        "auth"
+      ],
+      "idempotency_today": "MISSING",
+      "classifier_today": "NOT_IN_is_admin_critical_write_path",
+      "in_scope_w2": true
+    },
+    {
+      "surface_id": "W2-S-GUIDE-REGISTRATION-ADMIN",
+      "residual": "R059",
+      "method": "PATCH|POST",
+      "client": "frontend/lib/apiClient/adminGuideRegistration.ts",
+      "current_headers": [
+        "Content-Type",
+        "x-request-id",
+        "auth"
+      ],
+      "idempotency_today": "MISSING",
+      "classifier_today": "NOT_IN_is_admin_critical_write_path",
+      "in_scope_w2": true
+    },
+    {
+      "surface_id": "W2-S-PROVIDER-APPLICATION-ADMIN",
+      "residual": "R059",
+      "method": "PATCH|POST",
+      "client": "frontend/lib/apiClient/adminProviderApplication.ts",
+      "note": "Align with steward/guide pattern; do not reopen R006 approve-loop claim",
+      "idempotency_today": "VERIFY_AT_IMPL",
+      "classifier_today": "VERIFY_AT_IMPL",
+      "in_scope_w2": true
+    },
+    {
+      "surface_id": "W2-S-CMS-ANNOUNCEMENT-CREATE",
+      "residual": "R060",
+      "method": "POST",
+      "route_hint": "/api/v1/admin/content/announcements",
+      "client": "frontend/lib/apiClient/content/announcements.ts#postAdminContentAnnouncement",
+      "idempotency_today": "PRESENT_BUT_UNSTABLE_new_uuid_per_call",
+      "classifier_today": "NOT_IN_is_admin_critical_write_path",
+      "in_scope_w2": true
+    },
+    {
+      "surface_id": "W2-S-CMS-ANNOUNCEMENT-PATCH",
+      "residual": "R060",
+      "method": "PATCH",
+      "client": "frontend/lib/apiClient/content/announcements.ts#patchAdminContentAnnouncement",
+      "idempotency_today": "PRESENT_BUT_UNSTABLE_new_uuid_per_call",
+      "classifier_today": "NOT_IN_is_admin_critical_write_path",
+      "in_scope_w2": true
+    },
+    {
+      "surface_id": "W2-S-CMS-ANNOUNCEMENT-WORKFLOW",
+      "residual": "R060+R061",
+      "method": "POST",
+      "actions": [
+        "publish",
+        "unpublish",
+        "submit-review",
+        "archive"
+      ],
+      "client": "frontend/lib/apiClient/content/announcements.ts#postAdminContentAnnouncementWorkflow",
+      "idempotency_today": "PRESENT_BUT_UNSTABLE_new_uuid_per_call",
+      "classifier_today": "NOT_IN_is_admin_critical_write_path",
+      "in_scope_w2": true
+    },
+    {
+      "surface_id": "W2-S-APPROVALS-REJECT",
+      "residual": "R061",
+      "method": "POST",
+      "route_hint": "/api/v1/admin/approvals/:id/reject",
+      "classifier_today": "NOT_IN (approve IS in)",
+      "in_scope_w2": true
+    },
+    {
+      "surface_id": "W2-S-ROLE-CHANGE-REQUEST",
+      "residual": "R062",
+      "method": "POST",
+      "route": "/api/v1/admin/users/:id/role-change-request",
+      "handler": "crates/api/src/routes/admin/admin_users_http.rs#post_admin_user_role_change_request",
+      "rbac_today": "require_admin_actor_only",
+      "classifier_today": "IN_is_admin_critical_write_path (Idempotency fail-closed already)",
+      "in_scope_w2": true,
+      "note": "Classifier already covers this path; W2 focus is RBAC create gate, not adding to classifier"
+    },
+    {
+      "surface_id": "W2-S-ROLE-CHANGE-APPROVE-EXECUTE",
+      "residual": "R062",
+      "method": "POST",
+      "route_hint": "/api/v1/admin/approvals/:id/approve",
+      "phase": "approve+execute",
+      "rbac_today": "existing_approvals_gate",
+      "classifier_today": "IN_is_admin_critical_write_path",
+      "in_scope_w2": "BOUNDARY_DOC_ONLY_unless_gap_found",
+      "note": "Do not loosen approve; create must be stricter than bare admin actor"
+    }
+  ],
+  "idempotency_key_lifecycle": {
+    "headers": [
+      "Idempotency-Key",
+      "X-Idempotency-Key"
+    ],
+    "helper": "frontend/lib/apiClient/core.ts#writeRequestHeaders(idempotencyKey?)",
+    "server_cache_key": "method + path + Idempotency-Key",
+    "server_ssot": "crates/api/src/middleware/mod.rs",
+    "phases": [
+      {
+        "name": "MINT",
+        "when": "User intent starts (form submit / mutation session / workflow action click)",
+        "rule": "One UUID (or stable mutation id) per user intent — NOT per HTTP attempt"
+      },
+      {
+        "name": "ATTACH",
+        "when": "Building request headers",
+        "rule": "writeRequestHeaders(stableKey); forbid bare writeRequestHeaders() on critical CMS/admin writes in W2 scope"
+      },
+      {
+        "name": "REUSE",
+        "when": "Network retry · double-click · transport timeout before terminal success",
+        "rule": "Same key until 2xx success response accepted by client OR explicit replay/409 treated as success"
+      },
+      {
+        "name": "ROTATE",
+        "when": "Terminal success · user cancel · new distinct intent · validation 4xx after payload correction",
+        "rule": "Mint new key only for a new intent; do not rotate on blind retry"
+      },
+      {
+        "name": "SERVER_REPLAY",
+        "when": "Duplicate method+path+key hits cache",
+        "rule": "Return prior response / no second side-effect; observable in audit as replay not double-write"
+      },
+      {
+        "name": "FAIL_CLOSED",
+        "when": "Path in is_admin_critical_write_path (after R061 expansion) missing key",
+        "rule": "400 with required_header Idempotency-Key — no silent proceed"
+      }
+    ],
+    "locale_honesty": {
+      "bad_copy_example": "admin_approvals_idempotency_hint currently implies each submit mints a new key",
+      "target": "Hint must say retry reuses the same key; only a new user intent mints a new key"
+    }
+  },
+  "cms_retry_behavior": {
+    "residual": "R060",
+    "problem": "adminAnnouncementsFetch → writeRequestHeaders() with no arg → getIdempotencyKey() new UUID every call → retry/double-click ≠ idempotent replay",
+    "contract": {
+      "create": "Hook holds key for create intent until 2xx or abandon",
+      "save_patch": "Hook holds key per (id, edit-session) until 2xx",
+      "workflow_publish": "Hook holds key per (id, action, version) until 2xx or abandon",
+      "retry_5xx_timeout": "Reuse same key",
+      "double_click": "Second click reuses in-flight key; UI disables or coalesces",
+      "validation_4xx": "After operator corrects body, mint new key (new intent)",
+      "replay_2xx_or_409": "Treat as success of first write — no second CMS row/side-effect"
+    },
+    "out_of_scope_w2": [
+      "R063 CDN TTL / edge purge (P2)",
+      "R015 publish audit checklist expansion beyond idempotency honesty",
+      "R030 Publish→Live UX polish beyond retry safety"
+    ]
+  },
+  "rbac_request_approve_execute": {
+    "residual": "R062",
+    "model": [
+      {
+        "phase": "request",
+        "meaning": "Create pending role-change approval row",
+        "endpoint": "POST /api/v1/admin/users/:id/role-change-request",
+        "today": "require_admin_actor only",
+        "target": "require_admin_actor + PERM_USERS_WRITE (or dedicated role-change-create perm if matrix already names one)",
+        "forbidden": "Any admin JWT without users-write minting privilege-escalation requests"
+      },
+      {
+        "phase": "approve",
+        "meaning": "Approve pending request (higher privilege)",
+        "endpoint": "POST /api/v1/admin/approvals/:id/approve",
+        "today": "existing approvals RBAC",
+        "target": "Keep independent higher gate; do not collapse into create perm",
+        "note": "≠ R048 FE advisory · ≠ R057 403 UI hint"
+      },
+      {
+        "phase": "execute",
+        "meaning": "Apply role mutation + audit inside approve transaction",
+        "endpoint": "same approve path (no separate public execute)",
+        "today": "db::approve_admin_user_role_change_request_with_audit",
+        "target": "No new public execute surface; create≠approve≠execute privileges remain separated"
+      }
+    ],
+    "console_role_change": {
+      "endpoint_hint": "POST console role-change-request (admin_rbac.rs)",
+      "rule": "Same create-perm discipline if in same product surface; confirm at impl — do not expand beyond Users ops without Owner note"
+    },
+    "not_duplicate_of": [
+      "V65-PROD-003-B3-R048",
+      "V65-PROD-003-B3-R057",
+      "V65-PROD-003-B3-R006"
+    ]
+  },
+  "classifier_expansion_contract": {
+    "residual": "R061",
+    "ssot": "crates/api/src/middleware/rate_limit.rs#is_admin_critical_write_path",
+    "must_add": [
+      "POST /api/v1/admin/approvals/:id/reject",
+      "POST/PATCH CMS announcement admin write + workflow publish/unpublish/submit-review/archive",
+      "Steward / acquisition-suspend / guide-registration admin write paths used by R059 clients"
+    ],
+    "already_in": [
+      "POST .../approvals/:id/approve",
+      "POST .../users/:id/role-change-request",
+      "flags/policies/scopes publish",
+      "selected community moderation PATCHes"
+    ],
+    "pairing": "Idempotency middleware fail-closed list MUST match classifier after expansion",
+    "observability": "GET /meta rate_limits snapshot remains truthful"
+  },
+  "implementation_matrix": [
+    {
+      "id": "R059",
+      "surfaces": [
+        "W2-S-STEWARD-REVIEW",
+        "W2-S-ACQUISITION-SUSPEND",
+        "W2-S-GUIDE-REGISTRATION-ADMIN",
+        "W2-S-PROVIDER-APPLICATION-ADMIN"
+      ],
+      "fe": "Adopt writeRequestHeaders(stableKey) on all mutating calls",
+      "api": "Require Idempotency-Key once classifier lists these paths (R061)",
+      "tests": [
+        "unit client headers",
+        "API missing-key 400",
+        "same-key replay no double side-effect"
+      ]
+    },
+    {
+      "id": "R060",
+      "surfaces": [
+        "W2-S-CMS-ANNOUNCEMENT-CREATE",
+        "W2-S-CMS-ANNOUNCEMENT-PATCH",
+        "W2-S-CMS-ANNOUNCEMENT-WORKFLOW"
+      ],
+      "fe": "Page/hook stable key per intent; fix locale hint honesty",
+      "api": "Classifier include CMS writes (R061); fail-closed",
+      "tests": [
+        "fixture stable key across retry",
+        "staging double-click one side-effect"
+      ]
+    },
+    {
+      "id": "R061",
+      "surfaces": [
+        "W2-S-APPROVALS-REJECT",
+        "CMS writes",
+        "R059 paths"
+      ],
+      "fe": "none beyond consumers of R059/R060",
+      "api": "Expand is_admin_critical_write_path + unit table",
+      "tests": [
+        "classifier unit negatives/positives",
+        "staging burst → 429 observable"
+      ]
+    },
+    {
+      "id": "R062",
+      "surfaces": [
+        "W2-S-ROLE-CHANGE-REQUEST",
+        "W2-S-ROLE-CHANGE-APPROVE-EXECUTE"
+      ],
+      "fe": "optional 403 honesty only if API returns 403 — do not reopen R048 as missing button",
+      "api": "create requires users-write (or stricter); approve stays higher",
+      "tests": [
+        "fixture missing perm → 403",
+        "with perm → 201 + audit",
+        "approve path unchanged privilege"
+      ]
+    }
+  ],
+  "regression_verification_standard": {
+    "phases": {
+      "local_1": {
+        "required": true,
+        "bar": [
+          "cargo test targeted: rate_limit classifier + role-change RBAC fixtures",
+          "frontend vitest/contract for writeRequestHeaders(stableKey) consumers in scope",
+          "no broad workspace npm/cargo unless Owner asks"
+        ]
+      },
+      "staging_2": {
+        "required_before_residual_close": true,
+        "bar": [
+          "Double-click / retry smoke on CMS announce publish + one R059 review path",
+          "Missing Idempotency-Key on newly classified path → 400",
+          "Role-change create without perm → 403; with perm → pending approval",
+          "Burst critical write → 429 observable (R061)"
+        ]
+      },
+      "runtime_evidence_3": {
+        "required_before_residual_close": true,
+        "dir_pattern": "evidence/GO_v65_prod_003_batch3_w2_write_path/<stamp>/",
+        "artifacts": [
+          "RUNTIME-EVIDENCE.json",
+          "GAP-or-PASS notes",
+          "tip pins"
+        ]
+      },
+      "delta_cert_4": {
+        "required_before_go_review": true,
+        "note": "Delta Cert after W2 residual close — still does NOT flip TT_PRODUCTION_GO"
+      }
+    },
+    "exit_criteria_all_r059_r062": [
+      "All four residuals CLOSED in Residual SSOT with evidence refs",
+      "Classifier ↔ Idempotency middleware list paired",
+      "RBAC create/approve/execute boundaries fixture-green",
+      "Locale idempotency hint honest",
+      "Enterprise L5 Ready still false until other hard-gate P1 (R025/R050 …) clear",
+      "TT_PRODUCTION_GO remains NO_GO"
+    ],
+    "forbidden_claims_from_prep": [
+      "W2 CLOSED",
+      "R059–R062 CLOSED",
+      "Staging PASS",
+      "Production GO",
+      "Batch3 full CLOSED",
+      "Enterprise L5 Production Ready"
+    ]
+  },
+  "design_confirm_checklist": [
+    "Owner accepts critical_write_surfaces inventory (no silent extras)",
+    "Owner accepts Idempotency lifecycle MINT→REUSE→ROTATE",
+    "Owner accepts CMS retry contract (stable key per intent)",
+    "Owner accepts RBAC request≠approve≠execute",
+    "Owner accepts classifier must_add list",
+    "Owner unlocks W2 code after confirm — not before"
+  ],
+  "parents": {
+    "design_confirm": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.json",
+    "engineering_closure": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.json",
+    "residual": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.json",
+    "expansion": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.json"
+  },
+  "next": "Design Confirm DONE (20260805T043612Z) · W2 code unlocked · start R059→R060→R061→R062 · residuals OPEN · TT_PRODUCTION_GO=NO_GO · no Production mutate · no new Audit Pass · no Enterprise L5 / Production Ready claims",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

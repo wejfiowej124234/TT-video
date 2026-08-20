@@ -1,3 +1,13 @@
+# GAP-E2E-JOURNEY · historical STOP_AND_REPORT（superseded）
+
+**Superseded:** Official C2 non-money hop **CLOSED_REALITY** 2026-08-18T04:40:00Z.  
+UUID `7d91f354-af9d-461c-8790-b70a597751af`. Cite [`TT-GAP-E2E-JOURNEY-OFFICIAL-C2-NONMONEY-LATEST.json`](./TT-GAP-E2E-JOURNEY-OFFICIAL-C2-NONMONEY-LATEST.json).  
+Do not reuse this STOP as living status.
+
+> **Living Product Truth（后置）：** Official www = **OPS-2026.08.20-v9** (`3e356617`). Table pin `daa5ae87` below = **this STOP stamp only**.
+
+---
+
 # GAP-E2E-JOURNEY · STOP_AND_REPORT
 
 **Batch:** [`TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST`](./TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.md)  

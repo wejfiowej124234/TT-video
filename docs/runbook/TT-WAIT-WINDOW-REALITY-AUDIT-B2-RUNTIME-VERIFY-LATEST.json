@@ -1,0 +1,109 @@
+{
+  "schema": "traveltrust.wait_window_reality_audit_b2_runtime_verify.v1",
+  "batch": "REALITY-AUDIT-B2",
+  "status": "BATCH_2_SEALED",
+  "verdict": "PASS",
+  "recorded_utc": "2026-08-10T15:44:40Z",
+  "parent": "TT-WAIT-WINDOW-FINAL-REALITY-AUDIT-LATEST",
+  "closed_pack": "TT-WAIT-WINDOW-REALITY-AUDIT-B2-CLOSED-LATEST",
+  "web_base": "https://www.web3-ttg.com",
+  "api_base": "https://api.web3-ttg.com",
+  "deploy": {
+    "app": "tt-web-prod",
+    "reported_git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e"
+  },
+  "frozen_untouched": [
+    "Mainnet Reality",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "forbidden_not_executed": [
+    "Timelock.execute",
+    "Escrow.release",
+    "TrustedFactory",
+    "Production GO"
+  ],
+  "checks": [
+    {
+      "id": "B2-RV-001",
+      "surface": "market_guest",
+      "expect": "Guest Market money from published listings only; no Discover Draft $1200 pollution",
+      "observed": "Orders 0 · Guides 10 · empty copy No orders to match yet · no draft/1200 on page",
+      "result": "PASS"
+    },
+    {
+      "id": "B2-RV-002",
+      "surface": "guides_directory",
+      "expect": "Guide hourly rates from public guides list API; USDC not USDT; no Fee/settled claims",
+      "observed": "10 rates (85/170/160/…) · hasUSDC=true · hasUSDT=false · FeeRouter/RegionVault/已分账=false",
+      "result": "PASS"
+    },
+    {
+      "id": "B2-RV-003",
+      "surface": "pay_hub",
+      "expect": "Honest lock/Escrow copy; no settled/income claims",
+      "observed": "title Pay & Escrow | TravelTrust · funds stay locked · never platform collection · no 已分账/RegionVault",
+      "result": "PASS"
+    },
+    {
+      "id": "B2-RV-004",
+      "surface": "escrow_contract_address_misuse",
+      "expect": "0x Reality contract address does not load fake order money; clear contract≠UUID copy",
+      "observed": "This looks like an on-chain contract address, not an order id… · hasFakeMoney=false",
+      "result": "PASS"
+    },
+    {
+      "id": "B2-RV-005",
+      "surface": "orders_default_list",
+      "expect": "Default orders list does not surface Discover Draft $1200 money; draft itineraries isolated",
+      "observed": "No 1200 · copy hides home-generated draft itineraries behind Draft tab · shown amounts 12/10 USD with Refunded/In dispute (session)",
+      "result": "PASS"
+    },
+    {
+      "id": "B2-RV-006",
+      "surface": "code_status_fee_copy",
+      "expect": "released→order_status_released; Guide/Me suffix USDC; guest filter uses isDiscoverMarketPublishedListing",
+      "observed": "orderStatusI18n + locales + GuideBilling/MeStats USDC + filterDiscoverOrdersForViewer guest path",
+      "result": "PASS"
+    },
+    {
+      "id": "B2-RV-007",
+      "surface": "discover_api_still_draft",
+      "expect": "Document residual API Draft pollution for B3 (FE isolation already PASS)",
+      "observed": "GET /api/v1/discover/orders → 17/17 status=draft amount=1200.00 currency=USD escrow_address=null guide_id=0000…",
+      "result": "PASS_CARRY_B3"
+    }
+  ],
+  "carry_to_b3": [
+    {
+      "id": "B2-G-004",
+      "summary": "Discover API still returns only Draft rows; public eligibility filter needed server-side"
+    },
+    {
+      "id": "B3-SEED-001",
+      "summary": "GET /guides/{id} omits hourly_rate and public_title present on list (FE hydrate / not-found risk)"
+    }
+  ],
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "honesty": "BATCH_2_SEALED ≠ Reality Seal ≠ Production GO · no fund execution",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

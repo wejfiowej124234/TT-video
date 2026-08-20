@@ -1,0 +1,596 @@
+# Pack 09 · Release / Runtime / Evidence Architecture Matrix
+# Distinct from pack 05 (contract graph) and pack 06 (dollar hops) — this pack is when code is actually live.
+# Solo Owner release model: Owner Self Review + Evidence + Sign-off. Safe 1/1 is not a second Approver.
+# Phase 1 AS-IS inventory. Gaps → phase2_backlog only. Do not deploy/fix runtime.
+# Gate: python scripts/dev/check-release-runtime-evidence-matrix.py
+# Human: docs/runbook/TT-RELEASE-RUNTIME-EVIDENCE-MATRIX-LATEST.md
+#
+# Forbidden this wave: FTB rewrite, runtime/secrets/deploy/Timelock/money mutate,
+# deploy/schedule/execute/cutover/real money, CI-02 / PM $25 execute.
+# Pack 10 is an independent later wave.
+
+schema: traveltrust.release_runtime_evidence_matrix.v1
+version: 1
+effective_utc: "2026-08-15"
+status: PACK09_RELEASE_EVIDENCE_DEEPENED
+pack_id: "09"
+depth_grade: DEEP_PARTIAL
+tt_production_go: NO_GO
+mutation: READ_ONLY_INVENTORY
+phase: PHASE1_AS_IS
+human_doc: docs/runbook/TT-RELEASE-RUNTIME-EVIDENCE-MATRIX-LATEST.md
+living_ssot:
+  - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  - docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+  - docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md
+  - registry/engineering-ssot-anchor.v1.yaml
+  - docs/runbook/TT-V65-PRODUCTION-RELEASE-INTEGRITY-LATEST.md
+  - docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+  - docs/runbook/TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.md
+  - registry/project-pack-depth-audit.v1.yaml
+  - docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+ftb_lock: READ_ONLY_20260812
+note: >
+  Pack 03–08 CLOSED. CODE_READY ≠ BUILT ≠ DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE
+  ≠ REALITY_VERIFIED ≠ CLOSED_REALITY. ① Local ≠ ② Staging ≠ ③ Official.
+  Scheduled or deployed must not promote to Official or Reality.
+  V65 RI 20260804 SHA 16f29c7e is a historical integrity stamp, not current Official identity.
+  Engineering SSOT dual-wait freeze is STALE vs recon 2026-08-15 (T2/GOV-04 done).
+  Official product truth = OPS-2026.08.20-v9 · identity 3e356617 / 2026-08-20T00:51:57Z · image hybrid-live-auth-pin-nontarget-v9-20260820 · bootstrap v8 (≠ git checkout; daa5ae87 SUPERSEDED as living Official).
+  Historical hops 2ba08bd4 / 3e600076 / 9959ae50 SUPERSEDED as live product.
+  WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY (historical hop).
+  Cycle2 READY_FOR_OWNER_PRODUCTION_GO_VERDICT. TT_PRODUCTION_GO=NO_GO.
+
+machine_keys:
+  M9_SHALLOW_RELEASE_NODE: 0
+  M9_UNRESOLVED_ARTIFACT_IDENTITY: 0
+  M9_AMBIGUOUS_RUNTIME_STATUS: 0
+  UNEXPLAINED_RELEASE_TRANSITION: 0
+  TT_PRODUCTION_GO: NO_GO
+
+node_fields:
+  - rel_id
+  - environment
+  - artifact_identity
+  - lifecycle_hop
+  - wiring
+  - official_traffic
+  - l7_l8_observation
+  - probe
+  - evidence
+  - rollback_boundary
+  - failure_class
+  - status
+  - next_legal_transition
+  - forbidden_promotion
+  - phase_tier
+
+status_enum:
+  - CODE_READY
+  - BUILT
+  - DEPLOYED
+  - WIRED
+  - OFFICIAL_LIVE
+  - REALITY_VERIFIED
+  - CLOSED_REALITY
+  - SUPERSEDED
+  - ROLLED_BACK
+
+pack09_release_field:
+  overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  pack03: CLOSED
+  pack04: CLOSED
+  pack05: CLOSED
+  pack06: CLOSED
+  pack07: CLOSED
+  pack08: CLOSED
+  m9_shallow_release_node: 0
+  m9_unresolved_artifact_identity: 0
+  m9_ambiguous_runtime_status: 0
+  unexplained_release_transition: 0
+  stop_after: PACK09
+  next_pack_forbidden_this_wave: []
+  ci02_pm25_merge: FORBIDDEN
+  required_nodes:
+    - REL-ENV-LOCAL
+    - REL-ENV-STAGING
+    - REL-ENV-OFFICIAL-WEB
+    - REL-ENV-OFFICIAL-API
+    - REL-ENV-INDEXER
+    - REL-ENV-MAINNET
+    - REL-SOURCE-TIP
+    - REL-BUILD-IMAGE
+    - REL-CONFIG-SECRETS
+    - REL-DEPLOY
+    - REL-RUNTIME-IDENTITY
+    - REL-OFFICIAL-TRAFFIC
+    - REL-L7-L8-OBS
+    - REL-PROBE-UAT
+    - REL-REALITY-CLOSURE
+    - REL-ROLLBACK-BOUNDARY
+    - REL-HARD-GATE
+    - REL-SR-FT
+    - REL-FR-OLD
+    - REL-CI02-FR-NEW
+    - REL-PM-PROXY
+    - REL-PM25
+    - REL-TRACK1-ESCROW
+    - REL-JP-VAULT
+
+hard_split: >
+  ① Local Map/Code ≠ ② Staging Verified ≠ ③ Official/Production Verified.
+  CODE_READY ≠ BUILT ≠ DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE ≠ REALITY_VERIFIED ≠ CLOSED_REALITY.
+  Scheduled or deployed must not promote to Official or Reality.
+  V65 Release Integrity PASS ≠ current Official runtime identity.
+  Engineering SSOT dual-wait freeze ≠ living recon overlay.
+  Sepolia Candidate ≠ Official live.
+  FTB 20260812 lock table ≠ living L7/L8.
+  Solo Owner Sign-off ≠ team Approver.
+
+release_lifecycle_graph: |
+  Source/Branch/Tip
+    → Build/Image
+    → Config/Secrets (ops; values not dumped this wave)
+    → Deploy
+    → Runtime Identity (/meta git_sha · image_digest · attestation)
+    → Wiring (L7 pointers / proxy impl / feeRouter)
+    → Official Traffic (www + api.web3-ttg.com)
+    → L7/L8 Observation (recon overlay + Indexer + /meta)
+    → Probe/UAT/Real-Money Evidence
+    → Reality Closure (Hard Gate · TT_PRODUCTION_GO)
+  Environments are parallel, not a promotion ladder:
+    Local ①  ≠  Staging ②  ≠  Official Web/API/Indexer/Mainnet ③
+
+living_release_edges:
+  - { from: REL-SOURCE-TIP, to: REL-BUILD-IMAGE, via: bake, proven: Official build_time 2026-08-13 }
+  - { from: REL-BUILD-IMAGE, to: REL-DEPLOY, via: fly_deploy, proven: deployed_at 2026-08-12T23:44:18Z }
+  - { from: REL-DEPLOY, to: REL-RUNTIME-IDENTITY, via: meta_attestation, proven: git_sha 8df2ab21 }
+  - { from: REL-RUNTIME-IDENTITY, to: REL-ENV-OFFICIAL-API, via: api_origin, proven: https://api.web3-ttg.com }
+  - { from: REL-ENV-OFFICIAL-API, to: REL-L7-L8-OBS, via: GET_meta, proven: recon 2026-08-15 }
+  - { from: REL-ENV-OFFICIAL-WEB, to: REL-OFFICIAL-TRAFFIC, via: www, proven: https://www.web3-ttg.com }
+  - { from: REL-ENV-INDEXER, to: REL-L7-L8-OBS, via: checkpoint, proven: lag 0 block 25759530 }
+  - { from: REL-ENV-MAINNET, to: REL-SR-FT, via: wired_settlementRouter, proven: 0xEE0BE3→0xD1DAE665 }
+  - { from: REL-SR-FT, to: REL-FR-OLD, via: feeRouter, proven: SR-FT.feeRouter=OLD FR }
+  - { from: REL-FR-OLD, to: REL-OFFICIAL-TRAFFIC, via: meta_fee_router, proven: /meta.fee_router=OLD }
+  - { from: REL-PM-PROXY, to: REL-L7-L8-OBS, via: eip1967, proven: L7 $25 4e16; Official www still 1e18; /meta PM null EXPLAINED }
+  - { from: REL-TRACK1-ESCROW, to: REL-L7-L8-OBS, via: sealed_track1, proven: Track1 Reality seal }
+
+forbidden_release_edges:
+  - { from: REL-ENV-LOCAL, to: REL-ENV-OFFICIAL-API, why: "① Local is not ③ Official" }
+  - { from: REL-ENV-STAGING, to: REL-ENV-OFFICIAL-API, why: "② Staging is not ③ Official" }
+  - { from: REL-CI02-FR-NEW, to: REL-FR-OLD, why: "NEW FR scheduled; Official still OLD" }
+  - { from: REL-CI02-FR-NEW, to: REL-OFFICIAL-TRAFFIC, why: "DEPLOYED must not promote to Official traffic" }
+  - { from: REL-PM25, to: REL-PM-PROXY, why: "$25 L7 executed; Official www Live bake waiting; pack pin GOV-04" }
+  - { from: REL-JP-VAULT, to: REL-ENV-MAINNET, why: "CI-03 NOT_DEPLOYED" }
+  - { from: REL-TRACK1-ESCROW, to: REL-HARD-GATE, why: "Track1 seal is not Production GO" }
+  - { from: REL-REALITY-CLOSURE, to: REL-HARD-GATE, why: "closure hop is not a passed Hard Gate" }
+
+phase2_backlog:
+  - id: P2-V65-RI-STAMP-LAG
+    class: OBSERVED_GAP
+    fact: V65 RI 20260804 live SHA 16f29c7e ≠ Official 20260815 /meta git_sha 8df2ab21
+    do_not_fix_this_wave: true
+  - id: P2-API-FE-SHA-SPLIT
+    class: OBSERVED_GAP
+    fact: Official API git_sha 8df2ab21 (2026-08-13 build) vs later FE cut 892650f7 (2026-08-14 Track2 bake)
+    do_not_fix_this_wave: true
+  - id: P2-ENG-SSOT-DUALWAIT-STALE
+    class: EXPLAINED_STALE_DOC
+    fact: Engineering SSOT still narrates WAITING_TRACK2 / GOV-04 not live; recon 2026-08-15 T2/GOV-04 done=true
+    do_not_fix_this_wave: true
+  - id: P2-FTB-SR-LOCK-LAG
+    class: EXPLAINED_FTB_LOCKED_STAMP_LAG
+    fact: FTB 20260812 Official SR still Track1; living L7/L8 is SR-FT
+    do_not_fix_this_wave: true
+  - id: P2-META-PM-NULL
+    class: EXPLAINED_L8_OMIT
+    fact: Historical /meta.primary_market_address=null while OLD PM GOV-04 was live (SUPERSEDED as living remainder). Official /meta NOW publishes NEW PM 0x882Ad. Remaining = FTB overlay lock vs living /meta + www chrome 10→10 ED.
+    do_not_fix_this_wave: true
+  - id: P2-CI02-ETA
+    class: SCHEDULED_WAITING_ETA
+    fact: NEW FR 0xb6bfED… deployed; Official fee_router still OLD; ETA 2026-08-16T13:42:11Z
+    do_not_fix_this_wave: true
+  - id: P2-PM25-ETA
+    class: SCHEDULED_WAITING_ETA
+    fact: PM 25 L7 execute CLOSED 4e16 LEGACY; Official sale = NEW PM 100_000; www chrome still GOV-04 1e18 ED; bake FORBIDDEN SCHEDULED_WAITING_ETA
+    do_not_fix_this_wave: true
+  - id: P2-LOGIN-NOT-HAPPY-PATH
+    class: OBSERVED_GAP
+    fact: Historical Official www POST /auth/login 405 SUPERSEDED; Owner C2 Session chain CLOSED_REALITY; Staging seed still 401 on Production
+    do_not_fix_this_wave: true
+  - id: P2-STAGING-NOT-CURRENT-PIN
+    class: OBSERVED_GAP
+    fact: July Candidate drift audit SUPERSEDED_SNAPSHOT; staging is orthogonal, never Official
+    do_not_fix_this_wave: true
+
+nodes:
+  - rel_id: REL-ENV-LOCAL
+    environment: Local ①
+    artifact_identity: working tree / local HEAD (may be dirty; not Official git_sha)
+    lifecycle_hop: Source/Branch/Tip
+    wiring: none to Official
+    official_traffic: none
+    l7_l8_observation: maps-over-truth only
+    probe: local cargo/vitest ≠ Official /meta
+    evidence: docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+    rollback_boundary: discard local commits; do not rewrite Official
+    failure_class: [local_as_official, dirty_tree_as_tip]
+    status: CODE_READY
+    next_legal_transition: BUILT after bake (not this wave)
+    forbidden_promotion: OFFICIAL_LIVE, REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 1_LOCAL
+
+  - rel_id: REL-ENV-STAGING
+    environment: Staging ②
+    artifact_identity: Fly tt-api-staging / tt-web-staging · orthogonal patch ledger · not Official pin
+    lifecycle_hop: Deploy
+    wiring: must not equal Official mainnet addresses
+    official_traffic: none
+    l7_l8_observation: staging /meta is not L8 Official
+    probe: 2026-07-20 drift audit SUPERSEDED_SNAPSHOT vs Candidate tip; not re-probed as Official this wave
+    evidence: docs/runbook/TT-RELEASE-RUNTIME-DRIFT-AUDIT-DRY-RUN-LATEST.md
+    rollback_boundary: staging rollback does not move Official
+    failure_class: [staging_as_official, candidate_as_official]
+    status: DEPLOYED
+    next_legal_transition: remain ②; never auto-promote to ③
+    forbidden_promotion: OFFICIAL_LIVE, REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 2_STAGING
+
+  - rel_id: REL-ENV-OFFICIAL-WEB
+    environment: Official Web ③
+    artifact_identity: https://www.web3-ttg.com git_sha=3e356617a498b0faac42e4ae457343d36294a770 build_time=2026-08-20T00:51:57Z image hybrid-live-auth-pin-nontarget-v9-20260820 bootstrap=v8 (identity SHA ≠ git checkout; historical daa5ae87 / deployment-01M05JAAXJPTRZJAQEJ4JJWQMK SUPERSEDED as live product; misnamed …-v8 image FORBIDDEN restore; API 8df2ab21 kept)
+    lifecycle_hop: Official Traffic
+    wiring: Next same-origin BFF → api.web3-ttg.com; HttpOnly traveltrust_session on www/apex
+    official_traffic: yes (www + apex)
+    l7_l8_observation: browser is L0; not L7
+    probe: GET /api/release-identity git_sha=3e356617; Wave-0 2026-08-20 observe matches OPS-v9; Header login tech probes PASS · Owner hard-refresh still required; do not checkout SHA as live bytes; do not restore misnamed …-v8
+    evidence: evidence/GO_oa01_walletconnect_official_bake/WALLETCONNECT-OFFICIAL-BAKE-FORWARD-FIX-LATEST.json
+    rollback_boundary: FE cut rollback is Owner-only; do not rollback API 80eed10f; do not bake d5303513 or dirty c3eeaf10; WC fail = bake-chain only
+    failure_class: [fe_sha_split]
+    status: OFFICIAL_LIVE
+    next_legal_transition: REALITY_VERIFIED only after logged-in UAT (not this wave)
+    forbidden_promotion: REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+    note: Admin/FE live surface. Admin publish is L6 (Pack 08), not Web3 execute.
+
+  - rel_id: REL-ENV-OFFICIAL-API
+    environment: Official API ③
+    artifact_identity: https://api.web3-ttg.com git_sha=8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51 deployed_at=2026-08-12T23:44:18Z (www freeze does not change API; 80eed10f SUPERSEDED as live API identity)
+    lifecycle_hop: Runtime Identity
+    wiring: DATABASE_URL connected; pause.enabled=false
+    official_traffic: yes
+    l7_l8_observation: GET /meta is L8
+    probe: GET /meta 200 chain_id=1; GET /api/v1/me 401 STRICT_SESSION_GATE
+    evidence: registry/project-pack-depth-audit.v1.yaml
+    rollback_boundary: API image rollback Owner-only; do not hand-edit /meta
+    failure_class: [attestation_unknown, api_unavailable]
+    status: OFFICIAL_LIVE
+    next_legal_transition: REALITY_VERIFIED only with money+session UAT (not this wave)
+    forbidden_promotion: REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-ENV-INDEXER
+    environment: Official Indexer ③
+    artifact_identity: checkpoint 25759530 lag_blocks=0 (Official /meta 2026-08-15T09:35Z; ≥ release 25759423)
+    lifecycle_hop: L7/L8 Observation
+    wiring: READ L7 WRITE L8 only (Pack 07 AUTH-INDEXER-READONLY)
+    official_traffic: projection consumers
+    l7_l8_observation: lag 0
+    probe: /meta indexer.lag_blocks=0
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    rollback_boundary: reindex ≠ rewrite L7
+    failure_class: [checkpoint_stall, indexer_as_chain]
+    status: OFFICIAL_LIVE
+    next_legal_transition: stay observe-only
+    forbidden_promotion: CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-ENV-MAINNET
+    environment: Official Mainnet ③
+    artifact_identity: chain_id=1 · Wired 0xEE0BE3…C1C6 · Timelock 0x50F0B261 · probe block 25757600
+    lifecycle_hop: Wiring
+    wiring: Wired.settlementRouter=SR-FT; SR-FT.feeRouter=OLD FR
+    official_traffic: createEscrow Official create factory
+    l7_l8_observation: recon overlay living read; FTB 20260812 locked stamp lag
+    probe: CAST + /meta 2026-08-15 UNEXPLAINED_CONFLICT=0
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    rollback_boundary: cannot un-execute Timelock ops; SUPERSEDED addresses remain code
+    failure_class: [ftb_as_living, scheduled_as_official]
+    status: OFFICIAL_LIVE
+    next_legal_transition: CI-02 / PM25 remain independent ETA ladders
+    forbidden_promotion: CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-SOURCE-TIP
+    environment: Local ①
+    artifact_identity: repo HEAD / dirty architecture-map tree · Solo Owner working copy
+    lifecycle_hop: Source/Branch/Tip
+    wiring: none
+    official_traffic: none
+    l7_l8_observation: none
+    probe: git status dirty ≠ Official git_sha 8df2ab21
+    evidence: docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+    rollback_boundary: do not force-push Official
+    failure_class: [dirty_tree_as_tip, local_head_as_official]
+    status: CODE_READY
+    next_legal_transition: BUILT
+    forbidden_promotion: DEPLOYED, OFFICIAL_LIVE, REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 1_LOCAL
+
+  - rel_id: REL-BUILD-IMAGE
+    environment: Official API bake ③ (historical stamp)
+    artifact_identity: Official API build_time 2026-08-13T05:15:00Z git_sha 8df2ab21 · V65 RI expect 16f29c7e is SUPERSEDED stamp
+    lifecycle_hop: Build/Image
+    wiring: image digest reported via /meta attestation
+    official_traffic: after deploy only
+    l7_l8_observation: /meta.build
+    probe: depth audit official_freshness_20260815.git_sha=8df2ab21
+    evidence: registry/project-pack-depth-audit.v1.yaml
+    rollback_boundary: rebuild ≠ live until deploy
+    failure_class: [v65_sha_as_current, built_as_deployed]
+    status: BUILT
+    next_legal_transition: DEPLOYED (already happened for 8df2ab21)
+    forbidden_promotion: REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-CONFIG-SECRETS
+    environment: Official ops ③
+    artifact_identity: Fly secrets · INTERNAL_API_SECRET configured=true (boolean only)
+    lifecycle_hop: Config/Secrets
+    wiring: process env; CORS_ORIGINS must be set in production; NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID is Docker ARG/ENV bake-time (not Fly secret dump)
+    official_traffic: depends on secrets being present
+    l7_l8_observation: /meta.strict_mode.internal_api_secret_configured
+    probe: boolean only; this wave does not print secrets; Official WC Project ID inlined masked 2b29…8926
+    evidence: docs/runbook/TT-SECURITY-IDENTITY-ACCESS-MATRIX-LATEST.md
+    rollback_boundary: secret rotate is Owner-only; not this wave
+    failure_class: [secret_dump, placeholder_base]
+    status: DEPLOYED
+    next_legal_transition: stay; no rotate this wave
+    forbidden_promotion: CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-DEPLOY
+    environment: Official Fly ③
+    artifact_identity: deployed_at 2026-08-12T23:44:18Z · Solo Owner deploy · RI-02 order Backup→Mig→API→Health→FE
+    lifecycle_hop: Deploy
+    wiring: after health 200
+    official_traffic: yes after DNS/TLS
+    l7_l8_observation: deploy ≠ chain wiring
+    probe: /health 200 cited in V65 RI and 2026-08-15 /meta
+    evidence: docs/runbook/TT-V65-PRODUCTION-RELEASE-INTEGRITY-LATEST.md
+    rollback_boundary: REL-ROLLBACK-BOUNDARY
+    failure_class: [deploy_as_reality, fe_before_api]
+    status: OFFICIAL_LIVE
+    next_legal_transition: keep identity current; do not redeploy this wave
+    forbidden_promotion: REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-RUNTIME-IDENTITY
+    environment: Official API ③
+    artifact_identity: git_sha 8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51 · psg_release_version MAINNET-OFFICIAL-LIVE-PARTIAL
+    lifecycle_hop: Runtime Identity
+    wiring: attestation must not be hand-edited
+    official_traffic: identity of the process serving traffic
+    l7_l8_observation: /meta.build.git_sha
+    probe: depth audit 2026-08-15; V65 16f29c7e is not this identity
+    evidence: registry/project-pack-depth-audit.v1.yaml
+    rollback_boundary: unknown attestation → do not claim ok
+    failure_class: [attestation_unknown, sha_mismatch]
+    status: OFFICIAL_LIVE
+    next_legal_transition: refresh only via real redeploy (FORBIDDEN this wave)
+    forbidden_promotion: REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-OFFICIAL-TRAFFIC
+    environment: Official Web+API ③
+    artifact_identity: www + api.web3-ttg.com · SOLE_LIVE_SURFACE
+    lifecycle_hop: Official Traffic
+    wiring: L2 proxy → API origin
+    official_traffic: yes
+    l7_l8_observation: public 200s; session 401; login 405
+    probe: guides/feed/discover/did-rank 200
+    evidence: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+    rollback_boundary: traffic rollback = image rollback
+    failure_class: [sepolia_as_official, local_pages_as_official]
+    status: OFFICIAL_LIVE
+    next_legal_transition: REALITY_VERIFIED needs logged-in money path (not this wave)
+    forbidden_promotion: REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-L7-L8-OBS
+    environment: Overlay + Official /meta ③
+    artifact_identity: recon window 2026-08-12/15 · UNEXPLAINED_CONFLICT=0 · FTB stamp 20260812 LOCKED
+    lifecycle_hop: L7/L8 Observation
+    wiring: maps-over-truth; does not replace FTB
+    official_traffic: observe only
+    l7_l8_observation: Wired+meta SR-FT; FTB Track1 SR = EXPLAINED lag; Engineering SSOT dual-wait STALE vs recon
+    probe: python scripts/dev/check-l7-l8-reality-reconciliation.py
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    rollback_boundary: do not rewrite FTB from /meta or reverse
+    failure_class: [ftb_overwrite, eng_ssot_as_living]
+    status: OFFICIAL_LIVE
+    next_legal_transition: keep overlay; no execute
+    forbidden_promotion: CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-PROBE-UAT
+    environment: Official ③ public probes
+    artifact_identity: 2026-08-15 Official observation pack
+    lifecycle_hop: Probe/UAT/Real-Money Evidence
+    wiring: n/a
+    official_traffic: anonymous public yes; login happy path no
+    l7_l8_observation: Pause 503 not 418; STRICT_SESSION_GATE 401
+    probe: "POST www /auth/login 405; GET /me 401; public 200s; no real-money UAT this wave"
+    evidence: docs/runbook/TT-AUTH-SESSION-RUNTIME-TRACE-LATEST.md
+    rollback_boundary: probes do not mutate
+    failure_class: [login_as_closed, uat_as_go]
+    status: OFFICIAL_LIVE
+    next_legal_transition: REALITY_VERIFIED after Owner UAT (not this wave)
+    forbidden_promotion: REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-REALITY-CLOSURE
+    environment: Production GO gate (not passed)
+    artifact_identity: TT_PRODUCTION_GO=NO_GO · P0_COMMERCIAL_MONEY_PATH_BLOCKER=true
+    lifecycle_hop: Reality Closure
+    wiring: Hard Gate fail-closed
+    official_traffic: Official live ≠ closed reality
+    l7_l8_observation: Track1 sealed ≠ commercial CLOSED_REALITY
+    probe: overlay tt_production_go NO_GO
+    evidence: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    rollback_boundary: GO flip FORBIDDEN this wave
+    failure_class: [docs_as_go, track1_as_production_go]
+    status: CODE_READY
+    next_legal_transition: CLOSED_REALITY only after Hard Gate + Owner Sign-off + W5 (not this wave)
+    forbidden_promotion: CLOSED_REALITY, REALITY_VERIFIED
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-ROLLBACK-BOUNDARY
+    environment: Official ops ③
+    artifact_identity: Solo Owner rollback · V65 recovery note · V49 historical FE rollback evidence
+    lifecycle_hop: Deploy
+    wiring: rollback image ≠ un-execute L7
+    official_traffic: may revert FE/API; cannot revert Timelock done=true
+    l7_l8_observation: T2/GOV-04 executed ops are irreversible
+    probe: no rollback this wave
+    evidence: docs/runbook/TT-V65-PRODUCTION-RELEASE-INTEGRITY-LATEST.md
+    rollback_boundary: L7 execute has no rollback; L8/FE/API image can roll
+    failure_class: [rollback_l7, silent_roll_forward]
+    status: CODE_READY
+    next_legal_transition: ROLLED_BACK only if Owner executes rollback (FORBIDDEN this wave)
+    forbidden_promotion: CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-HARD-GATE
+    environment: Release governance
+    artifact_identity: Hard Gate REEVAL/NO_GO · Solo Owner W5 time-separated Sign-off required for formal GO
+    lifecycle_hop: Reality Closure
+    wiring: none
+    official_traffic: none
+    l7_l8_observation: gate reads overlay + FTB lock; does not mutate
+    probe: TT_PRODUCTION_GO remains NO_GO
+    evidence: docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md
+    rollback_boundary: refusing GO is the safe default
+    failure_class: [hard_gate_pass_claim, dual_approver_required]
+    status: CODE_READY
+    next_legal_transition: stay NO_GO this wave
+    forbidden_promotion: OFFICIAL_LIVE, REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-SR-FT
+    environment: Mainnet L7 ③
+    artifact_identity: SR-FT 0xD1DAE665eDc16FCEc7b7530Ead3504A846457147 · Wired.settlementRouter
+    lifecycle_hop: Wiring
+    wiring: WIRED to Official create factory 0xEE0BE3…C1C6
+    official_traffic: /meta.settlement_router=SR-FT
+    l7_l8_observation: ALIGNED L7=L8; FTB table still Track1 SR
+    probe: recon ADDR-SR-FT lifecycle OFFICIAL_LIVE · 1 USDC not CLOSED
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    rollback_boundary: Track1 SR 0xe5C3ED is SUPERSEDED not rolled back
+    failure_class: [track1_sr_as_living, unwired_label]
+    status: OFFICIAL_LIVE
+    next_legal_transition: REALITY_VERIFIED of 1 USDC still open (Pack 06 S05)
+    forbidden_promotion: CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-FR-OLD
+    environment: Mainnet L7 ③
+    artifact_identity: OLD FeeRouter 0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72
+    lifecycle_hop: Wiring
+    wiring: SR-FT.feeRouter=OLD · /meta.fee_router=OLD · buckets Safe/Safe/P4Cap/P4Cap INTERIM
+    official_traffic: yes
+    l7_l8_observation: ALIGNED Official still OLD
+    probe: recon ADDR-FR-OLD OFFICIAL_LIVE
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    rollback_boundary: NEW FR must not be treated as rollback of OLD
+    failure_class: [new_fr_as_official, vault_as_live]
+    status: OFFICIAL_LIVE
+    next_legal_transition: CI-02 cutover independent ladder (not this pack)
+    forbidden_promotion: CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-CI02-FR-NEW
+    environment: Mainnet L7 (scheduled)
+    artifact_identity: NEW FR 0xb6bfEDA39D242395a132AB9340bA4A17ce757655 · op done=false · ETA 2026-08-16T13:42:11Z
+    lifecycle_hop: Wiring
+    wiring: DEPLOYED bytecode; NOT WIRED as Official fee_router
+    official_traffic: no
+    l7_l8_observation: /meta still OLD · EXPLAINED_SCHEDULED_NOT_EXECUTED
+    probe: recon ADDR-FR-NEW lifecycle SCHEDULED_WAITING_ETA done=false
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    rollback_boundary: do not execute this wave
+    failure_class: [scheduled_as_official, deployed_as_wired]
+    status: DEPLOYED
+    next_legal_transition: WIRED only after Timelock execute (FORBIDDEN this wave; independent ETA ladder)
+    forbidden_promotion: WIRED, OFFICIAL_LIVE, REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-PM-PROXY
+    environment: Mainnet L7 ③
+    artifact_identity: Official /meta NEW PM 0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2 unit 100_000; OLD proxy 0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce LEGACY GOV-04 0xB3bCBc8F90b66E88961C2E8F178924F3200D6aA1 unit 1e18 www chrome ED; L7 $25 4e16 LEGACY
+    lifecycle_hop: Wiring
+    wiring: Official sale = NEW PM 100_000; OLD PM EIP-1967 L7 $25 LEGACY; www chrome still GOV-04 1e18 ED; old impl 0xDf9eF9 SUPERSEDED
+    official_traffic: quote still session-gated; /meta.primary_market_address=NEW PM 0x882Ad (historical null omit SUPERSEDED)
+    l7_l8_observation: L8 publishes NEW PM; OLD proxy + GOV-04 = LEGACY / www chrome ED
+    probe: recon ADDR-PM-PROXY OFFICIAL_LIVE NEW · ADDR-PM-IMPL-GOV04 LEGACY www chrome ED
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    rollback_boundary: cannot un-upgrade without new Timelock op
+    failure_class: [meta_null_as_undeployed, gov04_pending_stale]
+    status: OFFICIAL_LIVE
+    next_legal_transition: PM25 independent ladder
+    forbidden_promotion: CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-PM25
+    environment: Mainnet L7 (scheduled)
+    artifact_identity: PM 25 impl 0x53d0dA76BC618eC90D2FF497D400b1F9af5AFc6b · L7 execute CLOSED · Official sale = NEW PM not $25 · www bake FORBIDDEN
+    lifecycle_hop: Wiring
+    wiring: L7 execute done 2026-08-17 LEGACY; Official sale NEW PM 100_000; www chrome still 1e18 GOV-04 ED; bake FORBIDDEN
+    official_traffic: no
+    l7_l8_observation: $25 LEGACY on OLD proxy; Official /meta NEW PM; www bake not done FORBIDDEN
+    probe: recon ADDR-PM-IMPL-25 LEGACY bake FORBIDDEN (status stays DEPLOYED not OFFICIAL_LIVE)
+    evidence: docs/runbook/TT-PM25USDC-EXECUTE-VERIFIED-LATEST.md
+    rollback_boundary: do not Official-www-bake this wave
+    failure_class: [scheduled_as_official, deployed_as_wired]
+    status: DEPLOYED
+    next_legal_transition: Official www Live $25 bake (FORBIDDEN this wave; Wave 3)
+    forbidden_promotion: WIRED, OFFICIAL_LIVE, REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+  - rel_id: REL-TRACK1-ESCROW
+    environment: Mainnet historical Reality
+    artifact_identity: Track1 10 USDC conservation sealed · factory Wired · SR Track1 0xe5C3ED now SUPERSEDED as Official create path
+    lifecycle_hop: Probe/UAT/Real-Money Evidence
+    wiring: living create path is SR-FT not Track1 SR
+    official_traffic: sealed history ≠ current create router
+    l7_l8_observation: REALITY_VERIFIED on SUPERSEDED path
+    probe: docs/runbook/TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.md
+    evidence: docs/runbook/TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.md
+    rollback_boundary: seal is immutable evidence; not a GO
+    failure_class: [track1_as_production_go, superseded_as_living_create]
+    status: REALITY_VERIFIED
+    next_legal_transition: do not promote to CLOSED_REALITY / Production GO
+    forbidden_promotion: CLOSED_REALITY, OFFICIAL_LIVE
+    phase_tier: 3_OFFICIAL
+    note: REALITY_VERIFIED here is Track1 conservation only. Living Official create is SR-FT. ≠ TT_PRODUCTION_GO.
+
+  - rel_id: REL-JP-VAULT
+    environment: Target 83 (not live)
+    artifact_identity: CI-03 JP RegionVault · no mainnet address · /meta null
+    lifecycle_hop: Source/Branch/Tip
+    wiring: NOT_DEPLOYED
+    official_traffic: no
+    l7_l8_observation: recon Seat/Vault NOT_DEPLOYED
+    probe: /meta.registry_address=null
+    evidence: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+    rollback_boundary: n/a
+    failure_class: [map_deployed_yes_stale, vault_as_official]
+    status: CODE_READY
+    next_legal_transition: DEPLOYED only after CI-03 (not this wave)
+    forbidden_promotion: DEPLOYED, WIRED, OFFICIAL_LIVE, REALITY_VERIFIED, CLOSED_REALITY
+    phase_tier: 3_OFFICIAL
+
+hard_rule: >
+  Do not treat ① Local or ② Staging as ③ Official. Do not promote DEPLOYED/scheduled CI-02 or PM $25 to OFFICIAL_LIVE or REALITY.
+  Pack 10 is an independent later wave. Do not execute CI-02 or PM $25. TT_PRODUCTION_GO=NO_GO.
+  Do not rewrite FTB, Engineering SSOT dual-wait bytes, secrets, or Official Runtime.

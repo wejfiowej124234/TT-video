@@ -16,12 +16,32 @@
   "release_grade_now": "NO",
   "release_grade_target": "YES_②_STAGING",
   "equals_production_go": false,
-  "waves": ["W13-0", "W13-1", "W13-2", "W13-3", "W13-4", "W13-5", "W13-6a", "W13-6b", "W13-6c", "W13-7"],
+  "waves": [
+    "W13-0",
+    "W13-1",
+    "W13-2",
+    "W13-3",
+    "W13-4",
+    "W13-5",
+    "W13-6a",
+    "W13-6b",
+    "W13-6c",
+    "W13-7"
+  ],
   "gate_hu_eight_dim": 487,
   "gate_hu_capability": 495,
-  "gate_hu_orders": [510, 511],
-  "gate_hu_config": [566, 567],
-  "gate_hu_finance": [558, 559],
+  "gate_hu_orders": [
+    510,
+    511
+  ],
+  "gate_hu_config": [
+    566,
+    567
+  ],
+  "gate_hu_finance": [
+    558,
+    559
+  ],
   "open_hu_count": 90,
   "hu_range": "478-567",
   "next_hu": 568,
@@ -34,5 +54,22 @@
     "hard_gate_unlock_via_config": "FORBIDDEN"
   },
   "cite_md": "docs/runbook/TT-BATCH13-L5-RELEASE-GRADE-FULL-SCORE-PATH-LATEST.md",
-  "patch": "PATCH-STG-017"
+  "patch": "PATCH-STG-017",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
 }

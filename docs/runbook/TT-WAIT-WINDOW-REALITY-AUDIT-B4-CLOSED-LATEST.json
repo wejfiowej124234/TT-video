@@ -1,0 +1,48 @@
+{
+  "schema": "traveltrust.wait_window_reality_audit_b4_closed.v1",
+  "batch": "REALITY-AUDIT-B4",
+  "status": "SEALED",
+  "recorded_utc": "2026-08-11T01:02:45Z",
+  "parent": "TT-WAIT-WINDOW-FINAL-REALITY-AUDIT-LATEST",
+  "inventory": "TT-WAIT-WINDOW-REALITY-AUDIT-B4-GAP-INVENTORY-LATEST",
+  "runtime_verify": "TT-WAIT-WINDOW-REALITY-AUDIT-B4-RUNTIME-VERIFY-LATEST",
+  "gaps": {
+    "B4-G-001": "CLOSED",
+    "B4-G-002": "CLOSED",
+    "B4-G-003": "CLOSED",
+    "B4-G-004": "CLOSED",
+    "B4-G-005": "CLOSED",
+    "B4-G-006": "CHECK_OPEN",
+    "B4-G-007": "CLOSED",
+    "B4-G-008": "EXPECTED_HOLD",
+    "B4-G-009": "CHECK_OPEN",
+    "B3-G-007": "OPEN_SEPARATE"
+  },
+  "currency_policy": "USDC_ONLY",
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "frozen_untouched": [
+    "Mainnet Money Path",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

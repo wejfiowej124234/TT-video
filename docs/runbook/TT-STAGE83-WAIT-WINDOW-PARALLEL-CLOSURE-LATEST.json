@@ -1,0 +1,95 @@
+{
+  "schema": "traveltrust.stage83_wait_window_parallel_closure.v1",
+  "track": "STAGE83_WAIT_WINDOW_PARALLEL_CLOSURE",
+  "verdict": "STAGE83_WAIT_WINDOW_PARALLEL_CLOSURE_PASS_STOP",
+  "stamp_utc": "2026-08-14T16:40:00Z",
+  "tt_production_go": "NO_GO",
+  "fresh_block": 25754535,
+  "fdm_ssot": "D:/TravelTrust-recon-official-runtime-baseline-1/docs/runbook/TT-STAGE83-WAIT-WINDOW-PARALLEL-CLOSURE-LATEST.md",
+  "now_fixable_gap": 0,
+  "now_fixable_gap_locked": true,
+  "hold_frozen_ref": "docs/runbook/TT-STAGE83-WAIT-WINDOW-HOLD-FROZEN-MONITOR-ONLY-LATEST.json",
+  "expand_audit": "FORBIDDEN",
+  "code_changes": "FORBIDDEN",
+  "monitors_frozen_readonly": {
+    "pm_25usdc": {
+      "opId": "0xb7d2a7c37a6f8aca08d41a1f0c54ded6d83429a918cda89b9271aaad0b551b12",
+      "readyAt_unix": 1786897223,
+      "readyAt_utc": "2026-08-16T16:20:23Z",
+      "done": false
+    },
+    "ci02_feerouter": {
+      "opId": "0xa26f09da1309c85b128ea343aa7aa0ebe806025fc34a9857fcd3c2e4481d2479",
+      "readyAt_unix": 1786887731,
+      "readyAt_utc": "2026-08-16T13:42:11Z",
+      "done": false,
+      "target": "0xb6bfEDA39D242395a132AB9340bA4A17ce757655"
+    },
+    "proposal_3": {
+      "status": "ORTHOGONAL_LONG_WAIT_DO_NOT_TOUCH"
+    }
+  },
+  "official_live": {
+    "runtime_10_usdc": "10 TTG",
+    "candidate_10_usdc": "0.4 TTG",
+    "ttgPerUsdcUnit": "1000000000000000000"
+  },
+  "buckets": {
+    "WAITING_TIMELOCK": [
+      "CI-02_EXECUTE",
+      "PM_25USDC_EXECUTE"
+    ],
+    "WAITING_AUTH": [
+      "CI-03_SET_REGION_VAULT",
+      "OFFICIAL_CUTOVER"
+    ],
+    "WAITING_REALITY": [
+      "REALITY_A_B",
+      "S05_S06_CLOSED_REALITY",
+      "CI10_LIVE_INGEST"
+    ],
+    "WAITING_OWNER_UNFREEZE": [
+      "CI-04"
+    ],
+    "WAITING_GOVERNANCE": [
+      "PROPOSAL_3"
+    ],
+    "NOW_FIXABLE_MAX_HONEST_DONE": [
+      "CI-05",
+      "CI-06",
+      "CI-07_LOCAL_FORK",
+      "CI-10_CODE",
+      "META",
+      "MONITORS",
+      "PLAYBOOKS"
+    ]
+  },
+  "forbidden": [
+    "reschedule",
+    "early_execute",
+    "purchase",
+    "official_live_flip",
+    "proposal_3_touch",
+    "paper_closed_reality",
+    "fake_runtime_pass"
+  ],
+  "exception_non_fake": "cargo_region_steward_UNIT_BLOCKED_TOOLCHAIN_on_FDM",
+  "STOP": "STAGE83_WAIT_WINDOW_PARALLEL_CLOSURE_PASS_STOP",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

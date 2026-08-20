@@ -3,20 +3,35 @@
 **Machine:** [`TT-FINAL-TRUTH-BASELINE-LATEST.json`](./TT-FINAL-TRUTH-BASELINE-LATEST.json)  
 **STATUS:** `ACTIVE_UNIQUE_SSOT`  
 **Stamp:** `20260818T031500Z`  
+**Product Truth pin (living Official www):** **TravelTrust Official · OPS-2026.08.20-v9** · absorbed `2026-08-20` · **本窗口暂不可改产品字节**  
 **Amendment:** [`TT-FINAL-TRUTH-BASELINE-V8-CYCLE-20260818`](./TT-FINAL-TRUTH-BASELINE-V8-CYCLE-20260818.md)  
 **Immutable parent:** [`TT-FINAL-TRUTH-BASELINE-20260812`](./TT-FINAL-TRUTH-BASELINE-20260812.md) · **禁止覆盖**  
 **V8 Reality cited (do not recast):** [`Registry/Runtime/L7 Consistency Cert`](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md) · `PASS_STOP` · `2026-08-18T03:00:00Z`  
 **Final Reality / Release Certification:** [`TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST`](./TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md) · `FINAL_REALITY_RELEASE_CERTIFICATION_PASS` · `blocking_p0_p1=0` · `2026-08-18T03:20:00Z` · **≠** Production GO  
-**Production GO 重评（只读 · **FROZEN unique Final Closure entry**）：** [`TT-PRODUCTION-GO-REASSESSMENT-LATEST`](./TT-PRODUCTION-GO-REASSESSMENT-LATEST.md) · `TT_PRODUCTION_GO_REASSESSMENT_STOP` · `required_before_go=8` · `hard_gate=REFUSED` · Owner 裁决 **NOT_THIS_TURN** · successor `TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH` · FE `FROZEN_LATEST_PRODUCT_BASELINE` · **≠** Production GO  
-**Web3 Active Truth:** Ethereum mainnet · **NEW TTG / NEW PM / NEW Governor ACTIVE** · **KEEP** Wired + Official SR + Official OLD FeeRouter + Timelock（同一身份）  
-**Product Truth:** Official **API** 必须对齐下表 ACTIVE 地址；Official **www** = `FROZEN_LATEST_PRODUCT_BASELINE`（`daa5ae87` · `2026-08-16T15:15:49Z` · **禁止 bake / checkout 旧 FE**）  
+**Production GO 重评（只读 · **FROZEN unique Final Closure entry**）：** [`TT-PRODUCTION-GO-REASSESSMENT-LATEST`](./TT-PRODUCTION-GO-REASSESSMENT-LATEST.md) · `TT_PRODUCTION_GO_REASSESSMENT_STOP` · `required_before_go=8` · `hard_gate=REFUSED` · freeze SHA `94785a66` · **永不改写** · successor `TT_PRODUCTION_GO_FINAL_CLOSURE_BATCH` · FE product baseline = **OPS-2026.08.20-v9** · **≠** Production GO  
+**Production GO 重评 Cycle2（只读 overlay · **不是**改写 freeze 8）：** [`TT-PRODUCTION-GO-REASSESSMENT-CYCLE2-LATEST`](./TT-PRODUCTION-GO-REASSESSMENT-CYCLE2-LATEST.md) · `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · `current_required_before_go=0` · `unexplained_drift=0` · living Hard Gate entry **PASS** · Owner 裁决 **NOT_THIS_TURN** · **禁止**自动签发 GO  
+
+### 双平面（同属本 FTB · 禁止另起第二套 SSOT）
+
+| 平面 | 活真源 | 角色 |
+|------|--------|------|
+| **Web3 Active Truth** | Ethereum mainnet · **NEW TTG / NEW PM / NEW Governor** · **KEEP** Wired + Official SR + FeeRouter + Timelock | L7 / `/meta` / Money Path |
+| **Product Truth** | **TravelTrust Official · OPS-2026.08.20-v9** · `3e356617…` · `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** | Official www 产品面 |
+
+**Product Truth 钉：** [`Living Pin Index`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md) · [`OPS-20260820-V9 Baseline`](./TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md) · [`Freeze JSON`](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json)  
+
+> **Web3 对齐声明（未执行 · 另闸）：** Owner 将以 **Official V9 产品基线** 为准后续更新 Web3 轨文档/对齐；**本文件本轮不改** Web3 Active Truth 地址表 · **不翻** `TT_PRODUCTION_GO`。
 **Sepolia / Local:** 架构/ABI/流程对齐 · **独立地址** · **≠** Official  
 **Reality Wave:** `TRACK1_REALITY_SEALED` · execute `0xe575…e88e04` · release `0x271e…0f796` · Escrow status=3 / USDC=0 · `isEscrow=true` · conservation `10e6=9.5e6+0.5e6+0` · [`Seal`](./TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.md)  
 **money_path 活真源：** `MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED`（**禁止**再读 `WAITING_ETA` / `MAINNET_MONEY_PATH_INCOMPLETE` / Settlement·Fee **UNSET** 当活叙事）  
 **双等待冻结（Money Path 独立轨 · 未因 V8 自动消失）：** Track2 = `TRACK2_1USDC_CLOSED_REALITY_OWNER_A`（ETA elapsed · live `/meta` create hop SR-FT · KEEP SR listing `0xe5C3…` 未换针）+ `WAITING_GOV04_TIMELOCK_ETA`（DEFERRED_POST_GO） · [`DUAL-WAIT FREEZE`](./TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md) · GOV-04 pending impl 在 **OLD PM proxy** = **LEGACY for Official TTG sale**  
 **`P0_COMMERCIAL_MONEY_PATH_BLOCKER`:** **FALSE**（living · cite Owner A 2026-08-17 Track2 L7+L8；FTB 旧 stamp TRUE = EXPLAINED_FTB_STAMP_LAG）  
 **独立未自动轨：** FeeRouter 四桶 Timelock distribute · Track2 execute/切流 · GOV-04 on OLD proxy · 83 RegionVault · Bitget HOLD · **`TT_PRODUCTION_GO`**  
-**`TT_PRODUCTION_GO: NO_GO`** · Hard Gate **REEVAL 仍 REFUSED/NO_GO** · ≠ Production Ready · Final Reality / Release Certification **已 PASS** · Production GO 重评 **STOP**（`required_before_go=8` · Owner 裁决未开）  
+**`TT_PRODUCTION_GO: NO_GO`** · Hard Gate registry SSOT **仍 REFUSED** · living wave `AUTHORIZED_FOR_WAVE` ≠ Full GO · ≠ Production Ready · Final Reality / Release Certification **已 PASS** · freeze 重评 **STOP**（`required_before_go=8`）· Cycle2 **`READY_FOR_OWNER_PRODUCTION_GO_VERDICT`**（`current_required_before_go=0` · Owner 书面裁决未开 · **禁止**自动签发 GO）  
+
+> **Official 产品真源（活面 · OPS-2026.08.20-v9 · FTB Product Truth）：** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **≠** git checkout · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` = **SUPERSEDED** · M07 overlay `2551fafd` / `…-v9-m07-unlock` = **ROLLED_BACK_NOT_LIVING** · **≠** Candidate v2 · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)  
+> **GO 资格（Cycle2 overlay · 不改 freeze 8）：** `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · freeze unique entry `STOP` `required_before_go=8` · `current_required_before_go=0` · 下一步 = Owner 书面 **GO** 或 **继续 NO_GO**（`NOT_THIS_TURN`）· `TT_PRODUCTION_GO=NO_GO` · **禁止自动签发** · **禁止 bake www**（含禁止用 M07 冒充 OPS-v9）
+
 **区域分账设计真源（中文 · Target）：** [`83`](../spec/83-区域治理与收益分配-协议白皮书.md) · Living gap：[`83-GROUNDED`](../../evidence/GO_mainnet_money_path/WEB3-DESIGN-CONSISTENCY-83-GROUNDED-LATEST.md)
 
 ---
@@ -24,16 +39,19 @@
 ## 0 · Owner 锁死（防 AI 分叉）
 
 ```text
-Final Truth Baseline  = 全系统唯一 SSOT（读本文件 / JSON）
+Final Truth Baseline  = 全系统唯一 SSOT（读本文件 / JSON）· 禁止另起第二套
 Parent 20260812       = IMMUTABLE HISTORICAL · 不得改字节 · 不得覆盖
-V8 Cycle 20260818     = 本文件 = Active Truth
+V8 Cycle 20260818     = Web3 Active Truth 吸收进本文件
+Product Truth         = TravelTrust Official · OPS-2026.08.20-v9（本窗口产品字节钉死）
 Web3 Active Truth     = NEW TTG / NEW PM / NEW Governor + KEEP Money Path
 Official createEscrow = EscrowFactoryV2Wired 0xEE0BE3…  （ABI: frontend/dapp/abis/EscrowFactoryV2Wired.json）
 FactoryV2 0x0520…     = LINEAGE ONLY · 无 settlementRouter · 禁止重新绑到官网 FE/API
 Official API          = 必须对齐下表 ACTIVE
-Official www          = FROZEN_LATEST_PRODUCT_BASELINE daa5ae87 · 禁止 bake / checkout
+Official www          = OPS-2026.08.20-v9 (3e356617 · hybrid-…-v9 · bootstrap v8)
+                      · daa5ae87 SUPERSEDED · M07 …-m07-unlock ROLLED_BACK
+                      · 禁止无解锁 bake / checkout-as-rollback / 用 M07 改名冒充 OPS-v9
 Bitget HOLD           = 独立轨 · 不得 unwind V8 针
-TT_PRODUCTION_GO      = NO_GO · Final Reality / Release Certification = PASS · Production GO 重评 = STOP · required_before_go=8 · Owner 裁决 NOT_THIS_TURN
+TT_PRODUCTION_GO      = NO_GO · Final Reality / Release Certification = PASS · freeze 重评 STOP required_before_go=8 · Cycle2 READY_FOR_OWNER_PRODUCTION_GO_VERDICT current_required_before_go=0 · Owner 裁决 NOT_THIS_TURN · 禁止自动签发 GO
 ```
 
 **对齐闸：** `bash scripts/gates/check-official-mainnet-web3-alignment.sh`  
@@ -104,7 +122,7 @@ SSOT：[`TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST`](./TT-DUAL-WAIT-TRACK2-GOV04-F
 |----|------|---------|
 | **Track2** | `TRACK2_1USDC_CLOSED_REALITY_OWNER_A` | T1 `0x35f54aa1…9ebe` · T2 `0xbdc82edb…e21a` · ETA elapsed · live `/meta` create hop SR-FT `0xD1DA…` · KEEP SR listing `0xe5C3…` · KEEP identity not swapped |
 | **GOV-04（OLD proxy）** | `WAITING_GOV04_TIMELOCK_ETA` | opId `0xb33dfdf2…03bc` · newImpl `0xB3bC…` · **LEGACY for Official TTG sale** |
-| 商业 P0 | **FALSE** | living · Owner A money-path PASS；Official book 仍 GAP-E2E-JOURNEY |
+| 商业 P0 | **FALSE** | living · Owner A money-path PASS；GAP-E2E Official C2 非资金 hop **CLOSED** · AXIS-14 wave **AUTHORIZED_FOR_WAVE** · freeze `required_before_go=8` 未改 · **未**重开 Production GO |
 | 禁止 | — | 提前 execute · Track1 重跑 · FeeRouter 四桶 / 83 / Stake 插队 · 翻 GO · 用 Bitget unwind V8 |
 
 ## 2 · 产品 / ABI 对齐
@@ -112,7 +130,7 @@ SSOT：[`TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST`](./TT-DUAL-WAIT-TRACK2-GOV04-F
 | 面 | 要求 |
 |----|------|
 | API `GET /meta` | NEW TTG / NEW PM / NEW Governor · Wired · Fee/Settlement 非 null · quote 1 USDC=100000 TTG |
-| Official www | **FROZEN** `daa5ae87` / `2026-08-16T15:15:49Z` · Expected Difference · **禁止 bake** |
+| Official www | **OPS-2026.08.20-v9** `3e356617` / `2026-08-20T00:51:57Z` / `hybrid-…-v9` · bootstrap v8 · `daa5ae87` SUPERSEDED · **禁止无解锁 bake** |
 | FE ABI | `EscrowFactoryV2Wired.json`（含 `settlementRouter`） |
 | create 钩子 | `useEscrowFactoryCreate` → Wired ABI |
 | Indexer | `FEE_ROUTER_ADDRESS` / Settlement 事件随 API secrets |
@@ -126,7 +144,7 @@ SSOT：[`TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST`](./TT-DUAL-WAIT-TRACK2-GOV04-F
 | 环境 | 对齐 |
 |------|------|
 | **官网 API** | 上表 ACTIVE Mainnet 地址 + Wired ABI |
-| **官网 www** | 冻结 OLD bake · 不等价 API 已切 NEW |
+| **官网 www** | **OPS-2026.08.20-v9** Product Truth（`3e356617` / `…-v9-20260820`）· **≠** `daa5ae87` · **≠** M07 overlay · API 已切 NEW 与 www pin **并行钉死、勿混读** |
 | **Sepolia** | 同协议/ABI/流程 · **独立** Sepolia 地址 |
 | **Local** | 同架构/ABI/流程 · 独立地址 |
 
@@ -138,7 +156,7 @@ SSOT：[`TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST`](./TT-DUAL-WAIT-TRACK2-GOV04-F
 |----|------|
 | Owner fill Wired/Fee/Settlement | **PASS** |
 | Official API Runtime NEW V8 | **PASS** · cite consistency cert |
-| Official www bake | **FROZEN_LATEST_PRODUCT_BASELINE** · `daa5ae87` / `2026-08-16T15:15:49Z` · 禁止 bake / checkout |
+| Official www bake | **OPS-2026.08.20-v9** · restore only `hybrid-…-v9` · forbid misnamed `…-v8` · [`Living Pin Index`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md) |
 | Track1 10 USDC + dual confirm + setEscrow execute + release | **SEALED** · escrow `0x9996FBD5…B8d6` |
 | V8 Registry/Runtime/L7 consistency | **PASS_STOP** · 引用不重证 |
 | FTB Cycle absorb V8 | **THIS FILE** · parent 20260812 immutable |
@@ -158,7 +176,7 @@ Wallets：A deploy/traveler `0xe1e732…` · B TTG/guide `0xF34804…`
 - 把本 Cycle 或 Final Reality cert PASS 写成 Production GO  
 - 重跑已闭合 L7/`/meta`/Registry 来再证明一遍 V8  
 - 用 Bitget HOLD unwind V8 针或把 living FTB 退回 OLD TTG/PM/Governor  
-- Official www bake · checkout 旧 FE · 再发 `setGovernor` · CI-02 hop B · Money Path 再部署 · 重复 1 USDC 真金  
+- Official www bake · checkout 旧 FE · 把 M07 overlay 写成 OPS-v9 · 再发 `setGovernor` · CI-02 hop B · Money Path 再部署 · 重复 1 USDC 真金  
 - 把 NEW PM 写成仍用 OLD live impl `0xDf9e…`（min=100）  
 - 阅读本 SSOT 时仍采用「Fee/Settlement UNSET / MISSING_OWNER_FILL / Track1 仍 WAITING_ETA」旧叙事  
 - 官网 FE/API 重新绑定 lineage FactoryV2 `0x0520…`  
@@ -170,9 +188,11 @@ Wallets：A deploy/traveler `0xe1e732…` · B TTG/guide `0xF34804…`
 
 ## 6 · 下一动作（勿混）
 
-**已闭：** FTB `20260812` 冻结为历史父本 · V8 Mainnet Reality Certification `PASS_STOP` · 本 Cycle 吸收为 Active Truth · Final Reality / Release Certification `PASS`（`blocking_p0_p1=0`）· Production GO 重评只读 `STOP`（`required_before_go=8` · `hard_gate=REFUSED`）。
+**已闭：** FTB `20260812` 冻结为历史父本 · V8 Mainnet Reality Certification `PASS_STOP` · 本 Cycle 吸收为 Active Truth · Final Reality / Release Certification `PASS`（`blocking_p0_p1=0`）· Production GO 重评冻结 unique entry `STOP`（`required_before_go=8` · `hard_gate=REFUSED` · SHA `94785a66` · **永不改写**）· Final Closure batch remaining=0 · Cycle2 `READY_FOR_OWNER_PRODUCTION_GO_VERDICT`（`current_required_before_go=0`）。
 
-**下一闸（另会话 · Owner 书面授权后）：** 仅修 `REQUIRED_BEFORE_GO` 八项。本文件 **未**翻 `TT_PRODUCTION_GO`。**未**开 Owner Production GO 裁决。
+**产品真源（活面 · FTB Product Truth = OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617…` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · API `8df2ab21…`。**≠** git checkout · historical `daa5ae87` SUPERSEDED · M07 `…-m07-unlock` ROLLED_BACK。本窗口 **暂不可改** 产品字节；无 Owner 解锁 **禁止** 新 www bake；回滚只许 `fly deploy --image` → **v9**（禁止 restore 误名 `…-v8` 或 m07 当 OPS-v9）。
+
+**下一闸（不是技术修复）：** Owner 明确书面决定 **GO** 或 **继续 NO_GO**。`owner_production_go_verdict=NOT_THIS_TURN`。本文件 **未**翻 `TT_PRODUCTION_GO`。**禁止自动签发 GO。** freeze `required_before_go=8` **不得**改写成 0。
 
 Money Path KEEP 身份不变。Bitget HOLD 继续完全独立。Track2 / 83 / FeeRouter 四桶仍是独立未自动轨。
 

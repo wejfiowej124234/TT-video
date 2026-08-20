@@ -1,0 +1,109 @@
+{
+  "schema": "traveltrust.wait_window_maximize_pre_eta_remediation.v1",
+  "status": "ACTIVE_MAXIMIZE_PRE_ETA_REMEDIATION_TRACK1_MONEY_PATH_FROZEN",
+  "recorded_utc": "2026-08-11T04:17:00Z",
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "before_eta": true,
+  "supersedes_for_product": [
+    "PRE_ETA_READ_ONLY_PRODUCT_HOLD",
+    "CUT_QUEUE_HOLD_NO_PRODUCT_FIX",
+    "WAVE3_STOP_NO_REMEDIATION"
+  ],
+  "still_frozen_absolute": [
+    "mainnet_broadcast_addresses",
+    "FTB",
+    "Registry_v1",
+    "EscrowFactoryV2Wired",
+    "Timelock",
+    "Track1_Money_Path",
+    "pinned_operation",
+    "escrow_10_usdc",
+    "finalize_preconditions"
+  ],
+  "forbidden_always_until_eta_preflight_pass": [
+    "timelock_execute",
+    "escrow_release",
+    "settlement_fee_broadcast",
+    "trusted_factory",
+    "reality_seal",
+    "tt_production_go",
+    "mutate_ftb_registry_wired",
+    "change_pinned_op_or_escrow_balance"
+  ],
+  "allowed_pre_eta_product": [
+    "check_dedupe_gap",
+    "minimal_local_fix",
+    "targeted_tests",
+    "official_cut_when_track1_isolated",
+    "runtime_verify",
+    "ssot_update",
+    "mark_pack_CLOSED_product_only"
+  ],
+  "serial_queue": [
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1",
+    "R-MKT-UAT-LEAK-1",
+    "R-COMM-TEXT-BAN-1",
+    "R-MEDIA-1",
+    "Growth_CMS_Legal_Auth_routes_404_rbac_perf_ops_hygiene"
+  ],
+  "pack_loop": [
+    "confirm_blocks_track1_finalize_false",
+    "track1_readonly_health_ok",
+    "CHECK",
+    "GAP_dedupe",
+    "minimal_FIX",
+    "targeted_tests",
+    "official_deploy_if_isolated",
+    "runtime_verify",
+    "SSOT",
+    "CLOSED"
+  ],
+  "local_ready_after_seal_only": [
+    "production_db_delete_or_migration",
+    "object_storage_bulk",
+    "indexer_backfill",
+    "rpc_or_core_config",
+    "cannot_prove_track1_isolation"
+  ],
+  "r_media_1_default": "LOCAL_READY_AFTER_SEAL",
+  "track1_health_drift_action": "STOP_ALL_REMEDIATION",
+  "eta_action": "ABORT_UNFINISHED_PRODUCT_BATCHES_THEN_TRACK1_FRESH_PREFLIGHT",
+  "tt_production_go": "NO_GO",
+  "seal_ne_go": true,
+  "closed_ne_seal": true,
+  "ftb_unique_ssot": "TT-FINAL-TRUTH-BASELINE-LATEST",
+  "active_pack": "R-MKT-UAT-LEAK-1",
+  "active_pack_goal": "CLOSED_IF_SAFE_BEFORE_ETA",
+  "strategy_active": "MAXIMIZE_PRE_ETA_REMEDIATION",
+  "default_path": "B_MAXIMIZE_REMEDIATION",
+  "r_usdc_1_status": "CLOSED",
+  "closed_packs": [
+    "R-USDC-1",
+    "R-PAY-IA-1",
+    "R-ADMIN-1"
+  ],
+  "r_pay_ia_1_status": "CLOSED",
+  "r_admin_1_status": "CLOSED",
+  "r_mkt_uat_leak_1_status": "LOCAL_READY_OFFICIAL_CUT_ROLLED_BACK",
+  "pipeline_halt": "API_MIGRATION_CHECKSUM_BLOCKER",
+  "r_comm_text_ban_1": "NOT_AUTO_STARTED_UNTIL_R_MKT_CLOSED",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

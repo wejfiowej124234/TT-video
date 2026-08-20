@@ -1,0 +1,128 @@
+{
+  "schema": "traveltrust.wait_window_reality_audit_b3_g001_g002_g006_runtime_verify.v1",
+  "batch": "REALITY-AUDIT-B3-G001-G002-G006",
+  "status": "CLOSED",
+  "verdict": "PASS",
+  "recorded_utc": "2026-08-10T17:36:00Z",
+  "parent": "TT-WAIT-WINDOW-REALITY-AUDIT-B3-GAP-INVENTORY-LATEST",
+  "scope": "official_dual_deploy_runtime_verify_discover_guide_community",
+  "not_in_scope": [
+    "community_media_404",
+    "fund_exec",
+    "batch4_plus"
+  ],
+  "frozen_untouched": [
+    "Mainnet Money Path",
+    "FTB",
+    "Registry v1",
+    "Wired",
+    "Track1 Timelock"
+  ],
+  "deploy": {
+    "order": [
+      "tt-api-prod",
+      "tt-web-prod"
+    ],
+    "api": {
+      "app": "tt-api-prod",
+      "ok": true,
+      "image": "registry.fly.io/tt-api-prod:deployment-01KZPAYFV5K6A5QTB7RP8TBVNC",
+      "health": 200
+    },
+    "web": {
+      "app": "tt-web-prod",
+      "ok": true,
+      "image": "tt-web-prod:deployment-01KZPB3SET69TFJM4CHY7NM6AA",
+      "release_identity_git_sha": "c3eeaf10ae18ed675e32aa153977808ca586c08e",
+      "build_time_utc": "2026-08-10T17:21:19Z",
+      "idempotency_key_in_js_chunks": true
+    }
+  },
+  "checks": [
+    {
+      "id": "B3-G-001-RV-001",
+      "gap": "B3-G-001",
+      "name": "discover_api_no_draft_no_1200",
+      "result": "PASS",
+      "observed": "GET /api/v1/discover/orders items=[] drafts=0 has1200=false"
+    },
+    {
+      "id": "B3-G-001-RV-002",
+      "gap": "B3-G-001",
+      "name": "market_ui_orders_empty",
+      "result": "PASS",
+      "observed": "Official /market Orders 0 · No orders to match yet · no Draft+$1200 cards"
+    },
+    {
+      "id": "B3-G-002-RV-001",
+      "gap": "B3-G-002",
+      "name": "guide_detail_api_fields",
+      "result": "PASS",
+      "observed": "GET /guides/{id} includes hourly_rate/public_title/avatar_url"
+    },
+    {
+      "id": "B3-G-002-RV-002",
+      "gap": "B3-G-002",
+      "name": "guide_detail_ui_rate",
+      "result": "PASS",
+      "observed": "/guides/9ccab777-… Omar · 85 On request/hr"
+    },
+    {
+      "id": "B3-G-006-RV-001",
+      "gap": "B3-G-006",
+      "name": "error_cors_acao",
+      "result": "PASS",
+      "observed": "POST comments → 401 + access-control-allow-origin www"
+    },
+    {
+      "id": "B3-G-006-RV-002",
+      "gap": "B3-G-006",
+      "name": "fe_idempotency_key",
+      "result": "PASS",
+      "observed": "Official JS chunks include Idempotency-Key"
+    },
+    {
+      "id": "B3-G-006-RV-003",
+      "gap": "B3-G-006",
+      "name": "comment_create_ui",
+      "result": "PASS",
+      "observed": "Comments · 1 · B3 dual-deploy RV comment 20260810T1735Z"
+    },
+    {
+      "id": "B3-G-006-RV-004",
+      "gap": "B3-G-006",
+      "name": "duplicate_idempotency_replay",
+      "result": "PASS",
+      "observed": "same Idempotency-Key double POST → equal body + ACAO"
+    }
+  ],
+  "gaps_sealed": [
+    "B3-G-001",
+    "B3-G-002",
+    "B3-G-006"
+  ],
+  "media_404_separate": {
+    "id": "B3-G-007",
+    "disposition": "OPEN_SEPARATE"
+  },
+  "tt_production_go": "NO_GO",
+  "equals_reality_seal": false,
+  "honesty": "G-001/002/006 CLOSED ≠ Batch 3 CLOSED ≠ Seal ≠ Production GO · no fund execution",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

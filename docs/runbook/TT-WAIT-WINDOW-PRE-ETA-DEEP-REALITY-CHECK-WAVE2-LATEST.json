@@ -1,0 +1,526 @@
+{
+  "schema": "traveltrust.wait_window_pre_eta_deep_reality_check.v1",
+  "status": "WAVE2_RECORDED_STOP",
+  "mode": "PRE_ETA_DEEP_REALITY_CHECK_READ_ONLY",
+  "wave": 2,
+  "recorded_utc": "2026-08-11T03:52:00Z",
+  "eta_gate_utc": "2026-08-11T23:45:35Z",
+  "before_eta": true,
+  "parent_wave1": "TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-LATEST@wave1",
+  "cut_queue_hold": "CUT_QUEUE_HOLD_PRE_ETA_READ_ONLY",
+  "ftb_unique_ssot": "TT-FINAL-TRUTH-BASELINE-LATEST",
+  "manifest_mutations": "NONE",
+  "product_code_mutations": "NONE",
+  "official_runtime_mutations": "NONE",
+  "on_chain_mutations": "NONE",
+  "fix_policy": "NO_FIX",
+  "track1_delay_triggered": false,
+  "p0_fund_privilege_finalize_unsafe": false,
+  "abort_at_eta": true,
+  "hand_back_to": "Track1_fresh_Preflight",
+  "wave3_decision": "OWNER_DECIDE_AFTER_WAVE2_STOP",
+  "truth": {
+    "non_web3_product": "https://www.web3-ttg.com",
+    "api": "https://api.web3-ttg.com",
+    "web3": "mainnet_broadcast_FTB_Wired"
+  },
+  "wave1_dedupe_map": [
+    {
+      "id": "DRC-W1-004",
+      "was": "NEW_GAP",
+      "now": "COVERED_BY_LOCAL_READY_PACK",
+      "pack": "R-PAY-IA-1",
+      "note": "Official /me/payments 404; Local redirect→/orders frozen"
+    },
+    {
+      "id": "DRC-W1-005",
+      "was": "NEW_GAP",
+      "now": "COVERED_BY_LOCAL_READY_PACK",
+      "pack": "R-USDC-1",
+      "note": "Admin Currency=USD vs Traveler USDC; reconfirmed on refunded 0cd98cfc"
+    },
+    {
+      "id": "DRC-W1-006",
+      "was": "NEW_GAP",
+      "now": "COVERED_BY_LOCAL_READY_PACK",
+      "pack": "R-ADMIN-1",
+      "note": "Disputes Can write + Read-only dual-signal"
+    },
+    {
+      "id": "DRC-W1-007",
+      "was": "NEW_GAP",
+      "now": "COVERED_BY_LOCAL_READY_PACK_PARTIAL",
+      "pack": "R-ADMIN-1",
+      "note": "Dual-signal covered; same-object Disputes 12 vs filter 1 universe DEFER remains OPEN residual → DRC-W2-007"
+    },
+    {
+      "id": "DRC-W1-001",
+      "was": "POST_SEAL_BLOCKER_CANDIDATE",
+      "now": "POST_SEAL_BLOCKER_CANDIDATE",
+      "pack": null,
+      "note": "Not in three Local packs — keep"
+    },
+    {
+      "id": "DRC-W1-008",
+      "was": "NEW_GAP",
+      "now": "NEW_GAP_ROOTED_W2",
+      "pack": "R-MEDIA-1_POST_SEAL_SEPARATE",
+      "note": "Root-caused in Wave-2 — not covered by R-USDC/PAY/ADMIN"
+    },
+    {
+      "id": "DRC-W1-012",
+      "was": "NEW_GAP",
+      "now": "NEW_GAP",
+      "pack": "POST_SEAL_CMS_ROUTE_HYGIENE",
+      "note": "Not covered by three packs"
+    }
+  ],
+  "community_relative_media_root_cause": {
+    "finding_id": "DRC-W2-001",
+    "break_layer": "OBJECT_STORAGE_OR_VOLUME_PERSISTENCE",
+    "chain": [
+      {
+        "layer": "DB_reference",
+        "status": "INTACT",
+        "evidence": "feed/detail return cover_url=/api/v1/uploads/community-posts/<uuid>.jpg"
+      },
+      {
+        "layer": "object_key",
+        "status": "KEY_PRESENT_IN_URL",
+        "evidence": "filename UUID.ext in path"
+      },
+      {
+        "layer": "object_storage",
+        "status": "BROKEN_ON_OFFICIAL",
+        "evidence": "GET handler reads local FS data/community_post_media/<name>; Official returns 404 not_found — ephemeral/non-shared volume or never migrated to object storage"
+      },
+      {
+        "layer": "API_rewrite",
+        "status": "INTACT",
+        "evidence": "normalize_persisted_site_media_path; route GET /api/v1/uploads/community-posts/:name wired; anonymous read allowed"
+      },
+      {
+        "layer": "FE_fallback",
+        "status": "PARTIAL_DEGRADE",
+        "evidence": "onError→mediaError; video CDN media_urls still play; relative poster/cover may soft-fail; avatar next/image broken observed"
+      }
+    ],
+    "code_cites": [
+      "crates/api/src/routes/community/media_upload/handlers.rs (fs write/read data/community_post_media)",
+      "frontend/components/community/CommunityFeedCardCompact.tsx onError",
+      "frontend/components/community/communityFeedMainVideoFeed.ts poster from cover_url"
+    ],
+    "sample_keys": [
+      "ca438fb3-ea0b-4bde-8fcc-a5d25a947e5a.jpg",
+      "16e8fc19-f0c7-4d80-a3e9-a51e12722c25.jpg",
+      "2441880f-d4dc-485f-9b99-f15625dbce10.jpg"
+    ],
+    "fix_policy": "LOCATE_ONLY_NO_FIX"
+  },
+  "findings": [
+    {
+      "id": "DRC-W2-001",
+      "class": "NEW_GAP",
+      "severity": "P2",
+      "domain": "Community_media_persistence",
+      "route": "GET /api/v1/uploads/community-posts/:name",
+      "role": "public",
+      "symptom": "3 video posts: DB/API cover_url relative upload path → Official 404 not_found; CDN media_urls OK; local-FS upload path not durable on Official",
+      "layers": [
+        "DB",
+        "object_storage",
+        "API",
+        "FE"
+      ],
+      "runtime_evidence": "404 JSON not_found; handlers.rs local FS; comments 200 on same post",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "R-MEDIA-1_OBJECT_STORAGE_OR_VOLUME_SEPARATE",
+      "related": [
+        "DRC-W1-008",
+        "B3-G-007",
+        "M-02"
+      ]
+    },
+    {
+      "id": "DRC-W2-002",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Refunded_Traveler_Admin_Pay",
+      "route": "/escrow/0cd98cfc… · /admin/orders/0cd98cfc… · /pay?orderId=0cd98cfc…",
+      "role": "Traveler+Admin",
+      "symptom": "State refunded consistent; Traveler 12 USDC; Admin Amount 12.00 Currency USD (display debt); Pay hub not payable honest",
+      "layers": [
+        "FE",
+        "Orders",
+        "Pay",
+        "Admin"
+      ],
+      "runtime_evidence": "browser CDP Wave-2",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "currency_display": "COVERED_BY_R-USDC-1",
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W2-003",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Disputed_reconfirm",
+      "route": "/escrow|/pay|/admin 7617eba0…",
+      "role": "Traveler+Admin",
+      "symptom": "Wave-1 PASS holds: disputed terminal · not payable · Admin disputed",
+      "layers": [
+        "FE",
+        "Orders",
+        "Pay"
+      ],
+      "runtime_evidence": "prior + order samples 200",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W2-004",
+      "class": "COVERAGE_GAP",
+      "severity": "P3",
+      "domain": "Cancelled_state",
+      "route": "Orders matrix",
+      "role": "multi",
+      "symptom": "No live Cancelled Official sample this wave — forbid fabricate",
+      "layers": [
+        "coverage"
+      ],
+      "runtime_evidence": "only disputed+refunded anchors",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_COVERAGE_EXISTING_ONLY",
+      "related": [
+        "B5-G-006",
+        "DRC-W1-020"
+      ]
+    },
+    {
+      "id": "DRC-W2-005",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Guide_public_detail",
+      "route": "/guides/9ccab777… (Omar)",
+      "role": "Traveler",
+      "symptom": "Non-UAT guide detail loads · Book guide · hourly shown",
+      "layers": [
+        "FE",
+        "API",
+        "Guide"
+      ],
+      "runtime_evidence": "browser Omar Dubai AE 85/hr",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W2-006",
+      "class": "EXPECTED_DIFFERENCE",
+      "severity": "—",
+      "domain": "Guide_Owner_UAT_gate",
+      "route": "/guides/2caceaae… Owner UAT Guide",
+      "role": "public",
+      "symptom": "API 200 active but FE shows Guide not found via isOwnerUatPublicGuideSlot (B10-G-004) — intentional",
+      "layers": [
+        "FE",
+        "API"
+      ],
+      "runtime_evidence": "useGuideDetailPage.ts gate; API title Owner UAT Guide",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W2-007",
+      "class": "NEW_GAP",
+      "severity": "P2",
+      "domain": "Admin_dispute_universe_residual",
+      "route": "Admin Disputes badge 12 vs orderId filter 1",
+      "role": "Admin",
+      "symptom": "Same-object universe unexplained residual after R-ADMIN-1 dual-signal coverage",
+      "layers": [
+        "FE",
+        "API",
+        "DB_projection"
+      ],
+      "runtime_evidence": "Wave-1 browser; R-ADMIN-1 DEFER A-01",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_ADMIN_DISPUTE_UNIVERSE_EXPLAIN",
+      "related": [
+        "B4-G-006",
+        "DRC-W1-007"
+      ]
+    },
+    {
+      "id": "DRC-W2-008",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Acquisition_browse_honesty",
+      "route": "/market/acquisition",
+      "role": "Traveler/Acquisition",
+      "symptom": "Page 200; live catalog empty honesty; publish gated; API /acquisition 401 unauth",
+      "layers": [
+        "FE",
+        "API",
+        "Acquisition",
+        "RBAC"
+      ],
+      "runtime_evidence": "browser Live catalog unavailable / publish readiness; curl 401",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W2-009",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Provider_entry",
+      "route": "/provider/register · /api/v1/provider/me",
+      "role": "Provider",
+      "symptom": "Register surface 200; provider/me 401 STRICT_SESSION — fail-closed",
+      "layers": [
+        "FE",
+        "API",
+        "Auth"
+      ],
+      "runtime_evidence": "FE 200 · API 401",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null,
+      "coverage_note": "Authenticated Provider write-path not probed (NO write · login curl blocked)"
+    },
+    {
+      "id": "DRC-W2-010",
+      "class": "NEW_GAP",
+      "severity": "P3",
+      "domain": "Growth_FE_IA",
+      "route": "/growth · /referral · /me/referral",
+      "role": "Traveler",
+      "symptom": "FE routes 404; validate API public 200 valid:false; trust-growth/config 200; me/referrals 401",
+      "layers": [
+        "FE",
+        "API",
+        "Growth",
+        "Auth"
+      ],
+      "runtime_evidence": "FE 404×3; GET validate + config OK",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_GROWTH_IA_OR_R-GROWTH-1",
+      "related": []
+    },
+    {
+      "id": "DRC-W2-011",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "CMS_public_read",
+      "route": "/api/v1/public/announcements · roadmap",
+      "role": "public",
+      "symptom": "Public announcements+roadmap 200; lane=protocol may cms_empty",
+      "layers": [
+        "API",
+        "CMS"
+      ],
+      "runtime_evidence": "curl 200",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W2-012",
+      "class": "NEW_GAP",
+      "severity": "P3",
+      "domain": "CMS_misnamed_public",
+      "route": "/api/v1/cms/public/announcements",
+      "role": "public",
+      "symptom": "Reconfirm W1: path public but 401 STRICT_SESSION",
+      "layers": [
+        "API",
+        "CMS",
+        "Auth"
+      ],
+      "runtime_evidence": "curl 401",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "POST_SEAL_CMS_ROUTE_HYGIENE",
+      "related": [
+        "DRC-W1-012"
+      ]
+    },
+    {
+      "id": "DRC-W2-013",
+      "class": "PASS",
+      "severity": "—",
+      "domain": "Community_comments",
+      "route": "GET …/posts/:id/comments",
+      "role": "public",
+      "symptom": "Comments list 200 for relative-cover post — persistence of comments OK while cover blob missing",
+      "layers": [
+        "API",
+        "Community",
+        "DB"
+      ],
+      "runtime_evidence": "comments 200 for 0a24a0f5…",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": null
+    },
+    {
+      "id": "DRC-W2-014",
+      "class": "NEW_GAP",
+      "severity": "P3",
+      "domain": "Community_avatar_cdn",
+      "route": "cdn.web3-ttg.com/profile-avatars/… via next/image",
+      "role": "public",
+      "symptom": "Community FE: ≥1 avatar img naturalWidth=0 (broken) despite CDN HEAD sometimes 200 — renderer/optimizer gap",
+      "layers": [
+        "FE",
+        "CDN",
+        "Community"
+      ],
+      "runtime_evidence": "browser community img brokenCount≥1",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "R-MEDIA-1_or_CDN_AVATAR_OPTIMIZER",
+      "related": [
+        "DRC-W2-001"
+      ]
+    },
+    {
+      "id": "DRC-W2-015",
+      "class": "COVERED_BY_LOCAL_READY_PACK",
+      "severity": "P1",
+      "domain": "Admin_USD_display",
+      "route": "Admin orders disputed+refunded Currency USD",
+      "role": "Admin",
+      "symptom": "Reconfirmed refunded Admin USD vs Traveler USDC — do not open parallel pack",
+      "layers": [
+        "FE",
+        "Admin"
+      ],
+      "runtime_evidence": "0cd98cfc Admin Currency USD",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "R-USDC-1",
+      "related": [
+        "DRC-W1-005"
+      ]
+    },
+    {
+      "id": "DRC-W2-016",
+      "class": "COVERAGE_GAP",
+      "severity": "P3",
+      "domain": "Guide_Provider_Acquisition_authenticated_loop",
+      "route": "login-gated Provider/Acquisition publish · Guide accept",
+      "role": "Guide/Provider/Acquisition",
+      "symptom": "Cannot complete authenticated commercial write-path loop without login session probe; public edges only",
+      "layers": [
+        "coverage",
+        "Auth"
+      ],
+      "runtime_evidence": "login curl auto-review blocked; browser admin session not Guide/Provider",
+      "blocks_track1_finalize": false,
+      "blocks_reality_seal": false,
+      "blocks_hard_gate": false,
+      "blocks_production_go": false,
+      "remediation_pack": "WAVE3_OR_OWNER_APPROVED_LOGIN_READONLY"
+    }
+  ],
+  "counts": {
+    "PASS": 6,
+    "NEW_GAP": 5,
+    "COVERED_BY_LOCAL_READY_PACK": 1,
+    "COVERAGE_GAP": 2,
+    "EXPECTED_DIFFERENCE": 1,
+    "POST_SEAL_BLOCKER_CANDIDATE": 0
+  },
+  "suggested_remediation_packs": [
+    {
+      "id": "R-MEDIA-1",
+      "scope": "Official durable object storage for community-posts uploads OR persistent volume + rewrite; FE already has onError",
+      "when": "POST_SEAL_SEPARATE_not_Cut_Queue_three_packs",
+      "blocks_track1": false
+    },
+    {
+      "id": "POST_SEAL_GROWTH_IA",
+      "scope": "Honest FE routes for growth/referral or remove dead links",
+      "when": "POST_SEAL",
+      "blocks_track1": false
+    },
+    {
+      "id": "POST_SEAL_ADMIN_DISPUTE_UNIVERSE",
+      "scope": "Explain/reconcile Disputes 12 vs traveler disputed 1",
+      "when": "POST_SEAL after R-ADMIN-1 Cut",
+      "blocks_track1": false
+    },
+    {
+      "id": "R-USDC-1 / R-PAY-IA-1 / R-ADMIN-1",
+      "scope": "Already frozen Cut Queue — no duplicate open",
+      "when": "AFTER_REALITY_SEAL_SERIAL",
+      "blocks_track1": false
+    }
+  ],
+  "honesty": [
+    "FTB remains ACTIVE_UNIQUE_SSOT",
+    "Wave2 NO_FIX",
+    "does_not_delay_Track1",
+    "Cancelled_uncovered",
+    "auth_provider_guide_loop_coverage_gap",
+    "Seal_neq_GO"
+  ],
+  "tt_production_go": "NO_GO",
+  "next": "STOP — Owner decides Wave-3 (security/perf/release-config) or hold until ETA Track1",
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}

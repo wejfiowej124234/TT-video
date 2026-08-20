@@ -1,0 +1,515 @@
+# Pack 01 · Product / Business Architecture
+# Human: docs/runbook/TT-PRODUCT-BUSINESS-ARCHITECTURE-LATEST.md
+# Gate:  python scripts/dev/check-product-business-architecture.py
+# Maps over Official AS-IS. Does not copy Pack 03–13 technical matrices.
+# Forbidden this wave: fix 405, mutate FTB/runtime/Web3/RBAC/money, Phase 2 upgrade.
+# Pack 02 is an independent later Phase 1 wave.
+
+schema: traveltrust.product_capability_matrix.v1
+version: 1
+effective_utc: "2026-08-15"
+status: PACK01_PRODUCT_BUSINESS_DEEPENED
+pack_id: "01"
+depth_grade: DEEP_PARTIAL
+tt_production_go: NO_GO
+mutation: READ_ONLY_INVENTORY
+phase: PHASE1_AS_IS
+ftb_lock: READ_ONLY_20260812
+human_doc: docs/runbook/TT-PRODUCT-BUSINESS-ARCHITECTURE-LATEST.md
+overlay: registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+official_surface: https://www.web3-ttg.com
+official_api: https://api.web3-ttg.com
+living_official_www: 3e356617a498b0faac42e4ae457343d36294a770
+living_official_api: 8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51
+go_eligibility: READY_FOR_OWNER_PRODUCTION_GO_VERDICT
+pack03: CLOSED
+pack04: CLOSED
+pack05: CLOSED
+pack06: CLOSED
+pack07: CLOSED
+pack08: CLOSED
+pack09: CLOSED
+pack10: CLOSED
+pack11: CLOSED
+pack12: CLOSED
+pack13: CLOSED
+m1_shallow_product: 0
+m1_unresolved_capability_pointer: 0
+m1_ambiguous_product_status: 0
+unexplained_product_gap: 0
+stop_after: PACK01
+next_pack_forbidden_this_wave: []
+ci02_pm25_merge: FORBIDDEN
+phase2_upgrade: FORBIDDEN
+living_ssot:
+  - registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml
+  - registry/project-cross-maps-10-13.v1.yaml
+  - docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+machine_keys:
+  M1_SHALLOW_PRODUCT: 0
+  M1_UNRESOLVED_CAPABILITY_POINTER: 0
+  M1_AMBIGUOUS_PRODUCT_STATUS: 0
+  UNEXPLAINED_PRODUCT_GAP: 0
+  TT_PRODUCTION_GO: NO_GO
+
+node_fields:
+  - cap_id
+  - product_domain
+  - actor
+  - user_need
+  - entry_surface
+  - capability
+  - business_rule
+  - state_outcome
+  - money_web3_relation
+  - dependency
+  - current_official_status
+  - reality_level
+  - evidence
+  - known_gap
+  - cites
+
+product_domain_enum:
+  - TRAVELER
+  - GUIDE
+  - PROVIDER
+  - ACQUISITION
+  - COMMUNITY
+  - REGION_STEWARD
+  - ADMIN
+  - GOVERNANCE
+  - AI_ITINERARY
+  - ORDER_ESCROW
+  - DISPUTE
+  - CMS
+  - TTG_GATEWAY
+  - DID_RANK
+  - ONBOARDING
+  - GROWTH
+  - LEGAL
+  - I18N
+
+status_enum:
+  - OFFICIAL_LIVE
+  - PARTIAL
+  - TARGET_NOT_LIVE
+  - SCHEDULED_WAITING_ETA
+
+reality_level_enum:
+  - NONE_NOT_L7
+  - HANDOFF
+  - TARGET
+  - LIVE_PARTIAL
+  - SUPERSEDED_SEAL
+
+hard_split: >
+  Official www/API/Admin is the product AS-IS surface, not Web3 highest truth.
+  L7 + Timelock is Web3 fact. FTB is freeze/rules. Do not treat Target as Live.
+  www POST /auth/login historical 405 SUPERSEDED (GAP-LOGIN CLOSED_REALITY). Steward TARGET_NOT_LIVE.
+  PM live 10→10 ≠ $25 WAIT ≠ 10→0.4 Reality. Do not copy technical matrices.
+  TT_PRODUCTION_GO=NO_GO.
+
+required_nodes:
+  - CAP-AUTH-SESSION
+  - CAP-AI-ITINERARY
+  - CAP-MARKET-GUIDE-BOOK
+  - CAP-MARKET-PROVIDER
+  - CAP-MARKET-ACQUISITION
+  - CAP-REGION-STEWARD
+  - CAP-COMMUNITY
+  - CAP-ADMIN-FOUR-CENTERS
+  - CAP-GOVERNANCE-PORTAL
+  - CAP-ESCROW-USDC
+  - CAP-DISPUTES
+  - CAP-CMS-ANNOUNCE
+  - CAP-TTG-GATEWAY
+
+phase2_backlog:
+  - id: P2-LOGIN-405
+    class: PARTIAL
+    fact: Historical www POST /auth/login 405 SUPERSEDED; GAP-LOGIN CLOSED_REALITY; auth product still PARTIAL (register/OTP/E2E)
+    do_not_fix_this_wave: true
+  - id: P2-STEWARD-TARGET
+    class: TARGET_NOT_LIVE
+    fact: Region Steward Seat/Vault NOT_DEPLOYED; Target ≠ Live
+    do_not_fix_this_wave: true
+  - id: P2-PM25-WAIT
+    class: SCHEDULED_WAITING_ETA
+    fact: PM www chrome live 10→10 GOV-04 ED; Official /meta NEW PM 100_000; $25 WAIT is www bake FORBIDDEN; OLD proxy $25 LEGACY; not GO tech remaining
+    do_not_fix_this_wave: true
+  - id: P2-1USDC-REALITY
+    class: HANDOFF
+    fact: Track2 1 USDC money-path CLOSED_REALITY Owner A (L7+L8). Official C2 non-money book hop CLOSED_REALITY. Pack 01 HANDOFF remains for global JNY END_TO_END / Owner GO remaining — not a missing Official book hop.
+    do_not_fix_this_wave: true
+  - id: P2-PACK02-NOT-STARTED
+    class: STOP
+    fact: Pack 02 Frontend Design remains SHALLOW; this wave must not start Pack 02
+    do_not_fix_this_wave: true
+  - id: P2-PHASE2-NOT-STARTED
+    class: STOP
+    fact: Phase 2 Production-Grade Review forbidden
+    do_not_fix_this_wave: true
+
+note: Phase 2 forbidden this wave. Pack 02 is an independent later Phase 1 wave. Product AS-IS only. Target ≠ Live.
+
+capabilities:
+  - cap_id: CAP-AUTH-SESSION
+    name: 登录 / 会话
+    product_domain: TRAVELER
+    actor: traveler
+    user_need: sign in so later journeys can run
+    entry_surface: "www POST /auth/login (historical 405 SUPERSEDED; live 200 Owner C2 HttpOnly)"
+    capability: CAP-AUTH-SESSION
+    business_rule: Official www Session/BFF hop; Staging seed is not Production dataset
+    state_outcome: PARTIAL — www login Action Works for Owner Official C2; register/OTP not E2E
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: DEP-LOGIN-WWW-405 INC-LOGIN JNY-TRAVELER-LOGIN
+    current_official_status: PARTIAL
+    reality_level: NONE_NOT_L7
+    evidence: docs/runbook/TT-BATCH-A-SESSION-OFFICIAL-CREDENTIAL-DIAGNOSIS-LATEST.md
+    known_gap: historical www 405 SUPERSEDED; GAP-LOGIN-WWW-405 CLOSED_REALITY; GAP-FE-BFF-BYPASS CLOSED_REALITY; WALLETCONNECT_OFFICIAL_BAKE_FORWARD_FIX CLOSED_REALITY (wallet ≠ this CAP); remaining auth product still PARTIAL
+    cites: CAP-AUTH-SESSION JNY-TRAVELER-LOGIN DEP-LOGIN-WWW-405 INC-LOGIN SEC-SESSION-BEARER SEC-STRICT-SESSION-GATE REL-PROBE-UAT DATA-SESSION
+    backend_domain: AUTH
+    gp: GP-01
+    as_is_sample: true
+
+  - cap_id: CAP-AI-ITINERARY
+    name: AI 定制旅行
+    product_domain: AI_ITINERARY
+    actor: traveler
+    user_need: generate a custom itinerary from homepage hero
+    entry_surface: "https://www.web3-ttg.com/ hero · 10 countries"
+    capability: CAP-AI-ITINERARY
+    business_rule: homepage hero is AI itinerary not optional; 1x create
+    state_outcome: public hero OFFICIAL_LIVE; authenticated create blocked by www 405
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: JNY-TRAVELER-AI-ITINERARY DATA-ITINERARY-GENERATED CAP-AUTH-SESSION
+    current_official_status: OFFICIAL_LIVE
+    reality_level: NONE_NOT_L7
+    evidence: frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+    known_gap: create path still depends on CAP-AUTH-SESSION PARTIAL
+    cites: CAP-AI-ITINERARY JNY-TRAVELER-AI-ITINERARY DATA-ITINERARY-GENERATED DATA-CATALOG-GEO CAP-AUTH-SESSION INC-LOGIN REL-OFFICIAL-TRAFFIC
+    backend_domain: ITINERARY
+    gp: GP-04
+
+  - cap_id: CAP-MARKET-GUIDE-BOOK
+    name: 旅行预约 / 向导
+    product_domain: GUIDE
+    actor: traveler guide
+    user_need: book a guide listing from /market
+    entry_surface: https://www.web3-ttg.com/market
+    capability: CAP-MARKET-GUIDE-BOOK
+    business_rule: traveler books; guide fulfills; USDC escrow is the money rail
+    state_outcome: public catalog 200; order path needs session
+    money_web3_relation: S01 S02 CAP-ESCROW-USDC W3-SR-FT W3-FR-OLD
+    dependency: JNY-TRAVELER-GUIDE-BOOK JNY-GUIDE-FULFILL GATE-1USDC-REALITY
+    current_official_status: OFFICIAL_LIVE
+    reality_level: HANDOFF
+    evidence: frontend/evidence/GO_local_web3_pages_closure/LANDING-MARKET-PAGES-CODE-SSOT.md
+    known_gap: Track2 1 USDC money-path CLOSED_REALITY Owner A; Official C2 non-money book hop CLOSED_REALITY; Pack 01 HANDOFF remains for global JNY / Owner GO remaining (Pack 01 HANDOFF). Login 405 is CLOSED_REALITY.
+    cites: CAP-MARKET-GUIDE-BOOK JNY-TRAVELER-GUIDE-BOOK JNY-GUIDE-FULFILL CAP-ESCROW-USDC S01 S02 W3-SR-FT REL-SR-FT GATE-1USDC-REALITY DATA-GUIDE-PROFILE
+    backend_domain: GUIDES
+    gp: GP-04
+
+  - cap_id: CAP-MARKET-PROVIDER
+    name: 商家入驻 / 商家市场
+    product_domain: PROVIDER
+    actor: provider traveler
+    user_need: apply as merchant and list on /market
+    entry_surface: /provider/register · /market 商家
+    capability: CAP-MARKET-PROVIDER
+    business_rule: provider onboarding ≠ region steward; fiat onboarding is orthogonal
+    state_outcome: UI freeze ①; Official apply needs session
+    money_web3_relation: NONE_FIAT_ORTHOGONAL
+    dependency: JNY-PROVIDER-ONBOARD CAP-ONBOARDING-FIAT CAP-AUTH-SESSION
+    current_official_status: PARTIAL
+    reality_level: NONE_NOT_L7
+    evidence: frontend/evidence/GO_local_provider_register_closure/PROVIDER-REGISTER-UI-FREEZE.md
+    known_gap: www login 405; Stripe/fiat not this money rail
+    cites: CAP-MARKET-PROVIDER JNY-PROVIDER-ONBOARD CAP-ONBOARDING-FIAT CAP-AUTH-SESSION INC-LOGIN DATA-PROVIDER-APPLICATION REL-ENV-OFFICIAL-WEB
+    backend_domain: PROVIDER
+    gp: GP-01
+
+  - cap_id: CAP-MARKET-ACQUISITION
+    name: 旅行收购
+    product_domain: ACQUISITION
+    actor: acquisition traveler
+    user_need: publish acquisition listing after identities trust gate
+    entry_surface: /me/identities → /market/acquisition
+    capability: CAP-MARKET-ACQUISITION
+    business_rule: acquisition_publish_gate not region_steward and not 96-18 fee
+    state_outcome: Hub UI frozen ①; Official needs session
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: JNY-ACQUISITION-PUBLISH CAP-AUTH-SESSION CAP-ADMIN-FOUR-CENTERS
+    current_official_status: PARTIAL
+    reality_level: NONE_NOT_L7
+    evidence: frontend/evidence/GO_local_auth_l5/ME-IDENTITIES-UI-FREEZE.md
+    known_gap: backend_domain ORDERS is too coarse vs PD-009; login 405
+    cites: CAP-MARKET-ACQUISITION JNY-ACQUISITION-PUBLISH CAP-AUTH-SESSION CAP-ADMIN-FOUR-CENTERS INC-LOGIN DATA-PROVIDER-APPLICATION
+    backend_domain: ORDERS
+    gp: GP-04
+
+  - cap_id: CAP-REGION-STEWARD
+    name: 区域主理人
+    product_domain: REGION_STEWARD
+    actor: region_steward
+    user_need: occupy Seat and claim 83 region yield
+    entry_surface: /traveltrust five-role · /steward
+    capability: CAP-REGION-STEWARD
+    business_rule: session apply ≠ Seat Claim Official; Target ≠ Live
+    state_outcome: TARGET_NOT_LIVE — Seat/Vault not deployed
+    money_web3_relation: S05 S06 W3-SEAT-REGISTRY W3-REGION-VAULT
+    dependency: GATE-SEAT-CI01 GATE-VAULT-CI03 DEP-S05-REGION-83 INC-STEWARD-NOT-DEPLOYED
+    current_official_status: TARGET_NOT_LIVE
+    reality_level: TARGET
+    evidence: registry/web3-contract-architecture-matrix.v1.yaml
+    known_gap: CI-01/CI-03 NOT_DEPLOYED; do not draw as Official Live
+    cites: CAP-REGION-STEWARD JNY-REGION-STEWARD-CLAIM GATE-SEAT-CI01 GATE-VAULT-CI03 DEP-S05-REGION-83 INC-STEWARD-NOT-DEPLOYED W3-SEAT-REGISTRY W3-REGION-VAULT S05 S06 AUTH-STEWARD-CLAIM REL-JP-VAULT
+    backend_domain: STEWARD
+    gp: GP-07
+    as_is_sample: true
+
+  - cap_id: CAP-DID-RANK
+    name: 排行榜
+    product_domain: DID_RANK
+    actor: public
+    user_need: see public DID rank / guides rank
+    entry_surface: https://www.web3-ttg.com/did-rank
+    capability: CAP-DID-RANK
+    business_rule: public GET is 200; empty projection is data not a missing page
+    state_outcome: OFFICIAL_LIVE public 200
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: JNY-DID-RANK-PUBLIC DATA-DID-RANK
+    current_official_status: OFFICIAL_LIVE
+    reality_level: NONE_NOT_L7
+    evidence: frontend/evidence/GO_local_marketing_front_closure/DID-RANK-PHASE1-FREEZE.md
+    known_gap: guide stake DB vs chain null is Pack 04/05; not a product rename
+    cites: CAP-DID-RANK JNY-DID-RANK-PUBLIC DATA-DID-RANK REL-ENV-OFFICIAL-WEB
+    backend_domain: DID_RANK
+    gp: GP-04
+
+  - cap_id: CAP-COMMUNITY
+    name: TT社区
+    product_domain: COMMUNITY
+    actor: traveler
+    user_need: read feed and post
+    entry_surface: https://www.web3-ttg.com/community
+    capability: CAP-COMMUNITY
+    business_rule: public feed 200; write needs session
+    state_outcome: feed OFFICIAL_LIVE; write PARTIAL via 405
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: JNY-COMMUNITY-POST CAP-AUTH-SESSION DATA-COMMUNITY-POST
+    current_official_status: OFFICIAL_LIVE
+    reality_level: NONE_NOT_L7
+    evidence: frontend/evidence/GO_local_marketing_front_closure/COMMUNITY-PHASE1-FREEZE.md
+    known_gap: write path depends on CAP-AUTH-SESSION PARTIAL
+    cites: CAP-COMMUNITY JNY-COMMUNITY-POST CAP-AUTH-SESSION DATA-COMMUNITY-POST DATA-COMMUNITY-DM REL-ENV-OFFICIAL-WEB
+    backend_domain: COMMUNITY
+    gp: GP-02
+
+  - cap_id: CAP-CMS-ANNOUNCE
+    name: CMS 公告
+    product_domain: CMS
+    actor: admin_cms public
+    user_need: see live announcement without static fallback
+    entry_surface: homepage CMS slot
+    capability: CAP-CMS-ANNOUNCE
+    business_rule: CMS ops mainline; Admin publish ≠ Web3 execute; not a GP hop
+    state_outcome: no static fallback Official
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: JNY-ADMIN-CMS DATA-CMS-ANNOUNCEMENT INC-CMS-OBJECT SEC-CMS-OCS
+    current_official_status: OFFICIAL_LIVE
+    reality_level: NONE_NOT_L7
+    evidence: data/catalog/cms-asset-matrix.v1.yaml
+    known_gap: gp dash is expected; not a missing Golden Path
+    cites: CAP-CMS-ANNOUNCE JNY-ADMIN-CMS DATA-CMS-ANNOUNCEMENT DATA-MEDIA-OBJECT INC-CMS-OBJECT SEC-CMS-OCS AUTH-CMS-PUBLISH
+    backend_domain: CMS
+
+  - cap_id: CAP-ESCROW-USDC
+    name: USDC 订单托管
+    product_domain: ORDER_ESCROW
+    actor: traveler guide
+    user_need: lock USDC, fulfill, release or refund
+    entry_surface: /escrow/[id] · market book
+    capability: CAP-ESCROW-USDC
+    business_rule: product USDC rail ≠ TTG PrimaryMarket; live fee is OLD FR
+    state_outcome: Official create Wired→SR-FT→OLD FR; Track2 1 USDC money-path CLOSED_REALITY Owner A; Official book hop CLOSED_REALITY; GO remaining = Owner written verdict
+    money_web3_relation: S01 S02 S03 S04 W3-FACTORY-WIRED W3-SR-FT W3-FR-OLD
+    dependency: JNY-ESCROW-RELEASE-REFUND GATE-1USDC-REALITY INC-MONEY-SETTLEMENT
+    current_official_status: OFFICIAL_LIVE
+    reality_level: HANDOFF
+    evidence: registry/commercial-money-lifecycle-matrix.v1.yaml
+    known_gap: Track2 1 USDC money-path CLOSED_REALITY Owner A (L7 PASS · L8 25759530≥25759423). Official C2 non-money book hop CLOSED_REALITY; Pack 01 HANDOFF remains for global JNY / Owner GO remaining (not this hop). CI-02 NEW FR not Official.
+    cites: CAP-ESCROW-USDC JNY-ESCROW-RELEASE-REFUND GATE-1USDC-REALITY INC-MONEY-SETTLEMENT S01 S02 W3-FACTORY-WIRED W3-SR-FT W3-FR-OLD REL-FR-OLD GATE-FR-NEW-WIRE-CUTOVER
+    backend_domain: ESCROW
+    gp: GP-04
+
+  - cap_id: CAP-TTG-GATEWAY
+    name: TTG 兑换网关
+    product_domain: TTG_GATEWAY
+    actor: traveler
+    user_need: buy TTG via PrimaryMarket quote
+    entry_surface: /traveltrust TTG disclosure · quote API after session
+    capability: CAP-TTG-GATEWAY
+    business_rule: live www chrome 10→10 GOV-04 ED; Official /meta NEW PM 100_000; $25 WAIT is www bake not Official remaining hop; execute ≠ 10→0.4 Reality
+    state_outcome: Official /meta NEW PM 0x882Ad 100_000; www chrome 1e18 ED; $25 OLD proxy LEGACY; GATE-PM25 remaining = Official www bake WAIT
+    money_web3_relation: S11 S12 W3-PM-PROXY W3-PM-IMPL-GOV04 W3-PM-IMPL-25
+    dependency: JNY-TTG-PURCHASE GATE-PM25-ETA GATE-PM-10-TO-04-REALITY INC-PM-TTG
+    current_official_status: OFFICIAL_LIVE
+    reality_level: LIVE_PARTIAL
+    evidence: registry/governance-economic-matrix.v1.yaml
+    known_gap: "$25 WAIT Official www chrome bake FORBIDDEN; 10→10 is www chrome AS-IS ED; Official /meta NEW PM 100_000; CMS pulse product-ttg-v8-25t; 10→0.4 Reality not Official remaining"
+    cites: CAP-TTG-GATEWAY JNY-TTG-PURCHASE GATE-PM25-ETA GATE-PM-10-TO-04-REALITY INC-PM-TTG INC-TIMELOCK-WAIT W3-PM-PROXY W3-PM-IMPL-GOV04 W3-PM-IMPL-25 DATA-PM-PRICE-LIVE DATA-PM-PRICE-TARGET REL-PM25
+    backend_domain: TTG_MARKET
+    gp: GP-06
+    as_is_sample: true
+
+  - cap_id: CAP-DISPUTES
+    name: 争议
+    product_domain: DISPUTE
+    actor: traveler guide arbitrator
+    user_need: open and resolve an order dispute
+    entry_surface: /disputes · FAQ
+    capability: CAP-DISPUTES
+    business_rule: dispute sits on USDC escrow rail not TTG
+    state_outcome: route exists; write needs session
+    money_web3_relation: S01 CAP-ESCROW-USDC
+    dependency: JNY-ESCROW-RELEASE-REFUND DATA-DISPUTE CAP-AUTH-SESSION
+    current_official_status: PARTIAL
+    reality_level: NONE_NOT_L7
+    evidence: registry/data-truth-matrix.v1.yaml
+    known_gap: login 405; not a missing L7 dispute contract
+    cites: CAP-DISPUTES JNY-ESCROW-RELEASE-REFUND DATA-DISPUTE CAP-ESCROW-USDC CAP-AUTH-SESSION INC-LOGIN
+    backend_domain: DISPUTES
+    gp: GP-04
+
+  - cap_id: CAP-MESSAGES
+    name: 订单消息
+    product_domain: ORDER_ESCROW
+    actor: traveler guide
+    user_need: thread on an escrow order
+    entry_surface: escrow thread
+    capability: CAP-MESSAGES
+    business_rule: messages follow order identity not community DM
+    state_outcome: API exists; UI needs session
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: JNY-ESCROW-RELEASE-REFUND DATA-ORDER-MESSAGE CAP-AUTH-SESSION
+    current_official_status: PARTIAL
+    reality_level: NONE_NOT_L7
+    evidence: registry/data-truth-matrix.v1.yaml
+    known_gap: login 405
+    cites: CAP-MESSAGES JNY-ESCROW-RELEASE-REFUND DATA-ORDER-MESSAGE DATA-ORDER CAP-AUTH-SESSION INC-LOGIN
+    backend_domain: MESSAGES
+    gp: GP-04
+
+  - cap_id: CAP-ONBOARDING-FIAT
+    name: 准入费 (optional Stripe)
+    product_domain: ONBOARDING
+    actor: provider guide steward
+    user_need: optional fiat onboarding fee
+    entry_surface: register flows
+    capability: CAP-ONBOARDING-FIAT
+    business_rule: fiat/Stripe orthogonal to USDC escrow and TTG
+    state_outcome: ① register UI frozen; Official Stripe not this wave
+    money_web3_relation: NONE_FIAT_ORTHOGONAL
+    dependency: JNY-PROVIDER-ONBOARD CAP-MARKET-PROVIDER
+    current_official_status: PARTIAL
+    reality_level: NONE_NOT_L7
+    evidence: frontend/evidence/GO_local_provider_register_closure/PROVIDER-REGISTER-UI-FREEZE.md
+    known_gap: not a USDC money-path blocker
+    cites: CAP-ONBOARDING-FIAT JNY-PROVIDER-ONBOARD CAP-MARKET-PROVIDER DATA-ONBOARDING-ENTITLEMENT
+    backend_domain: ONBOARDING
+    gp: GP-01
+
+  - cap_id: CAP-GROWTH
+    name: 推荐 / 信任增长
+    product_domain: GROWTH
+    actor: traveler
+    user_need: referrals and trust growth
+    entry_surface: /me/referrals
+    capability: CAP-GROWTH
+    business_rule: growth is session product not L7
+    state_outcome: route exists; needs session
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: CAP-AUTH-SESSION DATA-REFERRAL
+    current_official_status: PARTIAL
+    reality_level: NONE_NOT_L7
+    evidence: registry/data-truth-matrix.v1.yaml
+    known_gap: login 405
+    cites: CAP-GROWTH CAP-AUTH-SESSION DATA-REFERRAL INC-LOGIN JNY-TRAVELER-LOGIN
+    backend_domain: GROWTH
+    gp: GP-01
+
+  - cap_id: CAP-LEGAL-TRUST
+    name: 信任中心 / 帮助 / 法务
+    product_domain: LEGAL
+    actor: public
+    user_need: read trust / help / legal
+    entry_surface: footer
+    capability: CAP-LEGAL-TRUST
+    business_rule: public content; not a money hop
+    state_outcome: public OFFICIAL_LIVE
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: REL-ENV-OFFICIAL-WEB
+    current_official_status: OFFICIAL_LIVE
+    reality_level: NONE_NOT_L7
+    evidence: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+    known_gap: none blocking Official read
+    cites: CAP-LEGAL-TRUST REL-ENV-OFFICIAL-WEB REL-OFFICIAL-TRAFFIC
+    backend_domain: PLATFORM
+
+  - cap_id: CAP-GOVERNANCE-PORTAL
+    name: 治理门户
+    product_domain: GOVERNANCE
+    actor: ttg_holder steward
+    user_need: see Governor queue; Proposal #3 is orthogonal LONG_WAIT
+    entry_surface: /governance
+    capability: CAP-GOVERNANCE-PORTAL
+    business_rule: "Proposal #3 ≠ CI-02 blocker ≠ PM25 blocker; Timelock WAIT ≠ code fault"
+    state_outcome: portal live; #3 TARGET; CI-02/PM25 WAIT independent
+    money_web3_relation: W3-GOVERNOR W3-TIMELOCK W3-P4CAP
+    dependency: JNY-GOVERNANCE-QUEUE GATE-PROPOSAL-3 INC-TIMELOCK-WAIT GATE-CI02-ETA GATE-PM25-ETA
+    current_official_status: OFFICIAL_LIVE
+    reality_level: LIVE_PARTIAL
+    evidence: registry/governance-economic-matrix.v1.yaml
+    known_gap: "#3 orthogonal; do not merge with CI-02 or PM25"
+    cites: CAP-GOVERNANCE-PORTAL JNY-GOVERNANCE-QUEUE GATE-PROPOSAL-3 INC-TIMELOCK-WAIT AUTH-PROPOSAL-3-ORTHOGONAL W3-GOVERNOR W3-TIMELOCK GATE-CI02-ETA GATE-PM25-ETA
+    backend_domain: GOVERNANCE
+    gp: GP-08
+
+  - cap_id: CAP-ADMIN-FOUR-CENTERS
+    name: Admin 四中心
+    product_domain: ADMIN
+    actor: admin
+    user_need: operate CMS/users/orders from Admin
+    entry_surface: Admin not public Official marketing
+    capability: CAP-ADMIN-FOUR-CENTERS
+    business_rule: Admin publish ≠ Web3 execute; 118 routes stay in Pack 02 SHALLOW
+    state_outcome: Admin exists; not a 16th matrix
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: JNY-ADMIN-CMS INC-ADMIN SEC-SUPERADMIN AUTH-CMS-PUBLISH
+    current_official_status: PARTIAL
+    reality_level: NONE_NOT_L7
+    evidence: registry/security-identity-authority-matrix.v1.yaml
+    known_gap: 118 admin routes unexpanded in Pack 02; not this pack
+    cites: CAP-ADMIN-FOUR-CENTERS JNY-ADMIN-CMS INC-ADMIN INC-403 SEC-SUPERADMIN AUTH-CMS-PUBLISH SEC-CMS-OCS CAP-CMS-ANNOUNCE
+    backend_domain: ADMIN
+    gp: GP-01
+
+  - cap_id: CAP-I18N
+    name: 语言切换
+    product_domain: I18N
+    actor: public
+    user_need: switch locale on Official
+    entry_surface: header
+    capability: CAP-I18N
+    business_rule: i18n is product chrome not a money hop
+    state_outcome: header control present
+    money_web3_relation: NONE_NOT_MONEY
+    dependency: REL-ENV-OFFICIAL-WEB
+    current_official_status: OFFICIAL_LIVE
+    reality_level: NONE_NOT_L7
+    evidence: frontend/evidence/GO_local_marketing_front_closure/FIVE-MAIN-ROUTES-PHASE1-FREEZE.md
+    known_gap: not a Pack 02 page-structure reopen
+    cites: CAP-I18N REL-ENV-OFFICIAL-WEB REL-OFFICIAL-TRAFFIC
+    backend_domain: PLATFORM

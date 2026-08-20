@@ -1,0 +1,141 @@
+{
+  "stamp_utc": "2026-08-20T09:20:34Z",
+  "dry_run": false,
+  "archive_branch": "archive/pre-official-v9-workspace-clean-f73e40c1",
+  "stash_message": "ARCHIVE_DIRTY_PRE_OFFICIAL_V9_WORKSPACE_CLEAN",
+  "stash_head_line": "stash@{0}: WIP on release/www-body-from-pin-daa5ae87: 6f46ade4 fix(frontend): lock live fifth campaign chip as Official www overlay",
+  "removed_count": 69,
+  "removed": [
+    "D:/CursorUserData/.cursor/worktrees/tt-rc-ea71c577",
+    "D:/dev/temp/tt-w0-align-deploy",
+    "D:/dev/temp/tt-w3-clean-deploy",
+    "D:/dev/temp/tt-w3-deploy-pristine",
+    "D:/dev/temp/tt-w3-sec-deploy",
+    "D:/dev/temp/tt-web-acl-tip-6b85bde9",
+    "D:/dev/temp/tt-web-p1-050607-bake",
+    "D:/dev/temp/tt-web-rc-tip-1ed03a9a",
+    "D:/dev/temp/tt-web-tip-align-40416",
+    "D:/TravelTrust-ACQ-PUBLIC-FIX",
+    "D:/TravelTrust-AXIS07-api-cut",
+    "D:/TravelTrust-bake-1ff71858",
+    "D:/TravelTrust-clean-1ff71858",
+    "D:/TravelTrust-COMMUNITY-CRASH-HOTFIX-1",
+    "D:/TravelTrust-coverage-deploy-wt",
+    "D:/TravelTrust-fe-cut-892650f7",
+    "D:/TravelTrust-m07-unlock-ops-v9-ready",
+    "D:/TravelTrust-official-traveltrust-body-only",
+    "D:/TravelTrust-ofr-h106-comment-dup-parent",
+    "D:/TravelTrust-PF-RC2-scoped",
+    "D:/TravelTrust-R-COMM-api-cut",
+    "D:/TravelTrust-R-COMM-api-sort-cut",
+    "D:/TravelTrust-R-COMM-comment-delete-api-cut",
+    "D:/TravelTrust-R-COMM-cors-cut",
+    "D:/TravelTrust-R-COMM-fe-cdn-cut",
+    "D:/TravelTrust-R-COMM-fe-comment-actions-cut",
+    "D:/TravelTrust-R-COMM-fe-cut",
+    "D:/TravelTrust-R-COMM-fe-sort-cut",
+    "D:/TravelTrust-R-COMM-ocs-identity-fe-cut",
+    "D:/TravelTrust-R-MKT-api-cut",
+    "D:/TravelTrust-R-MKT-fe-cut",
+    "D:/TravelTrust-R-PUBLIC-api-cut",
+    "D:/TravelTrust-recon-official-runtime-baseline-1",
+    "D:/TravelTrust-release-traveltrust-home-body",
+    "D:/TravelTrust-release-www-body-daa5ae87",
+    "D:/TravelTrust-tip-35872b40-deploy",
+    "D:/TravelTrust-V1.1/.fpc-b40-check-worktree",
+    "D:/TravelTrust-V1.1/.fpc-b40-docker-test",
+    "D:/TravelTrust-V1.1/.tmp-b14-deploy-a6f481c3",
+    "D:/TravelTrust-V1.1/.tmp-b14-final-closure-bake",
+    "D:/TravelTrust-V1.1/.tmp-b14-reality-79149b66",
+    "D:/TravelTrust-V1.1/.tmp-b14-reality-api-crlf",
+    "D:/TravelTrust-V1.1/.tmp-b14-recover-5d73c50d",
+    "D:/TravelTrust-V1.1/.tmp-b14-recover-crlf",
+    "D:/TravelTrust-V1.1/.tmp-bake-visibility-sync",
+    "D:/TravelTrust-V1.1/.tmp-cut-b-fe-05158f5c",
+    "D:/TravelTrust-V1.1/.tmp-finance-peer-hotfix",
+    "D:/TravelTrust-V1.1/.tmp-perf-deploy-f123",
+    "D:/TravelTrust-V1.1/.tmp-prod-inbox-focus-bake-1ff71858",
+    "D:/TravelTrust-V1.1/.tmp-rc-worktree-ea71c577",
+    "D:/TravelTrust-V1.1/.tmp-v65-admin-ux-cut-35872b40",
+    "D:/TravelTrust-V1.1/.tmp-v65-b3-cut-c-eng-staging",
+    "D:/TravelTrust-V1.1/.tmp-v65-b3-cutb-eng-wave",
+    "D:/TravelTrust-V1.1/.tmp-v65-b3-cutb-od-d41ddc38",
+    "D:/TravelTrust-V1.1/.tmp-v65-b3-w1-staging",
+    "D:/TravelTrust-V1.1/.tmp-v65-cut-a-staging",
+    "D:/TravelTrust-V1.1/.tmp-v65-cut-b-staging",
+    "D:/TravelTrust-V1.1/.tmp-v65-prod-003-b3-r006-cut",
+    "D:/TravelTrust-V1.1/.tmp-v65-prod-003-b3-r006-idem-16f29c7e",
+    "D:/TravelTrust-V1.1/.tmp-v65-prod-003-deploy-pin-c599a9f9",
+    "D:/TravelTrust-V1.1/.tmp-v65-prod-003-reconcile",
+    "D:/TravelTrust-V1.1/.tmp-v65-prod-003-wave-b",
+    "D:/TravelTrust-V1.1/.tmp-v65-prod-003-wave-e-cut",
+    "D:/TravelTrust-V1.1/.tmp-v65-rc-e06-api-1915ec4d",
+    "D:/TravelTrust-V1.1/.tmp-v65-rc-e06-fe-106feef4",
+    "D:/TravelTrust-V1.1/.worktrees/batch-a-session-staging",
+    "D:/TravelTrust-V1.1/.worktrees/meta-durable-api-tip",
+    "D:/TravelTrust-V1.1/.worktrees/r-comm-identity-cut",
+    "D:/TravelTrust-V1.1/.worktrees/ugc-translate-official-fe"
+  ],
+  "failed_removes": [
+    {
+      "path": "D:/TravelTrust-fe-lineage-fwd-1",
+      "err": "error: failed to delete 'D:/TravelTrust-fe-lineage-fwd-1': Invalid argument"
+    },
+    {
+      "path": "D:/TravelTrust-m07-unlock-pin-overlay",
+      "err": "error: failed to delete 'D:/TravelTrust-m07-unlock-pin-overlay': Invalid argument"
+    },
+    {
+      "path": "D:/TravelTrust-release-home-only",
+      "err": "error: failed to delete 'D:/TravelTrust-release-home-only': Invalid argument"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.tmp-wb-polish-87a5686f",
+      "err": "fatal: validation failed, cannot remove working tree: 'D:/TravelTrust-V1.1/.tmp-wb-polish-87a5686f/.git' does not exist"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/r-comm-identity-restore-bff",
+      "err": "fatal: 'D:/TravelTrust-V1.1/.worktrees/r-comm-identity-restore-bff' is not a working tree"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/traveltrust-home-body-release",
+      "err": "fatal: 'D:/TravelTrust-V1.1/.worktrees/traveltrust-home-body-release' is not a working tree"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/ttg-v8-runtime-cutover-api",
+      "err": "fatal: 'D:/TravelTrust-V1.1/.worktrees/ttg-v8-runtime-cutover-api' is not a working tree"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1/.worktrees/ugc-translate-official-api",
+      "err": "fatal: validation failed, cannot remove working tree: 'D:/TravelTrust-V1.1/.worktrees/ugc-translate-official-api/.git' does not exist"
+    },
+    {
+      "path": "D:/TravelTrust-V1.1-wt-w1-auth",
+      "err": "fatal: 'D:/TravelTrust-V1.1-wt-w1-auth' is not a working tree"
+    }
+  ],
+  "release_worktree": {
+    "path": "D:/TravelTrust-official-ops-v9-release",
+    "branch": "release/official-ops-v9-workspace-baseline",
+    "cite_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "created_this_run": false
+  },
+  "remaining_worktree_lines": [
+    "D:/TravelTrust-V1.1                     f73e40c14 [release/inbox-focus-product-truth-1ff71858]",
+    "D:/TravelTrust-official-ops-v9-release  3e356617a [release/official-ops-v9-workspace-baseline]"
+  ],
+  "remaining_count": 2,
+  "main_status_short": [
+    "## release/inbox-focus-product-truth-1ff71858",
+    "A  evidence/GO_official_www_product_surface/OFFICIAL-V9-RECOVERY-MASTER-20260820.json",
+    "A  evidence/GO_official_www_product_surface/OFFICIAL-V9-WORKSPACE-CLEAN-DRYRUN-20260820.json",
+    "A  evidence/GO_official_www_product_surface/OFFICIAL-V9-WORKSPACE-INVENTORY-20260820.json",
+    "?? .tmp-admin-shell-routes.json"
+  ],
+  "forbid": [
+    "git checkout 3e356617 as Official product restore",
+    "restore from dirty tip / non-V9 bake tree",
+    "restore hybrid-live-auth-pin-nontarget-v9-m07-unlock as OPS-v9",
+    "mutate FTB / Web3 addresses / TT_PRODUCTION_GO"
+  ]
+}

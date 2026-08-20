@@ -1,0 +1,66 @@
+{
+  "schema": "traveltrust.wait_window_r_business_state_authz_1.v1",
+  "batch_id": "R-BUSINESS-STATE-AUTHZ-1",
+  "status": "CLOSED",
+  "recorded_utc": "2026-08-11T09:20:00Z",
+  "strategy": "MAXIMIZE_PRE_ETA_REMEDIATION",
+  "track1_money_path_frozen": true,
+  "blocks_track1_finalize": false,
+  "tt_production_go": "NO_GO",
+  "seal": false,
+  "closed": true,
+  "official_api_cut": {
+    "app": "tt-api-prod",
+    "image_primary": "deployment-01KZQZF6VYQP8N4KGRJ5EF2F7F",
+    "image_followon_a": "deployment-01KZR0D7PA1ESGD42QWMGT959J",
+    "image_followon_b": "deployment-01KZR1GTJAZCJ7P2V92SWBA6FP"
+  },
+  "cross_pack_regression": "PASS",
+  "fixes": [
+    "confirm-completion_aliases_confirm-service-completion_bilateral",
+    "set-escrow-address_state_gate_created_accepted_only",
+    "community_delete_post_http_status_codes",
+    "dispute_resolve_validate_before_mutate",
+    "fe_confirm_dispute_gates_escrowed_funded_only",
+    "accept_cancel_dispute_negative_tests",
+    "review_reviewee_id_guide_user_not_row",
+    "fe_review_ui_final_financial_states",
+    "partially_refunded_terminal_gate",
+    "review_resolve_authz_negative_tests"
+  ],
+  "role_state_action_matrix": "documented_in_md",
+  "after_seal": [
+    "ADMIN_PUBLIC_FULL_MATRIX",
+    "INDEXER_FILL",
+    "R-MEDIA-1_OFFICIAL_OBJECT_DB"
+  ],
+  "track1_post": {
+    "readyAt": 1786491935,
+    "done": false,
+    "usdc": "10000000",
+    "isEscrow": false
+  },
+  "eta_abort_utc": "2026-08-11T23:45:35Z",
+  "backlog": [
+    "amount_fee_role_payout_deep_consistency",
+    "owner_session_delete_rv",
+    "onchain_refund_cta_traveler_role_fe"
+  ],
+  "official_product_truth": {
+    "role": "FTB_PRODUCT_TRUTH_LIVING_OFFICIAL_WWW",
+    "name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "baseline_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "image_tag": "hybrid-live-auth-pin-nontarget-v9-20260820",
+    "bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "superseded_www_git_sha": "daa5ae87b8c1af548c6beff6dd3451e5d386acf2",
+    "m07": "NOT_THIS_WAVE_LOCAL_ONLY_PENDING",
+    "tt_production_go": "NO_GO",
+    "ssot": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md"
+  },
+  "official_product_truth_note": "Living Product Truth stamp only. Does not rewrite freeze-era observation fields or claim Production GO. M07 not this wave."
+}
