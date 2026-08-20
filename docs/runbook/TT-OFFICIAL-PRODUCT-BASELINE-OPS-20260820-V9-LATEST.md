@@ -5,14 +5,29 @@
 **机读 ID：** `TT-OFFICIAL-OPS-20260820-V9`  
 **Owner 锁钉墙钟：** `2026-08-20 15:20` Asia/Tokyo（`2026-08-20T06:20:00Z`）  
 **活面：** `https://www.web3-ttg.com`  
-**`TT_PRODUCTION_GO`：** `NO_GO`（本基线 ≠ Production GO）
+**`TT_PRODUCTION_GO`：** `NO_GO`（本基线 ≠ Production GO）  
+**交付模式：** **个人独立开发（Solo）** · **不开任何 PR** · Owner Self Review · push · Evidence — [`TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST`](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)
 
 > **本包 = 今天（2026-08-20）Official 稳定活面。**  
 > 产品身份仍是 `3e356617…` / `2026-08-20T00:51:57Z`；**耐久镜像句柄 = `hybrid-live-auth-pin-nontarget-v9-20260820`**（内嵌 session bootstrap **v8**，右上角登录可水合）。  
-> **不是** `V01` / 裸 `V1`，**不是** PSG Archive Tag，**不是**误名 `…-v8` 标签。
+> **不是** `V01` / 裸 `V1`，**不是** PSG Archive Tag，**不是**误名 `…-v8` 标签。  
+> **本项目 = 个人独立开发。默认不开任何 Pull Request / Merge Request；** GitHub 推送后的「Create a pull request」提示 **不是**本仓工作流。
 
 Machine JSON：[`TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json`](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json)  
 前代（已 SUPERSEDED）：[`TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-LATEST.md`](./TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-LATEST.md)
+
+---
+
+## 交付纪律（写死 · Solo）
+
+| 项 | 口径 |
+|----|------|
+| 开发形态 | **个人独立开发**（Solo Owner = 唯一维护者） |
+| PR | **不开任何 PR**（含发版 PR / 合入 PR / 形式 Review PR） |
+| 合入替代 | Owner commit · 按需 `git push` · 引用 Tag / SHA / Evidence |
+| 人控 | Owner Self Review（正式 Release 另加时间隔离复检 + Sign-off） |
+| 质量真源 | Gate · Evidence · Freeze · Certification · Archive · Owner Sign-off — **不是** PR |
+| 禁止 | 以「缺 PR / 缺 Reviewer / 缺 Approver」阻塞合法 Solo 推进 |
 
 ---
 

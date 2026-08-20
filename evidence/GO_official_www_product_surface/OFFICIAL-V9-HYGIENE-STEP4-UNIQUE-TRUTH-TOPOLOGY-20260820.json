@@ -68,7 +68,24 @@
   ],
   "verdict": "OFFICIAL_V9_UNIQUE_TRUTH_TOPOLOGY_PASS",
   "next_optional": [
-    "push release/official-ops-v9-product-ssot (and drop old remote inbox-focus name)",
-    "Owner gate: Web3 align-to-V9 (separate; no address mutation yet)"
-  ]
+    "Owner gate: Web3 align-to-V9 (separate; no address mutation yet)",
+    "Keep Solo push-only delivery; never open PR by default"
+  ],
+  "delivery_mode": {
+    "form": "personal_independent_solo",
+    "zh": "个人独立开发",
+    "open_pull_requests": false,
+    "open_merge_requests": false,
+    "github_create_pr_prompt": "platform_noise_not_workflow",
+    "human_control": "Owner Self Review + Sign-off + Evidence/Gate/Archive",
+    "quality_spine_not_pr": true,
+    "ssot": "docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md",
+    "registry": "registry/psg-solo-developer-workflow.v1.yaml",
+    "forbidden_default": [
+      "open any Pull Request",
+      "open any Merge Request",
+      "treat GitHub Create-a-PR banner as required workflow",
+      "block Solo progress for missing Reviewer/Approver/PR"
+    ]
+  }
 }

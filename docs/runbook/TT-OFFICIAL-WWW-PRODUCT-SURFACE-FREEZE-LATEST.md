@@ -7,11 +7,13 @@
 **Live:** `https://www.web3-ttg.com`  
 **Machine:** [`TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json`](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json)  
 **Human SSOT:** [`TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md`](./TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md)  
-**`TT_PRODUCTION_GO`:** `NO_GO`
+**`TT_PRODUCTION_GO`:** `NO_GO`  
+**交付模式：** **个人独立开发（Solo）** · **不开任何 PR** · 见 [`TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST`](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)
 
 > **当前 Official 产品真源 = OPS-2026.08.20-v9（今天稳定版 · 官网优先 · 本窗口暂不可改产品字节）。**  
 > **不是** `V01` / 裸 `V1`，**不是** PSG Tag，**不是**误名 `…-v8` 镜像，**不是** M07 overlay，**不是** Production GO。  
-> 前代日钉 `TT-OFFICIAL-OPS-20260820`、历史 pin `daa5ae87`（2026-08-16）、M07 `…-m07-unlock` = **SUPERSEDED / ROLLED_BACK** 作为活面。
+> 前代日钉 `TT-OFFICIAL-OPS-20260820`、历史 pin `daa5ae87`（2026-08-16）、M07 `…-m07-unlock` = **SUPERSEDED / ROLLED_BACK** 作为活面。  
+> **本项目独立开发：** 远端 push ≠ 开 PR；质量真源是 Gate · Evidence · Freeze · Owner Sign-off，**不是** Pull Request。
 
 ---
 

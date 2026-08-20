@@ -57,8 +57,16 @@
     "session_bootstrap": "v8",
     "session_bootstrap_note": "Image tag v9 carries bootstrap v8 (SKIP_ME_FETCH=0). Misnamed tag hybrid-…-v8 still had bootstrap v7 and breaks Header login hydrate.",
     "composition": {
-      "live_tip_routes": ["/", "/traveltrust", "/auth"],
-      "pin_visual_routes": ["/market", "/did-rank", "/community"],
+      "live_tip_routes": [
+        "/",
+        "/traveltrust",
+        "/auth"
+      ],
+      "pin_visual_routes": [
+        "/market",
+        "/did-rank",
+        "/community"
+      ],
       "pin_visual_source": "2026-08-16 Official visual lock (o37WNTNObGxE3TiJPI7Sl)"
     },
     "note": "TravelTrust Official · OPS-2026.08.20-v9 is the unique living Official product truth. Identity SHA != clean git checkout of visual pin. Not Production GO. M07 must not rewrite this pin name or bytes."
@@ -150,9 +158,28 @@
     "equate this baseline to v1.1.0-psg-go.20260717",
     "rewrite living Official truth back to daa5ae87 without Owner auth",
     "restore misnamed hybrid-…-v8 image as living Official",
-    "claim M07 overlay bake as TravelTrust Official · OPS-2026.08.20-v9"
+    "claim M07 overlay bake as TravelTrust Official · OPS-2026.08.20-v9",
+    "open Pull Request / Merge Request as default Official or PSG workflow",
+    "treat GitHub Create-a-PR prompt after push as required step"
   ],
   "human_ssot": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md",
   "living_pin_index": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md",
-  "convergence_evidence": "evidence/GO_official_www_product_surface/WAVE-0-TO-D-OPS-V9-CONVERGENCE-20260820.md"
+  "convergence_evidence": "evidence/GO_official_www_product_surface/WAVE-0-TO-D-OPS-V9-CONVERGENCE-20260820.md",
+  "delivery_mode": {
+    "form": "personal_independent_solo",
+    "zh": "个人独立开发",
+    "open_pull_requests": false,
+    "open_merge_requests": false,
+    "github_create_pr_prompt": "platform_noise_not_workflow",
+    "human_control": "Owner Self Review + Sign-off + Evidence/Gate/Archive",
+    "quality_spine_not_pr": true,
+    "ssot": "docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md",
+    "registry": "registry/psg-solo-developer-workflow.v1.yaml",
+    "forbidden_default": [
+      "open any Pull Request",
+      "open any Merge Request",
+      "treat GitHub Create-a-PR banner as required workflow",
+      "block Solo progress for missing Reviewer/Approver/PR"
+    ]
+  }
 }

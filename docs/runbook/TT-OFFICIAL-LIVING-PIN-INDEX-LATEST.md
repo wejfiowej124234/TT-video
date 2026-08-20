@@ -4,12 +4,14 @@
 **Living baseline:** **TravelTrust Official · OPS-2026.08.20-v9**  
 **Machine:** [`TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json`](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json)  
 **Human:** [`TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md`](./TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md)  
-**`TT_PRODUCTION_GO`:** `NO_GO`
+**`TT_PRODUCTION_GO`:** `NO_GO`  
+**交付模式：** **个人独立开发（Solo）** · **不开任何 PR** · Owner Self Review + push + Evidence / Gate / Archive — SSOT [`TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST`](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)
 
 > 凡写「当前 Official www / 官网产品真源 / living www pin」→ **只认本页 + Freeze JSON**。  
 > 本 pin = **Final Truth Baseline 的 Product Truth 平面**（全系统唯一 SSOT 之下 · 禁止另起第二套）。  
 > Web3/链/API 地址真源仍是 [FTB](./TT-FINAL-TRUTH-BASELINE-LATEST.md) Web3 Active Truth（**≠** 本 pin 的镜像字节）。  
-> **OPS-v9 本窗口暂不可改产品字节**；矩阵/文档对齐本真源，不以 M07 overlay 冒充 OPS-v9。
+> **OPS-v9 本窗口暂不可改产品字节**；矩阵/文档对齐本真源，不以 M07 overlay 冒充 OPS-v9。  
+> **本项目 = 个人独立开发。禁止**把 GitHub「Create a pull request」提示、团队 Reviewer、双人 Approver 写成默认流程或硬闸。
 
 ## Pin card
 
@@ -58,4 +60,14 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 - 本页 = **Product Truth only**（官网产品/UI/UX/Runtime）。
 - **Web3 / 合约 / 资金路径** 真源仍是 [FTB Web3 Active Truth](./TT-FINAL-TRUTH-BASELINE-LATEST.md)；**本轮不改**链上地址与 `/meta` 合约字段。
 - Owner 已声明：**后续 Web3 轨将以 Official V9 产品基线为准做对齐更新**（独立会话 · 另闸）· **≠** 本窗口自动改链 · **≠** `TT_PRODUCTION_GO`。
+
+## 交付模式（写死）
+
+| 项 | 口径 |
+|----|------|
+| 形态 | **个人独立开发（Solo）** |
+| PR | **不开任何 PR** |
+| 远端 | `git push` 更新仓库即可；**不是**发 PR |
+| 人控 / 质量 | Owner Self Review · Evidence · Gate · Archive · Sign-off |
+| SSOT | [`TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST`](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md) |
 

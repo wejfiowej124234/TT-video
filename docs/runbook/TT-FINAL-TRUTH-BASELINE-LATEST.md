@@ -4,6 +4,7 @@
 **STATUS:** `ACTIVE_UNIQUE_SSOT`  
 **Stamp:** `20260818T031500Z`  
 **Product Truth pin (living Official www):** **TravelTrust Official · OPS-2026.08.20-v9** · absorbed `2026-08-20` · **本窗口暂不可改产品字节**  
+**交付模式（全仓写死）：** **个人独立开发（Solo）** · **不开任何 PR** · [`TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST`](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)  
 **Amendment:** [`TT-FINAL-TRUTH-BASELINE-V8-CYCLE-20260818`](./TT-FINAL-TRUTH-BASELINE-V8-CYCLE-20260818.md)  
 **Immutable parent:** [`TT-FINAL-TRUTH-BASELINE-20260812`](./TT-FINAL-TRUTH-BASELINE-20260812.md) · **禁止覆盖**  
 **V8 Reality cited (do not recast):** [`Registry/Runtime/L7 Consistency Cert`](./TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md) · `PASS_STOP` · `2026-08-18T03:00:00Z`  

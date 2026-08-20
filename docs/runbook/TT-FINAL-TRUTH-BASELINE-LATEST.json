@@ -522,7 +522,24 @@
       "4495d68ebf1447e1575d0fa2699732dd310d581c",
       "2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b",
       "daa5ae87b8c1af548c6beff6dd3451e5d386acf2"
-    ]
+    ],
+    "delivery_mode": {
+      "form": "personal_independent_solo",
+      "zh": "个人独立开发",
+      "open_pull_requests": false,
+      "open_merge_requests": false,
+      "github_create_pr_prompt": "platform_noise_not_workflow",
+      "human_control": "Owner Self Review + Sign-off + Evidence/Gate/Archive",
+      "quality_spine_not_pr": true,
+      "ssot": "docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md",
+      "registry": "registry/psg-solo-developer-workflow.v1.yaml",
+      "forbidden_default": [
+        "open any Pull Request",
+        "open any Merge Request",
+        "treat GitHub Create-a-PR banner as required workflow",
+        "block Solo progress for missing Reviewer/Approver/PR"
+      ]
+    }
   },
   "product_truth_absorb_note": {
     "utc": "2026-08-20T08:55:00Z",
@@ -534,5 +551,22 @@
       "production_go_reassessment_freeze_sha_94785a66"
     ],
     "restored_www_after_m07": true
+  },
+  "delivery_mode": {
+    "form": "personal_independent_solo",
+    "zh": "个人独立开发",
+    "open_pull_requests": false,
+    "open_merge_requests": false,
+    "github_create_pr_prompt": "platform_noise_not_workflow",
+    "human_control": "Owner Self Review + Sign-off + Evidence/Gate/Archive",
+    "quality_spine_not_pr": true,
+    "ssot": "docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md",
+    "registry": "registry/psg-solo-developer-workflow.v1.yaml",
+    "forbidden_default": [
+      "open any Pull Request",
+      "open any Merge Request",
+      "treat GitHub Create-a-PR banner as required workflow",
+      "block Solo progress for missing Reviewer/Approver/PR"
+    ]
   }
 }

@@ -10,12 +10,25 @@ owner: solo_owner
 baseline_tag: v1.1.0-psg-go.20260717
 baseline_sha: 0bbc7adbd3142b111463fc398288ab94be5c0b84
 
+# Project delivery mode (write-dead · Official V9 Product Truth + full repo)
+delivery_mode:
+  form: personal_independent_solo
+  open_pull_requests: false
+  open_merge_requests: false
+  github_create_pr_prompt: platform_noise_not_workflow
+  human_control: owner_self_review_plus_sign_off
+  quality_spine_not_pr: true
+  note: >
+    This repository is personal independent development.
+    Do not open any PR by default. Push + Evidence + Gate + Owner Sign-off only.
+
 honest_boundary: >
   Solo workflow replaces team PR/Approver/Reviewer gates.
   It does NOT waive Gate · Evidence · Freeze · Certification · Release Baseline · Release Archive.
   TT_PSG_PRODUCTION_CERT=PASS and Owner Sign-off remain hard for Production GO.
   Quality comes from Gates + Evidence + Freeze + Cert + Archive + Owner Sign-off —
   not from Peer Review theatre.
+  Default: open_pull_requests=false — GitHub "Create a pull request" after push is not this project's workflow.
 
 retained_unchanged:
   - Gate (Foundation / Alignment / Cap Cert / Production Cert hard gates)

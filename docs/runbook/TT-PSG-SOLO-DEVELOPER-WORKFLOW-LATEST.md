@@ -9,9 +9,12 @@
 
 ## 0 · 一句话
 
+**本项目 = 个人独立开发（Solo）。默认不开任何 Pull Request / Merge Request。**
+
 **个人独立开发 = Owner Self Review +（正式 Release）时间隔离复检 + Owner Sign-off + Release Archive。**  
 **保留** Gate · Evidence · Freeze · Certification · Release Baseline · Release Archive。  
-**移除 / 诚实降级** PR · Code Review · Reviewer · Approver · Merge Request · 双人审批 — 不再作为 PSG / Production GO 硬闸。
+**移除 / 诚实降级** PR · Code Review · Reviewer · Approver · Merge Request · 双人审批 — 不再作为 PSG / Production GO 硬闸。  
+**GitHub push 后出现的「Create a pull request」提示 = 平台噪音，不是本仓流程。**
 
 **质量真源不是 PR，而是：** 自动 Gate · Evidence · Freeze · Certification · Release Archive · Owner Sign-off。
 
