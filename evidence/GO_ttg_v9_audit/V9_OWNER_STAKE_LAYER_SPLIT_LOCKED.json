@@ -1,0 +1,48 @@
+{
+  "stamp": "V9_OWNER_STAKE_LAYER_SPLIT_LOCKED",
+  "status": "LOCKED",
+  "recorded_at_utc": "2026-08-21T13:40:00Z",
+  "layers": {
+    "ttg_seat": "RegionSteward_only",
+    "usdc_identity_order_risk": "Guide_and_Merchant_performance",
+    "escrow": "order_principal_and_dispute"
+  },
+  "merchant_guide_ttg_role_stake": "NOT_REQUIRED_DISABLED",
+  "default_backlog": false,
+  "reopen": "OWNER_GOVERNANCE_UPGRADE_ONLY",
+  "phase1_redeploy_required": false,
+  "slash_default": "USDC_first_not_TTG",
+  "doc": "docs/runbook/TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md",
+  "tt_production_go": "NO_GO",
+  "pre_commit_gates": {
+    "CONTRACT_BYTECODE_DIFF": 0,
+    "PHASE1_ADDRESS_DIFF": 0,
+    "FRONTEND_RUNTIME_CODE_DIFF": 0,
+    "UI_UX_DIFF": 0,
+    "OLD_MERCHANT_GUIDE_TTG_TBD_ACTIVE_REFS": 0
+  },
+  "atomic_commit_scope": [
+    "docs/runbook/TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md",
+    "evidence/GO_ttg_v9_audit/V9_OWNER_STAKE_LAYER_SPLIT_LOCKED.json",
+    "docs/runbook/TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md",
+    "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+    "docs/runbook/TT-TTG-V9-OWNER-ECONOMIC-MODEL-FEE-VS-STAKE-LATEST.md",
+    "docs/runbook/TT-TTG-V9-OWNER-OPS-FEE-MODEL-LATEST.md",
+    "docs/runbook/TT-TTG-V9-REMAINING-OWNER-CONFIRM-SHORTLIST-LATEST.md",
+    "docs/runbook/TT-TTG-V9-OWNER-ECONOMIC-TARGET-FREEZE-LATEST.md",
+    "docs/runbook/TT-TTG-V9-OWNER-DECISION-CHECKLIST-LATEST.md",
+    "docs/runbook/TT-TTG-V9-OWNER-ANSWERS-AND-REMAINING-CONFLICTS-LATEST.md",
+    "docs/runbook/TT-TTG-V9-OFFICIAL-WEBSITE-ALIGNMENT-CANDIDATE-OWNER-CHECKLIST-LATEST.md",
+    "docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md",
+    "docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-EN-LATEST.md",
+    "docs/github-official/zh/Role-Stake.md",
+    "docs/github-official/en/Role-Stake.md",
+    "registry/ttg-v9-documentation-truth-baseline.v1.yaml",
+    "registry/ttg-v9-mainnet-edition-whitepaper-fact-matrix.v1.yaml"
+  ],
+  "forbidden": [
+    "Phase1 redeploy/mutate",
+    "Staging/Production change",
+    "TT_PRODUCTION_GO flip"
+  ]
+}

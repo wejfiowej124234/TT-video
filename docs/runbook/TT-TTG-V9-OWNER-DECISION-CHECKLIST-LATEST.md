@@ -165,7 +165,7 @@
 | Role Stake ⊥ FeeRouter | FROZEN |
 | 十国 steward_stake_bps 分级表 | FROZEN（继续用） |
 | minStake ∝ **live** `totalSupply()` | FROZEN Target |
-| Merchant/Guide TBD DISABLED | FROZEN |
+| Merchant/Guide TTG RoleStake | **`NOT_REQUIRED` / `DISABLED`** · 非默认待办 · 履约 = USDC 81 + Escrow | FROZEN |
 | 300k → `0xe1e732…` | FROZEN Exact |
 | `globalStakers` 35.75% Owner ACTIVE | **EXIT** |
 | 有 Steward：45/55 · 无 Steward：100%→P4Cap | FROZEN Target |

@@ -27,7 +27,7 @@ Evidence: `evidence/GO_ttg_v9_audit/V9_OWNER_OPS_FEE_MODEL_RECORDED.json`
 | **D** | 总项目池运营动用 | **每季度（3 个月）最多拿出 30% USDC** 用于官方运营/工资等 · **可打到个人钱包使用** |
 | **X** | FeeRouter「质押 / globalStakers」 | **退出 ACTIVE** · 角色质押见 [Fee vs Stake](TT-TTG-V9-OWNER-ECONOMIC-MODEL-FEE-VS-STAKE-LATEST.md) |
 | **S** | 区域主理人 **TTG 质押** | **ACTIVE** · ~4%（protocol-ssot / RegionStewardStakePool）· **≠** FeeRouter |
-| **S2** | 商家 / 向导 TTG 质押 | **DISABLED · TBD** · 可升级 Role Stake 接口 |
+| **S2** | 商家 / 向导 TTG 质押 | **`NOT_REQUIRED` / `DISABLED`** · **非默认待办** · 履约走 USDC 81 + Escrow |
 
 **Orthogonal (unchanged):** Path A · 公售 TTG USDC → **P4Cap** `0xfB906ae…BbF`（≠ 准入费 · ≠ 订单 Fee）。
 

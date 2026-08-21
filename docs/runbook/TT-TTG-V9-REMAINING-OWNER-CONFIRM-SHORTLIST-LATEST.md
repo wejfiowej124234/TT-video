@@ -13,7 +13,7 @@
 |----|------|
 | 25T · NO FURTHER MINT | YES |
 | 十国 steward_stake_bps 分级 · min ∝ live `totalSupply()` | YES |
-| Merchant/Guide stake | TBD / DISABLED · 留接口 |
+| Merchant/Guide TTG RoleStake | **`NOT_REQUIRED` / `DISABLED`** · 非默认待办 · 履约 = USDC 81 + Escrow |
 | 平台费（有主理人） | 5% 订单费内：**45%→申请收款址 · 55%→新总池** |
 | 平台费（无主理人） | **100%→新总池** |
 | Fee Router | **新部署** 按国→收款址（R2=A） |
@@ -61,7 +61,7 @@
 | 缺口 | 说明 |
 |------|------|
 | 新 Fee Router 合约 | 尚无代码 · 须设计 Active Steward 表 + 45/55/100% |
-| 新 Role Stake 合约 | live `totalSupply()` · 十国 bps · Merchant/Guide DISABLED |
+| 新 Role Stake 合约 | live `totalSupply()` · 十国 bps · Steward ACTIVE · Merchant/Guide **NOT_REQUIRED/DISABLED** |
 | 新 Project Pool | 可复用 P4Cap 逻辑新部署 · spender=新 Timelock |
 | 新 Timelock + Governor 绑定 | admin=`0xe1e732` · 48h |
 | Escrow → 新 Router | `platformFeeRecipient` 切流 |

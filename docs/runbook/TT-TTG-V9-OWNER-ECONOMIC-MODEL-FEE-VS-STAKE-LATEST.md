@@ -13,8 +13,9 @@ Parents: [Owner Ops Fee Model](TT-TTG-V9-OWNER-OPS-FEE-MODEL-LATEST.md) · [Mone
 | Module | Final口径 | Notes |
 |--------|-----------|--------|
 | **区域主理人准入费** | **300,000 USDC** → `0xe1e732EfBf9B010a9204054467256d3d93f3CdD4` | 平台准入费 · **≠** 质押 · **≠** FeeRouter |
-| **区域主理人 TTG 质押** | **需要** · 十国 bps × **live** `totalSupply()` | 旧池不符合 → **Redeploy** |
-| **商家 / 向导 TTG 质押** | **未来需要** · 额度 **TBD** · DISABLED | 可升级接口 |
+| **区域主理人 TTG 质押** | **需要** · 十国 bps × **live** `totalSupply()` | Seat 责任 · [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) |
+| **商家 / 向导 TTG 质押** | **`NOT_REQUIRED` / `DISABLED`** · **非默认待办** | 履约 **只**走 USDC Identity/Order Risk（81）+ Escrow；开启须 Owner 另书面治理授权 |
+| **商家 / 向导 USDC 履约押** | **需要**（81 Identity / Order Risk） | 违约优先扣 USDC · **不动 TTG** |
 | **平台服务费（有主理人）** | **45% → 申请时提供的主理人收款钱包** · **55% → P4Cap** | Owner 2026-08-21 |
 | **平台服务费（无主理人）** | **100% → P4Cap**（订单平台费；Owner 口述费率层「5%」见 Remaining Conflicts R3） | |
 | **FeeRouter `globalStakers`** | **EXIT ACTIVE** | 旧四腿不符合 → **Redeploy** 倾向 |
@@ -37,9 +38,15 @@ Parents: [Owner Ops Fee Model](TT-TTG-V9-OWNER-OPS-FEE-MODEL-LATEST.md) · [Mone
     ┌─────────┼─────────┐
     ↓         ↓         ↓
  Steward   Merchant   Guide
-  ACTIVE    DISABLED  DISABLED
-  ~4% TTG    TBD        TBD
+  ACTIVE   NOT_REQ   NOT_REQ
+  ~4% TTG  DISABLED  DISABLED
+           ───────── 履约另轨 ─────────
+           USDC Identity / Order Risk (81) + Escrow
+           违约扣 USDC · 不动 TTG
 ```
+
+**三层写死：** TTG = 治理/区域席位 · USDC Stake = 向导商家履约保证 · Escrow = 订单本金/争议。  
+详见 [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md)。
 
 **Governance path for stake params:** Governor → vote → **NEW Timelock** → update role stake config / enable role.  
 **Does not** remint Token.
@@ -90,22 +97,25 @@ minStake(jurisdiction) = ttg.totalSupply() × steward_stake_bps[j] / 10_000
 
 **供应注意：** 同 bps 在 **25T genesis** 下绝对枚数远大于旧 10M 面额表；以 **活 `totalSupply()` × bps** 为准，Registry 绝对列仅作展示缓存。
 
-### Merchant / Guide AS-IS（接口已有 · 额度 TBD）
+### Merchant / Guide — TTG RoleStake = NOT_REQUIRED（Owner lock 2026-08-21）
 
-| Role | Contract AS-IS | Owner living |
-|------|----------------|--------------|
-| Merchant (Provider) | `ProviderIdentityStakingPool` · `minIdentityStake` **immutable at deploy** | DISABLED / TBD — **不宜**把未定额度写进不可升级 Token |
-| Guide | `GuideIdentityStakingPool` · 同上 | DISABLED / TBD |
+| Role | Contract surface | Owner living |
+|------|------------------|--------------|
+| Merchant (Provider) | `ProviderIdentityStakingPool`（**USDC** 81）· V9 RoleStake `RoleId.Merchant` 开关位 | **履约 = USDC** · TTG RoleStake = **`NOT_REQUIRED` / `DISABLED`** · **非默认待办** |
+| Guide | `GuideIdentityStakingPool`（**USDC** 81）· V9 RoleStake `RoleId.Guide` 开关位 | 同上 |
 
-**Target shape (Owner):** 统一 **Role Stake System**（可升级 / Timelock 配置），角色开关：
+**Target shape (Owner locked):**
 
 ```text
-REGION_STEWARD → per-country bps table (CN/US 4%…) · ACTIVE · min = live totalSupply × bps
-MERCHANT       → TBD · DISABLED
-GUIDE          → TBD · DISABLED
+REGION_STEWARD → per-country bps · ACTIVE · min = live totalSupply × bps · TTG Seat
+MERCHANT       → TTG RoleStake NOT_REQUIRED / DISABLED · 履约 = USDC 81 + Escrow
+GUIDE          → TTG RoleStake NOT_REQUIRED / DISABLED · 履约 = USDC 81 + Escrow
 ```
 
-现有双 Identity 池 + Steward 池可作 **LEGACY 实现面**；V9 绑定 NEW TTG 时优先 **可配置 Role Stake + live supply 分母**，避免 immutable `ttgTotalSupplyUnits` 与 burn 脱节。
+工程可保留 RoleStake 角色枚举开关（现 false）。**产品/白皮书/官网不得再把 Merchant/Guide TTG 写成「未来默认要开的 TBD」。**  
+重新开启 = **仅** Owner 另开治理升级书面授权。**已部署 Phase1 不必为此修改或重部署。**
+
+SSOT: [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) · 81 身份质押与订单押金。
 
 ---
 
@@ -137,15 +147,16 @@ GUIDE          → TBD · DISABLED
 1. Narrative / audits / Root Replacement：**质押 = Role Stake**；**分账 = FeeRouter USDC**。  
 2. 不再把 Option II「GlobalStakersFeeVault」当 Safe-exit 默认。  
 3. V9 remint **不**重写 Seat 经济为 Fee 腿；Stake 池 **另轨** 绑 NEW TTG。  
-4. Merchant/Guide：**留接口 · DISABLED · 额度 TBD**。  
+4. Merchant/Guide：**TTG RoleStake = `NOT_REQUIRED` / `DISABLED` · 非默认待办**；履约 = USDC 81 + Escrow。  
 5. 改十国 bps / 统一 4% / 改 FeeRouter 四腿 → **须 Owner 书面经济授权**（本文件只定拆分与 ACTIVE 语义）。
 
 ---
 
 ## 中文要点
 
-- **质押**只有角色责任锁 TTG：**主理人 ~4%（现有十国表 + Seat 池）**；商家/向导 **TBD + 可升级接口**。  
+- **TTG 质押**只服务 **区域主理人 Seat**（十国表 + live supply）；商家/向导 **不质押 TTG**（`NOT_REQUIRED` / `DISABLED` · 非默认待办）。  
+- **向导/商家履约** = **USDC Identity/Order Risk（81）+ Escrow**；违约优先扣 USDC，不动 TTG。  
 - **FeeRouter 不再含「质押」概念**；`globalStakers 35.75%` **退出 Owner ACTIVE**。  
-- **30万 USDC** 准入费与 **TTG 质押** 双轨并行（L5 已写）。  
-- 现成体系：`protocol-ssot` + `v311-stake-minimum-by-country` + `RegionStewardStakePool`；Identity 双池 = 商家/向导 LEGACY 面。  
-- **4% 不写进不可升级 Token**；走 Role Stake / 治理升级。
+- **30万 USDC** 准入费与 **主理人 TTG Seat** 双轨并行（L5 已写）。  
+- **4% 不写进不可升级 Token**；走 Steward Role Stake / 治理升级。  
+- 三层 SSOT：[Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md)。

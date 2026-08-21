@@ -44,7 +44,7 @@ coverage_required:
   - id: role_stake_live_supply
     must_match_any: ["totalSupply()", "live TTG.totalSupply()"]
   - id: merchant_guide_disabled
-    must_match_any: ["Merchant/Guide", "Merchant", "DISABLED"]
+    must_match_any: ["NOT_REQUIRED", "DISABLED", "Merchant/Guide"]
   - id: p4_90d_30pct
     must_match_any: ["90", "30%"]
   - id: governance_burn

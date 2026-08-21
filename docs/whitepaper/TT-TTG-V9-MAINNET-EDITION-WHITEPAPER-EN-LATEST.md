@@ -33,7 +33,7 @@ TravelTrust is a decentralized travel-commerce stack:
 - **Marketplace** — discovery and matching  
 - **On-chain Escrow (KEEP)** — milestone-constrained release of user principal  
 - **Fee / Project Pool (NEW)** — platform service fee and primary-sale USDC aggregation  
-- **Role Stake (NEW)** — Region Steward admission stake (Merchant/Guide **DISABLED** for now)  
+- **Role Stake (NEW)** — Region Steward TTG Seat admission stake; Merchant/Guide TTG = **`NOT_REQUIRED` / `DISABLED`** (not a default backlog); Guide/Merchant performance = **USDC Identity/Order Risk + Escrow**  
 - **Governance (NEW)** — Governor → 48h SoloTimelock for parameters and upgradeable periphery  
 
 **TTG** is the governance / budgeting asset. It is **not** the default settlement asset for travel orders. Order principal uses allowlisted stables (**USDC** on Mainnet) and stays narratively and operationally separate from protocol-fee flows.
@@ -117,8 +117,8 @@ Fee callers (target): verified Escrow / Settlement paths only; Mainnet **forbids
 | Role | Status | Threshold semantics |
 |------|--------|---------------------|
 | Region Steward | **ACTIVE** | `minStake = live TTG.totalSupply() × country_bps / 10000` (tracks burns) |
-| Merchant | **DISABLED** (TBD) | Unavailable until governance enables |
-| Guide | **DISABLED** (TBD) | Unavailable until governance enables |
+| Merchant | **`NOT_REQUIRED` / `DISABLED`** | No TTG stake · performance = USDC Identity/Order Risk + Escrow · not a default backlog |
+| Guide | **`NOT_REQUIRED` / `DISABLED`** | Same |
 
 Initial ten-country Steward bps (Design Lock deploy constants): CN/US 400 · FR/ES 450 · JP/TH 250 · SG/KR 200 · AU/AE 150.
 
@@ -185,7 +185,7 @@ Governor  →  SoloTimelock (delay = 48h, admin = 0xe1e732…)
 - Token: **NO-MINT** · no public holder burn · Governance Burn via Timelock.  
 - Fee: 5% baseline · governance-only rate changes · country payouts Timelock-written.  
 - Pool: 90d ≤ 30% ops cap · ops recipient fixed to Treasury.  
-- Stake: live supply × bps · Merchant/Guide default DISABLED.  
+- Stake: Steward live supply × bps ACTIVE · Merchant/Guide TTG = **NOT_REQUIRED / DISABLED** (not a default backlog) · performance = USDC 81 + Escrow.  
 - SoloTimelock: 48h delay · admin = Marketing Norm · **≠ Safe**.  
 - AI triad + Sepolia DL_R1 regression + Mainnet Pre-Broadcast Final are audit-candidate evidence; **not** `TT_PRODUCTION_GO`.
 
@@ -211,6 +211,6 @@ Governor  →  SoloTimelock (delay = 48h, admin = 0xe1e732…)
 ## Key points
 
 - Official whitepaper = **Design Lock DL_R1** semantics + Phase1 address facts.  
-- 25T / NO-MINT · 50/35/3/5/7 · five-batch primary market · USDC→ProjectPool · 5% · 45/55 or 100% · 300k access · live Role Stake · Merchant/Guide DISABLED · 90d≤30% · Governor→48h SoloTimelock.  
+- 25T / NO-MINT · 50/35/3/5/7 · five-batch primary market · USDC→ProjectPool · 5% · 45/55 or 100% · 300k access · Steward live Role Stake · Merchant/Guide TTG NOT_REQUIRED/DISABLED · 90d≤30% · Governor→48h SoloTimelock.  
 - **No** globalStakers / “83” ACTIVE / R2_FINAL ACTIVE / old-P4Cap sale sink / Safe-as-V9-admin (all **LEGACY / DO_NOT_USE_AS_ACTIVE_TRUTH**).  
 - Mainnet = **`MAINNET_DEPLOYED_PHASE1` / `TIMELOCK_CUTOVER_PENDING`** · **≠ Fully Active** · **≠ Production GO**.

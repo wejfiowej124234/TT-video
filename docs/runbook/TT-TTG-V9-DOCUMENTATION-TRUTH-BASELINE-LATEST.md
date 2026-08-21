@@ -75,7 +75,7 @@
 | `globalStakers` 35.75% | **EXIT** · **LEGACY / DO_NOT_USE** as ACTIVE |
 | P4 | NEW Pool · **90d ≤ 30%** · ops `to` = Treasury `0xF34804…` |
 | Access Fee | **300k USDC** → `0xF34804…` |
-| Role Stake | live `totalSupply` × country bps · Steward ACTIVE · Merchant/Guide **DISABLED** |
+| Role Stake | live `totalSupply` × country bps · Steward **ACTIVE** · Merchant/Guide TTG = **`NOT_REQUIRED` / `DISABLED`**（非默认待办）· 向导/商家履约 = **USDC Identity/Order Risk + Escrow** — [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) |
 | Governance | Governor → **SoloTimelock 48h** · admin = `0xe1e732…` · **no Safe** as V9 Official admin |
 | Norm wallets | Marketing `0xe1e732…` · Team `0x010365…` · Treasury/Guardian `0xF34804…` |
 

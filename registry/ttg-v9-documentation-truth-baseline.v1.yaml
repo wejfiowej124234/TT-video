@@ -51,8 +51,13 @@ governance:
   forbid_safe_as_v9_official_admin: true
 role_stake:
   steward: ACTIVE
-  merchant: DISABLED
-  guide: DISABLED
+  merchant: NOT_REQUIRED_DISABLED
+  guide: NOT_REQUIRED_DISABLED
+  merchant_guide_ttg_default_backlog: false
+  guide_merchant_performance_bond: USDC_IDENTITY_ORDER_RISK_PLUS_ESCROW
+  stake_layer_split_doc: docs/runbook/TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md
+  reopen_merchant_guide_ttg: OWNER_GOVERNANCE_UPGRADE_ONLY
+  phase1_redeploy_required_for_this_lock: false
 contracts_phase1:
   ttg: { address: "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9", status: DEPLOYED_PENDING_CUTOVER }
   solo_timelock: { address: "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f", status: DEPLOYED_PENDING_CUTOVER }
