@@ -30,7 +30,9 @@
     "TT_PRODUCTION_GO flip"
   ],
   "fingerprint_pack": "evidence/GO_ttg_v9_audit/V9_PRE_PRODUCTION_LOCAL_FINGERPRINT_PACK.json",
-  "recorded_at_utc": "2026-08-21T13:00:44Z",
+  "recorded_at_utc": "2026-08-21T13:01:05Z",
+  "fingerprint_evidence_commit_sha": "4138acc5dfd389495a98d897cdd41ecf7f66a907",
   "allowlist_manifest": "evidence/GO_ttg_v9_audit/V9_WEBSITE_ALLOWLIST_ATOMIC_COMMIT_MANIFEST.json",
-  "fingerprint_evidence_note": "Repo-local CLEAN/OPS fingerprints; live remote planes deferred to Staging Reality Regression"
+  "finalized_at_utc": "2026-08-21T13:01:32Z",
+  "stop": true
 }

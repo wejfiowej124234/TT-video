@@ -1,12 +1,12 @@
 {
   "stamp": "V9_PRE_PRODUCTION_LOCAL_FINGERPRINT_PACK",
-  "recorded_at_utc": "2026-08-21T13:00:44Z",
-  "allowlist_commit_sha": "992098d48742653250bf7ecfcfefb09562557812",
+  "recorded_at_utc": "2026-08-21T13:01:05Z",
+  "allowlist_commit_sha": "04f970580ed85727a547d66ff53bc650be8d4a86",
   "ops_mother_sha": "3e356617a498b0faac42e4ae457343d36294a770",
   "clean_baseline_sha": "92cc3057a22e919bb52dde0425e23487677da1be",
   "live_note": "Local fingerprint pack covers git-tracked repo surfaces vs CLEAN/OPS only. Live Staging/Production object-storage bytes, running image digests, and remote Indexer checkpoints are NOT_VERIFIED_THIS_TURN and are outside Local PASS scope as deploy is forbidden; Local RELEASE_IDENTITY = pin/baseline/patch commit coherence.",
   "fingerprints": {
-    "head_sha": "992098d48742653250bf7ecfcfefb09562557812",
+    "head_sha": "4138acc5dfd389495a98d897cdd41ecf7f66a907",
     "clean_baseline_sha": "92cc3057a22e919bb52dde0425e23487677da1be",
     "ops_mother_sha": "3e356617a498b0faac42e4ae457343d36294a770",
     "frontend_tree_head": "4056ef2fefe5833cfc3d798637c2e1c3f463e7d0",
