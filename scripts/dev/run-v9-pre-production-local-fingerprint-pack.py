@@ -109,7 +109,21 @@ def git_grep_active(pattern: str) -> list[str]:
 def main() -> None:
     head = run(["git", "rev-parse", "HEAD"]).strip()
     clean = run(["git", "rev-parse", CLEAN_TAG]).strip()
-    porcelain = [ln for ln in run(["git", "status", "--porcelain"]).splitlines() if ln.strip()]
+    porcelain_raw = [ln for ln in run(["git", "status", "--porcelain"]).splitlines() if ln.strip()]
+    ignore_dirty_suffixes = (
+        "V9_PRE_PRODUCTION_LOCAL_FINGERPRINT_PACK.json",
+        "V9_PRE_PRODUCTION_LOCAL_FULL_CLEAN_PASS.json",
+        "V9_PRE_PRODUCTION_LOCAL_FULL_CLEAN_BLOCKED.json",
+    )
+    porcelain = []
+    for ln in porcelain_raw:
+        path = ln[3:].strip().replace("\\", "/")
+        if " -> " in path:
+            path = path.split(" -> ", 1)[1]
+        if any(path.endswith(suf) for suf in ignore_dirty_suffixes):
+            continue
+        porcelain.append(ln)
+
 
     # Layer diffs vs CLEAN (backend / db / cms / docker config)
     scopes = {
