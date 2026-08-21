@@ -28,7 +28,7 @@ Parents: [Target FREEZE](TT-TTG-V9-OWNER-ECONOMIC-TARGET-FREEZE-LATEST.md) · [A
 | Deploy / TTG 5% | `0xe1e732…` |
 | TTG 3% / 7% | `0x010365…` / `0xF34804…` |
 | Q9/Q11/Q12/L1–L3 | Defaults accepted (stake absolute sticky · 83 Global deferred · CPNP orthogonal · old pool residual later · access fee collection may start off-chain · new 3× audits) |
-| MG-TTG | Merchant/Guide TTG RoleStake = **`NOT_REQUIRED` / `DISABLED`** · **非默认待办** · 履约 = USDC 81 + Escrow · Phase1 **不**因此重部署 — [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) |
+| MG-TTG | Merchant/Guide TTG RoleStake = **`NOT_REQUIRED` / `DISABLED`** · **非默认待办** · Guide 履约 = **逐订单 USDC Performance Bond**（≠ 81 Identity）· Merchant Bond **不自动继承** · Phase1 **不**因此重部署 — [Guide Bond](TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md) |
 
 ### Topology (locked)
 
@@ -44,9 +44,10 @@ Order(+country) → Escrow (KEEP EF/SR)
 Buy TTG USDC → NEW Project Pool
 NEW Pool spend → propose → Timelock → 0xF34804 (≤30%/90d live-cap semantics)
 Role Stake NEW · bps × totalSupply() · Steward ACTIVE only
-Merchant/Guide TTG RoleStake = NOT_REQUIRED / DISABLED（非默认待办 · 履约走 USDC 81）
+Merchant/Guide TTG RoleStake = NOT_REQUIRED / DISABLED（非默认待办）
+Guide 履约 = 逐订单 USDC Performance Bond（≠ 81 Identity）· Merchant Bond 独立未确认
 ```
-See [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md).
+See [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) · [Guide Bond](TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md).
 
 ---
 

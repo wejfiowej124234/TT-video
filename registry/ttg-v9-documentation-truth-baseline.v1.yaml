@@ -54,7 +54,13 @@ role_stake:
   merchant: NOT_REQUIRED_DISABLED
   guide: NOT_REQUIRED_DISABLED
   merchant_guide_ttg_default_backlog: false
-  guide_merchant_performance_bond: USDC_IDENTITY_ORDER_RISK_PLUS_ESCROW
+  guide_performance_bond: PER_ORDER_USDC_AFTER_CONFIRM_BEFORE_FULFILL
+  guide_performance_bond_doc: docs/runbook/TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md
+  guide_bond_impl_verdict: NEW_ORDER_BOND_MODULE_REQUIRED
+  identity_81_as_active_performance_bond: false
+  merchant_inherits_guide_per_order_bond: false
+  merchant_bond_status: INDEPENDENT_UNCONFIRMED_OPEN
+  guide_merchant_performance_bond: SUPERSEDED_USE_GUIDE_PER_ORDER_AND_MERCHANT_OPEN
   stake_layer_split_doc: docs/runbook/TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md
   reopen_merchant_guide_ttg: OWNER_GOVERNANCE_UPGRADE_ONLY
   phase1_redeploy_required_for_this_lock: false

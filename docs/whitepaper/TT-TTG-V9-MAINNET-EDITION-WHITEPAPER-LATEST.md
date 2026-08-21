@@ -33,7 +33,7 @@ TravelTrust 是去中心化旅行商业协议栈：
 - **Marketplace** — 发现与撮合  
 - **On-chain Escrow（KEEP）** — 里程碑资金约束与释放  
 - **Fee / Project Pool（NEW）** — 平台服务费与公售 USDC 归集  
-- **Role Stake（NEW）** — 区域主理人 TTG Seat 准入质押；Merchant/Guide TTG = **`NOT_REQUIRED` / `DISABLED`**（非默认待办）；向导/商家履约 = **USDC Identity/Order Risk + Escrow**  
+- **Role Stake（NEW）** — 区域主理人 TTG Seat；Merchant/Guide TTG = **`NOT_REQUIRED` / `DISABLED`**（非默认待办）；向导履约 = **逐订单 USDC Performance Bond**（≠ 81 Identity；完成返还 · Dispute 后可罚没）；商家 Bond **独立未确认**；Escrow = 游客本金正交  
 - **Governance（NEW）** — Governor → 48h SoloTimelock 对参数与外围可升级模块做程序性变更  
 
 **TTG** 是协议治理与预算程序资产，**不是**旅行订单默认结算资产。订单本金以允许列表内稳定币（Mainnet 以 **USDC**）为主，并与协议费路径分轨。
@@ -117,8 +117,8 @@ Fee 调用方（目标）：仅已验证 Escrow / Settlement 路径；Mainnet **
 | 角色 | 状态 | 门槛语义 |
 |------|------|----------|
 | Region Steward | **ACTIVE** | `minStake = live TTG.totalSupply() × country_bps / 10000`（随 burn 下降） |
-| Merchant | **`NOT_REQUIRED` / `DISABLED`** | 不质押 TTG · 履约 = USDC Identity/Order Risk + Escrow · 非默认待办 |
-| Guide | **`NOT_REQUIRED` / `DISABLED`** | 同上 |
+| Merchant | **`NOT_REQUIRED` / `DISABLED`** | 不质押 TTG · 履约押规则 **独立未确认**（不继承 Guide） |
+| Guide | **`NOT_REQUIRED` / `DISABLED`** | 不质押 TTG · 履约 = **逐订单 USDC Performance Bond**（≠ 81 Identity） |
 
 十国初始 Steward bps（Design Lock 部署常量）：CN/US 400 · FR/ES 450 · JP/TH 250 · SG/KR 200 · AU/AE 150。
 
@@ -185,7 +185,7 @@ Governor  →  SoloTimelock (delay = 48h, admin = 0xe1e732…)
 - Token：**NO-MINT** · 无公开 holder burn · Governance Burn 经 Timelock。  
 - Fee：固定 5% 起点 · 变更仅治理 · 国家 payout 经 Timelock 写入。  
 - Pool：90d≤30% 运营上限 · ops 收款固定 Treasury。  
-- Stake：Steward live supply × bps ACTIVE · Merchant/Guide TTG = **NOT_REQUIRED / DISABLED**（非默认待办）· 履约 = USDC 81 + Escrow。  
+- Stake：Steward live supply × bps ACTIVE · Merchant/Guide TTG = **NOT_REQUIRED / DISABLED** · Guide 履约 = 逐订单 USDC Bond（≠ 81）· Merchant Bond 独立未确认 · Escrow 正交。  
 - SoloTimelock：48h 延迟 · admin = Marketing Norm · **≠ Safe**。  
 - AI triad + Sepolia DL_R1 regression + Mainnet Pre-Broadcast Final 为审计候选路径证据；**不等价** `TT_PRODUCTION_GO`。
 

@@ -13,7 +13,9 @@
 |----|------|
 | 25T · NO FURTHER MINT | YES |
 | 十国 steward_stake_bps 分级 · min ∝ live `totalSupply()` | YES |
-| Merchant/Guide TTG RoleStake | **`NOT_REQUIRED` / `DISABLED`** · 非默认待办 · 履约 = USDC 81 + Escrow |
+| Merchant/Guide TTG RoleStake | **`NOT_REQUIRED` / `DISABLED`** · 非默认待办 |
+| Guide 履约 | **逐订单 USDC Performance Bond** · ≠ 81 Identity · `NEW_ORDER_BOND_MODULE_REQUIRED` |
+| Merchant 履约押 | **独立 · 未确认** · 不继承 Guide |
 | 平台费（有主理人） | 5% 订单费内：**45%→申请收款址 · 55%→新总池** |
 | 平台费（无主理人） | **100%→新总池** |
 | Fee Router | **新部署** 按国→收款址（R2=A） |

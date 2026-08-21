@@ -148,8 +148,9 @@ Treasury `0xF34804…`：7% TTG +（若 R1-A）仅 pause。
 |----------|------------------|--------|
 | FeeRouter KEEP | **NO**（四腿 ACTIVE 叙事 + 无 per-steward 路由） | **Redeploy** Steward-aware router（R2-A） |
 | RegionStewardStakePool | **NO**（immutable supply） | **Redeploy** live `totalSupply()` |
-| Identity Merchant/Guide pools (USDC 81) | **KEEP living** for Guide/Merchant **performance** bond | ≠ TTG RoleStake · TTG M/G = **NOT_REQUIRED/DISABLED** |
-| V9 RoleStake Merchant/Guide flags | **NOT_REQUIRED / DISABLED** · 非默认待办 | 不必为本波部署/开启；重启须 Owner 另书面治理授权 |
+| Identity Merchant/Guide pools (USDC 81) | **LEGACY / NOT_ACTIVE_PERFORMANCE_BOND** | 无 orderId 绑定 · **禁止**冒充 Guide 逐订单履约押 |
+| Guide per-order USDC Bond | **`NEW_ORDER_BOND_MODULE_REQUIRED`** | Owner ACTIVE 真源 · [Guide Bond](TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md) |
+| V9 RoleStake Merchant/Guide flags | **NOT_REQUIRED / DISABLED** · 非默认待办 | 不必为本波部署/开启 |
 | GovernanceTreasuryP4Cap KEEP | **YES** for Path A + 90d/30% | **KEEP_AND_REWIRE** spender→NEW Timelock |
 | V9 Token/Vault/PM/Governor sources | Monetary OK · Guardian≠改价 | Deploy with Norm ops；R1 定改价路径 |
 | Old Timelock+Safe | **NO** as ACTIVE root | **NEW Timelock** |

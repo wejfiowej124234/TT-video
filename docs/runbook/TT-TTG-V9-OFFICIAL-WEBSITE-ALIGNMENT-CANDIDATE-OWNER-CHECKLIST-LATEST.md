@@ -37,7 +37,7 @@
 | A4 | 公售 USDC | → **NEW ProjectPool**（禁止 ACTIVE 写旧 P4Cap） |
 | A5 | 平台费 | **5%（500 bps）** → 有主理人 **45% 登记钱包 / 55% ProjectPool** · 无主理人 **100% ProjectPool** |
 | A6 | 准入 | **300,000 USDC** Access Fee |
-| A7 | Role Stake | Steward **ACTIVE** · live `totalSupply()×bps` · Merchant/Guide TTG = **`NOT_REQUIRED` / `DISABLED`**（非默认待办）· 履约 = USDC 81 + Escrow |
+| A7 | Role Stake / Bond | Steward TTG ACTIVE · M/G TTG **NOT_REQUIRED/DISABLED** · Guide = **逐订单 USDC Bond**（≠ 81）· Merchant Bond 独立未确认 · Escrow 正交 |
 | A8 | Pool 拨付 | **90d ≤ 30%** · ops `to` = Treasury Norm |
 | A9 | 治理 | Governor → **48h SoloTimelock** · **无 Safe** 作 V9 Official admin |
 | A10 | 架构 | **NEW / KEEP / LEGACY** |
@@ -66,8 +66,8 @@
 | ID | 路由 / 表面 | 现状问题 | 拟升级动作 | Owner |
 |----|-------------|----------|------------|-------|
 | W-P1-01 | `/traveltrust` FAQ / 兑换 CTA | “如何获得 TTG” 须保持关闭窗 | CTA → 规则预览 + **非发售邀请**；链到白皮书 / GitHub Official Docs | ☐ |
-| W-P1-02 | `/traveltrust#roles` Merchant/Guide | 产品角色 CTA 易被理解成 TTG Role Stake 已开 | 写清：**不质押 TTG** · 履约 = USDC Identity/Order Risk · RoleStake M/G = NOT_REQUIRED/DISABLED | ☐ |
-| W-P1-03 | `/staking` | Guide/Provider USDC 身份押易与主理人 TTG Seat 混淆 | 页眉：**USDC 履约押 ≠ 主理人 TTG Seat** · M/G TTG RoleStake 不开 | ☐ |
+| W-P1-02 | `/traveltrust#roles` Merchant/Guide | 产品角色 CTA 易被理解成 TTG Role Stake 已开 | 写清：向导**不质押 TTG** · 履约=**确认订单后逐单 USDC Bond** · 商家 Bond 未自动等同 | ☐ |
+| W-P1-03 | `/staking` | Guide/Provider USDC 身份押易与主理人 TTG Seat / 履约押混淆 | 页眉：**81 Identity ≠ Guide per-order Bond** · Bond = `NEW_ORDER_BOND_MODULE_REQUIRED` | ☐ |
 | W-P1-04 | `/governance/fee-routes` | 名称与旧 FeeRouter 绑定 | 标题/导语区分 **KEEP Money Path 事件** vs **NEW CountryFeeRouter**；未切针前诚实 pending | ☐ |
 | W-P1-05 | Footer / Protocol / Brand / Assurance | 白皮书多为 placeholder | 链到 Mainnet Edition Whitepaper + `docs/github-official`；审计页保持诚实 | ☐ |
 | W-P1-06 | Explorer / Etherscan 链接 | 可能仍指旧地址 | 一律指向 ACTIVE Registry 地址 | ☐ |

@@ -1,0 +1,43 @@
+{
+  "stamp": "V9_GUIDE_PER_ORDER_PERFORMANCE_BOND_TRUTH_CORRECTION",
+  "status": "LOCKED",
+  "recorded_at_utc": "2026-08-21T13:51:11Z",
+  "supersedes_active_phrasing": [
+    "Guide/Merchant performance = USDC 81 Identity Stake",
+    "long-lived identity stake = order performance bond",
+    "\u5c65\u7ea6 = USDC 81 + Escrow as Guide ACTIVE performance"
+  ],
+  "guide": {
+    "ttg_role_stake": "NOT_REQUIRED_DISABLED",
+    "performance_bond": "PER_ORDER_USDC",
+    "lock_when": "after_tourist_and_guide_confirm_before_fulfill",
+    "refund_on_success": "FULL",
+    "slash": "only_after_escrow_dispute_adjudication"
+  },
+  "merchant": {
+    "ttg_role_stake": "NOT_REQUIRED_DISABLED",
+    "inherits_guide_per_order_bond": false,
+    "status": "INDEPENDENT_UNCONFIRMED_OPEN"
+  },
+  "orthogonal": [
+    "Escrow_tourist_principal",
+    "Steward_TTG_Seat",
+    "Access_Fee_300k",
+    "Platform_fee_45_55"
+  ],
+  "impl_audit": {
+    "GuideIdentityStakingPool": "LEGACY_NOT_ACTIVE_PERFORMANCE_BOND",
+    "orderId_binding": false,
+    "per_order_refund_loop": false,
+    "escrow_dispute_hard_bind": false,
+    "verdict": "NEW_ORDER_BOND_MODULE_REQUIRED"
+  },
+  "doc": "docs/runbook/TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md",
+  "tt_production_go": "NO_GO",
+  "forbidden": [
+    "Phase1 redeploy",
+    "Staging/Production mutate",
+    "TT_PRODUCTION_GO flip",
+    "twist business to fit 81 aggregate lockedOrder"
+  ]
+}

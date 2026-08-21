@@ -14,8 +14,9 @@ Parents: [Owner Ops Fee Model](TT-TTG-V9-OWNER-OPS-FEE-MODEL-LATEST.md) · [Mone
 |--------|-----------|--------|
 | **区域主理人准入费** | **300,000 USDC** → `0xe1e732EfBf9B010a9204054467256d3d93f3CdD4` | 平台准入费 · **≠** 质押 · **≠** FeeRouter |
 | **区域主理人 TTG 质押** | **需要** · 十国 bps × **live** `totalSupply()` | Seat 责任 · [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) |
-| **商家 / 向导 TTG 质押** | **`NOT_REQUIRED` / `DISABLED`** · **非默认待办** | 履约 **只**走 USDC Identity/Order Risk（81）+ Escrow；开启须 Owner 另书面治理授权 |
-| **商家 / 向导 USDC 履约押** | **需要**（81 Identity / Order Risk） | 违约优先扣 USDC · **不动 TTG** |
+| **商家 / 向导 TTG 质押** | **`NOT_REQUIRED` / `DISABLED`** · **非默认待办** | 开启须 Owner 另书面治理授权 |
+| **向导履约押** | **逐订单 USDC Performance Bond** | 确认订单后、履约前按 orderId 锁入 · 完成全额返还 · 仅 Dispute 裁决后可罚没 · **≠** 81 Identity ACTIVE · [Guide Bond](TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md) |
+| **商家履约押** | **独立 · 未确认 / OPEN** | **不自动继承** Guide 逐订单规则 |
 | **平台服务费（有主理人）** | **45% → 申请时提供的主理人收款钱包** · **55% → P4Cap** | Owner 2026-08-21 |
 | **平台服务费（无主理人）** | **100% → P4Cap**（订单平台费；Owner 口述费率层「5%」见 Remaining Conflicts R3） | |
 | **FeeRouter `globalStakers`** | **EXIT ACTIVE** | 旧四腿不符合 → **Redeploy** 倾向 |
@@ -40,13 +41,15 @@ Parents: [Owner Ops Fee Model](TT-TTG-V9-OWNER-OPS-FEE-MODEL-LATEST.md) · [Mone
  Steward   Merchant   Guide
   ACTIVE   NOT_REQ   NOT_REQ
   ~4% TTG  DISABLED  DISABLED
-           ───────── 履约另轨 ─────────
-           USDC Identity / Order Risk (81) + Escrow
-           违约扣 USDC · 不动 TTG
+           ──── Guide 履约另轨 ────
+           逐订单 USDC Performance Bond（orderId）
+           + Escrow（游客本金 · 正交）
+           Merchant Bond：独立 · 未确认
+           81 Identity：LEGACY · ≠ ACTIVE 履约真源
 ```
 
-**三层写死：** TTG = 治理/区域席位 · USDC Stake = 向导商家履约保证 · Escrow = 订单本金/争议。  
-详见 [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md)。
+**分层写死：** TTG = 治理/主理人 Seat · Guide 逐订单 USDC Bond = 履约保证 · Escrow = 订单本金 · 81 Identity ≠ ACTIVE 履约。  
+详见 [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) · [Guide Bond](TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md)。
 
 **Governance path for stake params:** Governor → vote → **NEW Timelock** → update role stake config / enable role.  
 **Does not** remint Token.
@@ -97,25 +100,21 @@ minStake(jurisdiction) = ttg.totalSupply() × steward_stake_bps[j] / 10_000
 
 **供应注意：** 同 bps 在 **25T genesis** 下绝对枚数远大于旧 10M 面额表；以 **活 `totalSupply()` × bps** 为准，Registry 绝对列仅作展示缓存。
 
-### Merchant / Guide — TTG RoleStake = NOT_REQUIRED（Owner lock 2026-08-21）
+### Merchant / Guide — TTG NOT_REQUIRED · Guide bond ≠ 81 Identity（Owner 2026-08-21）
 
-| Role | Contract surface | Owner living |
-|------|------------------|--------------|
-| Merchant (Provider) | `ProviderIdentityStakingPool`（**USDC** 81）· V9 RoleStake `RoleId.Merchant` 开关位 | **履约 = USDC** · TTG RoleStake = **`NOT_REQUIRED` / `DISABLED`** · **非默认待办** |
-| Guide | `GuideIdentityStakingPool`（**USDC** 81）· V9 RoleStake `RoleId.Guide` 开关位 | 同上 |
-
-**Target shape (Owner locked):**
+| Role | Living performance | TTG RoleStake |
+|------|--------------------|---------------|
+| Guide | **逐订单 USDC Performance Bond** · Escrow 正交 · 实现 **`NEW_ORDER_BOND_MODULE_REQUIRED`** | **`NOT_REQUIRED` / `DISABLED`** |
+| Merchant | **独立 · 未确认 / OPEN** · **不继承** Guide 逐订单规则 | **`NOT_REQUIRED` / `DISABLED`** |
 
 ```text
-REGION_STEWARD → per-country bps · ACTIVE · min = live totalSupply × bps · TTG Seat
-MERCHANT       → TTG RoleStake NOT_REQUIRED / DISABLED · 履约 = USDC 81 + Escrow
-GUIDE          → TTG RoleStake NOT_REQUIRED / DISABLED · 履约 = USDC 81 + Escrow
+REGION_STEWARD → TTG Seat · ACTIVE · live totalSupply × bps
+GUIDE          → TTG NOT_REQUIRED · per-order USDC Bond ACTIVE（≠ 81 Identity）
+MERCHANT       → TTG NOT_REQUIRED · bond rules independent / OPEN
 ```
 
-工程可保留 RoleStake 角色枚举开关（现 false）。**产品/白皮书/官网不得再把 Merchant/Guide TTG 写成「未来默认要开的 TBD」。**  
-重新开启 = **仅** Owner 另开治理升级书面授权。**已部署 Phase1 不必为此修改或重部署。**
-
-SSOT: [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) · 81 身份质押与订单押金。
+`GuideIdentityStakingPool` / 81：**LEGACY / NOT_ACTIVE_PERFORMANCE_BOND**（无 orderId 绑定）· **禁止**再标 ACTIVE「履约=81 Identity」。  
+SSOT: [Guide Bond](TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md)。
 
 ---
 
@@ -147,16 +146,16 @@ SSOT: [Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) · 81 身
 1. Narrative / audits / Root Replacement：**质押 = Role Stake**；**分账 = FeeRouter USDC**。  
 2. 不再把 Option II「GlobalStakersFeeVault」当 Safe-exit 默认。  
 3. V9 remint **不**重写 Seat 经济为 Fee 腿；Stake 池 **另轨** 绑 NEW TTG。  
-4. Merchant/Guide：**TTG RoleStake = `NOT_REQUIRED` / `DISABLED` · 非默认待办**；履约 = USDC 81 + Escrow。  
+4. Merchant/Guide：**TTG RoleStake = `NOT_REQUIRED` / `DISABLED` · 非默认待办**；Guide 履约 = 逐订单 USDC Bond（≠ 81）；Merchant Bond 独立未确认。  
 5. 改十国 bps / 统一 4% / 改 FeeRouter 四腿 → **须 Owner 书面经济授权**（本文件只定拆分与 ACTIVE 语义）。
 
 ---
 
 ## 中文要点
 
-- **TTG 质押**只服务 **区域主理人 Seat**（十国表 + live supply）；商家/向导 **不质押 TTG**（`NOT_REQUIRED` / `DISABLED` · 非默认待办）。  
-- **向导/商家履约** = **USDC Identity/Order Risk（81）+ Escrow**；违约优先扣 USDC，不动 TTG。  
+- **TTG 质押**只服务 **区域主理人 Seat**；商家/向导 **不质押 TTG**（`NOT_REQUIRED` / `DISABLED` · 非默认待办）。  
+- **向导履约** = **逐订单 USDC Performance Bond**（完成返还 · Dispute 后才可罚没）· **≠** 81 Identity ACTIVE；Escrow = 游客本金正交。  
+- **商家履约押** = **独立 · 未确认**（不继承 Guide）。  
 - **FeeRouter 不再含「质押」概念**；`globalStakers 35.75%` **退出 Owner ACTIVE**。  
-- **30万 USDC** 准入费与 **主理人 TTG Seat** 双轨并行（L5 已写）。  
-- **4% 不写进不可升级 Token**；走 Steward Role Stake / 治理升级。  
-- 三层 SSOT：[Stake Layer Split](TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md)。
+- **30万 USDC** 准入费与 **主理人 TTG Seat** 双轨并行。  
+- 实现缺口：Guide Bond = **`NEW_ORDER_BOND_MODULE_REQUIRED`** — [Guide Bond](TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md)。

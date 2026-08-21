@@ -4,8 +4,10 @@
   "recorded_at_utc": "2026-08-21T13:40:00Z",
   "layers": {
     "ttg_seat": "RegionSteward_only",
-    "usdc_identity_order_risk": "Guide_and_Merchant_performance",
-    "escrow": "order_principal_and_dispute"
+    "guide_per_order_usdc_bond": "Guide_ACTIVE",
+    "escrow": "tourist_principal",
+    "identity_81": "LEGACY_NOT_ACTIVE_PERFORMANCE_BOND",
+    "merchant_bond": "INDEPENDENT_UNCONFIRMED_OPEN"
   },
   "merchant_guide_ttg_role_stake": "NOT_REQUIRED_DISABLED",
   "default_backlog": false,
@@ -44,5 +46,6 @@
     "Phase1 redeploy/mutate",
     "Staging/Production change",
     "TT_PRODUCTION_GO flip"
-  ]
+  ],
+  "guide_performance_correction": "V9_GUIDE_PER_ORDER_PERFORMANCE_BOND_TRUTH_CORRECTION"
 }

@@ -20,8 +20,8 @@ TTG V9
 ├─ Role Stake  (⊥ FeeRouter)
 │  ├─ Region Steward · steward_stake_bps[country] × TTG_V9.totalSupply()   ACTIVE
 │  │     CN/US 4% · FR/ES 4.5% · JP/TH 2.5% · SG/KR 2% · AU/AE 1.5%
-│  ├─ Merchant · NOT_REQUIRED / DISABLED · 履约 = USDC 81 + Escrow · 非默认待办
-│  └─ Guide    · NOT_REQUIRED / DISABLED · 履约 = USDC 81 + Escrow · 非默认待办
+│  ├─ Merchant · NOT_REQUIRED / DISABLED · bond 规则独立 · 未确认 / OPEN
+│  └─ Guide    · NOT_REQUIRED / DISABLED · 履约 = 逐订单 USDC Performance Bond（≠ 81 Identity）
 │        （TTG RoleStake 仅 Owner 另开治理升级方可重启 · ≠ 默认 TBD）
 │
 ├─ Steward Access Fee
