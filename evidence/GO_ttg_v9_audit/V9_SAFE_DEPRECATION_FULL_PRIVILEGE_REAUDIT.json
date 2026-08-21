@@ -1,0 +1,25 @@
+{
+  "stamp": "V9_SAFE_DEPRECATION_FULL_PRIVILEGE_REAUDIT",
+  "issued_at": "2026-08-21T05:25:39Z",
+  "status": "MAINNET_BROADCAST_PAUSED",
+  "reason": "Owner deprecated Safe 0x96491aa894658ff7946506318c49F3c76b8f40e7",
+  "candidate_r2_final": "FROZEN_UNCHANGED",
+  "candidate_manifest_sha256": "sha256:59c81dbe55beeaeddae8bbd16b1a7e4f63549fa3b30d012e0387abd06887f92b",
+  "tt_production_go": "UNCHANGED_NOT_TOUCHED",
+  "mainnet_broadcast": "FORBIDDEN_UNTIL_NEW_TOPOLOGY_PLUS_REGRESSION_PLUS_CUTOVER",
+  "target_ops": {
+    "deployer_only": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+    "guardian_pause_only": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736",
+    "safe_deprecated": "0x96491aa894658ff7946506318c49F3c76b8f40e7"
+  },
+  "timelock_safe_admin_verdict": "CANNOT_LEGALLY_REMOVE_OR_REPLACE_ON_LIVE_BYTECODE",
+  "timelock_redeploy_required": true,
+  "audit_doc": "docs/runbook/TT-TTG-V9-SAFE-DEPRECATION-FULL-PRIVILEGE-REAUDIT-LATEST.md",
+  "next_gates": [
+    "new_privilege_topology_design",
+    "forge_regression",
+    "sepolia_regression",
+    "cutover_recheck",
+    "then_owner_mainnet_auth_again"
+  ]
+}

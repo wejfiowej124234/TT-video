@@ -1,0 +1,36 @@
+{
+  "stamp": "V9_REMINT_LOCAL_PASS",
+  "status": "PASS",
+  "phase": "1_local",
+  "final_norm": "docs/runbook/TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md",
+  "hard_gates": [
+    "G1_NO_MINT",
+    "G2_GENESIS",
+    "G3_GOV_BURN",
+    "G4_QUORUM_25T",
+    "G5_UUPS_RESCUE",
+    "G6_GOV_CUTOVER_LOCAL",
+    "G7_DEPLOY_TOPOLOGY"
+  ],
+  "v8": "LEGACY_NO_MIGRATION",
+  "keep": [
+    "timelock",
+    "p4cap",
+    "money_path"
+  ],
+  "not": [
+    "sepolia",
+    "mainnet",
+    "production_go",
+    "v8_migration"
+  ],
+  "gate_script": "scripts/dev/run-ttg-v9-remint-local-gate.sh",
+  "forge_profile": "ttg_v9",
+  "solc_min": "0.8.36",
+  "tests": {
+    "TtgV9BatchPrimaryMarketTest": true,
+    "TtgV9RemintLocalTest": true,
+    "TtgV9RemintG1G7HardGatesTest": true
+  },
+  "stamped_at_utc": "2026-08-21T01:20:31Z"
+}

@@ -1,0 +1,23 @@
+{
+  "stamp": "V9_DOC_TRUTH_CONVERGENCE_SCAN",
+  "files_scanned": 2257,
+  "files_with_unmarked_hits": 0,
+  "OLD_V9_ACTIVE_DOCUMENT_REFERENCES": 0,
+  "ACTIVE_TRUTH_CONFLICTS": 0,
+  "UNRESOLVED_V9_DOC_DRIFT": 0,
+  "by_class": {
+    "R2_FINAL_unmarked": 0,
+    "globalStakers_unmarked": 0,
+    "sale_to_p4cap_unmarked": 0,
+    "safe_v9_admin_unmarked": 0,
+    "fully_active_premature": 0
+  },
+  "hits": {
+    "R2_FINAL_unmarked": [],
+    "globalStakers_unmarked": [],
+    "sale_to_p4cap_unmarked": [],
+    "safe_v9_admin_unmarked": [],
+    "fully_active_premature": []
+  },
+  "hit_files": []
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "traveltrust.ttg_v9_mainnet_dl_r1_phase2_freeze_wait.v1",
+  "stamp": "V9_MAINNET_DL_R1_PHASE2_FREEZE_WAIT",
+  "recorded_at_utc": "2026-08-21T11:05:00Z",
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "remediation_wave": "DL_R1",
+  "phase1_stamp": "V9_MAINNET_BROADCAST_PHASE1_DEPLOYED_SCHEDULED",
+  "freeze": {
+    "candidate_sources_bytecode": true,
+    "phase1_deployed_addresses": true,
+    "forbid_redesign": true,
+    "forbid_redeploy": true,
+    "forbid_address_swap": true,
+    "forbid_live_param_edit": true
+  },
+  "frozen_addresses": {
+    "solo_timelock": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+    "project_pool": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+    "country_fee_router": "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970",
+    "ttg": "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9",
+    "vault": "0xe87378e49Ead2E1a422B8cae118d3C905Ee45B6C",
+    "market": "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b",
+    "governor": "0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c",
+    "stake_pool": "0xf6A1Fb4435E463117a666818611F49D03F91E7A7",
+    "keep_settlement_router": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "keep_escrow_factory": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+    "keep_timelock_legacy_only_for_sr_retarget": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "legacy_safe_admin_of_keep_timelock": "0x96491aa894658ff7946506318c49F3c76b8f40e7"
+  },
+  "solo_scheduled_ops_only": {
+    "idBind": "0x8b96ff20e9b91aabc9e53c20d4555e311cc0813e26e84a123b6ef5ff8176d358",
+    "idSeed": "0x4da49a34030eba44cb5112bb65cd2a3040179589500a00c347741097b38dfaa0",
+    "idCallerSr": "0x2265e858d10f7c80c117f2e6381100379ef03e492aee527f7c8e15d12a0f19f4",
+    "idCallerEf": "0x3818f4ce821f840cc51a7c0d564c935b776aa0a9ee0e0b088bc132f0482e0a18",
+    "earliest_eta_utc": "2026-08-23T10:52:59Z"
+  },
+  "keep_one_shot_retarget": {
+    "action": "SettlementRouter.setFeeRouter(CountryFeeRouter)",
+    "fee_router": "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970",
+    "settlement_router": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "keep_timelock": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "safe": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "salt": "0x964c55231547a832af7e9e496bd90442888950def8320daf451da13ce255fd57",
+    "salt_string": "ttg-v9-dl-r1-sr-setFeeRouter-1",
+    "inner_setFeeRouter_calldata": "0xc267ada40000000000000000000000005afd2e0c8b9fa4eecfde4bf582d3b282d28f4970",
+    "operation_id": "0xaa03ea8793347f61c9d8317306e9a07220a0ceddbeb083c527f1a52d19929da4",
+    "timelock_schedule_calldata": "0xb0e58bc9000000000000000000000000e5c3ed16741eb195fae11b0c1449a79dd675b37200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080964c55231547a832af7e9e496bd90442888950def8320daf451da13ce255fd570000000000000000000000000000000000000000000000000000000000000024c267ada40000000000000000000000005afd2e0c8b9fa4eecfde4bf582d3b282d28f497000000000000000000000000000000000000000000000000000000000",
+    "timelock_execute_calldata": "0xe751f271aa03ea8793347f61c9d8317306e9a07220a0ceddbeb083c527f1a52d19929da4",
+    "path": "Legacy Safe \u2192 KEEP Timelock.schedule \u2192 (KEEP 48h) \u2192 execute",
+    "note": "Safe/KEEP Timelock are NOT Official V9 ACTIVE governance root; one-time Money Path retarget only"
+  },
+  "still_forbidden": [
+    "public_sale_open",
+    "official_www_pin_cutover",
+    "TT_PRODUCTION_GO_flip"
+  ]
+}

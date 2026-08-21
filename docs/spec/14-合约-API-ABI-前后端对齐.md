@@ -1,5 +1,10 @@
 # 合约、API、ABI 与前后端对齐说明
 
+
+> **STATUS (V9 Documentation Truth Convergence · phase-2):** **SUPERSEDED as Official ACTIVE V9 path** · **DO_NOT_USE_AS_ACTIVE_TRUTH** · **HISTORICAL**.  
+> Sole living upstream: [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Public-sale USDC→P4Cap · globalStakers 35.75% · R2_FINAL/Remint · Safe/old Timelock as V9 Official admin = **LEGACY / SUPERSEDED**. Evidence retained.
+
 本文为**合约接口、API 路由、ABI 放置与前后端调用**的单源对齐文档，便于实现时 04、crates/api、frontend、contracts 保持一致。**权威依据**：合约见 [01-总库总览](01-总库总览.md) §4/§5、[02-架构设计](02-架构设计.md) §十、[contracts/README](../../contracts/README.md)；API 见 [04-后端与API](04-后端与API.md) §三；DApp 见 [06-DApp架构总览](06-DApp架构总览.md)、[09-技术架构总览](09-技术架构总览-v1.0.md) §2.7。
 
 **架构可视化（链上/链下边界与主链数据流）**：[18-TravelTrust-全系统架构图](18-TravelTrust-全系统架构图.md)、[18-补充-TravelTrust-全系统架构层级图-最终版](18-补充-TravelTrust-全系统架构层级图-最终版.md)。**订单与合约协同落地**仍以本文 + **04 §3.4** + [53-阶段开发技术文档](53-阶段开发技术文档.md) 为准。

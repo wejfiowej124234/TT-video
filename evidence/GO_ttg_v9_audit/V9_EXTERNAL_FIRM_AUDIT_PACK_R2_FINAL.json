@@ -1,0 +1,176 @@
+{
+  "package_id": "V9_EXTERNAL_FIRM_AUDIT_PACK_R2_FINAL",
+  "status": "LOCKED_FOR_EXTERNAL_FIRM",
+  "locked_at_utc": "2026-08-21T05:02:39Z",
+  "candidate_id": "V9_AUDIT_CANDIDATE_R2_FINAL",
+  "candidate_manifest": "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R2_FINAL_MANIFEST.json",
+  "candidate_manifest_sha256": "sha256:59c81dbe55beeaeddae8bbd16b1a7e4f63549fa3b30d012e0387abd06887f92b",
+  "candidate_frozen_at_utc": "2026-08-21T03:44:33Z",
+  "candidate_status": "FROZEN_R2_FINAL_POST_A3_OPEN01_FIX",
+  "package_content_lock_sha256": "sha256:bb91ae341b662d6ce29f57d430a9eb104bb34eeb81bebf072832f9e8bdacd2c1",
+  "integrity": {
+    "source_and_bytecode_drift_vs_manifest": [],
+    "exact_match": true
+  },
+  "scope": {
+    "NEW_deep": [
+      "TravelTrustGovernanceTokenV9",
+      "TravelTrustGovernorV9",
+      "TtgPublicSaleVault",
+      "TtgBatchPrimaryMarket",
+      "TtgV9UUPSUpgradeable",
+      "TtgV9ERC1967Proxy",
+      "TtgV9DeployTopology",
+      "TtgV9AtomicDeployer",
+      "TtgV9AtomicDeployerMainnet"
+    ],
+    "KEEP_reality_integration_privilege": [
+      "GovernanceTimelock",
+      "P4Cap_USDC_Treasury",
+      "EscrowFactoryV2Wired",
+      "SettlementRouter",
+      "FeeRouter",
+      "Safe_Guardian"
+    ],
+    "call_chains": [
+      "User_USDC_to_BatchPM_to_P4Cap",
+      "PublicSaleVault_to_BatchPM_to_User_TTG",
+      "TTG_to_GovernorV9_to_Vote_to_Timelock_to_Burn",
+      "Timelock_to_UUPS_Proxy_to_Implementation",
+      "Escrow_to_Settlement_to_FeeRouter_MoneyPath"
+    ],
+    "v8_legacy_isolation": true,
+    "usdc_source_code": "OUT_OF_SCOPE",
+    "v8_full_source_reaudit": "OUT_OF_SCOPE_isolation_only"
+  },
+  "ai_ladder_closed": {
+    "open_critical": 0,
+    "open_high": 0,
+    "regression2": "V9_SEPOLIA_REGRESSION2_PASS",
+    "topology_pass": "V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS",
+    "mainnet_ready_stop": "V9_MAINNET_READY_STOP"
+  },
+  "hard_rules": [
+    "Do not modify R2_FINAL sources or re-freeze while firm engagement is open",
+    "Firm report must cite candidate_manifest_sha256 and package_content_lock_sha256",
+    "Any core security-semantic fix after firm kickoff requires NEW candidate + diff audit + regression; prior firm report void for Mainnet claim",
+    "External firm PASS does not authorize Mainnet broadcast or TT_PRODUCTION_GO",
+    "Owner Mainnet Cutover final review only AFTER firm PASS (when firm elected)",
+    "Mainnet broadcast / Production GO only with independent Owner written auth"
+  ],
+  "sequence": [
+    "1_Send_this_locked_pack_to_external_firm",
+    "2_Firm_PASS_citing_manifest_SHA",
+    "3_Owner_Mainnet_Cutover_final_review",
+    "4_Owner_independent_written_auth_only_then_Mainnet"
+  ],
+  "after_firm_pass_only": {
+    "next": "Owner Mainnet Cutover final review",
+    "runbook": "docs/runbook/TT-TTG-V9-OWNER-MAINNET-GATE-LATEST.md",
+    "mainnet_broadcast": "FORBIDDEN_UNTIL_OWNER_WRITTEN_AUTH",
+    "tt_production_go": "FORBIDDEN_AUTO_FLIP"
+  },
+  "package_files": [
+    {
+      "path": "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R2_FINAL_MANIFEST.json",
+      "bytes": 10983,
+      "sha256": "sha256:59c81dbe55beeaeddae8bbd16b1a7e4f63549fa3b30d012e0387abd06887f92b",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION2_PASS.json",
+      "bytes": 7858,
+      "sha256": "sha256:0433fc9ed78d8dd74391df958eb3ce691e0328c75809de66e61889b561201db1",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "evidence/GO_ttg_v9_audit/V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS.json",
+      "bytes": 3014,
+      "sha256": "sha256:942a74ecba65bf9a2514d25c7ff1f851a2ab000f310a842c465d3b144c29f1bc",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "evidence/GO_ttg_v9_audit/V9_MAINNET_READY_STOP.json",
+      "bytes": 845,
+      "sha256": "sha256:262c6e32778b7a68ef3cfdd4830dbce92b31b2369381a56bb9e4984b152cdbe1",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION_PASS.json",
+      "bytes": 1441,
+      "sha256": "sha256:4dbf1e2950364fa79f52fbe38e90575ae3503142e310906569007d163159d759",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md",
+      "bytes": 7415,
+      "sha256": "sha256:35ec78350cfdd52c02b100342bcab3bf45c89b240662cab82e6b7264dfd031b7",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-INTERNAL-AUDIT-WAVE-FINDINGS-LATEST.md",
+      "bytes": 4767,
+      "sha256": "sha256:08942a2994ab87a4f9efa723a22cc4718a4c00a295f3f3ae5fe3c788570995db",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-RED-TEAM-AUDIT2-FINDINGS-LATEST.md",
+      "bytes": 15846,
+      "sha256": "sha256:3243f60e0283f3404a3177bf6219209670d3a1ba8f61fa7d78858258d3c40b30",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MAINNET-RELEASE-AUDIT3-FINDINGS-LATEST.md",
+      "bytes": 14713,
+      "sha256": "sha256:c67ed88adfd17c16b74fb59ef717de52badb3ce06e065d9631f123c4df8950c3",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OFFICIAL-FULL-TOPOLOGY-AUDIT-LATEST.md",
+      "bytes": 3760,
+      "sha256": "sha256:9d90f4c58bceab0f2a4e4c1266a887fc5fdf102b4e0be692389840ddab49e556",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-MAINNET-GATE-LATEST.md",
+      "bytes": 3610,
+      "sha256": "sha256:d556e0dc620f1bf26756a5bd621a96f06c91fbf739f30757f2c0e3d33b0b34c4",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MONETARY-INVARIANT-LATEST.md",
+      "bytes": 3961,
+      "sha256": "sha256:d634ac6a73523774a1430bf608de7132bff01f79120a825b398bd6017a33d1f0",
+      "required": true,
+      "missing": false
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md",
+      "bytes": 5340,
+      "sha256": "sha256:6b9b3291123a3cdbd2f921655a577da72e54c39d489e6f23aaafe92b09c38806",
+      "required": true,
+      "missing": false
+    }
+  ],
+  "manifest_source_count": 16,
+  "manifest_artifact_count": 12,
+  "compiler": {
+    "solc": "0.8.36",
+    "profile": "ttg_v9",
+    "via_ir": true,
+    "optimizer": true,
+    "optimizer_runs": 200,
+    "evm_version": "paris"
+  }
+}

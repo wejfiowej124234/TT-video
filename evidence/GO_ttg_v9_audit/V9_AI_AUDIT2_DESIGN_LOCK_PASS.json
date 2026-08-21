@@ -1,0 +1,23 @@
+{
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "candidate_manifest_sha256": "sha256:0445b1827100b1bafe8275449b9b33b518b2c0ce86dcb746788a59e282347bdf",
+  "remediation_wave": "DL_R1",
+  "inherits_r2_final_audit_pass": false,
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED",
+  "issued_at": "2026-08-21T09:56:25Z",
+  "stamp": "V9_AI_AUDIT2_DESIGN_LOCK_PASS",
+  "role": "RED_TEAM_ECONOMIC_ATTACKER",
+  "findings_doc": "docs/runbook/TT-TTG-V9-AI-AUDIT2-DESIGN-LOCK-LATEST.md",
+  "open_critical": 0,
+  "open_high": 0,
+  "open_medium": 0,
+  "confirm_ops_gate": [
+    "DL2-M01_FEE_JURISDICTION_MAINNET_WIRE"
+  ],
+  "accept_design": [
+    "SOLO_TIMELOCK_ADMIN",
+    "NO_CANCEL",
+    "OPS_VOTE_CONCENTRATION"
+  ]
+}

@@ -1,4 +1,11 @@
 {
+  "_v9_doc_truth_convergence": {
+    "status": "SUPERSEDED_AS_OFFICIAL_ACTIVE_V9",
+    "disposition": "DO_NOT_USE_AS_ACTIVE_TRUTH",
+    "living_upstream": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+    "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+    "note": "Historical evidence retained; P4Cap sale sink / globalStakers / R2_FINAL / Safe-as-V9-admin are LEGACY for Official V9 ACTIVE"
+  },
   "schema": "traveltrust.ttg_v8_fusion_candidate_pin.v1",
   "stamp": "TTG_V8_FUSION_CANDIDATE_PINNED",
   "issued_at_utc": "2026-08-17T16:40:25Z",
@@ -127,7 +134,11 @@
     "sourcify_v2": "exact_match",
     "stamp": "evidence/GO_ttg_v8_sepolia_rehearsal/TTG_V8_FUSION_SEPOLIA_REHEARSAL_PASS_STOP.json",
     "do_not_use_as_mainnet_address": true,
-    "historical_throwaway_not_this_pin": ["0x7dA9…", "0xA6a7…", "0x8512…"]
+    "historical_throwaway_not_this_pin": [
+      "0x7dA9…",
+      "0xA6a7…",
+      "0x8512…"
+    ]
   },
   "source_classification": {
     "pinned_mainnet_deployable": [

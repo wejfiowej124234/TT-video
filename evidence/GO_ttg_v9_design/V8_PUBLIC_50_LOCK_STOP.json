@@ -1,0 +1,16 @@
+{
+  "stamp": "V8_PUBLIC_50_LOCK_STOP",
+  "parent_verdict": "LEGACY_PUBLIC_INVENTORY_LOCKED_IN_V8_PM",
+  "issued_at_utc": "2026-08-21T00:36:05Z",
+  "stop": true,
+  "dao_untouched": true,
+  "remint": false,
+  "v9_mainnet_deploy": false,
+  "broadcast": false,
+  "artifacts": [
+    "V8_OLD_PM_RECOVERABILITY_VERDICT.json",
+    "PUBLIC_50_RECONCILIATION_AFTER_LOCK.md",
+    "OWNER_DECISION_RECOVERABILITY_COST.md",
+    "old_pm_runtime.hex"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "candidate_id": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "frozen_at": "2026-08-21T09:54:53Z",
+  "status": "FROZEN_FOR_EXTERNAL_AUDIT",
+  "remediation_wave": "DL_R1",
+  "phase": "2_sepolia_design_lock_dl_r1",
+  "baseline": "TT-TTG-V9-OWNER-DESIGN-LOCK + V9_DESIGN_LOCK_LOCAL_PASS + V9_CANONICAL_BASELINE_CLEAN_PASS",
+  "sepolia_pass": "V9_DESIGN_LOCK_SEPOLIA_PASS_STOP",
+  "sepolia_pass_sha256": "sha256:a37b1a9283b12a10cfaa71571c630525bd742dfe33b19b1c954142131e7969c7",
+  "sepolia_bytecode_note": "Sepolia deploy predated DL_R1 (P4 USDC-only + Gov single-op + setGovernor nonzero). Local Exact bytes = DL_R1. Sepolia DL_R1 re-broadcast REQUIRED before Mainnet Cutover Review.",
+  "required_before_mainnet_cutover": [
+    "SEPOLIA_REGRESSION_DL_R1",
+    "AI_AUDIT_1_2_3_OPEN_CHM_0",
+    "OWNER_WRITTEN_MAINNET_AUTH"
+  ],
+  "inherits_r2_final_audit_pass": false,
+  "supersedes_for_fee_root_stake_topology": "V9_AUDIT_CANDIDATE_R2_FINAL",
+  "r2_final_status": "SUPERSEDED_AS_ACTIVE_AUDIT_BASELINE_FOR_DESIGN_LOCK_TOPOLOGY",
+  "dl_r1_fixes": [
+    "DL1-M01_P4_USDC_ONLY",
+    "DL1-M02_PROPOSE_SINGLE_OP",
+    "DL1-L01_SET_GOVERNOR_NONZERO"
+  ],
+  "source_sha256": {
+    "contracts/src/ttg-v9/TtgV9SoloTimelock.sol": "sha256:9d85c32a47e6cbd8944706b263b889995cf1eeb227dda9eb72a744066703dfef",
+    "contracts/src/ttg-v9/TtgV9ProjectPool.sol": "sha256:ddf75cd53d1b13a90064cdc8fb32ba27e28db27ff50d283bbbab531913f8cef5",
+    "contracts/src/ttg-v9/TtgV9CountryFeeRouter.sol": "sha256:54e909371f8cabb0db80584a954df482f23fb6fad94d08f2b3328bd479d2ecdc",
+    "contracts/src/ttg-v9/TtgV9RoleStakePool.sol": "sha256:b73cea7b8a59482702fa279d672dbc765f1c914da1f4356b79259276da12dcb9",
+    "contracts/src/ttg-v9/TtgV9DesignLockConstants.sol": "sha256:7f6b4a26a5cb7c4debc2e56f744109ceed312210ce1c46becea2ed36e708868a",
+    "contracts/src/ttg-v9/TtgPublicSaleVault.sol": "sha256:ccfcc8b40bd85ab95f6cb740a86113a06419e363600621023dba2fd646ad602b",
+    "contracts/src/ttg-v9/TtgBatchPrimaryMarket.sol": "sha256:8c2d67b6a01c239c8a516aef884d5a6b55240ec3d5d8b5041763b3922298a29d",
+    "contracts/src/ttg-v9/TravelTrustGovernanceTokenV9.sol": "sha256:8731621c84fa4a66a1614044a6d0f64bda0b62a59cbb8bb05ce10c20cdec08ad",
+    "contracts/src/ttg-v9/TravelTrustGovernorV9.sol": "sha256:4867a9aa50512b6f7297ca2899a5c2c590a12f5c22f3ee9a0539d7658c4f0bd1",
+    "contracts/src/ttg-v9/TtgV9AtomicDeployer.sol": "sha256:5533c33697f76651087d37bb43ebc7baaa2359810c79c76192ed7a1f95830b07",
+    "contracts/src/ttg-v9/TtgV9DeployTopology.sol": "sha256:1bd2d95c8a7068ad0e7120137fe6b588643d231fc6431a826bee3c5e98203665",
+    "contracts/src/ttg-v9/TtgV9UUPSUpgradeable.sol": "sha256:b9f5a6b5961272b3271cae83ff1949106dd3c3efb70fa4981964c207707fd7f0"
+  },
+  "bytecode_sha256": {
+    "TtgV9ProjectPool": "sha256:6b87819247c0c23fc0a7e93cb0407eefc0dc64d22d11becdc2dd6ea84f02db6c",
+    "TtgV9SoloTimelock": "sha256:012ff299a241e6c579dab6e5301047260af23012f8ad356d0d9938bb56672841",
+    "TravelTrustGovernorV9": "sha256:76e7299070d1f4b510c99c6a692902251fed10a984f8199e38ae3fa0a401c6ff",
+    "TtgV9CountryFeeRouter": "sha256:26fdb4884bc669d8a1ebd9c7927e4d2935d1578a7d233df6b57ca9eb0a6bb50b",
+    "TtgV9RoleStakePool": "sha256:7e1914c3c8de99d2e9ba2c08bb6b54df99a2bdc9b1cd631d16a587b497a04ed0"
+  },
+  "addresses_sepolia_pre_dl_r1": {
+    "USDC": "0x90c95dF0C6e5A1991C35525d834457281FE6979d",
+    "TTG": "0x56dB5e6F81870aE0d3f3da7873D5cb030F88fDC8",
+    "VAULT": "0x4Ac2d1c0184D0C5686E376C273ba1Dc550daC9Bc",
+    "MARKET": "0xBbBB32CE48Cc495aE4623e5C29391ffE5379d594",
+    "GOVERNOR": "0xAb1f6B107e5400f49e190832CB8D7274e5aE8A8C",
+    "TIMELOCK": "0xEB576961e05aD441C7080F7836680fed548A63cd",
+    "POOL": "0x3e1d2f356B91DA98F314B2885503234E02F21A7a",
+    "FEE_ROUTER": "0x8603124648560a0e1AC831FFb019CE3029DB7D45",
+    "FEE_INGRESS": "0x52734fFef21FB9E4cbB9200F0546bA7641E34dD2",
+    "STAKE_POOL": "0xcEe99E4a330d6488721dF66afCAed75Bd776dfee",
+    "BATCH1_START": "1787300424",
+    "TIMELOCK_DELAY": "45",
+    "ID_BIND": "0xefbac864ec742f91ebf2243ade3dcf32ff591788fe3c14a733e06bb8e6b64fe1",
+    "ID_SEED": "0x40e0913d06cac16f965d9d747a800e60a4f6a6559af9cbd3777b72c9fdb70176",
+    "ID_CALLER": "0x8fa0423d7bf232ceb2f3da5ea9d4957051418f33072ccb8c58483fa796064729",
+    "DEPLOYER": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+    "LEGACY_SAFE": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "LEGACY_P4CAP": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "ESCROW_FACTORY": "0x4F232C97eeFc3917efFCB808130731F3d750F29f",
+    "SETTLEMENT_ROUTER": "0xb3b01A3919Aa2CbE3d85B3a18D20916cCcF30046"
+  },
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED_NO_AUTO_FLIP",
+  "stop_after_freeze": true,
+  "checks_local_dl_r1": {
+    "design_lock_local_gate": true,
+    "tests_passed": 11,
+    "canonical_baseline_clean": true,
+    "OLD_V9_ACTIVE_REFERENCES": 0
+  },
+  "next_human_gate": "Complete AI Audit #1/#2/#3 on THIS freeze \u00b7 Sepolia DL_R1 regression before Cutover \u00b7 no Mainnet/GO"
+}

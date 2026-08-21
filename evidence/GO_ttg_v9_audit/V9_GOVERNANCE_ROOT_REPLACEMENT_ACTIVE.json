@@ -1,0 +1,49 @@
+{
+  "stamp": "V9_GOVERNANCE_ROOT_REPLACEMENT_ACTIVE",
+  "issued_at": "2026-08-21T05:34:07Z",
+  "status": "ACTIVE_DESIGN_AND_PHASE_1_2_ONLY",
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED_NOT_TOUCHED",
+  "owner_decision": "Abandon Safe and old GovernanceTimelock ACTIVE roots; redeploy Timelock without Safe",
+  "new_root_target": {
+    "timelock_admin_eoa": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+    "guardian_pause_only": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736",
+    "timelock_delay_seconds_planned": 172800,
+    "safe_dependency": false
+  },
+  "legacy_after_cutover": {
+    "safe": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "old_timelock": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7"
+  },
+  "classifications": {
+    "GovernanceTimelock_old": "REDEPLOY_REQUIRED_THEN_LEGACY",
+    "Safe": "LEGACY_AFTER_CUTOVER_WINDOW",
+    "GovernanceTreasuryP4Cap": "KEEP_AND_REWIRE",
+    "EscrowFactoryV2Wired": "KEEP_AND_REWIRE",
+    "SettlementRouter": "KEEP_AND_REWIRE",
+    "FeeRouter": "KEEP_AND_REWIRE_PLUS_BUCKET_REPIN",
+    "FeeRouter_countryBucket_today": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "FeeRouter_globalStakers_today": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "fee_router_bucket_replacements": "OWNER_PIN_REQUIRED_BEFORE_MAINNET_REWIRE"
+  },
+  "invariants_preserved": [
+    "TTG_V9_25T_MONETARY_INVARIANT",
+    "FIVE_BATCH_PRIMARY_MARKET",
+    "GOVERNANCE_BURN",
+    "MONEY_PATH_ECONOMIC_RULES"
+  ],
+  "ladder": [
+    "local_forge",
+    "sepolia_lifecycle_and_privilege_migration",
+    "new_keep_topology_security_final",
+    "new_cutover_final_review",
+    "new_mainnet_deploy_authorization"
+  ],
+  "r2_final_economics_baseline": "V9_AUDIT_CANDIDATE_R2_FINAL",
+  "candidate_manifest_sha256": "sha256:59c81dbe55beeaeddae8bbd16b1a7e4f63549fa3b30d012e0387abd06887f92b",
+  "audit_doc": "docs/runbook/TT-TTG-V9-GOVERNANCE-ROOT-REPLACEMENT-LATEST.md",
+  "parents": [
+    "V9_SAFE_DEPRECATION_FULL_PRIVILEGE_REAUDIT",
+    "V9_MAINNET_CUTOVER_AUTH_READY_STOP"
+  ]
+}

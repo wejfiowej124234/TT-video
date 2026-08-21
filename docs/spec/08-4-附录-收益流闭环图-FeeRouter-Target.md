@@ -1,5 +1,10 @@
 # 08-4 附录 — 收益流闭环图（FeeRouter · Target）
 
+
+> **STATUS (V9 Documentation Truth Convergence · phase-2):** **SUPERSEDED as Official ACTIVE V9 path** · **DO_NOT_USE_AS_ACTIVE_TRUTH** · **HISTORICAL**.  
+> Sole living upstream: [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Public-sale USDC→P4Cap · globalStakers 35.75% · R2_FINAL/Remint · Safe/old Timelock as V9 Official admin = **LEGACY / SUPERSEDED**. Evidence retained.
+
 **用途**：落实 [08-4-对外口径包](08-4-对外口径包.md) **第 2 章**「企业级须补齐一页**收益流闭环图**」中，与 **可分配订单手续费** 相关的 **Target** 扩展路径；可直接 **复制到 PPT / PDF / 官网说明**（须与法务定稿后的对外话术一致）。  
 **状态**：`Target`（对外/终局图示；**仓库 `contracts/`** 已有 **FeeRouter**/**RegionVault** **Partial/MVP**，与 **`bash scripts/check-55-s13.sh` 2b**、**14 §1.1.1**/**B-116** 互证；**≠** 本附录全链路 **Implemented** 宣称）  
 **参数单源**：[83-区域治理与收益分配-协议白皮书](83-区域治理与收益分配-协议白皮书.md) **§3**、[84-第一阶段10国Country-Pool发行参数总表](84-第一阶段10国Country-Pool发行参数总表.md) **§一**；**「可分配费用 100%」分母与 gas/仲裁/slash 正交**见 **84 §1.1.1**、[Runbook](../../ops/RUNBOOK.md) **§7.1**（与 [08-4 第 2 章](08-4-对外口径包.md) 扩展条一致）。  

@@ -1,0 +1,243 @@
+{
+  "candidate_id": "V9_AUDIT_CANDIDATE_R1_FINAL",
+  "status": "FROZEN_R1_FINAL_FOR_AUDIT3",
+  "frozen_at_utc": "2026-08-21T03:39:41Z",
+  "workspace_git_head_at_freeze_tooling": "1826010bb9093e3d991a1de8ecf29467eb56cbd6",
+  "note": "Pins V9 Solidity under contracts/src/ttg-v9 + forge artifacts (FOUNDRY_PROFILE=ttg_v9). Unrelated dirty-tree files are NOT in this freeze. Audit #3 / Mainnet must target this manifest.",
+  "compiler": {
+    "solc": "0.8.36",
+    "profile": "ttg_v9",
+    "via_ir": true,
+    "optimizer": true,
+    "optimizer_runs": 200,
+    "evm_version": "paris"
+  },
+  "ladder": [
+    "Audit1_SmartContract",
+    "Regression1_Sepolia",
+    "Audit2_RedTeam",
+    "Freeze_R1_FINAL",
+    "Audit3_MainnetRelease",
+    "Regression2_Sepolia",
+    "V9_MAINNET_READY_STOP"
+  ],
+  "gate_before_mainnet": {
+    "critical": 0,
+    "high": 0,
+    "audit2_open_high": 0,
+    "sepolia_regression": "PASS",
+    "sepolia_regression2": "REQUIRED_BEFORE_READY_STOP",
+    "owner_mainnet_auth": "REQUIRED",
+    "auto_production_go": "FORBIDDEN"
+  },
+  "sepolia_remint_pass": {
+    "stamp": "V9_REMINT_SEPOLIA_PASS_STOP",
+    "path": "evidence/GO_ttg_v9_remint_sepolia/V9_REMINT_SEPOLIA_PASS_STOP.json",
+    "sha256": "sha256:0b812791da05488d7e1eb331a43aeae414cd03fdb7e1382d8e25f4392966f62e",
+    "addresses": {
+      "usdc_mock": "0x81a82695a8B4f76309f0D66834C7c8B00c3A0D2B",
+      "ttg_v9": "0xE472FEF27c115642865dD0657af6bf0C697edb3E",
+      "vault": "0x91a48a4F8D303d041F0aA9e227725EE0D5586BDB",
+      "market": "0x40cd86128dC1017157F6eb56D1aAF1253739cBD1",
+      "governor_v9": "0x70B16c9F785E14B1ed9724A594d82B763F1f0308",
+      "legacy_governor": "0x38fb913041735846b467dB1f20BD76fE4b7F2AC5",
+      "mock_timelock": "0x3E6318B1cc3f2d98381D743556A5E5b3BA39d13A",
+      "p4cap_keep": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+      "vault_v2": "0x1505a9C3F79ED1bA4fF37B3592A5088E6F0331Ec",
+      "market_v2": "0xfA02fa4FE8da2B29E69305c602C625a5F48781D8",
+      "junk": "0x76d3Ca26FeAFb9b168f25011947416d606cB611B"
+    },
+    "notes": null
+  },
+  "sepolia_regression1_pass": {
+    "stamp": "V9_SEPOLIA_REGRESSION_PASS",
+    "path": "evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION_PASS.json",
+    "sha256": "sha256:4dbf1e2950364fa79f52fbe38e90575ae3503142e310906569007d163159d759",
+    "addresses": {
+      "ttg": "0xe94A20036EF4d355541bc1aecfAAAdC86c63da68",
+      "vault": "0xDCAe5c386f742bcE726BA85Da61C593fe16a1Af3",
+      "market": "0x4C9aA408226111d960e01aC847Db27607c91e44d",
+      "governor": "0x61615c11800c1207Ce215aBAb48B32DA63BE12c0",
+      "timelock": "0x860ECD67323195E9d816B12Ba4E8157a89dEf1f3"
+    },
+    "notes": [
+      "Batches 1-3 close_cancel unarmed due to forge --slow window overrun; buy+RETURN proven on batches 4-5",
+      "Full post-sale: pause/unpause Timelock, rescue!=TTG, UUPS Timelock-only, Governor burn 1B",
+      "supply_after_burn=24999000000000000000000000000000",
+      "Mainnet broadcast FORBIDDEN; TT_PRODUCTION_GO unchanged"
+    ]
+  },
+  "sources": [
+    {
+      "path": "contracts/src/ttg-v9/ITtgV9Tokens.sol",
+      "sha256": "sha256:5d6a4891d0c6d12415fc09b5c83679c830e82bc6b65ff88429103c4148a04395",
+      "bytes": 989
+    },
+    {
+      "path": "contracts/src/ttg-v9/TravelTrustGovernanceTokenV9.sol",
+      "sha256": "sha256:8731621c84fa4a66a1614044a6d0f64bda0b62a59cbb8bb05ce10c20cdec08ad",
+      "bytes": 9551
+    },
+    {
+      "path": "contracts/src/ttg-v9/TravelTrustGovernorV9.sol",
+      "sha256": "sha256:8602e0ca86f1878432cce142fb87297108b604b456ae7fef92873a616b23da0c",
+      "bytes": 11230
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgBatchPrimaryMarket.sol",
+      "sha256": "sha256:8c2d67b6a01c239c8a516aef884d5a6b55240ec3d5d8b5041763b3922298a29d",
+      "bytes": 12864
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgPublicSaleVault.sol",
+      "sha256": "sha256:ccfcc8b40bd85ab95f6cb740a86113a06419e363600621023dba2fd646ad602b",
+      "bytes": 4570
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9AtomicDeployer.sol",
+      "sha256": "sha256:829c17a54d534d9145af9e3e491ac9650b674e8a33fa3917d070963cf8582c83",
+      "bytes": 1833
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9Constants.sol",
+      "sha256": "sha256:7eab7472010a3856c4cd4ce8aafe335f731e4ca5015c9b3003d31a8aef20f933",
+      "bytes": 2141
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9DaoProposalThresholds.sol",
+      "sha256": "sha256:eb8b97916f171140dd99831ea7d75da51c681ba3926d88d13aa18b812f9b424a",
+      "bytes": 991
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9DeployTopology.sol",
+      "sha256": "sha256:d1f02688b26c38d2f01d015372c41a8a6db7a5d1a825902ade5bfdd878adce2c",
+      "bytes": 3523
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9ERC1967Proxy.sol",
+      "sha256": "sha256:dee57755ae058f18588956d5835300b2825b1b31a38c6f512038f9b4f9eaa0fa",
+      "bytes": 2002
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9GovernanceParams.sol",
+      "sha256": "sha256:536122d61fa861c219a216875655f3df4223bac3ec5a1029dc8e7c343e7ff020",
+      "bytes": 710
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol",
+      "sha256": "sha256:2a645141e614461453dea4d55e7907c6e19ea6811a5547c6a192fe178b69b221",
+      "bytes": 6070
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9SepoliaRehearsal.s.sol",
+      "sha256": "sha256:24ecad2483a13fa98283ce846a622e83f9283dfd95df16bf70f26a0a67fe099f",
+      "bytes": 2667
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9StewardLifecycle.sol",
+      "sha256": "sha256:cc9d6f0e5df9a4736dc2992876fe5435cb942b0664c0f432b5cb2fbec4076432",
+      "bytes": 439
+    },
+    {
+      "path": "contracts/src/ttg-v9/TtgV9UUPSUpgradeable.sol",
+      "sha256": "sha256:b9f5a6b5961272b3271cae83ff1949106dd3c3efb70fa4981964c207707fd7f0",
+      "bytes": 2776
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact": "TravelTrustGovernanceTokenV9.sol/TravelTrustGovernanceTokenV9.json",
+      "contract": "TravelTrustGovernanceTokenV9",
+      "bytecode_sha256": "sha256:35fa85101c761e626a0ee1d102dccce0a7ea575a2a583a7a0e715c4a070be32d",
+      "deployedBytecode_sha256": "sha256:1617d2bdb8c5ff26751212d20cb79f8d01413bc62f4f66cd9cb5e0d3f05471f6",
+      "bytecode_len": 5191
+    },
+    {
+      "artifact": "TtgPublicSaleVault.sol/TtgPublicSaleVault.json",
+      "contract": "TtgPublicSaleVault",
+      "bytecode_sha256": "sha256:484a39528ceb020cc4fc68e0b74bd4dd0cd74e1d0c38121f84adaf6eade5a004",
+      "deployedBytecode_sha256": "sha256:eafd76ccb0e4dfde9d7def3dd9ef5aabf567fefefe025d2d1be495ed18ef5099",
+      "bytecode_len": 3532
+    },
+    {
+      "artifact": "TtgBatchPrimaryMarket.sol/TtgBatchPrimaryMarket.json",
+      "contract": "TtgBatchPrimaryMarket",
+      "bytecode_sha256": "sha256:6c9169e28e7e72161ebb79edb652d5bb036a60714f5deeabfdae254e424780c8",
+      "deployedBytecode_sha256": "sha256:6522990ca50e9de79d85b13c03992019eb1e67631a68d6f2e090a825dea7dbc2",
+      "bytecode_len": 8162
+    },
+    {
+      "artifact": "TravelTrustGovernorV9.sol/TravelTrustGovernorV9.json",
+      "contract": "TravelTrustGovernorV9",
+      "bytecode_sha256": "sha256:679064b0f147a380f7b84966ba1bb14f2a868c4e8ecbbc579e003d7550e7cca3",
+      "deployedBytecode_sha256": "sha256:b002e0b6af91db50de33d1afb82a7fdeb8a1ab4ba5dff2ae2e527d8e1ee027e5",
+      "bytecode_len": 11672
+    },
+    {
+      "artifact": "TtgV9ERC1967Proxy.sol/TtgV9ERC1967Proxy.json",
+      "contract": "TtgV9ERC1967Proxy",
+      "bytecode_sha256": "sha256:fb20b48237bbfc9b0c2a460eaf52713c4b255d8f19363db24c38feed0ccd5944",
+      "deployedBytecode_sha256": "sha256:4da5bb158b9197e44be6e723c5aa0ebd5cbf58f22b4925186ca407dfb8c1a596",
+      "bytecode_len": 596
+    },
+    {
+      "artifact": "TtgV9UUPSUpgradeable.sol/TtgV9UUPSUpgradeable.json",
+      "contract": "TtgV9UUPSUpgradeable",
+      "bytecode_sha256": null,
+      "deployedBytecode_sha256": null,
+      "bytecode_len": 0
+    },
+    {
+      "artifact": "TtgV9DeployTopology.sol/TtgV9DeployTopology.json",
+      "contract": "TtgV9DeployTopology",
+      "bytecode_sha256": "sha256:2c7dfe57c49bda4c99fd59e7705d05faef21f89014fcc41bda214a2e8542d669",
+      "deployedBytecode_sha256": "sha256:e5af4fc0bb66c40072ded4c21edf3bb564210d621fa8c8c99b5d32e859947d9a",
+      "bytecode_len": 87
+    },
+    {
+      "artifact": "TtgV9AtomicDeployer.sol/TtgV9AtomicDeployer.json",
+      "contract": "TtgV9AtomicDeployer",
+      "bytecode_sha256": "sha256:9ddb14c07a8d1008b245cda8ac00bd32bcdda6bbbc32b1ebf0b731adde4d291b",
+      "deployedBytecode_sha256": "sha256:82003e86e0ca5fc794611b37a5824d0ce5dab795a67bc9e67f7761f0d95c01ea",
+      "bytecode_len": 31328
+    },
+    {
+      "artifact": "TtgV9Constants.sol/TtgV9Constants.json",
+      "contract": "TtgV9Constants",
+      "bytecode_sha256": "sha256:8de802a2239a495d75e9fca21946f1f3250d4e6c5e8d5872824039146459e6f9",
+      "deployedBytecode_sha256": "sha256:ef0cbcca8bbf849fd2b086200aea01f350643296831c0a0d965a9551ef478607",
+      "bytecode_len": 87
+    },
+    {
+      "artifact": "TtgV9GovernanceParams.sol/TtgV9GovernanceParams.json",
+      "contract": "TtgV9GovernanceParams",
+      "bytecode_sha256": "sha256:a1612b0c41dc461d7a57cd05f06b41fd3b15a1ea52d31e3e2343e7344777b241",
+      "deployedBytecode_sha256": "sha256:a2bed92ccc7a6538b040704a2ab155f1d8e18178d00e5884074246a1287c6321",
+      "bytecode_len": 87
+    },
+    {
+      "artifact": "TtgV9DaoProposalThresholds.sol/TtgV9DaoProposalThresholds.json",
+      "contract": "TtgV9DaoProposalThresholds",
+      "bytecode_sha256": "sha256:191876f61f171e861c3980194406f0690eaea4f52d813fbd158050fb2aded0f6",
+      "deployedBytecode_sha256": "sha256:e1ca084f0b59c1b35a2482932bd6749ebd5980ad239df9d757322d74f6231ce7",
+      "bytecode_len": 87
+    }
+  ],
+  "core_contracts_in_scope": [
+    "TravelTrustGovernanceTokenV9",
+    "TtgPublicSaleVault",
+    "TtgBatchPrimaryMarket",
+    "TravelTrustGovernorV9",
+    "TtgV9UUPSUpgradeable",
+    "TtgV9ERC1967Proxy",
+    "TtgV9DeployTopology",
+    "TtgV9AtomicDeployer"
+  ],
+  "out_of_scope_for_mainnet_bytecode": [
+    "MockV9Timelock",
+    "MockV9Erc20",
+    "*V2Harness",
+    "TtgV9SepoliaRehearsal",
+    "TtgV9RemintSepoliaRehearsal"
+  ]
+}

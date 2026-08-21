@@ -1,0 +1,101 @@
+# TTG V9 Mainnet Edition Whitepaper — fact citation matrix
+# Machine SSOT for coverage gate. Upstream = Documentation Truth Baseline + Design Lock DL_R1.
+schema: traveltrust.ttg_v9_mainnet_edition_whitepaper_fact_matrix.v1
+stamp: TTG_V9_MAINNET_EDITION_WHITEPAPER_FACT_MATRIX
+status: ACTIVE
+candidate: V9_AUDIT_CANDIDATE_DESIGN_LOCK
+remediation_wave: DL_R1
+mainnet_status: DEPLOYED_PENDING_CUTOVER
+aliases:
+  - MAINNET_DEPLOYED_PHASE1
+  - TIMELOCK_CUTOVER_PENDING
+tt_production_go: NO_GO
+forbid_status_claims:
+  - MAINNET_FULLY_ACTIVE_as_current
+  - ACTIVE_OFFICIAL_as_current
+  - TT_PRODUCTION_GO_GO
+documents:
+  zh: docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md
+  en: docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-EN-LATEST.md
+upstream:
+  - docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md
+  - evidence/GO_ttg_v9_audit/V9_DOCUMENTATION_FULL_CONVERGENCE_PASS.json
+  - docs/runbook/TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md
+  - registry/ttg-v9-documentation-truth-baseline.v1.yaml
+coverage_required:
+  - id: protocol_positioning
+    must_match_any: ["协议定位", "Protocol positioning"]
+  - id: supply_25t_nomint
+    must_match_any: ["25T", "25,000,000,000,000", "NO-MINT"]
+  - id: genesis_50_35_3_5_7
+    must_match_any: ["50 / 35 / 3 / 5 / 7", "50/35/3/5/7"]
+  - id: five_batch_primary_market
+    must_match_any: ["五批", "five Norm batches", "Five Norm", "BATCH"]
+  - id: sale_usdc_project_pool
+    must_match_any: ["USDC → NEW ProjectPool", "Sale USDC → NEW ProjectPool", "公售 USDC → NEW ProjectPool"]
+  - id: platform_fee_5pct
+    must_match_any: ["500 bps", "5%"]
+  - id: steward_45_55
+    must_match_any: ["45%", "45%"]
+  - id: no_steward_100_pool
+    must_match_any: ["100%", "100%"]
+  - id: access_fee_300k
+    must_match_any: ["300,000 USDC", "300k"]
+  - id: role_stake_live_supply
+    must_match_any: ["totalSupply()", "live TTG.totalSupply()"]
+  - id: merchant_guide_disabled
+    must_match_any: ["Merchant/Guide", "Merchant", "DISABLED"]
+  - id: p4_90d_30pct
+    must_match_any: ["90", "30%"]
+  - id: governance_burn
+    must_match_any: ["Governance Burn", "治理 Burn"]
+  - id: governor_solo_timelock_48h
+    must_match_any: ["48h", "SoloTimelock"]
+  - id: periphery_upgradeable_token_nomint
+    must_match_any: ["外围", "Periphery", "NO-MINT"]
+  - id: new_keep_legacy
+    must_match_any: ["NEW / KEEP / LEGACY", "NEW/KEEP/LEGACY"]
+  - id: security_model
+    must_match_any: ["安全模型", "Security model"]
+  - id: legacy_policy_v8_old_v9
+    must_match_any: ["Legacy Policy", "Legacy Policy"]
+  - id: mainnet_phase1_status
+    must_match_any: ["MAINNET_DEPLOYED_PHASE1", "TIMELOCK_CUTOVER_PENDING", "DEPLOYED_PENDING_CUTOVER"]
+  - id: phase1_ttg_address
+    must_match_any: ["0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9"]
+  - id: phase1_project_pool
+    must_match_any: ["0x7B21b421981A3B61cc08c8E22D4fd690E457Df37"]
+  - id: phase1_fee_router
+    must_match_any: ["0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970"]
+  - id: keep_escrow_factory
+    must_match_any: ["0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6"]
+  - id: demote_globalStakers
+    must_match_any: ["globalStakers"]
+  - id: demote_legacy_p4cap
+    must_match_any: ["P4Cap", "0xfB906"]
+  - id: demote_safe_admin
+    must_match_any: ["Safe"]
+  - id: demote_r2_final
+    must_match_any: ["R2_FINAL"]
+  - id: no_production_go
+    must_match_any: ["TT_PRODUCTION_GO", "NO_GO"]
+addresses_phase1_must_cite:
+  ttg: "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9"
+  solo_timelock: "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f"
+  project_pool: "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37"
+  country_fee_router: "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970"
+  vault: "0xe87378e49Ead2E1a422B8cae118d3C905Ee45B6C"
+  market: "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b"
+  governor: "0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c"
+  role_stake: "0xf6A1Fb4435E463117a666818611F49D03F91E7A7"
+legacy_must_demote_near:
+  - pattern: globalStakers
+    require_near: "EXIT|LEGACY|DO_NOT_USE"
+  - pattern: R2_FINAL
+    require_near: "LEGACY|SUPERSEDED|DO_NOT_USE"
+  - pattern: "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+    require_near: "LEGACY|DO_NOT_USE|never"
+  - pattern: "0x96491aa894658ff7946506318c49F3c76b8f40e7"
+    require_near: "LEGACY|one-shot|一次性"
+gate: scripts/dev/run-ttg-v9-mainnet-edition-whitepaper-gate.py
+pass_stamp: evidence/GO_ttg_v9_audit/TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS.json

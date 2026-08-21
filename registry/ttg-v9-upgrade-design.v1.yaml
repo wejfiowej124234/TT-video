@@ -1,8 +1,20 @@
+# SUPERSEDED as Official ACTIVE V9 path · DO_NOT_USE_AS_ACTIVE_TRUTH · HISTORICAL
+# Living upstream: docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md · DL_R1 · DEPLOYED_PENDING_CUTOVER
+# sale→P4Cap / globalStakers / R2_FINAL / Safe-as-V9-admin = LEGACY (do not read as living Official V9 ACTIVE)
+
+# LIVING ACTIVE (2026-08-21 Design Lock cleanup):
+#   active_audit_candidate: V9_AUDIT_CANDIDATE_DESIGN_LOCK
+#   Remint/R1/R2_FINAL stamps below = LEGACY/SUPERSEDED/DO_NOT_USE for Official gates
+#   sepolia living: evidence/GO_ttg_v9_design_lock_sepolia/V9_DESIGN_LOCK_SEPOLIA_PASS_STOP.json
+#   Owner Design Lock SSOT: docs/runbook/TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md
 # TTG V9 upgrade design lock (machine companion)
 # Human SSOT: docs/runbook/TT-TTG-V9-UPGRADE-DESIGN-LATEST.md
 # Remint SSOT: docs/runbook/TT-TTG-V9-FULL-25T-REMINT-DESIGN-LATEST.md
 schema: traveltrust.ttg_v9_upgrade_design.v1
-status: V9_AUDIT_CANDIDATE_R1
+status: SUPERSEDED_REMINT_R1_SEE_DESIGN_LOCK
+active_audit_candidate: V9_AUDIT_CANDIDATE_DESIGN_LOCK
+active_sepolia_stamp: evidence/GO_ttg_v9_design_lock_sepolia/V9_DESIGN_LOCK_SEPOLIA_PASS_STOP.json
+legacy_status: LEGACY_DO_NOT_USE_FOR_OFFICIAL_V9
 final_norm: docs/runbook/TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md
 monetary_invariant: docs/runbook/TT-TTG-V9-MONETARY-INVARIANT-LATEST.md
 monetary_invariant_status: FROZEN

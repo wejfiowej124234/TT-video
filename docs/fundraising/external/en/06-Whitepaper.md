@@ -4,6 +4,8 @@
 
 **TravelTrust · Investor materials** · Release **1.3** · May 2026
 
+> **TTG V9 Mainnet Edition (Official protocol whitepaper · ACTIVE):** [`docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-EN-LATEST.md`](../../whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-EN-LATEST.md) · Design Lock **DL_R1** · stamp `TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS`. This investor note does **not** supersede V9 Token/Fee/Stake/Genesis ACTIVE semantics; on conflict, Mainnet Edition controls.
+
 > **General information only**; **not** an offer of securities or virtual assets in any jurisdiction, and **not** investment, tax, or legal advice. Official disclosures, terms of service, and executed agreements control. This note expands architecture, roles, and market framing for **institutional DD**; **unspecified quantitative claims** (absolute TAM, forecasts, on-chain counts) are available only under **NDA** with **source, as-of date, and environment**—do not treat this as a full economic model or legal package.
 
 ---

@@ -1,0 +1,25 @@
+{
+  "stamp": "V9_PRE_AUDIT_ALIGNMENT_REGISTER",
+  "issued_at": "2026-08-21T05:57:20Z",
+  "status": "PRE_AUDIT_ALIGNMENT_ACTIVE",
+  "three_security_audits": "NOT_STARTED_WAITING_P0",
+  "r2_final_src_drift_after_agent_fixes": 0,
+  "agent_fixes_this_wave": [
+    "pre_audit_alignment_register",
+    "bucket_audit_option_i_ii_language",
+    "root_replacement_local_pass_bucket_line",
+    "cutover_superseded_overlay",
+    "owner_gate_pre_audit_pointer",
+    "global_stakers_fee_vault_option_ii_natspec",
+    "forge_option_I_p4cap_all_legs_test"
+  ],
+  "owner_p0_required": [
+    "P0-1_option_I_or_II",
+    "P0-3_bucket_exact",
+    "P0-4_guardian_exact",
+    "P0-5_legacy_cutover_window"
+  ],
+  "audit_doc": "docs/runbook/TT-TTG-V9-PRE-AUDIT-ALIGNMENT-REGISTER-LATEST.md",
+  "tt_production_go": "UNCHANGED",
+  "sepolia": "FORBIDDEN_UNTIL_P0"
+}

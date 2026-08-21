@@ -1,4 +1,11 @@
 {
+  "_v9_doc_truth_convergence": {
+    "status": "SUPERSEDED_AS_OFFICIAL_ACTIVE_V9",
+    "disposition": "DO_NOT_USE_AS_ACTIVE_TRUTH",
+    "living_upstream": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+    "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+    "note": "Historical evidence retained; P4Cap sale sink / globalStakers / R2_FINAL / Safe-as-V9-admin are LEGACY for Official V9 ACTIVE"
+  },
   "schema": "traveltrust.v311_web3_deployment_inventory.v1",
   "machine_key": "TT_V311_WEB3_DEPLOYMENT_INVENTORY",
   "baseline": "v311_sepolia_clean_baseline",
@@ -22,7 +29,10 @@
       "upgrade_authority": "NONE",
       "safe_timelock_path": false,
       "abi": "contracts/abi/GovernanceVotesToken.json",
-      "env_keys": ["GOVERNANCE_TOKEN_ADDRESS", "NEXT_PUBLIC_GOVERNANCE_TOKEN_ADDRESS"],
+      "env_keys": [
+        "GOVERNANCE_TOKEN_ADDRESS",
+        "NEXT_PUBLIC_GOVERNANCE_TOKEN_ADDRESS"
+      ],
       "roles": [],
       "caps": null,
       "notes": "constructor mint only"
@@ -40,10 +50,23 @@
       "safe_timelock_path": true,
       "admin_role": "Safe is Timelock admin · schedule/execute authority surface",
       "abi": "contracts/abi/GovernanceTimelock.json",
-      "env_keys": ["TIMELOCK_ADDRESS", "GOVERNANCE_TIMELOCK_ADDRESS"],
-      "init_params": {"minDelay": 172800},
-      "roles": ["admin=Safe"],
-      "allowlist_targets": ["GOVERNOR", "P4CAP", "PRIMARY_MARKET", "SEAT", "STAKE"]
+      "env_keys": [
+        "TIMELOCK_ADDRESS",
+        "GOVERNANCE_TIMELOCK_ADDRESS"
+      ],
+      "init_params": {
+        "minDelay": 172800
+      },
+      "roles": [
+        "admin=Safe"
+      ],
+      "allowlist_targets": [
+        "GOVERNOR",
+        "P4CAP",
+        "PRIMARY_MARKET",
+        "SEAT",
+        "STAKE"
+      ]
     },
     {
       "id": "SAFE",
@@ -57,7 +80,9 @@
       "upgrade_authority": "SAFE_OWNERS_MULTISIG",
       "safe_timelock_path": true,
       "controls": "Timelock admin · Owner key / multisig Sign-off required for upgrade path",
-      "env_keys": ["TIMELOCK_ADMIN_ADDRESS"],
+      "env_keys": [
+        "TIMELOCK_ADMIN_ADDRESS"
+      ],
       "owner_required": true
     },
     {
@@ -75,8 +100,13 @@
       "upgrade_selector": "upgradeTo(address)",
       "proxiableUUID": "N/A_NOT_UUPS",
       "abi": "contracts/abi/TravelTrustGovernor.json",
-      "env_keys": ["GOVERNOR_ADDRESS", "NEXT_PUBLIC_GOVERNOR_ADDRESS"],
-      "roles": ["timelock=admin"]
+      "env_keys": [
+        "GOVERNOR_ADDRESS",
+        "NEXT_PUBLIC_GOVERNOR_ADDRESS"
+      ],
+      "roles": [
+        "timelock=admin"
+      ]
     },
     {
       "id": "P4CAP",
@@ -92,8 +122,14 @@
       "safe_timelock_path": true,
       "also_role": "USDC_SINK",
       "abi": "contracts/abi/GovernanceTreasuryP4Cap.json",
-      "env_keys": ["GOVERNANCE_TREASURY_P4CAP_ADDRESS", "TREASURY_P4_CAP_ADDRESS", "TREASURY_USDC_SINK_ADDRESS"],
-      "caps": {"p4_deploy_cap_bps": 3000}
+      "env_keys": [
+        "GOVERNANCE_TREASURY_P4CAP_ADDRESS",
+        "TREASURY_P4_CAP_ADDRESS",
+        "TREASURY_USDC_SINK_ADDRESS"
+      ],
+      "caps": {
+        "p4_deploy_cap_bps": 3000
+      }
     },
     {
       "id": "PRIMARY_MARKET",
@@ -107,9 +143,19 @@
       "upgrade_authority": "Safe→Timelock→upgradeTo",
       "safe_timelock_path": true,
       "abi": "contracts/abi/TtgPrimaryMarketV1.json",
-      "env_keys": ["PRIMARY_MARKET_ADDRESS"],
-      "caps": {"public_round_caps_ttg": [800000, 1200000, 3000000]},
-      "constraints": {"usdcTreasury_must_eq_p4cap": true}
+      "env_keys": [
+        "PRIMARY_MARKET_ADDRESS"
+      ],
+      "caps": {
+        "public_round_caps_ttg": [
+          800000,
+          1200000,
+          3000000
+        ]
+      },
+      "constraints": {
+        "usdcTreasury_must_eq_p4cap": true
+      }
     },
     {
       "id": "SEAT",
@@ -123,7 +169,10 @@
       "upgrade_authority": "Safe→Timelock→upgradeTo",
       "safe_timelock_path": true,
       "abi": "contracts/abi/TtgSeatConcentrationRegistry.json",
-      "env_keys": ["SEAT_REGISTRY_ADDRESS", "TTG_SEAT_CONCENTRATION_REGISTRY_ADDRESS"]
+      "env_keys": [
+        "SEAT_REGISTRY_ADDRESS",
+        "TTG_SEAT_CONCENTRATION_REGISTRY_ADDRESS"
+      ]
     },
     {
       "id": "STAKE",
@@ -137,7 +186,10 @@
       "upgrade_authority": "Safe→Timelock→upgradeTo",
       "safe_timelock_path": true,
       "abi": "contracts/abi/RegionStewardStakePool.json",
-      "env_keys": ["REGION_STEWARD_STAKE_POOL_PROXY_ADDRESS", "NEXT_PUBLIC_REGION_STEWARD_STAKE_POOL_ADDRESS"],
+      "env_keys": [
+        "REGION_STEWARD_STAKE_POOL_PROXY_ADDRESS",
+        "NEXT_PUBLIC_REGION_STEWARD_STAKE_POOL_ADDRESS"
+      ],
       "bootstrap": "10_jurisdiction"
     },
     {
@@ -164,7 +216,9 @@
       "upgrade_authority": "NONE",
       "safe_timelock_path": false,
       "abi": "contracts/abi/EscrowFactory.json",
-      "env_keys": ["ESCROW_FACTORY_ADDRESS"],
+      "env_keys": [
+        "ESCROW_FACTORY_ADDRESS"
+      ],
       "notes": "Not redeployed by V311 clean baseline · included for full deployed coverage"
     },
     {
@@ -174,7 +228,13 @@
       "upgrade_mode": "PER_INSTANCE_CLONE_OR_CREATE",
       "factory": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006",
       "abi": "contracts/abi/Escrow.json",
-      "functional_tests": ["create", "pay", "release", "refund", "dispute"],
+      "functional_tests": [
+        "create",
+        "pay",
+        "release",
+        "refund",
+        "dispute"
+      ],
       "owner_broadcast_required": true
     },
     {
@@ -184,7 +244,9 @@
       "upgrade_mode": "IMMUTABLE",
       "address": "0x81A8009210c5215100564c6E4123F672c4459306",
       "abi": "contracts/abi/FeeRouter.json",
-      "env_keys": ["FEE_ROUTER_ADDRESS"]
+      "env_keys": [
+        "FEE_ROUTER_ADDRESS"
+      ]
     },
     {
       "id": "REGION_VAULT",
@@ -247,7 +309,10 @@
       "scope": "OFFCHAIN_INDEXER",
       "upgrade_mode": "N/A",
       "source": "crates/core/src/indexer_v311_projections.rs",
-      "reconcile": ["scripts/ops/indexer-reconcile-probe.sh", "scripts/gates/check-web3-vacancy-indexer-reconcile-gate.sh"],
+      "reconcile": [
+        "scripts/ops/indexer-reconcile-probe.sh",
+        "scripts/gates/check-web3-vacancy-indexer-reconcile-gate.sh"
+      ],
       "notes": "Event projection + reconcile · not an on-chain deploy"
     }
   ],

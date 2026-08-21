@@ -1,0 +1,47 @@
+{
+  "stamp": "V9_GOV_ROOT_LOCAL_PASS_STOP",
+  "issued_at": "2026-08-21T05:43:22Z",
+  "status": "LOCAL_PASS_STOP",
+  "phase": "1_local_only",
+  "sepolia": "FORBIDDEN_THIS_TURN",
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED_NOT_TOUCHED",
+  "forge": {
+    "match_contract": "TtgGovRootReplacementLocalTest",
+    "passed": 3,
+    "failed": 0,
+    "bps_preserved": [
+      4500,
+      3575,
+      1100,
+      825
+    ]
+  },
+  "fee_router_bucket_audit": {
+    "countryBucket": {
+      "reality": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+      "verdict": "NEW_BUCKET_CONTRACT_REQUIRED",
+      "contract": "RegionVault",
+      "forbid_personal_eoa": true
+    },
+    "globalStakers": {
+      "reality": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+      "verdict": "NEW_BUCKET_CONTRACT_REQUIRED",
+      "contract": "GlobalStakersFeeVault",
+      "forbid_personal_eoa": true
+    },
+    "globalReserve": {
+      "verdict": "KEEP_EXACT_ADDRESS",
+      "address": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+    },
+    "globalOps": {
+      "verdict": "KEEP_EXACT_ADDRESS",
+      "address": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+    }
+  },
+  "zero_safe_active_refs_local_drill": true,
+  "new_companion_source": "contracts/src/GlobalStakersFeeVault.sol",
+  "audit_doc": "docs/runbook/TT-TTG-V9-GOV-ROOT-LOCAL-PASS-AND-BUCKET-AUDIT-LATEST.md",
+  "parent": "V9_GOVERNANCE_ROOT_REPLACEMENT_ACTIVE",
+  "next": "Sepolia lifecycle and privilege migration (separate Owner turn)"
+}

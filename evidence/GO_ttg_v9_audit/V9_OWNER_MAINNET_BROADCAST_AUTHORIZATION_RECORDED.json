@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.ttg_v9_owner_mainnet_broadcast_authorization.v1",
+  "stamp": "V9_OWNER_MAINNET_BROADCAST_AUTHORIZATION_RECORDED",
+  "recorded_at_utc": "2026-08-21T10:31:00Z",
+  "instrument_title": "Owner Mainnet Broadcast Authorization",
+  "active_candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "remediation_wave": "DL_R1",
+  "cited_prerequisites": [
+    "V9_SEPOLIA_REGRESSION_DL_R1_PASS",
+    "V9_MAINNET_PRE_BROADCAST_FINAL_PASS",
+    "V9_MAINNET_DL_R1_BROADCAST_ARTIFACT_PIN.json"
+  ],
+  "chain_id": 1,
+  "authorized": {
+    "ethereum_mainnet_v9_web3_contract_broadcast": true,
+    "necessary_wiring_per_artifact_pin": true
+  },
+  "explicitly_not_authorized": [
+    "TT_PRODUCTION_GO",
+    "official_www_pin_cutover",
+    "formal_public_sale_open",
+    "other_production_behaviors"
+  ],
+  "hard_rules": [
+    "Exact Match sources/bytecode/compiler/constructor-init args/Norm three addresses only",
+    "NEW SoloTimelock + ProjectPool + CountryFeeRouter + RoleStake + TTG V9/Vault/PM/Governor",
+    "KEEP Escrow/Settlement wiring topology only",
+    "FeeRouter callers = verified KEEP Escrow/Settlement only; FORBID FeeIngress",
+    "forbid old V8 / old V9 / R2_FINAL / Safe / old Timelock / old P4Cap / SUPERSEDED as Official ACTIVE path",
+    "per-tx verify vs Artifact Pin; mismatch => STOP; no live param/address auto-fix",
+    "all on-chain verify PASS => stamp V9_MAINNET_DEPLOYMENT_VERIFIED_STOP only and stop"
+  ]
+}

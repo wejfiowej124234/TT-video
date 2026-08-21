@@ -1,5 +1,10 @@
 # TT · TTG V8 live-logic fusion（25T 面额 · DESIGN_ONLY）
 
+
+> **STATUS (V9 Documentation Truth Convergence · phase-2):** **SUPERSEDED as Official ACTIVE V9 path** · **DO_NOT_USE_AS_ACTIVE_TRUTH** · **HISTORICAL**.  
+> Sole living upstream: [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Public-sale USDC→P4Cap · globalStakers 35.75% · R2_FINAL/Remint · Safe/old Timelock as V9 Official admin = **LEGACY / SUPERSEDED**. Evidence retained.
+
 **STATUS:** `DESIGN_ONLY` · **Candidate PINNED** · **① 25/25** · **② fusion Sepolia PASS_STOP** · **③ Preflight CLOSED** · **2A RUNTIME_PASS** · **Verification-1 PASS_STOP** · **`setGovernor` RUNTIME_PASS**（live already NEW · 禁止再发）· **Token Risk Differential `HOLD_NO_CUSTODY_CHANGE`** · **Token Risk Index `HOLD_RESCAN_PASS_STOP`（独立轨 · 不得 unwind V8 针）** · **Official Product Runtime Cutover Precheck `PASS_STOP`** · **Official Contract Registry Cutover Precheck `PASS_STOP`（`/meta` 段已 SUPERSEDED）** · **Official API Runtime ALIGNED** · **Registry/Runtime/L7 Consistency Cert `PASS_STOP`** · **Official Quote Surface Cutover Precheck `STOP`**（编译示意须重编译 · 无零漂移 overlay）· **Official www living = OPS-2026.08.20-v9 (3e356617); cert-era OLD bake daa5ae87 SUPERSEDED** · **FTB V8 Cycle `20260818` ACTIVE**（parent `20260812` immutable）· **NOT** Production GO  
 **Pin:** [TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md](./TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md)  
 **Machine:** [registry/ttg-v8-live-logic-fusion.v1.yaml](../../registry/ttg-v8-live-logic-fusion.v1.yaml)  

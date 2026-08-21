@@ -1,0 +1,45 @@
+{
+  "schema": "traveltrust.ttg_v9_legacy_supersession.v1",
+  "issued_at": "2026-08-21T09:47:52Z",
+  "successor_candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "status": "LEGACY_SUPERSESSION_INDEX",
+  "sidecars": [
+    "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R2_FINAL_MANIFEST.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R1_FINAL_MANIFEST.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_MANIFEST.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_PRE_MAINNET_SECURITY_PASS.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_MAINNET_READY_STOP.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_MAINNET_CUTOVER_AUTH_READY_STOP.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_OWNER_MAINNET_DEPLOY_AUTHORIZATION_RECORDED.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION2_PASS.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION_PASS.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_audit/V9_EXTERNAL_FIRM_AUDIT_PACK_R2_FINAL.json.SUPERSEDED.json",
+    "evidence/GO_ttg_v9_remint_sepolia/V9_REMINT_SEPOLIA_PASS_STOP.json.SUPERSEDED.json"
+  ],
+  "refuse_guards_applied": [
+    "scripts/dev/run-ttg-v9-remint-sepolia.sh",
+    "scripts/dev/run-ttg-v9-remint-sepolia-continue.sh",
+    "scripts/dev/run-ttg-v9-sepolia-regression.sh",
+    "scripts/dev/run-ttg-v9-sepolia-regression2.sh",
+    "scripts/dev/run-ttg-v9-full-topology-audit.sh",
+    "scripts/dev/freeze-ttg-v9-audit-candidate.py",
+    "scripts/dev/stamp-ttg-v9-pre-mainnet-security-pass.py",
+    "scripts/dev/stamp-ttg-v9-mainnet-cutover-auth-ready-stop.py",
+    "scripts/dev/lock-ttg-v9-external-firm-audit-pack.py"
+  ],
+  "docs_patched": [
+    "docs/runbook/TT-TTG-V9-OWNER-MAINNET-GATE-LATEST.md",
+    "docs/runbook/TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md",
+    "docs/runbook/TT-TTG-V9-MAINNET-DEPLOY-AUTHORIZATION-AWAIT-LATEST.md",
+    "docs/runbook/TT-TTG-V9-PRE-MAINNET-FINAL-SECURITY-AUDIT-LATEST.md",
+    "docs/runbook/TT-TTG-V9-OFFICIAL-FULL-TOPOLOGY-AUDIT-LATEST.md",
+    "docs/runbook/TT-TTG-V9-EXTERNAL-FIRM-AUDIT-PACK-LATEST.md",
+    "docs/runbook/TT-TTG-V9-FULL-25T-REMINT-DESIGN-LATEST.md",
+    "docs/runbook/TT-TTG-V9-DESIGN-LOCK-LOCAL-PASS-LATEST.md"
+  ],
+  "do_not_delete_original_bytes": true,
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED",
+  "r2_final_pass_inherits": false
+}

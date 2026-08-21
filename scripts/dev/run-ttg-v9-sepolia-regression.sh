@@ -3,6 +3,13 @@
 # Requires: TRAVELTRUST_TTG_V9_SEPOLIA_REHEARSAL_OK=1
 # STOP: V9_SEPOLIA_REGRESSION_PASS · FORBID Mainnet
 set -euo pipefail
+
+# SUPERSEDED_AS_OFFICIAL_V9_ENTRY — Design Lock is sole ACTIVE (V9_AUDIT_CANDIDATE_DESIGN_LOCK).
+# Historical Remint/R2 path. DO_NOT_USE for Official deploy/audit/cutover unless override.
+if [[ "${TTG_V9_ALLOW_LEGACY_R2_REMINT:-0}" != "1" ]]; then
+  echo "LEGACY_R2_REMINT_REFUSED: set TTG_V9_ALLOW_LEGACY_R2_REMINT=1 only for historical replay" >&2
+  exit 2
+fi
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 

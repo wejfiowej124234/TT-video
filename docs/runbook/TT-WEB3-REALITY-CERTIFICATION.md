@@ -1,5 +1,10 @@
 # Web3 Blockchain Reality Certification（L2 · 唯一 SSOT）
 
+
+
+> **ACTIVE V9 documentation pointer:** [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING`.  
+> Fee/sale/gov claims that cite P4Cap sale sink · globalStakers 35.75% · R2_FINAL · Safe-as-V9-admin = **LEGACY / SUPERSEDED / DO_NOT_USE_AS_ACTIVE_TRUTH**. This file remains living for non-V9-token architecture / Money Path Reality where marked KEEP.
+
 **Document ID:** `TT-WEB3-REALITY-CERTIFICATION`  
 **Certification Level:** **L2 · Blockchain Reality Certification**（[TT-CERTIFICATION-FRAMEWORK.md](./TT-CERTIFICATION-FRAMEWORK.md) v1.1 · 前置 **L0 FROZEN** · **L1 CLOSED** @ `9de9c1eb`）  
 **Supersedes:** ~~Sepolia Reality Verification / Sepolia Reality Certification~~（同 lineage · **禁止平行 Runbook**）  

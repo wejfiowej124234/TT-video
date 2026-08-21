@@ -1,0 +1,24 @@
+{
+  "stamp": "V9_GITHUB_OFFICIAL_ALIGNMENT_SCAN",
+  "GITHUB_ACTIVE_TRUTH_CONFLICTS": 0,
+  "LEGACY_ACTIVE_LEAKS": 0,
+  "SECRET_EXPOSURES": 0,
+  "DOC_LINK_ERRORS": 0,
+  "V9_PUBLIC_DOC_COVERAGE": 100.0,
+  "required_total": 36,
+  "required_present": 36,
+  "required_missing": [],
+  "conflicts": [],
+  "leaks": [],
+  "secrets": [],
+  "links": [],
+  "matrix": "registry/ttg-v9-github-official-alignment.v1.yaml",
+  "tt_production_go": "NO_GO",
+  "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+  "forbid_auto": [
+    "git_push_publicize",
+    "production_meta_indexer_cutover",
+    "official_www_rewrite",
+    "TT_PRODUCTION_GO_flip"
+  ]
+}

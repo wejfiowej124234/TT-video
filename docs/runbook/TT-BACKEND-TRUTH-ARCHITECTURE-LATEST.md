@@ -1,5 +1,10 @@
 # TT · Backend Truth Architecture（LATEST）
 
+
+
+> **ACTIVE V9 documentation pointer:** [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING`.  
+> Fee/sale/gov claims that cite P4Cap sale sink · globalStakers 35.75% · R2_FINAL · Safe-as-V9-admin = **LEGACY / SUPERSEDED / DO_NOT_USE_AS_ACTIVE_TRUTH**. This file remains living for non-V9-token architecture / Money Path Reality where marked KEEP.
+
 **STATUS:** `ACTIVE_ARCHITECTURE_SSOT` · **Pack 03** of [Project Master Map](./TT-PROJECT-MASTER-MAP-LATEST.md)  
 **Stamp:** `2026-08-15`  
 **Machine:** [`registry/backend-truth-architecture.v1.yaml`](../../registry/backend-truth-architecture.v1.yaml) · [`TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.json`](./TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.json)  

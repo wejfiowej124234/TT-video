@@ -1,0 +1,20 @@
+{
+  "stamp": "V9_DESIGN_LOCK_AI_TRIAD_PASS",
+  "issued_at": "2026-08-21T09:56:25Z",
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "candidate_manifest_sha256": "sha256:0445b1827100b1bafe8275449b9b33b518b2c0ce86dcb746788a59e282347bdf",
+  "canonical_baseline_clean": "V9_CANONICAL_BASELINE_CLEAN_PASS",
+  "audits": {
+    "1": "V9_AI_AUDIT1_DESIGN_LOCK_PASS",
+    "2": "V9_AI_AUDIT2_DESIGN_LOCK_PASS",
+    "3": "V9_AI_AUDIT3_DESIGN_LOCK_PASS"
+  },
+  "open_critical": 0,
+  "open_high": 0,
+  "open_medium": 0,
+  "inherits_r2_final_audit_pass": false,
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED",
+  "next": "Mainnet Cutover Review (new) ONLY after SEPOLIA_REGRESSION_DL_R1 + Owner written auth",
+  "stop": true
+}

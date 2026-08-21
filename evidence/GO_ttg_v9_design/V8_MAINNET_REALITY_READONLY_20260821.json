@@ -1,0 +1,134 @@
+{
+  "schema": "traveltrust.ttg_v9_v8_mainnet_reality_readonly.v1",
+  "status": "READ_ONLY_PASS",
+  "observed_at_utc": "2026-08-21T00:18:33Z",
+  "rpc_host": "ethereum-rpc.publicnode.com",
+  "chain_id": 1,
+  "writes": "NONE",
+  "no_broadcast": true,
+  "no_private_key_use": true,
+  "prior_cite": "evidence/GO_ttg_v9_design/V8_REALITY_READONLY_20260820.json",
+  "candidate_baseline": {
+    "V9_PM_LOCAL_PASS": true,
+    "V9_PM_SEPOLIA_PASS_STOP": true,
+    "sepolia_evidence": "evidence/GO_ttg_v9_sepolia_rehearsal/V9_PM_SEPOLIA_PASS_STOP.json"
+  },
+  "ttg": {
+    "address": "0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602",
+    "decimals": 18,
+    "totalSupply_wei": "25000000000000000000000000000000",
+    "totalSupply_whole_ttg": "25000000000000"
+  },
+  "balances_ttg_wei": {
+    "team_3pct_0x010365F0835323826569D61D0E13E6F8d25F6828": "750000000000000000000000000000",
+    "marketing_5pct_0xe1e732EfBf9B010a9204054467256d3d93f3CdD4": "1250000000000000000000000000000",
+    "treasury_7pct_0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736": "1750000000000000000000000000000",
+    "dao_timelock_0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7": "8750000000000000000000000000000",
+    "old_pm_0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2": "12500000000000000000000000000000",
+    "p4cap_0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF": "0",
+    "governor_0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F": "0"
+  },
+  "allocation_checksum": {
+    "ops_3_5_7_plus_dao_35_plus_public_50": true,
+    "ops_split_already_on_chain": true,
+    "sum_matches_25T": true
+  },
+  "allowances_ttg": {
+    "timelock_to_old_pm": "0",
+    "team_to_old_pm": "0",
+    "note": "Public inventory is ERC20 balance inside OLD PM, not allowance-based custody."
+  },
+  "primary_market_v8_old": {
+    "address": "0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2",
+    "version": "ttg_primary_25t_live_logic_fusion_v8",
+    "source_match_candidate": "contracts/src/ttg-meme-denom/TtgMemeDenomPrimaryMarket.sol",
+    "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "ttg": "0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602",
+    "usdcTreasury": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "ttgPerUsdcUnit_wei": "100000000000000000000000",
+    "quote": "1 USDC = 100000 TTG",
+    "minPurchaseUsdc": "1000000",
+    "perWalletCapTtg": "0",
+    "roundSoldTtg_wei": [
+      "0",
+      "0",
+      "0"
+    ],
+    "historical_purchases_on_ledger": "NONE",
+    "eip1967_implementation_slot": "0x0",
+    "eip1967_admin_slot": "0x0",
+    "proxy_posture": "NON_PROXY_OR_NON_EIP1967",
+    "owner_selector": "REVERT",
+    "paused_selector": "REVERT",
+    "timelock_selector": "REVERT",
+    "guardian_selector": "REVERT",
+    "withdraw_rescue_selectors": "ABSENT_IN_SOURCE_AND_ETH_CALL",
+    "inventory_exit_surface": "purchase_only",
+    "codesize_observed": 1874
+  },
+  "p4cap": {
+    "address": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "owner": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "spender": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "treasuryP4DeployCapBps": 3000,
+    "usdc_balance_raw": "10000000",
+    "ttg_balance_wei": "0",
+    "period_semantics": "<=30pct_of_reserve_per_90_days"
+  },
+  "timelock": {
+    "address": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "delay_seconds": 172800,
+    "governor": "0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F",
+    "admin": "0x96491aa894658ff7946506318c49F3c76b8f40e7"
+  },
+  "governor": {
+    "address": "0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F",
+    "proposalCount": 0,
+    "token": "0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602",
+    "timelock": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "meta_probe_voting_delay_blocks": "1",
+    "meta_probe_voting_period_blocks": "50400",
+    "meta_probe_quorum_numerator_bps": "400"
+  },
+  "money_path_keep": {
+    "escrow_factory_v2_wired": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+    "escrow_factory_guardian": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "settlement_router_track1": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "settlement_router_factory_trust_or_ft": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+    "fee_router": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+    "settlement_router_owner": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "fee_router_owner": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "fee_router_distributePaused": false,
+    "usdc_balances_raw": {
+      "fee_router": "0",
+      "settlement_router_track1": "500000",
+      "escrow_factory_v2_wired": "0",
+      "p4cap": "10000000"
+    },
+    "mutation_this_wave": "FORBIDDEN_KEEP"
+  },
+  "official_meta_l8": {
+    "source": "https://api.web3-ttg.com/meta",
+    "snapshot_file": "evidence/GO_ttg_v9_design/official-meta-readonly.json",
+    "chain_id": "1",
+    "primary_market_address": "0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2",
+    "governance_token_address": "0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602",
+    "governor_address": "0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F",
+    "timelock_address": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "treasury_address_p4cap": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "fee_router_address": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+    "escrow_factory_address": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+    "settlement_router_address": "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+    "api_pause_enabled": false,
+    "note": "/meta exposes V8 PM address; does not embed V9 batch quote. WWW may narrate V9 while chain/meta still V8."
+  },
+  "open_p0_for_cutover_execute": [
+    {
+      "id": "MIGRATE-01-OLD-PM-NO-INVENTORY-EXIT",
+      "severity": "P0",
+      "fact": "OLD PM holds 12.5T TTG with purchase-only exit; no owner/pause/withdraw/rescue in fusion source; EIP-1967 empty.",
+      "impact": "Cannot Timelock-pull inventory into TtgPublicSaleVault without Norm amendment or undiscovered bytecode path.",
+      "blocks_broadcast": true
+    }
+  ]
+}

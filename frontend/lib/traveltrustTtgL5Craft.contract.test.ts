@@ -13,10 +13,10 @@ function read(rel: string): string {
   return readFileSync(join(REPO, rel), "utf8");
 }
 
-describe("traveltrust TTG L5 craft v16 (local)", () => {
-  it("locks v16 economy breathing metadata and Owner screenshot section order", () => {
+describe("traveltrust TTG L5 craft v17 (local · M10/M11 remount)", () => {
+  it("locks v18 layout metadata after screenshot body composition", () => {
     expect(TRAVELTRUST_HOME_LAYOUT_LOCK_L5.lockId).toBe(
-      "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v16-economy-breathing",
+      "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v18-screenshot-body",
     );
     expect(TRAVELTRUST_HOME_LAYOUT_LOCK_L5.sectionOrder).toEqual([
       "hero",
@@ -25,7 +25,9 @@ describe("traveltrust TTG L5 craft v16 (local)", () => {
       "unlock",
       "liquidity",
       "roles",
+      "start",
     ]);
+    expect(TRAVELTRUST_HOME_LAYOUT_LOCK_L5.archivedSectionIds).toEqual(["faq"]);
   });
 
   it("hero chips keep ids but do not restack 15/35/50 or 25T", () => {

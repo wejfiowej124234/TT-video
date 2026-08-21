@@ -1,5 +1,10 @@
 # TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC
 
+
+
+> **ACTIVE V9 documentation pointer:** [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING`.  
+> Fee/sale/gov claims that cite P4Cap sale sink · globalStakers 35.75% · R2_FINAL · Safe-as-V9-admin = **LEGACY / SUPERSEDED / DO_NOT_USE_AS_ACTIVE_TRUTH**. This file remains living for non-V9-token architecture / Money Path Reality where marked KEEP.
+
 **文档类型：** TravelTrust 链上系统 · **企业级可审计架构规格**（代码真源审查）
 
 **审查基准（真源优先级）：** `contracts/src` → `contracts/test` → `contracts/script` → `registry/` → `docs/spec/`（14 · 01 · 08-4 · protocol-ssot）

@@ -1,0 +1,187 @@
+{
+  "docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md": {
+    "sale_to_p4cap_unmarked": 4
+  },
+  "docs/runbook/TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC.md": {
+    "globalStakers_unmarked": 4
+  },
+  "docs/runbook/TT-CLEAN-SEPOLIA-REDEPLOY-V311-LATEST.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-COMMERCIAL-MONEY-LIFECYCLE-MATRIX-LATEST.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md": {
+    "globalStakers_unmarked": 1,
+    "safe_v9_admin_unmarked": 1
+  },
+  "docs/runbook/TT-PHASE2-FUND-STACK-SEPOLIA-BROADCAST-CHECKLIST.md": {
+    "globalStakers_unmarked": 3
+  },
+  "docs/runbook/TT-PHASE2-SEPOLIA-DEPLOYED-SPINE-SUMMARY.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/runbook/TT-PHASE2-SEPOLIA-SPINE-FINAL-ATTESTATION.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/runbook/TT-PHASE2-SEPOLIA-SYSTEM-ACCEPTANCE-REPORT.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/runbook/TT-PSG-V311-SEPOLIA-CLEAN-BASELINE-CERT-LATEST.md": {
+    "sale_to_p4cap_unmarked": 2,
+    "safe_v9_admin_unmarked": 1
+  },
+  "docs/runbook/TT-STAGE83-VACANCY-CONTRACT-IMPACT-CLOSURE-CHECKLIST-LATEST.json": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.json": {
+    "sale_to_p4cap_unmarked": 3
+  },
+  "docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.md": {
+    "sale_to_p4cap_unmarked": 2
+  },
+  "docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.json": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V8-LIVE-LOGIC-FUSION-LATEST.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-AI-AUDIT1-DESIGN-LOCK-LATEST.md": {
+    "R2_FINAL_unmarked": 1,
+    "globalStakers_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-AI-AUDIT2-DESIGN-LOCK-LATEST.md": {
+    "R2_FINAL_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-AI-AUDIT3-DESIGN-LOCK-LATEST.md": {
+    "R2_FINAL_unmarked": 2,
+    "safe_v9_admin_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-DESIGN-LOCK-LOCAL-PASS-LATEST.md": {
+    "safe_v9_admin_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-GOV-ROOT-LOCAL-PASS-AND-BUCKET-AUDIT-LATEST.md": {
+    "globalStakers_unmarked": 1,
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-GOVERNANCE-ROOT-REPLACEMENT-LATEST.md": {
+    "globalStakers_unmarked": 1,
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-OFFICIAL-FULL-TOPOLOGY-AUDIT-LATEST.md": {
+    "R2_FINAL_unmarked": 2,
+    "sale_to_p4cap_unmarked": 2
+  },
+  "docs/runbook/TT-TTG-V9-OWNER-ANSWERS-AND-REMAINING-CONFLICTS-LATEST.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-OWNER-ECONOMIC-MODEL-FEE-VS-STAKE-LATEST.md": {
+    "globalStakers_unmarked": 3,
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-TTG-V9-OWNER-ECONOMIC-TARGET-FREEZE-LATEST.md": {
+    "R2_FINAL_unmarked": 4,
+    "globalStakers_unmarked": 2
+  },
+  "docs/runbook/TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md": {
+    "R2_FINAL_unmarked": 4,
+    "sale_to_p4cap_unmarked": 2
+  },
+  "docs/runbook/TT-TTG-VESTING-PRODUCTION-GOVERNANCE.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-V311-WEB3-DEPLOYMENT-FUNCTIONAL-CERT-LATEST.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-WAIT-WINDOW-WEB3-GAP-CLOSURE-LATEST.md": {
+    "safe_v9_admin_unmarked": 1
+  },
+  "docs/runbook/TT-WEB3-L5-FLOW-V311-STEWARD-GOVERNANCE-LATEST.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md": {
+    "sale_to_p4cap_unmarked": 4
+  },
+  "docs/spec/04-\u540e\u7aef\u4e0eAPI.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/spec/08-4-\u9644\u5f55-\u6536\u76ca\u6d41\u95ed\u73af\u56fe-FeeRouter-Target.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/spec/14-\u5408\u7ea6-API-ABI-\u524d\u540e\u7aef\u5bf9\u9f50.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/spec/84-\u7b2c\u4e00\u9636\u6bb510\u56fdCountry-Pool\u53d1\u884c\u53c2\u6570\u603b\u8868.md": {
+    "globalStakers_unmarked": 1
+  },
+  "docs/spec/91-\u534f\u8bae\u91d1\u5e93\u4e0e\u8d44\u91d1\u6c60-\u6280\u672f\u7d22\u5f15.md": {
+    "globalStakers_unmarked": 3
+  },
+  "docs/spec/99-\u94fe\u4e0a\u5408\u7ea6\u4e0e\u6c60\u5b50\u603b\u89c8.md": {
+    "globalStakers_unmarked": 3
+  },
+  "docs/spec/governance-token/ASSET-DENOMINATION-TREASURY-SEPARATION-AUDIT-LATEST.md": {
+    "sale_to_p4cap_unmarked": 8
+  },
+  "docs/spec/governance-token/GENESIS-GOVERNANCE-PHASE.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/spec/governance-token/GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md": {
+    "sale_to_p4cap_unmarked": 2
+  },
+  "docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md": {
+    "sale_to_p4cap_unmarked": 5
+  },
+  "docs/spec/governance-token/TTG-GOVERNANCE-FREEZE-CERTIFICATE.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "docs/spec/governance-token/WEB3-FULL-SYSTEM-CLOSURE-AUDIT-LATEST.md": {
+    "sale_to_p4cap_unmarked": 11,
+    "safe_v9_admin_unmarked": 1
+  },
+  "docs/spec/governance-token/WEB3-\u5168\u7cfb\u7edf\u4e1a\u52a1\u89c4\u8303-LATEST.md": {
+    "sale_to_p4cap_unmarked": 11
+  },
+  "docs/spec/governance-token/traveltrust-web3-protocol-master-audit-report-v1.md": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "registry/asset-denomination-treasury-separation.v1.yaml": {
+    "sale_to_p4cap_unmarked": 2
+  },
+  "registry/backend-truth-architecture.v1.yaml": {
+    "sale_to_p4cap_unmarked": 2
+  },
+  "registry/mainnet-address-registry.v1.yaml": {
+    "safe_v9_admin_unmarked": 2
+  },
+  "registry/traveltrust-web3-protocol-master-matrix.v1.yaml": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "registry/ttg-v8-live-logic-fusion.v1.yaml": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "registry/ttg-v9-upgrade-design.v1.yaml": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "registry/ttg-vesting-registry.v1.yaml": {
+    "sale_to_p4cap_unmarked": 2
+  },
+  "registry/v311-sepolia-address-matrix-freeze.v1.json": {
+    "sale_to_p4cap_unmarked": 1
+  },
+  "registry/v311-web3-deployment-inventory.v1.json": {
+    "sale_to_p4cap_unmarked": 2
+  },
+  "registry/web3-protocol-grade-audit-framework.v1.yaml": {
+    "globalStakers_unmarked": 1
+  }
+}

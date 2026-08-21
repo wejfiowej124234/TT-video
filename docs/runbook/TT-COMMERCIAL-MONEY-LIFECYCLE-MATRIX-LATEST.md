@@ -1,5 +1,10 @@
 # TT · Commercial Money / Value Lifecycle Matrix（Pack 06 · LATEST）
 
+
+
+> **ACTIVE V9 documentation pointer:** [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING`.  
+> Fee/sale/gov claims that cite P4Cap sale sink · globalStakers 35.75% · R2_FINAL · Safe-as-V9-admin = **LEGACY / SUPERSEDED / DO_NOT_USE_AS_ACTIVE_TRUTH**. This file remains living for non-V9-token architecture / Money Path Reality where marked KEEP.
+
 **STATUS:** `PACK06_MONEY_LIFECYCLE_DEEPENED`  
 **Stamp:** `2026-08-18`  
 **Machine:** [`registry/commercial-money-lifecycle-matrix.v1.yaml`](../../registry/commercial-money-lifecycle-matrix.v1.yaml)  

@@ -1,0 +1,9 @@
+{
+  "candidate_id": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "artifact": "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_DESIGN_LOCK.json",
+  "sha256": "sha256:0445b1827100b1bafe8275449b9b33b518b2c0ce86dcb746788a59e282347bdf",
+  "frozen_at": "2026-08-21T09:54:53Z",
+  "remediation_wave": "DL_R1",
+  "inherits_r2_final_audit_pass": false,
+  "stop": true
+}

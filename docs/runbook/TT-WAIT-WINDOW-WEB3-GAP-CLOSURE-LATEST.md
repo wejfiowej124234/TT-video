@@ -1,5 +1,10 @@
 # TT · Wait Window · Web3 Gap Closure（Track2 ETA 并行 · LATEST）
 
+
+> **STATUS (V9 Documentation Truth Convergence · phase-2):** **SUPERSEDED as Official ACTIVE V9 path** · **DO_NOT_USE_AS_ACTIVE_TRUTH** · **HISTORICAL**.  
+> Sole living upstream: [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Public-sale USDC→P4Cap · globalStakers 35.75% · R2_FINAL/Remint · Safe/old Timelock as V9 Official admin = **LEGACY / SUPERSEDED**. Evidence retained.
+
 **STATUS:** `WEB3_GAP_CLOSURE_INVENTORY_ACTIVE` · **Stamp:** `2026-08-12T09:07:53Z`  
 **Track2:** **`WAITING_TRACK2_TIMELOCK_ETA` · FROZEN**（不改 T1/T2/opId/ETA）  
 **Dual wait SSOT:** [`DUAL-WAIT FREEZE`](./TT-DUAL-WAIT-TRACK2-GOV04-FREEZE-LATEST.md) · FTB stamp `20260812T101500Z`  

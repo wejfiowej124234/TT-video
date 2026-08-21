@@ -1,5 +1,10 @@
 # TTG Vesting & Public Distribution — Production Governance (Phase③ · Step 7)
 
+
+> **STATUS (V9 Documentation Truth Convergence · phase-2):** **SUPERSEDED as Official ACTIVE V9 path** · **DO_NOT_USE_AS_ACTIVE_TRUTH** · **HISTORICAL**.  
+> Sole living upstream: [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Public-sale USDC→P4Cap · globalStakers 35.75% · R2_FINAL/Remint · Safe/old Timelock as V9 Official admin = **LEGACY / SUPERSEDED**. Evidence retained.
+
 **Status:** Allocation semantics **must be defined** before Production GO if TTG is publicly marketed.  
 **Supply amounts:** **FROZEN** per [TTG-TOKENOMICS-GENESIS-V2](../../docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md) · [protocol-ssot §1](../../docs/spec/governance-token/protocol-ssot.v1.md).  
 **Commercial schedule:** `OWNER_INPUT` — cliff / duration / start / beneficiary / optional round lockup.

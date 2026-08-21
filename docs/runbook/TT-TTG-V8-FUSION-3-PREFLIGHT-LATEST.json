@@ -1,4 +1,11 @@
 {
+  "_v9_doc_truth_convergence": {
+    "status": "SUPERSEDED_AS_OFFICIAL_ACTIVE_V9",
+    "disposition": "DO_NOT_USE_AS_ACTIVE_TRUTH",
+    "living_upstream": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+    "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+    "note": "Historical evidence retained; P4Cap sale sink / globalStakers / R2_FINAL / Safe-as-V9-admin are LEGACY for Official V9 ACTIVE"
+  },
   "schema": "traveltrust.ttg_v8_fusion_3_preflight.v1",
   "stamp": "TTG_V8_FUSION_3_PREFLIGHT_PASS_STOP",
   "issued_at_utc": "2026-08-17T16:57:55Z",
@@ -42,7 +49,11 @@
       "usdcTreasury_codesize": 1052,
       "ttgPerUsdcUnit_": "100000 ether",
       "min_purchase_usdc": "1e6",
-      "rounds_ttg": ["2000000000000 ether", "3000000000000 ether", "7500000000000 ether"],
+      "rounds_ttg": [
+        "2000000000000 ether",
+        "3000000000000 ether",
+        "7500000000000 ether"
+      ],
       "per_wallet_cap_ttg": 0,
       "entity_cap_bps": 400
     },
@@ -87,7 +98,11 @@
       "ttgPerUsdcUnit": "40000000000000000",
       "minPurchaseUsdc": "10000000",
       "perWalletCapTtg": 0,
-      "roundCapTtg": ["800000 ether", "1200000 ether", "3000000 ether"]
+      "roundCapTtg": [
+        "800000 ether",
+        "1200000 ether",
+        "3000000 ether"
+      ]
     },
     "legacy_ttg": {
       "address": "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",

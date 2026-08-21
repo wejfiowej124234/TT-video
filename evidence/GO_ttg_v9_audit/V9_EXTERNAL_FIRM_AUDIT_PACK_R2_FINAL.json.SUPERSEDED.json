@@ -1,0 +1,12 @@
+{
+  "status": "SUPERSEDED_AS_ACTIVE_AUDIT_BASELINE",
+  "do_not_use": true,
+  "reason": "Official ACTIVE V9 baseline is Design Lock (Fee/Root/Stake/NEW Timelock/NEW Pool)",
+  "successor_candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "original_artifact": "evidence/GO_ttg_v9_audit/V9_EXTERNAL_FIRM_AUDIT_PACK_R2_FINAL.json",
+  "original_sha256": "sha256:38b572edef3ec5b350eedfb22a70ccde2568690b6246a834612d4062698e21f5",
+  "superseded_at": "2026-08-21T09:47:52Z",
+  "inherits_to_design_lock_pass": false,
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED"
+}

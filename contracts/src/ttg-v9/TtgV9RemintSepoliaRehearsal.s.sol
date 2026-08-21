@@ -3,8 +3,10 @@ pragma solidity 0.8.36;
 
 import {Script, console2} from "forge-std/Script.sol";
 import {TtgV9DeployTopology} from "./TtgV9DeployTopology.sol";
+import {TtgV9AtomicDeployer} from "./TtgV9AtomicDeployer.sol";
 import {TtgPublicSaleVault} from "./TtgPublicSaleVault.sol";
 import {TtgBatchPrimaryMarket} from "./TtgBatchPrimaryMarket.sol";
+import {TravelTrustGovernanceTokenV9} from "./TravelTrustGovernanceTokenV9.sol";
 import {TravelTrustGovernorV9, ITtgV9GovernanceVotes, ITtgV9GovernanceTimelock} from "./TravelTrustGovernorV9.sol";
 import {TtgV9GovernanceParams} from "./TtgV9GovernanceParams.sol";
 import {MockV9Erc20} from "./mocks/MockV9Erc20.sol";
@@ -18,6 +20,7 @@ import {TtgBatchPrimaryMarketV2Harness} from "./mocks/TtgBatchPrimaryMarketV2Har
  * @dev KEEP Mainnet Money Path untouched. Mock USDC + MockTimelock are Sepolia-only.
  *      Ops wallets default to deployer (voting drill); Mainnet Norm pins remain separate.
  *      Timelock delay from env TTG_V9_SEPOLIA_TIMELOCK_DELAY_SECONDS (default 90; Norm KEEP = 48h).
+ *      Stack via TtgV9AtomicDeployer (same-tx init — closes RT2-OPEN-01).
  *      Not Mainnet. Not Production GO.
  */
 contract TtgV9RemintSepoliaRehearsal is Script {
@@ -46,9 +49,16 @@ contract TtgV9RemintSepoliaRehearsal is Script {
         MockV9Timelock timelock = new MockV9Timelock(deployer, delaySec);
         MockV9Erc20 usdc = new MockV9Erc20("USD Coin", "USDC", 6);
 
-        TtgV9DeployTopology.Bundle memory b = TtgV9DeployTopology.deploy(
+        TtgV9AtomicDeployer atomic = new TtgV9AtomicDeployer(
             address(usdc), KEEP_P4CAP, address(timelock), guardian, team, marketing, treasury
         );
+        TtgV9DeployTopology.Bundle memory b;
+        b.token = TravelTrustGovernanceTokenV9(atomic.token());
+        b.vault = TtgPublicSaleVault(payable(atomic.vault()));
+        b.market = TtgBatchPrimaryMarket(payable(atomic.market()));
+        b.governor = TravelTrustGovernorV9(atomic.governor());
+        b.vaultImpl = atomic.vaultImpl();
+        b.marketImpl = atomic.marketImpl();
 
         // Legacy governor stand-in for G6 cutover (set then replaced).
         TravelTrustGovernorV9 legacyGov = new TravelTrustGovernorV9(
@@ -69,7 +79,7 @@ contract TtgV9RemintSepoliaRehearsal is Script {
 
         timelock.bootstrapCall(address(b.vault), abi.encodeCall(TtgPublicSaleVault.bindMarket, (address(b.market))));
 
-        uint64 start = uint64(block.timestamp + 90);
+        uint64 start = uint64(block.timestamp + 1200); // 20m lead — forge --slow broadcast can exceed short leads
         timelock.bootstrapCall(
             address(b.market), abi.encodeCall(TtgBatchPrimaryMarket.seedBatchesRehearsal, (start, WINDOW))
         );

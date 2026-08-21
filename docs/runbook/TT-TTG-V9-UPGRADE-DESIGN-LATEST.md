@@ -1,5 +1,10 @@
 # TT · TTG V9 Upgrade Design (Economics + Batch PM + Ops Split)
 
+
+> **STATUS (Documentation Truth Convergence · 2026-08-21):** **SUPERSEDED as Official ACTIVE V9 path** · DO_NOT_USE for living V9 Design Lock / DL_R1 / Mainnet Phase1.  
+> **Sole upstream now:** [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · status `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Historical evidence below is retained · R2_FINAL / Remint / Safe-Timelock / P4Cap-as-sale-sink / globalStakers ACTIVE claims are **LEGACY**.
+
 **STATUS:** **`V9_REMINT_LOCAL_PASS`** · Monetary Invariant FROZEN → **[TT-TTG-V9-MONETARY-INVARIANT-LATEST](TT-TTG-V9-MONETARY-INVARIANT-LATEST.md)** · G1–G7 → **[Final Norm](TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md)** · **NOT** Sepolia · **NOT** Mainnet · **NOT** Production GO  
 **Token lock:** non-proxy · `MAX_SUPPLY` 25T · **NO_FURTHER_MINT** · coin fixed / system evolves  
 **P0 LOCK (V8 inventory):** OLD PM non-recoverable · V8 **LEGACY / NO_MIGRATION** · Sepolia only after Owner auth  

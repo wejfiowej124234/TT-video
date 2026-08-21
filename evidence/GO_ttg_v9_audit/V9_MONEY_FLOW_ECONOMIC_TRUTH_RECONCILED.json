@@ -1,0 +1,47 @@
+{
+  "stamp": "V9_MONEY_FLOW_ECONOMIC_TRUTH_RECONCILED",
+  "issued_at": "2026-08-21T05:51:01Z",
+  "status": "RECONCILED_STOP_BEFORE_SEPOLIA",
+  "sepolia": "FORBIDDEN_UNTIL_OWNER_PICKS_FEE_BUCKET_OPTION",
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED_NOT_TOUCHED",
+  "three_paths": {
+    "A_ttg_sale_usdc": {
+      "destination": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+      "name": "GovernanceTreasuryP4Cap",
+      "verdict": "ALIGNED_EXACT"
+    },
+    "B_steward_access_fee_300k_usdc": {
+      "destination": "founder_designated_wallet",
+      "ssot": [
+        "registry/v311-platform-access-fee.v1.yaml",
+        "TT-WEB3-L5-FLOW-V311-STEWARD-GOVERNANCE-LATEST.md"
+      ],
+      "verdict": "ALIGNED_ORTHOGONAL_NOT_FEEROUTER"
+    },
+    "C_order_platform_fee": {
+      "bps": [
+        4500,
+        3575,
+        1100,
+        825
+      ],
+      "reality_country_stakers": "Safe_interim_not_83_GO",
+      "reality_reserve_ops": "P4Cap_exact",
+      "verdict": "BPS_ALIGNED_DESTINATION_CHOICE_REOPENED"
+    }
+  },
+  "local_pass_correction": {
+    "V9_GOV_ROOT_LOCAL_PASS_STOP": "MECHANICS_PASS_RETAINED",
+    "regionVault_globalStakersFeeVault_as_required_safe_exit": "OVERCLAIMED_CORRECTED",
+    "option_I_interim": "country_and_stakers_to_P4Cap_exact",
+    "option_II_83_target": "RegionVault_plus_incentive_vault_requires_separate_Owner_auth"
+  },
+  "forbid": [
+    "personal_eoa_fee_sinks",
+    "conflate_safe_exit_with_83_commercial_GO",
+    "redirect_300k_steward_fee_into_feerouter_buckets_without_owner_rail_decision"
+  ],
+  "audit_doc": "docs/runbook/TT-TTG-V9-MONEY-FLOW-ECONOMIC-TRUTH-RECONCILIATION-LATEST.md",
+  "next": "Owner pick FeeRouter Safe-exit Option I or II before Sepolia"
+}

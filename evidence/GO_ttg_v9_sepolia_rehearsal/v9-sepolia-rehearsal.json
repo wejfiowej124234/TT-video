@@ -1,0 +1,98 @@
+{
+  "stamp": "V9_PM_SEPOLIA_PASS_STOP",
+  "phase": "\u2461",
+  "chain_id": 11155111,
+  "not_production_go": true,
+  "keep_mainnet": [
+    "TTG",
+    "OLD_PM",
+    "Governor",
+    "Timelock",
+    "P4Cap_live",
+    "Money_Path",
+    "Region-83"
+  ],
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "addresses": {
+    "usdc_mock": "0x1d36af227079770e6a6358cd81345378Cd1A3576",
+    "ttg_mock": "0x28379e41a72315f445547Ec750003621395e489f",
+    "vault": "0xFA19fa237Ab0ebEEfb73440c623230C491e6ae76",
+    "market": "0x2BE6a7fBB3B3Aa962AB90A3d53Cce5530b5D6f38",
+    "test_p4cap_sink": "0xf6e650b7E052708eDa1491C7ee8e89c04B77619a"
+  },
+  "window_seconds": 480,
+  "buy_usdc_raw_per_batch": 1000000,
+  "prices_usdc_raw_per_whole_ttg": [
+    1,
+    3,
+    5,
+    7,
+    9
+  ],
+  "close_policy": {
+    "batches_1_to_4": "RETURN_TO_PUBLIC_VAULT",
+    "batch_5": "BURN_TIMELOCK"
+  },
+  "drill_results": {
+    "batch1_ttg_out": "1000000000000000000000000",
+    "batch2_ttg_out": "333333333333333333333333",
+    "batch3_ttg_out": "200000000000000000000000",
+    "batch4_ttg_out": "142857142857142857142857",
+    "batch5_ttg_out": "111111111111111111111111",
+    "pause_guardian_ok": true,
+    "vault_pull_only_market_ok": true,
+    "current_batch_only_ok": true
+  },
+  "transactions": [
+    {
+      "label": "buy_batch_1",
+      "tx": "0xe3160938d1047c721e29ef38dff14e7252c16dee7b9df18892c1f7235c20a0b1"
+    },
+    {
+      "label": "pause",
+      "tx": "0xbcaf13f2da4aadfcf6dbf0bbb31bdab889c773c3e40d0926a7eed21fd1a18688"
+    },
+    {
+      "label": "unpause",
+      "tx": "0x84074afe9bda1c342ab10cb6485fd0d477ddec5ccee9d0a4736c6271ca737540"
+    },
+    {
+      "label": "closeBatchReturn_1",
+      "tx": "0x6b9162b2827c78cd8e98d1f43e8aee45dee95b7fac3778b2fe672d2b427cfadd"
+    },
+    {
+      "label": "buy_batch_2",
+      "tx": "0xf5692b882a7c2d29fae4fe66aa66b1a2cbefc30cae92d49499ffb52d01bff2e8"
+    },
+    {
+      "label": "closeBatchReturn_2",
+      "tx": "0x21910b0a9411adcb76a1dc0f686fc478fdbd6cc4f4da4755e8703d9751fdecf9"
+    },
+    {
+      "label": "buy_batch_3",
+      "tx": "0xee80cdcc9b6d5167ac1a30f861647e613d2878a655fde9db557d75480ff3f45d"
+    },
+    {
+      "label": "closeBatchReturn_3",
+      "tx": "0x48adb585d7c225f5e40b21292bcc851f99910bcf10e65bda697f926f72e1e999"
+    },
+    {
+      "label": "buy_batch_4",
+      "tx": "0x4de8015ce88b66face25fa426eee6f88382fcb66057a3624278d4cd29165e49a"
+    },
+    {
+      "label": "closeBatchReturn_4",
+      "tx": "0x29c16d43cbfb5b35b99c4cdf1546e541e0263898dfc358c41bf722bbe3b32c2b"
+    },
+    {
+      "label": "buy_batch_5",
+      "tx": "0xae35922c91686145ec0672c778d31d758a203cfe417524103f6d9d42b46a6155"
+    },
+    {
+      "label": "closeBatchBurn_5",
+      "tx": "0xe2720030cf61d57187533543f3b934017635b015e563878a520d4ecdf892431d"
+    }
+  ],
+  "issued_at": "2026-08-20T17:37:11Z",
+  "baseline": "V9_PM_LOCAL_PASS + Norm pins; Sepolia mock TTG/USDC only"
+}

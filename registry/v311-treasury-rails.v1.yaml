@@ -23,6 +23,8 @@ four_rails_isolation:
     role: platform_access_fee_300k_usdc
     gap_ref: [R-03, TR-02]
     status: LOGICAL_RAIL_DEFINED
+    # Owner Exact (2026-08-21 revise) · Treasury 0xF34804… · separate from Marketing deploy/5% TTG
+    address_exact: "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
     address_staging: null
 
 forbid_commingling: true

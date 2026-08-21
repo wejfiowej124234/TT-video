@@ -1,0 +1,29 @@
+{
+  "stamp": "V9_SEPOLIA_REGRESSION_PASS",
+  "phase": "Regression #1 post Audit #1 R1",
+  "candidate_commit_hint": "1826010bb",
+  "ts_utc": "2026-08-21T03:34:53Z",
+  "chain_id": 11155111,
+  "addresses": {
+    "ttg": "0xe94A20036EF4d355541bc1aecfAAAdC86c63da68",
+    "vault": "0xDCAe5c386f742bcE726BA85Da61C593fe16a1Af3",
+    "market": "0x4C9aA408226111d960e01aC847Db27607c91e44d",
+    "governor": "0x61615c11800c1207Ce215aBAb48B32DA63BE12c0",
+    "timelock": "0x860ECD67323195E9d816B12Ba4E8157a89dEf1f3"
+  },
+  "notes": [
+    "Batches 1-3 close_cancel unarmed due to forge --slow window overrun; buy+RETURN proven on batches 4-5",
+    "Full post-sale: pause/unpause Timelock, rescue!=TTG, UUPS Timelock-only, Governor burn 1B",
+    "supply_after_burn=24999000000000000000000000000000",
+    "Mainnet broadcast FORBIDDEN; TT_PRODUCTION_GO unchanged"
+  ],
+  "supply_before_burn": "25000000000000000000000000000000",
+  "supply_after_burn": "24999000000000000000000000000000",
+  "key_txs": {
+    "buy_batch_4": "0x29c9aefe6b45226e9dd0d91c9c395617151e983a7194ebba01255c81f998a491",
+    "buy_batch_5": "0x1546482f59a0ee506f27a3ef631873a9d2449c3c1c148f074cb1153400a7e830",
+    "execute_uups": "0x275f840e6712a96e7183c069a891c31ad1a9b225d114fd29b2c816d3f732b830",
+    "gov_execute_burn": "0x1c5e76076167170ca5b057900889e9fb77e0e4216e01aee76609b147ea1b0ca3"
+  },
+  "txs_tsv": "evidence/GO_ttg_v9_remint_sepolia/txs.tsv"
+}

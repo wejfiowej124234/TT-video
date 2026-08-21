@@ -1,0 +1,88 @@
+{
+  "stamp": "V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS",
+  "issued_at": "2026-08-21T04:57:44Z",
+  "candidate": "V9_AUDIT_CANDIDATE_R2_FINAL",
+  "candidate_manifest": "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R2_FINAL_MANIFEST.json",
+  "candidate_manifest_sha256": "sha256:59c81dbe55beeaeddae8bbd16b1a7e4f63549fa3b30d012e0387abd06887f92b",
+  "regression2": "V9_SEPOLIA_REGRESSION2_PASS",
+  "regression2_sha256": "sha256:0433fc9ed78d8dd74391df958eb3ce691e0328c75809de66e61889b561201db1",
+  "scope": {
+    "NEW_deep": [
+      "TravelTrustGovernanceTokenV9",
+      "TtgPublicSaleVault",
+      "TtgBatchPrimaryMarket",
+      "TravelTrustGovernorV9",
+      "TtgV9AtomicDeployer",
+      "TtgV9AtomicDeployerMainnet"
+    ],
+    "KEEP_reality_integration_privilege": [
+      "GovernanceTimelock",
+      "P4Cap",
+      "EscrowFactory",
+      "SettlementRouter",
+      "FeeRouter",
+      "Safe/Guardian"
+    ],
+    "call_chains": [
+      "C1_USDC_PM_P4Cap",
+      "C2_Vault_PM_TTG",
+      "C3_Gov_Timelock_Burn",
+      "C4_Timelock_UUPS",
+      "C5_MoneyPath_KEEP_cited",
+      "C6_MainnetGovernorFloors"
+    ],
+    "v8_legacy_isolation": [
+      "v8_marked_legacy_in_v9_norm",
+      "atomic_deployer_does_not_reference_v8_token",
+      "v9_token_version_tag",
+      "norm_says_v8_legacy",
+      "living_pin_doc_exists"
+    ]
+  },
+  "gates": {
+    "reg2_pass": true,
+    "candidate_r2_final": true,
+    "new_artifacts_present": true,
+    "keep_timelock_cited": true,
+    "keep_p4cap_cited": true,
+    "money_path_cited": true,
+    "call_chains": true,
+    "v8_isolation": true,
+    "open_critical": 0,
+    "open_high": 0,
+    "mainnet_broadcast": "FORBIDDEN",
+    "tt_production_go": "UNCHANGED_NO_AUTO_FLIP",
+    "onchain_keep_delay_verify": "REQUIRED_AT_MAINNET_PREFLIGHT_cast_delay_eq_172800",
+    "onchain_money_path_wiring": "REQUIRED_AT_MAINNET_PREFLIGHT_FTB_addresses"
+  },
+  "chains": {
+    "C1_USDC_PM_P4Cap": true,
+    "C2_Vault_PM_TTG": true,
+    "C3_Gov_Timelock_Burn": true,
+    "C4_Timelock_UUPS": true,
+    "C5_MoneyPath_KEEP_cited": true,
+    "C6_MainnetGovernorFloors": true
+  },
+  "v8_isolation": {
+    "v8_marked_legacy_in_v9_norm": true,
+    "atomic_deployer_does_not_reference_v8_token": true,
+    "v9_token_version_tag": true,
+    "norm_says_v8_legacy": true,
+    "living_pin_doc_exists": true
+  },
+  "keep_addresses_cited": {
+    "GovernanceTimelock": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "P4Cap": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+  },
+  "money_path_cited": {
+    "EscrowFactory": true,
+    "SettlementRouter": true,
+    "FeeRouter": true
+  },
+  "open_critical": 0,
+  "open_high": 0,
+  "external_firm": "OPTIONAL_NEXT_SAME_MANIFEST",
+  "mainnet_broadcast": "FORBIDDEN_UNTIL_OWNER_WRITTEN_AUTH",
+  "tt_production_go": "UNCHANGED_NO_AUTO_FLIP",
+  "note": "AI Full Topology PASS on R2_FINAL. Not Production GO. On-chain KEEP delay/Money Path Reality still Owner Mainnet preflight."
+}

@@ -1,5 +1,5 @@
 import { apiUrl, routes } from "../../api";
-import { requestId, parseResponse, getAuthHeaders, logApiJsonStatusNotOk, fetchGetWithTransitRetry, clearClientAuthStorage } from "../core";
+import { requestId, parseResponse, getAuthHeaders, hasWwwSessionHint, logApiJsonStatusNotOk, fetchGetWithTransitRetry, clearClientAuthStorage } from "../core";
 import {
   clearDevApiOfflineMeFetchBlocked,
   isDevApiOfflineMeFetchBlocked,
@@ -59,13 +59,19 @@ function noteDevMeFetchSuccess(): void {
   clearDevApiOfflineMeFetchBlocked();
 }
 
+
+function canFetchMe(): boolean {
+  const auth = getAuthHeaders();
+  return !!(auth["X-User-Id"] || auth.Authorization || hasWwwSessionHint());
+}
+
 export function getMe(): Promise<unknown | null> {
   if (isNextPublicSkipMeFetchEnabled()) return Promise.resolve(null);
   if (isDevApiOfflineMeFetchBlocked()) return Promise.resolve(null);
-  const auth = getAuthHeaders();
-  if (!auth["X-User-Id"] && !auth["Authorization"]) {
+  if (!canFetchMe()) {
     return Promise.resolve(null);
   }
+  const auth = getAuthHeaders();
   const now = Date.now();
   if (getMeCache) {
     if (getMeCache.result !== undefined && now - getMeCache.at < GET_ME_CACHE_MS) return Promise.resolve(getMeCache.result);
@@ -77,7 +83,7 @@ export function getMe(): Promise<unknown | null> {
       const url = apiUrl(routes.me);
       const res = await fetchGetWithTransitRetry(
         url,
-        { headers: { "x-request-id": requestId(), ...auth } },
+        { credentials: "include", headers: { "x-request-id": requestId(), ...auth } },
         { attempts: 4 },
       );
       if (res.status === 404) {
@@ -134,15 +140,15 @@ export async function getMeFull(opts?: GetMeFullOptions): Promise<unknown | null
   if (isNextPublicSkipMeFetchEnabled()) return null;
   if (isDevApiOfflineMeFetchBlocked()) return null;
   if (opts?.force === true) clearGetMeCache();
-  const auth = getAuthHeaders();
-  if (!auth["X-User-Id"] && !auth["Authorization"]) {
+  if (!canFetchMe()) {
     return null;
   }
+  const auth = getAuthHeaders();
   try {
     const url = apiUrl(routes.me);
     const res = await fetchGetWithTransitRetry(
       url,
-      { headers: { "x-request-id": requestId(), ...auth } },
+      { credentials: "include", headers: { "x-request-id": requestId(), ...auth } },
       { attempts: 4 },
     );
     if (res.status === 404) {

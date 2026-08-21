@@ -13,6 +13,8 @@ platform_access_fee:
   amount_usdc: 300000
   denomination: USDC
   destination: founder_designated_wallet
+  # Owner Exact (2026-08-21 revise) · Treasury 0xF34804… — NOT Marketing deploy/5% TTG
+  destination_exact: "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
   refund_policy:
     audit_fail: refund_100_percent
     audit_pass: non_refundable

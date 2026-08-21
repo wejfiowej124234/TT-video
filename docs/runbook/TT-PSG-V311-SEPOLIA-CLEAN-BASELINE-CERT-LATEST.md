@@ -1,5 +1,10 @@
 # TT · PSG Certification · V3.1.1 Sepolia Clean Baseline（②）
 
+
+> **STATUS (V9 Documentation Truth Convergence · phase-2):** **SUPERSEDED as Official ACTIVE V9 path** · **DO_NOT_USE_AS_ACTIVE_TRUTH** · **HISTORICAL**.  
+> Sole living upstream: [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Public-sale USDC→P4Cap · globalStakers 35.75% · R2_FINAL/Remint · Safe/old Timelock as V9 Official admin = **LEGACY / SUPERSEDED**. Evidence retained.
+
 **Machine:** `TT_PSG_V311_SEPOLIA_CLEAN_BASELINE_CERT`  
 **Registry:** [`registry/psg-v311-sepolia-clean-baseline-cert.v1.yaml`](../../registry/psg-v311-sepolia-clean-baseline-cert.v1.yaml)  
 **Evidence:** [`evidence/GO_phase2_v311_sepolia_clean_baseline/psg-cert/`](../../evidence/GO_phase2_v311_sepolia_clean_baseline/psg-cert/)  

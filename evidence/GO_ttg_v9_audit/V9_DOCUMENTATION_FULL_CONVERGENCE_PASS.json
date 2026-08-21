@@ -1,0 +1,26 @@
+{
+  "stamp": "V9_DOCUMENTATION_FULL_CONVERGENCE_PASS",
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "remediation_wave": "DL_R1",
+  "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+  "aliases": [
+    "MAINNET_DEPLOYED_PHASE1",
+    "TIMELOCK_CUTOVER_PENDING"
+  ],
+  "forbid_claim": [
+    "MAINNET_FULLY_ACTIVE",
+    "ACTIVE_OFFICIAL"
+  ],
+  "OLD_V9_ACTIVE_DOCUMENT_REFERENCES": 0,
+  "ACTIVE_TRUTH_CONFLICTS": 0,
+  "UNRESOLVED_V9_DOC_DRIFT": 0,
+  "documentation_upstream": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+  "tt_production_go": "NO_GO",
+  "downstream_still_forbidden_until_owner": [
+    "Mainnet_Edition_Whitepaper",
+    "GitHub_Official_Docs",
+    "Official_www_V9_copy",
+    "Production_meta_Indexer_cutover"
+  ],
+  "stop": true
+}

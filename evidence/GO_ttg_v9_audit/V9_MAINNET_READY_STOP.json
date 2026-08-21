@@ -1,0 +1,21 @@
+{
+  "stamp": "V9_MAINNET_READY_STOP",
+  "issued_at": "2026-08-21T04:57:44Z",
+  "candidate": "V9_AUDIT_CANDIDATE_R2_FINAL",
+  "topology_pass": "V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS",
+  "regression2": "V9_SEPOLIA_REGRESSION2_PASS",
+  "audit1": "PASS_R1",
+  "audit2": "OPEN_CRITICAL=0 OPEN_HIGH=0",
+  "audit3": "OPEN_CRITICAL=0 OPEN_HIGH=0_R2_FINAL",
+  "external_firm": "OPTIONAL_BEFORE_MAINNET_SAME_R2_FINAL",
+  "mainnet_broadcast": "FORBIDDEN_UNTIL_OWNER_WRITTEN_AUTH",
+  "tt_production_go": "UNCHANGED_NO_AUTO_FLIP",
+  "binds_r1_final": false,
+  "binds_r2_final": true,
+  "notes": [
+    "AI 3-audit + 2-regression + Full Topology closed on R2_FINAL",
+    "R1_FINAL is NOT the release baseline",
+    "Optional external firm must receive R2_FINAL manifest bytes",
+    "Do not treat READY_STOP as Production GO"
+  ]
+}

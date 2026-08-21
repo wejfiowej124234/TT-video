@@ -1,4 +1,11 @@
 {
+  "_v9_doc_truth_convergence": {
+    "status": "SUPERSEDED_AS_OFFICIAL_ACTIVE_V9",
+    "disposition": "DO_NOT_USE_AS_ACTIVE_TRUTH",
+    "living_upstream": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+    "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+    "note": "Historical evidence retained; P4Cap sale sink / globalStakers / R2_FINAL / Safe-as-V9-admin are LEGACY for Official V9 ACTIVE"
+  },
   "schema": "tt.stage83_vacancy_contract_impact_closure_checklist.v1",
   "stamp_utc": "2026-08-14T03:09:21Z",
   "freeze_status": "FROZEN_REGISTER_ONLY",

@@ -4,6 +4,8 @@
 
 **TravelTrust 投资者材料** · 版本 **1.3** · 2026年5月
 
+> **TTG V9 Mainnet Edition（正式协议白皮书 · ACTIVE）：** [`docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md`](../../whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md) · Design Lock **DL_R1** · stamp `TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS`。本投资者材料 **不**覆盖 V9 Token/Fee/Stake/Genesis ACTIVE 语义；冲突时以 Mainnet Edition 为准。
+
 > **一般性信息**；不构成在任何司法辖区的发售要约、证券或虚拟资产要约，亦不构成投资、税务或法律建议。正式披露以发布公告、用户协议及双方签署文本为准。本文对协议架构、角色与市场机会作**机构级 DD 友好**展开；**未载明的定量口径**（市场规模绝对值、财务预测、链上笔数等）须通过 **NDA 与 IR 预对表**索取，**勿**将本文当作完整经济模型或法律文件。
 
 ---

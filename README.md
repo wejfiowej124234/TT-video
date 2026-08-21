@@ -11,6 +11,8 @@
 **支付架构（Production SSOT）：** 核心 = **Web3 Escrow (USDC)** · Stripe = **Optional Fiat Onboarding (P1)**。  
 **Production GO：** 四层四 Gate — [`PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md`](docs/runbook/PRODUCTION-GO-FOUR-GATE-FRAMEWORK.md) · `bash scripts/check-production-go-four-gates.sh`
 
+**Web3 Official 公开文档面（仓库内 · 未自动 push/publicize）：** [`docs/github-official/README.md`](docs/github-official/README.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` · stamp `V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT`（Gate：`python scripts/dev/run-ttg-v9-github-official-alignment-gate.py --require-zero`）。**≠** `TT_PRODUCTION_GO` · **≠** Official www / `/meta` 切针。
+
 ---
 
 ## 重要声明（请先阅读）

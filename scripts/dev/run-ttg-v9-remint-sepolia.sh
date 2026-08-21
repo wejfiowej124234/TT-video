@@ -8,6 +8,13 @@
 # STOP: V9_REMINT_SEPOLIA_PASS_STOP · FORBID Mainnet · FORBID TT_PRODUCTION_GO flip
 set -euo pipefail
 
+# SUPERSEDED_AS_OFFICIAL_V9_ENTRY — Design Lock is sole ACTIVE (V9_AUDIT_CANDIDATE_DESIGN_LOCK).
+# Historical Remint/R2 path. DO_NOT_USE for Official deploy/audit/cutover unless override.
+if [[ "${TTG_V9_ALLOW_LEGACY_R2_REMINT:-0}" != "1" ]]; then
+  echo "LEGACY_R2_REMINT_REFUSED: set TTG_V9_ALLOW_LEGACY_R2_REMINT=1 only for historical replay" >&2
+  exit 2
+fi
+
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 

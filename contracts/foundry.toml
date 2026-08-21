@@ -67,7 +67,10 @@ fs_permissions = [
 line_length = 120
 
 
-# Isolated V9 Batch PM (solc >= 0.8.36). Local only — no broadcast.
+# Isolated V9 Batch PM / Design Lock (solc 0.8.36 · via_IR). Local only — no broadcast.
+# Pre-deploy scanner note: pin 0.8.36+via_IR so UnsoundSpill (fixed 0.8.36) and LostStorageArray
+# (fixed 0.8.32) are patched; remaining explorer banners are N/A for our patterns — see
+# docs/runbook/TT-TTG-V9-PRE-DEPLOY-COMPILER-AND-WALLET-SCAN-LATEST.md
 [profile.ttg_v9]
 src = "src/ttg-v9"
 test = "test/ttg-v9"
@@ -107,4 +110,6 @@ fs_permissions = [
   { access = "read-write", path = "./out-ttg-v9" },
   { access = "read-write", path = "../evidence/GO_ttg_v9_sepolia_rehearsal" },
   { access = "read-write", path = "../evidence/GO_ttg_v9_remint_sepolia" },
+  { access = "read-write", path = "../evidence/GO_ttg_v9_design_lock_sepolia" },
+  { access = "read-write", path = "../evidence/GO_ttg_v9_mainnet_dl_r1" },
 ]

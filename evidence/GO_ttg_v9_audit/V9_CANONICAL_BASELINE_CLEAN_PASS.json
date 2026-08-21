@@ -1,0 +1,14 @@
+{
+  "stamp": "V9_CANONICAL_BASELINE_CLEAN_PASS",
+  "issued_at": "2026-08-21T09:47:52Z",
+  "active_candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "active_baseline": "TT-TTG-V9-OWNER-DESIGN-LOCK + V9_DESIGN_LOCK_LOCAL_PASS + V9_DESIGN_LOCK_SEPOLIA_PASS_STOP",
+  "OLD_V9_ACTIVE_REFERENCES": 0,
+  "old_v9_active_hits": [],
+  "legacy_supersession_index": "evidence/GO_ttg_v9_audit/V9_LEGACY_SUPERSESSION_INDEX.json",
+  "inherits_r2_final_audit_pass": false,
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED",
+  "verdict": "PASS",
+  "next": "AI Audit #1/#2/#3 on V9_AUDIT_CANDIDATE_DESIGN_LOCK only"
+}

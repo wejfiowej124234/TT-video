@@ -1,0 +1,91 @@
+# TTG V9 GitHub Official Repository Alignment — machine SSOT
+schema: traveltrust.ttg_v9_github_official_alignment.v1
+stamp: V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT
+status: ACTIVE
+candidate: V9_AUDIT_CANDIDATE_DESIGN_LOCK
+remediation_wave: DL_R1
+mainnet_status: DEPLOYED_PENDING_CUTOVER
+aliases:
+  - MAINNET_DEPLOYED_PHASE1
+  - TIMELOCK_CUTOVER_PENDING
+tt_production_go: NO_GO
+forbid_status_claims:
+  - MAINNET_FULLY_ACTIVE_as_current
+  - ACTIVE_OFFICIAL_as_current
+  - TT_PRODUCTION_GO_GO
+upstream:
+  - docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md
+  - evidence/GO_ttg_v9_audit/V9_DOCUMENTATION_FULL_CONVERGENCE_PASS.json
+  - evidence/GO_ttg_v9_audit/TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS.json
+hub: docs/github-official/README.md
+public_readme_candidate: docs/github-official/PUBLIC-README.md
+required_docs:
+  - docs/github-official/README.md
+  - docs/github-official/PUBLIC-README.md
+  - docs/github-official/LICENSE.md
+  - docs/github-official/CONTRIBUTING.md
+  - docs/github-official/SECURITY.md
+  - SECURITY.md
+  - docs/github-official/en/README.md
+  - docs/github-official/zh/README.md
+  - docs/github-official/en/Architecture.md
+  - docs/github-official/zh/Architecture.md
+  - docs/github-official/en/TTG-V9.md
+  - docs/github-official/zh/TTG-V9.md
+  - docs/github-official/en/Tokenomics.md
+  - docs/github-official/zh/Tokenomics.md
+  - docs/github-official/en/Governance.md
+  - docs/github-official/zh/Governance.md
+  - docs/github-official/en/Primary-Market.md
+  - docs/github-official/zh/Primary-Market.md
+  - docs/github-official/en/ProjectPool.md
+  - docs/github-official/zh/ProjectPool.md
+  - docs/github-official/en/CountryFeeRouter.md
+  - docs/github-official/zh/CountryFeeRouter.md
+  - docs/github-official/en/Role-Stake.md
+  - docs/github-official/zh/Role-Stake.md
+  - docs/github-official/en/Security.md
+  - docs/github-official/zh/Security.md
+  - docs/github-official/en/Mainnet-Deployments.md
+  - docs/github-official/zh/Mainnet-Deployments.md
+  - docs/github-official/en/Contract-Registry.md
+  - docs/github-official/zh/Contract-Registry.md
+  - docs/github-official/en/Verification.md
+  - docs/github-official/zh/Verification.md
+  - docs/github-official/en/Legacy-Policy.md
+  - docs/github-official/zh/Legacy-Policy.md
+  - docs/github-official/en/Whitepaper.md
+  - docs/github-official/zh/Whitepaper.md
+active_registry_must_include:
+  - "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9"
+  - "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f"
+  - "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37"
+  - "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970"
+  - "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6"
+active_registry_must_exclude:
+  - "0x96491aa894658ff7946506318c49F3c76b8f40e7"
+  - "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+  - "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7"
+coverage_topics:
+  - Architecture
+  - TTG-V9
+  - Tokenomics
+  - Governance
+  - Primary-Market
+  - ProjectPool
+  - CountryFeeRouter
+  - Role-Stake
+  - Security
+  - Mainnet-Deployments
+  - Contract-Registry
+  - Verification
+  - Legacy-Policy
+  - Whitepaper
+forbid_auto:
+  - git_push_publicize
+  - production_meta_indexer_cutover
+  - official_www_rewrite
+  - TT_PRODUCTION_GO_flip
+  - DL_R1_source_or_address_mutation
+gate: scripts/dev/run-ttg-v9-github-official-alignment-gate.py
+pass_stamp: evidence/GO_ttg_v9_audit/V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT_PASS.json

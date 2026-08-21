@@ -1,0 +1,52 @@
+{
+  "stamp": "V9_OWNER_MAINNET_DEPLOY_AUTHORIZATION_RECORDED",
+  "issued_at": "2026-08-21T05:17:05Z",
+  "instrument": "OWNER MAINNET DEPLOY AUTHORIZATION",
+  "candidate": "V9_AUDIT_CANDIDATE_R2_FINAL",
+  "candidate_manifest_sha256": "sha256:59c81dbe55beeaeddae8bbd16b1a7e4f63549fa3b30d012e0387abd06887f92b",
+  "parent_stop": "V9_MAINNET_CUTOVER_AUTH_READY_STOP",
+  "network": {
+    "chain_id": 1,
+    "name": "Ethereum Mainnet"
+  },
+  "official_entry": "TtgV9AtomicDeployerMainnet",
+  "scope": "TTG V9 Mainnet deploy + necessary Timelock wiring",
+  "exact_match_only": true,
+  "forbid_live_code_param_bytecode_change": true,
+  "per_tx_verify": [
+    "chain_id=1",
+    "receipt",
+    "addresses",
+    "25T genesis 50/35/3/5/7",
+    "Governor->KEEP Timelock",
+    "Vault/PM UUPS",
+    "USDC->P4Cap",
+    "Governance Burn",
+    "V8 Legacy isolation"
+  ],
+  "mismatch_policy": "IMMEDIATE_STOP",
+  "post_deploy_stop": "Mainnet Deployment Verification",
+  "tt_production_go": "NOT_AUTHORIZED_BY_THIS_INSTRUMENT",
+  "boundary": "Mainnet Web3 deploy auth != TT_PRODUCTION_GO",
+  "execution_status": "PAUSED_SAFE_DEPRECATION_REAUDIT",
+  "stop_reason": "GUARDIAN_ADDRESS_NOT_PINNED_IN_AUTHORIZATION_OR_FROZEN_NORM",
+  "frozen_params_ready": {
+    "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "p4cap": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "timelock": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "team": "0x010365F0835323826569D61D0E13E6F8d25F6828",
+    "marketing": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+    "treasury": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736",
+    "voting_delay_blocks": 7200,
+    "voting_period_blocks": 50400,
+    "guardian": "REQUIRED_OWNER_PIN_BEFORE_BROADCAST"
+  },
+  "preflight": {
+    "exact_match_sources_and_bytecode": true,
+    "deployer_wallet_role": "Norm Marketing ops EOA (phase3 local)",
+    "deployer_gas_eth_observed": "~0.33",
+    "chain_id_rpc": 1
+  },
+  "pause_reason": "Owner deprecated Safe; Timelock admin immutable Safe",
+  "superseding_stamp": "V9_SAFE_DEPRECATION_FULL_PRIVILEGE_REAUDIT"
+}

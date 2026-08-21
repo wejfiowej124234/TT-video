@@ -4,156 +4,190 @@
   "chain_id": 11155111,
   "not_production_go": true,
   "mainnet_broadcast": "FORBIDDEN",
-  "tt_production_go": "UNCHANGED",
+  "candidate_binding": "V9_AUDIT_CANDIDATE_R2_FINAL",
   "monetary_invariant": "MAX_SUPPLY=25T NO_FURTHER_MINT",
   "timelock_delay_seconds_rehearsal": 90,
   "timelock_delay_mainnet_keep_hours": 48,
   "ops_wallets_mode": "SEPOLIA_DEPLOYER_TRIPLE_ALIAS",
-  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
   "addresses": {
-    "usdc_mock": "0x81a82695a8B4f76309f0D66834C7c8B00c3A0D2B",
-    "ttg_v9": "0xE472FEF27c115642865dD0657af6bf0C697edb3E",
-    "vault": "0x91a48a4F8D303d041F0aA9e227725EE0D5586BDB",
-    "market": "0x40cd86128dC1017157F6eb56D1aAF1253739cBD1",
-    "governor_v9": "0x70B16c9F785E14B1ed9724A594d82B763F1f0308",
-    "legacy_governor": "0x38fb913041735846b467dB1f20BD76fE4b7F2AC5",
-    "mock_timelock": "0x3E6318B1cc3f2d98381D743556A5E5b3BA39d13A",
-    "p4cap_keep": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
-    "vault_v2": "0x1505a9C3F79ED1bA4fF37B3592A5088E6F0331Ec",
-    "market_v2": "0xfA02fa4FE8da2B29E69305c602C625a5F48781D8",
-    "junk": "0x76d3Ca26FeAFb9b168f25011947416d606cB611B"
+    "ttg": "0x19d8E3d3BaEa92CbD748F63f0a2a79487a6FeCf3",
+    "vault": "0x643b9c31acea9c6e457575318a8a8e7568980c22",
+    "market": "0x479CA5Ba27c5B2893d30ebf302d194DD09e0c704",
+    "governor": "0x0E45bdECF7bae246a00a571767E32fBbf215C9ec",
+    "timelock": "0xC7247917B4f9A1a103B774f46AC79313BDd2632D",
+    "p4capKeep": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "usdc": "0x67f1533e6e2DcD978CEa77DD6F653E9E1c7C0Cd2"
   },
-  "drills_pass": [
-    "genesis_25t_allocation",
-    "batch1_cancelled_unarmed_after_deploy_overrun",
-    "batch2_buy_return",
-    "batch3_buy_return",
-    "batch4_buy_return",
-    "batch5_buy_return",
-    "pause_unpause_via_timelock",
-    "rescue_foreign_deny_ttg",
-    "uups_deny_eoa",
-    "uups_timelock_upgrade",
-    "governor_cutover_legacy_cannot_schedule",
-    "gov_propose_vote_queue_delay_execute_burn",
-    "supply_decreased_never_increases"
-  ],
-  "max_supply_wei": "25000000000000000000000000000000",
+  "key_txs": {
+    "buy_batch_1": "0x69d9e7cce47b3f4e216beff013ac1877024d137f1015be24ca10380963e2edac",
+    "buy_batch_5": "0x7a99796eb521341a6bea63f9ba2f87bff2a45cdbee0eeb62a0fa62823fbc57fd",
+    "gov_execute_burn": "0x7245e3dd2c906c24f1cab2d282d61e8998f298985a72b9d260b91c73de3782b6",
+    "execute_vault_uups": "0xfab3dbdab4dd5fa9a35a9ddf34e924384bf7690abc2dfdb79b1f795e6bbadcbc"
+  },
   "supply_after_burn": "24999000000000000000000000000000",
-  "governance_burn_wei": "1000000000000000000000000000",
+  "lifecycle": "five_batch_RETURN + pause/unpause + rescue!=TTG + UUPS + G6 + gov burn 1B",
+  "issued_at": "2026-08-21T04:57:44Z",
+  "note": "On-chain drill PASS; stamp repaired after Windows path bug in remint python heredoc. R2_FINAL sources NOT modified.",
   "transactions": [
     {
-      "label": "closeBatchReturn_1_cancelled",
-      "tx": "0x7a1a6aa9e0a843310cfb54fc1db957f7d6efd0428ec06be2b459921c72df924a"
-    },
-    {
-      "label": "buy_batch_2",
-      "tx": "0x96d303af148a9c747a7e4039b7aa17a2ab149dd2289b0e6048cad0d26650b579"
-    },
-    {
-      "label": "schedule_resched_3",
-      "tx": "0x2fc5ab817acef5b7c30a9f404da8035acbf7e96fac118541dd26aac1e68156f1"
-    },
-    {
-      "label": "schedule_resched_4",
-      "tx": "0x53a036e8b796c275d151b0f01a537220257677fbdb8fc768e8f22ea4e724880b"
-    },
-    {
-      "label": "schedule_resched_5",
-      "tx": "0x4398f77e7030f74d54405846893490d004fa859dbd17dae1dbab7564e6e7f5fa"
-    },
-    {
-      "label": "execute_resched_3",
-      "tx": ""
-    },
-    {
-      "label": "execute_resched_4",
-      "tx": "0xca3bc590d3fad12e16336e1f8f83ae6fcb887f77c52fb9421c882f2bc3fc06fb"
-    },
-    {
-      "label": "execute_resched_5",
-      "tx": "0xffc32805080944c5d199074d9ccdcc71b303a7790083f47ba9c9657c5911fc3c"
-    },
-    {
-      "label": "closeBatchReturn_2",
-      "tx": "0x6b1b3d5a886e1639ec43eb4e773f22bf92abd050ce657a8a29a8bb5aef620587"
-    },
-    {
-      "label": "buy_batch_3",
-      "tx": "0x898caa32923235d7831038ffcb9fe223e46d11cd2349be67a09d965bda8af3fa"
-    },
-    {
-      "label": "closeBatchReturn_3",
-      "tx": "0x7c8bfb620c40d5ebb587bbd042df2ba66c7c986b937e81944f3b24340c587e17"
-    },
-    {
-      "label": "buy_batch_4",
-      "tx": "0x31809b0521ef5369843d2153e6fcd477aabb4c8402a7fd0f389f7f82d4db9350"
-    },
-    {
-      "label": "closeBatchReturn_4",
-      "tx": "0x1d8b8586a3f15524cb53908a0d74b21587b95769266dc37d114ce0acb3d8a2ea"
-    },
-    {
-      "label": "buy_batch_5",
-      "tx": "0xf4d5cd96db54877b46e9aa336e3f99e239eba236e36bf83a76dfd09b9ebdc87c"
-    },
-    {
-      "label": "closeBatchReturn_5",
-      "tx": "0xb21bb47291008e5ed52f0b889694c4ed06e91ca959abfe6556fd98cf3a7329c8"
-    },
-    {
-      "label": "pause",
-      "tx": "0xf315cbb93ea4d30bed8e013ea9e184f210aabe0395d487c874b6b73109845e6e"
-    },
-    {
       "label": "schedule_unpause",
-      "tx": "0x14056ba2885480cbc9575123d46d427ce45b67e862d98c0c98a823bd1725993f"
+      "tx": "0x1f97216101f39e8940626ddb70718726635cf043abc3d5f04a57f230bbb4433a"
     },
     {
       "label": "execute_unpause",
-      "tx": "0xf7de21c0a1bb99d35c2a2a684b0a7053568a9c3b86851d960c0b7af8d68b3020"
+      "tx": "0x6884dd8e7d1f6540735c1bc27ceae299ff992d8d2f30f1b2103651aaff90de8b"
     },
     {
-      "label": "junk_mint_vault",
-      "tx": "0x798386b9ba35e674226239e70e0d57ef07bb8042b752c3ed8c03ec6303f362cd"
+      "label": "closeBatchReturn_1",
+      "tx": "0xf82e12254877fe4c14c21db62239858f079667304cbc151ef801c2d574796115"
     },
     {
-      "label": "schedule_rescue",
-      "tx": "0x25171b452cf75003144d8cbead2e12cf910e0dfb257fecb8fae47484a95a1e06"
+      "label": "buy_batch_2",
+      "tx": "0x189b07a184ac9c8c6bad465d6ae2856a0a93c03a471f3c28df050e4bcf4a89c6"
     },
     {
-      "label": "execute_rescue",
-      "tx": "0x1887b06abbb51cd4d817bb8ffdaf4f4d618c48b3bb1b442eeee18983c28fc123"
+      "label": "buy_batch_1",
+      "tx": "0x32d4c221f25d581e7cfbf51d9e27930b94e452b5afd406d4b7f55133ba226e82"
     },
     {
-      "label": "schedule_uups",
-      "tx": "0x597fe921a9789e04dd9b1f4095c15ee533ca00ba200a24194328c6cb9331fc94"
+      "label": "pause",
+      "tx": "0x78539a69a91dd0267cda79621cad741658125084082bf4d3ce0eb6229f7a9d7c"
     },
     {
-      "label": "execute_uups",
-      "tx": "0xf591e24a47f0011b4e1a2e14af8438e6a1d1b8c74995cee5ec66007069c46658"
+      "label": "schedule_unpause",
+      "tx": "0x8c96775b9fed6911b6b53e0fbf0d6e2ba090846917b18e07876dc23b7a4970e7"
     },
     {
-      "label": "delegate",
-      "tx": "0x948ac5edeeee609d1cfdd2857d1ad4016e7ef898dfe6494e0333faa3931d1d49"
+      "label": "closeBatchReturn_2",
+      "tx": "0x8d811af8bcde5fc6d9ef9525d060af55cf253d3dbf1781989f0141b8b47053a0"
     },
     {
-      "label": "gov_propose",
-      "tx": "0x69e6470bc698904db93806decc645f2d7a5ec7c3a4eade3bd2df0f27d663e413"
+      "label": "buy_batch_3",
+      "tx": "0x824b7f530d5bfc5df230aee4f3b7bd7c28fddb99403ad25c1e04c57fc3b4f04e"
     },
     {
-      "label": "gov_vote",
-      "tx": "0xa6074c84eff368935b0320e155a11265f4d1cf2aa70aecd5738959e5e21d6295"
+      "label": "execute_unpause",
+      "tx": "0x2cce5f689ebfd674a1b3ea24f392df004ea6b9aa71fea1c6ebc59554d28aee7a"
+    },
+    {
+      "label": "closeBatchReturn_1",
+      "tx": "0xfd1245a687be8f52b227554dbfcf34fd8c389e8b452f1573806421b432c9b135"
+    },
+    {
+      "label": "buy_batch_2",
+      "tx": "0x1a7dc2d23a76dcc4c9b2d04a1447771cbf8cb82e462692d9874e4499c17a5a17"
+    },
+    {
+      "label": "closeBatchReturn_3",
+      "tx": "0xa4625bd159013231c196ec7b3d7a8c616ea93149d8b3136abedc60c4d5f6bac8"
+    },
+    {
+      "label": "buy_batch_4",
+      "tx": "0xa2f719056143ea1839e6597bf2bc0854bebbe40962d2da15d5bfe68f66264006"
+    },
+    {
+      "label": "closeBatchReturn_2",
+      "tx": "0x56a163e47e45c2a7592b788bb4b08377563a6c05abfd2fc8e44753dc3aca7cac"
+    },
+    {
+      "label": "buy_batch_3",
+      "tx": "0x630dec71d2c34e4613504cc58bb83f7a3a60cc36166ad3818ce7369f4031d598"
+    },
+    {
+      "label": "closeBatchReturn_4",
+      "tx": "0xd18fdf20bce162b921780fa9809b4221fc4b1911074d807e4f148119f34ecf5e"
+    },
+    {
+      "label": "buy_batch_5",
+      "tx": "0xb6be08d11ee92794e3266c4972340cb7f79fa667583884421c89ecc2c28c49e1"
+    },
+    {
+      "label": "closeBatchReturn_3",
+      "tx": "0xd339101be77f11ca0fb06c4e2ed05faf750b62a5c13c8c21669be27a7cc9b111"
+    },
+    {
+      "label": "buy_batch_4",
+      "tx": "0xb6361f1ec3b0ff66a09b1af804d66200dec1a9559d693ef38af2f89a2591ccfa"
+    },
+    {
+      "label": "closeBatchReturn_5",
+      "tx": "0xbd04160a71d9f840a18e0ed6dbd30c0b12f6dabef259ee1fa9689340ad8ea7f4"
+    },
+    {
+      "label": "schedule_rescue_junk",
+      "tx": "0x91f1bc53761dce5c158464049fd01d36e4cd07709af0f03849552c1a80f7a176"
+    },
+    {
+      "label": "execute_rescue_junk",
+      "tx": "0xe273b2465dcf88f977483a9a592526931ff8e2fea001b0e773fd3b222629e664"
+    },
+    {
+      "label": "schedule_vault_uups",
+      "tx": "0xffb84031059180f5d813a81be994b94444bb1a849d2ca9963d6a86b965df1903"
+    },
+    {
+      "label": "closeBatchReturn_4",
+      "tx": "0xd3a1f812a4207ceccd8a1333763ee33a18bc87c49efeb8cc02150724d87cca9d"
+    },
+    {
+      "label": "buy_batch_5",
+      "tx": "0x7a99796eb521341a6bea63f9ba2f87bff2a45cdbee0eeb62a0fa62823fbc57fd"
+    },
+    {
+      "label": "execute_vault_uups",
+      "tx": "0x30188e002bcba003afc4441b528fbc07923c7f75aa4fd218595da6ad91b8f77a"
+    },
+    {
+      "label": "delegate_self",
+      "tx": "0xf07158d92089130c646882bae6735af119fb25a641b2b6082016b1c9199cea69"
+    },
+    {
+      "label": "gov_propose_burn",
+      "tx": "0x5643762b5de2ea7b09a083091617c495f64af40b9f2c26d2b60cb22745764a8f"
+    },
+    {
+      "label": "gov_vote_for",
+      "tx": "0xf98002cb19837b997654e2f109325d81780d55917e6601870426322466c67289"
+    },
+    {
+      "label": "closeBatchReturn_5",
+      "tx": "0x59be0b604c6a81999ed726f3c019f8ccabac455d823149b164eb96023829e137"
+    },
+    {
+      "label": "schedule_rescue_junk",
+      "tx": "0xba344633eeb8390f71c653a0d6fd6117e62c208f13ef34056ae2eb0b6eae0a7a"
+    },
+    {
+      "label": "execute_rescue_junk",
+      "tx": "0x63e7c9878a895d8ee72834c8c202b0f28f3063640226208f75f6b995cbb3f9a0"
+    },
+    {
+      "label": "schedule_vault_uups",
+      "tx": "0x988465e81469a2b11edfb18b50f75720344dce17c6440c0adf0303bdb2f03cf3"
+    },
+    {
+      "label": "execute_vault_uups",
+      "tx": "0xfab3dbdab4dd5fa9a35a9ddf34e924384bf7690abc2dfdb79b1f795e6bbadcbc"
+    },
+    {
+      "label": "delegate_self",
+      "tx": "0x456985d40ec97d67fe7fe803a6de1e7da00bf200ba9edfe70b320acb567058b0"
+    },
+    {
+      "label": "gov_propose_burn",
+      "tx": "0x1ce15b1e18167fa70451324c692f87ecb6ade4dcb34db2d8a26788a2da10aa68"
+    },
+    {
+      "label": "gov_vote_for",
+      "tx": "0x7e14c6e0abce10185928ec1ec5128e53eeeb0dca0652475e4f5fc94b338fe7da"
     },
     {
       "label": "gov_queue",
-      "tx": "0x40d10965658fc6735070565afb564ae126a65ada1be7e631f9447b2867362c50"
+      "tx": "0xedc2f4ddde85c4037e8f0e0dd2a6ccff112f633547b4bf9a488ba72228b4a843"
     },
     {
       "label": "gov_execute_burn",
-      "tx": "0x00be3d4226868e9469f956005ccae43df67ca4db46a056ed728fe37e50b8876c"
+      "tx": "0x7245e3dd2c906c24f1cab2d282d61e8998f298985a72b9d260b91c73de3782b6"
     }
-  ],
-  "issued_at": "2026-08-21T02:42:46Z"
+  ]
 }

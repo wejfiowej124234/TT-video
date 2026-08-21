@@ -329,9 +329,12 @@ export async function fetchJsonWithApiStatusLog<T>(
 
 export type AuthHeaders = { "X-User-Id"?: string; Authorization?: string };
 
-/** 与 POST /auth/login、/auth/register 返回的 `token` 一致；有 DB 时为不透明 `tts_<uuid>`（见 crates/api 鉴权）。 */
+/** Legacy key. BATCH-A: opaque token lives in HttpOnly `traveltrust_session`; JS must not persist this. */
 export const AUTH_SESSION_TOKEN_KEY = "traveltrust_session_token";
 export const AUTH_USER_ID_KEY = "traveltrust_user_id";
+
+export { hasWwwSessionHint, canProbeAccountSession } from "./core/authSession";
+export { AUTH_SESSION_OK_COOKIE } from "./core/authSession";
 
 export function clearClientAuthStorage(): void {
   if (typeof window === "undefined") return;
@@ -340,14 +343,15 @@ export function clearClientAuthStorage(): void {
   clearAdmin2faSession();
 }
 
-/** 开发/链下模式可从 localStorage 或 env 取；登录后优先带 Bearer（DB 模式下须带 token，勿仅 X-User-Id）。 */
+/** Never read leftover LS token. Local-dev only: NEXT_PUBLIC_DEV_USER_ID. Cookie Bearer is injected at www middleware. */
 export function getAuthHeaders(): AuthHeaders & Record<string, string> {
   const twoFa = getAdmin2faSessionHeaders();
   if (typeof window !== "undefined") {
-    const tok = localStorage.getItem(AUTH_SESSION_TOKEN_KEY)?.trim();
-    if (tok) return { Authorization: `Bearer ${tok}`, ...twoFa };
-    const uid = localStorage.getItem(AUTH_USER_ID_KEY);
-    if (uid) return { "X-User-Id": uid, ...twoFa };
+    try {
+      localStorage.removeItem(AUTH_SESSION_TOKEN_KEY);
+    } catch {
+      /* ignore */
+    }
   }
   const dev = typeof process !== "undefined" && process.env.NEXT_PUBLIC_DEV_USER_ID;
   if (dev) return { "X-User-Id": process.env.NEXT_PUBLIC_DEV_USER_ID!, ...twoFa };

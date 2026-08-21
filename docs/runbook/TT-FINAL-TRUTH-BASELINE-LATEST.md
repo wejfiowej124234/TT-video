@@ -16,12 +16,14 @@
 
 | 平面 | 活真源 | 角色 |
 |------|--------|------|
-| **Web3 Active Truth** | Ethereum mainnet · **NEW TTG / NEW PM / NEW Governor** · **KEEP** Wired + Official SR + FeeRouter + Timelock | L7 / `/meta` / Money Path |
-| **Product Truth** | **TravelTrust Official · OPS-2026.08.20-v9** · `3e356617…` · `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** | Official www 产品面 |
+| **Web3 Active Truth (V9 Design Lock · DL_R1)** | Ethereum mainnet · **SoloTimelock / NEW TTG·Vault·PM·Governor·ProjectPool·CountryFeeRouter·RoleStake** · status **`DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING`** · **KEEP** EF/SR/USDC · **≠** `MAINNET_FULLY_ACTIVE` | L7 token/gov/sale topology (cutover pending) |
+| **Web3 Money Path Reality (Track1 sealed)** | **KEEP** EscrowFactoryV2Wired + Official SR · historical FeeRouter/P4Cap/Safe-Timelock cites = **LEGACY for V9 Official ACTIVE** (one-shot SR `setFeeRouter` only) | L7 order money path |
+| **Product Truth** | **TravelTrust Official · OPS-2026.08.20-v9** · `3e356617…` · `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** | Official www 产品面 · **本窗口不切 V9 文案** |
 
+**V9 文档唯一上游：** [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](./TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · machine [`registry/ttg-v9-documentation-truth-baseline.v1.yaml`](../../registry/ttg-v9-documentation-truth-baseline.v1.yaml)  
 **Product Truth 钉：** [`Living Pin Index`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md) · [`OPS-20260820-V9 Baseline`](./TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md) · [`Freeze JSON`](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json)  
 
-> **Web3 对齐声明（未执行 · 另闸）：** Owner 将以 **Official V9 产品基线** 为准后续更新 Web3 轨文档/对齐；**本文件本轮不改** Web3 Active Truth 地址表 · **不翻** `TT_PRODUCTION_GO`。
+> **Web3 V9 Design Lock overlay（2026-08-21）：** Phase1 已部署地址与经济锁进入本 FTB；**禁止**写成 V9 Official **FULLY ACTIVE**（Solo `idBind/idSeed/idCaller*` + KEEP `setFeeRouter` 未完）。**禁止**自动翻 `TT_PRODUCTION_GO`。V8 Cycle 下列 TTG/PM/Governor 地址对 **Official V9 token/sale/gov** = **SUPERSEDED**（历史 Reality 可引用）。
 **Sepolia / Local:** 架构/ABI/流程对齐 · **独立地址** · **≠** Official  
 **Reality Wave:** `TRACK1_REALITY_SEALED` · execute `0xe575…e88e04` · release `0x271e…0f796` · Escrow status=3 / USDC=0 · `isEscrow=true` · conservation `10e6=9.5e6+0.5e6+0` · [`Seal`](./TT-TRACK1-REALITY-EVIDENCE-SEAL-LATEST.md)  
 **money_path 活真源：** `MAINNET_MONEY_PATH_TRACK1_REALITY_SEALED`（**禁止**再读 `WAITING_ETA` / `MAINNET_MONEY_PATH_INCOMPLETE` / Settlement·Fee **UNSET** 当活叙事）  
@@ -62,22 +64,43 @@ TT_PRODUCTION_GO      = NO_GO · Final Reality / Release Certification = PASS ·
 
 ---
 
-## 1 · Official Mainnet 地址（活真源 · V8 Cycle）
+## 1 · Official Mainnet 地址
+
+### 1a · V9 Design Lock · DL_R1（文档活真源 · `DEPLOYED_PENDING_CUTOVER`）
+
+| 角色 | Address | 状态 |
+|------|---------|------|
+| chain_id | `1` | Ethereum mainnet |
+| **TTG V9** | `0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9` | `DEPLOYED_PENDING_CUTOVER` · 25T · 50/35/3/5/7 · NO-MINT |
+| **SoloTimelock** | `0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f` | `DEPLOYED_PENDING_CUTOVER` · admin=`0xe1e732…` · 48h · **no Safe** |
+| **ProjectPool** | `0x7B21b421981A3B61cc08c8E22D4fd690E457Df37` | `DEPLOYED_PENDING_CUTOVER` · sale USDC sink |
+| **CountryFeeRouter** | `0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970` | `DEPLOYED_PENDING_CUTOVER` · 5%→45/55 or 100% |
+| **Vault** | `0xe87378e49Ead2E1a422B8cae118d3C905Ee45B6C` | `DEPLOYED_PENDING_CUTOVER` |
+| **PrimaryMarket** | `0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b` | `DEPLOYED_PENDING_CUTOVER` · bind/seed **pending** Solo execute |
+| **Governor** | `0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c` | `DEPLOYED_PENDING_CUTOVER` |
+| **RoleStake** | `0xf6A1Fb4435E463117a666818611F49D03F91E7A7` | `DEPLOYED_PENDING_CUTOVER` |
+| **EscrowFactoryV2Wired** | `0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6` | **KEEP** |
+| **SettlementRouter** | `0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372` | **KEEP** · `setFeeRouter(NEW)` **pending** |
+| USDC | `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48` | **KEEP** |
+
+SSOT: [`V9 Documentation Truth Baseline`](./TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · [`Phase2 Freeze Wait`](./TT-TTG-V9-MAINNET-DL-R1-PHASE2-FREEZE-WAIT-LATEST.md)
+
+### 1b · V8 Cycle 历史表（SUPERSEDED as Official V9 token/sale/gov · Money Path lineage）
 
 | 角色 | Address | 本 Cycle |
 |------|---------|----------|
 | chain_id | `1` | Ethereum mainnet |
-| **EscrowFactoryV2Wired** | `0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6` | **KEEP** · Official create · 现仍指旧 SR |
+| **EscrowFactoryV2Wired** | `0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6` | **KEEP** · Official create |
 | **SettlementRouter（Official live）** | `0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372` | **KEEP** · Track1 封印路径 |
-| SettlementRouterFactoryTrust（SR-FT） | `0xD1DAE665eDc16FCEc7b7530Ead3504A846457147` | **KEEP** · DEPLOYED_UNWIRED · ≠ Official live 直至 Track2 T1/T2 |
-| FeeRouter | `0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72` | **KEEP** · Official OLD hop |
-| EscrowFactoryV2 (lineage) | `0x052052f06bfc15cbd63606252db68b4b445aa4f7` | **历史** · 非 Official create |
-| Timelock | `0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7` | **KEEP** · delay=48h · governor()=NEW |
-| Timelock admin Safe | `0x96491aa894658ff7946506318c49F3c76b8f40e7` | **KEEP** |
-| **Governor** | `0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F` | **ACTIVE · NEW** |
-| **Governance token (TTG)** | `0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602` | **ACTIVE · NEW** · 25T · 15/35/50 |
-| Treasury P4Cap | `0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF` | **KEEP** |
-| **PrimaryMarket** | `0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2` | **ACTIVE · NEW instance** · min=1 USDC · 禁止抄 OLD `0xDf9e…` |
+| SettlementRouterFactoryTrust（SR-FT） | `0xD1DAE665eDc16FCEc7b7530Ead3504A846457147` | **KEEP** · DEPLOYED_UNWIRED |
+| FeeRouter | `0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72` | **LEGACY for V9 Official Fee** · Track1 historical |
+| EscrowFactoryV2 (lineage) | `0x052052f06bfc15cbd63606252db68b4b445aa4f7` | **历史** |
+| Timelock | `0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7` | **LEGACY for V9 Official gov** · one-shot SR retarget only |
+| Timelock admin Safe | `0x96491aa894658ff7946506318c49F3c76b8f40e7` | **LEGACY** · one-shot Safe→KEEP only |
+| Governor (V8 Cycle) | `0xD5819acACdA86F2C73de4a18cb5e4464ECAF787F` | **SUPERSEDED** as Official V9 Governor |
+| Governance token (V8 Cycle TTG) | `0x0EC40c8a4ff31Fcc9e65121C1A38310df0413602` | **SUPERSEDED** as Official V9 TTG |
+| Treasury P4Cap | `0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF` | **LEGACY** · **not** V9 sale USDC sink |
+| PrimaryMarket (V8 Cycle) | `0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2` | **SUPERSEDED** as Official V9 PM |
 | USDC | `0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48` | **KEEP** |
 
 **LEGACY / SUPERSEDED（仅本 Cycle 降级；父本 20260812 仍列原身份）：**

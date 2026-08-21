@@ -18,6 +18,9 @@ import {MockV9Timelock} from "../../src/ttg-v9/mocks/MockV9Timelock.sol";
 import {TtgPublicSaleVaultV2Harness} from "../../src/ttg-v9/mocks/TtgPublicSaleVaultV2Harness.sol";
 import {TtgBatchPrimaryMarketV2Harness} from "../../src/ttg-v9/mocks/TtgBatchPrimaryMarketV2Harness.sol";
 import {TtgV9DeployTopology} from "../../src/ttg-v9/TtgV9DeployTopology.sol";
+import {TtgV9AtomicDeployer} from "../../src/ttg-v9/TtgV9AtomicDeployer.sol";
+import {TtgV9AtomicDeployerMainnet} from "../../src/ttg-v9/TtgV9AtomicDeployerMainnet.sol";
+import {TtgV9GovernanceParams} from "../../src/ttg-v9/TtgV9GovernanceParams.sol";
 
 contract TtgV9RemintLocalTest is Test {
     event BatchCancelledUnarmed(uint256 indexed batchId, address closer);
@@ -255,5 +258,55 @@ contract TtgV9RemintLocalTest is Test {
         vm.prank(buyer);
         market.buy(2, 1e6);
         assertEq(ttg.balanceOf(buyer), (uint256(1e6) * 1 ether) / 3);
+    }
+
+    /// @dev RT2-OPEN-01 close: AtomicDeployer leaves Vault admin=Timelock in the same constructor tx.
+    function test_atomicDeployer_vaultAdminIsTimelock() public {
+        MockV9Timelock tl2 = new MockV9Timelock(admin, 1 days);
+        MockV9Erc20 usdc2 = new MockV9Erc20("USD Coin", "USDC", 6);
+        TtgV9AtomicDeployer atomic =
+            new TtgV9AtomicDeployer(address(usdc2), p4cap, address(tl2), guardian, team, marketing, treasury);
+        TtgPublicSaleVault v = TtgPublicSaleVault(payable(atomic.vault()));
+        assertEq(v.admin(), address(tl2));
+        assertEq(address(v.ttg()), atomic.token());
+        assertEq(TravelTrustGovernanceTokenV9(atomic.token()).balanceOf(atomic.vault()), PUBLIC);
+    }
+
+    /// @dev A3-OPEN-01: Mainnet factory rejects LOCAL windows; accepts MAINNET floors.
+    function test_atomicDeployerMainnet_rejectsLocalWindows() public {
+        MockV9Timelock tl2 = new MockV9Timelock(admin, 1 days);
+        MockV9Erc20 usdc2 = new MockV9Erc20("USD Coin", "USDC", 6);
+        vm.expectRevert(TtgV9AtomicDeployerMainnet.GovernorParamsBelowMainnetFloor.selector);
+        new TtgV9AtomicDeployerMainnet(
+            address(usdc2),
+            p4cap,
+            address(tl2),
+            guardian,
+            team,
+            marketing,
+            treasury,
+            TtgV9GovernanceParams.VOTING_DELAY_BLOCKS_LOCAL,
+            TtgV9GovernanceParams.VOTING_PERIOD_BLOCKS_LOCAL
+        );
+    }
+
+    function test_atomicDeployerMainnet_productionWindows() public {
+        MockV9Timelock tl2 = new MockV9Timelock(admin, 1 days);
+        MockV9Erc20 usdc2 = new MockV9Erc20("USD Coin", "USDC", 6);
+        TtgV9AtomicDeployerMainnet atomic = new TtgV9AtomicDeployerMainnet(
+            address(usdc2),
+            p4cap,
+            address(tl2),
+            guardian,
+            team,
+            marketing,
+            treasury,
+            TtgV9GovernanceParams.VOTING_DELAY_BLOCKS_MAINNET,
+            TtgV9GovernanceParams.VOTING_PERIOD_BLOCKS_MAINNET
+        );
+        TravelTrustGovernorV9 g = TravelTrustGovernorV9(atomic.governor());
+        assertEq(g.votingDelayBlocks(), TtgV9GovernanceParams.VOTING_DELAY_BLOCKS_MAINNET);
+        assertEq(g.votingPeriodBlocks(), TtgV9GovernanceParams.VOTING_PERIOD_BLOCKS_MAINNET);
+        assertEq(TtgPublicSaleVault(payable(atomic.vault())).admin(), address(tl2));
     }
 }

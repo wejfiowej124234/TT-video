@@ -1,0 +1,229 @@
+{
+  "stamp": "V9_MAINNET_BROADCAST_PHASE1_DEPLOYED_SCHEDULED",
+  "chain_id": 1,
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "remediation_wave": "DL_R1",
+  "addresses": {
+    "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "TTG": "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9",
+    "VAULT": "0xe87378e49Ead2E1a422B8cae118d3C905Ee45B6C",
+    "MARKET": "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b",
+    "GOVERNOR": "0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c",
+    "TIMELOCK": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+    "POOL": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+    "FEE_ROUTER": "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970",
+    "STAKE_POOL": "0xf6A1Fb4435E463117a666818611F49D03F91E7A7",
+    "ID_BIND": "0x8b96ff20e9b91aabc9e53c20d4555e311cc0813e26e84a123b6ef5ff8176d358",
+    "ID_SEED": "0x4da49a34030eba44cb5112bb65cd2a3040179589500a00c347741097b38dfaa0",
+    "ID_CALLER_SR": "0x2265e858d10f7c80c117f2e6381100379ef03e492aee527f7c8e15d12a0f19f4",
+    "ID_CALLER_EF": "0x3818f4ce821f840cc51a7c0d564c935b776aa0a9ee0e0b088bc132f0482e0a18",
+    "TIMELOCK_DELAY": "172800",
+    "DEPLOYER": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+    "KEEP_SETTLEMENT_ROUTER": "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372",
+    "KEEP_ESCROW_FACTORY": "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+    "LEGACY_SAFE": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "LEGACY_P4CAP": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "LEGACY_KEEP_TIMELOCK": "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    "FEE_INGRESS": "0x0000000000000000000000000000000000000000"
+  },
+  "broadcast_run": "D:/TravelTrust-V1.1/contracts/broadcast/TtgV9DesignLockMainnet.s.sol/1/run-latest.json",
+  "exact_match_method": "creation_bytecode_prefix_plus_norm_constructor_args",
+  "runtime_hash_note": "immutable-bearing contracts differ from forge deployedBytecode pin by design",
+  "checks": [
+    {
+      "name": "broadcast_chain_id_1",
+      "pass": true,
+      "detail": "1"
+    },
+    {
+      "name": "timelock_admin_norm_marketing",
+      "pass": true,
+      "detail": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+    },
+    {
+      "name": "timelock_admin_not_safe",
+      "pass": true,
+      "detail": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+    },
+    {
+      "name": "timelock_delay_48h",
+      "pass": true,
+      "detail": "172800"
+    },
+    {
+      "name": "market_usdcTreasury_is_new_pool",
+      "pass": true,
+      "detail": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37"
+    },
+    {
+      "name": "market_usdcTreasury_not_legacy_p4cap",
+      "pass": true,
+      "detail": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37"
+    },
+    {
+      "name": "guardian_norm_treasury",
+      "pass": true,
+      "detail": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
+    },
+    {
+      "name": "timelock_governor_set",
+      "pass": true,
+      "detail": "0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c"
+    },
+    {
+      "name": "genesis_totalSupply_25T",
+      "pass": true,
+      "detail": "25000000000000000000000000000000"
+    },
+    {
+      "name": "genesis_public_50pct_vault",
+      "pass": true,
+      "detail": "12500000000000000000000000000000"
+    },
+    {
+      "name": "genesis_dao_35pct_timelock",
+      "pass": true,
+      "detail": "8750000000000000000000000000000"
+    },
+    {
+      "name": "genesis_team_3pct",
+      "pass": true,
+      "detail": "750000000000000000000000000000"
+    },
+    {
+      "name": "genesis_marketing_5pct",
+      "pass": true,
+      "detail": "1250000000000000000000000000000"
+    },
+    {
+      "name": "genesis_treasury_7pct",
+      "pass": true,
+      "detail": "1750000000000000000000000000000"
+    },
+    {
+      "name": "creation_exact_TtgV9SoloTimelock",
+      "pass": true,
+      "detail": "0x99e43faba8dc773888223f70e1dfcd18bea37d7f"
+    },
+    {
+      "name": "creation_exact_TtgV9ProjectPool",
+      "pass": true,
+      "detail": "0x7b21b421981a3b61cc08c8e22d4fd690e457df37"
+    },
+    {
+      "name": "creation_exact_TtgV9CountryFeeRouter",
+      "pass": true,
+      "detail": "0x5afd2e0c8b9fa4eecfde4bf582d3b282d28f4970"
+    },
+    {
+      "name": "creation_exact_TtgV9AtomicDeployerMainnet",
+      "pass": true,
+      "detail": "0x82159eafac498756bbd7a3f9668e0945d5af9269"
+    },
+    {
+      "name": "creation_exact_nested_TtgPublicSaleVault",
+      "pass": true,
+      "detail": "0x59efd968a22dd942463cd7b47fc92042ac165d0c"
+    },
+    {
+      "name": "creation_exact_nested_TtgV9ERC1967Proxy",
+      "pass": true,
+      "detail": "0xe87378e49ead2e1a422b8cae118d3c905ee45b6c"
+    },
+    {
+      "name": "creation_exact_nested_TravelTrustGovernanceTokenV9",
+      "pass": true,
+      "detail": "0xd5c1ef9ec730f93e324a1966bd414a7f5ebc41c9"
+    },
+    {
+      "name": "creation_exact_nested_TtgBatchPrimaryMarket",
+      "pass": true,
+      "detail": "0x1d09eed5ee0975af781d27afc1724af64616b56c"
+    },
+    {
+      "name": "creation_exact_nested_TtgV9ERC1967Proxy",
+      "pass": true,
+      "detail": "0xc714e2567982ea92d5f3c5b66ab65532cfc5f09b"
+    },
+    {
+      "name": "creation_exact_nested_TravelTrustGovernorV9",
+      "pass": true,
+      "detail": "0xa0dfc4c5c544488afefe696afb8e5823911e5a9c"
+    },
+    {
+      "name": "creation_exact_TtgV9RoleStakePool",
+      "pass": true,
+      "detail": "0x5ed06445fec342ae5405c2c91969a52c28d653e3"
+    },
+    {
+      "name": "creation_exact_TtgV9ERC1967Proxy",
+      "pass": true,
+      "detail": "0xf6a1fb4435e463117a666818611f49d03f91e7a7"
+    },
+    {
+      "name": "atomic_usdc_circle",
+      "pass": true,
+      "detail": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    },
+    {
+      "name": "atomic_usdcTreasury_new_pool",
+      "pass": true,
+      "detail": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37"
+    },
+    {
+      "name": "atomic_timelock_new_solo",
+      "pass": true,
+      "detail": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f"
+    },
+    {
+      "name": "atomic_guardian_treasury",
+      "pass": true,
+      "detail": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
+    },
+    {
+      "name": "atomic_team",
+      "pass": true,
+      "detail": "0x010365F0835323826569D61D0E13E6F8d25F6828"
+    },
+    {
+      "name": "atomic_marketing",
+      "pass": true,
+      "detail": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+    },
+    {
+      "name": "atomic_treasury",
+      "pass": true,
+      "detail": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
+    },
+    {
+      "name": "atomic_voting_delay_floor",
+      "pass": true,
+      "detail": "7200"
+    },
+    {
+      "name": "atomic_voting_period_floor",
+      "pass": true,
+      "detail": "50400"
+    },
+    {
+      "name": "fee_caller_sr_false_until_48h_execute",
+      "pass": true,
+      "detail": "false"
+    },
+    {
+      "name": "fee_ingress_zero",
+      "pass": true,
+      "detail": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "name": "sr_feeRouter_not_yet_new",
+      "pass": true,
+      "detail": "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72"
+    }
+  ],
+  "hard_fail_count": 0,
+  "execute_eta_note": "SoloTimelock delay 172800s \u2014 execute idBind/idSeed/idCallerSr/idCallerEf after eta",
+  "keep_sr_setFeeRouter_note": "SettlementRouter.owner=KEEP Timelock; Safe->KEEP Timelock required",
+  "verified_stop_ready": false,
+  "tt_production_go": "UNCHANGED_NOT_AUTHORIZED"
+}

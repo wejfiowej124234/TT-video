@@ -1,0 +1,36 @@
+{
+  "stamp": "TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS",
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "remediation_wave": "DL_R1",
+  "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+  "aliases": [
+    "MAINNET_DEPLOYED_PHASE1",
+    "TIMELOCK_CUTOVER_PENDING"
+  ],
+  "forbid_claim": [
+    "MAINNET_FULLY_ACTIVE",
+    "ACTIVE_OFFICIAL"
+  ],
+  "WHITEPAPER_ACTIVE_TRUTH_CONFLICTS": 0,
+  "LEGACY_ACTIVE_LEAKS": 0,
+  "V9_BASELINE_COVERAGE": 100.0,
+  "documents": {
+    "zh": "docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md",
+    "en": "docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-EN-LATEST.md",
+    "matrix": "registry/ttg-v9-mainnet-edition-whitepaper-fact-matrix.v1.yaml"
+  },
+  "upstream": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+  "tt_production_go": "NO_GO",
+  "forbid_mutations": [
+    "DL_R1_sources",
+    "phase1_addresses",
+    "live_chain_params",
+    "TT_PRODUCTION_GO"
+  ],
+  "still_forbidden_auto": [
+    "GitHub_Official_Docs_cutover",
+    "Official_www_V9_copy_cutover",
+    "Production_meta_Indexer_cutover"
+  ],
+  "stop": true
+}

@@ -1,0 +1,64 @@
+{
+  "stamp": "V9_MAINNET_CUTOVER_AUTH_READY_STOP",
+  "issued_at": "2026-08-21T05:11:09Z",
+  "candidate": "V9_AUDIT_CANDIDATE_R2_FINAL",
+  "candidate_manifest": "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R2_FINAL_MANIFEST.json",
+  "candidate_manifest_sha256": "sha256:59c81dbe55beeaeddae8bbd16b1a7e4f63549fa3b30d012e0387abd06887f92b",
+  "r2_final_permanently_frozen": true,
+  "pre_mainnet_security_pass_permanently_frozen": true,
+  "cutover_review_doc": "docs/runbook/TT-TTG-V9-OWNER-MAINNET-CUTOVER-FINAL-REVIEW-LATEST.md",
+  "checklist_all_pass": true,
+  "open_critical": 0,
+  "open_high": 0,
+  "open_medium_cutover_blockers": 0,
+  "exact_match_sources_and_bytecode": true,
+  "source_drift_count": 0,
+  "bytecode_drift_count": 0,
+  "mainnet_keep_reality": {
+    "chain_id": 1,
+    "governance_timelock": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+    "timelock_delay_seconds": 172800,
+    "timelock_admin_safe": "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "p4cap": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "p4cap_owner_timelock": true,
+    "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "cast_rpc": "https://ethereum.publicnode.com"
+  },
+  "genesis": {
+    "max_supply_ttg": "25000000000000",
+    "bps": "50/35/3/5/7",
+    "wei_buckets": [
+      "12.5T",
+      "8.75T",
+      "0.75T",
+      "1.25T",
+      "1.75T"
+    ]
+  },
+  "official_deploy_entry": "TtgV9AtomicDeployerMainnet",
+  "local_atomic_deployer_forbidden_for_official_mainnet": true,
+  "v8_disposition": "LEGACY_NO_MIGRATION",
+  "checklist": {
+    "mainnet_chain_addresses": "PASS",
+    "genesis_25t_50_35_3_5_7": "PASS",
+    "governor_to_keep_timelock": "PASS",
+    "governance_burn": "PASS",
+    "vault_pm_uups": "PASS",
+    "five_batch_params": "PASS",
+    "usdc_to_p4cap": "PASS",
+    "safe_guardian": "PASS",
+    "deploy_order": "PASS",
+    "verify_source": "PASS",
+    "v8_legacy_isolation": "PASS",
+    "deploy_bytecode_exact_match": "PASS"
+  },
+  "next": "WAIT independent Owner written Mainnet auth then deploy only",
+  "mainnet_broadcast": "FORBIDDEN_UNTIL_OWNER_WRITTEN_AUTH",
+  "tt_production_go": "INDEPENDENT_OWNER_DECISION_NO_AUTO",
+  "parents": {
+    "pre_mainnet_security": "V9_PRE_MAINNET_SECURITY_PASS",
+    "regression2": "V9_SEPOLIA_REGRESSION2_PASS",
+    "topology": "V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS",
+    "mainnet_ready_stop": "V9_MAINNET_READY_STOP"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "stamp": "V9_PM_MAINNET_CUTOVER_READY",
+  "phase": "\u2462",
+  "mode": "READ_ONLY_AUDIT_COMPLETE",
+  "issued_at_utc": "2026-08-21T00:20:31Z",
+  "not_production_go": true,
+  "broadcast_authorized": false,
+  "broadcast_gate": "HOLD",
+  "tt_production_go_unchanged": true,
+  "writes_performed": "NONE_ON_CHAIN",
+  "private_key_contact": false,
+  "baselines": {
+    "V9_PM_LOCAL_PASS": true,
+    "V9_PM_SEPOLIA_PASS_STOP": true,
+    "reality": "evidence/GO_ttg_v9_design/V8_MAINNET_REALITY_READONLY_20260821.json",
+    "delta": "evidence/GO_ttg_v9_design/V8_MAINNET_REALITY_TO_V9_PM_CUTOVER_DELTA.md",
+    "plan": "evidence/GO_ttg_v9_design/V9_PM_MAINNET_CUTOVER_PLAN.md",
+    "official_meta_snapshot": "evidence/GO_ttg_v9_design/official-meta-readonly.json"
+  },
+  "audit_gates": {
+    "reality_readonly": "PASS",
+    "meta_l8_vs_l7_v8_addresses": "PASS",
+    "money_path_keep_observed": "PASS",
+    "p4cap_sink_keep": "PASS",
+    "v9_candidate_local_sepolia": "PASS",
+    "inventory_migrate_executable": "HOLD"
+  },
+  "open_p0_blockers": [
+    {
+      "id": "MIGRATE-01-OLD-PM-NO-INVENTORY-EXIT",
+      "blocks_broadcast": true,
+      "summary": "OLD PM 0x882Ad\u2026 holds 12.5T with purchase-only exit; no owner/pause/withdraw; EIP-1967 empty.",
+      "owner_options": [
+        "A_upgrade_proof",
+        "B_norm_amendment_dao_fund",
+        "C_parallel_needs_remint_forbidden",
+        "D_STOP"
+      ]
+    }
+  ],
+  "keep_mainnet": [
+    "TTG",
+    "Governor",
+    "Timelock",
+    "P4Cap",
+    "Money_Path",
+    "Region-83"
+  ],
+  "next_owner_gate": "Written MIGRATE-01 decision; then separate Mainnet broadcast auth",
+  "meaning_of_ready": "Pre-broadcast audit pack complete. Not authorization to deploy or Timelock-execute."
+}

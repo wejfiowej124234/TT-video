@@ -3,6 +3,7 @@
  * 51-H2/51-B1：verify/forgot/reset 后端为 stub 时前端照常调用；真实实现（邮件/令牌）待 51-B1 落地后对接。
  */
 
+import { extractUserIdFromAuthJson } from "@/lib/auth/wwwSessionCookie";
 import { apiUrl, routes } from "../api";
 import {
   requestId,
@@ -14,11 +15,7 @@ import {
   logApiJsonStatusNotOk,
   throwUnlessApiOk,
 } from "./core";
-import {
-  clearAuthSessionCookies,
-  clearAuthSessionOkCookie,
-  writeAuthSessionOkCookie,
-} from "./core/authSession";
+import { clearAuthSessionCookies, writeAuthSessionOkCookie } from "./core/authSession";
 import { clearGetMeCache } from "./me";
 
 /**
@@ -39,36 +36,31 @@ export function applyLocalLogoutAfterServerOk(): void {
  * @returns 已写入的 user_id，失败时 undefined
  */
 export function applyClientSessionAfterAuth(res: unknown): string | undefined {
-  const userId = (res as { user_id?: string })?.user_id?.trim();
-  const token = (res as { token?: string })?.token?.trim();
+  const userId = extractUserIdFromAuthJson(res);
   if (!userId || typeof window === "undefined") return undefined;
-  localStorage.setItem(AUTH_USER_ID_KEY, userId);
-  if (token) {
-    localStorage.setItem(AUTH_SESSION_TOKEN_KEY, token);
-    writeAuthSessionOkCookie();
-  } else {
-    clearAuthSessionOkCookie();
+  try {
+    localStorage.removeItem(AUTH_SESSION_TOKEN_KEY);
+  } catch {
+    /* ignore */
   }
+  localStorage.setItem(AUTH_USER_ID_KEY, userId);
   document.cookie = `traveltrust_user_id=${encodeURIComponent(userId)}; Path=/; SameSite=Lax`;
+  writeAuthSessionOkCookie();
   clearGetMeCache();
   window.dispatchEvent(new CustomEvent("traveltrust:auth-change"));
   return userId;
 }
 
-/** 将 localStorage 用户 id + Bearer token 同步到 middleware 可读 cookie（硬刷新 Admin 时避免误跳登录）。 */
+/** Sync user_id cookie from localStorage. HttpOnly session cookie is set by www BFF, not JS. */
 export function syncClientSessionUserIdCookieFromStorage(): boolean {
   if (typeof window === "undefined") return false;
   try {
     const userId = localStorage.getItem(AUTH_USER_ID_KEY)?.trim();
-    const token = localStorage.getItem(AUTH_SESSION_TOKEN_KEY)?.trim();
-    if (!userId || !token) return false;
+    if (!userId) return false;
     const prefix = `${AUTH_USER_ID_KEY}=`;
-    const okPrefix = "traveltrust_session_ok=";
     const hasUid = document.cookie.split(";").some((part) => part.trim().startsWith(prefix));
-    const hasOk = document.cookie.split(";").some((part) => part.trim().startsWith(okPrefix));
-    if (hasUid && hasOk) return true;
+    if (hasUid) return true;
     document.cookie = `${AUTH_USER_ID_KEY}=${encodeURIComponent(userId)}; Path=/; SameSite=Lax`;
-    writeAuthSessionOkCookie();
     return true;
   } catch {
     return false;
@@ -91,6 +83,7 @@ export async function postSeedTestAccounts(): Promise<{ seeded?: boolean; disabl
 export async function postLogin(body: { email: string; password: string }): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.login), {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     body: JSON.stringify(body),
   });
@@ -113,6 +106,7 @@ export async function postRegister(body: {
 }): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.register), {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     body: JSON.stringify(body),
   });
@@ -151,6 +145,7 @@ export async function postRegisterSendVerificationCode(body: {
 export async function postLogout(body?: Record<string, unknown>): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.logout), {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     body: JSON.stringify(body ?? {}),
   });
@@ -163,6 +158,7 @@ export async function postLogout(body?: Record<string, unknown>): Promise<unknow
 export async function postRefresh(body?: Record<string, unknown>): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.refresh), {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     body: JSON.stringify(body ?? {}),
   });

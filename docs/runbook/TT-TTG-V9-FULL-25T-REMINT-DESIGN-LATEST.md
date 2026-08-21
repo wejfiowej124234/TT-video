@@ -1,6 +1,13 @@
 # TT · TTG V9 Full 25T Remint Design (Official successor)
 
-**STATUS:** `V9_REMINT_SEPOLIA_PASS_STOP` · **Final Norm FROZEN** ([G1–G7](TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md)) · **[Monetary Invariant](TT-TTG-V9-MONETARY-INVARIANT-LATEST.md)** · V8 **LEGACY / NO_MIGRATION** · **NOT** Mainnet · **NOT** Production GO  
+
+> **STATUS (Documentation Truth Convergence · 2026-08-21):** **SUPERSEDED as Official ACTIVE V9 path** · DO_NOT_USE for living V9 Design Lock / DL_R1 / Mainnet Phase1.  
+> **Sole upstream now:** [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · status `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Historical evidence below is retained · R2_FINAL / Remint / Safe-Timelock / P4Cap-as-sale-sink / globalStakers ACTIVE claims are **LEGACY**.
+
+**STATUS:** `LEGACY_MONETARY_NORM_REFERENCE` · Official topology SSOT = [Owner Design Lock](TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md) · remint script = DO_NOT_USE entry
+
+**Historical STATUS:** `V9_REMINT_SEPOLIA_PASS_STOP` · **Final Norm FROZEN** ([G1–G7](TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md)) · **[Monetary Invariant](TT-TTG-V9-MONETARY-INVARIANT-LATEST.md)** · V8 **LEGACY / NO_MIGRATION** · **NOT** Mainnet · **NOT** Production GO  
 **Stamp ①:** `evidence/GO_ttg_v9_design/V9_REMINT_LOCAL_PASS.json`  
 **Stamp ②:** `evidence/GO_ttg_v9_remint_sepolia/V9_REMINT_SEPOLIA_PASS_STOP.json` · entry `scripts/dev/run-ttg-v9-remint-sepolia.sh`  
 **Parent:** `docs/runbook/TT-TTG-V9-UPGRADE-DESIGN-LATEST.md` · `registry/ttg-v9-upgrade-design.v1.yaml`  

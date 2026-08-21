@@ -1,0 +1,22 @@
+{
+  "stamp": "V9_DOCUMENTATION_TRUTH_BASELINE",
+  "status": "CONVERGENCE_PASS",
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "remediation_wave": "DL_R1",
+  "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+  "tt_production_go": "NO_GO",
+  "doc": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+  "registry": "registry/ttg-v9-documentation-truth-baseline.v1.yaml",
+  "OLD_V9_ACTIVE_DOCUMENT_REFERENCES": 0,
+  "ACTIVE_TRUTH_CONFLICTS": 0,
+  "UNRESOLVED_V9_DOC_DRIFT": 0,
+  "scan": "evidence/GO_ttg_v9_audit/V9_DOC_TRUTH_CONVERGENCE_SCAN.json",
+  "forbid": [
+    "mutate_DL_R1_sources",
+    "redeploy_or_swap_phase1_addresses",
+    "live_param_edit",
+    "TT_PRODUCTION_GO_flip",
+    "claim_MAINNET_FULLY_ACTIVE",
+    "whitepaper_github_www_before_full_convergence_pass"
+  ]
+}

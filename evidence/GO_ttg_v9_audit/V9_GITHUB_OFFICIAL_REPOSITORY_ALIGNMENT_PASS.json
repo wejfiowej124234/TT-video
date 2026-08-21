@@ -1,0 +1,26 @@
+{
+  "stamp": "V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT_PASS",
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "remediation_wave": "DL_R1",
+  "mainnet_status": "DEPLOYED_PENDING_CUTOVER",
+  "aliases": [
+    "MAINNET_DEPLOYED_PHASE1",
+    "TIMELOCK_CUTOVER_PENDING"
+  ],
+  "GITHUB_ACTIVE_TRUTH_CONFLICTS": 0,
+  "LEGACY_ACTIVE_LEAKS": 0,
+  "SECRET_EXPOSURES": 0,
+  "DOC_LINK_ERRORS": 0,
+  "V9_PUBLIC_DOC_COVERAGE": 100.0,
+  "hub": "docs/github-official/README.md",
+  "tt_production_go": "NO_GO",
+  "did_not": [
+    "git_push",
+    "publicize",
+    "www_cutover",
+    "meta_indexer_cutover",
+    "DL_R1_mutation",
+    "TT_PRODUCTION_GO_flip"
+  ],
+  "stop": true
+}

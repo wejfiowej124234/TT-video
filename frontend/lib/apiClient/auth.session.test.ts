@@ -13,10 +13,18 @@ describe("applyClientSessionAfterAuth (07 Phase 4 / 53-S23)", () => {
     const out = applyClientSessionAfterAuth({ user_id: id, token: "tts_testopaque" });
     expect(out).toBe(id);
     expect(localStorage.getItem("traveltrust_user_id")).toBe(id);
-    expect(localStorage.getItem(AUTH_SESSION_TOKEN_KEY)).toBe("tts_testopaque");
+    expect(localStorage.getItem(AUTH_SESSION_TOKEN_KEY)).toBeNull();
+    expect(document.cookie).toContain("traveltrust_session_ok=1");
     expect(dispatch).toHaveBeenCalled();
     const ev = dispatch.mock.calls[0][0] as CustomEvent;
     expect(ev.type).toBe("traveltrust:auth-change");
+  });
+
+  it("reads nested data.user_id from BFF-redacted login JSON", () => {
+    const id = "550e8400-e29b-41d4-a716-446655440000";
+    const out = applyClientSessionAfterAuth({ status: "ok", data: { user_id: id, token: null } });
+    expect(out).toBe(id);
+    expect(localStorage.getItem("traveltrust_user_id")).toBe(id);
   });
 
   it("returns undefined when user_id missing", () => {

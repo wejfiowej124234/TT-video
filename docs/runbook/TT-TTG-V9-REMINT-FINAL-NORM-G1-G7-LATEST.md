@@ -1,5 +1,10 @@
 # TT · TTG V9 Remint Final Norm (G1–G7 Hard Gates)
 
+
+> **STATUS (Documentation Truth Convergence · 2026-08-21):** **SUPERSEDED as Official ACTIVE V9 path** · DO_NOT_USE for living V9 Design Lock / DL_R1 / Mainnet Phase1.  
+> **Sole upstream now:** [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · status `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Historical evidence below is retained · R2_FINAL / Remint / Safe-Timelock / P4Cap-as-sale-sink / globalStakers ACTIVE claims are **LEGACY**.
+
 **STATUS:** `FINAL_NORM_FROZEN` · Local **`V9_REMINT_LOCAL_PASS`** · Sepolia **`V9_REMINT_SEPOLIA_PASS_STOP`** · **[Monetary Invariant](TT-TTG-V9-MONETARY-INVARIANT-LATEST.md)** · **NOT** Mainnet · **NOT** Production GO  
 **Companion:** `docs/runbook/TT-TTG-V9-FULL-25T-REMINT-DESIGN-LATEST.md` · `registry/ttg-v9-upgrade-design.v1.yaml`  
 **Language:** Solidity / NatSpec **English only**

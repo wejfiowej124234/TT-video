@@ -1,0 +1,28 @@
+{
+  "stamp": "V9_PRE_MAINNET_SECURITY_PASS",
+  "issued_at": "2026-08-21T05:07:10Z",
+  "candidate": "V9_AUDIT_CANDIDATE_R2_FINAL",
+  "candidate_manifest": "evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R2_FINAL_MANIFEST.json",
+  "candidate_manifest_sha256": "sha256:59c81dbe55beeaeddae8bbd16b1a7e4f63549fa3b30d012e0387abd06887f92b",
+  "audit_doc": "docs/runbook/TT-TTG-V9-PRE-MAINNET-FINAL-SECURITY-AUDIT-LATEST.md",
+  "role": "attacker_plus_mainnet_config_exact_match_final",
+  "not_repeat_of_audit_1_2_3": true,
+  "open_critical": 0,
+  "open_high": 0,
+  "open_medium_security_defects": 0,
+  "exact_match_sources_and_bytecode": true,
+  "deploy_bytecode_equals_audited_bytecode": true,
+  "external_firm": {
+    "hard_gate_for_v9_mainnet": false,
+    "optional": true,
+    "internal_pass_not_equivalent_to_firm_attestation": true
+  },
+  "next": "Owner Mainnet Cutover final review then independent Owner written auth",
+  "mainnet_broadcast": "FORBIDDEN_UNTIL_OWNER_WRITTEN_AUTH",
+  "tt_production_go": "INDEPENDENT_OWNER_DECISION_NO_AUTO",
+  "parents": {
+    "regression2": "V9_SEPOLIA_REGRESSION2_PASS",
+    "topology": "V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS",
+    "mainnet_ready_stop": "V9_MAINNET_READY_STOP"
+  }
+}

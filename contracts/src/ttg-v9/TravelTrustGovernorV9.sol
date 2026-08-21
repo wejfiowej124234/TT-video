@@ -145,7 +145,7 @@ contract TravelTrustGovernorV9 {
         uint8 tier
     ) public returns (uint256 proposalId) {
         if (targets.length != values.length || values.length != calldatas.length) revert GovWrongLength();
-        require(targets.length >= 1, "empty proposal");
+        if (targets.length != 1) revert GovSingleOpOnly();
         uint256 snapshot = block.number - 1;
         uint256 supply = token.getPastTotalSupply(snapshot);
         uint256 need = TtgV9DaoProposalThresholds.requiredVotes(tier, supply);

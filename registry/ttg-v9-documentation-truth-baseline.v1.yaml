@@ -1,0 +1,107 @@
+# TTG V9 Documentation Truth Baseline — machine SSOT
+# Upstream for Whitepaper / GitHub / www copy — NOT Production GO
+schema: traveltrust.ttg_v9_documentation_truth_baseline.v1
+stamp: V9_DOCUMENTATION_TRUTH_BASELINE
+status: CONVERGENCE_PASS
+whitepaper_pass: TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS
+github_official_pass: V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT_PASS
+github_official_hub: docs/github-official/README.md
+github_official_gate: scripts/dev/run-ttg-v9-github-official-alignment-gate.py
+forbid_auto_github_push: true
+forbid_auto_www_meta_indexer: true
+
+candidate: V9_AUDIT_CANDIDATE_DESIGN_LOCK
+remediation_wave: DL_R1
+mainnet_status: DEPLOYED_PENDING_CUTOVER
+aliases:
+  - MAINNET_DEPLOYED_PHASE1
+  - TIMELOCK_CUTOVER_PENDING
+forbid_status_claims:
+  - MAINNET_FULLY_ACTIVE
+  - ACTIVE_OFFICIAL
+  - TT_PRODUCTION_GO_GO
+tt_production_go: NO_GO
+inputs:
+  - V9_AUDIT_CANDIDATE_DESIGN_LOCK
+  - TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST
+  - V9_SEPOLIA_REGRESSION_DL_R1_PASS
+  - V9_MAINNET_PRE_BROADCAST_FINAL_PASS
+  - V9_MAINNET_DL_R1_BROADCAST_ARTIFACT_PIN
+  - V9_MAINNET_BROADCAST_PHASE1_DEPLOYED_SCHEDULED
+  - V9_MAINNET_DL_R1_PHASE2_FREEZE_WAIT
+chain_id: 1
+norm_wallets:
+  marketing_deployer_timelock_admin_ttg5pct: "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+  team_ttg3pct: "0x010365F0835323826569D61D0E13E6F8d25F6828"
+  treasury_guardian_ttg7pct_access_fee_p4_ops: "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
+economics:
+  total_supply: "25000000000000000000000000000000"
+  genesis_bps: { public: 5000, dao: 3500, team: 300, marketing: 500, treasury_ops: 700 }
+  platform_fee_bps: 500
+  steward_share_bps: 4500
+  project_share_bps: 5500
+  p4_cap_bps: 3000
+  p4_period_seconds: 7776000
+  access_fee_usdc: "300000000000"
+  no_globalStakers_active: true
+  sale_usdc_sink: NEW_PROJECT_POOL
+governance:
+  path: Governor_to_SoloTimelock_48h
+  solo_timelock_delay_seconds: 172800
+  forbid_safe_as_v9_official_admin: true
+role_stake:
+  steward: ACTIVE
+  merchant: DISABLED
+  guide: DISABLED
+contracts_phase1:
+  ttg: { address: "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9", status: DEPLOYED_PENDING_CUTOVER }
+  solo_timelock: { address: "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f", status: DEPLOYED_PENDING_CUTOVER }
+  project_pool: { address: "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37", status: DEPLOYED_PENDING_CUTOVER }
+  country_fee_router: { address: "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970", status: DEPLOYED_PENDING_CUTOVER }
+  vault: { address: "0xe87378e49Ead2E1a422B8cae118d3C905Ee45B6C", status: DEPLOYED_PENDING_CUTOVER }
+  market: { address: "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b", status: DEPLOYED_PENDING_CUTOVER }
+  governor: { address: "0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c", status: DEPLOYED_PENDING_CUTOVER }
+  role_stake: { address: "0xf6A1Fb4435E463117a666818611F49D03F91E7A7", status: DEPLOYED_PENDING_CUTOVER }
+keep:
+  escrow_factory_v2_wired: { address: "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6", status: KEEP }
+  settlement_router: { address: "0xe5C3ED16741Eb195fAE11b0C1449A79DD675B372", status: KEEP_SET_FEE_ROUTER_PENDING }
+  usdc: { address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", status: KEEP }
+legacy_do_not_use_as_v9_official_active:
+  safe: "0x96491aa894658ff7946506318c49F3c76b8f40e7"
+  keep_timelock: "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7"
+  p4cap: "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+  note: Safe_and_KEEP_Timelock_allowed_only_for_one_shot_SR_setFeeRouter
+pending_cutover:
+  solo_ops: [idBind, idSeed, idCallerSr, idCallerEf]
+  solo_earliest_eta_utc: "2026-08-23T10:52:59Z"
+  keep_set_fee_router_to: "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970"
+demote_classes:
+  - V8_official_ttg_pm_governor_as_v9_active
+  - R2_FINAL
+  - Remint
+  - old_V9_candidates
+  - globalStakers_35_75_active
+  - sale_usdc_to_legacy_p4cap_as_v9_active
+  - safe_as_v9_solo_timelock_admin
+layers:
+  - Final_Truth_Baseline
+  - Web3_Protocol_SSOT
+  - Architecture_Master_Matrix
+  - Contract_Registry
+  - Economic_Model
+  - Governance
+  - Role_Stake
+  - Primary_Market
+  - ProjectPool
+  - Fee_Model
+  - Wallet_Privilege
+  - Security_Audit
+  - Release_Deployment
+  - Indexer_API_meta_prep
+downstream_last:
+  - Whitepaper
+  - GitHub_README
+  - Official_www_copy
+doc_path: docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md
+scan_path: evidence/GO_ttg_v9_audit/V9_DOC_TRUTH_CONVERGENCE_SCAN.json
+gate: scripts/dev/run-ttg-v9-doc-truth-convergence-gate.py

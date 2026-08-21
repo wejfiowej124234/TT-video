@@ -1,0 +1,101 @@
+{
+  "stamp": "V9_MAINNET_PRE_BROADCAST_FINAL_PASS",
+  "issued_at": "2026-08-21T10:46:32Z",
+  "phase": "3_mainnet_pre_broadcast_gate_only",
+  "chain_id_target": 1,
+  "candidate": "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+  "remediation_wave": "DL_R1",
+  "candidate_manifest_sha256": "sha256:0445b1827100b1bafe8275449b9b33b518b2c0ce86dcb746788a59e282347bdf",
+  "candidate_frozen_at": "2026-08-21T09:54:53Z",
+  "candidate_mutated": false,
+  "sepolia_pass": "V9_SEPOLIA_REGRESSION_DL_R1_PASS",
+  "sepolia_pass_sha256": "sha256:fd39099b8daed6701b5fa9ea939d302be755089a914dbbacf189e0442746c6d0",
+  "inherits_r2_final_audit_pass": false,
+  "forbids_legacy_assets": [
+    "V9_AUDIT_CANDIDATE_R2_FINAL",
+    "V9_REMINT_SEPOLIA_PASS_STOP",
+    "deploy3_pre_dl_r1",
+    "FeeIngress_as_mainnet_caller",
+    "0x96491aa894658ff7946506318c49F3c76b8f40e7",
+    "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+  ],
+  "exact_match": {
+    "source_files": 12,
+    "source_exact": true,
+    "local_bytecode_pin_exact": true,
+    "compiler": {
+      "profile": "ttg_v9",
+      "solc_version": "0.8.36",
+      "via_ir": true,
+      "optimizer": true,
+      "optimizer_runs": 200,
+      "evm_version": "paris",
+      "chain_id_target": 1
+    },
+    "broadcast_artifact_pin": "evidence/GO_ttg_v9_audit/V9_MAINNET_DL_R1_BROADCAST_ARTIFACT_PIN.json",
+    "broadcast_artifact_pin_sha256": "sha256:b40fe0687c37d04da4f7166b9eecd5199b5ff2201960c2b3c135b8853a50404c"
+  },
+  "pins_verified": {
+    "ops": {
+      "marketing_deployer": true,
+      "team": true,
+      "treasury_guardian": true,
+      "timelock_48h": true,
+      "platform_fee_500": true,
+      "steward_4500": true,
+      "project_5500": true,
+      "p4_30pct": true,
+      "p4_90d": true
+    },
+    "tokenomics_50_35_3_5_7": {
+      "public_50": true,
+      "dao_35": true,
+      "team_3": true,
+      "marketing_5": true,
+      "treasury_7": true,
+      "five_batches": true
+    },
+    "dl_r1_fixes": {
+      "p4_usdc_only": true,
+      "propose_single_op": true,
+      "set_governor_nonzero": true
+    },
+    "fee_ingress_policy": {
+      "mainnet_core_free_of_fee_ingress": true,
+      "policy": "Mainnet CountryFeeRouter callers = verified KEEP EscrowFactory/SettlementRouter only; jurisdiction from trusted order ISO; FORBID free FeeIngress",
+      "hits": []
+    },
+    "solo_timelock_delay_48h": true,
+    "marketing": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+    "team": "0x010365F0835323826569D61D0E13E6F8d25F6828",
+    "treasury_guardian": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
+  },
+  "checks": {
+    "chain_id_1_target": true,
+    "solo_timelock_48h": true,
+    "ops_addresses_norm": true,
+    "fee_router_escrow_settlement_only_policy": true,
+    "forbid_free_fee_ingress": true,
+    "jurisdiction_from_trusted_order_iso_policy": true,
+    "supply_25t_no_mint_invariant_in_source": true,
+    "genesis_50_35_3_5_7": true,
+    "five_batches": true,
+    "sale_usdc_to_new_project_pool_required": true,
+    "platform_fee_500_45_55_or_100": true,
+    "p4_90d_30pct_usdc_only": true,
+    "role_stake_live_supply": true,
+    "governance_burn_timelock_gated": true,
+    "uups_guardian_model": true,
+    "zero_active_legacy_safe_p4cap_v8_as_v9_official": true,
+    "source_compiler_bytecode_constructor_pin_exact": true
+  },
+  "mainnet_broadcast": "FORBIDDEN_UNTIL_OWNER_WRITTEN_AUTH",
+  "tt_production_go": "UNCHANGED_INDEPENDENT",
+  "owner_auth_must_name": [
+    "V9_AUDIT_CANDIDATE_DESIGN_LOCK",
+    "DL_R1",
+    "V9_SEPOLIA_REGRESSION_DL_R1_PASS"
+  ],
+  "stop": true,
+  "next": "Owner independent written Mainnet Broadcast Authorization \u2192 then per-tx Mainnet deploy + verify \u00b7 still no auto TT_PRODUCTION_GO"
+}

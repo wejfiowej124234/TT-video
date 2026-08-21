@@ -1,5 +1,10 @@
 # TravelTrust Economic Constitution（V3.1.1 Final）
 
+
+> **STATUS (V9 Documentation Truth Convergence · phase-2):** **SUPERSEDED as Official ACTIVE V9 path** · **DO_NOT_USE_AS_ACTIVE_TRUTH** · **HISTORICAL**.  
+> Sole living upstream: [`TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST`](TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md) · Design Lock **DL_R1** · Mainnet `DEPLOYED_PENDING_CUTOVER` / `TIMELOCK_CUTOVER_PENDING` · **≠** `MAINNET_FULLY_ACTIVE` · **≠** `TT_PRODUCTION_GO`.  
+> Public-sale USDC→P4Cap · globalStakers 35.75% · R2_FINAL/Remint · Safe/old Timelock as V9 Official admin = **LEGACY / SUPERSEDED**. Evidence retained.
+
 **Document ID:** `TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL`  
 **Status:** **LOCKED · TARGET_BASELINE · OWNER_APPROVED · PSG Web3 唯一经济对齐目标**  
 **Lock:** **2026-07-18 · ECONOMIC_MODEL_FREEZE** — **禁止**再改本文件**经济规则**（含措辞级「小改」）；经济变更须 **V3.2+** 新版本 + Owner 书面  
