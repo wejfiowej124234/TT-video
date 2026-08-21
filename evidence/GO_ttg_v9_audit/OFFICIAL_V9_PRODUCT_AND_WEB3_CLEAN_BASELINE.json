@@ -1,8 +1,17 @@
 {
   "stamp": "OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE",
-  "commit": "3fcb635d68d6fd59860804de872f4a68e7023b94",
+  "commit": "f3fc8ace22373f6a706e05de86e342513d4e39cb",
   "tag": "OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE",
   "product_mother_ops_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "live_www": "https://www.web3-ttg.com",
+  "live_build_time": "2026-08-20T00:51:57Z",
+  "metrics": {
+    "git_status_porcelain": 0,
+    "OFFICIAL_PRODUCT_DRIFT": 0,
+    "V9_WEB3_TRUTH_LOSS": 0,
+    "OLD_V9_ACTIVE_DOCUMENT_REFERENCES": 0,
+    "frontend_diff_vs_ops_file_count": 0
+  },
   "backup_tag": "backup/official-v9-dirty-closure-pre-20260821T121026Z",
   "tt_production_go": "NO_GO",
   "did_not": [

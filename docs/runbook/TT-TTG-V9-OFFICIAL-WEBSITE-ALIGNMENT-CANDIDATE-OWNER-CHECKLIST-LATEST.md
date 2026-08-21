@@ -1,14 +1,15 @@
 # TT · V9 Official Website Alignment Candidate — Owner 审阅清单（先看后做）
 
-**STATUS:** `V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_PLAN` · **`STOP_DIRTY_WORKTREE`**  
-**Owner 已批准：** P0+P1（2026-08-21）  
-**开工审计：** [`V9_OFFICIAL_WEBSITE_ALIGNMENT_PRESTART_CLEANLINESS_AUDIT.json`](../../evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_PRESTART_CLEANLINESS_AUDIT.json) · porcelain **438** 行 · **禁止在脏工作区改官网**  
-**本轮：** **未改** `frontend/` 官网代码 · **未** Production deploy · **未** `/meta`/Indexer 切针  
-**上游：** `V9_DOCUMENTATION_TRUTH_BASELINE` · `TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS` · `V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT_PASS` · Design Lock **DL_R1**  
-**目标状态展示：** `MAINNET_DEPLOYED_PHASE1` / `TIMELOCK_CUTOVER_PENDING` · **≠** Fully Active · **≠** 公售已开放 · **≠** `TT_PRODUCTION_GO`
+**STATUS:** `OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE` · **STOP**  
+**Clean baseline commit/tag:** `OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE`（见 `evidence/GO_ttg_v9_audit/OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE.json`）  
+**Product mother:** OPS-2026.08.20-v9 · `3e356617…` · live www matched  
+**Metrics:** `git status --porcelain=0` · `OFFICIAL_PRODUCT_DRIFT=0` · `V9_WEB3_TRUTH_LOSS=0` · `OLD_V9_ACTIVE_DOCUMENT_REFERENCES=0`  
+**Website P0+P1：** 尚未实施（须在干净基线上另开一轮 allowlist）  
+**上游：** `V9_DOCUMENTATION_TRUTH_BASELINE` · Whitepaper PASS · GitHub Official PASS · Design Lock **DL_R1**  
+**目标状态展示（未来官网对齐）：** `MAINNET_DEPLOYED_PHASE1` / `TIMELOCK_CUTOVER_PENDING` · **≠** Fully Active · **≠** 公售已开放 · **≠** `TT_PRODUCTION_GO`
 
-> **STOP 原因：** worktree 不洁净（modified≈299 · untracked≈139 · frontend modified≈97 · remint/build residue≈25）。须 Owner 隔离/提交/stash 无关 dirty，或给出书面 dirty-allowlist + 独立 worktree 后再授权开工。  
-> Gate 目标（洁净开工并执行后）：`WEBSITE_V9_TRUTH_CONFLICTS=0` · `LEGACY_ACTIVE_LEAKS=0` · `WRONG_CONTRACT_ADDRESSES=0` · `BROKEN_PUBLIC_LINKS=0` · `V9_WEBSITE_CONTENT_COVERAGE=100%` · 另加 `OUT_OF_SCOPE_CHANGED_FILES=0` · `UI_UX_STRUCTURAL_DIFF=0` · `UNAUTHORIZED_PAGE_DIFF=0` → stamp `V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_PASS`
+> Dirty closure 已完成：Production 产品母版 + V9 Web3 成果合并为干净基线。**未** Production deploy · **未** `/meta`/Indexer 切针 · **未** `git reset --hard`。  
+> Gate 目标（洁净开工并执行官网 P0+P1 后）：`WEBSITE_V9_TRUTH_CONFLICTS=0` · … → stamp `V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_PASS`
 
 ---
 
