@@ -1,0 +1,12 @@
+{
+  "stamp": "OFFICIAL_V9_PRODUCT_PIN_LIVE_OBSERVE",
+  "web": "https://www.web3-ttg.com",
+  "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "build_time": "2026-08-20T00:51:57Z",
+  "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+  "fly_image_digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+  "live_matches_pin": true,
+  "home_http": 200,
+  "restore_script": "scripts/dev/restore-tt-web-production-product-pin.sh",
+  "tt_production_go": "NO_GO"
+}

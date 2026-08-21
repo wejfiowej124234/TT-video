@@ -1,0 +1,664 @@
+ M README.md
+ M contracts/foundry.toml
+ M contracts/src/ttg-v9/TravelTrustGovernorV9.sol
+ M contracts/src/ttg-v9/TtgV9DeployTopology.sol
+ M contracts/src/ttg-v9/TtgV9GovernanceParams.sol
+ M contracts/src/ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol
+ M contracts/test/ttg-v9/TtgV9RemintLocal.t.sol
+ M crates/api/src/db/cms_roadmap.rs
+ M crates/api/src/db/pg_transient_retry.rs
+ M crates/api/src/routes/admin/admin_content_roadmap_http.rs
+ M crates/api/src/routes/admin/cms_announcement_lane_rbac.rs
+ M crates/api/src/routes/public_roadmap.rs
+ M data/official-cold-start/dataset.v1.json
+ M docs/fundraising/external/06-Whitepaper.md
+ M docs/fundraising/external/en/06-Whitepaper.md
+ M docs/handbook/engineering/148-PI3-005-Production-Scope-Decision-Report.md
+ M docs/runbook/ESCROW-BILATERAL-SETTLEMENT-OWNER-DECISION-RECORD-V1.md
+ M docs/runbook/G2-RETROSPECTIVE.md
+ M docs/runbook/G3-02-WEB3-PAYMENT-PRODUCTION-EXECUTION.md
+ M docs/runbook/PER-WAVE-REMEDIATION-PLAN-v1.md
+ M docs/runbook/PRODUCTION-PAYMENT-READINESS-WEB3-USDC.md
+ M docs/runbook/PRODUCTION-USDC-GO-LIVE-MASTER-CHECKLIST.md
+ M docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md
+ M docs/runbook/TT-C4-MEDIA-TUNNEL-UNAVAILABLE.md
+ M docs/runbook/TT-CHAIN-ARCHITECTURE-AUDITABLE-SPEC.md
+ M docs/runbook/TT-CI-BUILD-STABILITY.md
+ M docs/runbook/TT-CLEAN-SEPOLIA-REDEPLOY-V311-LATEST.md
+ M docs/runbook/TT-COMMERCIAL-MONEY-LIFECYCLE-MATRIX-LATEST.md
+ M docs/runbook/TT-ENTERPRISE-SSOT-ALIGNMENT.md
+ M docs/runbook/TT-EXECUTIVE-DASHBOARD-GATE-SEMANTICS.md
+ M docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.json
+ M docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+ M docs/runbook/TT-MEDIA-CDN-PRODUCTION-ACCEPTANCE-GATE.md
+ M docs/runbook/TT-MEDIA-THREE-TIER-ARCHITECTURE.md
+ M docs/runbook/TT-MODULE-RELEASE-LADDER-V1.md
+ M docs/runbook/TT-MODULE-RELEASE-STAGE-BATCH-V1.md
+ M docs/runbook/TT-OFFICIAL-COLD-START-DATASET.md
+ M docs/runbook/TT-OPEN-ISSUES-REGISTRY.md
+ M docs/runbook/TT-PHASE2-FUND-STACK-SEPOLIA-BROADCAST-CHECKLIST.md
+ M docs/runbook/TT-PHASE2-SEPOLIA-DEPLOYED-SPINE-SUMMARY.md
+ M docs/runbook/TT-PHASE2-SEPOLIA-SPINE-FINAL-ATTESTATION.md
+ M docs/runbook/TT-PHASE2-SEPOLIA-SYSTEM-ACCEPTANCE-REPORT.md
+ M docs/runbook/TT-PI3-CATALOG-ASSET-MIGRATION.md
+ M docs/runbook/TT-PI3-MEDIA-R2-CDN-FINAL-OWNER-CHECKLIST.md
+ M docs/runbook/TT-PSG-V311-SEPOLIA-CLEAN-BASELINE-CERT-LATEST.md
+ M docs/runbook/TT-RELEASE-LOCK-LATEST.md
+ M docs/runbook/TT-STAGE83-VACANCY-CONTRACT-IMPACT-CLOSURE-CHECKLIST-LATEST.json
+ M docs/runbook/TT-STAGING-API-DB-TRANSIENT-503.md
+ M docs/runbook/TT-TRAVELTRUST-EXECUTIVE-DASHBOARD.md
+ M docs/runbook/TT-TRAVELTRUST-OPERATIONS-PLATFORM.md
+ M docs/runbook/TT-TRAVELTRUST-OPERATIONS-WORKFLOW.md
+ M docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.json
+ M docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.md
+ M docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.json
+ M docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md
+ M docs/runbook/TT-TTG-V8-LIVE-LOGIC-FUSION-LATEST.md
+ M docs/runbook/TT-TTG-V9-FULL-25T-REMINT-DESIGN-LATEST.md
+ M docs/runbook/TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md
+ M docs/runbook/TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md
+ M docs/runbook/TT-TTG-V9-UPGRADE-DESIGN-LATEST.md
+ M docs/runbook/TT-TTG-VESTING-PRODUCTION-GOVERNANCE.md
+ M docs/runbook/TT-V311-WEB3-DEPLOYMENT-FUNCTIONAL-CERT-LATEST.md
+ M docs/runbook/TT-WAIT-WINDOW-WEB3-GAP-CLOSURE-LATEST.md
+ M docs/runbook/TT-WEB3-L5-FLOW-V311-STEWARD-GOVERNANCE-LATEST.md
+ M docs/runbook/TT-WEB3-REALITY-CERTIFICATION.md
+ M docs/runbook/WEB3-GATE-LAYERING.md
+ M docs/runbook/WEB3-PROTOCOL-GRADE-AUDIT-FRAMEWORK-V1.md
+ M docs/spec/04-后端与API.md
+ M docs/spec/08-4-附录-收益流闭环图-FeeRouter-Target.md
+ M docs/spec/14-合约-API-ABI-前后端对齐.md
+ M docs/spec/84-第一阶段10国Country-Pool发行参数总表.md
+ M docs/spec/91-协议金库与资金池-技术索引.md
+ M docs/spec/99-链上合约与池子总览.md
+ M docs/spec/ESCROW-V2-FACTORY-V2-DESIGN-SPEC-V1.md
+ M docs/spec/governance-token/ASSET-DENOMINATION-TREASURY-SEPARATION-AUDIT-LATEST.md
+ M docs/spec/governance-token/GOVERNANCE-CONSISTENCY-AUDIT-LATEST.md
+ M docs/spec/governance-token/TT-ECONOMIC-CONSTITUTION-V3.1.1-FINAL.md
+ M docs/spec/governance-token/TTG-GENESIS-V2-ALIGNMENT-AUDIT.md
+ M docs/spec/governance-token/TTG-TOKENOMICS-GENESIS-V2.md
+ M docs/spec/governance-token/WEB3-FULL-SYSTEM-CLOSURE-AUDIT-LATEST.md
+ M docs/spec/governance-token/WEB3-全系统业务规范-LATEST.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/ANNOUNCEMENT-LANE-GOVERNANCE-CLOSEOUT.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/CMS-ANNOUNCEMENTS-STAGING-CLOSEOUT.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/CMS-ANNOUNCEMENTS-STAGING-UAT-LATEST.json
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/HOME-PUBLIC-DISCLOSURE-ALIGNMENT-CLOSEOUT.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-03-MAINNET-ADDRESS-PLANNING-CLOSEOUT.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/P3-04-DEPLOYMENT-PLAN-CLOSEOUT.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-ROUND1-FINDINGS-LATEST.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-ROUND1-MATRIX-LATEST.json
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-A1-CLOSEOUT.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/PER-WAVE-B1-CLOSEOUT.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-CONTENT-UX-READINESS-AUDIT-20260709.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/PRODUCTION-ENTRY-REVIEW.md
+ M docs/spec/governance-token/evidence/phase3-production-entry-baseline/PUBLIC-SURFACE-AUDIT-CLOSEOUT.md
+ M docs/spec/governance-token/traveltrust-web3-protocol-master-audit-report-v1.md
+ M evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_MANIFEST.json
+ M evidence/GO_ttg_v9_remint_sepolia/V9_REMINT_SEPOLIA_PASS_STOP.json
+ M evidence/GO_ttg_v9_remint_sepolia/addresses.env
+ M evidence/GO_ttg_v9_remint_sepolia/events.tsv
+ M evidence/GO_ttg_v9_remint_sepolia/resched.tsv
+ M evidence/GO_ttg_v9_remint_sepolia/txs.tsv
+ M evidence/manual-transaction-review/latest-order-id.txt
+ M evidence/manual-transaction-review/latest.json
+ M frontend/app/assurance/AssurancePageMain.tsx
+ M frontend/app/assurance/layout.tsx
+ M frontend/app/assurance/page.tsx
+ M frontend/app/brand/BrandMarkPageMain.tsx
+ M frontend/app/brand/layout.tsx
+ M frontend/app/brand/page.tsx
+ M frontend/app/contact/ContactPageMain.tsx
+ M frontend/app/contact/layout.tsx
+ M frontend/app/contact/page.tsx
+ M frontend/app/governance/params/GovernanceParamsQueryProvider.tsx
+ M frontend/app/governance/params/GovernanceParamsStewardBackLink.tsx
+ M frontend/app/governance/params/governanceParamsParticipatePanel.contract.test.ts
+ M frontend/app/governance/useStewardStakePanelAnchorOpen.ts
+ M frontend/app/governance/useStewardWorkbenchTodoCounts.ts
+ M frontend/app/help/helpPage.i18n.contract.test.ts
+ M frontend/app/protocol/ProtocolPaperPageMain.tsx
+ M frontend/app/protocol/layout.tsx
+ M frontend/app/protocol/page.tsx
+ M frontend/app/protocol/protocolPaperPage.contract.test.ts
+ M frontend/components/community/PostDetailDrawerActionBar.tsx
+ M frontend/components/community/communityFollowPillClassName.test.ts
+ M frontend/components/community/communityFollowPillClassName.ts
+ M frontend/components/community/communityOpenPostDetail.test.ts
+ M frontend/components/community/communityPostTagDisplay.test.ts
+ M frontend/components/community/communityPostTagDisplay.ts
+ M frontend/components/community/postDetailMediaWheelPolicy.test.ts
+ M frontend/components/community/postDetailMediaWheelPolicy.ts
+ M frontend/components/community/postDetailMetaFormat.ts
+ M frontend/components/community/postDetailVideoFeedNav.test.ts
+ M frontend/components/community/postDetailVideoFeedNav.ts
+ M frontend/components/community/useCommunityFeedLikeCollectFollow.test.ts
+ M frontend/components/community/useCommunityVideoOverlayNavInteractions.test.ts
+ M frontend/components/community/usePostDetailDrawerModel.test.ts
+ M frontend/components/community/usePostDetailMediaWheel.test.tsx
+ M frontend/components/community/usePostDetailMediaWheel.ts
+ M frontend/components/governance/GovernanceParamsL5Shell.tsx
+ M frontend/components/governance/StewardWorkbenchSubpageBackLink.tsx
+ M frontend/components/governance/StewardWorkbenchSubpageBackLinkFromQuery.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustAppDownloadDialog.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustCopyableAddress.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustFooterDisclosureNav.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustListingDocPage.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustOfficialTeamDialog.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustTtgAllocationDashboard.tsx
+ M frontend/components/traveltrust/cinematic/TravelTrustTtgUnlockSchedule.tsx
+ M frontend/e2e/market-subsite-catalog-race-regression.spec.ts
+ M frontend/evidence/GO_local_governance_params_l5/GOVERNANCE-PARAMS-L5-ENTERPRISE-AUDIT.md
+ M frontend/evidence/GO_local_governance_params_l5/GOVERNANCE-PARAMS-L5-FREEZE.md
+ M frontend/evidence/GO_local_steward_workbench_l5/STEWARD-WORKBENCH-L5-FREEZE.md
+ M frontend/evidence/GO_local_wallet_connection_l5/ENTERPRISE-L5-PRODUCTION-STANDARD.md
+ M frontend/evidence/GO_local_wallet_connection_l5/SIGNOFF-LATEST.md
+ M frontend/evidence/GO_local_wallet_connection_l5/WALLET-CONNECTION-CENTER-L5.md
+ M frontend/lib/admin/cmsAnnouncementLanePermissions.ts
+ M frontend/lib/admin/formatAdminMoney.ts
+ M frontend/lib/apiClient/auth.session.test.ts
+ M frontend/lib/apiClient/auth.ts
+ M frontend/lib/apiClient/auth/auth.session.test.ts
+ M frontend/lib/apiClient/auth/sessionSideEffects.ts
+ M frontend/lib/apiClient/content/roadmap.ts
+ M frontend/lib/apiClient/core.ts
+ M frontend/lib/apiClient/me.ts
+ M frontend/lib/apiClient/me/meFetch.ts
+ M frontend/lib/cmsPublicAnnouncementsTypes.ts
+ M frontend/lib/cmsRoadmapTypes.ts
+ M frontend/lib/communityShowcaseEngagementStorage.test.ts
+ M frontend/lib/communityShowcaseEngagementStorage.ts
+ M frontend/lib/communityShowcaseFollowStorage.test.ts
+ M frontend/lib/communityShowcaseFollowStorage.ts
+ M frontend/lib/governance/governanceParamsPageL5.ts
+ M frontend/lib/governance/governanceParamsPageL5Ui.test.tsx
+ M frontend/lib/governance/governanceStarterProposalDisplay.test.ts
+ M frontend/lib/governance/governanceStarterProposalDisplay.ts
+ M frontend/lib/governance/stewardWorkbenchTodoModel.test.ts
+ M frontend/lib/governance/stewardWorkbenchTodoModel.ts
+ M frontend/lib/governance/ttgPublicUnlockScheduleLocal.test.ts
+ M frontend/lib/governanceChainMeta.test.ts
+ M frontend/lib/marketHubBrowserTruth.test.ts
+ M frontend/lib/marketHubBrowserTruth.ts
+ M frontend/lib/publicChromeHygiene.test.ts
+ M frontend/lib/publicChromeHygiene.ts
+ M frontend/lib/server/cmsPublicAnnouncementsDb.ts
+ M frontend/lib/steward/useStewardStakeManage.ts
+ M frontend/lib/traveltrustAnnouncementLaneGovernance.contract.test.ts
+ M frontend/lib/traveltrustAnnouncementLaneGovernance.ts
+ M frontend/lib/traveltrustCmsRoadmap.test.ts
+ M frontend/lib/traveltrustCmsRoadmap.ts
+ M frontend/lib/traveltrustListingDisclosure.contract.test.ts
+ M frontend/lib/traveltrustListingDisclosure.ts
+ M frontend/lib/traveltrustOfficialTeam.ts
+ M frontend/lib/traveltrustSafeHref.ts
+ M frontend/lib/traveltrustTtgL5Craft.contract.test.ts
+ M frontend/lib/traveltrustTtgV8QuoteSurfaceLocal.contract.test.ts
+ M frontend/lib/useEffectiveSubsiteCountry.ts
+ M frontend/locales/en.ts
+ M frontend/locales/zh.ts
+ M frontend/modules/traveltrust-home/sections/TravelTrustHomeUnlockSection.tsx
+ M frontend/public/tt-session-cookie-bootstrap.js
+ M registry/asset-denomination-treasury-separation.v1.yaml
+ M registry/backend-truth-architecture.v1.yaml
+ M registry/catalog-asset-migration.v1.yaml
+ M registry/ci-build-stability.v1.yaml
+ M registry/enterprise-ssot-alignment.v1.yaml
+ M registry/evidence-reuse-policy.v1.yaml
+ M registry/executive-dashboard.v1.yaml
+ M registry/frontend-runtime-consistency-gate.v1.yaml
+ M registry/media-cdn-production-acceptance.v1.yaml
+ M registry/media-three-tier-architecture.v1.yaml
+ M registry/official-catalog-identity-policy.v1.yaml
+ M registry/official-cold-start-dataset.v1.yaml
+ M registry/open-issues.v1.yaml
+ M registry/per-wave-backlog.v1.yaml
+ M registry/pi3-media-infrastructure.v1.yaml
+ M registry/production-go-closure-sequence.v1.yaml
+ M registry/production-go-four-gate-framework.v1.yaml
+ M registry/production-go-remaining-work.v1.yaml
+ M registry/production-payment-readiness-checklist.v1.yaml
+ M registry/production-usdc-go-live-master-checklist.v1.yaml
+ M registry/single-official-public-catalog-policy.v1.yaml
+ M registry/traveltrust-announcement-lane-governance.v1.yaml
+ M registry/traveltrust-operations-platform.v1.yaml
+ M registry/traveltrust-operations-workflow.v1.yaml
+ M registry/traveltrust-public-surface-audit.v1.yaml
+ M registry/ttg-v8-live-logic-fusion.v1.yaml
+ M registry/ttg-v9-upgrade-design.v1.yaml
+ M registry/v311-platform-access-fee.v1.yaml
+ M registry/v311-sepolia-address-matrix-freeze.v1.json
+ M registry/v311-treasury-rails.v1.yaml
+ M registry/v311-web3-deployment-inventory.v1.json
+ M registry/web3-gate-layering.v1.yaml
+ M registry/web3-payment-production-gate.v1.yaml
+ M registry/web3-protocol-grade-audit-framework.v1.yaml
+ M scripts/dev/align-ocs-staging-guides-public-catalog.cjs
+ M scripts/dev/align-single-official-baseline-staging.cjs
+ M scripts/dev/assemble-production-go-decision-package.cjs
+ M scripts/dev/audit-enterprise-ssot-alignment.cjs
+ M scripts/dev/audit-executive-dashboard-gate-consistency.cjs
+ M scripts/dev/audit-frontend-runtime-consistency-gate.cjs
+ M scripts/dev/audit-market-subsite-race-fix-source-truth.cjs
+ M scripts/dev/audit-official-catalog-identity.cjs
+ M scripts/dev/audit-official-cold-start-baseline-readiness.cjs
+ M scripts/dev/audit-official-cold-start-dataset-l5.cjs
+ M scripts/dev/audit-operations-platform-local-staging-alignment.cjs
+ M scripts/dev/audit-single-official-baseline.cjs
+ M scripts/dev/audit-staging-media-urls.cjs
+ M scripts/dev/check-web3-system-master-map-parity.cjs
+ M scripts/dev/check-web3-system-production-meta-contracts.cjs
+ M scripts/dev/close-local-staging-ops-alignment.sh
+ M scripts/dev/close-market-default-filter-audit.sh
+ M scripts/dev/close-market-subsite-frontend-race-fix.sh
+ M scripts/dev/close-pi3-media-r2-cdn-staging.sh
+ M scripts/dev/close-staging-infra-console-errors.sh
+ M scripts/dev/configure-staging-media-r2-cdn.sh
+ M scripts/dev/deploy-fundstack-anvil-local.ps1
+ M scripts/dev/deploy-tt-web-staging.sh
+ M scripts/dev/freeze-ttg-v9-audit-candidate.py
+ M scripts/dev/gen-ttg-cert-production-evidence-index.cjs
+ M scripts/dev/lib/cms-uat-artifact-teardown.cjs
+ M scripts/dev/mint-fundstack-anvil-usdc.ps1
+ M scripts/dev/mirror-staging-official-baseline-local.sh
+ M scripts/dev/provision-staging-media-r2-cdn.sh
+ M scripts/dev/record-cert9-unstake-signoff.py
+ M scripts/dev/restore-c4-staging-media-tunnel.sh
+ M scripts/dev/run-align-guide-stake-db-to-chain-local.ps1
+ M scripts/dev/run-cms-uat-artifacts-teardown.cjs
+ M scripts/dev/run-escrow-bilateral-layer-a-evidence.cjs
+ M scripts/dev/run-fcg-v2-wired-factory-redeploy.sh
+ M scripts/dev/run-frontend-runtime-consistency-gate.sh
+ M scripts/dev/run-g3-02-evidence-closure.cjs
+ M scripts/dev/run-g3-02-evidence-synchronization.cjs
+ M scripts/dev/run-g3-02-web3-payment-production-verification.cjs
+ M scripts/dev/run-mainnet-deployment-plan-dry-run.cjs
+ M scripts/dev/run-media-cdn-production-acceptance-gate.sh
+ M scripts/dev/run-official-cold-start-dataset.cjs
+ M scripts/dev/run-official-cold-start-dataset.sh
+ M scripts/dev/run-payment-usdc-web3-closure.cjs
+ M scripts/dev/run-payment-usdc-web3-deep-audit.cjs
+ M scripts/dev/run-performance-optimization-closure.py
+ M scripts/dev/run-performance-runtime-revalidation.py
+ M scripts/dev/run-production-operations-enablement.cjs
+ M scripts/dev/run-production-readiness-rc-freeze.cjs
+ M scripts/dev/run-ttg-v9-remint-sepolia-continue.sh
+ M scripts/dev/run-ttg-v9-remint-sepolia.sh
+ M scripts/dev/run-ttg-v9-sepolia-regression.sh
+ M scripts/dev/run-web3-protocol-grade-audit.cjs
+ M scripts/dev/run-web3-system-closure.cjs
+ M scripts/dev/run-web3-system-meta-contracts-closure.cjs
+ M scripts/dev/seed-cms-announcements-demo.cjs
+ M scripts/dev/smoke-seed-tourist-guide-transaction-local.sh
+ M scripts/dev/staging-media-r2-cdn.env.example
+ M scripts/dev/staging-media-tigris-rollback.env.example
+ M scripts/dev/start-api-local-staging-db-mirror.sh
+ M scripts/dev/test-operations-workflow-fsm-unit.cjs
+ M scripts/dev/validate-official-cold-start-dataset.cjs
+ M scripts/dev/validate-operations-workflow.cjs
+ M scripts/gates/check-admin-inbox-channel-runtime-parity.sh
+ M scripts/gates/check-frontend-runtime-consistency-gate-ssot.sh
+?? SECURITY.md
+?? contracts/cache-ttg-v8/solidity-files-cache.json
+?? contracts/cache-ttg-v9/TtgV9DesignLockMainnet.s.sol/1/run-1787309630840.json
+?? contracts/cache-ttg-v9/TtgV9DesignLockMainnet.s.sol/1/run-latest.json
+?? contracts/cache-ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol/11155111/run-1787296011211.json
+?? contracts/cache-ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol/11155111/run-1787296789677.json
+?? contracts/cache-ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol/11155111/run-1787299201889.json
+?? contracts/cache-ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol/11155111/run-1787300570139.json
+?? contracts/cache-ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol/11155111/run-1787306810861.json
+?? contracts/cache-ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol/11155111/run-latest.json
+?? contracts/cache-ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol/11155111/run-1787277819721.json
+?? contracts/cache-ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol/11155111/run-1787278213940.json
+?? contracts/cache-ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol/11155111/run-1787281526075.json
+?? contracts/cache-ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol/11155111/run-1787283997170.json
+?? contracts/cache-ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol/11155111/run-1787284455917.json
+?? contracts/cache-ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol/11155111/run-latest.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787236299367.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787236442307.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787236681961.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787236863338.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787236884988.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787237028760.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787239910264.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787240212897.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787240247742.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787240273116.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787240312565.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787240342922.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787240345964.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787243017005.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787243281134.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-1787245044204.json
+?? contracts/cache-ttg-v9/TtgV9SepoliaRehearsal.s.sol/11155111/run-latest.json
+?? contracts/cache-ttg-v9/solidity-files-cache.json
+?? contracts/out-ttg-v8/Base.sol/CommonBase.json
+?? contracts/out-ttg-v8/Base.sol/ScriptBase.json
+?? contracts/out-ttg-v8/Base.sol/TestBase.json
+?? contracts/out-ttg-v8/IMulticall3.sol/IMulticall3.json
+?? contracts/out-ttg-v8/Script.sol/Script.json
+?? contracts/out-ttg-v8/StdAssertions.sol/StdAssertions.json
+?? contracts/out-ttg-v8/StdChains.sol/StdChains.json
+?? contracts/out-ttg-v8/StdCheats.sol/StdCheats.json
+?? contracts/out-ttg-v8/StdCheats.sol/StdCheatsSafe.json
+?? contracts/out-ttg-v8/StdConstants.sol/StdConstants.json
+?? contracts/out-ttg-v8/StdError.sol/stdError.json
+?? contracts/out-ttg-v8/StdInvariant.sol/StdInvariant.json
+?? contracts/out-ttg-v8/StdJson.sol/stdJson.json
+?? contracts/out-ttg-v8/StdMath.sol/stdMath.json
+?? contracts/out-ttg-v8/StdStorage.sol/stdStorage.json
+?? contracts/out-ttg-v8/StdStorage.sol/stdStorageSafe.json
+?? contracts/out-ttg-v8/StdStyle.sol/StdStyle.json
+?? contracts/out-ttg-v8/StdToml.sol/stdToml.json
+?? contracts/out-ttg-v8/StdUtils.sol/StdUtils.json
+?? contracts/out-ttg-v8/Test.sol/Test.json
+?? contracts/out-ttg-v8/TtgMemeDenomConstants.sol/TtgMemeDenomConstants.json
+?? contracts/out-ttg-v8/TtgMemeDenomGenesisSeatGate.sol/TtgMemeDenomGenesisSeatGate.json
+?? contracts/out-ttg-v8/TtgMemeDenomGovernanceToken.sol/TtgMemeDenomGovernanceToken.json
+?? contracts/out-ttg-v8/TtgMemeDenomGovernor.sol/ITtgMemeDenomTimelock.json
+?? contracts/out-ttg-v8/TtgMemeDenomGovernor.sol/ITtgMemeDenomVotes.json
+?? contracts/out-ttg-v8/TtgMemeDenomGovernor.sol/TtgMemeDenomGovernor.json
+?? contracts/out-ttg-v8/TtgMemeDenomMigration.t.sol/MockLegacyShareToken.json
+?? contracts/out-ttg-v8/TtgMemeDenomMigration.t.sol/TtgMemeDenomMigrationTest.json
+?? contracts/out-ttg-v8/TtgMemeDenomMigrator.sol/ITtgMemeDenomErc20.json
+?? contracts/out-ttg-v8/TtgMemeDenomMigrator.sol/TtgMemeDenomMigrator.json
+?? contracts/out-ttg-v8/TtgMemeDenomOpsWallet.sol/TtgMemeDenomOpsWallet.json
+?? contracts/out-ttg-v8/TtgMemeDenomPrimaryMarket.sol/ITtgMemeDenomSaleToken.json
+?? contracts/out-ttg-v8/TtgMemeDenomPrimaryMarket.sol/TtgMemeDenomPrimaryMarket.json
+?? contracts/out-ttg-v8/TtgMemeDenomProposalThresholds.sol/TtgMemeDenomProposalThresholds.json
+?? contracts/out-ttg-v8/TtgMemeDenomRehearsal.t.sol/TtgMemeDenomRehearsalTest.json
+?? contracts/out-ttg-v8/TtgMemeDenomRehearsalUsdc.sol/TtgMemeDenomRehearsalUsdc.json
+?? contracts/out-ttg-v8/TtgMemeDenomSeatConcentrationRegistry.sol/TtgMemeDenomSeatConcentrationRegistry.json
+?? contracts/out-ttg-v8/TtgMemeDenomStewardMinimums.sol/TtgMemeDenomStewardMinimums.json
+?? contracts/out-ttg-v8/TtgMemeDenomTimelock.sol/TtgMemeDenomTimelock.json
+?? contracts/out-ttg-v8/TtgMemeDenomTokenomics.t.sol/MockUsdc6.json
+?? contracts/out-ttg-v8/TtgMemeDenomTokenomics.t.sol/TtgMemeDenomTokenomicsTest.json
+?? contracts/out-ttg-v8/TtgMemeDenomVoteEscrowStakePool.sol/TtgMemeDenomVoteEscrowStakePool.json
+?? contracts/out-ttg-v8/TtgV8SepoliaGenesisRehearsal.s.sol/TtgV8SepoliaGenesisRehearsal.json
+?? contracts/out-ttg-v8/Vm.sol/Vm.json
+?? contracts/out-ttg-v8/Vm.sol/VmSafe.json
+?? contracts/out-ttg-v8/build-info/1405f176f7858c17.json
+?? contracts/out-ttg-v8/build-info/c091ff858d93658b.json
+?? contracts/out-ttg-v8/console.sol/console.json
+?? contracts/out-ttg-v8/safeconsole.sol/safeconsole.json
+?? contracts/out-ttg-v9/Base.sol/CommonBase.json
+?? contracts/out-ttg-v9/Base.sol/ScriptBase.json
+?? contracts/out-ttg-v9/Base.sol/TestBase.json
+?? contracts/out-ttg-v9/IMulticall3.sol/IMulticall3.json
+?? contracts/out-ttg-v9/ITtgV9Tokens.sol/ITtgV9BatchMarketBurnGate.json
+?? contracts/out-ttg-v9/ITtgV9Tokens.sol/ITtgV9Burnable.json
+?? contracts/out-ttg-v9/ITtgV9Tokens.sol/ITtgV9Erc20.json
+?? contracts/out-ttg-v9/ITtgV9Tokens.sol/ITtgV9ProtocolBurnable.json
+?? contracts/out-ttg-v9/MockV9Erc20.sol/MockV9Erc20.json
+?? contracts/out-ttg-v9/MockV9Timelock.sol/MockV9Timelock.json
+?? contracts/out-ttg-v9/Script.sol/Script.json
+?? contracts/out-ttg-v9/StdAssertions.sol/StdAssertions.json
+?? contracts/out-ttg-v9/StdChains.sol/StdChains.json
+?? contracts/out-ttg-v9/StdCheats.sol/StdCheats.json
+?? contracts/out-ttg-v9/StdCheats.sol/StdCheatsSafe.json
+?? contracts/out-ttg-v9/StdConstants.sol/StdConstants.json
+?? contracts/out-ttg-v9/StdError.sol/stdError.json
+?? contracts/out-ttg-v9/StdInvariant.sol/StdInvariant.json
+?? contracts/out-ttg-v9/StdJson.sol/stdJson.json
+?? contracts/out-ttg-v9/StdMath.sol/stdMath.json
+?? contracts/out-ttg-v9/StdStorage.sol/stdStorage.json
+?? contracts/out-ttg-v9/StdStorage.sol/stdStorageSafe.json
+?? contracts/out-ttg-v9/StdStyle.sol/StdStyle.json
+?? contracts/out-ttg-v9/StdToml.sol/stdToml.json
+?? contracts/out-ttg-v9/StdUtils.sol/StdUtils.json
+?? contracts/out-ttg-v9/Test.sol/Test.json
+?? contracts/out-ttg-v9/TravelTrustGovernanceTokenV9.sol/TravelTrustGovernanceTokenV9.json
+?? contracts/out-ttg-v9/TravelTrustGovernorV9.sol/ITtgV9GovernanceTimelock.json
+?? contracts/out-ttg-v9/TravelTrustGovernorV9.sol/ITtgV9GovernanceVotes.json
+?? contracts/out-ttg-v9/TravelTrustGovernorV9.sol/TravelTrustGovernorV9.json
+?? contracts/out-ttg-v9/TtgBatchPrimaryMarket.sol/TtgBatchPrimaryMarket.json
+?? contracts/out-ttg-v9/TtgBatchPrimaryMarketV2Harness.sol/TtgBatchPrimaryMarketV2Harness.json
+?? contracts/out-ttg-v9/TtgPublicSaleVault.sol/TtgPublicSaleVault.json
+?? contracts/out-ttg-v9/TtgPublicSaleVaultV2Harness.sol/TtgPublicSaleVaultV2Harness.json
+?? contracts/out-ttg-v9/TtgV9AtomicDeployer.sol/TtgV9AtomicDeployer.json
+?? contracts/out-ttg-v9/TtgV9AtomicDeployerMainnet.sol/TtgV9AtomicDeployerMainnet.json
+?? contracts/out-ttg-v9/TtgV9BatchPrimaryMarket.t.sol/TtgV9BatchPrimaryMarketTest.json
+?? contracts/out-ttg-v9/TtgV9Constants.sol/TtgV9Constants.json
+?? contracts/out-ttg-v9/TtgV9CountryFeeRouter.sol/TtgV9CountryFeeRouter.json
+?? contracts/out-ttg-v9/TtgV9DaoProposalThresholds.sol/TtgV9DaoProposalThresholds.json
+?? contracts/out-ttg-v9/TtgV9DeployTopology.sol/TtgV9DeployTopology.json
+?? contracts/out-ttg-v9/TtgV9DesignLockConstants.sol/TtgV9DesignLockConstants.json
+?? contracts/out-ttg-v9/TtgV9DesignLockLocal.t.sol/TtgV9DesignLockLocalTest.json
+?? contracts/out-ttg-v9/TtgV9DesignLockMainnet.s.sol/TtgV9DesignLockMainnet.json
+?? contracts/out-ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol/TtgV9DesignLockSepoliaRehearsal.json
+?? contracts/out-ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol/TtgV9SepoliaFeeIngress.json
+?? contracts/out-ttg-v9/TtgV9ERC1967Proxy.sol/TtgV9ERC1967Proxy.json
+?? contracts/out-ttg-v9/TtgV9GovernanceParams.sol/TtgV9GovernanceParams.json
+?? contracts/out-ttg-v9/TtgV9ProjectPool.sol/TtgV9ProjectPool.json
+?? contracts/out-ttg-v9/TtgV9RemintG1G7HardGates.t.sol/TtgV9RemintG1G7HardGatesTest.json
+?? contracts/out-ttg-v9/TtgV9RemintLocal.t.sol/TtgV9RemintLocalTest.json
+?? contracts/out-ttg-v9/TtgV9RemintSepoliaRehearsal.s.sol/TtgV9RemintSepoliaRehearsal.json
+?? contracts/out-ttg-v9/TtgV9RoleStakePool.sol/ITtgV9SupplyToken.json
+?? contracts/out-ttg-v9/TtgV9RoleStakePool.sol/TtgV9RoleStakePool.json
+?? contracts/out-ttg-v9/TtgV9SepoliaRehearsal.s.sol/TtgV9SepoliaRehearsal.json
+?? contracts/out-ttg-v9/TtgV9SoloTimelock.sol/TtgV9SoloTimelock.json
+?? contracts/out-ttg-v9/TtgV9StewardLifecycle.sol/TtgV9StewardLifecycle.json
+?? contracts/out-ttg-v9/TtgV9UUPSUpgradeable.sol/TtgV9UUPSUpgradeable.json
+?? contracts/out-ttg-v9/Vm.sol/Vm.json
+?? contracts/out-ttg-v9/Vm.sol/VmSafe.json
+?? contracts/out-ttg-v9/build-info/106f7279cf1e2a65.json
+?? contracts/out-ttg-v9/build-info/195fa0d737564228.json
+?? contracts/out-ttg-v9/build-info/4f53cd0364b4fdeb.json
+?? contracts/out-ttg-v9/build-info/77c425caae5af58d.json
+?? contracts/out-ttg-v9/build-info/7bbe475bac663240.json
+?? contracts/out-ttg-v9/build-info/85b3949945139fba.json
+?? contracts/out-ttg-v9/build-info/a574b00f9dd00f6c.json
+?? contracts/out-ttg-v9/build-info/b25b1cf2b07e8098.json
+?? contracts/out-ttg-v9/build-info/bb9dd6433bdc64f0.json
+?? contracts/out-ttg-v9/build-info/c26cf2523a518a91.json
+?? contracts/out-ttg-v9/build-info/c5ec1ad995b1714e.json
+?? contracts/out-ttg-v9/build-info/cedb29b52597719c.json
+?? contracts/out-ttg-v9/build-info/db40fd44d0ef2851.json
+?? contracts/out-ttg-v9/build-info/e0f18c6ebdf9f054.json
+?? contracts/out-ttg-v9/build-info/e885d46c01fcb3a9.json
+?? contracts/out-ttg-v9/build-info/f52d6d993870aea6.json
+?? contracts/out-ttg-v9/build-info/f6921ea1238f06f8.json
+?? contracts/out-ttg-v9/build-info/f6a015be95d4c90b.json
+?? contracts/out-ttg-v9/console.sol/console.json
+?? contracts/out-ttg-v9/mocks/MockV9Erc20.sol/MockV9Erc20.json
+?? contracts/out-ttg-v9/safeconsole.sol/safeconsole.json
+?? contracts/out-ttg-v9/ttg-v9/MockV9Erc20.sol/MockV9Erc20.json
+?? contracts/src/GlobalStakersFeeVault.sol
+?? contracts/src/ttg-v9/TtgV9AtomicDeployer.sol
+?? contracts/src/ttg-v9/TtgV9AtomicDeployerMainnet.sol
+?? contracts/src/ttg-v9/TtgV9CountryFeeRouter.sol
+?? contracts/src/ttg-v9/TtgV9DesignLockConstants.sol
+?? contracts/src/ttg-v9/TtgV9DesignLockMainnet.s.sol
+?? contracts/src/ttg-v9/TtgV9DesignLockSepoliaRehearsal.s.sol
+?? contracts/src/ttg-v9/TtgV9ProjectPool.sol
+?? contracts/src/ttg-v9/TtgV9RoleStakePool.sol
+?? contracts/src/ttg-v9/TtgV9SoloTimelock.sol
+?? contracts/test/TtgGovRootReplacementLocal.t.sol
+?? contracts/test/ttg-v9/TtgV9DesignLockLocal.t.sol
+?? docs/github-official/CONTRIBUTING.md
+?? docs/github-official/LICENSE.md
+?? docs/github-official/PUBLIC-README.md
+?? docs/github-official/README.md
+?? docs/github-official/SECURITY.md
+?? docs/github-official/en/Architecture.md
+?? docs/github-official/en/Contract-Registry.md
+?? docs/github-official/en/CountryFeeRouter.md
+?? docs/github-official/en/Governance.md
+?? docs/github-official/en/Legacy-Policy.md
+?? docs/github-official/en/Mainnet-Deployments.md
+?? docs/github-official/en/Primary-Market.md
+?? docs/github-official/en/ProjectPool.md
+?? docs/github-official/en/README.md
+?? docs/github-official/en/Role-Stake.md
+?? docs/github-official/en/Security.md
+?? docs/github-official/en/TTG-V9.md
+?? docs/github-official/en/Tokenomics.md
+?? docs/github-official/en/Verification.md
+?? docs/github-official/en/Whitepaper.md
+?? docs/github-official/zh/Architecture.md
+?? docs/github-official/zh/Contract-Registry.md
+?? docs/github-official/zh/CountryFeeRouter.md
+?? docs/github-official/zh/Governance.md
+?? docs/github-official/zh/Legacy-Policy.md
+?? docs/github-official/zh/Mainnet-Deployments.md
+?? docs/github-official/zh/Primary-Market.md
+?? docs/github-official/zh/ProjectPool.md
+?? docs/github-official/zh/README.md
+?? docs/github-official/zh/Role-Stake.md
+?? docs/github-official/zh/Security.md
+?? docs/github-official/zh/TTG-V9.md
+?? docs/github-official/zh/Tokenomics.md
+?? docs/github-official/zh/Verification.md
+?? docs/github-official/zh/Whitepaper.md
+?? docs/runbook/TT-OFFICIAL-V9-PRODUCT-BASELINE-DIRTY-RECONCILIATION-PREVIEW-LATEST.md
+?? docs/runbook/TT-TTG-V9-AI-AUDIT1-DESIGN-LOCK-LATEST.md
+?? docs/runbook/TT-TTG-V9-AI-AUDIT2-DESIGN-LOCK-LATEST.md
+?? docs/runbook/TT-TTG-V9-AI-AUDIT3-DESIGN-LOCK-LATEST.md
+?? docs/runbook/TT-TTG-V9-DESIGN-LOCK-LOCAL-PASS-LATEST.md
+?? docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md
+?? docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-CONVERGENCE-RESIDUE-LATEST.md
+?? docs/runbook/TT-TTG-V9-EXTERNAL-FIRM-AUDIT-PACK-LATEST.md
+?? docs/runbook/TT-TTG-V9-GOV-ROOT-LOCAL-PASS-AND-BUCKET-AUDIT-LATEST.md
+?? docs/runbook/TT-TTG-V9-GOVERNANCE-ROOT-REPLACEMENT-LATEST.md
+?? docs/runbook/TT-TTG-V9-MAINNET-BROADCAST-PHASE1-STOP-LATEST.md
+?? docs/runbook/TT-TTG-V9-MAINNET-DEPLOY-AUTHORIZATION-AWAIT-LATEST.md
+?? docs/runbook/TT-TTG-V9-MAINNET-DL-R1-PHASE2-FREEZE-WAIT-LATEST.md
+?? docs/runbook/TT-TTG-V9-MAINNET-PRE-BROADCAST-FINAL-LATEST.md
+?? docs/runbook/TT-TTG-V9-MAINNET-RELEASE-AUDIT3-FINDINGS-LATEST.md
+?? docs/runbook/TT-TTG-V9-MONEY-FLOW-ECONOMIC-TRUTH-RECONCILIATION-LATEST.md
+?? docs/runbook/TT-TTG-V9-OFFICIAL-FULL-TOPOLOGY-AUDIT-LATEST.md
+?? docs/runbook/TT-TTG-V9-OFFICIAL-WEBSITE-ALIGNMENT-CANDIDATE-OWNER-CHECKLIST-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-ANSWERS-AND-REMAINING-CONFLICTS-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-DECISION-CHECKLIST-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-ECONOMIC-MODEL-FEE-VS-STAKE-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-ECONOMIC-TARGET-FREEZE-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-MAINNET-CUTOVER-FINAL-REVIEW-DESIGN-LOCK-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-MAINNET-CUTOVER-FINAL-REVIEW-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-MAINNET-GATE-LATEST.md
+?? docs/runbook/TT-TTG-V9-OWNER-OPS-FEE-MODEL-LATEST.md
+?? docs/runbook/TT-TTG-V9-PRE-AUDIT-ALIGNMENT-REGISTER-LATEST.md
+?? docs/runbook/TT-TTG-V9-PRE-DEPLOY-COMPILER-AND-WALLET-SCAN-LATEST.md
+?? docs/runbook/TT-TTG-V9-PRE-MAINNET-FINAL-SECURITY-AUDIT-LATEST.md
+?? docs/runbook/TT-TTG-V9-RED-TEAM-AUDIT2-FINDINGS-LATEST.md
+?? docs/runbook/TT-TTG-V9-REMAINING-OWNER-CONFIRM-SHORTLIST-LATEST.md
+?? docs/runbook/TT-TTG-V9-SAFE-DEPRECATION-FULL-PRIVILEGE-REAUDIT-LATEST.md
+?? docs/runbook/_write_test
+?? docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-EN-LATEST.md
+?? docs/whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md
+?? evidence/GO_ttg_v9_audit/DIRTY_CLOSURE_BACKUP/preview-20260821T121008Z.json
+?? evidence/GO_ttg_v9_audit/DIRTY_CLOSURE_BACKUP/tracked-diff-20260821T121008Z.patch
+?? evidence/GO_ttg_v9_audit/OFFICIAL_V9_PRODUCT_BASELINE_DIRTY_RECONCILIATION_PREVIEW.json
+?? evidence/GO_ttg_v9_audit/OFFICIAL_V9_PRODUCT_PIN_LIVE_OBSERVE.json
+?? evidence/GO_ttg_v9_audit/TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS.json
+?? evidence/GO_ttg_v9_audit/TTG_V9_MAINNET_EDITION_WHITEPAPER_SCAN.json
+?? evidence/GO_ttg_v9_audit/V9_AI_AUDIT1_DESIGN_LOCK_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_AI_AUDIT2_DESIGN_LOCK_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_AI_AUDIT3_DESIGN_LOCK_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_DESIGN_LOCK.json
+?? evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_DESIGN_LOCK.manifest.json
+?? evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_DESIGN_LOCK.pre_dl_r1.json
+?? evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_MANIFEST.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R1_FINAL_MANIFEST.json
+?? evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R1_FINAL_MANIFEST.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R2_FINAL_MANIFEST.json
+?? evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_R2_FINAL_MANIFEST.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_CANONICAL_BASELINE_CLEAN_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_DESIGN_LOCK_AI_TRIAD_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_DOCUMENTATION_FULL_CONVERGENCE_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_DOCUMENTATION_TRUTH_BASELINE.json
+?? evidence/GO_ttg_v9_audit/V9_DOC_TRUTH_CONVERGENCE_SCAN.json
+?? evidence/GO_ttg_v9_audit/V9_DOC_TRUTH_RESIDUE_FILES.json
+?? evidence/GO_ttg_v9_audit/V9_EXTERNAL_FIRM_AUDIT_PACK_R2_FINAL.json
+?? evidence/GO_ttg_v9_audit/V9_EXTERNAL_FIRM_AUDIT_PACK_R2_FINAL.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_GITHUB_OFFICIAL_ALIGNMENT_SCAN.json
+?? evidence/GO_ttg_v9_audit/V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_GOVERNANCE_ROOT_REPLACEMENT_ACTIVE.json
+?? evidence/GO_ttg_v9_audit/V9_GOV_ROOT_LOCAL_PASS_STOP.json
+?? evidence/GO_ttg_v9_audit/V9_LEGACY_SUPERSESSION_INDEX.json
+?? evidence/GO_ttg_v9_audit/V9_MAINNET_BROADCAST_PHASE1_DEPLOYED_SCHEDULED.json
+?? evidence/GO_ttg_v9_audit/V9_MAINNET_CUTOVER_AUTH_READY_STOP.json
+?? evidence/GO_ttg_v9_audit/V9_MAINNET_CUTOVER_AUTH_READY_STOP.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_MAINNET_DL_R1_BROADCAST_ARTIFACT_PIN.json
+?? evidence/GO_ttg_v9_audit/V9_MAINNET_DL_R1_PHASE2_FREEZE_WAIT.json
+?? evidence/GO_ttg_v9_audit/V9_MAINNET_PRE_BROADCAST_FINAL_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_MAINNET_READY_STOP.json
+?? evidence/GO_ttg_v9_audit/V9_MAINNET_READY_STOP.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_MONEY_FLOW_ECONOMIC_TRUTH_RECONCILED.json
+?? evidence/GO_ttg_v9_audit/V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_OFFICIAL_FULL_CONTRACT_TOPOLOGY_AUDIT_PASS.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_PRESTART_CLEANLINESS_AUDIT.json
+?? evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_PRESTART_GIT_STATUS_PORCELAIN.txt
+?? evidence/GO_ttg_v9_audit/V9_OWNER_MAINNET_BROADCAST_AUTHORIZATION_RECORDED.json
+?? evidence/GO_ttg_v9_audit/V9_OWNER_MAINNET_DEPLOY_AUTHORIZATION_RECORDED.json
+?? evidence/GO_ttg_v9_audit/V9_OWNER_MAINNET_DEPLOY_AUTHORIZATION_RECORDED.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_PRE_AUDIT_ALIGNMENT_REGISTER_LATEST.json
+?? evidence/GO_ttg_v9_audit/V9_PRE_MAINNET_SECURITY_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_PRE_MAINNET_SECURITY_PASS.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_SAFE_DEPRECATION_FULL_PRIVILEGE_REAUDIT.json
+?? evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION2_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION2_PASS.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION_DL_R1_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION_PASS.json
+?? evidence/GO_ttg_v9_audit/V9_SEPOLIA_REGRESSION_PASS.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_design/OWNER_DECISION_RECOVERABILITY_COST.md
+?? evidence/GO_ttg_v9_design/PUBLIC_50_RECONCILIATION_AFTER_LOCK.md
+?? evidence/GO_ttg_v9_design/TT-TTG-V9-FULL-25T-REMINT-DESIGN.md
+?? evidence/GO_ttg_v9_design/TT-TTG-V9-MONETARY-INVARIANT.md
+?? evidence/GO_ttg_v9_design/TT-TTG-V9-REMINT-FINAL-NORM-G1-G7.md
+?? evidence/GO_ttg_v9_design/V8_MAINNET_REALITY_READONLY_20260821.json
+?? evidence/GO_ttg_v9_design/V8_MAINNET_REALITY_TO_V9_PM_CUTOVER_DELTA.md
+?? evidence/GO_ttg_v9_design/V8_OLD_PM_RECOVERABILITY_VERDICT.json
+?? evidence/GO_ttg_v9_design/V8_PUBLIC_50_LOCK_STOP.json
+?? evidence/GO_ttg_v9_design/V8_REALITY_READONLY_20260820.json
+?? evidence/GO_ttg_v9_design/V8_REALITY_TO_V9_TARGET_DELTA_20260820.md
+?? evidence/GO_ttg_v9_design/V9_PM_MAINNET_CUTOVER_PLAN.md
+?? evidence/GO_ttg_v9_design/V9_PM_MAINNET_CUTOVER_READY.json
+?? evidence/GO_ttg_v9_design/V9_REMINT_LOCAL_PASS.json
+?? evidence/GO_ttg_v9_design/_write_test
+?? evidence/GO_ttg_v9_design/official-meta-readonly.json
+?? evidence/GO_ttg_v9_design/old_pm_runtime.hex
+?? evidence/GO_ttg_v9_design_lock_sepolia/V9_DESIGN_LOCK_SEPOLIA_PASS_STOP.json
+?? evidence/GO_ttg_v9_design_lock_sepolia/addresses.env
+?? evidence/GO_ttg_v9_mainnet_dl_r1/KEEP_SAFE_SET_FEE_ROUTER_PAYLOAD.json
+?? evidence/GO_ttg_v9_mainnet_dl_r1/addresses.env
+?? evidence/GO_ttg_v9_mainnet_dl_r1/post_deploy_verify.json
+?? evidence/GO_ttg_v9_remint_sepolia/V9_REMINT_SEPOLIA_PASS_STOP.json.SUPERSEDED.json
+?? evidence/GO_ttg_v9_remint_sepolia/V9_SEPOLIA_REGRESSION_PASS.json
+?? evidence/GO_ttg_v9_remint_sepolia/max_supply.txt
+?? evidence/GO_ttg_v9_remint_sepolia/supply_after_burn.txt
+?? evidence/GO_ttg_v9_remint_sepolia/supply_before_burn.txt
+?? evidence/GO_ttg_v9_sepolia_regression_dl_r1/V9_SEPOLIA_REGRESSION_DL_R1_PASS.json
+?? evidence/GO_ttg_v9_sepolia_regression_dl_r1/addresses.env
+?? evidence/GO_ttg_v9_sepolia_rehearsal/V9_PM_SEPOLIA_PASS_STOP.json
+?? evidence/GO_ttg_v9_sepolia_rehearsal/txs.tsv
+?? evidence/GO_ttg_v9_sepolia_rehearsal/v9-sepolia-rehearsal.json
+?? registry/ttg-v9-documentation-truth-baseline.v1.yaml
+?? registry/ttg-v9-github-official-alignment.v1.yaml
+?? registry/ttg-v9-mainnet-edition-whitepaper-fact-matrix.v1.yaml
+?? scripts/dev/classify-official-v9-dirty-reconciliation-preview.py
+?? scripts/dev/execute-official-v9-dirty-closure.py
+?? scripts/dev/freeze-ttg-v9-audit-candidate-design-lock.py
+?? scripts/dev/lock-ttg-v9-external-firm-audit-pack.py
+?? scripts/dev/run-ttg-v9-canonical-baseline-cleanup.py
+?? scripts/dev/run-ttg-v9-design-lock-local-gate.sh
+?? scripts/dev/run-ttg-v9-design-lock-mainnet-broadcast.sh
+?? scripts/dev/run-ttg-v9-design-lock-sepolia-continue.sh
+?? scripts/dev/run-ttg-v9-design-lock-sepolia-pass-from-deploy3.sh
+?? scripts/dev/run-ttg-v9-design-lock-sepolia-resume-burn.sh
+?? scripts/dev/run-ttg-v9-design-lock-sepolia.sh
+?? scripts/dev/run-ttg-v9-doc-truth-convergence-gate.py
+?? scripts/dev/run-ttg-v9-full-topology-audit.sh
+?? scripts/dev/run-ttg-v9-github-official-alignment-gate.py
+?? scripts/dev/run-ttg-v9-gov-root-local-gate.sh
+?? scripts/dev/run-ttg-v9-mainnet-dl-r1-phase2-solo-execute.sh
+?? scripts/dev/run-ttg-v9-mainnet-dl-r1-verified-stop-gate.py
+?? scripts/dev/run-ttg-v9-mainnet-edition-whitepaper-gate.py
+?? scripts/dev/run-ttg-v9-mainnet-pre-broadcast-final-gate.py
+?? scripts/dev/run-ttg-v9-sepolia-drill-from-addresses.sh
+?? scripts/dev/run-ttg-v9-sepolia-post-sale-from-addresses.sh
+?? scripts/dev/run-ttg-v9-sepolia-regression-dl-r1.sh
+?? scripts/dev/run-ttg-v9-sepolia-regression2.sh
+?? scripts/dev/run-ttg-v9-sepolia-rehearsal.sh
+?? scripts/dev/stamp-ttg-v9-mainnet-cutover-auth-ready-stop.py
+?? scripts/dev/stamp-ttg-v9-pre-mainnet-security-pass.py
+?? scripts/dev/verify-ttg-v9-mainnet-dl-r1-phase1.py

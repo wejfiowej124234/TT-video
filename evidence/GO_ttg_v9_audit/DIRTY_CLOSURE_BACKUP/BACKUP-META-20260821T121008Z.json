@@ -1,0 +1,8 @@
+{
+  "stamp": "OFFICIAL_V9_DIRTY_CLOSURE_BACKUP",
+  "tag": "backup/official-v9-dirty-closure-pre-20260821T121008Z",
+  "head": "1826010bb9093e3d991a1de8ecf29467eb56cbd6",
+  "ops_product_pin": "3e356617a498b0faac42e4ae457343d36294a770",
+  "tracked_diff": "evidence/GO_ttg_v9_audit/DIRTY_CLOSURE_BACKUP/tracked-diff-20260821T121008Z.patch",
+  "note": "Recover tracked mods via git apply patch; recover tag via git checkout tag; V9 untracked still on disk until DELETE/COMMIT"
+}

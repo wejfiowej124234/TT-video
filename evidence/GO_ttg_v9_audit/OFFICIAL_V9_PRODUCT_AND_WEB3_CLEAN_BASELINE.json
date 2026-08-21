@@ -1,0 +1,17 @@
+{
+  "stamp": "OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE",
+  "commit": "3fcb635d68d6fd59860804de872f4a68e7023b94",
+  "tag": "OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE",
+  "product_mother_ops_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "backup_tag": "backup/official-v9-dirty-closure-pre-20260821T121026Z",
+  "tt_production_go": "NO_GO",
+  "did_not": [
+    "production_deploy",
+    "meta_indexer_cutover",
+    "mainnet_phase2",
+    "DL_R1_chain_mutation",
+    "TT_PRODUCTION_GO_flip",
+    "git_reset_hard"
+  ],
+  "stop": true
+}
