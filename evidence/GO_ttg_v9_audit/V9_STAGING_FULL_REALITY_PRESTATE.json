@@ -1,0 +1,66 @@
+{
+  "stamp": "V9_STAGING_FULL_REALITY_PRESTATE",
+  "recorded_at_utc": "2026-08-21T13:05:10Z",
+  "release_artifact": {
+    "local_pass": "V9_PRE_PRODUCTION_LOCAL_FULL_CLEAN_PASS",
+    "allowlist_commit": "04f970580ed85727a547d66ff53bc650be8d4a86",
+    "tip_sha": "a0750771617296a52444aa97c8e99f2df0b75da0",
+    "fingerprint_pack": "evidence/GO_ttg_v9_audit/V9_PRE_PRODUCTION_LOCAL_FINGERPRINT_PACK.json"
+  },
+  "prestate": {
+    "web": {
+      "app": "tt-web-staging",
+      "url": "https://tt-web-staging.fly.dev",
+      "release_identity": {
+        "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+        "artifact_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+        "image_digest": "gitsha:3e356617a498b0faac42e4ae457343d36294a770",
+        "build_time": "2026-08-20T10:50:46Z",
+        "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+        "contract_profile": "v311_fund_safety_candidate_v2"
+      },
+      "home_http": 200,
+      "fly_image": {
+        "tag": "deployment-01M0FCRYMW4TRN8CR0AJEEDHBA",
+        "digest": "sha256:41e046b02464f8047aaf3f5339f0eaa03899bdec4021de357e893858cd7ec71c",
+        "version": 425
+      }
+    },
+    "api": {
+      "app": "tt-api-staging",
+      "url": "https://tt-api-staging.fly.dev",
+      "build": {
+        "git_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+        "image_digest": "gitsha:1915ec4da828e0139e90a85cd321415fdb6e53d9",
+        "build_time": "2026-08-06T03:07:41Z",
+        "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+        "contract_profile": "v311_fund_safety_candidate_v2",
+        "deployment_profile": "staging",
+        "attestation_status": "ok"
+      },
+      "health_http": 200,
+      "fly_image": {
+        "tag": "deployment-01M01G0M29KX5NCKSR0R4JFYMM",
+        "digest": "sha256:c88bf99e2f7b8514f24e9d5fcc7a6a72392d2d109bbe0bff2e932739e446cc23",
+        "label_revision": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51-meta-durable"
+      }
+    },
+    "forbidden_ops_this_wave": [
+      "Production deploy",
+      "Mainnet Phase2",
+      "Production /meta or Indexer pin cutover",
+      "TT_PRODUCTION_GO flip",
+      "Staging hotfix/SFTP/overlay",
+      "manual DB/CMS edit",
+      "Staging-only patch"
+    ],
+    "observations": {
+      "web_currently_ops_mother_only": true,
+      "web_missing_v9_allowlist_patch": true,
+      "api_sha_not_tip": true,
+      "cms_object_storage_indexer": "DEFERRED_PROBE_POST_DEPLOY",
+      "db_schema_migration": "DEFERRED_PROBE_POST_DEPLOY"
+    }
+  },
+  "updated_at_utc": "2026-08-21T13:14:48Z"
+}

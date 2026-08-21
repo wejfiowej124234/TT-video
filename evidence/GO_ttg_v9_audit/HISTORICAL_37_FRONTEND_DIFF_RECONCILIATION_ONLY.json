@@ -1,0 +1,34 @@
+{
+  "stamp": "HISTORICAL_37_FRONTEND_DIFF_RECONCILIATION_ONLY",
+  "status": "DEMOTED",
+  "recorded_at_utc": "2026-08-21T13:20:14Z",
+  "historical_total_37": "RECONCILIATION_ONLY_NOT_GIT_OR_RELEASE_TRUTH",
+  "forbid_chase_or_force_count_37": true,
+  "living_frontend_mother_truth": {
+    "ops_mother_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "metric": "real_tree_diff_vs_ops",
+    "shared_path_byte_diff_required": 0,
+    "head_only_14_status": "EXCLUDED_FROM_RELEASE_PERMANENT",
+    "head_only_14": [
+      "frontend/app/assurance/AssurancePageMain.tsx",
+      "frontend/app/assurance/layout.tsx",
+      "frontend/app/assurance/page.tsx",
+      "frontend/app/brand/BrandMarkPageMain.tsx",
+      "frontend/app/brand/layout.tsx",
+      "frontend/app/brand/page.tsx",
+      "frontend/app/contact/ContactPageMain.tsx",
+      "frontend/app/contact/layout.tsx",
+      "frontend/app/contact/page.tsx",
+      "frontend/app/protocol/ProtocolPaperPageMain.tsx",
+      "frontend/app/protocol/layout.tsx",
+      "frontend/app/protocol/page.tsx",
+      "frontend/app/protocol/protocolPaperPage.contract.test.ts",
+      "frontend/components/traveltrust/cinematic/TravelTrustListingDocPage.tsx"
+    ],
+    "v9_p0_p1_overlay": "atomic_allowlist_manifest_only",
+    "allowlist_commit": "04f970580ed85727a547d66ff53bc650be8d4a86",
+    "allowlist_manifest": "evidence/GO_ttg_v9_audit/V9_WEBSITE_ALLOWLIST_ATOMIC_COMMIT_MANIFEST.json"
+  },
+  "archive_reconciliation_only": "evidence/GO_ttg_v9_audit/OPS_MOTHER_PARITY_RECONCILIATION.json",
+  "tt_production_go": "NO_GO"
+}

@@ -1,0 +1,57 @@
+{
+  "stamp": "V9_STAGING_FULL_REALITY_BLOCKER_STOP",
+  "status": "STOP",
+  "wave": "V9_STAGING_FULL_REALITY_REGRESSION",
+  "recorded_at_utc": "2026-08-21T13:17:08Z",
+  "release_artifact": {
+    "local_pass": "V9_PRE_PRODUCTION_LOCAL_FULL_CLEAN_PASS",
+    "allowlist_commit": "04f970580ed85727a547d66ff53bc650be8d4a86",
+    "tip_sha": "a0750771617296a52444aa97c8e99f2df0b75da0",
+    "fingerprint_pack": "evidence/GO_ttg_v9_audit/V9_PRE_PRODUCTION_LOCAL_FINGERPRINT_PACK.json"
+  },
+  "prestate_ref": "evidence/GO_ttg_v9_audit/V9_STAGING_FULL_REALITY_PRESTATE.json",
+  "prestate_summary": {
+    "web_release_identity_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "web_image_digest": "sha256:41e046b02464f8047aaf3f5339f0eaa03899bdec4021de357e893858cd7ec71c",
+    "api_git_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "api_image_digest": "sha256:c88bf99e2f7b8514f24e9d5fcc7a6a72392d2d109bbe0bff2e932739e446cc23",
+    "observation": "Staging www currently OPS mother only (3e356617); V9 allowlist patch NOT live yet"
+  },
+  "deploy_attempted": false,
+  "deploy_blocked_at": "pre-deploy gate: TT_ROLE_PROMO_MEDIA_ASSETS",
+  "root_cause": {
+    "code": "ROLE_PROMO_MEDIA_SSOT_REGISTRY_MISMATCH",
+    "layer": "L0 local bake gate (not Staging runtime)",
+    "detail": "On-disk role MP4 bytes match frontend/.../PROMO-MANIFEST.json (bc894e\u2026/2a4706\u2026/eb01e8\u2026/7814e0\u2026), but registry/traveltrust-role-promo-media-assets.v1.yaml still pins older sha256 (traveler 17fbb9\u2026, guide 70a32f\u2026, merchant/provider e60a5d\u2026, acquisition e31553\u2026). deploy-tt-web-staging.sh fails closed before any Fly bake/deploy.",
+    "why_not_staging_fix": "Per wave rule: any blocker \u2192 root-cause + STOP; forbid Staging hotfix/SFTP/overlay/manual DB/CMS/Staging-only patch. Repair must be Local SSOT coherence (registry\u2194manifest\u2194LFS bytes) then re-enter controlled deploy."
+  },
+  "metrics": {
+    "STAGING_RELEASE_IDENTITY_MATCH": 0,
+    "FRONTEND_DRIFT": "NOT_EVALUATED_PRE_DEPLOY",
+    "ADMIN_UI_UX_DRIFT": "NOT_EVALUATED_PRE_DEPLOY",
+    "BACKEND_DRIFT": "NOT_EVALUATED_PRE_DEPLOY",
+    "DB_SCHEMA_DRIFT": "NOT_EVALUATED_PRE_DEPLOY",
+    "CMS_DATA_TRUTH_CONFLICTS": "NOT_EVALUATED_PRE_DEPLOY",
+    "OBJECT_STORAGE_DRIFT": "NOT_EVALUATED_PRE_DEPLOY",
+    "INDEXER_DRIFT": "NOT_EVALUATED_PRE_DEPLOY",
+    "STALE_RUNTIME_OVERLAY": "NOT_EVALUATED_PRE_DEPLOY",
+    "OLD_VERSION_ACTIVE_REFS": "NOT_EVALUATED_PRE_DEPLOY",
+    "WEB3_TRUTH_CONFLICTS": "NOT_EVALUATED_PRE_DEPLOY",
+    "V9_STAGING_FULL_REALITY_PASS": 0
+  },
+  "honesty_note": "V9_PRE_PRODUCTION_LOCAL_FULL_CLEAN_PASS covered git-tracked fingerprint vs CLEAN/OPS and did not exercise the Staging bake hard-gate check-traveltrust-role-promo-media-ssot-gate.sh; Staging entry exposed the mismatch.",
+  "next_owner_decision_required": [
+    "Authorize Local SSOT realign: refresh registry sha256 from PROMO-MANIFEST (or restore LFS bytes to registry pins) as a new Local commit outside Staging",
+    "Re-run deploy-tt-web-staging.sh --check-only until exit 0",
+    "Resume V9_STAGING_FULL_REALITY_REGRESSION controlled deploy of same product allowlist (04f970580) + coherent media SSOT"
+  ],
+  "still_forbidden": [
+    "Production deploy",
+    "Mainnet Phase2",
+    "Production /meta or Indexer pin cutover",
+    "TT_PRODUCTION_GO flip",
+    "Staging hotfix / SFTP / temp overlay / manual DB-CMS / Staging-only patch"
+  ],
+  "tt_production_go": "NO_GO",
+  "production_candidate_frozen": false
+}
