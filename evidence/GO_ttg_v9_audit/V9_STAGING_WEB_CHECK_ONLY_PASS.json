@@ -1,0 +1,18 @@
+{
+  "stamp": "V9_STAGING_WEB_CHECK_ONLY_PASS",
+  "status": "PASS",
+  "recorded_at_utc": "2026-08-21T13:22:14Z",
+  "command": "DEPLOYMENT_STATE=sync DEPLOY_GOVERNANCE_FORCE_RUNTIME=1 STAGING_RC_BASELINE_ALIGNING=1 bash scripts/dev/deploy-tt-web-staging.sh --check-only",
+  "exit_code": 0,
+  "role_promo_media_ssot": "PASS",
+  "media_convergence_stamp": "V9_ROLE_PROMO_MEDIA_CHECKSUM_SSOT_CONVERGED",
+  "deploy_executed": false,
+  "script_side_effect": "check-only path may fly secrets set attestation before exit; live image remains OPS mother until Owner-authorized full deploy; identity must be re-bound atomically with image bake",
+  "resume_staging_reality_regression": "ALLOWED_AFTER_OWNER_DEPLOY_AUTH",
+  "still_forbidden": [
+    "Staging hotfix",
+    "Production deploy",
+    "OPS/V9 UI-UX mother mutation",
+    "TT_PRODUCTION_GO flip"
+  ]
+}

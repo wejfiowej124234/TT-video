@@ -11,7 +11,7 @@ schema: traveltrust.role_promo_media_assets.v1
 version: 1
 machine_key: TT_ROLE_PROMO_MEDIA_ASSETS
 status: ACTIVE_BOUND_TO_FINAL_RELEASE
-recorded_utc: "2026-07-24T00:00:00Z"
+recorded_utc: "2026-08-21T13:20:00Z"
 equals_production_go: false
 equals_staging_grade_go: false
 
@@ -24,43 +24,45 @@ governance:
   dest_dir: frontend/public/media/traveltrust/roles/
   runtime_manifest: frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json
   optional_ingest_drop_zone: 首页角色宣传片/
+  checksum_ssot_triple: registry_yaml + PROMO-MANIFEST.json + on_disk_or_lfs_smudged_bytes
   forbidden:
     - bake_depends_on_gitignore_local_only
     - drop_zone_as_git_ssot
     - tier1_placeholder_overwrite_of_promo
+    - registry_sha_stale_vs_manifest_or_disk
 
-# sha256 of on-disk MP4 bytes (same as PROMO-MANIFEST.json)
+# sha256 of on-disk MP4 bytes (same as PROMO-MANIFEST.json · FASTSTART_REMUX 2026-08-15)
 assets:
   - role: traveler
     path: frontend/public/media/traveltrust/roles/traveler.mp4
     public_url: /media/traveltrust/roles/traveler.mp4
-    bytes: 52372947
-    sha256: 17fbb964e6bfdea792c3e5a3666433fe1c0d2ce448a7ed54cc2c3b77f7306226
+    bytes: 53120809
+    sha256: bc894e1fde39c1d73f687e5e57ff5398bbb83ab879e1ac2d70b3aef6d73c310a
     aliases: []
   - role: guide
     path: frontend/public/media/traveltrust/roles/guide.mp4
     public_url: /media/traveltrust/roles/guide.mp4
-    bytes: 57239266
-    sha256: 70a32f076e3551c606d2d6fca016a8f40d3e50e2cdd5f3463f55d388609215ac
+    bytes: 56740572
+    sha256: 2a4706d3d235fc65afdd75ae859ab8d542ce466d50a90d2512cb04942a70a0af
     aliases: []
   - role: merchant
     path: frontend/public/media/traveltrust/roles/merchant.mp4
     public_url: /media/traveltrust/roles/merchant.mp4
-    bytes: 69728477
-    sha256: e60a5d52797e95c2158f7adb3c9ee3ab08ca2050b4e4745b710c0a60122f1546
+    bytes: 70281841
+    sha256: eb01e846feec32c4ad9b45929cb2594a6cf136f62692f6a768175108d1871605
     aliases:
       - provider.mp4
   - role: acquisition
     path: frontend/public/media/traveltrust/roles/acquisition.mp4
     public_url: /media/traveltrust/roles/acquisition.mp4
-    bytes: 51002616
-    sha256: e3155395c85b87e61ae7ee7d86b41e104675c4a20694a765c142db3c991f5706
+    bytes: 75418479
+    sha256: 7814e0fce4d8eaa41e4c8d1448fe0af0fcca2cc32915364c969b83abb2a46bc8
     aliases: []
   - role: provider
     path: frontend/public/media/traveltrust/roles/provider.mp4
     public_url: /media/traveltrust/roles/provider.mp4
-    bytes: 69728477
-    sha256: e60a5d52797e95c2158f7adb3c9ee3ab08ca2050b4e4745b710c0a60122f1546
+    bytes: 70281841
+    sha256: eb01e846feec32c4ad9b45929cb2594a6cf136f62692f6a768175108d1871605
     note: merchant alias · must match merchant sha256
     aliases: []
 
@@ -84,4 +86,6 @@ region_steward:
 honesty: >
   Role promo Media Asset SSOT ≠ Staging-grade GO ≠ Production GO.
   Clean tip worktree bake requires git lfs pull so MP4 pointers are smudged.
+  Checksum triple must agree: registry YAML ↔ PROMO-MANIFEST.json ↔ on-disk/LFS-smudged MP4 bytes.
+  2026-08-21: registry sha256/bytes realigned to FASTSTART_REMUX manifest (unblocks Staging bake gate).
   HU-003 2026-07-24: Owner drop-zone ingest (游客/向导/商家/旅行收购) + JPG posters.

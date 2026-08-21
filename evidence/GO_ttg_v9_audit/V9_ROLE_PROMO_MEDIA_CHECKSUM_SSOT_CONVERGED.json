@@ -1,0 +1,41 @@
+{
+  "stamp": "V9_ROLE_PROMO_MEDIA_CHECKSUM_SSOT_CONVERGED",
+  "status": "PASS",
+  "recorded_at_utc": "2026-08-21T13:20:14Z",
+  "triple": [
+    "registry/traveltrust-role-promo-media-assets.v1.yaml",
+    "frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json",
+    "frontend/public/media/traveltrust/roles/{traveler,guide,merchant,acquisition,provider}.mp4 (LFS smudged)"
+  ],
+  "assets": [
+    {
+      "role": "traveler",
+      "bytes": 53120809,
+      "sha256": "bc894e1fde39c1d73f687e5e57ff5398bbb83ab879e1ac2d70b3aef6d73c310a"
+    },
+    {
+      "role": "guide",
+      "bytes": 56740572,
+      "sha256": "2a4706d3d235fc65afdd75ae859ab8d542ce466d50a90d2512cb04942a70a0af"
+    },
+    {
+      "role": "merchant",
+      "bytes": 70281841,
+      "sha256": "eb01e846feec32c4ad9b45929cb2594a6cf136f62692f6a768175108d1871605"
+    },
+    {
+      "role": "acquisition",
+      "bytes": 75418479,
+      "sha256": "7814e0fce4d8eaa41e4c8d1448fe0af0fcca2cc32915364c969b83abb2a46bc8"
+    },
+    {
+      "role": "provider",
+      "bytes": 70281841,
+      "sha256": "eb01e846feec32c4ad9b45929cb2594a6cf136f62692f6a768175108d1871605"
+    }
+  ],
+  "ui_ux_mother_touched": false,
+  "staging_hotfix": false,
+  "production_deploy": false,
+  "next": "deploy-tt-web-staging.sh --check-only must exit 0 before resume V9_STAGING_FULL_REALITY_REGRESSION"
+}
