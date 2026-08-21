@@ -1,0 +1,36 @@
+{
+  "stamp": "V9_PRE_PRODUCTION_LOCAL_FULL_CLEAN_PASS",
+  "status": "PASS",
+  "allowlist_commit_sha": "04f970580ed85727a547d66ff53bc650be8d4a86",
+  "ops_mother_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "clean_baseline_sha": "92cc3057a22e919bb52dde0425e23487677da1be",
+  "metrics": {
+    "DIRTY_WORKTREE": 0,
+    "UNKNOWN_DIFF": 0,
+    "OLD_VERSION_ACTIVE_REFS": 0,
+    "UNAUTHORIZED_FRONTEND_DRIFT": 0,
+    "ADMIN_UI_UX_DRIFT": 0,
+    "BACKEND_DRIFT": 0,
+    "DATABASE_SCHEMA_DRIFT": 0,
+    "CMS_DATA_TRUTH_CONFLICTS": 0,
+    "STALE_BUILD_OR_OVERLAY": 0,
+    "WEB3_TRUTH_CONFLICTS": 0,
+    "RELEASE_IDENTITY_CONFLICTS": 0,
+    "HEAD_ONLY_14_PRESENT_IN_HEAD": 0
+  },
+  "head_only_14": "EXCLUDED_FROM_RELEASE",
+  "formula": "Local = OPS Mother + Approved V9 P0+P1 Patch",
+  "tt_production_go": "NO_GO",
+  "staging_entry": "Owner decision required — not auto-started",
+  "forbidden": [
+    "Staging/Production deploy this turn",
+    "/meta Indexer Production cutover",
+    "Mainnet Phase2",
+    "DL_R1/Phase1 mutation",
+    "TT_PRODUCTION_GO flip"
+  ],
+  "fingerprint_pack": "evidence/GO_ttg_v9_audit/V9_PRE_PRODUCTION_LOCAL_FINGERPRINT_PACK.json",
+  "recorded_at_utc": "2026-08-21T13:00:44Z",
+  "allowlist_manifest": "evidence/GO_ttg_v9_audit/V9_WEBSITE_ALLOWLIST_ATOMIC_COMMIT_MANIFEST.json",
+  "fingerprint_evidence_note": "Repo-local CLEAN/OPS fingerprints; live remote planes deferred to Staging Reality Regression"
+}

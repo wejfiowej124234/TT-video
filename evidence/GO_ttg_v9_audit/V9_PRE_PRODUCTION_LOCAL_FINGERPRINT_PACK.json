@@ -1,0 +1,87 @@
+{
+  "stamp": "V9_PRE_PRODUCTION_LOCAL_FINGERPRINT_PACK",
+  "recorded_at_utc": "2026-08-21T13:00:44Z",
+  "allowlist_commit_sha": "992098d48742653250bf7ecfcfefb09562557812",
+  "ops_mother_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "clean_baseline_sha": "92cc3057a22e919bb52dde0425e23487677da1be",
+  "live_note": "Local fingerprint pack covers git-tracked repo surfaces vs CLEAN/OPS only. Live Staging/Production object-storage bytes, running image digests, and remote Indexer checkpoints are NOT_VERIFIED_THIS_TURN and are outside Local PASS scope as deploy is forbidden; Local RELEASE_IDENTITY = pin/baseline/patch commit coherence.",
+  "fingerprints": {
+    "head_sha": "992098d48742653250bf7ecfcfefb09562557812",
+    "clean_baseline_sha": "92cc3057a22e919bb52dde0425e23487677da1be",
+    "ops_mother_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "frontend_tree_head": "4056ef2fefe5833cfc3d798637c2e1c3f463e7d0",
+    "frontend_tree_ops": "51b7046339b80533607feb29a0f05b1f46976a98",
+    "crates_api_tree_head": "36a37e5cd5024dae4009a8131e1048ea07d3118c",
+    "data_catalog_tree_head": "79d40da773de5c2d2e4404a9b06a9ae91bbd0ff5",
+    "registry_mainnet": "d0b6b1648ddd395d0f4b4f9a2896cf57c12e28078b81cd8e9001b31ed0fdc86e",
+    "living_pin_doc": "1065d64e20da0ea795e17714e52cebe53e91b748320558d5ac99c512496e4098"
+  },
+  "scope_diffs_vs_clean": {
+    "backend_api_rust": [],
+    "database_migrations": [],
+    "cms_catalog": [],
+    "docker_build": [],
+    "indexer": [],
+    "env_samples": []
+  },
+  "fe_vs_ops_all": [
+    "frontend/lib/governance/governanceParamsProtocolReferenceMirror.ts",
+    "frontend/lib/governance/governanceParamsTokenomicsModel.test.ts",
+    "frontend/lib/governance/governanceParamsTokenomicsModel.ts",
+    "frontend/lib/governance/primaryMarketRuntimePriceSsot.ts",
+    "frontend/lib/governance/ttgPublicUnlockScheduleLocal.test.ts",
+    "frontend/lib/governance/ttgPublicUnlockScheduleLocal.ts",
+    "frontend/lib/governance/ttgReferencePriceV1.ts",
+    "frontend/lib/governance/v9PublicContractRegistry.ts",
+    "frontend/lib/traveltrustOfficialMainnetProtocolDirectory.ts",
+    "frontend/lib/traveltrustTtgPublicRounds.test.ts",
+    "frontend/lib/traveltrustTtgPublicRounds.ts",
+    "frontend/locales/en.ts",
+    "frontend/locales/zh.ts"
+  ],
+  "unauthorized_fe_vs_ops": [],
+  "admin_diff_vs_ops": [],
+  "old_version_active_refs": {},
+  "head_only_14": {
+    "status": "EXCLUDED_FROM_RELEASE",
+    "absent_from_head": true,
+    "present_paths": [],
+    "paths": [
+      "frontend/app/assurance/AssurancePageMain.tsx",
+      "frontend/app/assurance/layout.tsx",
+      "frontend/app/assurance/page.tsx",
+      "frontend/app/brand/BrandMarkPageMain.tsx",
+      "frontend/app/brand/layout.tsx",
+      "frontend/app/brand/page.tsx",
+      "frontend/app/contact/ContactPageMain.tsx",
+      "frontend/app/contact/layout.tsx",
+      "frontend/app/contact/page.tsx",
+      "frontend/app/protocol/ProtocolPaperPageMain.tsx",
+      "frontend/app/protocol/layout.tsx",
+      "frontend/app/protocol/page.tsx",
+      "frontend/app/protocol/protocolPaperPage.contract.test.ts",
+      "frontend/components/traveltrust/cinematic/TravelTrustListingDocPage.tsx"
+    ]
+  },
+  "metrics": {
+    "DIRTY_WORKTREE": 0,
+    "UNKNOWN_DIFF": 0,
+    "OLD_VERSION_ACTIVE_REFS": 0,
+    "UNAUTHORIZED_FRONTEND_DRIFT": 0,
+    "ADMIN_UI_UX_DRIFT": 0,
+    "BACKEND_DRIFT": 0,
+    "DATABASE_SCHEMA_DRIFT": 0,
+    "CMS_DATA_TRUTH_CONFLICTS": 0,
+    "STALE_BUILD_OR_OVERLAY": 0,
+    "WEB3_TRUTH_CONFLICTS": 0,
+    "RELEASE_IDENTITY_CONFLICTS": 0,
+    "HEAD_ONLY_14_PRESENT_IN_HEAD": 0
+  },
+  "blockers": [],
+  "local_all_zeros": true,
+  "tt_production_go": "NO_GO",
+  "deploy": {
+    "staging": "FORBIDDEN",
+    "production": "FORBIDDEN"
+  }
+}
