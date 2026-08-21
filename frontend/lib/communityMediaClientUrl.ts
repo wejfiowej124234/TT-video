@@ -47,7 +47,9 @@ function communityMediaSameOriginApiPathForBrowser(path: string): string | null 
 
 export function communityMediaAbsoluteUrlForRender(raw: string | null | undefined): string {
   const normalized = normalizePersistedCommunityMediaPath(raw);
-  const u = remapCommunityTestCdnPlaybackPath(normalized);
+  const ocs = remapOfficialColdStartLegacyUploadUrl(normalized);
+  if (ocs !== normalized && ocs.startsWith("https://")) return ocs;
+  const u = remapCommunityTestCdnPlaybackPath(ocs);
   if (!u) return "";
   if (u.startsWith("blob:") || u.startsWith("data:")) return u;
   if (u.startsWith("http://") || u.startsWith("https://")) {
@@ -115,6 +117,32 @@ export const COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST =
 
 /** 未来 CDN 切流目标（PI3 · 与 COS permanent `r2_cdn_cutover` 对齐）。 */
 export const COMMUNITY_MEDIA_CDN_PUBLIC_HOST = "cdn.traveltrust.app";
+
+/** Official OCS assets live on Tigris `official-cold-start/v1/`; DB may still store legacy upload paths. */
+const OCS_LEGACY_UPLOAD_RE =
+  /(?:^|\/)api\/v1\/uploads\/community-posts\/(ocs-[A-Za-z0-9._-]+\.(?:jpe?g|png|webp|gif|avif))(?:\?.*)?$/i;
+
+/**
+ * Remap legacy `/api/v1/uploads/community-posts/ocs-*` → Tigris Official Cold Start object URL.
+ * No-op for non-OCS uploads (user media still served via uploads / community-media).
+ */
+export function remapOfficialColdStartLegacyUploadUrl(raw: string | null | undefined): string {
+  const u = (raw ?? "").trim();
+  if (!u) return "";
+  const m = u.replace(/\\/g, "/").match(OCS_LEGACY_UPLOAD_RE);
+  if (!m) return u;
+  return `https://${COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST}/official-cold-start/v1/${m[1]}`;
+}
+
+/**
+ * Durable community media normalizer（数据入模边界）：path normalize + OCS legacy→Tigris。
+ * 浏览器 Network 不得再发 `/api/v1/uploads/community-posts/ocs-*`。
+ */
+export function normalizeDurableCommunityMediaUrl(raw: string | null | undefined): string {
+  const n = normalizePersistedCommunityMediaPath(raw);
+  if (!n) return "";
+  return remapOfficialColdStartLegacyUploadUrl(n);
+}
 
 function communityMediaHostIsObjectStoreOrCdn(hostname: string): boolean {
   const h = hostname.toLowerCase();

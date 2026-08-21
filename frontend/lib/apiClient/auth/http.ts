@@ -23,6 +23,7 @@ export async function postSeedTestAccounts(): Promise<{ seeded?: boolean; disabl
 export async function postLogin(body: { email: string; password: string }): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.login), {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     body: JSON.stringify(body),
   });
@@ -45,6 +46,7 @@ export async function postRegister(body: {
 }): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.register), {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     body: JSON.stringify(body),
   });
@@ -83,6 +85,7 @@ export async function postRegisterSendVerificationCode(body: {
 export async function postLogout(body?: Record<string, unknown>): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.logout), {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     body: JSON.stringify(body ?? {}),
   });
@@ -95,6 +98,7 @@ export async function postLogout(body?: Record<string, unknown>): Promise<unknow
 export async function postRefresh(body?: Record<string, unknown>): Promise<unknown> {
   const res = await fetch(apiUrl(routes.auth.refresh), {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     body: JSON.stringify(body ?? {}),
   });

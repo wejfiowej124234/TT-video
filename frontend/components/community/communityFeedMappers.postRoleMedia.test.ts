@@ -83,6 +83,21 @@ describe("mapApiPostToCommunityPost", () => {
   });
 });
 
+describe("mapApiPostToCommunityPost OCS durable media", () => {
+  it("remaps OCS author avatar and media_urls away from legacy uploads path", () => {
+    const post = mapApiPostToCommunityPost({
+      ...base,
+      author_avatar_url: "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      media_urls: ["/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg"],
+      cover_url: "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+    });
+    expect(post.author.avatar_url).toContain("official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg");
+    expect(post.author.avatar_url).not.toMatch(/\/api\/v1\/uploads\/community-posts\/ocs-/);
+    expect(post.media_url).toContain("official-cold-start/v1/");
+    expect(post.cover_url).toContain("official-cold-start/v1/");
+  });
+});
+
 describe("communityPostGridThumbRaw", () => {
   it("prefers cover_url for video posts", () => {
     expect(

@@ -1,8 +1,8 @@
 /**
- * ① **TT-NEXT-BATCH A2 / TT-31 B3**：帖子详情抽屉 **评论排序三态** 与 **`GET /api/v1/community/posts/:id/comments`** 查询串对拍
- *（`sort=latest` / `sort=hot`；**时间序** 默认可能**省略** `sort=`，仅带 **`limit=`**，与 **`buildCommunityPostCommentsQueryString`** 同源）。
+ * ① **R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1**：帖子详情评论区 **无排序三态 Tab**；
+ * 默认 **`GET …/comments?sort=hot`**（互动/回复多优先，同分时间正序）。
  *
- * 依赖：**`traveltrust-api`** + Postgres + **`SEED_TEST_ACCOUNTS`**（与 **`93-matrix-path-community-feed-post`** 同源）。
+ * 依赖：**`traveltrust-api`** + Postgres + **`SEED_TEST_ACCOUNTS`**。
  */
 import { test, expect } from "@playwright/test";
 import {
@@ -35,8 +35,8 @@ function commentsListUrlPredicate(postId: string, url: string): boolean {
   }
 }
 
-test.describe("community post detail · comment sort tabs (04 GET …/comments)", () => {
-  test("detail drawer: sort Latest / Hot / Timeline triggers GET comments with expected query", async ({
+test.describe("community post detail · comment default sort (hot · no tabs)", () => {
+  test("detail drawer: no sort tablist; initial comments GET uses sort=hot", async ({
     page,
     request,
   }) => {
@@ -68,7 +68,11 @@ test.describe("community post detail · comment sort tabs (04 GET …/comments)"
           "Content-Type": "application/json",
           "Idempotency-Key": idemPost,
         },
-        data: { post_type: "text", body: bodyText },
+        data: {
+          post_type: "photo",
+          media_urls: ["/api/v1/uploads/community-posts/e2e-legacy.png"],
+          body: bodyText,
+        },
       },
     );
     const created = (await createRes.json()) as { id?: string; status?: string };
@@ -77,10 +81,14 @@ test.describe("community post detail · comment sort tabs (04 GET …/comments)"
     expect(postId.length).toBeGreaterThan(10);
 
     const commentBody = `e2e-root-comment-${stamp}`;
-    const commentRes = await requestPostWith429Retry(request, `${API_BASE}/api/v1/community/posts/${postId}/comments`, {
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      data: { body: commentBody },
-    });
+    const commentRes = await requestPostWith429Retry(
+      request,
+      `${API_BASE}/api/v1/community/posts/${postId}/comments`,
+      {
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        data: { body: commentBody },
+      },
+    );
     if (!commentRes.ok()) {
       test.skip(true, `POST comment failed HTTP ${commentRes.status} — ${(await commentRes.text()).slice(0, 200)}`);
     }
@@ -91,32 +99,6 @@ test.describe("community post detail · comment sort tabs (04 GET …/comments)"
     const feedShell = communityFeedPageShell(page);
     await expect(feedShell).toBeVisible({ timeout: 90_000 });
 
-    await gotoSmoke(page, `/community?post=${encodeURIComponent(postId)}`, { timeout: 90_000 });
-    await expect(feedShell).toBeVisible({ timeout: 90_000 });
-    await expectCommunityFeedPostDeepLinkSettled(page, feedShell);
-
-    const postDrawer = communityPostDetailDrawerShell(page);
-    await expect
-      .poll(async () => (await postDrawer.innerText()).includes(commentBody), { timeout: 90_000 })
-      .toBe(true);
-
-    const sortTabs = postDrawer.getByRole("tablist", { name: /Sort comments|评论排序/i });
-    await expect(sortTabs).toBeVisible({ timeout: 30_000 });
-
-    const latestTab = postDrawer.getByRole("tab", { name: /Latest|最新/i });
-    const hotTab = postDrawer.getByRole("tab", { name: /^Hot$|^最热$/i });
-    const timelineTab = postDrawer.getByRole("tab", { name: /Timeline|时间序/i });
-
-    const waitLatest = page.waitForResponse(
-      (res) =>
-        res.request().method() === "GET" &&
-        commentsListUrlPredicate(postId, res.url()) &&
-        res.url().includes("sort=latest") &&
-        res.ok(),
-      { timeout: 90_000 },
-    );
-    await Promise.all([waitLatest, latestTab.click()]);
-
     const waitHot = page.waitForResponse(
       (res) =>
         res.request().method() === "GET" &&
@@ -125,17 +107,23 @@ test.describe("community post detail · comment sort tabs (04 GET …/comments)"
         res.ok(),
       { timeout: 90_000 },
     );
-    await Promise.all([waitHot, hotTab.click()]);
 
-    const waitChrono = page.waitForResponse(
-      (res) => {
-        if (res.request().method() !== "GET" || !res.ok()) return false;
-        if (!commentsListUrlPredicate(postId, res.url())) return false;
-        if (res.url().includes("sort=latest") || res.url().includes("sort=hot")) return false;
-        return res.url().includes("limit=");
-      },
-      { timeout: 90_000 },
+    await Promise.all([
+      waitHot,
+      gotoSmoke(page, `/community?post=${encodeURIComponent(postId)}`, { timeout: 90_000 }),
+    ]);
+
+    await expect(feedShell).toBeVisible({ timeout: 90_000 });
+    await expectCommunityFeedPostDeepLinkSettled(page, feedShell);
+
+    const postDrawer = communityPostDetailDrawerShell(page);
+    await expect
+      .poll(async () => (await postDrawer.innerText()).includes(commentBody), { timeout: 90_000 })
+      .toBe(true);
+
+    await expect(postDrawer.getByRole("tablist", { name: /Sort comments|评论排序/i })).toHaveCount(0);
+    await expect(postDrawer.getByRole("tab", { name: /时间正序|最新优先|互动最热|Latest|Hot|Timeline/i })).toHaveCount(
+      0,
     );
-    await Promise.all([waitChrono, timelineTab.click()]);
   });
 });

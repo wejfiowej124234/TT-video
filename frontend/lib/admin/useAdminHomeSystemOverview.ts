@@ -49,6 +49,7 @@ import { apiUrl, routes } from "@/lib/api";
 import { getAuthHeaders } from "@/lib/apiClient";
 
 import { useAdminCapabilities } from "@/lib/admin/useAdminCapabilities";
+import { useAdminHomeSoftRevalidate } from "@/lib/admin/useAdminHomeSoftRevalidate";
 
 
 
@@ -305,8 +306,10 @@ export function useAdminHomeSystemOverview(): AdminHomeSystemOverviewValue {
   const [observabilityError, setObservabilityError] = useState(warm?.observabilityError ?? false);
 
   const loadInFlightRef = useRef(false);
+  const loadRef = useRef<() => void>(() => {});
 
-
+  // HU-463 · tab visible → soft reload
+  const { markFetched } = useAdminHomeSoftRevalidate(() => loadRef.current());
 
   const load = useCallback(() => {
 
@@ -606,9 +609,13 @@ export function useAdminHomeSystemOverview(): AdminHomeSystemOverviewValue {
 
       writeAdminHomeOverviewCache(snapshot);
 
+      markFetched();
+
     });
 
-  }, [caps.hasPermission, caps.permissionsLoaded]);
+  }, [caps.hasPermission, caps.permissionsLoaded, markFetched]);
+
+  loadRef.current = load;
 
 
 

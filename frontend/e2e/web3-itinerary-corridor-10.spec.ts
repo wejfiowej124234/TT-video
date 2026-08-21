@@ -32,7 +32,7 @@ test.describe("Web3 itinerary corridor 10 (① local browser)", () => {
     const apiBase = defaultApiBase();
     const creds = await registerFreshTouristForCorridor(request, apiBase);
 
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     await injectBearerSessionInPage(page, creds);
     await clearLandingItinerarySession(page);
     await page.reload({ waitUntil: "domcontentloaded", timeout: 90_000 });

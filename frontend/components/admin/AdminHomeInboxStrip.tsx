@@ -375,13 +375,6 @@ export function AdminHomeInboxStrip(props: {
                 {t("admin_home_inbox_open_unified")}
               </span>
             )}
-            <AdminShellPrefetchLink
-              href="/admin/operator-guide"
-              className={`${touchTargetLink44Classes} text-small font-medium ${ADMIN_INLINE_LINK_CLASS} ${travelFocusRingOffset2Classes}`}
-              data-tt-admin-home-inbox-operator-guide="1"
-            >
-              {t("admin_home_guide_full_link")}
-            </AdminShellPrefetchLink>
             {error && onRetry ? (
               <button
                 type="button"

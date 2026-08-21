@@ -12,6 +12,7 @@ import type {
   MerchantCategorySlug,
 } from "@/lib/marketSubsiteDemo";
 import { MERCHANT_CATEGORY_SLUGS, ACQUISITION_CATEGORY_SLUGS } from "@/lib/marketSubsiteFilters";
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
 
 function l10nSame(s: string): { zh: string; en: string } {
   const t = s.trim();
@@ -53,14 +54,14 @@ function resolveCatalogImageSrc(p: Record<string, unknown>): string {
     return null;
   };
   const cover = pick(p.cover_url) || pick(p.coverUrl);
-  if (cover) return cover;
+  if (cover) return communityMediaAbsoluteUrlForRender(cover) || cover;
   const media = Array.isArray(p.media_urls) ? p.media_urls : [];
   for (const m of media) {
     const u = pick(m);
-    if (u) return u;
+    if (u) return communityMediaAbsoluteUrlForRender(u) || u;
   }
   const video = pick(p.videoUrl) || pick(p.video_url);
-  if (video) return video;
+  if (video) return communityMediaAbsoluteUrlForRender(video) || video;
   return PLACEHOLDER_IMG;
 }
 

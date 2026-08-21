@@ -20,7 +20,6 @@ const TravelTrustHorizonArc = dynamic(
   () => import("./TravelTrustHorizonArc").then((m) => ({ default: m.TravelTrustHorizonArc })),
   { ssr: false },
 );
-import { resolveTraveltrustPlanTripHref } from "@/lib/traveltrustPlanTripHref";
 import { useTravelTrustHeroScrollProgress } from "./TravelTrustHeroScrollContext";
 import { TRAVELTRUST_HERO_TRUST_CHIPS } from "@/lib/traveltrustHeroTrustChips";
 import { TrustChipIcon } from "./TrustChipIcon";
@@ -79,10 +78,7 @@ import { TravelTrustHeroDestinationLabels } from "./TravelTrustHeroDestinationLa
 import { TravelTrustHeroNetworkNarrative } from "./TravelTrustHeroNetworkNarrative";
 import { useTraveltrustGlobeHeroHud } from "@/lib/traveltrustGlobeHeroHud";
 import {
-  buildTraveltrustPlanTripHrefWithRegion,
   resolveHeroGlobeP1DefaultRegion,
-  setHeroGlobeP1FocusedRegion,
-  setHeroGlobeP1StartPrefill,
   useHeroGlobeP1Link,
 } from "@/lib/traveltrustHeroGlobeP1Link";
 
@@ -113,12 +109,10 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
   const [appDownloadOpen, setAppDownloadOpen] = useState(false);
   const { brief } = useTravelTrustPageBriefContext();
   const reduceMotion = useReducedMotion();
-  const planHref = resolveTraveltrustPlanTripHref(brief?.cta_contract.primary_target);
   const { routeBias } = useTraveltrustGlobeHeroHud();
   const { focusedRegionId, startPrefillRegionId } = useHeroGlobeP1Link();
   const ctaRegionId =
     focusedRegionId ?? startPrefillRegionId ?? resolveHeroGlobeP1DefaultRegion(routeBias);
-  const planHrefWithRegion = buildTraveltrustPlanTripHrefWithRegion(planHref, ctaRegionId);
   const titleId = TT_TRAVELTRUST_SECTION_A11Y.hero.title;
   const { media: heroMedia, hydrationSettled: heroMediaHydrationSettled } =
     useHeroMediaUrlsHydrated(brief);
@@ -397,25 +391,7 @@ export function TravelTrustCinematicHero({ heroRef: heroRefProp }: Props = {}) {
                     {t("traveltrust_hero_cta_ttg")}
                   </Link>
                 </motion.div>
-                <Link
-                  href={planHrefWithRegion}
-                  data-tt-traveltrust-plan-href={planHrefWithRegion}
-                  onClick={() => {
-                    setHeroGlobeP1StartPrefill(ctaRegionId);
-                    setHeroGlobeP1FocusedRegion(ctaRegionId);
-                    trackTravelTrustEvent("traveltrust_plan_trip_click", {
-                      source: "hero",
-                      target: planHrefWithRegion,
-                      region_id: ctaRegionId,
-                      corridor: routeBias,
-                    });
-                  }}
-                  className={TT_HERO_BTN_GHOST_LINK}
-                  data-tt-traveltrust-hero-cta-plan-warm="1"
-                  data-tt-traveltrust-hero-cta-plan="1"
-                >
-                  {t("traveltrust_hero_cta_plan")}
-                </Link>
+                {/* Screenshot body: primary CTA only「查看 TTG」— no「开始规划行程」ghost. */}
                 <button
                   type="button"
                   className={TT_HERO_BTN_GHOST_LINK}

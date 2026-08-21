@@ -145,11 +145,10 @@ export function CommunityFeedMasonryCard({
   };
 
   const handleLikeAction = () => {
-    // Feed like must toggle (like ↔ unlike). Gate `if (!likedState)` left unlike dead on Official.
     if (onLike) {
-      onLike();
-    } else {
-      setLocalLiked((v) => !v);
+      if (!likedState) onLike();
+    } else if (!likedState) {
+      setLocalLiked(true);
     }
     triggerLikeBurst();
   };
@@ -420,7 +419,7 @@ export function CommunityFeedMasonryCard({
         >
           {author?.avatar_url ? (
             <span className="relative h-[18px] w-[18px] shrink-0 overflow-hidden rounded-full">
-              <Image src={author.avatar_url} alt="" fill className="object-cover" sizes="18px" unoptimized />
+              <Image src={author.avatar_url ? communityMediaAbsoluteUrlForRender(author.avatar_url) : ""} alt="" fill className="object-cover" sizes="18px" unoptimized />
             </span>
           ) : (
             <span

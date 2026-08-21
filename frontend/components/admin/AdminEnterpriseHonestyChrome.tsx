@@ -57,8 +57,8 @@ export function AdminEnterpriseHubDataSourceStrip({
         [M.hubDataSourceSurface]: surface,
       }}
     >
-      <p className="font-medium">{t(adminEnterpriseDataSourceLabelKey(tone))}</p>
-      <p className={`mt-0.5 ${ADMIN_TEXT_META_CLASS}`}>{t("admin_enterprise_hub_data_source_footnote")}</p>
+      <p className="font-medium text-inherit">{t(adminEnterpriseDataSourceLabelKey(tone))}</p>
+      <p className="mt-0.5 text-slate-300">{t("admin_enterprise_hub_data_source_footnote")}</p>
     </div>
   );
 }

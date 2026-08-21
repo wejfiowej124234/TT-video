@@ -16,6 +16,7 @@ import {
   communitySlatePillFocus,
 } from "@/lib/communityA11yFocus";
 import { communityStoredRoleLabelI18nKey } from "@/lib/meRoleDisplay";
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
 import { TT_COMMUNITY_FEED_ACTION, TT_MARKETING_COMMUNITY_FEED_ASIDE_STICKY_CLASS } from "@/lib/marketingUi";
 
 export interface CommunityFeedDesktopAsideProps {
@@ -164,7 +165,14 @@ export default function CommunityFeedDesktopAside({
                             >
                               {a.avatar_url ? (
                                 <span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full">
-                                  <Image src={a.avatar_url} alt="" fill className="object-cover" sizes="32px" unoptimized />
+                                  <Image
+                                    src={communityMediaAbsoluteUrlForRender(a.avatar_url)}
+                                    alt=""
+                                    fill
+                                    className="object-cover"
+                                    sizes="32px"
+                                    unoptimized
+                                  />
                                 </span>
                               ) : (
                                 <span

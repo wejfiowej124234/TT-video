@@ -41,52 +41,98 @@ export type TravelTrustAnnouncementWithLane = {
   expiresAt?: string;
 };
 
-/** 第一层 · 产品公告（首页 Pulse 默认） */
+/** 第一层 · 产品公告（首页 Pulse 取前 6 条；第 7 条区域主理人仅公告页） */
 export const TRAVELTRUST_PRODUCT_ANNOUNCEMENTS: TravelTrustAnnouncementWithLane[] = [
   {
-    id: "product-planned-launch",
+    id: "product-ttg-v8-25t",
     lane: "product",
     kind: "product",
-    contentTier: "upcoming",
-    messageKey: "traveltrust_product_ann_planned_launch",
-    releaseAt: TRAVELTRUST_PLATFORM_LAUNCH_ISO,
-    href: "/traveltrust",
-    ctaHref: "/traveltrust",
+    contentTier: "live",
+    messageKey: "traveltrust_pulse_ttg_v8_25t",
+    effectiveAt: "2026-08-18",
+    href: "/traveltrust/announcements#protocol-runtime",
+    ctaHref: "/traveltrust/announcements#protocol-runtime",
+    ctaKind: "learn_more",
+    pinned: true,
+    networkScope: "mainnet",
+  },
+  {
+    id: "campaign-referral",
+    lane: "product",
+    kind: "campaign",
+    contentTier: "live",
+    messageKey: "traveltrust_pulse_campaign_referral",
+    effectiveAt: "2026-08-16",
+    href: "/me/referrals",
+    ctaHref: "/me/referrals",
+    ctaKind: "join_now",
     pinned: true,
     networkScope: "none",
   },
   {
-    id: "product-escrow-usdc",
-    lane: "product",
-    kind: "trust",
-    contentTier: "upcoming",
-    messageKey: "traveltrust_product_ann_escrow",
-    releaseAt: TRAVELTRUST_PLATFORM_LAUNCH_ISO,
-    href: "/trust",
-    ctaHref: "/trust",
-    networkScope: "none",
-  },
-  {
-    id: "product-guide-merchant",
+    id: "product-role-traveler",
     lane: "product",
     kind: "product",
-    contentTier: "upcoming",
-    messageKey: "traveltrust_product_ann_guide_merchant",
-    releaseAt: TRAVELTRUST_PLATFORM_LAUNCH_ISO,
-    href: "/provider/register",
-    ctaHref: "/provider/register",
+    contentTier: "live",
+    messageKey: "traveltrust_product_ann_role_traveler",
+    effectiveAt: "2026-08-16",
+    href: "/auth/register",
+    ctaHref: "/auth/register",
+    ctaKind: "learn_more",
+    pinned: true,
     networkScope: "none",
   },
   {
-    id: "product-security-disclosure",
+    id: "product-role-guide",
     lane: "product",
-    kind: "trust",
+    kind: "product",
     contentTier: "live",
-    messageKey: "traveltrust_product_ann_security",
-    effectiveAt: TRAVELTRUST_PLATFORM_LAUNCH_ISO,
-    href: "/trust",
-    ctaHref: "/trust",
-    networkScope: "all",
+    messageKey: "traveltrust_product_ann_role_guide",
+    effectiveAt: "2026-08-16",
+    href: "/guide/register",
+    ctaHref: "/guide/register",
+    ctaKind: "learn_more",
+    pinned: true,
+    networkScope: "none",
+  },
+  {
+    id: "product-role-merchant",
+    lane: "product",
+    kind: "product",
+    contentTier: "live",
+    messageKey: "traveltrust_product_ann_role_merchant",
+    effectiveAt: "2026-08-16",
+    href: "/provider/register",
+    ctaHref: "/provider/register",
+    ctaKind: "learn_more",
+    pinned: true,
+    networkScope: "none",
+  },
+  {
+    id: "product-role-acquisition",
+    lane: "product",
+    kind: "product",
+    contentTier: "live",
+    messageKey: "traveltrust_product_ann_role_acquisition",
+    effectiveAt: "2026-08-16",
+    href: "/market/acquisition",
+    ctaHref: "/market/acquisition",
+    ctaKind: "learn_more",
+    pinned: true,
+    networkScope: "none",
+  },
+  {
+    id: "product-role-steward",
+    lane: "product",
+    kind: "product",
+    contentTier: "live",
+    messageKey: "traveltrust_product_ann_role_steward",
+    effectiveAt: "2026-08-16",
+    href: "/steward/register",
+    ctaHref: "/steward/register",
+    ctaKind: "learn_more",
+    pinned: true,
+    networkScope: "none",
   },
 ];
 
@@ -102,7 +148,7 @@ export const TRAVELTRUST_GOVERNANCE_ANNOUNCEMENTS: TravelTrustAnnouncementWithLa
     href: "/governance/proposals",
     ctaHref: "/governance/proposals",
     ctaKind: "vote_now",
-    networkScope: "testnet",
+    networkScope: "mainnet",
   },
   {
     id: "governance-params",
@@ -113,7 +159,7 @@ export const TRAVELTRUST_GOVERNANCE_ANNOUNCEMENTS: TravelTrustAnnouncementWithLa
     effectiveAt: TRAVELTRUST_DEPLOY_PHASE1_ACTIVE_ISO,
     href: "/governance/params",
     ctaHref: "/governance/params",
-    networkScope: "testnet",
+    networkScope: "mainnet",
   },
 ];
 
@@ -129,7 +175,7 @@ export const TRAVELTRUST_PROTOCOL_STATUS_ANNOUNCEMENTS: TravelTrustAnnouncementW
     ctaHref: "/governance/params",
     effectiveAt: TRAVELTRUST_PHASE3_ENTRY_ISO,
     pinned: true,
-    networkScope: "testnet",
+    networkScope: "mainnet",
   },
   {
     id: "product-deploy-phase3",
@@ -179,4 +225,13 @@ export const TRAVELTRUST_ANNOUNCEMENT_LANES: TravelTrustAnnouncementLane[] = [
 
 export function traveltrustAnnouncementLaneLabelKey(lane: TravelTrustAnnouncementLane): string {
   return `traveltrust_announcements_lane_${lane}`;
+}
+
+/** Official list/dialog chip: campaign → 活动; other rows use lane. */
+export function traveltrustAnnouncementSurfaceChipKey(item: {
+  kind: TravelTrustAnnouncementKind;
+  lane: TravelTrustAnnouncementLane;
+}): string {
+  if (item.kind === "campaign") return "traveltrust_pulse_kind_campaign";
+  return traveltrustAnnouncementLaneLabelKey(item.lane);
 }

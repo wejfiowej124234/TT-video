@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const feRoot = join(__dirname, "..");
-const homePage = join(feRoot, "app/(home)/page.tsx");
+const homePage = join(feRoot, "app/plan/page.tsx");
 const valueSection = join(feRoot, "components/landing/HomeConsumerValueSection.tsx");
 const resultsSection = join(feRoot, "components/landing/ItineraryResultsSection.tsx");
 

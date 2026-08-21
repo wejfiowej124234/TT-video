@@ -38,7 +38,7 @@ describe("E2E-A-01 cold start campaign consumer contract", () => {
     expect(read("frontend/components/consumer/ConsumerSurfaceStatePanel.tsx")).toContain(
       "data-tt-cold-start-empty",
     );
-    expect(read("frontend/app/(home)/page.tsx")).toContain("ColdStartHomeHeroHighlights");
+    expect(read("frontend/app/plan/page.tsx")).toContain("ColdStartHomeHeroHighlights");
     expect(read("frontend/app/market/MarketPageClient.tsx")).toContain("COLD_START_SURFACE_MARKET_FEED");
     expect(read("frontend/components/community/CommunityFeedMain.tsx")).toContain(
       "COLD_START_SURFACE_COMMUNITY_FEED",
@@ -50,7 +50,7 @@ describe("E2E-A-01 cold start campaign consumer contract", () => {
   });
 
   it("home consumer hero hides probe campaigns and renders highlight cards", () => {
-    expect(read("frontend/app/(home)/page.tsx")).toContain("ColdStartHomeHeroHighlights");
+    expect(read("frontend/app/plan/page.tsx")).toContain("ColdStartHomeHeroHighlights");
     expect(read("frontend/components/coldStartCampaign/ColdStartHomeHeroHighlights.tsx")).toContain(
       "data-tt-cold-start-consumer",
     );

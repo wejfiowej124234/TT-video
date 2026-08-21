@@ -51,18 +51,21 @@ describe("traveltrust-home architecture (enterprise boundaries)", () => {
     expect(main).not.toContain("TravelTrustCinematicHero");
   });
 
-  it("composer is thin orchestrator; sections live in main column", () => {
+  it("composer is thin orchestrator; chrome and body are split", () => {
     const modDir = dirname(fileURLToPath(import.meta.url));
     const composer = readFileSync(join(modDir, "presentation/TravelTrustNetworkPageComposer.tsx"), "utf8");
     const mainColumn = readFileSync(join(modDir, "presentation/TravelTrustHomeMainColumn.tsx"), "utf8");
+    const body = readFileSync(join(modDir, "presentation/TravelTrustHomeBodyModule.tsx"), "utf8");
     expect(composer).toContain("useTraveltrustComposerPage");
     expect(composer).toContain("TravelTrustHomeMainColumn");
     expect(composer).toContain("TravelTrustHomeComposerShell");
     expect(composer).not.toMatch(/dynamic\s*\(/);
     expect(composer.split("\n").length).toBeLessThan(65);
-    expect(mainColumn).toContain("TravelTrustHomeHeroSection");
-    expect(mainColumn).toContain("TravelTrustHomeBelowFoldSection");
+    expect(mainColumn).toContain("TravelTrustLockedHomeChrome");
+    expect(mainColumn).toContain("TravelTrustHomeBodyModule");
     expect(mainColumn).toContain('data-tt-traveltrust-home-composer="1"');
+    expect(body).toContain("TravelTrustHomeHeroSection");
+    expect(body).toContain("TravelTrustHomeBelowFoldSection");
     const backdrop = readFileSync(join(modDir, "presentation/TravelTrustHomeUnified3DBackdrop.tsx"), "utf8");
     expect(backdrop).toContain("TravelTrustHomeWebGLLayer");
     const dynamics = readFileSync(join(modDir, "presentation/TravelTrustHomeComposerDynamics.tsx"), "utf8");

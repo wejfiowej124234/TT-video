@@ -5,6 +5,14 @@ import Link from "next/link";
 import type { CommunityCommentSort } from "@/lib/apiClient/community";
 import ApiErrorAlert from "@/components/ApiErrorAlert";
 import type { CommunityComment } from "@/lib/communityMockData";
+import { CommunityCommentGuideIdentityBadge } from "@/components/community/CommunityCommentGuideIdentityBadge";
+import {
+  COMMUNITY_COMMENT_ACTION_REPLY_CLASS,
+  COMMUNITY_COMMENT_ACTION_DELETE_CLASS,
+  COMMUNITY_COMMENT_ACTION_REPORT_CLASS,
+  COMMUNITY_COMMENT_CREATOR_BADGE_CLASS,
+} from "@/lib/communityCommentIdentitySortUi";
+import { COMMUNITY_AUTHOR_WALLET_CLASS } from "@/lib/communityCommentAuthorUi";
 import {
   communityCardLinkFocus,
   communityCyanPillFocus,
@@ -20,14 +28,7 @@ import {
   CommunityCommentAuthorAvatar,
   CommunityCommentAuthorName,
 } from "@/components/community/CommunityCommentAuthorAvatar";
-import { CommunityCommentGuideIdentityBadge } from "@/components/community/CommunityCommentGuideIdentityBadge";
-import { COMMUNITY_AUTHOR_WALLET_CLASS } from "@/lib/communityCommentAuthorUi";
 import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
-import {
-  COMMUNITY_COMMENT_ACTION_DELETE_CLASS,
-  COMMUNITY_COMMENT_ACTION_REPLY_CLASS,
-  COMMUNITY_COMMENT_ACTION_REPORT_CLASS,
-} from "@/lib/communityCommentIdentitySortUi";
 
 export function PostDetailDrawerCommentsSection({
   t,
@@ -41,11 +42,14 @@ export function PostDetailDrawerCommentsSection({
   rootComments,
   getReplies,
   canCommentReply,
+  showReplyToComment,
   setReplyTarget,
   showReportComment,
   onReportComment,
   showDeleteComment,
   onDeleteComment,
+  isCommentByPostAuthor,
+  postAuthor,
   commentsHasMore,
   onLoadMoreComments,
   commentsLoadMoreBusy,
@@ -63,11 +67,14 @@ export function PostDetailDrawerCommentsSection({
   rootComments: CommunityComment[];
   getReplies: (id: string) => CommunityComment[];
   canCommentReply: boolean;
+  showReplyToComment?: (c: CommunityComment) => boolean;
   setReplyTarget: (c: CommunityComment | null) => void;
   showReportComment: (c: CommunityComment) => boolean;
   onReportComment?: (comment: CommunityComment) => void;
   showDeleteComment?: (c: CommunityComment) => boolean;
   onDeleteComment?: (comment: CommunityComment) => void | Promise<void>;
+  isCommentByPostAuthor?: (c: CommunityComment) => boolean;
+  postAuthor?: CommunityComment["author"] | null;
   commentsHasMore?: boolean;
   onLoadMoreComments?: () => void | Promise<void>;
   commentsLoadMoreBusy?: boolean;
@@ -132,13 +139,19 @@ export function PostDetailDrawerCommentsSection({
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                         <CommunityCommentAuthorName author={c.author} guestLabel={guestLabel} dash={dash} />
+                        {isCommentByPostAuthor?.(c) ? (
+                          <span className={COMMUNITY_COMMENT_CREATOR_BADGE_CLASS} data-testid="community-comment-creator">
+                            {t("community_badge_creator")}
+                          </span>
+                        ) : null}
                         <CommunityCommentGuideIdentityBadge
                           author={c.author}
-                          label={t("community_badge_guide")}
+                          t={t}
+                          postAuthor={postAuthor}
                         />
                       </div>
                       <div className="flex flex-wrap items-center justify-end gap-1 shrink-0">
-                        {canCommentReply ? (
+                        {(showReplyToComment ? showReplyToComment(c) : canCommentReply) ? (
                           <form
                             className="contents"
                             onSubmit={(e: FormEvent<HTMLFormElement>) => {
@@ -190,12 +203,7 @@ export function PostDetailDrawerCommentsSection({
                       </div>
                     </div>
                     {c.author.wallet ? (
-                      <p
-                        className={`${COMMUNITY_AUTHOR_WALLET_CLASS} mt-0.5`}
-                        data-testid="community-comment-author-wallet"
-                      >
-                        {c.author.wallet}
-                      </p>
+                      <p className={`${COMMUNITY_AUTHOR_WALLET_CLASS} mt-0.5`} data-testid="community-comment-author-wallet">{c.author.wallet}</p>
                     ) : null}
                     {communityCommentUseModerationPlaceholder(c) ? (
                       <p className="text-small text-slate-500 mt-0.5 italic">
@@ -222,13 +230,19 @@ export function PostDetailDrawerCommentsSection({
                               dash={dash}
                               className="text-meta text-slate-100 font-medium"
                             />
+                            {isCommentByPostAuthor?.(r) ? (
+                              <span className={COMMUNITY_COMMENT_CREATOR_BADGE_CLASS} data-testid="community-comment-creator">
+                                {t("community_badge_creator")}
+                              </span>
+                            ) : null}
                             <CommunityCommentGuideIdentityBadge
                               author={r.author}
-                              label={t("community_badge_guide")}
+                              t={t}
+                              postAuthor={postAuthor}
                             />
                           </div>
                           <div className="flex flex-wrap items-center justify-end gap-1 shrink-0">
-                            {canCommentReply ? (
+                            {(showReplyToComment ? showReplyToComment(r) : canCommentReply) ? (
                               <form
                                 className="contents"
                                 onSubmit={(e: FormEvent<HTMLFormElement>) => {
@@ -280,12 +294,7 @@ export function PostDetailDrawerCommentsSection({
                           </div>
                         </div>
                         {r.author.wallet ? (
-                          <p
-                            className={`${COMMUNITY_AUTHOR_WALLET_CLASS} mt-0.5`}
-                            data-testid="community-comment-author-wallet"
-                          >
-                            {r.author.wallet}
-                          </p>
+                          <p className={`${COMMUNITY_AUTHOR_WALLET_CLASS} mt-0.5`} data-testid="community-comment-author-wallet">{r.author.wallet}</p>
                         ) : null}
                         {communityCommentUseModerationPlaceholder(r) ? (
                           <p className="text-small text-slate-500 italic">

@@ -9,7 +9,6 @@ import {
   CommunityCommentAuthorAvatar,
   CommunityCommentAuthorName,
 } from "@/components/community/CommunityCommentAuthorAvatar";
-import { CommunityCommentSortTabs } from "@/components/community/CommunityCommentSortTabs";
 
 export function CommunityVideoOverlayCommentSheet({
   t,
@@ -110,15 +109,7 @@ export function CommunityVideoOverlayCommentSheet({
           {t("community_close")}
         </button>
       </div>
-
-      {commentSort != null && onCommentSortChange ? (
-        <CommunityCommentSortTabs
-          t={t}
-          commentSort={commentSort}
-          onCommentSortChange={onCommentSortChange}
-          className="shrink-0 px-4 pb-2"
-        />
-      ) : null}
+      {/* R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1: sort tabs removed */}
 
       <div className={TT_COMMUNITY_VIDEO_OVERLAY_L5.commentSheetScroll}>
         {isShowcasePost ? (

@@ -44,7 +44,7 @@ export function MeSettingsProfileIdentityCard({
   bioCardText: string;
   bioFeatureOn: boolean;
   avatarFileRef: RefObject<HTMLInputElement | null>;
-  onAvatarPickClick: (e: FormEvent) => void;
+  onAvatarPickClick: (e?: FormEvent) => void;
   onAvatarFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
   avatarUploadBusy: boolean;
   avatarLocalUploadEnabled: boolean;
@@ -102,7 +102,7 @@ export function MeSettingsProfileIdentityCard({
             aria-hidden
             onChange={onAvatarFileChange}
           />
-          {avatarLocalUploadEnabled && !editing ? (
+          {avatarLocalUploadEnabled ? (
             <form className="absolute -bottom-0.5 -right-0.5" onSubmit={onAvatarPickClick}>
               <button
                 type="submit"
@@ -116,13 +116,22 @@ export function MeSettingsProfileIdentityCard({
               </button>
             </form>
           ) : null}
-          {!editing ? (
-            <p className={TT_ME_SETTINGS_L5.profileAvatarUploadHint}>
-              {avatarLocalUploadEnabled
-                ? t("community_me_upload_avatar")
-                : t("me_settings_profile_avatar_upload_disabled")}
-            </p>
+          {avatarLocalUploadEnabled ? (
+            <button
+              type="button"
+              data-tt-me-settings-change-avatar="1"
+              disabled={avatarUploadBusy}
+              className={TT_ME_SETTINGS_L5.profileIdentityLink}
+              onClick={() => onAvatarPickClick()}
+            >
+              {t("community_me_change_avatar")}
+            </button>
           ) : null}
+          <p className={TT_ME_SETTINGS_L5.profileAvatarUploadHint}>
+            {avatarLocalUploadEnabled
+              ? t("community_me_upload_avatar")
+              : t("me_settings_profile_avatar_upload_disabled")}
+          </p>
           {hasAvatarUrl && avatarImgFailed ? (
             <div
               className={`${TT_ME_SETTINGS_L5.profileAvatarLoadFailed} mt-2`}

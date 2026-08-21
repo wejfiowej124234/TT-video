@@ -131,6 +131,11 @@ const nextConfig = {
       { source: "/apple-touch-icon.png", destination: "/favicon.svg" },
       { source: "/api/v1/:path*", destination: `${dest}/api/v1/:path*` },
       { source: "/health", destination: `${dest}/health` },
+      {
+        source: "/meta",
+        has: [{ type: "query", key: "compact", value: "(?<compact>.*)" }],
+        destination: `${dest}/meta?compact=:compact`,
+      },
       { source: "/meta", destination: `${dest}/meta` },
       { source: "/meta/build", destination: `${dest}/meta/build` },
       /** PP-D-001 / deploy fingerprint：与 `/meta/build` 同源，避免 Next 404 HTML */
@@ -178,6 +183,8 @@ const nextConfig = {
         pathname: "/**",
       },
       { protocol: "https", hostname: "cdn.traveltrust.app", pathname: "/**" },
+      /** Official live CDN (avatars + community media) — required for next/image */
+      { protocol: "https", hostname: "cdn.web3-ttg.com", pathname: "/**" },
     ],
   },
   async headers() {

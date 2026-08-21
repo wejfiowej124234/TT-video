@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   COMMUNITY_FEED_LIST_API_MAX,
   getUserPosts,
+  getMyPosts,
   getConversations,
   getMeFollowing,
   postUserFollow,
@@ -68,13 +69,21 @@ export function useCommunityUserRemoteLists(options: {
       setLoading(false);
       return;
     }
+    if (authLoading) {
+      return;
+    }
     let cancelled = false;
     setLoading(true);
     setPostsLoadError(null);
-    getUserPosts(id, {
-      limit: COMMUNITY_FEED_LIST_API_MAX,
-      ...(isSelf ? { visibility: postsVisFilter } : {}),
-    })
+    const fetchPosts = isSelf
+      ? getMyPosts({
+          limit: COMMUNITY_FEED_LIST_API_MAX,
+          visibility: postsVisFilter,
+        })
+      : getUserPosts(id, {
+          limit: COMMUNITY_FEED_LIST_API_MAX,
+        });
+    fetchPosts
       .then((data) => {
         if (cancelled) return;
         const list = data?.posts ?? [];
@@ -95,7 +104,7 @@ export function useCommunityUserRemoteLists(options: {
     return () => {
       cancelled = true;
     };
-  }, [id, postsRetryKey, postsVisFilter, t, isSelf]);
+  }, [id, postsRetryKey, postsVisFilter, t, isSelf, authLoading]);
 
   const convQ = useQuery({
     queryKey: COMMUNITY_CONVERSATIONS_LAYOUT_QUERY_KEY,

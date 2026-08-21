@@ -1,10 +1,9 @@
 /**
- * TTG Public Sale rounds · SSOT: TTG-TOKENOMICS-GENESIS-V2 + registry/ttg-vesting-registry.v1.yaml
- *
- * Genesis fixes Public Sale = 50% (5M) and round *roles*; per-round amounts are Registry
- * (initial 800k / 1.2M / 3M · mutable via governance · sum MUST remain 5M).
- *
- * GOV-04: per-wallet cap + min purchase. Seat stake is separate (no Country Shelf genesis bucket).
+ * TTG public-share long buckets (50% of 25T) · not the near-term unlock calendar.
+ * Homepage `/traveltrust` SSOT for dates, batch sizes, and prices:
+ * `ttgPublicUnlockScheduleLocal.ts` (five geometric batches; contracts follow later).
+ * These three cards stay as remaining public-allocation buckets (2T / 3T / 7.5T = 12.5T).
+ * Do not quote live PM overlay (1 USDC = 100,000 TTG) on the homepage.
  */
 
 import type { TraveltrustTtgRoundGovernanceStatus } from "./traveltrustAnnouncementLaneGovernance";
@@ -18,7 +17,7 @@ export type TraveltrustTtgPublicRound = {
   status: TraveltrustTtgPublicRoundStatus;
   /** 本轮 TTG 额度（枚） */
   allocationTtg: number;
-  /** GOV-04 单钱包上限（枚） */
+  /** GOV-04 单钱包上限（枚）；`0` = NONE */
   perWalletCapTtg: number;
   /** 用户向发放说明 locale key（非锁仓） */
   distributionKey: string;
@@ -31,14 +30,14 @@ export type TraveltrustTtgPublicRound = {
   requiresGovernanceApproval?: boolean;
 };
 
-/** Registry initial split · Genesis V2 Public Sale 50% · sum = 5_000_000 */
+/** Official V8 Public Sale 50% of 25T · sum = 12_500_000_000_000 */
 export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
   {
     id: "public_round_1",
     roundNumber: 1,
     status: "upcoming",
-    allocationTtg: 800_000,
-    perWalletCapTtg: 25_000,
+    allocationTtg: 2_000_000_000_000,
+    perWalletCapTtg: 0,
     distributionKey: "traveltrust_ttg_round_distribution_r1",
     titleKey: "traveltrust_ttg_round_1_title",
     paramsHref: "/governance/params",
@@ -49,8 +48,8 @@ export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
     id: "public_round_2",
     roundNumber: 2,
     status: "governance_approval_required",
-    allocationTtg: 1_200_000,
-    perWalletCapTtg: 25_000,
+    allocationTtg: 3_000_000_000_000,
+    perWalletCapTtg: 0,
     distributionKey: "traveltrust_ttg_round_distribution_governance_gated",
     titleKey: "traveltrust_ttg_round_2_title",
     paramsHref: "/governance/params",
@@ -62,8 +61,8 @@ export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
     id: "public_round_3",
     roundNumber: 3,
     status: "governance_approval_required",
-    allocationTtg: 3_000_000,
-    perWalletCapTtg: 25_000,
+    allocationTtg: 7_500_000_000_000,
+    perWalletCapTtg: 0,
     distributionKey: "traveltrust_ttg_round_distribution_governance_gated",
     titleKey: "traveltrust_ttg_round_3_title",
     paramsHref: "/governance/params",

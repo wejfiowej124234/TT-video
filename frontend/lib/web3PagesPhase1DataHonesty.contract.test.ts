@@ -18,7 +18,7 @@ describe("web3 + market phase 1 data honesty anchors (contract)", () => {
   });
 
   it("page shells expose favorites mode data-tt", () => {
-    expect(read("app/(home)/page.tsx")).toContain('data-tt-home-favorites-mode="localstorage-f020-sync-v1"');
+    expect(read("app/plan/page.tsx")).toContain('data-tt-home-favorites-mode="localstorage-f020-sync-v1"');
     expect(read("app/market/MarketPageClient.tsx")).toContain(
       'data-tt-market-favorites-mode="localstorage-f020-sync-v1"',
     );

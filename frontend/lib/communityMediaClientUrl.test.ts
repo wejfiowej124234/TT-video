@@ -41,24 +41,43 @@ describe("communityMediaAbsoluteUrlForRender", () => {
     globalThis.window = saved;
   });
 
-  it("keeps same-origin /api uploads in browser (Guide cover parity · ② staging web rewrite)", async () => {
+  it("remaps Official OCS legacy upload paths to Tigris public objects", async () => {
     vi.resetModules();
-    const { communityMediaAbsoluteUrlForRender } = await import("./communityMediaClientUrl");
-    const rel = "/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg";
-    expect(communityMediaAbsoluteUrlForRender(rel)).toBe(rel);
+    const { communityMediaAbsoluteUrlForRender, COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST } = await import(
+      "./communityMediaClientUrl"
+    );
+    const file = "ocs-dubai-luxury-community-cover.jpg";
+    const expected = `https://${COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST}/official-cold-start/v1/${file}`;
+    expect(communityMediaAbsoluteUrlForRender(`/api/v1/uploads/community-posts/${file}`)).toBe(expected);
     expect(
       communityMediaAbsoluteUrlForRender(
-        "https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/ocs-dubai-luxury-community-cover.jpg",
+        `https://tt-api-staging.fly.dev/api/v1/uploads/community-posts/${file}`,
       ),
-    ).toBe(rel);
+    ).toBe(expected);
+    expect(
+      communityMediaAbsoluteUrlForRender(
+        "https://www.web3-ttg.com/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      ),
+    ).toBe(
+      `https://${COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST}/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg`,
+    );
+    const userUpload = "/api/v1/uploads/community-posts/55a9b570-e5f2-42a2-9337-8b6f00e9d9b2.png";
+    expect(communityMediaAbsoluteUrlForRender(userUpload)).toBe(userUpload);
   });
 
-  it("normalizes double-slash API/auth paths for browser rewrite", async () => {
+  it("remaps Official OCS legacy upload paths to Tigris (Network must not hit /uploads/…/ocs-*)", async () => {
     vi.resetModules();
-    const { communityMediaAbsoluteUrlForRender } = await import("./communityMediaClientUrl");
-    const doubled = "//api/v1/uploads/community-posts/x.mp4";
-    expect(communityMediaAbsoluteUrlForRender(doubled)).toBe("/api/v1/uploads/community-posts/x.mp4");
-    expect(communityMediaAbsoluteUrlForRender("//auth/session")).toBe("/auth/session");
+    const {
+      communityMediaAbsoluteUrlForRender,
+      normalizeDurableCommunityMediaUrl,
+      COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST,
+    } = await import("./communityMediaClientUrl");
+    const legacy =
+      "https://www.web3-ttg.com/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg";
+    const expected = `https://${COMMUNITY_MEDIA_TIGRIS_PUBLIC_HOST}/official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg`;
+    expect(normalizeDurableCommunityMediaUrl(legacy)).toBe(expected);
+    expect(communityMediaAbsoluteUrlForRender(legacy)).toBe(expected);
+    expect(normalizeDurableCommunityMediaUrl(legacy)).not.toContain("/api/v1/uploads/community-posts/ocs-");
   });
 
   it("resolves protocol-relative CDN URLs to absolute http(s)", async () => {

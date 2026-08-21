@@ -7,7 +7,6 @@
  * V1 只读：`frontend/archive/ui-v1/`
  */
 
-import { isListingDocDarkL5HeaderPath } from "@/lib/traveltrustListingDisclosure";
 import {
   TT_MARKETING_DARK_ROUTE_PAGE_SHELL,
   TT_MARKETING_HEADER_BAR_COMMUNITY_PREMIUM,
@@ -67,20 +66,12 @@ export function isGovernanceDarkL5HeaderPath(pathname: string | null | undefined
   return p === "/governance" || p.startsWith("/governance/");
 }
 
-/** `/protocol` · 白皮书官方阅读占位（金黑 cinematic · 同源治理链顶栏） */
-/** `/brand` · `/assurance` · `/contact` · `/protocol` 送审占位阅读页同顶栏 */
-export function isProtocolPaperDarkL5HeaderPath(pathname: string | null | undefined): boolean {
-  const p = pathname ?? "";
-  return p === "/protocol" || p.startsWith("/protocol/");
-}
-
 /** `/orders*` · `/escrow*` · `/pay*` · `/itinerary*` · `/governance*` — 订单/治理主链 + 顶栏 cinematic 同族 */
 export function isOrderChainDarkL5HeaderPath(pathname: string | null | undefined): boolean {
   return (
     isOrdersDarkL5HeaderPath(pathname) ||
     isProductConsoleL5UtilityPath(pathname) ||
-    isGovernanceDarkL5HeaderPath(pathname) ||
-    isListingDocDarkL5HeaderPath(pathname)
+    isGovernanceDarkL5HeaderPath(pathname)
   );
 }
 
@@ -147,7 +138,7 @@ export function isHeaderUtilityL5Path(pathname: string | null | undefined): bool
   if (isAuthL5DarkHeaderPath(p)) return true;
   if (isCommunityPremiumHeaderPath(p)) return true;
   if (isMarketDarkPremiumHeaderPath(p)) return true;
-  if (p === "/" || p.startsWith("/traveltrust")) return true;
+  if (p === "/" || p === "/plan" || p.startsWith("/traveltrust")) return true;
   if (isOrderChainDarkL5HeaderPath(p)) return true;
   const kind = headerSurfaceKindForPathname(p);
   return kind === "home" || kind === "dark";
@@ -179,7 +170,7 @@ export function resolveUiZone(pathname: string | null | undefined): UiZone {
   const p = pathname ?? "";
   if (p.startsWith(ADMIN_PREFIX)) return "admin";
   if (MARKET_DARK_PREFIXES.some((pre) => p === pre || p.startsWith(`${pre}/`))) return "marketDark";
-  if (p === "/" || p.startsWith("/traveltrust")) return "experience";
+  if (p === "/" || p === "/plan" || p.startsWith("/traveltrust")) return "experience";
   return "console";
 }
 
@@ -208,7 +199,7 @@ export type HeaderSurfaceKind = "home" | "dark" | "light";
 export function headerSurfaceKindForPathname(pathname: string | null | undefined): HeaderSurfaceKind {
   const p = pathname ?? "";
   if (isAdminHeaderPath(p)) return "dark";
-  if (p === "/") return "home";
+  if (p === "/" || p === "/plan") return "home";
   if (isOrderChainDarkL5HeaderPath(p)) return "home";
   if (isAuthL5DarkHeaderPath(p)) return "dark";
   const zone = resolveUiZone(p);
@@ -224,7 +215,7 @@ export function headerBarClassForPathname(pathname: string | null | undefined): 
   if (isOrderChainDarkL5HeaderPath(p)) {
     return TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC;
   }
-  if (p.startsWith("/traveltrust")) {
+  if (p === "/" || p.startsWith("/traveltrust")) {
     return TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC;
   }
   if (isAuthL5DarkHeaderPath(p)) {
@@ -264,12 +255,19 @@ export function headerMobileNavRailClassForPathname(pathname: string | null | un
 /** L0 四链：当前项是否激活（与 Header href 一一对应） */
 export function headerNavItemIsActive(pathname: string | null | undefined, href: string): boolean {
   const p = pathname ?? "";
-  /** Web3旅行 → `/` 风景入口；`/traveltrust` 网络首页不点亮四链（品牌字标单独链） */
-  if (href === "/") return p === "/";
+  /** 定制旅行 → AI 行程规划 `/plan`（地球仪首页 `/` 由品牌字标承担） */
+  if (href === "/plan") return p === "/plan" || p.startsWith("/plan/");
+  if (href === "/") return false;
   if (href === "/market") return p === "/market" || p.startsWith("/market/");
   if (href === "/did-rank") return p === "/did-rank" || p.startsWith("/did-rank/");
   if (href === "/community") return p === "/community" || p.startsWith("/community/");
   return false;
+}
+
+/** 品牌字标 TravelTrust：官网地球仪首页为当前目录 */
+export function headerBrandWordmarkIsActive(pathname: string | null | undefined): boolean {
+  const p = pathname ?? "";
+  return p === "/" || p.startsWith("/traveltrust");
 }
 
 /** L0 四链 class：仅「浅 Console / 深顶栏」两套；激活态由 `active` 决定，不随当前页换色板 */
@@ -284,9 +282,13 @@ export function headerNavLinkClasses(pathname: string | null | undefined, active
 /** L0 品牌字标（不用四链 inactive 胶囊） */
 export function headerBrandWordmarkClasses(pathname: string | null | undefined): string {
   const kind = headerSurfaceKindForPathname(pathname);
-  if (kind === "home") return TT_MARKETING_HEADER_BRAND_HOME;
-  if (kind === "light") return TT_MARKETING_HEADER_BRAND_LIGHT;
-  return TT_MARKETING_HEADER_BRAND_DARK;
+  const base =
+    kind === "home"
+      ? TT_MARKETING_HEADER_BRAND_HOME
+      : kind === "light"
+        ? TT_MARKETING_HEADER_BRAND_LIGHT
+        : TT_MARKETING_HEADER_BRAND_DARK;
+  return headerBrandWordmarkIsActive(pathname) ? `${base} !text-ref-sun` : base;
 }
 
 /** L0 登录文字链 */
@@ -331,9 +333,9 @@ export function headerRegisterPillClasses(pathname: string | null | undefined): 
     : TT_MARKETING_REGISTER_PILL_WARM;
 }
 
-/** 品牌字标：首页回 `/`，其余默认网络页 */
-export function resolveHeaderBrandHref(pathname: string | null | undefined): string {
-  return pathname === "/" ? "/" : "/traveltrust";
+/** 品牌字标：官网根路径即为地球仪网络首页 */
+export function resolveHeaderBrandHref(_pathname: string | null | undefined): string {
+  return "/";
 }
 
 export function resolveHeaderBrandLabel(

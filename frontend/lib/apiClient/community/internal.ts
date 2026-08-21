@@ -1,6 +1,7 @@
 import {
   getAuthHeaders,
   requestId,
+  writeRequestHeaders,
   logApiJsonStatusNotOk,
   parseResponse,
   throwUnlessApiOk,
@@ -24,6 +25,17 @@ export const defaultHeaders = (): Record<string, string> => ({
   "Content-Type": "application/json",
   ...getAuthHeaders(),
 });
+
+/**
+ * 社区写路径（POST/PUT/PATCH/DELETE）：`Content-Type` + 鉴权 + Idempotency-Key。
+ * Official / `REQUIRE_IDEMPOTENCY_KEY=1` 缺头 → 400 `missing_idempotency_key`。
+ */
+export function communityWriteHeaders(idempotencyKey?: string): Record<string, string> {
+  return {
+    "Content-Type": "application/json",
+    ...writeRequestHeaders(idempotencyKey),
+  };
+}
 
 /** 社区 GET：408/429/502/503/504 与网络 flake 退避重试（② staging P1）。 */
 export async function communityFetchGet(url: string, init?: RequestInit): Promise<Response> {

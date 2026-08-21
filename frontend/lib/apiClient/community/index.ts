@@ -74,6 +74,9 @@ export {
   postLike,
   deleteLike,
   postComment,
+  deleteComment,
+  communityCommentIdempotencyKey,
+  COMMUNITY_COMMENT_OPTIMISTIC_DELETE_FORBIDDEN,
   buildCommunityPostCommentsQueryString,
   getPostComments,
 } from "./comments";

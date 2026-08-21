@@ -13,7 +13,7 @@ test.describe("E2E-A-01 cold start campaign consumer surfaces", () => {
   });
 
   test("home hides probe cold-start or shows consumer cards; value preview when idle", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/plan");
     const consumerPanel = page.locator('[data-tt-cold-start-consumer="1"]');
     const count = await consumerPanel.count();
     if (count > 0) {

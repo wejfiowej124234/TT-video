@@ -1,22 +1,22 @@
 {
   "schema": "traveltrust.role_promo_video_manifest.v1",
-  "recorded_utc": "2026-07-23T23:32:33.035Z",
+  "recorded_utc": "2026-08-15T19:04:32.000Z",
   "ssot_registry": "registry/traveltrust-role-promo-media-assets.v1.yaml",
   "machine_key": "TT_ROLE_PROMO_MEDIA_ASSETS",
   "storage": "git_lfs",
   "dest_dir": "frontend/public/media/traveltrust/roles/",
-  "optional_ingest_drop_zone": "首页角色宣传片/",
+  "optional_ingest_drop_zone": "\u9996\u9875\u89d2\u8272\u5ba3\u4f20\u7247/",
   "replace_howto": "git lfs track + replace MP4s, or --ingest from drop zone, then refresh registry sha256 and re-verify",
   "equals_staging_bake": true,
-  "note": "Canonical bake SSOT via Git LFS + registry. Drop zone optional. region_steward not in batch.",
+  "note": "Canonical bake SSOT via Git LFS + registry. Drop zone optional. region_steward included in Owner promo batch.",
   "entries": [
     {
       "role": "traveler",
       "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/traveler.mp4",
-      "bytes": 52372947,
-      "sha256": "17fbb964e6bfdea792c3e5a3666433fe1c0d2ce448a7ed54cc2c3b77f7306226",
-      "status": "INGESTED",
+      "bytes": 53120809,
+      "sha256": "bc894e1fde39c1d73f687e5e57ff5398bbb83ab879e1ac2d70b3aef6d73c310a",
+      "status": "FASTSTART_REMUX",
       "aliases": [],
       "poster": "frontend/public/media/traveltrust/roles/traveler.poster.jpg"
     },
@@ -24,9 +24,9 @@
       "role": "guide",
       "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/guide.mp4",
-      "bytes": 57239266,
-      "sha256": "70a32f076e3551c606d2d6fca016a8f40d3e50e2cdd5f3463f55d388609215ac",
-      "status": "INGESTED",
+      "bytes": 56740572,
+      "sha256": "2a4706d3d235fc65afdd75ae859ab8d542ce466d50a90d2512cb04942a70a0af",
+      "status": "FASTSTART_REMUX",
       "aliases": [],
       "poster": "frontend/public/media/traveltrust/roles/guide.poster.jpg"
     },
@@ -34,9 +34,9 @@
       "role": "merchant",
       "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/merchant.mp4",
-      "bytes": 69728477,
-      "sha256": "e60a5d52797e95c2158f7adb3c9ee3ab08ca2050b4e4745b710c0a60122f1546",
-      "status": "INGESTED",
+      "bytes": 70281841,
+      "sha256": "eb01e846feec32c4ad9b45929cb2594a6cf136f62692f6a768175108d1871605",
+      "status": "FASTSTART_REMUX",
       "aliases": [
         "provider.mp4"
       ],
@@ -46,9 +46,9 @@
       "role": "provider",
       "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/provider.mp4",
-      "bytes": 69728477,
-      "sha256": "e60a5d52797e95c2158f7adb3c9ee3ab08ca2050b4e4745b710c0a60122f1546",
-      "status": "INGESTED",
+      "bytes": 70281841,
+      "sha256": "eb01e846feec32c4ad9b45929cb2594a6cf136f62692f6a768175108d1871605",
+      "status": "FASTSTART_REMUX",
       "aliases": [],
       "poster": "frontend/public/media/traveltrust/roles/provider.poster.jpg"
     },
@@ -56,11 +56,21 @@
       "role": "acquisition",
       "source": "drop_zone_ingest",
       "dest": "frontend/public/media/traveltrust/roles/acquisition.mp4",
-      "bytes": 51002616,
-      "sha256": "e3155395c85b87e61ae7ee7d86b41e104675c4a20694a765c142db3c991f5706",
-      "status": "INGESTED",
+      "bytes": 75418479,
+      "sha256": "7814e0fce4d8eaa41e4c8d1448fe0af0fcca2cc32915364c969b83abb2a46bc8",
+      "status": "FASTSTART_REMUX",
       "aliases": [],
       "poster": "frontend/public/media/traveltrust/roles/acquisition.poster.jpg"
+    },
+    {
+      "role": "region_steward",
+      "source": "drop_zone_ingest",
+      "dest": "frontend/public/media/traveltrust/roles/region_steward.mp4",
+      "bytes": 82695358,
+      "sha256": "b89e81ece67678179cc80285c5304daae1c9567e88d59b06ac32007665959955",
+      "status": "FASTSTART_REMUX",
+      "aliases": [],
+      "poster": "frontend/public/media/traveltrust/roles/region_steward.poster.jpg"
     }
   ]
 }

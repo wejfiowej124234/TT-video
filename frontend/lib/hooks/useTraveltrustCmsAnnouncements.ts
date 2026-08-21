@@ -13,6 +13,7 @@ import {
   listTraveltrustAnnouncementsByLane,
   listTraveltrustPulseProductAnnouncements,
 } from "@/lib/traveltrustNetworkAnnouncements";
+import { withStaticAnnouncementCmsCopy } from "@/lib/traveltrustStaticAnnouncementCmsCopy";
 
 export type TraveltrustAnnouncementsSource = "cms" | "static" | "hybrid";
 
@@ -37,7 +38,12 @@ export function useTraveltrustCmsAnnouncements(lane?: TravelTrustAnnouncementLan
 }
 
 export function useTraveltrustPulseAnnouncements() {
-  const staticPulse = useMemo(() => listTraveltrustPulseProductAnnouncements(), []);
+  // Official www Pulse chips use CMS summary copy; when CMS is empty, static CMS
+  // fallback must be on the first paint (not only after fetch), or SSR shows i18n keys.
+  const staticPulse = useMemo(
+    () => withStaticAnnouncementCmsCopy(listTraveltrustPulseProductAnnouncements()),
+    [],
+  );
   const [items, setItems] = useState<TravelTrustAnnouncementDisplay[]>(staticPulse);
   const [source, setSource] = useState<TraveltrustAnnouncementsSource>("static");
 
@@ -49,7 +55,7 @@ export function useTraveltrustPulseAnnouncements() {
         setItems(mergeTraveltrustPulseAnnouncements(staticPulse, cms));
         setSource("cms");
       } else {
-        setItems(staticPulse);
+        setItems(mergeTraveltrustPulseAnnouncements(staticPulse, []));
         setSource("static");
       }
     });
@@ -98,12 +104,14 @@ export function useTraveltrustAnnouncementsPageData() {
   };
 }
 
-export type AnnouncementLaneFilter = "all" | TravelTrustAnnouncementLane;
+export type AnnouncementLaneFilter = "all" | "campaign" | TravelTrustAnnouncementLane;
 
 export function filterAnnouncementsByChip(
   items: TravelTrustAnnouncementDisplay[],
   chip: AnnouncementLaneFilter,
 ): TravelTrustAnnouncementDisplay[] {
   if (chip === "all") return items;
+  if (chip === "campaign") return items.filter((i) => i.kind === "campaign");
+  if (chip === "product") return items.filter((i) => i.lane === "product" && i.kind !== "campaign");
   return items.filter((i) => i.lane === chip);
 }

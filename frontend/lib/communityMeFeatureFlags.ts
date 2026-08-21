@@ -31,15 +31,15 @@ export function isCommunityMeLikesListEnabled(): boolean {
 }
 
 /**
- * 头像本地上传 / data URL（编辑资料内；仍走 `PUT /api/v1/me` 的 `avatar_url`）。
- * - **production** 且未设置 env → `false`
- * - 非 production 且未设置 → `true`（本地默认可传）
+ * 头像上传入口（设置资料 / 个人中心；本机 Base64 或对象存储 presign）。
+ * - 未设置 env → **默认开启**（含 production；API 仍闸本机/presign）
  * - 显式 `0`/`false`/… → `false`
+ * - 显式 `1`/`true`/… → `true`
  */
 export function isCommunityMeAvatarUploadEnabled(): boolean {
   const explicit = parseTruthyEnv(process.env.NEXT_PUBLIC_COMMUNITY_ME_AVATAR_UPLOAD);
   if (explicit !== null) return explicit;
-  return process.env.NODE_ENV !== "production";
+  return true;
 }
 
 /**

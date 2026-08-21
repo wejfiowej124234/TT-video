@@ -6,7 +6,8 @@ import { PRODUCT_COUNTRIES } from "@/lib/productCountries";
 export type FeedTab = "recommend" | "following";
 export type SortBy = "latest" | "hot";
 
-export const TYPE_OPTIONS: CommunityPostType[] = ["photo", "video", "food", "travel", "text"];
+/** Feed type chips · 照片 / 视频 only（好吃/好住 在发现主行，不进本排）. */
+export const TYPE_OPTIONS: CommunityPostType[] = ["photo", "video"];
 
 /**
  * Feed 目的地 · 产品十国精选城（每国 ≤4 · 与 productCountries / preset_cities 同源）
@@ -124,6 +125,12 @@ export type RegionKey = (typeof REGION_KEYS)[number];
 export const FEED_PAGE_SIZE = 6;
 /** 乐观评论 id 前缀（`useCommunityFeedCommentSend` · `communityFeedMappersCounts` 同源） */
 export const COMMUNITY_COMMENT_OPTIMISTIC_ID_PREFIX = "comment-local-";
+
+/** 乐观临时评论 id：禁止对 Official DELETE；须等 POST 返回真实 UUID 后再删。 */
+export function isCommunityOptimisticCommentId(id: string | null | undefined): boolean {
+  return typeof id === "string" && id.startsWith(COMMUNITY_COMMENT_OPTIMISTIC_ID_PREFIX);
+}
+
 /** @deprecated Local demo only — do not use in production surfaces; use governed API media URLs. */
 export const TRAVEL_IMG = "";
 

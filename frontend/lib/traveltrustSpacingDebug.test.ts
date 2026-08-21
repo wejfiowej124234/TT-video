@@ -12,10 +12,10 @@ describe("traveltrustSpacingDebug", () => {
     vi.unstubAllEnvs();
   });
 
-  it("exposes query key and section labels for theater→liquidity", () => {
+  it("exposes query key and section labels for hero→trust", () => {
     expect(TT_SPACING_DEBUG_QUERY).toBe("tt_spacing");
     expect(TT_SPACING_DEBUG_SECTION_LABELS.theater).toBe("旅行角色");
-    expect(TT_SPACING_DEBUG_GAP_TARGETS_PX["theater→liquidity"]).toBeGreaterThanOrEqual(64);
+    expect(TT_SPACING_DEBUG_GAP_TARGETS_PX["hero→trust"]).toBeGreaterThanOrEqual(48);
   });
 
   it("does not mount spacing debug on dev host alone (PER-R1-CI-09)", () => {

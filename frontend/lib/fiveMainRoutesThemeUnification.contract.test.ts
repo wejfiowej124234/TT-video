@@ -14,6 +14,7 @@ function read(rel: string) {
 
 const FIVE_MAIN_MARKETING_PATHS = [
   "app/(home)/page.tsx",
+  "app/plan/page.tsx",
   "components/landing/LandingHeroForm.tsx",
   "modules/traveltrust-home/presentation/TravelTrustHomeMainColumn.tsx",
   "app/market/page.tsx",

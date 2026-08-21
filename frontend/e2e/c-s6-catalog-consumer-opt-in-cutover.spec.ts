@@ -27,7 +27,7 @@ test.describe("C-S6 catalog consumer opt-in (ENABLED=1 staging)", () => {
   });
 
   test("landing hero geo pills functional with catalog opt-in", async ({ page }) => {
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     const form = page.locator("#landing-hero-form");
     await expect(form).toBeVisible({ timeout: 20_000 });
     const chinaPill = form.getByRole("button", { name: "中国" });

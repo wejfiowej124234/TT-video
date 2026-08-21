@@ -143,7 +143,7 @@ export function TravelTrustBelowFoldSections({ onTheaterViewportChange }: Props)
       </TravelTrustSnapChapter>
       <TravelTrustSectionFilmDivider />
       <TravelTrustSnapChapter chapterId="close" align="start">
-        <div className={TT_SNAP_CHAPTER_GROUP_L5.innerStackClass}>
+        <div className={TT_SNAP_CHAPTER_GROUP_L5.innerStackClass} id="start">
           <TravelTrustNetworkFooter grouped />
         </div>
       </TravelTrustSnapChapter>

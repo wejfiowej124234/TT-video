@@ -64,30 +64,30 @@ export type AdminEnterpriseHubSurface = "content" | "official" | "growth" | "ord
 
 export type AdminEnterpriseTipHonestyKind = "product_fe" | "product_api" | "mixed_declared";
 
-/** R049 · lifecycle badge contrast (sitewide; not finance-only REAL/PARTIAL). */
+/** R049 · lifecycle badge contrast (dark Admin shell · not cream/ink-50). */
 export const ADMIN_ENTERPRISE_LIFECYCLE_TONE_CLASS: Record<AdminEnterpriseLifecycleTone, string> = {
   ACTIVE:
-    "inline-flex items-center rounded-md border border-success-600/40 bg-success-50 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-success-800",
+    "inline-flex items-center rounded-md border border-emerald-400/40 bg-emerald-950/55 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-emerald-100",
   PARTIAL:
-    "inline-flex items-center rounded-md border border-warning-600/45 bg-warning-50 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-warning-900",
+    "inline-flex items-center rounded-md border border-amber-400/45 bg-amber-950/60 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-amber-50",
   DISABLED:
-    "inline-flex items-center rounded-md border border-ink-400 bg-ink-100 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-ink-800",
+    "inline-flex items-center rounded-md border border-slate-500/50 bg-slate-900/80 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-slate-200",
   TARGET:
-    "inline-flex items-center rounded-md border border-ink-500 bg-ink-50 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-ink-700",
+    "inline-flex items-center rounded-md border border-sky-500/40 bg-sky-950/45 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-sky-100",
   HISTORICAL:
-    "inline-flex items-center rounded-md border border-ink-300 bg-ink-50 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-ink-600",
+    "inline-flex items-center rounded-md border border-slate-500/40 bg-slate-950/70 px-2 py-0.5 text-[11px] font-semibold tracking-wide text-slate-300",
 };
 
-/** R051 · hub data-source strip tone classes. */
+/** R051 · hub data-source strip tone classes (dark shell · light text). */
 export const ADMIN_ENTERPRISE_HUB_DATA_SOURCE_TONE_CLASS: Record<
   AdminEnterpriseDataSourceTone,
   string
 > = {
-  real_db: "border-success-600/35 bg-success-50/80 text-success-900",
-  memory: "border-warning-600/40 bg-warning-50/90 text-warning-950",
-  mixed: "border-ink-400 bg-ink-50 text-ink-900",
-  unavailable: "border-danger-500/35 bg-danger-50/80 text-danger-900",
-  declared: "border-ink-300 bg-ink-50 text-ink-800",
+  real_db: "border-emerald-400/35 bg-emerald-950/45 text-emerald-50",
+  memory: "border-amber-400/40 bg-amber-950/50 text-amber-50",
+  mixed: "border-white/15 bg-slate-950/70 text-slate-100",
+  unavailable: "border-red-400/40 bg-red-950/45 text-red-50",
+  declared: "border-white/18 bg-slate-950/75 text-slate-100",
 };
 
 /** Guide directory status options for honest select filter (R035). */
@@ -169,13 +169,13 @@ export function adminEnterpriseContentStatusContrastTone(
   return "neutral";
 }
 
-/** High-contrast status badge surfaces (R033 · extends R016). */
+/** High-contrast status badge surfaces (R033 · dark Admin shell). */
 export const ADMIN_ENTERPRISE_CONTENT_STATUS_CONTRAST_CLASS: Record<
   AdminEnterpriseContentStatusContrastTone,
   string
 > = {
-  published: "bg-emerald-100 text-emerald-950 ring-1 ring-inset ring-emerald-300",
-  in_flight: "bg-amber-100 text-amber-950 ring-1 ring-inset ring-amber-300",
-  archived: "bg-slate-200 text-slate-900 ring-1 ring-inset ring-slate-400",
-  neutral: "bg-ink-200 text-ink-900 ring-1 ring-inset ring-ink-400",
+  published: "bg-emerald-950/70 text-emerald-100 ring-1 ring-inset ring-emerald-400/45",
+  in_flight: "bg-amber-950/70 text-amber-50 ring-1 ring-inset ring-amber-400/45",
+  archived: "bg-slate-800 text-slate-100 ring-1 ring-inset ring-slate-500/50",
+  neutral: "bg-slate-900/80 text-slate-200 ring-1 ring-inset ring-white/20",
 };

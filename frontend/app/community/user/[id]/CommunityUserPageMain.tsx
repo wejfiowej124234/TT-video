@@ -106,6 +106,7 @@ export function CommunityUserPageMain({ core }: { core: CommunityUserPageCore })
         likedIds={likedIds}
         collectedIds={collectedIds}
         isSelf={isSelf}
+        postsVisFilter={postsVisFilter}
         onPostLike={handlePostLike}
         onPostCollect={handlePostCollect}
         onCommentOpen={onCommentOpen}

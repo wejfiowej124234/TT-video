@@ -11,7 +11,6 @@ import {
 } from "@/lib/communityFeedSortUrl";
 import type { CommunityPost, CommunityPostType } from "@/lib/communityMockData";
 import { CommunityFeedMobileHotStrip } from "@/components/community/CommunityFeedMobileHotStrip";
-import { communityFeedPromoDestinationHref } from "@/components/community/communityFeedPromoMedia";
 import {
   COMMUNITY_FEED_ANCHOR_POIS,
   communityFeedAnchorPoiLabel,
@@ -21,15 +20,16 @@ import type { CommunityFeedProximityFilter } from "@/components/community/commun
 import {
   applyCommunityDiscoveryFoodFilter,
   applyCommunityDiscoveryFunFilter,
+  applyCommunityDiscoveryStayFilter,
   applyCommunityDiscoveryProximityFilter,
   applyCommunityDiscoveryStreamTab,
   communityDiscoverySecondaryFiltersActive,
   isCommunityDiscoveryFunTopicActive,
+  isCommunityDiscoveryStayTopicActive,
 } from "@/components/community/communityFeedDiscoveryQuickFilters";
 import type { FeedTab, SortBy, RegionKey } from "./communityFeedConstants";
 import {
   TYPE_OPTIONS,
-  FEED_DESTINATION_CITY_OPTIONS,
   communityFeedDestinationLabel,
 } from "./communityFeedConstants";
 import { CommunityFeedDestinationPicker } from "@/components/community/CommunityFeedDestinationPicker";
@@ -94,14 +94,6 @@ function discoveryFilterChipClass(active: boolean): string {
     active
       ? `${TT_COMMUNITY_FEED_ACTION.filterChipActive} ${TT_COMMUNITY_FEED_L5.discoveryChipActivePop}`
       : TT_COMMUNITY_FEED_ACTION.filterChipIdle
-  }`;
-}
-
-function discoveryQuickDestChipClass(active: boolean): string {
-  return `${TT_COMMUNITY_FEED_ACTION.discoveryQuickDestChip} ${TT_COMMUNITY_FEED_L5.discoveryChipMotion} ${communityCardLinkFocus} ${
-    active
-      ? `${TT_COMMUNITY_FEED_ACTION.discoveryQuickDestChipActive} ${TT_COMMUNITY_FEED_L5.discoveryChipActivePop}`
-      : ""
   }`;
 }
 
@@ -173,11 +165,6 @@ export function CommunityFeedDiscoveryChrome({
     : undefined;
   const streamTab = feedStreamTabFromState(feedTab, sortBy, destinationFilter);
 
-  const feedHotDestinations = useMemo(() => {
-    const citySet = new Set(FEED_DESTINATION_CITY_OPTIONS);
-    return hotDestinations.filter((d) => citySet.has(d)).slice(0, 3);
-  }, [hotDestinations]);
-
   const hasStreamContext = feedTab === "following" || sortBy === "hot";
   const hasActiveFilters =
     hasStreamContext ||
@@ -214,8 +201,8 @@ export function CommunityFeedDiscoveryChrome({
   };
 
   const isNearbyFeed = proximityFilter === "nearby";
-  const isNearby1kmFeed = proximityFilter === "nearby_1km";
   const isFunTopicFeed = isCommunityDiscoveryFunTopicActive(tagFilter);
+  const isStayTopicFeed = isCommunityDiscoveryStayTopicActive(tagFilter);
   const isRecommendNearbyMode =
     feedTab === "recommend" && sortBy === "latest" && proximityFilter !== "none";
 
@@ -399,10 +386,12 @@ export function CommunityFeedDiscoveryChrome({
           onChange={(next) => {
             setDestinationFilter(next);
             if (next === "all") setRegionFilter("all");
+            else setProximityFilter("none");
           }}
           onCitySelect={() => {
             setFeedTab("recommend");
             setRegionFilter("all");
+            setProximityFilter("none");
           }}
           className="hidden md:block"
         />
@@ -426,11 +415,11 @@ export function CommunityFeedDiscoveryChrome({
             className="contents"
             onSubmit={(e: FormEvent<HTMLFormElement>) => {
               e.preventDefault();
-              applyCommunityDiscoveryProximityFilter(discoveryReset, "nearby_1km");
+              applyCommunityDiscoveryFunFilter(discoveryReset);
             }}
           >
-            <button type="submit" className={discoveryFilterChipClass(isNearby1kmFeed)}>
-              {t("community_discovery_nearby_1km")}
+            <button type="submit" className={discoveryFilterChipClass(isFunTopicFeed)}>
+              {t("community_discovery_fun_chip")}
             </button>
           </form>
           <form
@@ -448,22 +437,13 @@ export function CommunityFeedDiscoveryChrome({
             className="contents"
             onSubmit={(e: FormEvent<HTMLFormElement>) => {
               e.preventDefault();
-              applyCommunityDiscoveryFunFilter(discoveryReset);
+              applyCommunityDiscoveryStayFilter(discoveryReset);
             }}
           >
-            <button type="submit" className={discoveryFilterChipClass(isFunTopicFeed)}>
-              {t("community_discovery_fun_chip")}
+            <button type="submit" className={discoveryFilterChipClass(isStayTopicFeed)}>
+              {t("community_discovery_stay_chip")}
             </button>
           </form>
-          {feedHotDestinations.map((d) => (
-            <Link
-              key={`hot-${d}`}
-              href={communityFeedPromoDestinationHref(d)}
-              className={`hidden md:inline-flex ${discoveryQuickDestChipClass(destinationFilter === d)}`}
-            >
-              {communityFeedDestinationLabel(t, d)}
-            </Link>
-          ))}
         </div>
         </div>
           <form
@@ -551,10 +531,12 @@ export function CommunityFeedDiscoveryChrome({
           onChange={(next) => {
             setDestinationFilter(next);
             if (next === "all") setRegionFilter("all");
+            else setProximityFilter("none");
           }}
           onCitySelect={() => {
             setFeedTab("recommend");
             setRegionFilter("all");
+            setProximityFilter("none");
           }}
           className="md:hidden block max-w-full w-full"
           showLabel

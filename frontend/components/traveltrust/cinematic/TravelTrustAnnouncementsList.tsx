@@ -5,12 +5,8 @@ import { useEffect, useRef } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import {
   formatTraveltrustAnnouncementListDate,
-  isTraveltrustPulseDeployAnnouncement,
   resolveTraveltrustAnnouncementRowCtaLabelKey,
-  traveltrustAnnouncementListLabelKey,
   traveltrustContentTierLabelKey,
-  type TravelTrustAnnouncement,
-  type TravelTrustAnnouncementKind,
   type TravelTrustContentTier,
 } from "@/lib/traveltrustNetworkAnnouncements";
 import { traveltrustAnnouncementLaneLabelKey } from "@/lib/traveltrustAnnouncementCatalog";
@@ -22,16 +18,9 @@ import {
 import {
   TT_ANNOUNCEMENTS_LIST_L5,
   TT_ANNOUNCEMENTS_MOTION_L5,
-  TT_PULSE_KIND_L5,
   TT_PULSE_UPDATES_PANEL_L5,
   TT_ROADMAP_L5,
 } from "@/lib/traveltrust/l5";
-
-const KIND_STYLE = TT_PULSE_KIND_L5;
-
-function pulseKindStyleClass(kind: TravelTrustAnnouncementKind): string {
-  return KIND_STYLE[kind];
-}
 
 function tierBadgeClass(tier: TravelTrustContentTier): string {
   switch (tier) {
@@ -49,36 +38,21 @@ function AnnouncementRow({
   highlight,
   onViewDetail,
   index,
-  showListDates,
-  showKindBadge,
 }: {
   item: TravelTrustAnnouncementDisplay;
   highlight?: boolean;
   onViewDetail: (item: TravelTrustAnnouncementDisplay) => void;
   index: number;
-  showListDates: boolean;
-  showKindBadge: boolean;
 }) {
   const { t, locale } = useTranslation();
   const reduceMotion = useReducedMotion();
-  const deployPulse = isTraveltrustPulseDeployAnnouncement(item.id);
-  const kindLabel = t(`traveltrust_pulse_kind_${item.kind}`);
   const isCms = Boolean(item.cmsCopy);
-  const chipLabel = isCms
-    ? t(traveltrustAnnouncementLaneLabelKey(item.lane))
-    : t(traveltrustAnnouncementListLabelKey(item));
-  const showKindChip = showKindBadge && !deployPulse && kindLabel !== chipLabel;
+  const chipLabel = t(traveltrustAnnouncementLaneLabelKey(item.lane));
   const headline = isCms ? traveltrustAnnouncementTitleText(item, locale) : null;
-  const bodyText = isCms
-    ? traveltrustAnnouncementListText(item, locale)
-    : t(item.messageKey);
+  const bodyText = isCms ? traveltrustAnnouncementListText(item, locale) : t(item.messageKey);
   const rowCtaLabel = t(resolveTraveltrustAnnouncementRowCtaLabelKey(item));
-  const formattedDate =
-    item.cmsCopy && item.contentTier === "upcoming" && item.releaseAt
-      ? formatTraveltrustAnnouncementListDate(item.releaseAt, locale ?? "en")
-      : showListDates && item.contentTier === "live" && item.effectiveAt
-        ? formatTraveltrustAnnouncementListDate(item.effectiveAt, locale ?? "en")
-        : null;
+  const dateIso = item.releaseAt ?? item.effectiveAt;
+  const formattedDate = formatTraveltrustAnnouncementListDate(dateIso, locale ?? "en");
   const rowStateClass = highlight ? TT_ANNOUNCEMENTS_LIST_L5.rowHighlightClass : TT_ANNOUNCEMENTS_LIST_L5.rowIdleClass;
 
   return (
@@ -87,6 +61,7 @@ function AnnouncementRow({
       className={`${TT_ANNOUNCEMENTS_LIST_L5.itemShellClass} scroll-mt-28`}
       data-tt-traveltrust-announcement-row={item.id}
       data-tt-traveltrust-announcement-lane={item.lane}
+      data-tt-traveltrust-announcement-kind={item.kind}
       initial={reduceMotion ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -102,23 +77,16 @@ function AnnouncementRow({
       >
         <div className={TT_ANNOUNCEMENTS_LIST_L5.tagRowClass}>
           <span className={TT_ANNOUNCEMENTS_LIST_L5.phaseChipClass}>{chipLabel}</span>
-          {showKindChip ? (
-            <span className={`${TT_PULSE_UPDATES_PANEL_L5.rowKindClass} ${pulseKindStyleClass(item.kind)}`}>{kindLabel}</span>
-          ) : null}
           <span className={`${TT_ROADMAP_L5.statusBadgeClass} ${tierBadgeClass(item.contentTier)}`}>
             {t(traveltrustContentTierLabelKey(item.contentTier))}
           </span>
         </div>
         {headline ? <p className={TT_ANNOUNCEMENTS_LIST_L5.rowTitleClass}>{headline}</p> : null}
-        {bodyText ? (
-          <p className={`${TT_PULSE_UPDATES_PANEL_L5.rowBodyClass}${headline ? " mt-1.5 text-slate-300/88" : ""}`}>
-            {bodyText}
-          </p>
-        ) : null}
+        {bodyText ? <p className={TT_ANNOUNCEMENTS_LIST_L5.rowBodyClass}>{bodyText}</p> : null}
         <div className={TT_PULSE_UPDATES_PANEL_L5.rowMetaClass}>
           <span className={TT_PULSE_UPDATES_PANEL_L5.rowDateClass}>
-            {formattedDate ? (
-              <time dateTime={item.releaseAt ?? item.effectiveAt} className={TT_ANNOUNCEMENTS_LIST_L5.dateChipClass}>
+            {formattedDate && dateIso ? (
+              <time dateTime={dateIso} className={TT_ANNOUNCEMENTS_LIST_L5.dateChipClass}>
                 {formattedDate}
               </time>
             ) : null}
@@ -144,17 +112,13 @@ type Props = {
   items: TravelTrustAnnouncementDisplay[];
   focusId?: string | null;
   onViewDetail: (item: TravelTrustAnnouncementDisplay) => void;
-  showListDates?: boolean;
-  showKindBadge?: boolean;
 };
 
-/** 公告列表（按 lane 分轨传入 items） */
+/** 公告列表 — 分栏共用同一行结构：标签 · 标题 · 摘要 · 日期 · 详情 */
 export function TravelTrustAnnouncementsList({
   items,
   focusId,
   onViewDetail,
-  showListDates = false,
-  showKindBadge = false,
 }: Props) {
   const scrolledRef = useRef(false);
 
@@ -186,8 +150,6 @@ export function TravelTrustAnnouncementsList({
           index={index}
           highlight={focusId === item.id}
           onViewDetail={onViewDetail}
-          showListDates={showListDates}
-          showKindBadge={showKindBadge}
         />
       ))}
     </motion.ul>

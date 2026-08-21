@@ -18,6 +18,8 @@ export const routesCommunity = {
     postById: (id: string) => `/api/v1/community/posts/${id}`,
     postLike: (postId: string) => `/api/v1/community/posts/${postId}/like`,
     postComments: (postId: string) => `/api/v1/community/posts/${postId}/comments`,
+    postCommentById: (postId: string, commentId: string) =>
+      `/api/v1/community/posts/${postId}/comments/${commentId}`,
     conversations: "/api/v1/community/conversations",
     /** 51-31-6：与对端幂等创建会话（须 Bearer） */
     conversationsEnsure: "/api/v1/community/conversations/ensure",

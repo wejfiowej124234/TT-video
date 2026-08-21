@@ -100,6 +100,98 @@ describe("adminHomeDomainHealth", () => {
     );
     expect(items.find((i) => i.id === "operations")?.countLabel).toContain("162");
   });
+
+  it("keeps content/official green from their own queues even when ops KPI source is unknown", () => {
+    const items = buildAdminHomeDomainHealth({
+      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, disputes: 0, reports: 0 },
+      channels,
+      kpi: { orders: 0, disputes: 0, guides: null },
+      inboxLoading: false,
+      kpiLoading: false,
+      kpiSource: null,
+      hasPermission: () => true,
+      permissionsLoaded: true,
+      t,
+      contentQueueCount: 0,
+      contentQueueLoading: false,
+      officialQueueCount: 0,
+      officialQueueLoading: false,
+    });
+    expect(items.find((i) => i.id === "content")?.tone).toBe("ok");
+    expect(items.find((i) => i.id === "official")?.tone).toBe("ok");
+    expect(items.find((i) => i.id === "onboarding")?.tone).toBe("ok");
+    expect(items.find((i) => i.id === "community")?.tone).toBe("ok");
+  });
+
+  it("greens community from extras snapshot 0 even when inbox reports are unknown", () => {
+    const items = buildAdminHomeDomainHealth({
+      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, disputes: 0, reports: null },
+      channels: {
+        ...channels,
+        reports: { count: null, permissionDenied: true, errorKind: null },
+      },
+      kpi: { orders: 0, disputes: 0, guides: null },
+      inboxLoading: false,
+      kpiLoading: false,
+      hasPermission: () => true,
+      permissionsLoaded: true,
+      t,
+      communityReportsCount: 0,
+      communityReportsLoading: false,
+    });
+    expect(items.find((i) => i.id === "community")?.tone).toBe("ok");
+  });
+
+  it("does not paint community green when inbox reports are higher than extras", () => {
+    const items = buildAdminHomeDomainHealth({
+      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, disputes: 0, reports: 3 },
+      channels,
+      kpi: { orders: 0, disputes: 0, guides: null },
+      inboxLoading: false,
+      kpiLoading: false,
+      hasPermission: () => true,
+      permissionsLoaded: true,
+      t,
+      communityReportsCount: 0,
+      communityReportsLoading: false,
+    });
+    expect(items.find((i) => i.id === "community")?.tone).toBe("attention");
+  });
+
+  it("greens content/governance from real empty queue and live cross-check without inventing ops green", () => {
+    const items = buildAdminHomeDomainHealth({
+      counts: { provider: 0, guide: 0, steward: 0, approvals: 0, disputes: 0, reports: 0 },
+      channels,
+      kpi: { orders: 43, disputes: 12, guides: null },
+      inboxLoading: false,
+      kpiLoading: false,
+      kpiSource: "postgres",
+      hasPermission: () => true,
+      permissionsLoaded: true,
+      t,
+      communityReportsCount: 0,
+      communityReportsLoading: false,
+      contentQueueCount: 0,
+      contentQueueLoading: false,
+      officialQueueCount: 0,
+      officialQueueLoading: false,
+      growthRegistrations: 0,
+      growthReferrals: 0,
+      growthFrozen: 0,
+      growthLoading: false,
+      treasurySource: "projection",
+      treasuryEventTotal: 0,
+      governanceLive: true,
+      governanceLoading: false,
+    });
+    expect(items.find((i) => i.id === "operations")?.tone).toBe("attention");
+    expect(items.find((i) => i.id === "community")?.tone).toBe("ok");
+    expect(items.find((i) => i.id === "content")?.tone).toBe("ok");
+    expect(items.find((i) => i.id === "official")?.tone).toBe("ok");
+    expect(items.find((i) => i.id === "growth")?.tone).toBe("ok");
+    expect(items.find((i) => i.id === "finance")?.tone).toBe("ok");
+    expect(items.find((i) => i.id === "governance")?.tone).toBe("ok");
+  });
 });
 
 describe("adminHomeKpiFoldDefaultOpen HU-441", () => {

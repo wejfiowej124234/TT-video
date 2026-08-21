@@ -9,6 +9,7 @@ import {
   postLike,
   deleteLike,
   postComment,
+  deleteComment,
   getPostComments,
 } from ".";
 import {
@@ -53,7 +54,7 @@ describe("postLike / deleteLike", () => {
   beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
   afterEach(() => vi.restoreAllMocks());
 
-  it("POSTs like", async () => {
+  it("POSTs like with Idempotency-Key", async () => {
     (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       status: 200,
@@ -62,11 +63,17 @@ describe("postLike / deleteLike", () => {
     expect(await postLike(pid)).toEqual({ status: "ok" });
     expect(globalThis.fetch).toHaveBeenCalledWith(
       apiUrl(routes.community.postLike(pid)),
-      expect.objectContaining({ method: "POST" })
+      expect.objectContaining({
+        method: "POST",
+        headers: expect.objectContaining({
+          "Idempotency-Key": expect.any(String),
+          "X-Idempotency-Key": expect.any(String),
+        }),
+      })
     );
   });
 
-  it("DELETEs like", async () => {
+  it("DELETEs like with Idempotency-Key", async () => {
     (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       status: 200,
@@ -75,7 +82,13 @@ describe("postLike / deleteLike", () => {
     expect(await deleteLike(pid)).toEqual({ status: "ok" });
     expect(globalThis.fetch).toHaveBeenCalledWith(
       apiUrl(routes.community.postLike(pid)),
-      expect.objectContaining({ method: "DELETE" })
+      expect.objectContaining({
+        method: "DELETE",
+        headers: expect.objectContaining({
+          "Idempotency-Key": expect.any(String),
+          "X-Idempotency-Key": expect.any(String),
+        }),
+      })
     );
   });
 });
@@ -84,7 +97,7 @@ describe("postComment", () => {
   beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
   afterEach(() => vi.restoreAllMocks());
 
-  it("POSTs body and optional parent_id", async () => {
+  it("POSTs body and optional parent_id with Idempotency-Key", async () => {
     (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       status: 200,
@@ -95,6 +108,10 @@ describe("postComment", () => {
       apiUrl(routes.community.postComments(pid)),
       expect.objectContaining({
         body: JSON.stringify({ body: "nice", parent_id: "parent-uuid" }),
+        headers: expect.objectContaining({
+          "Idempotency-Key": expect.any(String),
+          "X-Idempotency-Key": expect.any(String),
+        }),
       })
     );
   });
@@ -108,22 +125,81 @@ describe("postComment", () => {
     await postComment(pid, "root");
     const raw = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].body as string;
     expect(JSON.parse(raw)).toEqual({ body: "root", parent_id: null });
+    const headers = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].headers as Record<
+      string,
+      string
+    >;
+    expect(headers["Idempotency-Key"]).toBeTruthy();
+    expect(headers["X-Idempotency-Key"]).toBe(headers["Idempotency-Key"]);
+  });
+
+  it("reuses the same Idempotency-Key for identical post/body/parent", async () => {
+    const ok = {
+      ok: true,
+      status: 200,
+      json: async () => ({ status: "ok", id: "c1" }),
+    };
+    (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(ok).mockResolvedValueOnce(ok);
+    await postComment(pid, "same text", "p1");
+    await postComment(pid, "same text", "p1");
+    const h1 = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].headers as Record<
+      string,
+      string
+    >;
+    const h2 = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[1][1].headers as Record<
+      string,
+      string
+    >;
+    expect(h1["Idempotency-Key"]).toBe(h2["Idempotency-Key"]);
+    expect(h1["Idempotency-Key"]).toMatch(/^tt-cmt-/);
   });
 });
 
+
+describe("deleteComment", () => {
+  beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
+  afterEach(() => vi.restoreAllMocks());
+
+  it("DELETEs postCommentById with Idempotency-Key", async () => {
+    (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ status: "ok", deleted: true }),
+      json: async () => ({ status: "ok", deleted: true }),
+    });
+    await deleteComment(pid, "c1");
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      apiUrl(`${routes.community.postComments(pid)}/c1`),
+      expect.objectContaining({
+        method: "DELETE",
+        headers: expect.objectContaining({
+          "Idempotency-Key": expect.any(String),
+          "X-Idempotency-Key": expect.any(String),
+        }),
+      })
+    );
+  });
+});
 describe("getPostComments", () => {
   beforeEach(() => vi.stubGlobal("fetch", vi.fn()));
   afterEach(() => vi.restoreAllMocks());
 
-  it("omits sort query when chronological (default)", async () => {
+  it("defaults to sort=hot (engagement then chrono)", async () => {
     (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(
       mockTextResponse(true, { status: "ok", comments: [] })
     );
     await getPostComments(pid);
     expect(globalThis.fetch).toHaveBeenCalledWith(
-      apiUrl(routes.community.postComments(pid)),
+      expect.stringContaining(`${routes.community.postComments(pid)}?sort=hot`),
       expect.any(Object)
     );
+  });
+
+  it("omits sort query when chronological", async () => {
+    (globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce(
+      mockTextResponse(true, { status: "ok", comments: [] })
+    );
+    await getPostComments(pid, { sort: "chronological" });
     const url = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0][0] as string;
     expect(url).not.toContain("sort=");
   });

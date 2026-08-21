@@ -7,6 +7,7 @@ import type { CommunityPost } from "@/lib/communityMockData";
 import { TT_COMMUNITY_DRAWER_L5 } from "@/lib/marketingUi";
 import { communityPostTagDisplayLabel, communityPostTagsForDisplay } from "@/components/community/communityPostTagDisplay";
 import { communityCardLinkFocus, communityShellTabFocus } from "@/lib/communityA11yFocus";
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
 import { useCommunityTopicTagWarm } from "@/lib/useCommunityTopicTagWarm";
 import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
@@ -92,7 +93,14 @@ export function PostDetailAuthorRow({
       >
         <div className={TT_COMMUNITY_DRAWER_L5.postDetailAuthorAvatar}>
           {author?.avatar_url ? (
-            <Image src={author.avatar_url} alt="" fill className="object-cover" sizes="36px" unoptimized />
+            <Image
+              src={communityMediaAbsoluteUrlForRender(author.avatar_url)}
+              alt=""
+              fill
+              className="object-cover"
+              sizes="36px"
+              unoptimized
+            />
           ) : (
             <span aria-hidden>{(author?.nickname ?? "?").slice(0, 1)}</span>
           )}

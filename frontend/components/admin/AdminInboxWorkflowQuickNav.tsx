@@ -10,14 +10,13 @@ import { ADMIN_INBOX_WORKFLOW_IDS } from "@/lib/admin/adminInboxWorkflowOrder";
 import type { AdminUnifiedInboxTask } from "@/lib/admin/adminUnifiedInboxTasks";
 import {
   ADMIN_INBOX_WORKFLOW_CHIP_ACTIVE_CLASS,
-  ADMIN_INBOX_WORKFLOW_CHIP_IDLE_CLASS,
   ADMIN_INBOX_WORKFLOW_NAV_PANEL_CLASS,
   ADMIN_TEXT_META_CLASS,
   ADMIN_TEXT_MUTED_CLASS,
 } from "@/lib/adminUi";
 import { touchTargetLink44Classes, travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
-/** ① 首页 / 统一收件箱 · 动线快链（商家→主理人→审批→社区）。HU-442 · 横滑芯片。 */
+/** ① 首页 / 统一收件箱 · 动线快链（商家→向导→主理人→审批→争议→社区）。HU-442 · 横滑芯片。 */
 export function AdminInboxWorkflowQuickNav(props: {
   tasks: readonly AdminUnifiedInboxTask[];
   loading?: boolean;
@@ -55,9 +54,6 @@ export function AdminInboxWorkflowQuickNav(props: {
           {t("admin_inbox_workflow_quick_nav_label")}
         </span>
         {ordered.map((task, index) => {
-          const hasWork = !loading && task.count !== null && task.count > 0;
-          const countLabel =
-            loading || task.count === null ? "…" : task.count > 0 ? String(task.count) : "0";
           const showCountBadge =
             !hideZeroCounts && !loading && task.count !== null && task.count > 0;
           const chipClass =
@@ -65,9 +61,7 @@ export function AdminInboxWorkflowQuickNav(props: {
             " shrink-0 gap-2 " +
             travelFocusRingOffset2Classes +
             " " +
-            (hasWork
-              ? ADMIN_INBOX_WORKFLOW_CHIP_ACTIVE_CLASS
-              : ADMIN_INBOX_WORKFLOW_CHIP_IDLE_CLASS);
+            ADMIN_INBOX_WORKFLOW_CHIP_ACTIVE_CLASS;
           return (
             <AdminShellPrefetchLink
               key={task.id}
@@ -81,14 +75,7 @@ export function AdminInboxWorkflowQuickNav(props: {
               </span>
               <span>{t(task.labelKey)}</span>
               {showCountBadge ? (
-                <span
-                  className={
-                    "tabular-nums font-semibold " +
-                    (hasWork ? "text-[#ffe8d4]" : ADMIN_TEXT_MUTED_CLASS)
-                  }
-                >
-                  {countLabel}
-                </span>
+                <span className="tabular-nums font-semibold text-[#ffe8d4]">{task.count}</span>
               ) : null}
             </AdminShellPrefetchLink>
           );

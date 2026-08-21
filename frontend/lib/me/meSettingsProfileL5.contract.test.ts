@@ -35,6 +35,7 @@ describe("me settings profile L5 (①)", () => {
     expect(identity).toContain("profileIdentityEditBtn");
     expect(identity).not.toContain("profileIdentityEditBtnPrimary");
     expect(identity).toContain("data-tt-me-settings-profile-avatar-load-failed");
+    expect(identity).toContain('data-tt-me-settings-change-avatar="1"');
     expect(details).not.toContain("me_editProfile");
     expect(read("components/me/MeSettingsProfilePanel.tsx")).toContain("onCancelEdit");
   });

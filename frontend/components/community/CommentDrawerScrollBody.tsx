@@ -10,7 +10,6 @@ import {
   communityCyanPillFocus,
 } from "@/lib/communityA11yFocus";
 import { TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
-import { CommentDrawerSortTabs } from "@/components/community/CommentDrawerSortTabs";
 import { CommentDrawerCommentThreads } from "@/components/community/CommentDrawerCommentThreads";
 
 export interface CommentDrawerScrollBodyProps {
@@ -35,8 +34,8 @@ export function CommentDrawerScrollBody({
   t,
   isLoggedIn,
   authPending,
-  commentSort,
-  onCommentSortChange,
+  commentSort: _commentSort,
+  onCommentSortChange: _onCommentSortChange,
   commentsLoadError,
   onRetryCommentsLoad,
   comments,
@@ -62,9 +61,7 @@ export function CommentDrawerScrollBody({
           </Link>
         </div>
       )}
-      {commentSort != null && onCommentSortChange ? (
-        <CommentDrawerSortTabs t={t} commentSort={commentSort} onCommentSortChange={onCommentSortChange} />
-      ) : null}
+      {/* R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1: sort tabs removed */}
       {commentsLoadError ? (
         <div className="space-y-2" role="alert" aria-live="polite">
           <ApiErrorAlert message={commentsLoadError} />

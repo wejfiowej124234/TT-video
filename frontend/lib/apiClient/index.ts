@@ -7,6 +7,8 @@ export {
   isComplianceError,
   fetchJsonWithApiStatusLog,
   getAuthHeaders,
+  canProbeAccountSession,
+  hasWwwSessionHint,
   getApiRetryAfterSeconds,
   writeRequestHeaders,
   getIdempotencyKey,
@@ -76,6 +78,8 @@ export {
   putMe,
   putMePassword,
   postMeProfileAvatar,
+  postMeProfileAvatarPresign,
+  postMeProfileAvatarCommit,
 } from "./me/meWrite";
 export { getMeWallets, getMeRoleApplications } from "./me/meIdentityPhase15";
 export type { MeWalletRow } from "./me/meIdentityPhase15";

@@ -20,7 +20,7 @@ export function useCommunityFeedModals() {
   const [commentSendErrorMessage, setCommentSendErrorMessage] = useState<string | null>(null);
   const [commentFieldMessages, setCommentFieldMessages] = useState<Record<string, string> | null>(null);
   const [commentsRetryTick, setCommentsRetryTick] = useState(0);
-  const [commentSort, setCommentSort] = useState<CommunityCommentSort>("chronological");
+  const [commentSort, setCommentSort] = useState<CommunityCommentSort>("hot");
   const [publishSendFailed, setPublishSendFailed] = useState(false);
   const [publishErrorMessage, setPublishErrorMessage] = useState<string | null>(null);
   const [publishFieldMessages, setPublishFieldMessages] = useState<Record<string, string> | null>(null);

@@ -21,14 +21,14 @@ test.describe("PH1 verify screenshots (① machine旁证)", () => {
     await installTraveltrustVisualStability(page);
   });
 
-  test("home 1280 + 375 (`app/(home)/page.tsx` SSOT)", async ({ page }) => {
+  test("plan 1280 + 375 (`app/plan/page.tsx` SSOT)", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     await expect(page.locator("#landing-hero-form")).toBeVisible({ timeout: 20_000 });
     await page.screenshot({ path: join(VERIFY_DIR, "home-desktop-1280x800.png"), fullPage: true });
 
     await page.setViewportSize({ width: 375, height: 812 });
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     await expect(page.locator("#form")).toBeVisible({ timeout: 20_000 });
     await page.screenshot({ path: join(VERIFY_DIR, "home-mobile-375x812.png"), fullPage: false });
   });

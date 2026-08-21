@@ -663,8 +663,9 @@ export const ADMIN_MOTION_CARD_HOVER_CLASS =
   "transition-[border-color,background-color] duration-150 motion-reduce:transition-none";
 export const ADMIN_MOTION_SKELETON_CLASS = "animate-pulse motion-reduce:animate-none";
 
-/** 主操作按钮（批准 / 处置 / 去审核）— VIS-07 · warm 主色与首页 CTA 对齐 */
-export const ADMIN_PRIMARY_ACTION_BTN_CLASS = TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT;
+/** 主操作按钮（批准 / 处置 / 去审核）— 深壳金底 + 深字（勿用 text-ink-900，会被 zone remap 洗成浅字） */
+export const ADMIN_PRIMARY_ACTION_BTN_CLASS =
+  "tt-admin-gold-fill inline-flex min-h-[44px] items-center justify-center whitespace-nowrap rounded-[var(--radius-sm)] border border-[#e8c96a]/70 bg-gradient-to-r from-[#e8c96a] via-[#f0a878] to-[#e8c96a] px-3 py-2 text-small font-semibold text-[#0c0a09] shadow-warm-up transition hover:brightness-110 motion-sub motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] disabled:cursor-not-allowed disabled:opacity-55";
 
 /**
  * Batch-10 W13 · HU-210/242 · 三档 CTA 锁（深壳运营页）
@@ -1020,7 +1021,7 @@ export const ADMIN_APPROVAL_REJECT_ACTION_CLASS =
 
 /** 域健康 · 正常（深壳可读） */
 export const ADMIN_DOMAIN_HEALTH_OK_CARD_CLASS =
-  "border-success/35 bg-success/12 text-emerald-100";
+  "border-success/55 bg-success/22 text-emerald-50";
 
 export const ADMIN_DOMAIN_HEALTH_OK_DOT_CLASS = "bg-success";
 
@@ -1105,22 +1106,21 @@ export function adminShellTopNavLinkClass(active: boolean): string {
   return active ? ADMIN_SHELL_NAV_ACTIVE_CLASS : ADMIN_SHELL_NAV_IDLE_CLASS;
 }
 
-/** 表内 / 列表内联链（U8） */
-/** 白卡表格内链：须用 travel/ink 色，勿复用深壳 `ADMIN_INLINE_LINK_CLASS`（slate-200 在 `#faf8f6` 上不可读）。 */
+/** 表内 / 列表内联链（U8 · 深壳运营表，非奶油白卡） */
 export const ADMIN_TABLE_INLINE_LINK_CLASS =
-  "text-travel-700 hover:text-travel-900 hover:underline";
+  "text-slate-200 hover:text-[#ffe8d4] hover:underline";
 
 export function adminTableInlineLinkClass(): string {
   return `${touchTargetLink44Classes} font-medium whitespace-nowrap ${ADMIN_TABLE_INLINE_LINK_CLASS} ${ADMIN_LINK_FOCUS_CLASS}`;
 }
 
-/** 列表行内主操作（紧凑 warm pill · 与页面级 PRIMARY 同系 · HU-210） */
+/** 列表行内主操作（深壳金底 + 深字 · 压过 `a { color: inherit }`） */
 export const ADMIN_TABLE_PRIMARY_ACTION_BTN_CLASS =
-  "inline-flex min-h-[36px] items-center justify-center rounded-[var(--radius-sm)] border border-ref-sun/40 bg-gradient-to-r from-ref-sun/95 via-ref-coral/90 to-ref-sun/95 px-3 py-1.5 text-small font-semibold text-[#0c0a09] shadow-warm-up transition hover:brightness-110 motion-sub motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-55";
+  "tt-admin-gold-fill inline-flex min-h-[36px] items-center justify-center whitespace-nowrap rounded-[var(--radius-sm)] border border-[#e8c96a]/70 bg-gradient-to-r from-[#e8c96a] via-[#f0a878] to-[#e8c96a] px-3 py-1.5 text-small font-semibold text-[#0c0a09] shadow-warm-up transition hover:brightness-110 motion-sub motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-55";
 
-/** 列表行内次操作（文本链 · 与白表主 pill 配对 · batch57） */
+/** 列表行内次操作（深壳浅字链） */
 export const ADMIN_TABLE_SECONDARY_ACTION_BTN_CLASS =
-  "inline-flex min-h-[36px] items-center px-1 text-small font-medium text-travel-700 underline-offset-2 hover:text-travel-900 hover:underline motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-55";
+  "inline-flex min-h-[36px] items-center px-1 text-small font-medium text-slate-200 underline-offset-2 hover:text-[#ffe8d4] hover:underline motion-reduce:transition-none disabled:cursor-not-allowed disabled:opacity-55";
 
 /** 列表行操作列布局（主 pill + 次链 · 横排） */
 export const ADMIN_TABLE_ROW_ACTIONS_CLASS =

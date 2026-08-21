@@ -1,5 +1,5 @@
 import { API_ROUTES } from "@/lib/api/routes";
-import { getAuthHeaders, parseResponse } from "@/lib/apiClient/core";
+import { getAuthHeaders, parseResponse, writeRequestHeaders } from "@/lib/apiClient/core";
 
 export async function getProviderRegistrationServerDraft(): Promise<{ draft: Record<string, unknown> }> {
   const res = await fetch(API_ROUTES.meProviderRegistrationDraft, {
@@ -12,10 +12,14 @@ export async function getProviderRegistrationServerDraft(): Promise<{ draft: Rec
   return { draft: draft && typeof draft === "object" ? draft : {} };
 }
 
+/**
+ * Official `REQUIRE_IDEMPOTENCY_KEY=1`：缺幂等键 → HTTP 400 `missing_idempotency_key`。
+ * PUT 必须走 `writeRequestHeaders`（Idempotency-Key + X-Idempotency-Key）。
+ */
 export async function putProviderRegistrationServerDraft(draft: Record<string, unknown>): Promise<void> {
   const res = await fetch(API_ROUTES.meProviderRegistrationDraft, {
     method: "PUT",
-    headers: { ...getAuthHeaders(), "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
     credentials: "include",
     body: JSON.stringify({ draft }),
   });

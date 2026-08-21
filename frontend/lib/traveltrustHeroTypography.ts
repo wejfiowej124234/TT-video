@@ -4,7 +4,12 @@
 
 /** 品牌 + 后缀分 span，避免「TravelTrust」与「网络」拆成两行 */
 export const TT_HERO_TITLE_CLASS =
-  "flex w-full max-w-full flex-wrap items-baseline justify-center gap-x-[0.38em] gap-y-1 bg-gradient-to-r from-ref-sun via-white to-slate-100 bg-clip-text text-[clamp(1.4rem,4.2vw,1.95rem)] font-bold leading-[1.14] tracking-tight text-transparent sm:text-[clamp(1.55rem,2.8vw,2.1rem)] lg:justify-start lg:gap-x-[0.4em] lg:text-[clamp(1.65rem,1.6vw+0.75rem,2.15rem)] [&_span]:max-w-full lg:[&_span]:whitespace-nowrap";
+  "flex w-full max-w-full flex-wrap items-baseline justify-center gap-x-[0.38em] gap-y-1 text-[clamp(1.4rem,4.2vw,1.95rem)] font-bold leading-[1.14] tracking-tight sm:text-[clamp(1.55rem,2.8vw,2.1rem)] lg:justify-start lg:gap-x-[0.4em] lg:text-[clamp(1.65rem,1.6vw+0.75rem,2.15rem)] [&_span]:max-w-full lg:[&_span]:whitespace-nowrap";
+
+export const TT_HERO_TITLE_BRAND_CLASS =
+  "bg-gradient-to-r from-ref-sun via-[#f0c27a] to-[#e8b86a] bg-clip-text text-transparent";
+
+export const TT_HERO_TITLE_SUFFIX_CLASS = "text-white";
 
 export const TT_HERO_TAGLINE_CLASS =
   "mt-0.5 text-pretty text-body leading-relaxed text-slate-200/95 lg:mt-1 lg:max-w-[22rem]";

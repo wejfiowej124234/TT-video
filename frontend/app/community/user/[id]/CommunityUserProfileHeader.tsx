@@ -89,7 +89,7 @@ export function CommunityUserProfileHeader(props: {
               >
                 {t(communityStoredRoleLabelI18nKey(profileAuthor?.role))}
               </span>
-              {!loading && userPostsLength === 0 ? (
+              {!isSelf && !loading && userPostsLength === 0 ? (
                 <span className="text-slate-400">{t("community_user_no_posts_hint")}</span>
               ) : null}
             </p>

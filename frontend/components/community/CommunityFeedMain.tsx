@@ -97,6 +97,12 @@ export default function CommunityFeedMain({
     openPublish,
     handleReport,
     handleReportComment,
+    handleDeleteComment,
+    deleteConfirmCommentOpen,
+    deleteConfirmBusy,
+    deleteCommentError,
+    cancelDeleteComment,
+    confirmDeleteComment,
     handleReportSubmit,
     reportContext,
     closeReportDrawer,
@@ -485,6 +491,12 @@ export default function CommunityFeedMain({
         authLoading={authLoading}
         meUserId={meUserId}
         handleReportComment={handleReportComment}
+        handleDeleteComment={handleDeleteComment}
+        deleteConfirmCommentOpen={deleteConfirmCommentOpen}
+        deleteConfirmBusy={deleteConfirmBusy}
+        deleteCommentError={deleteCommentError}
+        cancelDeleteComment={cancelDeleteComment}
+        confirmDeleteComment={confirmDeleteComment}
         commentSendFailed={commentSendFailed}
         commentSendErrorMessage={commentSendErrorMessage}
         commentFieldMessages={commentFieldMessages}

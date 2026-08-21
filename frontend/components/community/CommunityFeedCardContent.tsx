@@ -15,14 +15,14 @@ import { touchTargetLink44Classes } from "@/lib/travelLinkFocus";
 import { communityFollowPillClassName } from "@/components/community/communityFollowPillClassName";
 import { TT_COMMUNITY_DRAWER_L5 } from "@/lib/marketingUi";
 import { isShowcasePostId } from "@/lib/communityShowcase";
-import { COMMUNITY_AUTHOR_WALLET_CLASS } from "@/lib/communityCommentAuthorUi";
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
 import { UgcTranslatedText } from "@/components/ugc/UgcTranslatedText";
 
 export type CommunityFeedCardContentProps = {
   post: CommunityPost;
   destination: string | undefined;
   tags: string[];
-  roleKey: string;
+  identityKeys: string[];
   t: (key: string) => string;
   followed: boolean;
   /** 未提供 `onFollowPress` 时用于本地 Mock（收藏页等） */
@@ -44,7 +44,7 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
     post,
     destination,
     tags,
-    roleKey,
+    identityKeys,
     t,
     followed,
     setFollowed,
@@ -145,38 +145,45 @@ export default function CommunityFeedCardContent(props: CommunityFeedCardContent
               aria-label={author.nickname ?? ""}
             >
               <div className={`relative h-11 w-11 min-h-[44px] min-w-[44px] rounded-full overflow-hidden flex-shrink-0 ${TT_COMMUNITY_DRAWER_L5.avatarRing}`}>
-                {author.avatar_url ? <Image src={author.avatar_url} alt="" fill className="object-cover" sizes="44px" unoptimized /> : <div className={TT_COMMUNITY_DRAWER_L5.avatarFallback} />}
+                {author.avatar_url ? (
+                  <Image
+                    src={communityMediaAbsoluteUrlForRender(author.avatar_url)}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="44px"
+                    unoptimized
+                  />
+                ) : (
+                  <div className={TT_COMMUNITY_DRAWER_L5.avatarFallback} />
+                )}
               </div>
               <span className="flex min-w-0 flex-col gap-0.5">
-                <span className="text-small font-medium text-slate-100 truncate group-hover:text-ref-sun/95 motion-sub">{author.nickname ?? dash}</span>
+                <span className="text-small font-medium text-slate-200 truncate group-hover:text-ref-sun/95 motion-sub">{author.nickname ?? dash}</span>
                 {author.wallet ? (
-                  <span
-                    className={`${COMMUNITY_AUTHOR_WALLET_CLASS} truncate max-w-[11rem] group-hover:text-slate-100`}
-                    aria-hidden
-                    data-testid="community-author-wallet"
-                  >
+                  <span className="text-meta font-mono text-slate-400 truncate max-w-[11rem]" aria-hidden>
                     {author.wallet}
                   </span>
                 ) : null}
               </span>
             </Link>
-            <span
-              className={
-                isShowcasePost
-                  ? TT_COMMUNITY_DRAWER_L5.postDetailRoleBadge
-                  : author.role === "guide"
-                    ? TT_COMMUNITY_DRAWER_L5.roleGuide
-                    : TT_COMMUNITY_DRAWER_L5.roleTourist
-              }
-            >
-              {t(roleKey)}
-            </span>
+            {identityKeys.map((k) => (
+              <span
+                key={k}
+                className={
+                  isShowcasePost
+                    ? TT_COMMUNITY_DRAWER_L5.postDetailRoleBadge
+                    : k === "community_role_guide"
+                      ? TT_COMMUNITY_DRAWER_L5.roleGuide
+                      : TT_COMMUNITY_DRAWER_L5.roleTourist
+                }
+              >
+                {t(k)}
+              </span>
+            ))}
             {isShowcasePost ? (
               <span className={TT_COMMUNITY_DRAWER_L5.postDetailShowcaseBadge}>{t("community_feed_showcase_badge")}</span>
             ) : null}
-            {author.isEscrowGuide && (
-              <span className="rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90">{t("community_badge_escrow_guide")}</span>
-            )}
             {(author.role === "guide" || author.isEscrowGuide) && author.id ? (
               <Link href={marketHrefForCommunityUser(author.id)} className={COMMUNITY_BOOK_GUIDE_CTA_CLASS}>
                 {t("community_book_guide_cta")}

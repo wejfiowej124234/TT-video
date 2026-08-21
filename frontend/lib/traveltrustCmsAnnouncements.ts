@@ -12,6 +12,7 @@ import type {
   TravelTrustAnnouncementKind,
   TravelTrustContentTier,
 } from "./traveltrustNetworkAnnouncements";
+import { withStaticAnnouncementCmsCopy } from "./traveltrustStaticAnnouncementCmsCopy";
 import { traveltrustSafeAnnouncementHref } from "./traveltrustSafeHref";
 
 export type TravelTrustCmsCopy = {
@@ -89,15 +90,33 @@ export function mapCmsRowToTraveltrustAnnouncement(row: CmsPublicAnnouncementRow
   };
 }
 
-async function fetchCmsJson(path: string): Promise<CmsPublicAnnouncementRow[]> {
+/** Official www public CMS — used when local BFF/API pulse is empty or 500. */
+export const TRAVELTRUST_OFFICIAL_WWW_ORIGIN = "https://www.web3-ttg.com";
+
+async function fetchCmsRowsFrom(url: string): Promise<CmsPublicAnnouncementRow[]> {
   try {
-    const res = await fetch(apiUrl(path), { cache: "no-store" });
+    const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return [];
     const data = (await res.json()) as { items?: CmsPublicAnnouncementRow[] };
-    return data.items ?? [];
+    return Array.isArray(data.items) ? data.items : [];
   } catch {
     return [];
   }
+}
+
+function isBrowserOnOfficialWww(): boolean {
+  if (typeof globalThis === "undefined") return false;
+  const loc = (globalThis as { window?: { location?: { hostname?: string } } }).window?.location?.hostname;
+  if (typeof loc !== "string" || !loc) return false;
+  const h = loc.toLowerCase();
+  return h === "www.web3-ttg.com" || h === "web3-ttg.com";
+}
+
+async function fetchCmsJson(path: string): Promise<CmsPublicAnnouncementRow[]> {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  const local = await fetchCmsRowsFrom(apiUrl(p));
+  if (local.length > 0 || isBrowserOnOfficialWww()) return local;
+  return fetchCmsRowsFrom(`${TRAVELTRUST_OFFICIAL_WWW_ORIGIN}${p}`);
 }
 
 export async function fetchTraveltrustCmsAnnouncements(opts?: {
@@ -175,7 +194,7 @@ export function mergeTraveltrustAnnouncementsByLane(
   if (cmsLane.length > 0) {
     return cmsLane;
   }
-  return staticItems.filter((i) => i.lane === lane);
+  return withStaticAnnouncementCmsCopy(staticItems.filter((i) => i.lane === lane));
 }
 
 export function mergeTraveltrustPulseAnnouncements(
@@ -186,7 +205,7 @@ export function mergeTraveltrustPulseAnnouncements(
   if (cmsPulse.length > 0) {
     return cmsPulse.slice(0, max);
   }
-  return staticPulse.slice(0, max);
+  return withStaticAnnouncementCmsCopy(staticPulse).slice(0, max);
 }
 
 export function isCmsOpsLane(lane: string): boolean {

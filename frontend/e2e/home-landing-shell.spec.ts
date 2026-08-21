@@ -1,5 +1,5 @@
 /**
- * `/` Web3 旅行首页 · ① 壳层（与 `app/(home)/page.tsx` SSOT 一致）
+ * `/plan` AI 行程规划 · ① 壳层（原 `/` 表单迁此）
  * 取代未接线的 `home-landing-marketing-v2` / `home-landing-api-preflight` v2 契约用例。
  */
 import { test, expect } from "@playwright/test";
@@ -9,7 +9,7 @@ import { gotoSmoke } from "./helpers/smoke-nav";
 
 test.describe("PI-1 · home landing shell", () => {
   test("hero form, network CTA, and warm Action submit (§1.7)", async ({ page }) => {
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     const main = page.locator("main[aria-label]");
     await expect(main).toBeVisible({ timeout: 20_000 });
 
@@ -33,7 +33,7 @@ test.describe("PI-1 · home landing shell", () => {
   test("submit FAB mostly in viewport on 375×812 after scroll", async ({ page, request }) => {
     await skipIfApiDown(request);
     await page.setViewportSize({ width: 375, height: 812 });
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     const submit = page.locator("#landing-hero-form button[type='submit']");
     await expect(submit).toBeVisible();
     await submit.scrollIntoViewIfNeeded();
@@ -46,7 +46,7 @@ test.describe("PI-1 · home landing shell", () => {
   });
 
   test("ambient backdrop stable TS src on first paint (W1 · flag=0 default)", async ({ page }) => {
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     const backdrop = page.locator('[data-tt-home-ambient-phase="A"]');
     await expect(backdrop).toBeVisible({ timeout: 20_000 });
     const src = await backdrop.getAttribute("data-tt-home-ambient-src");
@@ -55,7 +55,7 @@ test.describe("PI-1 · home landing shell", () => {
   });
 
   test("hero country pills visible from TS geo (W2 · flag=0 default)", async ({ page }) => {
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     const form = page.locator("#landing-hero-form");
     await expect(form).toBeVisible({ timeout: 20_000 });
     const chinaPill = form.getByRole("button", { name: "中国" });

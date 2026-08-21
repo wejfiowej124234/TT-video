@@ -75,7 +75,7 @@ test.describe("L5 Mobile 375 Live Scan @l5-mobile-375", () => {
   }
 
   test("home submit FAB in viewport band after scroll @375", async ({ page }) => {
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     const submit = page.locator("#landing-hero-form button[type='submit']");
     await expect(submit).toBeVisible();
     await submit.scrollIntoViewIfNeeded();

@@ -4,6 +4,7 @@
  */
 
 import type { GuideCardItem, OrderCardItem } from "@/lib/marketTypes";
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
 
 const COVER_W = 640;
 
@@ -100,7 +101,9 @@ export function marketCoverGradientClass(seed: string): string {
 export function resolveGuideAvatarUrl(guide: Pick<GuideCardItem, "id" | "avatar_url" | "city" | "user_id">): string {
   const explicit = nonEmptyUrl(guide.avatar_url);
   if (explicit) {
-    return explicit.replace("w=120", `w=${COVER_W}`).replace("q=80", "q=82");
+    const remapped = communityMediaAbsoluteUrlForRender(explicit);
+    const src = remapped || explicit;
+    return src.replace("w=120", `w=${COVER_W}`).replace("q=80", "q=82");
   }
   const idx = stablePoolIndex(guide.id || guide.user_id || guide.city || "guide", GUIDE_PORTRAIT_POOL.length);
   return GUIDE_PORTRAIT_POOL[idx] ?? stockPlaceholder(`guide-${idx}`);

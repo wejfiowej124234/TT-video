@@ -68,3 +68,16 @@ describe("marketMediaFallback", () => {
     ).toBe("中国 · 北京 · 1天");
   });
 });
+
+describe("resolveGuideAvatarUrl OCS remap", () => {
+  it("remaps legacy OCS upload avatar_url to Tigris", () => {
+    const url = resolveGuideAvatarUrl({
+      id: "g-ocs",
+      avatar_url: "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+      city: "Tokyo",
+      user_id: "u-ocs",
+    });
+    expect(url).toContain("official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg");
+    expect(url).toContain("traveltrust-community-media.fly.storage.tigris.dev");
+  });
+});

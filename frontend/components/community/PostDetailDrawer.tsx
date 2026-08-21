@@ -107,11 +107,14 @@ export function PostDetailDrawer(props: PostDetailDrawerProps) {
     videoPoster,
     author,
     authorAvatarResolved,
-    roleKey,
+    identityKeys,
     authorProfileHref,
     rootComments,
     getReplies,
     showReportComment,
+    showDeleteComment,
+    showReplyToComment,
+    isCommentByPostAuthor,
     isTextOnlyDetail,
     handleDetailDoubleTapLike,
     handleDetailCarouselKeyDown,
@@ -299,7 +302,7 @@ export function PostDetailDrawer(props: PostDetailDrawerProps) {
                 isTextOnlyDetail={isTextOnlyDetail}
                 author={author}
                 authorAvatarResolved={authorAvatarResolved}
-                roleKey={roleKey}
+                identityKeys={identityKeys}
                 authorProfileHref={authorProfileHref}
                 authorFollow={authorFollow}
                 topicHref={topicHref}
@@ -337,9 +340,14 @@ export function PostDetailDrawer(props: PostDetailDrawerProps) {
                   rootComments={rootComments}
                   getReplies={getReplies}
                   canCommentReply={isLoggedIn && !authPending}
+                  showReplyToComment={showReplyToComment}
                   setReplyTarget={setReplyTarget}
                   showReportComment={showReportComment}
                   onReportComment={onReportComment}
+                  showDeleteComment={showDeleteComment}
+                  onDeleteComment={props.onDeleteComment}
+                  isCommentByPostAuthor={isCommentByPostAuthor}
+                  postAuthor={author}
                   commentsHasMore={commentsHasMore}
                   onLoadMoreComments={onLoadMoreComments}
                   commentsLoadMoreBusy={commentsLoadMoreBusy}

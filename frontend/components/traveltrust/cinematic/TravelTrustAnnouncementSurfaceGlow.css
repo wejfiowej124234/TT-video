@@ -1,0 +1,74 @@
+/* Official announcements + pulse surface glow (scoped import; matches pre-bake product look). */
+
+@keyframes tt-pulse-chip-glow {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.45);
+  }
+}
+
+@keyframes tt-pulse-chip-shimmer {
+  0% {
+    transform: translateX(-70%);
+  }
+  100% {
+    transform: translateX(280%);
+  }
+}
+
+.tt-pulse-chip-glow {
+  animation: tt-pulse-chip-glow 2.2s ease-in-out infinite;
+}
+
+.tt-pulse-chip-shimmer {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.32) 50%, transparent 65%);
+  animation: tt-pulse-chip-shimmer 2.6s linear infinite;
+}
+
+.tt-announcement-row-glow {
+  animation: tt-pulse-chip-glow 3.2s ease-in-out infinite;
+}
+
+/* Card / plate border glow closer to prior Official announcements screenshots */
+[data-tt-traveltrust-announcements-list-plate="1"] [data-tt-traveltrust-announcement-row],
+[data-tt-traveltrust-announcements-protocol-cards="1"] [data-tt-traveltrust-announcement-row],
+.tt-announcement-row-glow {
+  box-shadow:
+    0 0 0 1px rgba(249, 215, 121, 0.35),
+    0 0 18px rgba(249, 215, 121, 0.22),
+    inset 0 0 24px rgba(249, 215, 121, 0.06);
+}
+
+[data-tt-traveltrust-announcements-list-plate="1"] [data-tt-traveltrust-announcement-row][data-tt-traveltrust-announcement-lane="governance"],
+.tt-announcement-row-glow[data-tt-traveltrust-announcement-lane="governance"] {
+  box-shadow:
+    0 0 0 1px rgba(52, 211, 153, 0.45),
+    0 0 20px rgba(52, 211, 153, 0.28),
+    inset 0 0 24px rgba(52, 211, 153, 0.06);
+}
+
+[data-tt-traveltrust-announcements-list-plate="1"] [data-tt-traveltrust-announcement-row][data-tt-traveltrust-announcement-kind="campaign"],
+.tt-announcement-row-glow[data-tt-traveltrust-announcement-kind="campaign"] {
+  box-shadow:
+    0 0 0 1px rgba(248, 113, 113, 0.4),
+    0 0 18px rgba(248, 113, 113, 0.22),
+    inset 0 0 24px rgba(248, 113, 113, 0.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-pulse-chip-glow,
+  .tt-announcement-row-glow {
+    animation: none;
+  }
+  .tt-pulse-chip-shimmer {
+    animation: none;
+    display: none;
+  }
+}

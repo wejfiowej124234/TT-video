@@ -35,8 +35,7 @@ export function TravelTrustPageBriefModeBadge({ compact = false }: Props) {
     );
   }
 
-  // Compact traveler chrome matches Official www: always paint LIVE (never Demo / empty slot).
-  const demo = compact ? false : degraded || source !== "api";
+  const demo = degraded || source !== "api";
   const label = demo ? t("traveltrust_page_brief_mode_demo") : t("traveltrust_page_brief_mode_live");
   const title = demo
     ? t("traveltrust_page_brief_degraded")

@@ -1,4 +1,5 @@
 "use client";
+import "./TravelTrustAnnouncementSurfaceGlow.css";
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
@@ -21,6 +22,13 @@ import {
 
 const KIND_STYLE: Record<TravelTrustAnnouncement["kind"], string> = TT_PULSE_KIND_L5;
 
+function pulseChipPlateClass(item: TravelTrustAnnouncement): string {
+  if (item.kind === "campaign") return TT_PULSE_TICKER_L5.itemPlateCampaignClass;
+  if (item.lane === "protocol_status") return TT_PULSE_TICKER_L5.itemPlateProtocolClass;
+  if (item.lane === "governance") return TT_PULSE_TICKER_L5.itemPlateGovernanceClass;
+  return TT_PULSE_TICKER_L5.itemPlateProductClass;
+}
+
 function TickerItem({ item, inline = false }: { item: TravelTrustAnnouncement; inline?: boolean }) {
   const { t, locale } = useTranslation();
   const reduceMotion = useReducedMotion();
@@ -32,7 +40,8 @@ function TickerItem({ item, inline = false }: { item: TravelTrustAnnouncement; i
   const target = traveltrustAnnouncementPageHref(item.id);
   const body = (
     <>
-      <span className={`shrink-0 font-mono text-[10px] uppercase tracking-wide ${KIND_STYLE[item.kind]}`}>
+      <span className={TT_PULSE_TICKER_L5.itemShimmerClass} aria-hidden />
+      <span className={`${TT_PULSE_TICKER_L5.itemKindClass} ${KIND_STYLE[item.kind]}`}>
         {label}
       </span>
       <span className={TT_PULSE_TICKER_L5.itemSeparatorClass} aria-hidden>
@@ -42,7 +51,7 @@ function TickerItem({ item, inline = false }: { item: TravelTrustAnnouncement; i
     </>
   );
 
-  const className = TT_PULSE_TICKER_L5.itemClass;
+  const className = `${TT_PULSE_TICKER_L5.itemClass} ${pulseChipPlateClass(item)}`;
   const link = (
     <Link
       href={target}
@@ -212,6 +221,7 @@ export function TravelTrustPulseTicker({ variant = "section" }: Props) {
         data-tt-traveltrust-pulse-scroll-mode={inlineScrollMode}
         data-tt-traveltrust-pulse-anchor="1"
         aria-label={t("traveltrust_pulse_aria")}
+        data-tt-home-module="M03"
         data-tt-traveltrust-pulse-ticker="1"
         data-tt-traveltrust-pulse-l5="1"
         data-tt-traveltrust-cinematic-non-globe-l5={TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID}
@@ -238,6 +248,7 @@ export function TravelTrustPulseTicker({ variant = "section" }: Props) {
       data-tt-traveltrust-pulse-scroll-mode={reduceMotion ? "static" : "marquee"}
       data-tt-traveltrust-pulse-anchor="1"
       aria-label={t("traveltrust_pulse_aria")}
+      data-tt-home-module="M03"
       data-tt-traveltrust-pulse-ticker="1"
       data-tt-traveltrust-pulse-l5="1"
       data-tt-traveltrust-cinematic-non-globe-l5={TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID}

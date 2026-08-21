@@ -56,6 +56,8 @@ export const communityMePostsPageShell = (page: Page) => page.locator(dataTt.com
 export const communityMeLoadMorePageButton = (page: Page) => page.locator(dataTt.communityMeLoadMorePage);
 export const communityMeLoadMoreDrawerButton = (page: Page) => page.locator(dataTt.communityMeLoadMoreDrawer);
 export const communityDeletePostConfirmShell = (page: Page) => page.locator(dataTt.communityDeletePostConfirm);
+export const communityDeleteCommentConfirmShell = (page: Page) =>
+  page.locator(dataTt.communityDeleteCommentConfirm);
 export const communityUncollectConfirmShell = (page: Page) => page.locator(dataTt.communityUncollectConfirm);
 export const communityUnlikeConfirmShell = (page: Page) => page.locator(dataTt.communityUnlikeConfirm);
 export const communityOrderCancelConfirmShell = (page: Page) => page.locator(dataTt.communityOrderCancelConfirm);

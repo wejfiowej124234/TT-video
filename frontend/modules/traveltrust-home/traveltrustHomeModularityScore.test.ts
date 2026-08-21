@@ -9,7 +9,7 @@ const mod = dirname(fileURLToPath(import.meta.url));
 const cinematic = join(root, "components/traveltrust/cinematic");
 const l5 = join(root, "lib/traveltrust/l5");
 
-/** 16 维企业模块化满分门禁（每维 1 分 · 全绿 = 16/16） */
+/** 17 维企业模块化满分门禁（每维 1 分 · 全绿 = 17/17） */
 const DIMENSIONS = [
   {
     id: "entry-bridge",
@@ -42,10 +42,12 @@ const DIMENSIONS = [
     label: "Hero / WebGL / BelowFold 三节边界",
     score: () => {
       const mainColumn = readFileSync(join(mod, "presentation/TravelTrustHomeMainColumn.tsx"), "utf8");
+      const body = readFileSync(join(mod, "presentation/TravelTrustHomeBodyModule.tsx"), "utf8");
       const backdrop = readFileSync(join(mod, "presentation/TravelTrustHomeUnified3DBackdrop.tsx"), "utf8");
-      expect(mainColumn).toContain("TravelTrustHomeHeroSection");
-      expect(mainColumn).toContain("TravelTrustHomeBelowFoldSection");
+      expect(mainColumn).toContain("TravelTrustHomeBodyModule");
       expect(mainColumn).toContain('data-tt-traveltrust-home-composer="1"');
+      expect(body).toContain("TravelTrustHomeHeroSection");
+      expect(body).toContain("TravelTrustHomeBelowFoldSection");
       expect(backdrop).toContain("TravelTrustHomeWebGLLayer");
     },
   },
@@ -118,7 +120,7 @@ const DIMENSIONS = [
     label: "布局锁 v3-modular 元数据",
     score: () => {
       expect(TRAVELTRUST_HOME_LAYOUT_LOCK_L5.lockId).toBe(
-        "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v16-economy-breathing",
+        "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v18-screenshot-body",
       );
       expect(TRAVELTRUST_HOME_LAYOUT_LOCK_L5.modularity.cinematicBridgeImport).toBe(
         "@/lib/traveltrust/home/cinematic-bridge",
@@ -226,6 +228,45 @@ const DIMENSIONS = [
     },
   },
   {
+    id: "locked-chrome-vs-home-body",
+    label: "LOCKED chrome 与唯一 HOME_BODY_MODULE 分界",
+    score: () => {
+      const lock = TRAVELTRUST_HOME_LAYOUT_LOCK_L5.modularity;
+      expect(lock.homeBodyModulePath).toContain("TravelTrustHomeBodyModule");
+      expect(lock.lockedChromePath).toContain("TravelTrustLockedHomeChrome");
+      expect(existsSync(join(root, "..", lock.homeBodyModulePath))).toBe(true);
+      expect(existsSync(join(root, "..", lock.lockedChromePath))).toBe(true);
+      for (const rel of lock.lockedChromeFiles) {
+        expect(existsSync(join(root, "..", rel)), rel).toBe(true);
+      }
+      const mainColumn = readFileSync(join(mod, "presentation/TravelTrustHomeMainColumn.tsx"), "utf8");
+      const body = readFileSync(join(mod, "presentation/TravelTrustHomeBodyModule.tsx"), "utf8");
+      const chrome = readFileSync(join(mod, "presentation/TravelTrustLockedHomeChrome.tsx"), "utf8");
+      expect(mainColumn).toContain("TravelTrustLockedHomeChrome");
+      expect(mainColumn).toContain("TravelTrustHomeBodyModule");
+      expect(mainColumn).not.toContain("TravelTrustHomeLandingNavSlot");
+      expect(mainColumn).not.toContain("TravelTrustHomeHeroSection");
+      expect(chrome).toContain("TravelTrustHomeLandingNavSlot");
+      expect(chrome).toContain('data-tt-locked-home-chrome="1"');
+      expect(body).toContain('data-tt-home-body-module="1"');
+      expect(body).not.toContain("TravelTrustLandingChrome");
+      expect(body).not.toContain("TravelTrustPulseTicker");
+      expect(body).not.toContain("TravelTrustLandingNav");
+      expect(body).not.toContain("@/components/Header");
+      const dualTrack = ["tt_home_variant", "officialBody", "localBody"];
+      const scanned = [
+        mainColumn,
+        body,
+        chrome,
+        readFileSync(join(mod, "presentation/TravelTrustNetworkPageComposer.tsx"), "utf8"),
+        readFileSync(join(root, "app/traveltrust/page.tsx"), "utf8"),
+      ].join("\n");
+      for (const flag of dualTrack) {
+        expect(scanned).not.toContain(flag);
+      }
+    },
+  },
+  {
     id: "section-ui-slot",
     label: "节 UI 槽位（sections/ui · P3 起步）",
     score: () => {
@@ -248,7 +289,7 @@ const DIMENSIONS = [
   },
 ] as const;
 
-describe("traveltrust-home modularity score (16/16)", () => {
+describe("traveltrust-home modularity score (17/17)", () => {
   const scores: Record<string, boolean> = {};
 
   for (const dim of DIMENSIONS) {
@@ -258,8 +299,8 @@ describe("traveltrust-home modularity score (16/16)", () => {
     });
   }
 
-  it("aggregate score is 16/16", () => {
+  it("aggregate score is 17/17", () => {
     const passed = DIMENSIONS.filter((d) => scores[d.id]).length;
-    expect(passed).toBe(16);
+    expect(passed).toBe(17);
   });
 });

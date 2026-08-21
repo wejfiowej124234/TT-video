@@ -1,11 +1,7 @@
 import type { AdminHomeInboxChannels, AdminHomeInboxCounts } from "@/lib/admin/useAdminHomeInbox";
 import type { AdminHomeKpiCounts } from "@/lib/admin/useAdminHomeKpi";
 import { onboardingSectionPending } from "@/lib/admin/adminHomeSectionPending";
-import {
-  classifyOpsKpiSource,
-  clampDomainHealthToneNoFakeGreen,
-  resolveOperationsDomainLamp,
-} from "@/lib/admin/opsWorkbenchL5";
+import { resolveOperationsDomainLamp } from "@/lib/admin/opsWorkbenchL5";
 
 export type AdminDomainHealthTone = "ok" | "attention" | "neutral" | "unknown";
 
@@ -22,10 +18,10 @@ export type AdminDomainHealthItem = {
 /**
  * Batch-10 HU-288 + W9 HU-294 · 超管指挥台域灯：
  * 入驻 / 经营 / 社区 / 内容 / 官方 / 增长 / 财务 / 治理。
- * Batch-11 HU-325 · 内容/官方/增长：CTA 深链文案（honest `neutral` 设计空 · 无假绿）。
- * Batch-11 HU-422 · 经营域灯 memory≠假绿 · 旁标数据源。
- * Batch-12 HU-449 · 全域绿点仅 REAL_DB；memory/unknown 禁假绿。
- * Batch-14 HU-495/Q6 · 内容/官方/增长改 `neutral` 设计空（禁整墙 `unknown` 死灰）。
+ *
+ * Green means that domain's own queue/snapshot is healthy — not "the hub page exists".
+ * Operations still forbids fake green unless KPI `meta.source` is REAL_DB (HU-422).
+ * Other domains use their own APIs and are not clamped by the ops KPI source.
  */
 export function buildAdminHomeDomainHealth(input: {
   counts: AdminHomeInboxCounts;
@@ -33,11 +29,26 @@ export function buildAdminHomeDomainHealth(input: {
   kpi: AdminHomeKpiCounts;
   inboxLoading: boolean;
   kpiLoading: boolean;
-  /** KPI list meta.source（缺省 = unknown · 禁假绿） */
   kpiSource?: string | null;
   hasPermission: (perm: string) => boolean;
   permissionsLoaded: boolean;
   t: (key: string, vars?: Record<string, string | number>) => string;
+  contentQueueCount?: number | null;
+  contentQueueLoading?: boolean;
+  officialQueueCount?: number | null;
+  officialQueueLoading?: boolean;
+  communityReportsCount?: number | null;
+  communityReportsLoading?: boolean;
+  treasurySource?: "not_deployed" | "chain" | "projection";
+  treasuryLoading?: boolean;
+  treasuryEventTotal?: number | null;
+  growthRegistrations?: number | null;
+  growthReferrals?: number | null;
+  growthFrozen?: number | null;
+  growthLoading?: boolean;
+  governorAddress?: string | null;
+  governanceLive?: boolean;
+  governanceLoading?: boolean;
 }): AdminDomainHealthItem[] {
   const {
     counts,
@@ -49,6 +60,22 @@ export function buildAdminHomeDomainHealth(input: {
     hasPermission,
     permissionsLoaded,
     t,
+    contentQueueCount,
+    contentQueueLoading = false,
+    officialQueueCount,
+    officialQueueLoading = false,
+    communityReportsCount,
+    communityReportsLoading = false,
+    treasurySource,
+    treasuryLoading = false,
+    treasuryEventTotal = null,
+    growthRegistrations,
+    growthReferrals,
+    growthFrozen,
+    growthLoading = false,
+    governorAddress,
+    governanceLive,
+    governanceLoading = false,
   } = input;
 
   const onboardingPending = onboardingSectionPending(
@@ -61,7 +88,8 @@ export function buildAdminHomeDomainHealth(input: {
 
   const orders = kpiLoading ? null : kpi.orders;
   const disputes = kpiLoading ? null : kpi.disputes;
-  const reports =
+  const extrasCommunityWired = communityReportsCount !== undefined;
+  const inboxReports =
     inboxLoading || !permissionsLoaded
       ? null
       : typeof counts.reports === "number"
@@ -69,21 +97,22 @@ export function buildAdminHomeDomainHealth(input: {
         : channels.reports?.permissionDenied
           ? null
           : counts.reports;
+  const reports = extrasCommunityWired
+    ? communityReportsLoading
+      ? inboxReports
+      : communityReportsCount == null
+        ? inboxReports
+        : inboxReports == null
+          ? communityReportsCount
+          : Math.max(communityReportsCount, inboxReports)
+    : inboxReports;
+  const communityLoading =
+    reports == null &&
+    (extrasCommunityWired
+      ? communityReportsLoading || inboxLoading || !permissionsLoaded
+      : inboxLoading || !permissionsLoaded);
 
-  /** HU-449 · 绿=健康 仅正式库；memory/unknown 禁假绿 */
-  const kpiSourceKind = classifyOpsKpiSource(kpiSource);
   const statusOk = t("admin_home_domain_health_status_ok");
-  const statusNoFakeGreen = t("admin_home_domain_health_status_no_fake_green");
-
-  const finalize = (item: AdminDomainHealthItem): AdminDomainHealthItem => {
-    const tone = clampDomainHealthToneNoFakeGreen(item.tone, kpiSourceKind);
-    if (tone === item.tone) return item;
-    return {
-      ...item,
-      tone,
-      countLabel: item.countLabel === statusOk ? statusNoFakeGreen : item.countLabel,
-    };
-  };
 
   return [
     {
@@ -130,49 +159,168 @@ export function buildAdminHomeDomainHealth(input: {
       labelKey: "admin_home_domain_health_label_community",
       href: "/admin/community/reports",
       tone: reports === null ? "unknown" : reports > 0 ? "attention" : "ok",
-      countLabel:
-        inboxLoading || !permissionsLoaded
+      countLabel: communityLoading
+        ? t("admin_home_empty_state_loading")
+        : reports === null
+          ? t("admin_home_domain_health_community_empty")
+          : reports > 0
+            ? t("admin_home_domain_health_reports", { count: reports })
+            : statusOk,
+    },
+    (() => {
+      const wired = contentQueueCount !== undefined;
+      if (!wired) {
+        return {
+          id: "content",
+          labelKey: "admin_home_domain_health_label_content",
+          href: "/admin/content",
+          tone: "neutral" as const,
+          countLabel: t("admin_home_domain_health_cta_content"),
+        };
+      }
+      return {
+        id: "content",
+        labelKey: "admin_home_domain_health_label_content",
+        href: "/admin/content",
+        tone: contentQueueLoading
+          ? "unknown"
+          : contentQueueCount == null
+            ? "unknown"
+            : contentQueueCount > 0
+              ? "attention"
+              : "ok",
+        countLabel: contentQueueLoading
           ? t("admin_home_empty_state_loading")
-          : reports === null
-            ? t("admin_home_domain_health_community_empty")
-            : reports > 0
-              ? t("admin_home_domain_health_reports", { count: reports })
+          : contentQueueCount == null
+            ? t("admin_home_domain_health_cta_content")
+            : contentQueueCount > 0
+              ? t("admin_home_domain_health_content_queue", { count: contentQueueCount })
+              : t("admin_home_domain_health_content_clear"),
+      };
+    })(),
+    (() => {
+      const wired = officialQueueCount !== undefined;
+      if (!wired) {
+        return {
+          id: "official",
+          labelKey: "admin_home_domain_health_label_official",
+          href: "/admin/official",
+          tone: "neutral" as const,
+          countLabel: t("admin_home_domain_health_cta_official"),
+        };
+      }
+      return {
+        id: "official",
+        labelKey: "admin_home_domain_health_label_official",
+        href: "/admin/official",
+        tone: officialQueueLoading
+          ? "unknown"
+          : officialQueueCount == null
+            ? "unknown"
+            : officialQueueCount > 0
+              ? "attention"
+              : "ok",
+        countLabel: officialQueueLoading
+          ? t("admin_home_empty_state_loading")
+          : officialQueueCount == null
+            ? t("admin_home_domain_health_cta_official")
+            : officialQueueCount > 0
+              ? t("admin_home_domain_health_official_queue", { count: officialQueueCount })
               : statusOk,
-    },
-    {
-      id: "content",
-      labelKey: "admin_home_domain_health_label_content",
-      href: "/admin/content",
-      tone: "neutral",
-      countLabel: t("admin_home_domain_health_cta_content"),
-    },
-    {
-      id: "official",
-      labelKey: "admin_home_domain_health_label_official",
-      href: "/admin/official",
-      tone: "neutral",
-      countLabel: t("admin_home_domain_health_cta_official"),
-    },
-    {
-      id: "growth",
-      labelKey: "admin_home_domain_health_label_growth",
-      href: "/admin/growth",
-      tone: "neutral",
-      countLabel: t("admin_home_domain_health_cta_growth"),
-    },
-    {
-      id: "finance",
-      labelKey: "admin_home_domain_health_label_finance",
-      href: "/admin/finance-suite",
-      tone: "neutral",
-      countLabel: t("admin_home_domain_health_finance_pool"),
-    },
-    {
-      id: "governance",
-      labelKey: "admin_home_domain_health_label_governance",
-      href: "/admin/cross-check",
-      tone: "neutral",
-      countLabel: t("admin_home_domain_health_governance"),
-    },
-  ].map(finalize);
+      };
+    })(),
+    (() => {
+      const wired = growthRegistrations !== undefined;
+      if (!wired) {
+        return {
+          id: "growth",
+          labelKey: "admin_home_domain_health_label_growth",
+          href: "/admin/growth",
+          tone: "neutral" as const,
+          countLabel: t("admin_home_domain_health_cta_growth"),
+        };
+      }
+      const frozen = growthFrozen ?? 0;
+      return {
+        id: "growth",
+        labelKey: "admin_home_domain_health_label_growth",
+        href: "/admin/growth",
+        tone: growthLoading
+          ? "unknown"
+          : growthRegistrations == null
+            ? "unknown"
+            : frozen > 0
+              ? "attention"
+              : "ok",
+        countLabel: growthLoading
+          ? t("admin_home_empty_state_loading")
+          : growthRegistrations == null
+            ? t("admin_home_domain_health_cta_growth")
+            : t("admin_home_domain_health_growth_snapshot", {
+                registrations: String(growthRegistrations),
+                referrals: String(growthReferrals ?? 0),
+              }),
+      };
+    })(),
+    (() => {
+      if (treasuryLoading) {
+        return {
+          id: "finance",
+          labelKey: "admin_home_domain_health_label_finance",
+          href: "/admin/finance-suite",
+          tone: "unknown" as const,
+          countLabel: t("admin_home_empty_state_loading"),
+        };
+      }
+      if (treasurySource === "not_deployed") {
+        return {
+          id: "finance",
+          labelKey: "admin_home_domain_health_label_finance",
+          href: "/admin/finance-suite",
+          tone: "unknown" as const,
+          countLabel: t("admin_home_domain_health_finance_not_deployed"),
+        };
+      }
+      if (treasurySource === "chain" || treasurySource === "projection") {
+        return {
+          id: "finance",
+          labelKey: "admin_home_domain_health_label_finance",
+          href: "/admin/finance-suite",
+          tone: "ok" as const,
+          countLabel:
+            treasuryEventTotal == null
+              ? t("admin_home_domain_health_finance_chain")
+              : t("admin_home_domain_health_finance_events", { count: treasuryEventTotal }),
+        };
+      }
+      return {
+        id: "finance",
+        labelKey: "admin_home_domain_health_label_finance",
+        href: "/admin/finance-suite",
+        tone: "neutral" as const,
+        countLabel: t("admin_home_domain_health_finance_pool"),
+      };
+    })(),
+    (() => {
+      if (governanceLoading) {
+        return {
+          id: "governance",
+          labelKey: "admin_home_domain_health_label_governance",
+          href: "/admin/cross-check",
+          tone: "unknown" as const,
+          countLabel: t("admin_home_empty_state_loading"),
+        };
+      }
+      const live = governanceLive === true || Boolean(governorAddress);
+      return {
+        id: "governance",
+        labelKey: "admin_home_domain_health_label_governance",
+        href: "/admin/cross-check",
+        tone: live ? ("ok" as const) : ("neutral" as const),
+        countLabel: live
+          ? t("admin_home_domain_health_governance_live")
+          : t("admin_home_domain_health_governance"),
+      };
+    })(),
+  ];
 }

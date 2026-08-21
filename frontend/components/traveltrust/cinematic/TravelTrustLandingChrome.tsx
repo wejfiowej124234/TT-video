@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
-import { TravelTrustCinematicLowQualityToggle } from "./TravelTrustCinematicLowQualityToggle";
 import { TravelTrustLandingNav } from "./TravelTrustLandingNav";
 import { TravelTrustPageBriefModeBadge } from "./TravelTrustPageBriefModeBadge";
 import { TravelTrustPulseTicker } from "./TravelTrustPulseTicker";
@@ -72,12 +71,6 @@ export function TravelTrustLandingChrome() {
             data-tt-traveltrust-landing-chrome-nav-slot-l5="1"
           >
             <TravelTrustLandingNav embedded compactOnHero />
-          </div>
-          <div
-            className={TT_LANDING_CHROME_L5.toolbarToggleSlotClass}
-            data-tt-traveltrust-landing-chrome-toggle-slot-l5="1"
-          >
-            <TravelTrustCinematicLowQualityToggle compact />
           </div>
         </div>
         <div

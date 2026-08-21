@@ -214,7 +214,7 @@ export async function createItineraryViaLandingUi(page: Page): Promise<string> {
   let lastGotoErr: unknown;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      await page.goto("/", { timeout: 120_000, waitUntil: "domcontentloaded" });
+      await page.goto("/plan", { timeout: 120_000, waitUntil: "domcontentloaded" });
       lastGotoErr = undefined;
       break;
     } catch (err) {

@@ -24,7 +24,7 @@ test.describe("PI-1 · home landing itinerary submit (PH1-HOME-02)", () => {
       return;
     }
 
-    await gotoSmoke(page, "/");
+    await gotoSmoke(page, "/plan");
     await injectBearerSessionInPage(page, creds);
     await page.reload({ waitUntil: "domcontentloaded", timeout: 90_000 });
     await injectBearerSessionInPage(page, creds);

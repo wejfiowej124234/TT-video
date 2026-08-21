@@ -1,8 +1,9 @@
 "use client";
 
-import type { CommunityComment, CommunityPost } from "@/lib/communityMockData";
+import type { CommunityComment, CommunityPost, CommunityPostUserVisibility } from "@/lib/communityMockData";
 import { CommunityFeedCard } from "@/components/community/CommunityFeedCard";
 import { communityFeedCardCommentDisplayCountHonest } from "@/components/community/communityFeedMappers";
+import { communityUserPostsEmptyI18nKey } from "./communityUserSelfProfileAuthor";
 
 type TFn = (key: string) => string;
 
@@ -16,6 +17,7 @@ export function CommunityUserPostsFeedSection(props: {
   likedIds: Set<string>;
   collectedIds: Set<string>;
   isSelf: boolean;
+  postsVisFilter?: "all" | CommunityPostUserVisibility;
   onPostLike: (postId: string) => void;
   onPostCollect: (postId: string) => void;
   onCommentOpen: (p: CommunityPost, trigger?: HTMLElement | null) => void;
@@ -35,6 +37,7 @@ export function CommunityUserPostsFeedSection(props: {
     likedIds,
     collectedIds,
     isSelf,
+    postsVisFilter = "all",
     onPostLike,
     onPostCollect,
     onCommentOpen,
@@ -53,7 +56,9 @@ export function CommunityUserPostsFeedSection(props: {
         </p>
       ) : userPosts.length === 0 && !postsLoadError ? (
         <div className="rounded-[var(--radius-md)] border border-ref-sun/25 bg-ink-900/70 px-6 py-12 text-center">
-          <p className="text-body text-slate-300">{t("community_empty")}</p>
+          <p className="text-body text-slate-300">
+            {t(communityUserPostsEmptyI18nKey(isSelf, postsVisFilter))}
+          </p>
         </div>
       ) : !loading && userPosts.length > 0 ? (
         userPostsForFeed.map((post) => (

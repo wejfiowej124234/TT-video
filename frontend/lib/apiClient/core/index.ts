@@ -20,10 +20,12 @@ export {
   AUTH_SESSION_TOKEN_KEY,
   AUTH_USER_ID_KEY,
   AUTH_SESSION_OK_COOKIE,
+  canProbeAccountSession,
   clearAuthSessionCookies,
   clearAuthSessionOkCookie,
   clearClientAuthStorage,
   getAuthHeaders,
+  hasWwwSessionHint,
   writeAuthSessionOkCookie,
 } from "./authSession";
 

@@ -3,7 +3,6 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import {
-  COMMUNITY_FEED_PATH,
   POST_AUTH_DEFAULT_RETURN_PATH,
   resolvePostAuthReturnPath,
 } from "@/lib/auth/postAuthReturnPath";
@@ -12,7 +11,7 @@ import { ME_SETTINGS_PROFILE_PATH } from "@/lib/me/meSettingsL5";
 const LOGIN_PAGE = join(process.cwd(), "app/auth/login/page.tsx");
 
 /**
- * ① 烟测：无 returnUrl → 社区动态；裸 `/community/me` → 动态（小红书式）。
+ * ① 烟测：无 returnUrl → 官网地球仪首页；裸 `/community/me` → 资料页。
  */
 describe("login post-auth default return (smoke · ①)", () => {
   it("login page wires resolvePostAuthReturnPath for post-submit redirect", () => {
@@ -21,12 +20,12 @@ describe("login post-auth default return (smoke · ①)", () => {
     expect(page).toContain("router.replace(returnUrl)");
   });
 
-  it("missing or blank returnUrl → /community feed only", () => {
-    expect(POST_AUTH_DEFAULT_RETURN_PATH).toBe(COMMUNITY_FEED_PATH);
-    expect(resolvePostAuthReturnPath(null)).toBe("/community");
-    expect(resolvePostAuthReturnPath(undefined)).toBe("/community");
-    expect(resolvePostAuthReturnPath("")).toBe("/community");
-    expect(resolvePostAuthReturnPath("   ")).toBe("/community");
+  it("missing or blank returnUrl → official globe home /", () => {
+    expect(POST_AUTH_DEFAULT_RETURN_PATH).toBe("/");
+    expect(resolvePostAuthReturnPath(null)).toBe("/");
+    expect(resolvePostAuthReturnPath(undefined)).toBe("/");
+    expect(resolvePostAuthReturnPath("")).toBe("/");
+    expect(resolvePostAuthReturnPath("   ")).toBe("/");
   });
 
   it("bare /community/me → settings profile; tab deep links canonicalize to dedicated paths", () => {

@@ -33,7 +33,7 @@ export function PostDetailDrawerMetaSection({
   isTextOnlyDetail,
   author,
   authorAvatarResolved,
-  roleKey,
+  identityKeys,
   authorProfileHref,
   authorFollow,
   topicHref,
@@ -46,7 +46,7 @@ export function PostDetailDrawerMetaSection({
   isTextOnlyDetail: boolean;
   author: CommunityPost["author"];
   authorAvatarResolved: string;
-  roleKey: string;
+  identityKeys: string[];
   authorProfileHref: string;
   authorFollow?: CommunityFeedCardAuthorFollow;
   topicHref: (tag: string) => string;
@@ -141,27 +141,25 @@ export function PostDetailDrawerMetaSection({
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <span className={TT_COMMUNITY_DRAWER_L5.postDetailRoleBadge}>{t(roleKey)}</span>
+        {identityKeys.map((k) => (
+          <span key={k} className={TT_COMMUNITY_DRAWER_L5.postDetailRoleBadge}>
+            {t(k)}
+          </span>
+        ))}
         {isShowcasePost ? (
           <span className={TT_COMMUNITY_DRAWER_L5.postDetailShowcaseBadge}>{t("community_feed_showcase_badge")}</span>
         ) : null}
-        {author?.isEscrowGuide ? (
-          <span
-            className={`pointer-events-none shrink-0 ${TT_COMMUNITY_DRAWER_L5.postDetailRoleBadge} border border-warning/35 bg-warning/12 text-slate-100`}
-            aria-hidden
-          >
-            {t("community_badge_escrow_guide")}
-          </span>
-        ) : null}
-        {author?.id && (author.role === "guide" || author.isEscrowGuide) ? (
+      </div>
+      {author?.id && (author.role === "guide" || author.isEscrowGuide) ? (
+        <div className="flex flex-wrap items-center gap-2">
           <Link
             href={marketHrefForCommunityUser(author.id)}
             className={`${TT_COMMUNITY_DRAWER_L5.postDetailBookGuideChip} ${communityCardLinkFocus}`}
           >
             {t("community_book_guide_cta")}
           </Link>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       {post.title ? <h3 className="text-h4 font-semibold text-slate-100 leading-snug">{post.title}</h3> : null}
       {!isTextOnlyDetail ? (

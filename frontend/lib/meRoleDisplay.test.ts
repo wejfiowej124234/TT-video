@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import {
   communityRoleLabelI18nKey,
+  communityAuthorIdentityI18nKeys,
+  communityAuthorIdentityForComment,
   communityStoredRoleLabelI18nKey,
   meProtocolRoleForDisplay,
   meRoleLabelI18nKey,
@@ -80,5 +82,50 @@ describe("communityRoleLabelI18nKey", () => {
   });
   it("maps unknown to community_role_tourist", () => {
     expect(communityRoleLabelI18nKey("")).toBe("community_role_tourist");
+  });
+});
+
+describe("communityAuthorIdentityI18nKeys", () => {
+  it("uses tourist when no role", () => {
+    expect(communityAuthorIdentityI18nKeys({})).toEqual(["community_role_tourist"]);
+    expect(communityAuthorIdentityI18nKeys(null)).toEqual(["community_role_tourist"]);
+  });
+  it("maps provider / region_steward / guide", () => {
+    expect(communityAuthorIdentityI18nKeys({ role: "provider" })).toEqual(["community_role_provider"]);
+    expect(communityAuthorIdentityI18nKeys({ role: "region_steward" })).toEqual([
+      "community_role_region_steward",
+    ]);
+    expect(communityAuthorIdentityI18nKeys({ role: "guide" })).toEqual(["community_role_guide"]);
+  });
+  it("picks admin over guide when both identities exist", () => {
+    expect(communityAuthorIdentityI18nKeys({ role: "admin", isEscrowGuide: true })).toEqual([
+      "community_role_admin",
+    ]);
+    expect(communityAuthorIdentityI18nKeys({ isEscrowGuide: true })).toEqual(["community_role_guide"]);
+  });
+  it("ranks steward above merchant and merchant above guide", () => {
+    expect(communityAuthorIdentityI18nKeys({ role: "region_steward", isEscrowGuide: true })).toEqual([
+      "community_role_region_steward",
+    ]);
+    expect(communityAuthorIdentityI18nKeys({ role: "provider", isEscrowGuide: true })).toEqual([
+      "community_role_provider",
+    ]);
+  });
+});
+
+describe("communityAuthorIdentityForComment", () => {
+  it("uses post author rank when the commenter is the post author", () => {
+    const commentAuthor = { id: "u1", role: "guide", isEscrowGuide: true };
+    const postAuthor = { id: "u1", role: "admin", isEscrowGuide: true };
+    expect(communityAuthorIdentityI18nKeys(communityAuthorIdentityForComment(commentAuthor, postAuthor))).toEqual([
+      "community_role_admin",
+    ]);
+  });
+  it("does not borrow another user's identity", () => {
+    const commentAuthor = { id: "u2", role: "guide" };
+    const postAuthor = { id: "u1", role: "admin", isEscrowGuide: true };
+    expect(communityAuthorIdentityI18nKeys(communityAuthorIdentityForComment(commentAuthor, postAuthor))).toEqual([
+      "community_role_guide",
+    ]);
   });
 });

@@ -25,6 +25,7 @@ ARG NEXT_PUBLIC_GUIDE_STAKING_ADDRESS=
 ARG NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS=
 ARG NEXT_PUBLIC_CATALOG_API_ENABLED=1
 ARG NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=0
+ARG NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=
 ARG NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL=
 ARG NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES=
 ARG NEXT_PUBLIC_PSG_RELEASE_VERSION=PSG-REL-20260720-WEB3-CAND-V2
@@ -55,6 +56,7 @@ ENV NEXT_PUBLIC_GUIDE_STAKING_ADDRESS=$NEXT_PUBLIC_GUIDE_STAKING_ADDRESS
 ENV NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS=$NEXT_PUBLIC_STAKING_PROVIDER_ADDRESS
 ENV NEXT_PUBLIC_CATALOG_API_ENABLED=$NEXT_PUBLIC_CATALOG_API_ENABLED
 ENV NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI=$NEXT_PUBLIC_TRAVELTRUST_ALLOW_CHAIN_OFF_MOCK_PAY_UI
+ENV NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=$NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
 ENV NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL=$NEXT_PUBLIC_COMMUNITY_MEDIA_S3_PUBLIC_BASE_URL
 ENV NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES=$NEXT_PUBLIC_TRAVELTRUST_COMMUNITY_POST_MEDIA_URL_PREFIXES
 ENV NEXT_PUBLIC_PSG_RELEASE_VERSION=$NEXT_PUBLIC_PSG_RELEASE_VERSION
@@ -73,6 +75,13 @@ RUN test -n "$NEXT_PUBLIC_ESCROW_FACTORY_V2_ADDRESS" \
 # Fail-closed: attestation SHA must be non-empty at bake (blocks silent unknown → Fly secret fallback to stale tip)
 RUN test -n "$NEXT_PUBLIC_GIT_SHA" \
   || (echo "FAIL: NEXT_PUBLIC_GIT_SHA empty at docker bake — pass --build-arg from deploy-tt-web-staging.sh" >&2 && exit 1)
+
+# OA-01 · Official WalletConnect must be non-empty at bake (QR / Deep Link)
+RUN if [ "$NEXT_PUBLIC_CHAIN_ID" = "1" ]; then \
+      test -n "$NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID" \
+        || (echo "FAIL: OA-01 Official requires NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID at bake" >&2 && exit 1); \
+      node -e "const v=process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID||''; if(!/^[0-9a-fA-F]{32}$/.test(v)){console.error('FAIL: OA-01 WC Project ID malformed'); process.exit(1);} console.log('oa01-wc-bake', v.slice(0,4)+'…'+v.slice(-4));"; \
+    fi
 
 # Bake-time SSOT file (cannot be overridden by stale Fly secrets TRAVELTRUST_GIT_SHA)
 RUN node -e "const fs=require('fs');const o={git_sha:process.env.NEXT_PUBLIC_GIT_SHA||'',artifact_sha:process.env.NEXT_PUBLIC_ARTIFACT_SHA||'',image_digest:process.env.NEXT_PUBLIC_IMAGE_DIGEST||'',build_time:process.env.NEXT_PUBLIC_BUILD_TIME||'',psg_release_version:process.env.NEXT_PUBLIC_PSG_RELEASE_VERSION||'',contract_profile:process.env.NEXT_PUBLIC_CONTRACT_PROFILE||'',database_baseline:process.env.NEXT_PUBLIC_DATABASE_BASELINE||'',cms_baseline:process.env.NEXT_PUBLIC_CMS_BASELINE||'',source:'docker-bake'};fs.mkdirSync('public',{recursive:true});fs.writeFileSync('public/tt-release-identity.bake.json',JSON.stringify(o));console.log('bake-identity',o.git_sha)"

@@ -7,8 +7,6 @@ import ApiErrorAlert from "@/components/ApiErrorAlert";
 import type { CommunityCommentSort } from "@/lib/apiClient/community";
 import type { CommunityPost, CommunityComment } from "@/lib/communityMockData";
 import { isShowcasePostId } from "@/lib/communityShowcase";
-import { marketHrefForCommunityUser } from "@/lib/communityMarketDeepLink";
-import { COMMUNITY_BOOK_GUIDE_CTA_CLASS } from "@/components/community/communityFeedConstants";
 import {
   communityAmberPillFocus,
   communityCardLinkFocus,
@@ -22,7 +20,8 @@ import {
   CommunityCommentAuthorAvatar,
   CommunityCommentAuthorName,
 } from "@/components/community/CommunityCommentAuthorAvatar";
-import { CommunityCommentSortTabs } from "@/components/community/CommunityCommentSortTabs";
+import { CommunityCommentGuideIdentityBadge } from "@/components/community/CommunityCommentGuideIdentityBadge";
+import { COMMUNITY_COMMENT_ACTION_REPORT_CLASS } from "@/lib/communityCommentIdentitySortUi";
 
 /** 31 附录：评论抽屉——一级/二级评论列表 + 发表输入；未登录时禁用发送 */
 export function CommentDrawer({
@@ -120,7 +119,12 @@ export function CommentDrawer({
     try {
       await Promise.resolve(onSend(payload));
     } catch (err) {
-      if (typeof window !== "undefined") {
+      const msg = err instanceof Error ? err.message : "";
+      const expectedSendReject =
+        msg === "comment_post_not_ok" ||
+        msg === "comment_offline" ||
+        msg === "comment_send_failed";
+      if (typeof window !== "undefined" && !expectedSendReject) {
         console.error("CommentDrawer handleSend:", err);
       }
       setInput(payload);
@@ -188,14 +192,7 @@ export function CommentDrawer({
             {t("community_showcase_content_hint")}
           </p>
         ) : null}
-        {commentSort != null && onCommentSortChange ? (
-          <CommunityCommentSortTabs
-            t={t}
-            commentSort={commentSort}
-            onCommentSortChange={onCommentSortChange}
-            withDivider
-          />
-        ) : null}
+        {/* R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1: sort tabs removed — default hot */}
         {commentsLoadError ? (
           <div className="space-y-2" role="alert" aria-live="polite">
             <ApiErrorAlert message={commentsLoadError} />
@@ -228,16 +225,7 @@ export function CommentDrawer({
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                       <CommunityCommentAuthorName author={c.author} guestLabel={guestLabel} dash={dash} />
-                      {c.author.isEscrowGuide ? (
-                        <span className="pointer-events-none rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90" aria-hidden>
-                          {t("community_badge_escrow_guide")}
-                        </span>
-                      ) : null}
-                      {(c.author.role === "guide" || c.author.isEscrowGuide) && c.author.id ? (
-                        <Link href={marketHrefForCommunityUser(c.author.id)} className={COMMUNITY_BOOK_GUIDE_CTA_CLASS}>
-                          {t("community_book_guide_cta")}
-                        </Link>
-                      ) : null}
+                      <CommunityCommentGuideIdentityBadge author={c.author} t={t} />
                     </div>
                     {showReport(c) ? (
                       <form
@@ -249,7 +237,7 @@ export function CommentDrawer({
                       >
                         <button
                           type="submit"
-                          className={`shrink-0 text-meta text-slate-400 hover:text-slate-300 motion-sub min-h-[44px] min-w-[44px] px-1 rounded-[var(--radius-md)] inline-flex items-center justify-center ${communityShellTabFocus}`}
+                          className={`${COMMUNITY_COMMENT_ACTION_REPORT_CLASS} ${communityShellTabFocus}`}
                         >
                           {t("community_report")}
                         </button>
@@ -262,16 +250,7 @@ export function CommentDrawer({
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                           <CommunityCommentAuthorName author={r.author} guestLabel={guestLabel} dash={dash} />
-                          {r.author.isEscrowGuide ? (
-                            <span className="pointer-events-none rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90" aria-hidden>
-                              {t("community_badge_escrow_guide")}
-                            </span>
-                          ) : null}
-                          {(r.author.role === "guide" || r.author.isEscrowGuide) && r.author.id ? (
-                            <Link href={marketHrefForCommunityUser(r.author.id)} className={COMMUNITY_BOOK_GUIDE_CTA_CLASS}>
-                              {t("community_book_guide_cta")}
-                            </Link>
-                          ) : null}
+                          <CommunityCommentGuideIdentityBadge author={r.author} t={t} />
                         </div>
                         {showReport(r) ? (
                           <form
@@ -283,7 +262,7 @@ export function CommentDrawer({
                           >
                             <button
                               type="submit"
-                              className={`shrink-0 text-meta text-slate-400 hover:text-slate-300 motion-sub min-h-[44px] min-w-[44px] px-1 rounded-[var(--radius-md)] inline-flex items-center justify-center ${communityShellTabFocus}`}
+                              className={`${COMMUNITY_COMMENT_ACTION_REPORT_CLASS} ${communityShellTabFocus}`}
                             >
                               {t("community_report")}
                             </button>

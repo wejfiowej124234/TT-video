@@ -1,8 +1,8 @@
 "use client";
 
 import {
+  canProbeAccountSession,
   clearGetMeCache,
-  getAuthHeaders,
   getMe,
   getMeFull,
   isMeFullRequestError,
@@ -12,8 +12,7 @@ import { userFromGetMePayload } from "@/lib/meTrust";
 
 /** 与顶栏 `useHeaderSession` / `getMe` 同源：本地是否有可探测的账户凭证。 */
 export function hasAccountSessionCredentials(): boolean {
-  const auth = getAuthHeaders();
-  return !!(auth.Authorization || auth["X-User-Id"]);
+  return canProbeAccountSession();
 }
 
 /** `GET /me` 探测：无凭证或无效用户 → false。 */

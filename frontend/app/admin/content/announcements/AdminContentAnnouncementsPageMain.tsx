@@ -26,6 +26,7 @@ import {
   ADMIN_FILTER_FIELD_LABEL_CLASS,
   ADMIN_FILTER_INPUT_MD_CLASS,
   ADMIN_PRIMARY_ACTION_BTN_CLASS,
+  ADMIN_TABLE_ROW_ACTIONS_CLASS,
   ADMIN_TABLE_TD_CELL_CLASS,
   ADMIN_TEXT_FOOTNOTE_CLASS,
   adminTableRowPrimaryActionClass,
@@ -78,6 +79,7 @@ export function AdminContentAnnouncementsPageMain() {
 
       {canAccessWrite ? (
         <OfficialOpsFormCard
+          layout="stack"
           title={t(editId ? "admin_content_announcements_edit_title" : "admin_content_announcements_create_title")}
         >
           <div className="grid gap-3 sm:grid-cols-2">
@@ -248,7 +250,8 @@ export function AdminContentAnnouncementsPageMain() {
               <td className={ADMIN_TABLE_TD_CELL_CLASS}>
                 <AdminContentStatusBadge status={row.publish_status} />
               </td>
-              <td className={`${ADMIN_TABLE_TD_CELL_CLASS} space-x-1`}>
+              <td className={ADMIN_TABLE_TD_CELL_CLASS}>
+                <div className={ADMIN_TABLE_ROW_ACTIONS_CLASS}>
                 {canWriteLane(row.lane) && row.publish_status === "draft" ? (
                   <button
                     type="button"
@@ -330,6 +333,7 @@ export function AdminContentAnnouncementsPageMain() {
                     {t("admin_content_announcements_archive_btn")}
                   </button>
                 ) : null}
+                </div>
               </td>
             </tr>
           ))}

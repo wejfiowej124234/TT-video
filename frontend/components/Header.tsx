@@ -13,6 +13,7 @@ import { buildHeaderLoginHref } from "@/lib/headerLoginHref";
 import {
   headerBarClassForPathname,
   headerBrandWordmarkClasses,
+  headerBrandWordmarkIsActive,
   headerLoginLinkClasses,
   headerMobileNavRailClassForPathname,
   headerNavItemIsActive,
@@ -23,6 +24,7 @@ import {
   isAdminHeaderPath,
   isAuthL5DarkHeaderPath,
   isCommunityPremiumHeaderPath,
+  resolveHeaderBrandHref,
   shouldSuppressGlobalSiteNav,
 } from "@/lib/uiSystem";
 import { ADMIN_HEADER_RETURN_SITE_CLASS } from "@/lib/adminUi";
@@ -158,7 +160,7 @@ export default function Header() {
   const showGuestAuthRail = !mounted || (!checking && !sessionUser);
   const { t } = useTranslation();
 
-  const isTraveltrust = pathname?.startsWith("/traveltrust");
+  const isTraveltrust = pathname === "/" || pathname?.startsWith("/traveltrust");
   const isAuthL5 = isAuthL5DarkHeaderPath(pathname);
   const isCommunityPremium = isCommunityPremiumHeaderPath(pathname);
   const isDarkSurface = headerSurfaceKindForPathname(pathname) !== "light";
@@ -176,9 +178,9 @@ export default function Header() {
   const nav = (
     <nav className="flex flex-wrap items-center gap-2 sm:gap-2.5">
       <NavLink
-        href="/"
-        active={headerNavItemIsActive(pathname, "/")}
-        className={navLinkClass("/")}
+        href="/plan"
+        active={headerNavItemIsActive(pathname, "/plan")}
+        className={navLinkClass("/plan")}
         onNavStart={onNavStart}
         focusRingClass={headerNavFocusRing}
       >
@@ -273,7 +275,13 @@ export default function Header() {
             </div>
           ) : (
             <>
-              <NavLink href="/traveltrust" className={brandWordmarkClass} onNavStart={onNavStart} focusRingClass={headerNavFocusRing}>
+              <NavLink
+                href={resolveHeaderBrandHref(pathname)}
+                active={headerBrandWordmarkIsActive(pathname)}
+                className={brandWordmarkClass}
+                onNavStart={onNavStart}
+                focusRingClass={headerNavFocusRing}
+              >
                 TravelTrust
               </NavLink>
               <div className="hidden sm:block">{nav}</div>

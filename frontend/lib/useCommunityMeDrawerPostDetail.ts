@@ -30,7 +30,7 @@ export function useCommunityMeDrawerPostDetail(args: {
   const [detailPost, setDetailPost] = useState<CommunityPost | null>(null);
   const [detailFocusComments, setDetailFocusComments] = useState(false);
   const [commentsRetryTick, setCommentsRetryTick] = useState(0);
-  const [commentSort, setCommentSort] = useState<CommunityCommentSort>("chronological");
+  const [commentSort, setCommentSort] = useState<CommunityCommentSort>("hot");
   const focusReturnTargetRef = useRef<HTMLElement | null>(null);
 
   const loginRedirect = useCallback(() => {

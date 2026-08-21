@@ -29,10 +29,10 @@ describe("communityMeFeatureFlags", () => {
     expect(isCommunityMeLikesListEnabled()).toBe(false);
   });
 
-  it("avatar upload follows NODE_ENV when env unset", () => {
+  it("avatar upload defaults on when env unset (including production)", () => {
     vi.stubEnv("NEXT_PUBLIC_COMMUNITY_ME_AVATAR_UPLOAD", "");
     vi.stubEnv("NODE_ENV", "production");
-    expect(isCommunityMeAvatarUploadEnabled()).toBe(false);
+    expect(isCommunityMeAvatarUploadEnabled()).toBe(true);
     vi.stubEnv("NODE_ENV", "development");
     expect(isCommunityMeAvatarUploadEnabled()).toBe(true);
   });

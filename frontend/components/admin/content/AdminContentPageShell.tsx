@@ -3,6 +3,11 @@
 import { useTranslation } from "@/components/LocaleProvider";
 import { AdminOpsPlanePermissionBanners } from "@/components/admin/ops/AdminOpsPlanePermissionBanners";
 import { OpsPlanePageShell } from "@/components/admin/ops/OpsPlanePageShell";
+import {
+  ADMIN_ENTERPRISE_CONTENT_STATUS_CONTRAST_CLASS,
+  ADMIN_ENTERPRISE_HARDENING_MARKERS,
+  adminEnterpriseContentStatusContrastTone,
+} from "@/lib/admin/adminEnterpriseHardeningContract";
 import { ADMIN_PERM, type AdminPermissionId } from "@/lib/admin/adminPermissionIds";
 
 type Props = {
@@ -64,8 +69,13 @@ export function AdminContentPageShell({
 export function AdminContentStatusBadge({ status }: { status: string }) {
   const { t } = useTranslation();
   const key = `admin_content_status_${status}` as const;
+  const tone = adminEnterpriseContentStatusContrastTone(status);
   return (
-    <span className="rounded bg-ink-100 px-2 py-0.5 text-body-xs text-ink-700" data-tt-content-status={status}>
+    <span
+      className={`inline-flex whitespace-nowrap rounded px-2 py-0.5 text-body-xs ${ADMIN_ENTERPRISE_CONTENT_STATUS_CONTRAST_CLASS[tone]}`}
+      data-tt-content-status={status}
+      {...{ [ADMIN_ENTERPRISE_HARDENING_MARKERS.contentStatusContrast]: tone }}
+    >
       {t(key)}
     </span>
   );

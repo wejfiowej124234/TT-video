@@ -16,6 +16,7 @@ import {
   headerBrandWordmarkClasses,
   headerLoginLinkClasses,
   headerNavItemIsActive,
+  headerBrandWordmarkIsActive,
   headerNavLinkClasses,
   headerRegisterPillClasses,
   resolveHeaderBrandHref,
@@ -180,6 +181,7 @@ describe("uiSystem L0 header", () => {
   });
 
   it("headerBarClassForPathname uses merged cinematic bar on /traveltrust", () => {
+    expect(headerBarClassForPathname("/")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
     expect(headerBarClassForPathname("/traveltrust")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
     expect(headerBarClassForPathname("/traveltrust/foo")).toBe(TT_MARKETING_HEADER_BAR_TRAVELTRUST_CINEMATIC);
   });
@@ -201,18 +203,24 @@ describe("uiSystem L0 header", () => {
     expect(headerNavLinkClasses("/community", true)).not.toContain("bg-cyan/10");
   });
 
-  it("headerNavItemIsActive matches L0 hrefs; traveltrust does not activate Web3", () => {
-    expect(headerNavItemIsActive("/", "/")).toBe(true);
-    expect(headerNavItemIsActive("/traveltrust", "/")).toBe(false);
-    expect(headerNavItemIsActive("/traveltrust/announcements", "/")).toBe(false);
-    expect(headerNavItemIsActive("/market", "/")).toBe(false);
+  it("headerNavItemIsActive matches L0 hrefs; globe home does not activate 定制旅行", () => {
+    expect(headerNavItemIsActive("/", "/")).toBe(false);
+    expect(headerNavItemIsActive("/", "/plan")).toBe(false);
+    expect(headerNavItemIsActive("/plan", "/plan")).toBe(true);
+    expect(headerNavItemIsActive("/traveltrust", "/plan")).toBe(false);
+    expect(headerNavItemIsActive("/traveltrust/announcements", "/plan")).toBe(false);
+    expect(headerNavItemIsActive("/market", "/plan")).toBe(false);
     expect(headerNavItemIsActive("/market/foo", "/market")).toBe(true);
     expect(headerNavItemIsActive("/community/me", "/community")).toBe(true);
     expect(headerNavItemIsActive("/did-rank", "/did-rank")).toBe(true);
+    expect(headerBrandWordmarkIsActive("/")).toBe(true);
+    expect(headerBrandWordmarkIsActive("/traveltrust")).toBe(true);
+    expect(headerBrandWordmarkIsActive("/plan")).toBe(false);
+    expect(headerBrandWordmarkIsActive("/market")).toBe(false);
   });
 
   it("header chrome helpers align with Web3 travel tokens", () => {
-    expect(headerBrandWordmarkClasses("/")).toContain("text-white");
+    expect(headerBrandWordmarkClasses("/")).toContain("!text-ref-sun");
     expect(headerBrandWordmarkClasses("/orders")).toContain("text-white");
     expect(headerBrandWordmarkClasses("/orders/new")).toContain("text-white");
     expect(headerBrandWordmarkClasses("/traveltrust")).toContain("text-slate-100");
@@ -230,9 +238,9 @@ describe("uiSystem L0 header", () => {
     expect(headerLoginLinkClasses("/market")).toContain("text-slate-100");
   });
 
-  it("resolveHeaderBrandHref sends home to /", () => {
+  it("resolveHeaderBrandHref always points to official /", () => {
     expect(resolveHeaderBrandHref("/")).toBe("/");
-    expect(resolveHeaderBrandHref("/traveltrust")).toBe("/traveltrust");
-    expect(resolveHeaderBrandHref("/orders")).toBe("/traveltrust");
+    expect(resolveHeaderBrandHref("/traveltrust")).toBe("/");
+    expect(resolveHeaderBrandHref("/orders")).toBe("/");
   });
 });

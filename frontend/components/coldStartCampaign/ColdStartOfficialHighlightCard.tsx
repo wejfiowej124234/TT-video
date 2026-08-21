@@ -5,6 +5,7 @@ import { memo, useState } from "react";
 
 import type { ColdStartConsumerHighlightCard } from "@/lib/coldStartCampaign/coldStartConsumerPresentation";
 import { COLD_START_CONSUMER_COVER_FALLBACK } from "@/lib/coldStartCampaign/coldStartConsumerPresentation";
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 export type ColdStartOfficialHighlightCardProps = {
@@ -12,7 +13,7 @@ export type ColdStartOfficialHighlightCardProps = {
 };
 
 function ColdStartOfficialHighlightCardInner({ card }: ColdStartOfficialHighlightCardProps) {
-  const [coverSrc, setCoverSrc] = useState(card.coverUrl);
+  const [coverSrc, setCoverSrc] = useState(() => communityMediaAbsoluteUrlForRender(card.coverUrl) || card.coverUrl);
 
   return (
     <article

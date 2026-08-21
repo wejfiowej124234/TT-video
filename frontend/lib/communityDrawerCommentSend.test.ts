@@ -117,6 +117,44 @@ describe("communityDrawerCommentSend", () => {
         logContext: "TestCtx",
       });
       expect(r).toEqual({ ok: false, body: { status: "error", message: "x" } });
+      expect(errSpy).toHaveBeenCalled();
+      errSpy.mockRestore();
+    });
+
+    it("returns softDuplicate for comment_duplicate without console.error", async () => {
+      const errSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      vi.mocked(postComment).mockResolvedValue({
+        status: "error",
+        error: "comment_duplicate",
+        message: "comment_duplicate",
+      });
+      const r = await postCommunityDrawerComment({
+        postId: "p1",
+        content: "same",
+        logContext: "TestCtx",
+      });
+      expect(r).toEqual({ ok: true, softDuplicate: true });
+      expect(errSpy).not.toHaveBeenCalled();
+      errSpy.mockRestore();
+    });
+
+    it("does not console.error for expected abuse codes like comment_too_fast", async () => {
+      const errSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      vi.mocked(postComment).mockResolvedValue({
+        status: "error",
+        error: "comment_too_fast",
+        message: "comment_too_fast",
+      });
+      const r = await postCommunityDrawerComment({
+        postId: "p1",
+        content: "a",
+        logContext: "TestCtx",
+      });
+      expect(r).toEqual({
+        ok: false,
+        body: { status: "error", error: "comment_too_fast", message: "comment_too_fast" },
+      });
+      expect(errSpy).not.toHaveBeenCalled();
       errSpy.mockRestore();
     });
   });

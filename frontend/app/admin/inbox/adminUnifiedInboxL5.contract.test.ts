@@ -78,6 +78,15 @@ describe("admin unified inbox L5 (①)", () => {
 
   });
 
+  it("workflow chips render task.count (not an undefined countLabel)", () => {
+    const nav = readFileSync(
+      join(__dir, "..", "..", "..", "components", "admin", "AdminInboxWorkflowQuickNav.tsx"),
+      "utf8",
+    );
+    expect(nav).toContain("{task.count}");
+    expect(nav).not.toMatch(/\bcountLabel\b/);
+  });
+
 });
 
 

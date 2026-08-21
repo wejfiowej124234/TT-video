@@ -34,6 +34,7 @@ import { ADMIN_DATA_MUTATED_EVENT } from "@/lib/admin/adminPostWriteCacheInvalid
 
 import { runAdminQueueFetchesInSeries } from "@/lib/admin/runAdminQueueFetchesInSeries";
 import { scheduleAdminDeferredShellWork } from "@/lib/admin/adminDeferredShellWork";
+import { useAdminHomeSoftRevalidate } from "@/lib/admin/useAdminHomeSoftRevalidate";
 
 import type { AdminFetchErrorKind } from "@/lib/adminFetchDisplay";
 
@@ -173,7 +174,15 @@ async function fetchInboxChannel(
 
   const { scope, listUrl } = adminInboxQueueListFetchConfig(key);
   const res = await fetchAdminQueueList<{ items?: unknown[] }>(context, listUrl, { scope });
-  return { total: res.total, errorKind: res.errorKind, rateLimited: res.rateLimited };
+  const total =
+    res.errorKind != null
+      ? null
+      : typeof res.total === "number"
+        ? res.total
+        : Array.isArray(res.items)
+          ? res.items.length
+          : 0;
+  return { total, errorKind: res.errorKind, rateLimited: res.rateLimited };
 }
 
 
@@ -199,8 +208,10 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
   const rateLimitUntilRef = useRef(0);
 
   const loadInFlightRef = useRef(false);
+  const loadRef = useRef<() => void>(() => {});
 
-
+  // HU-463 · tab visible → soft reload
+  const { markFetched } = useAdminHomeSoftRevalidate(() => loadRef.current(), fetchEnabled);
 
   const load = useCallback(() => {
 
@@ -400,9 +411,13 @@ export function useAdminHomeInboxInternal(options?: { fetchEnabled?: boolean }):
 
         setLoading(false);
 
+        markFetched();
+
       });
 
-  }, [caps.hasPermission, caps.permissionsLoaded, fetchEnabled]);
+  }, [caps.hasPermission, caps.permissionsLoaded, fetchEnabled, markFetched]);
+
+  loadRef.current = load;
 
 
 

@@ -8,6 +8,7 @@ describe("next.config meta/build rewrites (PP-D-001)", () => {
     expect(cfg).toContain('source: "/meta/build"');
     expect(cfg).toContain('source: "/api/meta/build"');
     expect(cfg).toMatch(/source:\s*"\/api\/meta\/build"[\s\S]*destination:\s*`\$\{dest\}\/meta\/build`/);
+    expect(cfg).toContain('destination: `${dest}/meta?compact=:compact`');
   });
 
   it("MED-01 allows Tigris + cdn.traveltrust.app remotePatterns", () => {

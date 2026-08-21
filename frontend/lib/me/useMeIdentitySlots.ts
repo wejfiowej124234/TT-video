@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getMe, getAuthHeaders } from "@/lib/apiClient";
+import { getMe, canProbeAccountSession } from "@/lib/apiClient";
 import {
   parseIdentitySlotsFromMe,
   type MeIdentitySlot,
@@ -16,9 +16,7 @@ export function useMeIdentitySlots() {
   const run = useCallback(() => {
     const gen = ++genRef.current;
     if (typeof window === "undefined") return;
-    const auth = getAuthHeaders();
-    const canProbe = !!(auth.Authorization || auth["X-User-Id"]);
-    if (!canProbe) {
+    if (!canProbeAccountSession()) {
       if (gen !== genRef.current) return;
       setSlots(null);
       setReady(true);

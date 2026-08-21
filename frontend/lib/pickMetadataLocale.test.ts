@@ -1,14 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { localeMessagesFromAcceptLanguage } from "@/lib/pickMetadataLocale";
+import { localeFromAcceptLanguage, localeMessagesFromAcceptLanguage } from "@/lib/pickMetadataLocale";
+import { DEFAULT_LOCALE, LOCALES, LOCALE_STORAGE_KEY } from "@/lib/i18n";
 import zh from "@/locales/zh";
 import en from "@/locales/en";
 
 describe("localeMessagesFromAcceptLanguage", () => {
-  it("defaults to zh for null/empty", () => {
-    expect(localeMessagesFromAcceptLanguage(null)).toBe(zh);
-    expect(localeMessagesFromAcceptLanguage(undefined)).toBe(zh);
-    expect(localeMessagesFromAcceptLanguage("")).toBe(zh);
-    expect(localeMessagesFromAcceptLanguage("   ")).toBe(zh);
+  it("product default locale is English", () => {
+    expect(DEFAULT_LOCALE).toBe("en");
+    expect(LOCALES[0]).toBe("en");
+    expect(LOCALE_STORAGE_KEY).toBe("traveltrust_locale_v2");
+    expect(localeFromAcceptLanguage(null)).toBe("en");
+  });
+  it("defaults to en for null/empty", () => {
+    expect(localeMessagesFromAcceptLanguage(null)).toBe(en);
+    expect(localeMessagesFromAcceptLanguage(undefined)).toBe(en);
+    expect(localeMessagesFromAcceptLanguage("")).toBe(en);
+    expect(localeMessagesFromAcceptLanguage("   ")).toBe(en);
   });
 
   it("prefers first matching tag in list", () => {

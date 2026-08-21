@@ -38,6 +38,7 @@ export type PostDetailDrawerProps = {
   postVisibilityBusy?: boolean;
   meUserId?: string | null;
   onReportComment?: (comment: CommunityComment) => void;
+  onDeleteComment?: (comment: CommunityComment) => void | Promise<void>;
   commentsHasMore?: boolean;
   onLoadMoreComments?: () => void | Promise<void>;
   commentsLoadMoreBusy?: boolean;

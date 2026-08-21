@@ -23,6 +23,7 @@ describe("accountSessionPageSync (① · header vs page body)", () => {
     const header = read("components/header/headerSession.ts");
     expect(header).toContain("traveltrust:auth-change");
     expect(header).toContain("clearGetMeCache");
+    expect(header).toContain("canProbeAccountSession");
     expect(header).toContain("getMe()");
   });
 

@@ -154,7 +154,7 @@ export async function completeGuideOnboardingStaging(
 /** Staging landing：POST 成功后若结果区慢/文案不同，fallback 直跳 /escrow/:id */
 export async function createItineraryViaLandingUiStaging(page: Page): Promise<string> {
   await clearLandingItinerarySession(page);
-  await page.goto("/", { timeout: 120_000, waitUntil: "domcontentloaded" });
+  await page.goto("/plan", { timeout: 120_000, waitUntil: "domcontentloaded" });
   await expect(page.locator("#landing-hero-form")).toBeVisible({ timeout: 120_000 });
   await fillLandingHeroChinaBeijing(page);
   await fillLandingHeroBudget(page, "3700");

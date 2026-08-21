@@ -277,7 +277,12 @@ describe("community Feed Action SSOT (site theme V1 §1.7 · contract)", () => {
     expect(src).toContain("applyCommunityDiscoveryStreamTab");
     expect(src).toContain("discoveryTypeSortRow");
     expect(src).toContain("CommunityFeedDestinationPicker");
-    expect(src).toContain("FEED_DESTINATION_CITY_OPTIONS");
+    expect(src).toContain("applyCommunityDiscoveryStayFilter");
+    expect(src).toContain("community_discovery_stay_chip");
+    expect(src).not.toContain("destinationSelected ? null");
+    expect(src).not.toContain("community_discovery_goods_chip");
+    expect(src).not.toContain('applyCommunityDiscoveryProximityFilter(discoveryReset, "nearby_1km")');
+    expect(src).not.toContain("feedHotDestinations");
     expect(src).not.toContain("PUBLISH_DESTINATION_OPTIONS");
     expect(read("CommunityFeedDestinationPicker.tsx")).toContain("community-feed-destination-picker");
   });

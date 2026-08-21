@@ -39,7 +39,7 @@ const sampleRow = (over: Partial<CmsPublicAnnouncementRow> = {}): CmsPublicAnnou
 
 describe("homeCmsAnnouncements CMS-only contract", () => {
   it("mounts strip on home page beside Cold Start (data chain only)", () => {
-    const page = read("app/(home)/page.tsx");
+    const page = read("app/plan/page.tsx");
     expect(page).toContain("HomeCmsAnnouncementStrip");
     expect(page).toContain("ColdStartHomeHeroHighlights");
     const strip = read("components/landing/HomeCmsAnnouncementStrip.tsx");

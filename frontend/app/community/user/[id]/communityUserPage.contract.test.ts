@@ -38,6 +38,38 @@ describe("community user page L5 (① · refactored VM)", () => {
   it("overlays mount delete confirm dialog", () => {
     const overlays = readFileSync(join(ROOT, "CommunityUserPageOverlays.tsx"), "utf8");
     expect(overlays).toContain("CommunityDeletePostConfirmDialog");
+    expect(overlays).toContain('variant="comment"');
+    expect(overlays).toContain("onDeleteComment");
+    expect(overlays).not.toContain("window.confirm");
+  });
+
+  it("comment delete uses L5 confirm not window.confirm", () => {
+    const core = readFileSync(join(ROOT, "useCommunityUserPageCore.ts"), "utf8");
+    expect(core).toContain("useCommunityFeedCommentDelete");
+    expect(core).not.toContain("window.confirm");
+    expect(core).not.toContain("window.alert");
+  });
+
+  it("self profile header uses GET /me when the current posts filter is empty", () => {
+    const core = readFileSync(join(ROOT, "useCommunityUserPageCore.ts"), "utf8");
+    expect(core).toContain("communityUserSelfProfileAuthor");
+    expect(core).toContain("mergeCommunitySelfProfileAuthor");
+    expect(core).toContain("lastSelfAuthorRef");
+    expect(core).not.toMatch(/const profileAuthor = userPosts\[0\]\?\.author;/);
+    expect(core).not.toMatch(/meAsAuthor \?\? userPosts\[0\]\?\.author/);
+  });
+
+  it("self profile 全部/公开/仅自己/归档 load the same logged-in account via getMyPosts", () => {
+    const lists = readFileSync(join(ROOT, "useCommunityUserRemoteLists.ts"), "utf8");
+    expect(lists).toContain("getMyPosts");
+    expect(lists).toContain("visibility: postsVisFilter");
+    expect(lists).toContain("authLoading");
+    expect(lists).not.toMatch(/isSelf \? \{ visibility: postsVisFilter \}/);
+    const header = readFileSync(join(ROOT, "CommunityUserProfileHeader.tsx"), "utf8");
+    expect(header).toContain("!isSelf && !loading && userPostsLength === 0");
+    const feed = readFileSync(join(ROOT, "CommunityUserPostsFeedSection.tsx"), "utf8");
+    expect(feed).toContain("communityUserPostsEmptyI18nKey");
+    expect(feed).toContain("postsVisFilter");
   });
 
   it("feed section wires feed-level delete for self profile", () => {

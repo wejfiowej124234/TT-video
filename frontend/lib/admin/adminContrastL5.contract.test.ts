@@ -62,6 +62,10 @@ describe("admin contrast L5 (①)", () => {
     expect(globalsCss).toMatch(
       /\[data-tt-admin-warm-l5-surface\] \.text-ink-600,[\s\S]*?203 213 225/,
     );
+    expect(globalsCss).toContain("tt-admin-gold-fill");
+    expect(adminUi).toContain("tt-admin-gold-fill");
+    expect(adminUi).toMatch(/ADMIN_TABLE_PRIMARY_ACTION_BTN_CLASS[\s\S]*text-\[#0c0a09\]/);
+    expect(adminUi).toMatch(/ADMIN_TABLE_SECONDARY_ACTION_BTN_CLASS[\s\S]*text-slate-200/);
   });
 
   it("AdminNoticeBanner uses adminUi notice tokens", () => {

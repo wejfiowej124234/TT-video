@@ -18,6 +18,12 @@ export interface CommunityFeedMainPortalsProps {
   authLoading: boolean;
   meUserId: string | null;
   handleReportComment: (post: CommunityPost, c: CommunityComment) => void;
+  handleDeleteComment: (post: CommunityPost, c: CommunityComment) => void | Promise<void>;
+  deleteConfirmCommentOpen: boolean;
+  deleteConfirmBusy: boolean;
+  deleteCommentError: string | null;
+  cancelDeleteComment: () => void;
+  confirmDeleteComment: () => void | Promise<void>;
   commentSendFailed: boolean;
   commentSendErrorMessage: string | null;
   commentFieldMessages: Record<string, string> | null;

@@ -16,9 +16,14 @@ import {
 import { adminHomeEmptyStateDisplay } from "@/lib/admin/adminHomeEmptyStateDict";
 import {
   adminHomeTreasuryDonutFractions,
+  adminHomeTreasuryExplorerAddressUrl,
+  adminHomeTreasuryShortAddress,
+  isAdminHomeTreasuryEvmAddress,
   resolveAdminHomeTreasuryPoolsSnapshot,
+  type AdminHomeTreasuryChainFacts,
   type AdminHomeTreasuryPoolCard,
 } from "@/lib/admin/adminHomeTreasuryPools";
+import { useAdminHomeDomainHealthExtras } from "@/lib/admin/useAdminHomeDomainHealthExtras";
 import { travelFocusRingOffset2Classes } from "@/lib/travelLinkFocus";
 
 const DONUT_COLORS = ["#e8a05c", "#7eb8a8", "#8b9bb8", "#c4a574"] as const;
@@ -129,6 +134,55 @@ function PoolCard(props: { pool: AdminHomeTreasuryPoolCard; t: (k: string) => st
   );
 }
 
+function TreasuryLiveFacts(props: {
+  facts: AdminHomeTreasuryChainFacts;
+  t: (k: string) => string;
+}) {
+  const { facts, t } = props;
+  const rows: Array<{ labelKey: string; address: string | null }> = [
+    { labelKey: "admin_home_treasury_addr_fee_router", address: facts.feeRouterAddress },
+    { labelKey: "admin_home_treasury_addr_governor", address: facts.governorAddress },
+    { labelKey: "admin_home_treasury_addr_timelock", address: facts.timelockAddress },
+  ];
+  return (
+    <div
+      className={`${ADMIN_WARM_L5_FRAME_CLASS} mt-3`}
+      data-tt-admin-home-treasury-live-facts="1"
+    >
+      <div className={`${ADMIN_WARM_L5_INNER_CLASS} ${ADMIN_WARM_L5_PAD_CLASS}`}>
+        <p className={`text-body font-semibold ${ADMIN_TEXT_BODY_CLASS}`}>
+          {t("admin_home_treasury_live_title")}
+        </p>
+        <ul className={`mt-2 space-y-1 text-small ${ADMIN_TEXT_FOOTNOTE_CLASS}`}>
+          {rows.map((row) => {
+            if (!isAdminHomeTreasuryEvmAddress(row.address)) return null;
+            const href = adminHomeTreasuryExplorerAddressUrl(facts.chainId, row.address);
+            return (
+              <li key={row.labelKey} className="flex min-w-0 flex-wrap items-baseline gap-x-2">
+                <span>{t(row.labelKey)}</span>
+                {href ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${ADMIN_INLINE_LINK_CLASS} font-mono`}
+                  >
+                    {adminHomeTreasuryShortAddress(row.address)}
+                  </a>
+                ) : (
+                  <span className={`font-mono ${ADMIN_TEXT_BODY_CLASS}`}>
+                    {adminHomeTreasuryShortAddress(row.address)}
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 /** HU-436 · not_deployed 单一空态（禁三环全 — 假故障感） */
 function TreasuryNotDeployedEmpty(props: {
   poolTitleKeys: string[];
@@ -187,9 +241,11 @@ export function AdminHomeTreasuryPoolStrip(props?: {
   positionVariant?: "home" | "finance-suite";
 }) {
   const { t } = useTranslation();
-  const snap = useMemo(() => resolveAdminHomeTreasuryPoolsSnapshot(), []);
+  const extras = useAdminHomeDomainHealthExtras();
+  const snap = extras.treasurySnapshot;
   const variant = props?.positionVariant ?? "home";
-  const notDeployed = snap.source === "not_deployed";
+  const notDeployed = !extras.treasuryLoading && snap.source === "not_deployed";
+  const showFacts = !extras.treasuryLoading && snap.facts != null && snap.source !== "not_deployed";
 
   return (
     <section
@@ -207,7 +263,7 @@ export function AdminHomeTreasuryPoolStrip(props?: {
       }
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h3 className="text-body font-semibold text-ink-900">
+        <h3 className={`text-body font-semibold ${ADMIN_TEXT_BODY_CLASS}`}>
           {variant === "finance-suite"
             ? t("admin_fin_treasury_position_title")
             : t("admin_home_treasury_title")}
@@ -232,14 +288,19 @@ export function AdminHomeTreasuryPoolStrip(props?: {
           {t("admin_fin_treasury_position_lead")}
         </p>
       ) : null}
-      {notDeployed ? (
+      {extras.treasuryLoading ? (
+        <p className={`mt-3 ${ADMIN_TEXT_FOOTNOTE_CLASS}`}>{t("admin_home_empty_state_loading")}</p>
+      ) : notDeployed ? (
         <TreasuryNotDeployedEmpty poolTitleKeys={snap.pools.map((p) => p.titleKey)} t={t} />
       ) : (
-        <ul className="mt-3 grid gap-3 lg:grid-cols-3">
-          {snap.pools.map((pool) => (
-            <PoolCard key={pool.id} pool={pool} t={t} />
-          ))}
-        </ul>
+        <>
+          {showFacts && snap.facts ? <TreasuryLiveFacts facts={snap.facts} t={t} /> : null}
+          <ul className="mt-3 grid gap-3 lg:grid-cols-3">
+            {snap.pools.map((pool) => (
+              <PoolCard key={pool.id} pool={pool} t={t} />
+            ))}
+          </ul>
+        </>
       )}
       <p className="mt-3">
         <Link

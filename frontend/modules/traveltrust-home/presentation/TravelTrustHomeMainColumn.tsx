@@ -6,14 +6,9 @@ import {
   TT_HERO_SPLIT_CANVAS_RIGHT_INSET_CSS,
   TT_HERO_SPLIT_CSS_VARS_STYLE,
 } from "@/lib/traveltrustHeroSplitLayout";
-import {
-  TT_TRAVELTRUST_PAGE_BLEED_BAND_CLASS,
-  TT_TRAVELTRUST_PAGE_FRAME_CLASS,
-} from "@/lib/traveltrustPageLayout";
 import { TT_Z, ttZClass } from "@/lib/traveltrustZ";
-import { TravelTrustHomeBelowFoldSection } from "../sections/TravelTrustHomeBelowFoldSection";
-import { TravelTrustHomeHeroSection } from "../sections/TravelTrustHomeHeroSection";
-import { TravelTrustHomeLandingNavSlot } from "./TravelTrustHomeLandingNavSlot";
+import { TravelTrustHomeBodyModule } from "./TravelTrustHomeBodyModule";
+import { TravelTrustLockedHomeChrome } from "./TravelTrustLockedHomeChrome";
 import { TravelTrustHomeUnified3DBackdrop } from "./TravelTrustHomeUnified3DBackdrop";
 
 type Props = {
@@ -26,6 +21,11 @@ type Props = {
   onTheaterViewportChange?: (anchor: TheaterViewportAnchor | null) => void;
 };
 
+/**
+ * Official-shaped chrome stack (pin order):
+ * Unified3D backdrop → L1 LandingNav/Pulse → screenshot body module.
+ * Do not wrap chrome in TravelTrustLockedHomeChrome (local-only marker).
+ */
 export function TravelTrustHomeMainColumn({
   mainRef,
   heroRef,
@@ -64,13 +64,11 @@ export function TravelTrustHomeMainColumn({
         data-tt-traveltrust-home-main-column="1"
       >
         <TravelTrustHomeUnified3DBackdrop />
-        <TravelTrustHomeLandingNavSlot />
-        <TravelTrustHomeHeroSection heroRef={heroRef} />
-        <div className={`${TT_TRAVELTRUST_PAGE_BLEED_BAND_CLASS} relative ${ttZClass(TT_Z.HERO_SKY)}`}>
-          <div className={TT_TRAVELTRUST_PAGE_FRAME_CLASS}>
-            <TravelTrustHomeBelowFoldSection onTheaterViewportChange={onTheaterViewportChange} />
-          </div>
-        </div>
+        <TravelTrustLockedHomeChrome />
+        <TravelTrustHomeBodyModule
+          heroRef={heroRef}
+          onTheaterViewportChange={onTheaterViewportChange}
+        />
       </main>
     </>
   );

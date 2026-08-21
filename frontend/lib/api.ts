@@ -4,6 +4,7 @@
  */
 
 import { routesAdminOnboarding } from "./api/routesAdminOnboarding";
+import { isWwwSessionAuthPath } from "./auth/wwwSessionCookie";
 
 const BASE =
   typeof process !== "undefined" && process.env.NEXT_PUBLIC_API_BASE_URL?.trim()
@@ -30,17 +31,46 @@ function isLoopbackApiBase(base: string): boolean {
   }
 }
 
+/** Official www/apex — HttpOnly `traveltrust_session` lives here; never treat `api.web3-ttg.com` as the web origin. */
+function isOfficialWebHostname(hostname: string): boolean {
+  const h = hostname.toLowerCase();
+  return h === "www.web3-ttg.com" || h === "web3-ttg.com";
+}
+
+function stripWwwHostname(hostname: string): string {
+  return hostname.toLowerCase().replace(/^www\./, "");
+}
+
 /**
- * Staging FE（`NEXT_PUBLIC_SITE_URL` 与当前页 origin 一致）：与 loopback 相同，浏览器走同源 + Next rewrites，
- * 避免 `/api/v1/*`、`/meta` 跨域 Failed to fetch（② tt-web-staging P0 bugfix）。
+ * Staging FE（`NEXT_PUBLIC_SITE_URL` 与当前页 origin 一致）与 Official www：
+ * 浏览器走同源 `/api/v1/*` + middleware BFF（注入 Bearer），禁止直连 `api.web3-ttg.com`
+ * （GAP-FE-BFF-BYPASS CLOSED_REALITY：Official SITE_URL apex vs browse www 时旧实现会绕过 BFF）。
  */
 function browserUsesSameOriginApiProxy(): boolean {
   if (isLoopbackApiBase(BASE)) return true;
   if (typeof globalThis === "undefined") return false;
   const loc = (globalThis as { window?: { location?: { origin?: string } } }).window?.location?.origin;
+  if (typeof loc !== "string" || !loc) return false;
+  try {
+    const locHost = new URL(loc).hostname;
+    if (isOfficialWebHostname(locHost)) return true;
+  } catch {
+    /* fall through to SITE_URL match */
+  }
   const site = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "");
-  if (typeof loc !== "string" || !loc || !site) return false;
-  return loc === site;
+  if (!site) return false;
+  if (loc === site) return true;
+  try {
+    const a = new URL(loc);
+    const b = new URL(site);
+    return (
+      a.protocol === b.protocol &&
+      stripWwwHostname(a.hostname) === stripWwwHostname(b.hostname) &&
+      (a.port || "") === (b.port || "")
+    );
+  } catch {
+    return false;
+  }
 }
 
 /** 浏览器端：指向前端自身 origin，由 Next `rewrites` 代理到 BASE，避免直连 :8080 触发 CORS。 */
@@ -1062,6 +1092,9 @@ export const routes = {
     postById: (id: string) => `/api/v1/community/posts/${id}`,
     postLike: (postId: string) => `/api/v1/community/posts/${postId}/like`,
     postComments: (postId: string) => `/api/v1/community/posts/${postId}/comments`,
+    /** R-COMM-COMMENT-DELETE-1 · DELETE …/comments/:commentId */
+    postCommentById: (postId: string, commentId: string) =>
+      `/api/v1/community/posts/${postId}/comments/${commentId}`,
     conversations: "/api/v1/community/conversations",
     conversationsEnsure: "/api/v1/community/conversations/ensure",
     conversationMessages: (id: string) =>
@@ -1098,8 +1131,9 @@ export const routes = {
 } as const;
 
 /** 完整 URL（base + path）。浏览器 + loopback 基址时通常返回「当前页 origin + path」（经 `next.config.js` rewrites 代理）。
- * `/auth/*` 例外：须直连 `BASE`（依赖 API `CORS_ORIGINS` 含前端 origin；与 auth 注册/登录同源）。
- * 其它 `/api/*` 在浏览器 loopback 下走同源 + rewrites，避免 `localhost:3012` → `127.0.0.1:8080` 跨域与 CORS 误配导致 **Failed to fetch**。
+ * BATCH-A / GAP-LOGIN-WWW-405：`POST /auth/login|logout|refresh|register` 走当前 origin，由 middleware BFF 设 HttpOnly cookie。
+ * Official www/apex：同源 `/api/v1/*`（GAP-FE-BFF-BYPASS CLOSED_REALITY）。
+ * 其它 `/auth/*`（seed / verify / forgot）仍直连 `BASE`。
  * SSR/Node（无 `window`）仍用 `${BASE}${p}`，由 Next 服务端直连 API。
  */
 export function apiUrl(path: string): string {
@@ -1108,9 +1142,18 @@ export function apiUrl(path: string): string {
   }
   const p = path.startsWith("/") ? path : `/${path}`;
   if (browserUsesSameOriginApiProxy()) {
+    const pathOnly = p.split("?")[0];
+    // Official www rewrite drops `?compact=1` and can 503 on the 75k full /meta corpus.
+    // Public GET /meta hits API origin (CORS allow-credentials from www).
+    if ((pathOnly === "/meta" || pathOnly === "/meta/build") && !isLoopbackApiBase(BASE)) {
+      return `${BASE}${p}`;
+    }
     if (p.startsWith("/auth/")) {
-      // ① loopback：绕过 Next `/auth/*` 页面路由，直连 API :8080
-      // ② staging/production：Next rewrite 对 POST /auth/login 返回 405 → 直连 API（CORS 已允许 SITE_URL）
+      const authPath = p.split("?")[0].replace(/\/$/, "") || "/";
+      if (isWwwSessionAuthPath(authPath)) {
+        const same = sameOriginApiPathInBrowser(p);
+        if (same != null) return same;
+      }
       if (isLoopbackApiBase(BASE)) {
         return loopbackDirectAuthApiUrl(p);
       }

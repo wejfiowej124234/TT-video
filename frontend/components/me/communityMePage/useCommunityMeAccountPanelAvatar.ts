@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
-import { clearGetMeCache, postMeProfileAvatar } from "@/lib/apiClient";
+import { clearGetMeCache } from "@/lib/apiClient";
 import { mapProfileAvatarUploadError } from "@/lib/me/mapProfileAvatarUploadError";
+import { uploadMeProfileAvatarFile } from "@/lib/me/uploadMeProfileAvatar";
 import { isCommunityMeAvatarUploadEnabled } from "@/lib/communityMeFeatureFlags";
 import {
   COMMUNITY_ME_PROFILE_AVATAR_MAX_BYTES,
@@ -25,8 +26,8 @@ export function useCommunityMeAccountPanelAvatar({
   const avatarLocalUploadEnabled = isCommunityMeAvatarUploadEnabled();
 
   const onAvatarPickClick = useCallback(
-    (e: FormEvent) => {
-      e.preventDefault();
+    (e?: FormEvent) => {
+      e?.preventDefault();
       setAvatarUploadErr(null);
       if (avatarLocalUploadEnabled) {
         avatarFileRef.current?.click();
@@ -53,26 +54,10 @@ export function useCommunityMeAccountPanelAvatar({
         setAvatarUploadErr(t("community_me_avatar_upload_too_large"));
         return;
       }
-      let dataUrl: string;
-      try {
-        dataUrl = await new Promise<string>((resolve, reject) => {
-          const fr = new FileReader();
-          fr.onloadend = () => {
-            const s = fr.result;
-            if (typeof s === "string") resolve(s);
-            else reject(new Error("read_failed"));
-          };
-          fr.onerror = () => reject(new Error("read_failed"));
-          fr.readAsDataURL(f);
-        });
-      } catch {
-        setAvatarUploadErr(t("community_me_avatar_upload_failed"));
-        return;
-      }
       setAvatarUploadBusy(true);
       setAvatarUploadErr(null);
       try {
-        await postMeProfileAvatar({ content_base64: dataUrl });
+        await uploadMeProfileAvatarFile(f);
         clearGetMeCache();
         loadMe({ silent: true });
         if (typeof window !== "undefined") {

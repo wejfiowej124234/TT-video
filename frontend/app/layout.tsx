@@ -6,10 +6,10 @@ import Header from "@/components/Header";
 import ClientSkipLink from "@/components/ClientSkipLink";
 import { VIEWPORT_THEME_LIGHT, VIEWPORT_THEME_DARK } from "@/lib/viewportTheme";
 import { getSiteMetadataBase } from "@/lib/siteMetadataBase";
-import zh from "@/locales/zh";
+import en from "@/locales/en";
 
-const title = zh.meta_title;
-const description = zh.meta_description;
+const title = en.meta_title;
+const description = en.meta_description;
 
 export const metadata: Metadata = {
   metadataBase: getSiteMetadataBase(),
@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <Script src="/tt-session-cookie-bootstrap.js" strategy="beforeInteractive" />
         <Script src="/tt-dev-chunk-recovery.js" strategy="beforeInteractive" />

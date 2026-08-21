@@ -5,17 +5,17 @@
 
 export type Locale = "zh" | "en";
 
-export const LOCALE_STORAGE_KEY = "traveltrust_locale";
+export const LOCALE_STORAGE_KEY = "traveltrust_locale_v2";
 
-export const DEFAULT_LOCALE: Locale = "zh";
+export const DEFAULT_LOCALE: Locale = "en";
 
 export const LOCALE_LABELS: Record<Locale, string> = {
-  zh: "中文",
   en: "English",
+  zh: "中文",
 };
 
-/** 所有可选语言，下拉菜单顺序 */
-export const LOCALES: Locale[] = ["zh", "en"];
+/** 所有可选语言，下拉菜单顺序（英文默认 · 中文可选） */
+export const LOCALES: Locale[] = ["en", "zh"];
 
 export function getStoredLocale(): Locale | null {
   if (typeof window === "undefined") return null;

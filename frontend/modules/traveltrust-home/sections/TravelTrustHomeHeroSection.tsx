@@ -24,5 +24,9 @@ type Props = {
 
 export function TravelTrustHomeHeroSection({ heroRef }: Props) {
   useTraveltrustHomeEntryMilestone("hero");
-  return <TravelTrustCinematicHero heroRef={heroRef} />;
+  return (
+    <div className="contents" data-tt-home-module="M04">
+      <TravelTrustCinematicHero heroRef={heroRef} />
+    </div>
+  );
 }

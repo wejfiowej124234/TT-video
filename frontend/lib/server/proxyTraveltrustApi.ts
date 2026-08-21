@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { WWW_SESSION_COOKIE } from "@/lib/auth/wwwSessionCookie";
 
 export function traveltrustApiBaseCandidates(): string[] {
   const seen = new Set<string>();
@@ -6,6 +7,15 @@ export function traveltrustApiBaseCandidates(): string[] {
     const t = raw?.trim();
     if (!t) return;
     const b = t.replace(/\/$/, "");
+    // Skip deploy placeholders — Official fly.toml historically set api.example.com.
+    try {
+      const host = new URL(b).hostname.toLowerCase();
+      if (host === "api.example.com" || host === "example.com" || host.endsWith(".example.com")) {
+        return;
+      }
+    } catch {
+      return;
+    }
     seen.add(b);
   };
   add(process.env.TRAVELTRUST_API_BASE_URL);
@@ -83,7 +93,12 @@ export function forwardApiHeaders(req: NextRequest): Headers {
   const requestId = req.headers.get("x-request-id");
   const idem = req.headers.get("idempotency-key") ?? req.headers.get("x-idempotency-key");
   const admin2fa = req.headers.get("x-traveltrust-admin-2fa-session");
-  if (auth) headers.set("authorization", auth);
+  if (auth) {
+    headers.set("authorization", auth);
+  } else {
+    const tok = req.cookies.get(WWW_SESSION_COOKIE)?.value?.trim();
+    if (tok) headers.set("authorization", `Bearer ${tok}`);
+  }
   if (userId) headers.set("x-user-id", userId);
   if (admin2fa) headers.set("x-traveltrust-admin-2fa-session", admin2fa);
   if (requestId) headers.set("x-request-id", requestId);
@@ -110,13 +125,25 @@ async function fetchUpstreamBestEffort(
   init: RequestInit,
 ): Promise<{ res: Response; baseUsed: string }> {
   let last: { res: Response; baseUsed: string } | null = null;
+  let lastErr: unknown = null;
   for (const base of bases) {
     const url = `${base}${upstreamPath}${query}`;
-    const res = await fetchUpstreamWithTransitRetry(url, init);
-    last = { res, baseUsed: base };
-    if (res.status !== 404) return last;
+    try {
+      const res = await fetchUpstreamWithTransitRetry(url, init);
+      last = { res, baseUsed: base };
+      lastErr = null;
+      // Try next base on hard upstream miss / gateway death; keep first non-404 otherwise.
+      if (res.status === 404 || res.status === 502 || res.status === 503 || res.status === 504) {
+        continue;
+      }
+      return last;
+    } catch (e) {
+      lastErr = e;
+      continue;
+    }
   }
-  return last!;
+  if (last) return last;
+  throw lastErr instanceof Error ? lastErr : new Error("api_upstream_unreachable");
 }
 
 /** 同源转发至 traveltrust-api（① · 避免 Next rewrite ECONNREFUSED → 浏览器 404/500） */

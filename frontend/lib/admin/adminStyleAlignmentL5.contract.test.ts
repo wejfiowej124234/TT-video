@@ -33,7 +33,7 @@ describe("admin style alignment L5 (① · project console)", () => {
       /TT_MARKETING_ADMIN_ZONE_ROOT = TT_MARKETING_PRODUCT_PAGE_SHELL;/,
     );
     expect(adminUi).toMatch(
-      /ADMIN_PRIMARY_ACTION_BTN_CLASS[\s\S]*TT_MARKETING_BTN_PRIMARY_WARM_SUBMIT/,
+      /export const ADMIN_PRIMARY_ACTION_BTN_CLASS =\s*"tt-admin-gold-fill/,
     );
     expect(adminUi).toMatch(
       /ADMIN_INBOX_TASK_CTA_ACTIVE_CLASS[\s\S]*TT_MARKETING_BTN_PRIMARY_WARM_WIDGET/,

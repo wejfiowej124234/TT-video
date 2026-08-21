@@ -99,9 +99,10 @@ export function CommunityMessagesConversationRow({ conv, t, locale, dash, shareP
                     {t(communityStoredRoleLabelI18nKey(conv.peer.role))}
                   </span>
                 )}
-                {conv.peer?.isEscrowGuide ? (
+                {conv.peer?.isEscrowGuide &&
+                String(conv.peer?.role ?? "").toLowerCase() !== "guide" ? (
                   <span className="flex-shrink-0 rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90">
-                    {t("community_badge_escrow_guide")}
+                    {t("community_role_guide")}
                   </span>
                 ) : null}
               </span>

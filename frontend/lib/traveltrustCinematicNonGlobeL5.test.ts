@@ -340,6 +340,11 @@ describe("traveltrustCinematicNonGlobeL5", () => {
     expect(TT_PULSE_TICKER_L5.inlineMarqueeTrackClass).toContain("tt-traveltrust-pulse-inline-marquee-track");
     expect(TT_PULSE_TICKER_L5.inlineMarqueeDuration).toBe(72);
     expect(TT_PULSE_TICKER_L5.itemClass).toContain("min-h-[1.875rem]");
+    expect(TT_PULSE_TICKER_L5.itemClass).toContain("tt-pulse-chip-glow");
+    expect(TT_PULSE_TICKER_L5.marqueeItemClass).toContain("overflow-visible");
+    expect(TT_PULSE_TICKER_L5.itemPlateCampaignClass).toContain("#ff8a6a");
+    expect(globals).toContain("tt-pulse-chip-glow");
+    expect(globals).toContain("tt-pulse-chip-shimmer");
     expect(TT_PAGE_LAYOUT_L5.heroContentOffsetClass).toContain("5.5rem");
     expect(TT_HERO_CTA_L5.primaryPulse.repeat).toBe(0);
     expect(TT_START_STEP_L5.upcomingClass).toContain("text-slate-200");

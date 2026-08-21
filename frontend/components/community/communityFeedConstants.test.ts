@@ -5,7 +5,17 @@ import {
   FEED_DESTINATION_GROUPS,
   PUBLISH_DESTINATION_OPTIONS,
   REGION_KEYS,
+  TYPE_OPTIONS,
 } from "./communityFeedConstants";
+
+describe("TYPE_OPTIONS", () => {
+  it("excludes standalone text from feed type chips", () => {
+    expect(TYPE_OPTIONS).toEqual(["photo", "video"]);
+    expect(TYPE_OPTIONS).not.toContain("text");
+    expect(TYPE_OPTIONS).not.toContain("food");
+    expect(TYPE_OPTIONS).not.toContain("travel");
+  });
+});
 
 describe("FEED_DESTINATION_CITY_OPTIONS", () => {
   const countryNames = PRODUCT_COUNTRIES.map((c) => c.nameZh);

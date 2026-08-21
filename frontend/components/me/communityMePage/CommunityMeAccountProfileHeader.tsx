@@ -40,7 +40,7 @@ export default function CommunityMeAccountProfileHeader({
   bioCardText: string;
   bioFeatureOn: boolean;
   avatarFileRef: RefObject<HTMLInputElement | null>;
-  onAvatarPickClick: (e: FormEvent) => void;
+  onAvatarPickClick: (e?: FormEvent) => void;
   onAvatarFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
   avatarUploadBusy: boolean;
   avatarLocalUploadEnabled: boolean;

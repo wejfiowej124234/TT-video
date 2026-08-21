@@ -43,6 +43,15 @@ describe("mapApiCommentToCommunityComment / communityCommentUseModerationPlaceho
     expect(communityCommentModerationPlaceholderI18nKey(c)).toBe("community_comment_status_hidden");
   });
 
+  it("remaps OCS legacy author avatar on comments to Tigris (no legacy upload path)", () => {
+    const c = mapApiCommentToCommunityComment({
+      ...commentBase,
+      author_avatar_url: "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
+    });
+    expect(c.author.avatar_url).toContain("official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg");
+    expect(c.author.avatar_url).not.toContain("/api/v1/uploads/community-posts/ocs-");
+  });
+
   it("maps removed visibility to removed i18n key", () => {
     const c = mapApiCommentToCommunityComment({
       ...commentBase,

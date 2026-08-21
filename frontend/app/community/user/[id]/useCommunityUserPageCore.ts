@@ -6,12 +6,18 @@ import { useCommunityAuth } from "@/components/community/CommunityAuthContext";
 import { useCommunityPostLikeCollect } from "@/components/community/useCommunityPostLikeCollect";
 import { useCommunityPostReport } from "@/components/community/useCommunityPostReport";
 import { isUuid } from "./communityUserPageModel";
+import {
+  communityUserProfileDisplayName,
+  communityUserSelfProfileAuthor,
+  mergeCommunitySelfProfileAuthor,
+} from "./communityUserSelfProfileAuthor";
 import { useCommunityUserRemoteLists } from "./useCommunityUserRemoteLists";
-import { useCommunityUserPostMutations } from "./useCommunityUserPostMutations";
 import { useCommunityUserPageCommentDrawer } from "./useCommunityUserPageCommentDrawer";
+import { useCommunityUserPostMutations } from "./useCommunityUserPostMutations";
+import { useCommunityFeedCommentDelete } from "@/components/community/useCommunityFeedCommentDelete";
 import { communityOpenPostDetail } from "@/components/community/communityOpenPostDetail";
-import type { CommunityPost } from "@/lib/communityMockData";
-import { useCallback } from "react";
+import type { CommunityPost, CommunityPostAuthor } from "@/lib/communityMockData";
+import { useCallback, useRef } from "react";
 import { useCommunityMePageSessionPin } from "@/lib/communityMePageSessionPin";
 
 export function useCommunityUserPageCore() {
@@ -58,6 +64,23 @@ export function useCommunityUserPageCore() {
   );
 
   const drawer = useCommunityUserPageCommentDrawer({ t, meUser: meUser ?? null, setUserPosts });
+
+  const {
+    handleDeleteComment,
+    deleteConfirmCommentOpen,
+    deleteConfirmBusy: deleteCommentConfirmBusy,
+    deleteCommentError,
+    cancelDeleteComment,
+    confirmDeleteComment,
+  } = useCommunityFeedCommentDelete({
+    t,
+    setApiCommentsByPostId: drawer.setApiCommentsByPostId,
+    setLocalCommentsByPostId: drawer.setApiCommentsByPostId,
+    setApiPosts: setUserPosts,
+    setLocalPosts: setUserPosts,
+    setDetailPost: drawer.setDetailPost,
+    setCommentPost: drawer.setCommentPost,
+  });
 
   const userProfileReturnPath = id ? `/community/user/${id}` : "/community";
   const {
@@ -108,10 +131,19 @@ export function useCommunityUserPageCore() {
     setApiCommentsByPostId: drawer.setApiCommentsByPostId,
   });
 
-  const authorLabel = id.slice(0, 8);
-  const profileAuthor = userPosts[0]?.author;
-  const displayName =
-    profileAuthor?.nickname?.trim() ? profileAuthor.nickname : authorLabel;
+  const lastSelfAuthorRef = useRef<CommunityPostAuthor | undefined>(undefined);
+  const meAsAuthor = isSelf ? communityUserSelfProfileAuthor(meUser, id) : undefined;
+  const mergedSelfAuthor = isSelf
+    ? mergeCommunitySelfProfileAuthor(
+        mergeCommunitySelfProfileAuthor(meAsAuthor, userPosts[0]?.author),
+        lastSelfAuthorRef.current,
+      )
+    : undefined;
+  if (isSelf && mergedSelfAuthor && (mergedSelfAuthor.nickname.trim() || mergedSelfAuthor.wallet)) {
+    lastSelfAuthorRef.current = mergedSelfAuthor;
+  }
+  const profileAuthor = isSelf ? mergedSelfAuthor : userPosts[0]?.author;
+  const displayName = communityUserProfileDisplayName(profileAuthor, id);
 
   const detailDrawerAuthorFollow =
     !isSelf && isLoggedIn
@@ -235,6 +267,12 @@ export function useCommunityUserPageCore() {
     commentsLoadMoreBusy: drawer.commentsLoadMoreBusy,
     detailDrawerAuthorFollow,
     handleReportComment,
+    handleDeleteComment,
+    deleteConfirmCommentOpen,
+    deleteCommentConfirmBusy,
+    deleteCommentError,
+    cancelDeleteComment,
+    confirmDeleteComment,
     confirmDeletePost,
     deleteBusyId,
     deleteConfirmPostId,

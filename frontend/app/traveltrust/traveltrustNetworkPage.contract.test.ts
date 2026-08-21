@@ -22,6 +22,8 @@ const composerPresentationPaths = [
   "../../modules/traveltrust-home/presentation/TravelTrustHomeComposerShell.tsx",
   "../../modules/traveltrust-home/presentation/TravelTrustHomeScrollProviders.tsx",
   "../../modules/traveltrust-home/presentation/TravelTrustHomeMainColumn.tsx",
+  "../../modules/traveltrust-home/presentation/TravelTrustLockedHomeChrome.tsx",
+  "../../modules/traveltrust-home/presentation/TravelTrustHomeBodyModule.tsx",
   "../../modules/traveltrust-home/presentation/TravelTrustHomeUnified3DBackdrop.tsx",
   "../../modules/traveltrust-home/presentation/TravelTrustHomeComposerOverlays.tsx",
   "../../modules/traveltrust-home/hooks/useTraveltrustComposerPage.ts",
@@ -708,9 +710,9 @@ describe("traveltrust network page (contract)", () => {
     expect(
       readFileSync(join(__dirname, "../../lib/traveltrustComplianceDisclosure.ts"), "utf8"),
     ).toContain("TRAVELTRUST_V6_COMPLIANCE_DISCLOSURE_KEYS");
-    expect(src).toContain("TravelTrustFaqStrip");
+    expect(src).not.toContain("TravelTrustHomeFaqSection");
     expect(src).toContain("TravelTrustSettlementStrip");
-    expect(src).toContain('id="faq"');
+    expect(readFileSync(join(cinematicDir, "TravelTrustFaqStrip.tsx"), "utf8")).toContain('id="faq"');
     expect(src).toContain('id="settlement"');
     expect(src).not.toContain('id="stats"');
     expect(src).toContain("traveltrust_hero_title_brand");
@@ -745,7 +747,9 @@ describe("traveltrust network page (contract)", () => {
     expect(src).toContain('id="start"');
     expect(src).toContain('href="#roles"');
     expect(src).toContain('href="#liquidity"');
-    expect(src).toContain('id="fee-router"');
+    expect(readFileSync(join(cinematicDir, "TravelTrustStartSection.tsx"), "utf8")).toContain(
+      'id="fee-router"',
+    );
     expect(readFileSync(join(cinematicDir, "TravelTrustPageComplianceBlock.tsx"), "utf8")).toContain(
       "traveltrust_footer_t2",
     );

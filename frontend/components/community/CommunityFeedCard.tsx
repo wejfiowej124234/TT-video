@@ -5,7 +5,7 @@ import type { CommunityPost } from "@/lib/communityMockData";
 import CommunityFeedCardMedia from "./CommunityFeedCardMedia";
 import CommunityFeedCardContent from "./CommunityFeedCardContent";
 import CommunityFeedCardActions from "./CommunityFeedCardActions";
-import { communityStoredRoleLabelI18nKey } from "@/lib/meRoleDisplay";
+import { communityAuthorIdentityI18nKeys } from "@/lib/meRoleDisplay";
 import { warmCommunityPostDetailDrawer } from "@/lib/communityDrawerPrefetch";
 import { TT_COMMUNITY_FEED_ACTION } from "@/lib/marketingUi";
 import { CommunityMeNotesCardOverflowMenu } from "@/components/me/communityMeNotes/CommunityMeNotesCardOverflowMenu";
@@ -62,7 +62,7 @@ export function CommunityFeedCard({
   const tags = post.tags ?? [];
   const { author, likes, comments, collects } = post;
   const displayComments = commentCount ?? comments;
-  const roleKey = communityStoredRoleLabelI18nKey(author?.role);
+  const identityKeys = communityAuthorIdentityI18nKeys(author);
   const images = media_urls && media_urls.length > 0 ? media_urls : (media_url ? [media_url] : []);
   const [localLiked, setLocalLiked] = useState(false);
   const [localCollected, setLocalCollected] = useState(false);
@@ -110,7 +110,7 @@ export function CommunityFeedCard({
         post={post}
         destination={destination}
         tags={tags}
-        roleKey={roleKey}
+        identityKeys={identityKeys}
         t={t}
         followed={followed}
         setFollowed={authorFollow ? undefined : setLocalFollowed}

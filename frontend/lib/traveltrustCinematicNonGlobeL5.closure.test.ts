@@ -217,6 +217,8 @@ describe("traveltrustCinematicNonGlobeL5 closure", () => {
     expect(pulse).toContain("data-tt-traveltrust-pulse-inline-static-l5");
     expect(pulse).toContain("data-tt-traveltrust-pulse-inline-marquee-l5");
     expect(pulse).toContain("inlineMarqueeTrackClass");
+    expect(pulse).toContain("itemPlateCampaignClass");
+    expect(pulse).toContain("itemShimmerClass");
     const roleVideo = readFileSync(join(CINEMATIC, "TravelTrustRoleVideoPlayer.tsx"), "utf8");
     expect(roleVideo).toContain("placeholderCopyClass");
     const theater = readFileSync(join(CINEMATIC, "TravelTrustIdentityTheater.tsx"), "utf8");

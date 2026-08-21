@@ -13,9 +13,10 @@ import {
 } from "@/lib/communityMediaClientUrl";
 import { communityTopicPathForTag } from "@/lib/communityFeedSortUrl";
 import { recordCommunityPostBrowse } from "@/lib/communityBrowseHistory";
-import { communityStoredRoleLabelI18nKey } from "@/lib/meRoleDisplay";
+import { communityAuthorIdentityI18nKeys } from "@/lib/meRoleDisplay";
 import type { CommunityComment } from "@/lib/communityMockData";
 import { isShowcasePostId } from "@/lib/communityShowcase";
+import { isCommunityOptimisticCommentId } from "@/components/community/communityFeedConstants";
 import type { PostDetailDrawerProps } from "@/components/community/postDetailDrawerTypes";
 import { resolvePostDetailImageSources } from "@/components/community/postDetailImageSources";
 
@@ -36,6 +37,7 @@ export function usePostDetailDrawerModel(p: PostDetailDrawerProps) {
     topicTagHref,
     meUserId,
     onReportComment,
+    onDeleteComment,
   } = p;
 
   const topicHref =
@@ -86,13 +88,27 @@ export function usePostDetailDrawerModel(p: PostDetailDrawerProps) {
   const author = post.author;
   const authorAvatarResolved =
     author?.avatar_url?.trim() ? communityMediaAbsoluteUrlForRender(author.avatar_url.trim()) : "";
-  const roleKey = communityStoredRoleLabelI18nKey(author?.role);
+  const identityKeys = communityAuthorIdentityI18nKeys(author);
   const authorProfileHref = author?.id ? `/community/user/${author.id}` : "/community";
   const isShowcasePost = isShowcasePostId(post.id);
   const rootComments = comments.filter((c) => !c.parent_id);
   const getReplies = (id: string) => comments.filter((c) => c.parent_id === id);
   const showReportComment = (c: CommunityComment) =>
     Boolean(isLoggedIn && onReportComment && (!meUserId || c.author.id !== meUserId));
+  const showDeleteComment = (c: CommunityComment) =>
+    Boolean(
+      isLoggedIn &&
+        onDeleteComment &&
+        meUserId &&
+        c.author.id === meUserId &&
+        !isCommunityOptimisticCommentId(c.id),
+    );
+  /** Own comment: delete, no reply. Others: reply. */
+  const showReplyToComment = (c: CommunityComment) =>
+    Boolean(isLoggedIn && !authPending && (!meUserId || c.author.id !== meUserId));
+  const postAuthorId = post.author?.id ?? null;
+  const isCommentByPostAuthor = (c: CommunityComment) =>
+    Boolean(postAuthorId && c.author.id === postAuthorId);
   const imageCarouselCount = images.length;
   const isTextOnlyDetail = post.type === "text" && images.length === 0;
 
@@ -187,7 +203,13 @@ export function usePostDetailDrawerModel(p: PostDetailDrawerProps) {
       await Promise.resolve(onCommentSend(payload, parentId));
       setReplyTarget(null);
     } catch (err) {
-      if (typeof window !== "undefined") {
+      const msg = err instanceof Error ? err.message : "";
+      // 预期写拒绝（含 comment_post_not_ok / offline）：UI 已展示文案，勿冒充系统故障
+      const expectedSendReject =
+        msg === "comment_post_not_ok" ||
+        msg === "comment_offline" ||
+        msg === "comment_send_failed";
+      if (typeof window !== "undefined" && !expectedSendReject) {
         console.error("PostDetailDrawer handleSend:", err);
       }
       setInput(payload);
@@ -234,11 +256,14 @@ export function usePostDetailDrawerModel(p: PostDetailDrawerProps) {
     videoPoster,
     author,
     authorAvatarResolved,
-    roleKey,
+    identityKeys,
     authorProfileHref,
     rootComments,
     getReplies,
     showReportComment,
+    showDeleteComment,
+    showReplyToComment,
+    isCommentByPostAuthor,
     imageCarouselCount,
     isTextOnlyDetail,
     handleDetailDoubleTapLike,

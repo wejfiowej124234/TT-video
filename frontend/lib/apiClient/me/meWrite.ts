@@ -59,3 +59,44 @@ export async function postMeProfileAvatar(body: { content_base64: string }): Pro
   throwUnlessApiOk(data);
   return data;
 }
+
+export type MeProfileAvatarPresignResponse = {
+  status?: string;
+  upload_url: string;
+  avatar_url: string;
+  headers?: Record<string, string>;
+  expires_in_seconds?: number;
+};
+
+/** F-007 · `POST …/me/profile-avatar/presign`（对象存储已配时） */
+export async function postMeProfileAvatarPresign(body: {
+  content_type: string;
+  content_length: number;
+}): Promise<MeProfileAvatarPresignResponse> {
+  const res = await fetch(apiUrl(routes.meProfileAvatarPresign), {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
+    body: JSON.stringify(body),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("postMeProfileAvatarPresign", data);
+  throwUnlessApiOk(data);
+  const row = data as MeProfileAvatarPresignResponse;
+  if (!row?.upload_url || !row?.avatar_url) {
+    throw new Error("profile_avatar_presign_incomplete");
+  }
+  return row;
+}
+
+/** F-007 · `POST …/me/profile-avatar/commit` */
+export async function postMeProfileAvatarCommit(body: { avatar_url: string }): Promise<unknown> {
+  const res = await fetch(apiUrl(routes.meProfileAvatarCommit), {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...writeRequestHeaders() },
+    body: JSON.stringify(body),
+  });
+  const data = await parseResponse(res);
+  logApiJsonStatusNotOk("postMeProfileAvatarCommit", data);
+  throwUnlessApiOk(data);
+  return data;
+}

@@ -2,11 +2,19 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const homePage = join(__dirname, "page.tsx");
+const cinematicHome = join(__dirname, "page.tsx");
+const homePage = join(__dirname, "../plan/page.tsx");
 const heroForm = join(__dirname, "../../components/landing/LandingHeroForm.tsx");
 
-/** `/` 首页 SSOT：`app/(home)/page.tsx` + `components/landing/*`（非 archive/ui-v1、非未接线 v2 拆分件） */
+/** `/` 官网地球仪首页；AI 行程表单迁至 `/plan` */
 describe("home `/` SSOT (marketing closure)", () => {
+  it("apex `/` is the cinematic network home", () => {
+    const src = readFileSync(cinematicHome, "utf8");
+    expect(src).toContain("TravelTrustHomePageShell");
+    expect(src).toContain("TravelTrustNetworkPageMain");
+    expect(src).not.toContain("LandingHeroForm");
+  });
+
   it("uses per-country Ken Burns ambient backdrop + vignette + dot grid on page shell", () => {
     const src = readFileSync(homePage, "utf8");
     const decor = readFileSync(join(__dirname, "../../components/landing/LandingHomeDecorLayers.tsx"), "utf8");

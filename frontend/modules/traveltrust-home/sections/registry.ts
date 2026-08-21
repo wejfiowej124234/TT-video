@@ -33,6 +33,7 @@ export const TRAVELTRUST_HOME_SECTION_CHUNK_LOADERS: Record<
   unlock: () => import("./TravelTrustHomeUnlockSection"),
   trust: () => import("./TravelTrustHomeTrustSection"),
   settlement: () => import("./TravelTrustHomeSettlementSection"),
+  start: () => import("./TravelTrustHomeStartCloseSection"),
 };
 
 export const TRAVELTRUST_HOME_DEFERRED_BELOW_FOLD_LOADER = () =>

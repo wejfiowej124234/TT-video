@@ -78,6 +78,12 @@ describe("community drawer/modal SSOT (site theme V1 §1.7 · TT-PH1-219d/e)", (
     expect(read("CommunityVideoOverlayCommentSheet.tsx")).toContain("composerInputDisabled");
     expect(read("CommunityVideoOverlayCommentSheet.tsx")).toContain("community_showcase_content_hint");
     expect(read("PostDetailDrawerCommentsSection.tsx")).toContain("postDetailCommentRow");
+    expect(read("PostDetailDrawerCommentsSection.tsx")).toContain("CommunityCommentGuideIdentityBadge");
+    expect(read("PostDetailDrawerCommentsSection.tsx")).toContain("COMMUNITY_COMMENT_ACTION_REPLY_CLASS");
+    expect(read("PostDetailDrawerCommentsSection.tsx")).not.toContain("CommunityCommentSortTabs");
+    expect(read("PostDetailDrawerCommentsSection.tsx")).not.toContain("community_badge_escrow_guide");
+    expect(read("PostDetailDrawerMetaSection.tsx")).not.toContain("community_badge_escrow_guide");
+    expect(read("CommunityFeedCardContent.tsx")).not.toContain("community_badge_escrow_guide");
     expect(read("PostDetailDrawerMediaZone.tsx")).toContain("community_post_image_counter");
     expect(read("PostDetailDrawerMediaZone.tsx")).toContain("feedNavHintKey");
     expect(read("CommunityCommentSortTabs.tsx")).toContain("communityCommentSortTabHintKey");
@@ -127,11 +133,13 @@ describe("community drawer/modal SSOT (site theme V1 §1.7 · TT-PH1-219d/e)", (
     expect(src).not.toMatch(/bg-slate-/);
   });
 
-  it("CommunityCommentSortTabs use drawer sortTabActive gradient SSOT", () => {
-    const src = read("CommunityCommentSortTabs.tsx");
-    expect(src).toContain("TT_COMMUNITY_DRAWER_L5.sortTabActive");
-    expect(src).toContain("communityCommentSortTabHintKey");
-    expect(src).not.toMatch(/border-ref-sun\/45 bg-ref-sun\/12/);
+  it("R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1: comment UIs omit sort tabs (default hot)", () => {
+    expect(read("PostDetailDrawerCommentsSection.tsx")).not.toContain("CommunityCommentSortTabs");
+    expect(read("CommentDrawerScrollBody.tsx")).not.toContain("CommentDrawerSortTabs");
+    expect(read("CommunityVideoOverlayCommentSheet.tsx")).not.toContain("CommunityCommentSortTabs");
+    expect(read("CommentDrawer.tsx")).not.toContain("CommunityCommentSortTabs");
+    const tabs = read("CommunityCommentSortTabs.tsx");
+    expect(tabs).toContain("TT_COMMUNITY_DRAWER_L5.sortTabActive");
   });
 
   it("PostDetailDrawer portals via PostDetailDrawerPortal", () => {

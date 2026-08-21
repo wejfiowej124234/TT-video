@@ -7,15 +7,31 @@ import { communityCyanPillFocus } from "@/lib/communityA11yFocus";
 import { TT_COMMUNITY_DRAWER_L5, TT_COMMUNITY_PAGE_L5 } from "@/lib/marketingUi";
 
 type Surface = "page" | "hub";
+type ConfirmVariant = "post" | "comment";
 
 const DANGER_CONFIRM_BTN =
   "inline-flex min-h-[44px] flex-1 items-center justify-center rounded-[var(--radius-md)] border border-danger/55 bg-danger/10 px-4 py-2 text-small font-semibold text-red-300 hover:border-danger/70 hover:bg-danger/16 hover:text-red-200 motion-sub focus:outline-none focus-visible:ring-2 focus-visible:ring-danger/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] disabled:cursor-not-allowed disabled:opacity-50";
+
+const VARIANT_COPY: Record<ConfirmVariant, { title: string; body: string; confirm: string }> = {
+  post: {
+    title: "community_delete_post",
+    body: "community_delete_post_confirm",
+    confirm: "community_delete_post",
+  },
+  comment: {
+    title: "community_delete_comment",
+    body: "community_delete_comment_confirm",
+    confirm: "community_delete_comment",
+  },
+};
 
 export function CommunityDeletePostConfirmDialog({
   open,
   busy,
   t,
   surface = "page",
+  variant = "post",
+  error = null,
   onCancel,
   onConfirm,
 }: {
@@ -23,6 +39,8 @@ export function CommunityDeletePostConfirmDialog({
   busy?: boolean;
   t: (k: string) => string;
   surface?: Surface;
+  variant?: ConfirmVariant;
+  error?: string | null;
   onCancel: () => void;
   onConfirm: () => void;
 }) {
@@ -30,6 +48,7 @@ export function CommunityDeletePostConfirmDialog({
   const descId = useId();
   const [portalReady, setPortalReady] = useState(false);
   const trapRef = useFocusTrap(open, onCancel);
+  const copy = VARIANT_COPY[variant];
 
   useEffect(() => {
     setPortalReady(true);
@@ -59,7 +78,8 @@ export function CommunityDeletePostConfirmDialog({
   return createPortal(
     <div
       className={TT_COMMUNITY_DRAWER_L5.postDetailOverlay}
-      data-tt-community-delete-post-confirm="1"
+      data-tt-community-delete-post-confirm={variant === "post" ? "1" : undefined}
+      data-tt-community-delete-comment-confirm={variant === "comment" ? "1" : undefined}
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onCancel();
       }}
@@ -74,17 +94,22 @@ export function CommunityDeletePostConfirmDialog({
         tabIndex={-1}
       >
         <h2 id={titleId} className="text-body font-semibold text-slate-100">
-          {t("community_delete_post")}
+          {t(copy.title)}
         </h2>
         <p id={descId} className="mt-2 text-meta text-slate-300 leading-snug">
-          {t("community_delete_post_confirm")}
+          {t(copy.body)}
         </p>
+        {error ? (
+          <p className="mt-3 text-meta text-red-300" role="alert">
+            {error}
+          </p>
+        ) : null}
         <div className="mt-5 flex flex-wrap gap-3">
           <button type="button" className={cancelClass} onClick={onCancel} disabled={busy}>
             {t("common_cancel")}
           </button>
           <button type="button" className={DANGER_CONFIRM_BTN} onClick={() => void onConfirm()} disabled={busy}>
-            {busy ? t("common_loading") : t("community_delete_post")}
+            {busy ? t("common_loading") : t(copy.confirm)}
           </button>
         </div>
       </div>

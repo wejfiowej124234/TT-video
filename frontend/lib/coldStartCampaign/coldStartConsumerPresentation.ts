@@ -1,4 +1,5 @@
 import type { LocaleTranslateFn } from "@/lib/i18n";
+import { communityMediaAbsoluteUrlForRender } from "@/lib/communityMediaClientUrl";
 
 import type { ColdStartCampaignItem, ColdStartCampaignPayload } from "./types";
 
@@ -105,13 +106,16 @@ function ctaI18nKey(category: ColdStartConsumerCategory): string {
 
 function resolveCoverUrl(item: ColdStartCampaignItem): string {
   const r = item.resolved as Record<string, unknown>;
+  let raw = "";
   if (item.item_type === "itinerary_template" && typeof r.cover_image_url === "string" && r.cover_image_url.trim()) {
-    return r.cover_image_url.trim();
+    raw = r.cover_image_url.trim();
+  } else if (item.item_type === "guide_post" && typeof r.cover_url === "string" && r.cover_url.trim()) {
+    raw = r.cover_url.trim();
   }
-  if (item.item_type === "guide_post" && typeof r.cover_url === "string" && r.cover_url.trim()) {
-    return r.cover_url.trim();
-  }
-  return COLD_START_CONSUMER_COVER_FALLBACK;
+  if (!raw) return COLD_START_CONSUMER_COVER_FALLBACK;
+  // Official OCS covers may still arrive as legacy `/api/v1/uploads/community-posts/ocs-*` —
+  // normalize at consumer presentation so SSR + <img> never request the dead upload path.
+  return communityMediaAbsoluteUrlForRender(raw) || COLD_START_CONSUMER_COVER_FALLBACK;
 }
 
 function resolveTitle(item: ColdStartCampaignItem): string | null {

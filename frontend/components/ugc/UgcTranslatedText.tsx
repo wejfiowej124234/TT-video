@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState, type MouseEvent } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import {
   getUgcTranslationCache,
+  getUgcTranslationStatus,
   hasUgcTranslateSession,
   postUgcTranslate,
 } from "@/lib/apiClient/ugcTranslate";
@@ -60,6 +61,17 @@ export function UgcTranslatedText({
   const [busy, setBusy] = useState(false);
   const [needLogin, setNeedLogin] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [enabled, setEnabled] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void getUgcTranslationStatus().then((row) => {
+      if (!cancelled) setEnabled(row.enabled);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     setTranslated(null);
@@ -69,7 +81,7 @@ export function UgcTranslatedText({
   }, [contentId, field, source, targetLocale]);
 
   useEffect(() => {
-    if (!eligible || policy !== "cache_first") return;
+    if (!eligible || enabled !== true || policy !== "cache_first") return;
     let cancelled = false;
     void getUgcTranslationCache({
       contentClass,
@@ -86,13 +98,17 @@ export function UgcTranslatedText({
     return () => {
       cancelled = true;
     };
-  }, [eligible, policy, contentClass, contentId, field, targetLocale]);
+  }, [eligible, enabled, policy, contentClass, contentId, field, targetLocale]);
 
   const onTranslate = useCallback(
     async (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
-      if (!eligible || busy) return;
+      if (busy) return;
+      if (!eligible || enabled !== true) {
+        setFailed(true);
+        return;
+      }
       if (!hasUgcTranslateSession()) {
         setNeedLogin(true);
         return;
@@ -120,7 +136,7 @@ export function UgcTranslatedText({
         setBusy(false);
       }
     },
-    [eligible, busy, contentClass, contentId, field, targetLocale],
+    [eligible, enabled, busy, contentClass, contentId, field, targetLocale],
   );
 
   const onShowOriginal = useCallback((e: MouseEvent) => {
@@ -132,8 +148,9 @@ export function UgcTranslatedText({
   if (!source.trim()) return null;
 
   const text = showTranslated && translated ? translated : source;
-  const showTranslateBtn = showAction && eligible && !showTranslated;
-  const showOriginalBtn = showAction && eligible && showTranslated && Boolean(translated);
+  const showTranslateBtn = showAction && Boolean(source.trim()) && !showTranslated;
+  const showOriginalBtn =
+    showAction && eligible && enabled === true && showTranslated && Boolean(translated);
   const translateClass = actionSurface === "overlay" ? ACTION_OVERLAY : ACTION_FEED;
   const originalClass = actionSurface === "overlay" ? ACTION_ORIGINAL_OVERLAY : ACTION_ORIGINAL;
 

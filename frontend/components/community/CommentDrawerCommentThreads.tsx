@@ -1,14 +1,11 @@
 "use client";
 
 import type { FormEvent } from "react";
-import Link from "next/link";
 import type { CommunityComment } from "@/lib/communityMockData";
 import {
   communityCommentModerationPlaceholderI18nKey,
   communityCommentUseModerationPlaceholder,
 } from "@/components/community/communityFeedMappers";
-import { marketHrefForCommunityUser } from "@/lib/communityMarketDeepLink";
-import { COMMUNITY_BOOK_GUIDE_CTA_CLASS } from "@/components/community/communityFeedConstants";
 import {
   communityCyanPillFocus,
   communityShellTabFocus,
@@ -18,6 +15,11 @@ import {
   CommunityCommentAuthorAvatar,
   CommunityCommentAuthorName,
 } from "@/components/community/CommunityCommentAuthorAvatar";
+import { CommunityCommentGuideIdentityBadge } from "@/components/community/CommunityCommentGuideIdentityBadge";
+import {
+  COMMUNITY_COMMENT_ACTION_REPLY_CLASS,
+  COMMUNITY_COMMENT_ACTION_REPORT_CLASS,
+} from "@/lib/communityCommentIdentitySortUi";
 
 function CommentDrawerOneCommentBody({
   c,
@@ -49,19 +51,7 @@ function CommentDrawerOneCommentBody({
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-1.5 min-w-0">
           <CommunityCommentAuthorName author={c.author} guestLabel={guestLabel} dash={dash} />
-          {c.author.isEscrowGuide ? (
-            <span
-              className="pointer-events-none rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90"
-              aria-hidden
-            >
-              {t("community_badge_escrow_guide")}
-            </span>
-          ) : null}
-          {(c.author.role === "guide" || c.author.isEscrowGuide) && c.author.id ? (
-            <Link href={marketHrefForCommunityUser(c.author.id)} className={COMMUNITY_BOOK_GUIDE_CTA_CLASS}>
-              {t("community_book_guide_cta")}
-            </Link>
-          ) : null}
+          <CommunityCommentGuideIdentityBadge author={c.author} t={t} />
         </div>
         <div className="flex flex-wrap items-center justify-end gap-1 shrink-0">
           {canCommentReply ? (
@@ -74,7 +64,7 @@ function CommentDrawerOneCommentBody({
             >
               <button
                 type="submit"
-                className={`shrink-0 text-meta text-ref-sun/90 hover:text-ref-sun motion-sub min-h-[44px] px-2 rounded-[var(--radius-md)] inline-flex items-center justify-center ${communityShellTabFocus}`}
+                className={`${COMMUNITY_COMMENT_ACTION_REPLY_CLASS} ${communityShellTabFocus}`}
               >
                 {t("community_comment_reply")}
               </button>
@@ -90,7 +80,7 @@ function CommentDrawerOneCommentBody({
             >
               <button
                 type="submit"
-                className={`shrink-0 text-meta text-slate-400 hover:text-slate-300 motion-sub min-h-[44px] min-w-[44px] px-1 rounded-[var(--radius-md)] inline-flex items-center justify-center ${communityShellTabFocus}`}
+                className={`${COMMUNITY_COMMENT_ACTION_REPORT_CLASS} ${communityShellTabFocus}`}
               >
                 {t("community_report")}
               </button>

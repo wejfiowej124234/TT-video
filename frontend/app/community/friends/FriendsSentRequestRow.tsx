@@ -68,9 +68,10 @@ export function FriendsSentRequestRow({
           >
             {t(communityStoredRoleLabelI18nKey(mapApiUserRoleToCommunity(req.to_role)))}
           </span>
-          {req.to_is_escrow_guide === true ? (
+          {req.to_is_escrow_guide === true &&
+          mapApiUserRoleToCommunity(req.to_role) !== "guide" ? (
             <span className="rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90">
-              {t("community_badge_escrow_guide")}
+              {t("community_role_guide")}
             </span>
           ) : null}
         </div>

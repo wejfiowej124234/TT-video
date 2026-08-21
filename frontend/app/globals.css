@@ -320,6 +320,37 @@ select[data-tt-admin-warm-l5-modal-control="1"] option {
   color: rgb(203 213 225) !important;
 }
 
+/**
+ * 深壳金底主操作：压过 `a { color: inherit }` 与 ink remap。
+ * 表内「监管详情」等 pill 必须深字贴金底，不能只剩描边。
+ */
+[data-tt-admin-zone-content-stack] .tt-admin-gold-fill,
+[data-tt-admin-zone-content-stack] a.tt-admin-gold-fill,
+[data-tt-admin-zone-content-stack] button.tt-admin-gold-fill {
+  color: #0c0a09 !important;
+  background-color: #e8c96a !important;
+  background-image: linear-gradient(to right, #e8c96a, #f0a878, #e8c96a) !important;
+}
+
+/**
+ * 深壳表内次链：travel-700 不在 theme 中会被丢掉，继承成看不见的深字。
+ */
+[data-tt-admin-zone-content-stack] a.text-travel-700,
+[data-tt-admin-zone-content-stack] button.text-travel-700 {
+  color: rgb(226 232 240) !important;
+}
+
+/**
+ * 残留浅底 chip（bg-ink-50 等）：把被 zone remap 洗浅的字拉回深色。
+ * 诚实条已改深底；本规则兜底其它子页未改完的浅底块。
+ */
+[data-tt-admin-zone-content-stack] :is(.bg-ink-50, .bg-ink-100, .bg-warning-50, .bg-success-50, .bg-amber-100, .bg-emerald-100) {
+  color: rgb(31 41 55);
+}
+[data-tt-admin-zone-content-stack] :is(.bg-ink-50, .bg-ink-100, .bg-warning-50, .bg-success-50, .bg-amber-100, .bg-emerald-100) :is(.text-ink-900, .text-ink-800, .text-ink-700, .text-ink-600, .text-ink-500, .text-slate-300, .text-slate-400) {
+  color: rgb(31 41 55) !important;
+}
+
 /* `/` Hero · Phase A Cinematic Still（Ken Burns）：内层放大平移，外层 overflow 裁切 */
 @keyframes tt-home-ambient-ken-burns {
   0% {

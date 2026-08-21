@@ -98,23 +98,23 @@ describe("coldStartConsumerPresentation", () => {
     expect(filterConsumerHighlightCards(consumerCampaign.items, t)).toHaveLength(2);
   });
 
-  it("maps catalog guide items to consumer highlight cards", () => {
-    const guideCatalogItem: ColdStartCampaignItem = {
-      id: "item-catalog-guide",
-      item_type: "guide",
+  it("remaps Official OCS legacy upload covers to Tigris before render", () => {
+    const guidePost: ColdStartCampaignItem = {
+      id: "item-guide-post-ocs",
+      item_type: "guide_post",
       sort_order: 0,
       payload: {},
       resolved: {
-        id: "b4d9ecf8-4762-4bc8-95f6-d1c339d2975b",
-        city: "东京",
-        public_title: null,
-        display_status: "published",
+        id: "gp-1",
+        title: "东京摄影一日路线 · 官方精选",
+        destination: "东京",
+        community_post_id: "122f6e58-54f1-41be-b42d-82cbec08f68c",
+        cover_url: "/api/v1/uploads/community-posts/ocs-tokyo-photo-official-guide-cover.jpg",
       },
     };
-    const card = buildConsumerHighlightCard(guideCatalogItem, t);
+    const card = buildConsumerHighlightCard(guidePost, t);
     expect(card).not.toBeNull();
-    expect(card?.href).toBe("/guides/b4d9ecf8-4762-4bc8-95f6-d1c339d2975b");
-    expect(card?.title).toBe("东京");
-    expect(filterConsumerHighlightCards([guideCatalogItem, validRouteItem], t)).toHaveLength(2);
+    expect(card?.coverUrl).toContain("official-cold-start/v1/ocs-tokyo-photo-official-guide-cover.jpg");
+    expect(card?.coverUrl).not.toContain("/api/v1/uploads/community-posts/ocs-");
   });
 });

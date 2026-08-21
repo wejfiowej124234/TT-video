@@ -46,6 +46,12 @@ export default function CommunityFeedMainPortals(props: CommunityFeedMainPortals
         authLoading={props.authLoading}
         meUserId={props.meUserId}
         handleReportComment={props.handleReportComment}
+        handleDeleteComment={props.handleDeleteComment}
+        deleteConfirmCommentOpen={props.deleteConfirmCommentOpen}
+        deleteConfirmBusy={props.deleteConfirmBusy}
+        deleteCommentError={props.deleteCommentError}
+        cancelDeleteComment={props.cancelDeleteComment}
+        confirmDeleteComment={props.confirmDeleteComment}
         handleReport={props.handleReport}
         likedPostIds={props.likedPostIds}
         collectedPostIds={props.collectedPostIds}

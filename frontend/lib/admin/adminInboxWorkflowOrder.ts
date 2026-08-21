@@ -1,8 +1,9 @@
 import type { AdminUnifiedInboxTask } from "@/lib/admin/adminUnifiedInboxTasks";
 
-/** ① 经营动线：商家 → 主理人 → 审批 → 争议 → 社区（与首页 workflow 文案同源）。 */
+/** ① 经营动线：商家 → 向导 → 主理人 → 审批 → 争议 → 社区（与首页待办六队列同源）。 */
 export const ADMIN_INBOX_WORKFLOW_IDS = [
   "provider",
+  "guide",
   "steward",
   "approvals",
   "disputes",
@@ -13,10 +14,11 @@ export type AdminInboxWorkflowId = (typeof ADMIN_INBOX_WORKFLOW_IDS)[number];
 
 const WORKFLOW_RANK: Record<AdminInboxWorkflowId, number> = {
   provider: 0,
-  steward: 1,
-  approvals: 2,
-  disputes: 3,
-  reports: 4,
+  guide: 1,
+  steward: 2,
+  approvals: 3,
+  disputes: 4,
+  reports: 5,
 };
 
 export function adminInboxWorkflowRank(id: string): number {

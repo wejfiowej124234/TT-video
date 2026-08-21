@@ -1,5 +1,9 @@
 import type { CommunityComment } from "@/lib/communityMockData";
 
+/** UI-HYG-COMM-COMMENT-WALLET-CONTRAST-1 · dark ink card */
+export const COMMUNITY_AUTHOR_WALLET_CLASS =
+  "text-meta font-mono text-slate-200 hover:text-slate-100 focus-visible:text-slate-100";
+
 /** 评论作者展示名（乐观评论 / 无头像时亦须可读） */
 export function communityCommentAuthorDisplayName(
   author: CommunityComment["author"],

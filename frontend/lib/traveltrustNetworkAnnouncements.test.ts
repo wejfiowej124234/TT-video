@@ -293,7 +293,8 @@ describe("traveltrustNetworkAnnouncements", () => {
     const sorted = listTraveltrustPulseProductAnnouncements();
     expect(sorted.length).toBeLessThanOrEqual(TRAVELTRUST_PULSE_MAX_VISIBLE);
     expect(sorted.every((a) => a.lane === "product")).toBe(true);
-    expect(sorted[0]?.id).toBe("product-planned-launch");
+    expect(sorted[0]?.id).toBe("product-ttg-v8-25t");
+    expect(sorted.some((a) => a.id === "campaign-referral")).toBe(true);
     expect(sorted.some((a) => a.id === "phase3-entry-mainnet-prep")).toBe(false);
   });
 
@@ -355,18 +356,22 @@ describe("traveltrustNetworkAnnouncements", () => {
 
 
 
-  it("catalog lanes: product upcoming + protocol live archive", () => {
+  it("catalog lanes: official product pulse + protocol live archive", () => {
     const product = TRAVELTRUST_NETWORK_ANNOUNCEMENTS.filter((a) => a.lane === "product");
     const protocol = TRAVELTRUST_NETWORK_ANNOUNCEMENTS.filter((a) => a.lane === "protocol_status");
-    expect(product.length).toBe(4);
+    expect(product.map((a) => a.id)).toEqual([
+      "product-ttg-v8-25t",
+      "campaign-referral",
+      "product-role-traveler",
+      "product-role-guide",
+      "product-role-merchant",
+      "product-role-acquisition",
+      "product-role-steward",
+    ]);
     expect(protocol.length).toBe(4);
     for (const item of product) {
-      if (item.id === "product-security-disclosure") {
-        expect(item.contentTier).toBe("live");
-      } else {
-        expect(item.contentTier).toBe("upcoming");
-        expect(item.releaseAt).toBeDefined();
-      }
+      expect(item.contentTier).toBe("live");
+      expect(item.pinned).toBe(true);
       expect(validateTraveltrustAnnouncementContract(item)).toEqual([]);
     }
     for (const item of protocol) {
@@ -374,7 +379,7 @@ describe("traveltrustNetworkAnnouncements", () => {
       expect(item.effectiveAt).toBeDefined();
       expect(validateTraveltrustAnnouncementContract(item)).toEqual([]);
     }
-    expect(TRAVELTRUST_NETWORK_ANNOUNCEMENTS).toHaveLength(10);
+    expect(TRAVELTRUST_NETWORK_ANNOUNCEMENTS).toHaveLength(13);
   });
 
 

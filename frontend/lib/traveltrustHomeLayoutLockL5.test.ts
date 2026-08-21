@@ -32,14 +32,29 @@ describe("traveltrustHomeLayoutLockL5", () => {
   const lock = TRAVELTRUST_HOME_LAYOUT_LOCK_L5;
 
   it("exports frozen lock metadata", () => {
-    expect(lock.lockId).toBe("TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v16-economy-breathing");
-    expect(lock.label).toBe("traveltrust-home-economy-breathing-v16-local");
-    expect(lock.sectionOrder).toEqual(["hero", "trust", "settlement", "unlock", "liquidity", "roles"]);
+    expect(lock.lockId).toBe("TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v18-screenshot-body");
+    expect(lock.label).toBe("traveltrust-home-screenshot-body-v18-local");
+    expect(lock.sectionOrder).toEqual([
+      "hero",
+      "trust",
+      "settlement",
+      "unlock",
+      "liquidity",
+      "roles",
+      "start",
+    ]);
+    expect(lock.archivedSectionIds).toEqual(["faq"]);
     expect(lock.liquiditySplit.stack).toContain("flex-col");
     expect(lock.liquiditySplit.stack).toContain("pt-10");
     expect(lock.liquiditySplit.stack).toContain("gap-8");
     expect(lock.liquiditySplit.wrap).toContain("lg:grid-cols-2");
     expect(lock.modularity.composerShellPath).toContain("TravelTrustHomeComposerShell");
+    expect(lock.modularity.composerMainColumnPath).toContain("TravelTrustHomeMainColumn");
+    expect(lock.modularity.homeBodyModulePath).toContain("TravelTrustHomeBodyModule");
+    expect(lock.modularity.lockedChromePath).toContain("TravelTrustLockedHomeChrome");
+    expect(lock.modularity.homeModuleRegistryPath).toBe("registry/traveltrust-home-module-registry.v1.yaml");
+    expect(lock.modularity.homeModuleRegistryId).toBe("TRAVELTRUST_HOME_MODULAR_RELEASE_V1");
+    expect(lock.modularity.lockedChromeFiles).toContain("frontend/components/Header.tsx");
     expect(lock.modularity.composerLifecycleHookPath).toContain("useTraveltrustComposerPage");
     expect(lock.modularity.cinematicBridgePath).toContain("lib/traveltrust/home/cinematic-bridge");
     expect(lock.modularity.cinematicBridgeImport).toBe("@/lib/traveltrust/home/cinematic-bridge");
@@ -104,8 +119,11 @@ describe("traveltrustHomeLayoutLockL5", () => {
     expect(below.indexOf("<TravelTrustHomeEconomyClusterSection")).toBeLessThan(
       below.indexOf("<TravelTrustHomeRolesSection"),
     );
-    expect(below).not.toContain("TravelTrustHomeFaqSection");
     expect(below).toContain("TravelTrustHomeStartCloseSection");
+    expect(below).not.toContain("TravelTrustHomeFaqSection");
+    expect(below.indexOf("<TravelTrustHomeRolesSection")).toBeLessThan(
+      below.indexOf("<TravelTrustHomeStartCloseSection"),
+    );
     const trustIdx = economy.indexOf("<TravelTrustHomeTrustSection");
     const settlementIdx = economy.indexOf("<TravelTrustHomeSettlementSection");
     const unlockIdx = economy.indexOf("<TravelTrustHomeUnlockSection");

@@ -25,6 +25,8 @@ export type AdminQueueListResult<T extends { items?: unknown[] }> = {
   rateLimited?: boolean;
   /** Authoritative inventory total when API provided it; null = unknown / fail-closed. */
   total: number | null;
+  /** List `meta.source` when present (postgres / memory / …). */
+  source: string | null;
 };
 
 export type AdminQueueListFetchOptions = {
@@ -46,6 +48,7 @@ export async function fetchAdminQueueList<T extends { items?: unknown[] }>(
         items: warm.items as T["items"],
         errorKind: null,
         total: parseAdminQueueInventoryTotal({ total: warm.total }),
+        source: readListMetaSource(warm.meta),
       };
     }
     return dedupeAdminListFetch(cacheKey, () =>
@@ -54,6 +57,12 @@ export async function fetchAdminQueueList<T extends { items?: unknown[] }>(
   }
 
   return fetchAdminQueueListOnce<T>(context, listUrl, null);
+}
+
+function readListMetaSource(meta: Record<string, unknown> | null | undefined): string | null {
+  if (!meta || typeof meta !== "object") return null;
+  const source = meta.source;
+  return typeof source === "string" && source.trim() ? source.trim() : null;
 }
 
 async function fetchAdminQueueListOnce<T extends { items?: unknown[] }>(
@@ -65,7 +74,7 @@ async function fetchAdminQueueListOnce<T extends { items?: unknown[] }>(
   try {
     Object.assign(headers, getAuthHeaders());
   } catch {
-    return { items: [] as T["items"], errorKind: "login_required", total: null };
+    return { items: [] as T["items"], errorKind: "login_required", total: null, source: null };
   }
 
   try {
@@ -83,7 +92,7 @@ async function fetchAdminQueueListOnce<T extends { items?: unknown[] }>(
         defaultAdminListFetchSnapshot(body as AdminStandardListBody<never>),
       );
     }
-    return { items, errorKind: null, total };
+    return { items, errorKind: null, total, source: readListMetaSource((body as AdminStandardListBody<never>).meta) };
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     logAdminFetch(context, e);
@@ -92,6 +101,7 @@ async function fetchAdminQueueListOnce<T extends { items?: unknown[] }>(
       errorKind: adminFetchErrorKind(e),
       rateLimited: msg === "rate_limit_exceeded",
       total: null,
+      source: null,
     };
   }
 }

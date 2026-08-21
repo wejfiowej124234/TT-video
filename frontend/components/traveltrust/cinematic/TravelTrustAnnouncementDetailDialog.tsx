@@ -15,10 +15,9 @@ import {
 import {
   traveltrustAnnouncementCtaHref,
   resolveTraveltrustAnnouncementModalCtaLabelKey,
-  traveltrustAnnouncementListLabelKey,
   traveltrustContentTierLabelKey,
 } from "@/lib/traveltrustNetworkAnnouncements";
-import { traveltrustAnnouncementLaneLabelKey } from "@/lib/traveltrustAnnouncementCatalog";
+import { traveltrustAnnouncementSurfaceChipKey } from "@/lib/traveltrustAnnouncementCatalog";
 import { traveltrustSafeAnnouncementHref } from "@/lib/traveltrustSafeHref";
 import { trackTravelTrustEvent } from "@/lib/analytics";
 import {
@@ -170,9 +169,7 @@ export function TravelTrustAnnouncementDetailDialog({ item, open, onClose }: Pro
               <div className="min-w-0 pr-2">
                 <p className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
                   <span className={TT_ANNOUNCEMENTS_LIST_L5.phaseChipClass}>
-                    {item.cmsCopy
-                      ? t(traveltrustAnnouncementLaneLabelKey(item.lane))
-                      : t(traveltrustAnnouncementListLabelKey(item))}
+                    {t(traveltrustAnnouncementSurfaceChipKey(item))}
                   </span>
                   <span className="font-mono text-kicker text-ref-sun/35" aria-hidden>
                     ·

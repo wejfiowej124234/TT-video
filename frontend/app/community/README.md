@@ -26,6 +26,7 @@
 |------|-------------|------|
 | Feed | `GET /api/v1/community/feed`（`mode` · `tag` · **`q`** · geo 等） | `useCommunityFeed` · `useCommunityFeedApi` · **`feedSearchMode`** |
 | 发帖/互动 | `POST …/posts` · like/collect/comment/follow 等 | `PublishDrawer` · `useCommunityFeedPublishSubmit` |
+| 评论列表（① · R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1） | `GET …/posts/:id/comments` 默认 **`sort=hot`**（回复多优先 · 同分时间正序）；**无**排序 Tab；作者身份单徽章 **向导**；回复/删除 **白字** | `PostDetailDrawerCommentsSection` · `CommunityCommentGuideIdentityBadge` · `communityCommentIdentitySortUi` |
 | 活动中心 | **`GET …/me/activity`** · **`GET …/me/notifications`**（同源） | `activity/page.tsx` · `getMeActivity` · **`activity-events-v1` \| `likes-summary-v1`** |
 | 发现目的地 | **`GET …/explore/destinations`** | `useCommunityExplorePage` · **`api-aggregate-v1` \| `static-v1`** |
 | 消息/好友 | `GET …/conversations` · `…/friends` 等 | `messages/*` · `friends/page.tsx` |

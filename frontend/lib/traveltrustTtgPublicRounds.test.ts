@@ -9,9 +9,11 @@ import {
 describe("traveltrustTtgPublicRounds", () => {  it("lists three public rounds with frozen allocations", () => {
     const rounds = listTraveltrustTtgPublicRounds();
     expect(rounds).toHaveLength(3);
-    expect(rounds[0]?.allocationTtg).toBe(500_000);
-    expect(rounds[2]?.allocationTtg).toBe(1_000_000);
-    expect(rounds.every((r) => r.perWalletCapTtg === 25_000)).toBe(true);
+    expect(rounds[0]?.allocationTtg).toBe(2_000_000_000_000);
+    expect(rounds[1]?.allocationTtg).toBe(3_000_000_000_000);
+    expect(rounds[2]?.allocationTtg).toBe(7_500_000_000_000);
+    expect(rounds.reduce((s, r) => s + r.allocationTtg, 0)).toBe(12_500_000_000_000);
+    expect(rounds.every((r) => r.perWalletCapTtg === 0)).toBe(true);
   });
 
   it("round 1 defaults to upcoming until ops flips status", () => {
@@ -29,7 +31,7 @@ describe("traveltrustTtgPublicRounds", () => {  it("lists three public rounds wi
   });
 
   it("round 1 distribution includes full planned open date", () => {
-    const dateZh = formatTraveltrustTtgPlannedOpenDate("2026-07-15", "zh");
+    const dateZh = formatTraveltrustTtgPlannedOpenDate("2026-10-15", "zh");
     expect(dateZh).toMatch(/2026/);
     const text = resolveTraveltrustTtgRoundDistributionText(
       TRAVELTRUST_TTG_PUBLIC_ROUNDS[0]!,

@@ -187,6 +187,13 @@ const PROTOCOL_MODAL_CTA_LABEL_KEYS: Readonly<Record<string, string>> = {
 };
 
 const PRODUCT_MODAL_CTA_LABEL_KEYS: Readonly<Record<string, string>> = {
+  "product-ttg-v8-25t": "traveltrust_pulse_cta_learn_more",
+  "campaign-referral": "traveltrust_pulse_cta_join_now",
+  "product-role-traveler": "traveltrust_pulse_cta_learn_more",
+  "product-role-guide": "traveltrust_pulse_cta_learn_more",
+  "product-role-merchant": "traveltrust_pulse_cta_learn_more",
+  "product-role-acquisition": "traveltrust_pulse_cta_learn_more",
+  "product-role-steward": "traveltrust_pulse_cta_learn_more",
   "product-planned-launch": "traveltrust_product_ann_cta_explore",
   "product-escrow-usdc": "traveltrust_product_ann_cta_trust",
   "product-guide-merchant": "traveltrust_product_ann_cta_apply",

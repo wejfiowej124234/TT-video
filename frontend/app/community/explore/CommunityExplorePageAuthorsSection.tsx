@@ -139,9 +139,9 @@ export function CommunityExplorePageAuthorsSection(vm: CommunityExplorePageViewM
                 >
                   {t(communityStoredRoleLabelI18nKey(a.role))}
                 </span>
-                {a.isEscrowGuide ? (
+                {a.isEscrowGuide && String(a.role ?? "").toLowerCase() !== "guide" ? (
                   <span className="rounded-full border border-warning/35 bg-warning/10 px-1.5 py-0.5 text-[0.6rem] text-warning/90">
-                    {t("community_badge_escrow_guide")}
+                    {t("community_role_guide")}
                   </span>
                 ) : null}
               </Link>

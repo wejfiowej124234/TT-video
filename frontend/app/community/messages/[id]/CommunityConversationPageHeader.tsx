@@ -66,9 +66,9 @@ export function CommunityConversationPageHeader({
               {t(communityStoredRoleLabelI18nKey(peerRole))}
             </span>
           ) : null}
-          {peerIsEscrowGuide ? (
+          {peerIsEscrowGuide && peerRole !== "guide" ? (
             <span className="rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90 shrink-0">
-              {t("community_badge_escrow_guide")}
+              {t("community_role_guide")}
             </span>
           ) : null}
           {(peerRole === "guide" || peerIsEscrowGuide) && peerUserId ? (

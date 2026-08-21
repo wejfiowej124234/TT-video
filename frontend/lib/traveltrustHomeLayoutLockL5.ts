@@ -8,18 +8,17 @@
  */
 
 export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
-  lockId: "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v16-economy-breathing",
+  lockId: "TT-TRAVELTRUST-HOME-LAYOUT-LOCK-2026-08-v18-screenshot-body",
   lockedAt: "2026-08-19",
-  label: "traveltrust-home-economy-breathing-v16-local",
+  label: "traveltrust-home-screenshot-body-v18-local",
   route: "/traveltrust",
   /** 全页 scroll-snap 与滚轮切章关闭 */
   scrollSnapEnabled: false,
   /** `TravelTrustBelowFoldSections` 内 Film 占位条数（仅 margin，无压暗渐变） */
   filmDividerCount: 2,
-  /** 叙事节顺序（Owner 截图流 · 本地活页；不含 FAQ / 启程） */
-  sectionOrder: ["hero", "trust", "settlement", "unlock", "liquidity", "roles"] as const,
-  /** 源文件仍保留，不挂活页 */
-  archivedSectionIds: ["faq", "start"] as const,
+  /** Owner 本地截图自上而下：Chrome + Hero→Trust/分配→Settlement→Unlock→Liquidity→Roles→Start footer。FAQ 与「先了解 TTG 再规划」不在截图内。 */
+  sectionOrder: ["hero", "trust", "settlement", "unlock", "liquidity", "roles", "start"] as const,
+  archivedSectionIds: ["faq"] as const,
   belowFold: {
     economyCluster: true,
     economyClusterIds: ["trust", "settlement", "unlock", "liquidity"] as const,
@@ -50,6 +49,19 @@ export const TRAVELTRUST_HOME_LAYOUT_LOCK_L5 = {
     composerDynamicsPath: "frontend/modules/traveltrust-home/presentation/TravelTrustHomeComposerDynamics.tsx",
     composerShellPath: "frontend/modules/traveltrust-home/presentation/TravelTrustHomeComposerShell.tsx",
     composerMainColumnPath: "frontend/modules/traveltrust-home/presentation/TravelTrustHomeMainColumn.tsx",
+    homeBodyModulePath: "frontend/modules/traveltrust-home/presentation/TravelTrustHomeBodyModule.tsx",
+    lockedChromePath: "frontend/modules/traveltrust-home/presentation/TravelTrustLockedHomeChrome.tsx",
+    homeModuleRegistryPath: "registry/traveltrust-home-module-registry.v1.yaml",
+    homeModuleRegistryId: "TRAVELTRUST_HOME_MODULAR_RELEASE_V1",
+    lockedChromeFiles: [
+      "frontend/components/Header.tsx",
+      "frontend/components/traveltrust/cinematic/TravelTrustLandingChrome.tsx",
+      "frontend/components/traveltrust/cinematic/TravelTrustLandingNav.tsx",
+      "frontend/components/traveltrust/cinematic/TravelTrustPulseTicker.tsx",
+      "frontend/components/traveltrust/cinematic/TravelTrustPageBriefModeBadge.tsx",
+      "frontend/components/traveltrust/cinematic/TravelTrustCinematicLowQualityToggle.tsx",
+      "frontend/modules/traveltrust-home/presentation/TravelTrustHomeLandingNavSlot.tsx",
+    ] as const,
     composerScrollProvidersPath:
       "frontend/modules/traveltrust-home/presentation/TravelTrustHomeScrollProviders.tsx",
     composerUnified3DBackdropPath:

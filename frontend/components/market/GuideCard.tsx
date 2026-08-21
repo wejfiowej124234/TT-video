@@ -4,7 +4,7 @@ import { memo, type KeyboardEvent, type MouseEvent } from "react";
 import { MarketGuideCover } from "@/components/market/MarketGuideCover";
 import { useTranslation } from "@/components/LocaleProvider";
 import type { GuideCardItem } from "@/lib/marketTypes";
-import { formatGuideDisplayName, formatGuideCityLabel } from "@/lib/guideDisplayName";
+import { formatGuideDisplayName } from "@/lib/guideDisplayName";
 import {
   filterGuidePublicServiceTypes,
   formatGuideLanguages,
@@ -45,13 +45,13 @@ function GuideCard({
   /** 工作台/设置只读预览：无假按钮、不可点击 */
   previewOnly?: boolean;
 }) {
-  const { t, locale } = useTranslation();
+  const { t } = useTranslation();
   const dash = t("ui_em_dash");
-  const name = formatGuideDisplayName(t, guide, locale);
+  const name = formatGuideDisplayName(t, guide);
   const langs = formatGuideLanguages(guide.languages, t, " / ");
   const tags = filterGuidePublicServiceTypes(guide.service_types);
   const avatarAlt = t("guide_card_avatarAlt").replace("{{name}}", name);
-  const cityLabel = formatGuideCityLabel(guide.city, locale) || guide.city || dash;
+  const cityLabel = guide.city ?? dash;
   const hourlyLabel = formatGuideHourlyRateLabel(guide, t);
   const hourlyDisplayGlass = hourlyLabel ?? (glass ? t("market_guide_hourly_on_request") : null);
   const stakeDisplay = guide.stake_amount?.trim() ? guide.stake_amount.trim() : null;

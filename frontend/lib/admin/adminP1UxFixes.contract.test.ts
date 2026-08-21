@@ -96,7 +96,7 @@ describe("admin P1 UX fixes (①)", () => {
 
   it("domain health grid uses compact gap + touch targets (P2-7)", () => {
     const strip = readFileSync(join(FE, "components", "admin", "AdminHomeDomainHealthStrip.tsx"), "utf8");
-    expect(strip).toContain('className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3"');
+    expect(strip).toContain('const DOMAIN_HEALTH_GRID_CLASS = "mt-3 grid grid-cols-2 gap-2 xl:grid-cols-4"');
     expect(strip).toContain("touchTargetLink44Classes");
     expect(strip).toContain("rounded-[var(--radius-md)]");
     expect(strip).toContain("min-w-0 overflow-hidden");

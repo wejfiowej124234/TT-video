@@ -15,7 +15,8 @@ export {
   isMeFullRequestError,
 } from "./meFetch";
 export type { GetMeFullOptions } from "./meFetch";
-export { getMeStats, putMe, putMePassword, postMeProfileAvatar } from "./meWrite";
+export { getMeStats, putMe, putMePassword, postMeProfileAvatar, postMeProfileAvatarPresign, postMeProfileAvatarCommit } from "./meWrite";
+export type { MeProfileAvatarPresignResponse } from "./meWrite";
 export {
   getWalletVerificationStatus,
   postWalletVerifyChallenge,

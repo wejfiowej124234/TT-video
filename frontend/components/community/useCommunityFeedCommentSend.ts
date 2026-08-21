@@ -92,7 +92,13 @@ export function useCommunityFeedCommentSend(options: {
           parentId,
           logContext: "useCommunityFeed",
         });
-        if (pr.ok) {
+        if (pr.ok && "softDuplicate" in pr && pr.softDuplicate) {
+          // 同文已在库：撤乐观行、拉真列表；勿抛错（抽屉会回填草稿导致重试死循环）
+          rollback();
+          setCommentsRetryTick((n) => n + 1);
+          return;
+        }
+        if (pr.ok && "commentId" in pr) {
           setLocalCommentsByPostId((prev) => ({
             ...prev,
             [postId]: (prev[postId] ?? []).map((c) =>

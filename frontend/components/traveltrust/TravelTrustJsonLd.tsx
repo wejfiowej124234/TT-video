@@ -1,4 +1,4 @@
-import zh from "@/locales/zh";
+import en from "@/locales/en";
 
 const SITE_URL =
   (typeof process !== "undefined" && process.env.NEXT_PUBLIC_SITE_URL?.trim()
@@ -7,15 +7,15 @@ const SITE_URL =
 
 /** 页面内结构化数据（TT-PH1-167 · ①）— Server Component，与 layout metadata 同源 */
 export function TravelTrustJsonLd() {
-  const pageUrl = `${SITE_URL}/traveltrust`;
+  const pageUrl = `${SITE_URL}/`;
 
   const payload = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: zh.traveltrust_meta_title,
-    description: zh.traveltrust_meta_description,
+    name: en.traveltrust_meta_title,
+    description: en.traveltrust_meta_description,
     url: pageUrl,
-    inLanguage: "zh-CN",
+    inLanguage: "en",
     isPartOf: {
       "@type": "WebSite",
       name: "TravelTrust",
@@ -24,7 +24,7 @@ export function TravelTrustJsonLd() {
     about: {
       "@type": "Organization",
       name: "TravelTrust",
-      description: zh.traveltrust_intro,
+      description: en.traveltrust_intro,
     },
   };
 

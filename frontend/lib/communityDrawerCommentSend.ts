@@ -4,6 +4,10 @@
 import { postComment } from "@/lib/apiClient/community";
 import { mapApiUserRoleToCommunity } from "@/components/community/communityFeedMappers";
 import type { CommunityComment, CommunityPostAuthor } from "@/lib/communityMockData";
+import {
+  isCommunityCommentDuplicateRejection,
+  isExpectedCommunityWriteRejection,
+} from "@/lib/communityApiExpectedWriteRejection";
 import { formatWalletOrDidShort } from "@/lib/formatWalletOrDidShort";
 
 /** `throw` / `catch` 与 CommentDrawer 发评错误分流同源；勿改字面量。 */
@@ -81,9 +85,10 @@ export function buildCommunityDrawerCommentRow(args: {
 
 export type PostCommunityDrawerCommentResult =
   | { ok: true; commentId: string }
+  | { ok: true; softDuplicate: true }
   | { ok: false; body: unknown };
 
-/** `POST …/posts/:id/comments`；成功返回 `commentId`，否则 `ok: false`（由页面 **`interpretCommunityWriteError`**）。 */
+/** `POST …/posts/:id/comments`；成功返回 `commentId`；同文重复为软成功；否则 `ok: false`（由页面 **`interpretCommunityWriteError`**）。 */
 export async function postCommunityDrawerComment(args: {
   postId: string;
   content: string;
@@ -94,7 +99,10 @@ export async function postCommunityDrawerComment(args: {
   const res = await postComment(postId, content, parentId);
   const r = res as { id?: string; status?: string; message?: string } | null;
   if (r?.id) return { ok: true, commentId: r.id };
-  if (typeof window !== "undefined") {
+  if (isCommunityCommentDuplicateRejection(res)) {
+    return { ok: true, softDuplicate: true };
+  }
+  if (typeof window !== "undefined" && !isExpectedCommunityWriteRejection(res)) {
     console.error(`${logContext} postComment not ok:`, res);
   }
   return { ok: false, body: res };

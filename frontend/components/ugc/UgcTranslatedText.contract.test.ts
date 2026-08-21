@@ -12,6 +12,9 @@ describe("UgcTranslatedText", () => {
     expect(src).toContain("on_demand");
     expect(src).toContain("postUgcTranslate");
     expect(src).toContain("getUgcTranslationCache");
+    expect(src).toContain("getUgcTranslationStatus");
+    expect(src).toContain("enabled !== true");
+    expect(src).toContain("showAction && Boolean(source.trim()) && !showTranslated");
     expect(src).toContain("showAction");
     expect(src).toContain("actionSurface");
     expect(src).toContain("text-ref-sun/90");

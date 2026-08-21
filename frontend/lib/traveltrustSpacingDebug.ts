@@ -16,11 +16,12 @@ export const TT_SPACING_DEBUG_SECTION_LABELS: Record<string, string> = {
 
 /** 节与节之间期望外间距（ideal · 对齐 `TT_PAGE_SPACING_AUDIT_L5`） */
 export const TT_SPACING_DEBUG_GAP_TARGETS_PX: Record<string, number> = {
-  "theater→liquidity": 64,
-  "liquidity→trust": 44,
-  "trust→settlement": 44,
-  "settlement→faq": 64,
-  "faq→start": 64,
+  "hero→trust": 48,
+  "trust→settlement": 72,
+  "settlement→unlock": 72,
+  "unlock→liquidity": 88,
+  "liquidity→roles": 56,
+  "faq→start": 56,
 };
 
 /** @deprecated NODE_ENV alone must not mount public spacing debug (PER-R1-CI-09). */

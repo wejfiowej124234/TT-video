@@ -25,7 +25,7 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-bg-main text-ink-900 antialiased">
         <main className="mx-auto flex min-h-screen max-w-lg flex-col items-center justify-center px-6 py-12" role="alert">
           <div className="rounded-[var(--radius-md)] border border-ink-200 bg-bg-console p-6 shadow-soft w-full text-center">

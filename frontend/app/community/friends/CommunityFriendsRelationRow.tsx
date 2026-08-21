@@ -79,9 +79,9 @@ export function CommunityFriendsRelationRow({
           <span className={`rounded-full px-2 py-0.5 text-meta ${communityStoredRolePillClassName(user.role)}`}>
             {t(communityStoredRoleLabelI18nKey(user.role))}
           </span>
-          {user.isEscrowGuide ? (
+          {user.isEscrowGuide && String(user.role ?? "").toLowerCase() !== "guide" ? (
             <span className="rounded-full border border-warning/40 bg-warning/10 px-2 py-0.5 text-meta text-warning/90">
-              {t("community_badge_escrow_guide")}
+              {t("community_role_guide")}
             </span>
           ) : null}
         </div>

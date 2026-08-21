@@ -81,12 +81,18 @@ export function createTravelTrustWagmiConnectors(
   return connectors;
 }
 
+/**
+ * Read WalletConnect Project ID for bake/runtime.
+ * MUST use direct `process.env.NEXT_PUBLIC_*` access so Next.js inlines at build
+ * (indirect `env.NEXT_PUBLIC_*` stays empty in the browser bundle — OA-01).
+ */
 export function readWalletConnectProjectIdFromEnv(
-  env: { NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID?: string } = typeof process !== "undefined"
-    ? process.env
-    : {}
+  env?: { NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID?: string }
 ): string {
-  return (env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "").trim();
+  if (env) {
+    return (env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "").trim();
+  }
+  return (process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "").trim();
 }
 
 /** Prefer deploy site URL so wallet metadata icons resolve on Staging/Production. */

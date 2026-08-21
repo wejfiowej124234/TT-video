@@ -65,3 +65,100 @@ export function communityRoleLabelI18nKey(protocolRole: string): string {
       return "community_role_tourist";
   }
 }
+
+/**
+ * Comment / feed identity rank (highest first):
+ * 管理员 > 区域主理人 > 商家 > 向导 > 旅行者/游客.
+ * Multiple identities → only the first (highest) pill.
+ */
+export const COMMUNITY_AUTHOR_IDENTITY_PRIORITY = [
+  "community_role_admin",
+  "community_role_region_steward",
+  "community_role_provider",
+  "community_role_guide",
+  "community_role_arbitrator",
+  "community_role_traveler",
+  "community_role_tourist",
+] as const;
+
+function communityAuthorIdentityKeySet(author: {
+  role?: string | null;
+  isEscrowGuide?: boolean;
+} | null | undefined): Set<string> {
+  const r = typeof author?.role === "string" ? author.role.trim().toLowerCase() : "";
+  const keys = new Set<string>();
+  if (r === "admin" || r === "super_admin") keys.add("community_role_admin");
+  if (r === "region_steward") keys.add("community_role_region_steward");
+  if (r === "provider") keys.add("community_role_provider");
+  if (r === "guide" || Boolean(author?.isEscrowGuide)) keys.add("community_role_guide");
+  if (r === "arbitrator") keys.add("community_role_arbitrator");
+  if (r === "traveler") keys.add("community_role_traveler");
+  if (r === "tourist") keys.add("community_role_tourist");
+  return keys;
+}
+
+function communityAuthorPrimaryIdentityFromKeys(keys: Set<string>): string {
+  for (const k of COMMUNITY_AUTHOR_IDENTITY_PRIORITY) {
+    if (keys.has(k)) return k;
+  }
+  return "community_role_tourist";
+}
+
+/**
+ * Post / feed / comment identity pill under display name.
+ * One pill only — never 托管向导 / 预约向导, never stacked 管理员+向导.
+ */
+export function communityAuthorIdentityI18nKeys(author: {
+  role?: string | null;
+  isEscrowGuide?: boolean;
+} | null | undefined): string[] {
+  return [communityAuthorPrimaryIdentityFromKeys(communityAuthorIdentityKeySet(author))];
+}
+
+/** Same person on post + comment: keep the higher-ranked identity (comment API may omit admin). */
+export function communityAuthorIdentityForComment(
+  commentAuthor: {
+    id?: string;
+    role?: string | null;
+    isEscrowGuide?: boolean;
+  },
+  postAuthor?: {
+    id?: string;
+    role?: string | null;
+    isEscrowGuide?: boolean;
+  } | null,
+): { role?: string | null; isEscrowGuide?: boolean } {
+  if (!postAuthor?.id || !commentAuthor.id || postAuthor.id !== commentAuthor.id) {
+    return commentAuthor;
+  }
+  const keys = communityAuthorIdentityKeySet(commentAuthor);
+  for (const k of communityAuthorIdentityKeySet(postAuthor)) keys.add(k);
+  return syntheticAuthorFromIdentityKeys(keys);
+}
+
+function syntheticAuthorFromIdentityKeys(keys: Set<string>): {
+  role: string;
+  isEscrowGuide?: boolean;
+} {
+  const primary = communityAuthorPrimaryIdentityFromKeys(keys);
+  const role =
+    primary === "community_role_admin"
+      ? "admin"
+      : primary === "community_role_region_steward"
+        ? "region_steward"
+        : primary === "community_role_provider"
+          ? "provider"
+          : primary === "community_role_guide"
+            ? "guide"
+            : primary === "community_role_arbitrator"
+              ? "arbitrator"
+              : primary === "community_role_traveler"
+                ? "traveler"
+                : "tourist";
+  return {
+    role,
+    ...(keys.has("community_role_guide") && primary === "community_role_guide"
+      ? { isEscrowGuide: true }
+      : {}),
+  };
+}

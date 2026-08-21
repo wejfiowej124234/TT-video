@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useLayoutEffect, useState, useCallback } from "react";
-import { getMe, clearGetMeCache, getAuthHeaders } from "@/lib/apiClient";
+import { getMe, clearGetMeCache, canProbeAccountSession } from "@/lib/apiClient";
 
 /** 与 `CommunityAuthContext.normalizeMe` 同源：须 `user.id` 存在且非 `anonymous` 才视为已登录（勿仅凭 localStorage）。 */
 export function headerSessionUserFromMe(me: unknown): {
@@ -49,9 +49,7 @@ export function useHeaderSession() {
         setChecking(false);
         return;
       }
-      const auth = getAuthHeaders();
-      const canProbe = !!(auth.Authorization || auth["X-User-Id"]);
-      if (!canProbe) {
+      if (!canProbeAccountSession()) {
         if (gen !== genRef.current) return;
         setSessionUser(null);
         setChecking(false);
@@ -66,8 +64,21 @@ export function useHeaderSession() {
         })
         .catch((err) => {
           if (gen !== genRef.current) return;
+          const upstream =
+            err instanceof Error &&
+            (err.message.startsWith("me_upstream_") || err.message === "chain_off_unavailable");
           if (typeof window !== "undefined") {
             console.error("Header useHeaderSession getMe:", err);
+          }
+          // Transient API 503/502: do not force Guest (would flash logout). Soft-retry once.
+          if (upstream) {
+            setChecking(false);
+            window.setTimeout(() => {
+              if (gen !== genRef.current) return;
+              clearGetMeCache();
+              run();
+            }, 1200);
+            return;
           }
           setSessionUser(null);
           setChecking(false);

@@ -42,6 +42,7 @@ import {
 import { useCommunityFeedApi } from "@/components/community/useCommunityFeedApi";
 import { useCommunityDrawerCommentsQuery } from "@/components/community/useCommunityDrawerCommentsQuery";
 import { useCommunityFeedPostDeepLink } from "@/components/community/useCommunityFeedPostDeepLink";
+import { useCommunityFeedCommentDelete } from "@/components/community/useCommunityFeedCommentDelete";
 import {
   mapApiCommentToCommunityComment,
   mapApiPostToCommunityPost,
@@ -50,6 +51,10 @@ import {
 import { buildAuthorFollowForPost } from "@/components/community/communityFeedFollowUtils";
 import { formatWalletOrDidShort } from "@/lib/formatWalletOrDidShort";
 import { mapApiReadError } from "@/lib/mapApiReadError";
+import {
+  isCommunityCommentDuplicateRejection,
+  isExpectedCommunityWriteRejection,
+} from "@/lib/communityApiExpectedWriteRejection";
 import {
   interpretCommunityWriteError,
   messageForCommunityActionResponse,
@@ -120,10 +125,11 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
   /** 后端 `errors` 映射后的字段文案（31 §二：输入旁 + aria） */
   const [commentFieldMessages, setCommentFieldMessages] = useState<Record<string, string> | null>(null);
   const [commentsRetryTick, setCommentsRetryTick] = useState(0);
-  const [commentSort, setCommentSort] = useState<CommunityCommentSort>("chronological");
+  const [commentSort, setCommentSort] = useState<CommunityCommentSort>("hot");
   const activeCommentPostId = commentPost?.id ?? detailPost?.id ?? null;
   const {
     apiCommentsByPostId,
+    setApiCommentsByPostId,
     commentsLoadError,
     commentsHasMore,
     loadMoreComments,
@@ -851,9 +857,16 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
           setToastHint(null);
           setToast("community_comment_send_success");
           scheduleToastClear(2600);
+          setCommentsRetryTick((n) => n + 1);
           return;
         }
-        if (typeof window !== "undefined") {
+        // API 同文防刷：评论已在库；软成功（刷新列表、不抛错、不回填草稿）
+        if (isCommunityCommentDuplicateRejection(res)) {
+          rollback();
+          setCommentsRetryTick((n) => n + 1);
+          return;
+        }
+        if (typeof window !== "undefined" && !isExpectedCommunityWriteRejection(res)) {
           console.error("handleCommentSend postComment not ok:", res);
         }
         const { topMessage, fieldMessages } = interpretCommunityWriteError(r, t, "community_comment_send_failed");
@@ -881,6 +894,23 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
     },
     [communityUser, t, dash, scheduleToastClear, setToast, setToastBodyOverride, setToastHint]
   );
+
+  const {
+    handleDeleteComment,
+    deleteConfirmCommentOpen,
+    deleteConfirmBusy,
+    deleteCommentError,
+    cancelDeleteComment,
+    confirmDeleteComment,
+  } = useCommunityFeedCommentDelete({
+    t,
+    setApiCommentsByPostId,
+    setLocalCommentsByPostId,
+    setApiPosts,
+    setLocalPosts,
+    setDetailPost,
+    setCommentPost,
+  });
 
   const followBusyRef = useRef(false);
   const handleAuthorFollowToggle = useCallback(
@@ -1253,6 +1283,12 @@ export function useCommunityFeed(options?: { initialSnapshot?: CommunityFeedInit
     openPublish,
     handleReport,
     handleReportComment,
+    handleDeleteComment,
+    deleteConfirmCommentOpen,
+    deleteConfirmBusy,
+    deleteCommentError,
+    cancelDeleteComment,
+    confirmDeleteComment,
     handleReportSubmit,
     reportContext,
     closeReportDrawer,

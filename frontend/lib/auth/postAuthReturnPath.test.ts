@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  COMMUNITY_FEED_PATH,
   POST_AUTH_DEFAULT_RETURN_PATH,
   normalizeXiaohongshuCommunityReturn,
   resolvePostAuthReturnPath,
@@ -10,9 +9,9 @@ import { ME_SETTINGS_PROFILE_PATH } from "@/lib/me/meSettingsL5";
 
 describe("postAuthReturnPath", () => {
   it("defaults to community feed when returnUrl is absent (小红书式)", () => {
-    expect(POST_AUTH_DEFAULT_RETURN_PATH).toBe(COMMUNITY_FEED_PATH);
-    expect(resolvePostAuthReturnPath(null)).toBe("/community");
-    expect(resolvePostAuthReturnPath("")).toBe("/community");
+    expect(POST_AUTH_DEFAULT_RETURN_PATH).toBe("/");
+    expect(resolvePostAuthReturnPath(null)).toBe("/");
+    expect(resolvePostAuthReturnPath("")).toBe("/");
   });
 
   it("normalizes bare community profile shell to settings profile", () => {

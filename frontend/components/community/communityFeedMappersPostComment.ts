@@ -10,7 +10,10 @@ import type {
   CommunityCommentVisibility,
 } from "@/lib/communityMockData";
 import { formatWalletOrDidShort } from "@/lib/formatWalletOrDidShort";
-import { communityMediaAbsoluteUrlForRender, normalizePersistedCommunityMediaPath } from "@/lib/communityMediaClientUrl";
+import {
+  communityMediaAbsoluteUrlForRender,
+  normalizeDurableCommunityMediaUrl,
+} from "@/lib/communityMediaClientUrl";
 import { mapApiUserRoleToCommunity } from "@/components/community/communityFeedMappersRoleAndMedia";
 
 export type ApiPostInput = {
@@ -111,7 +114,7 @@ export function communityCommentModerationPlaceholderI18nKey(c: CommunityComment
 /** 51-F1 / 51-31-9：将后端帖子格式映射为前端 CommunityPost；51-31-19 供 me/collects、me/posts 使用 */
 export function mapApiPostToCommunityPost(p: ApiPostInput): CommunityPost {
   const urls = (p.media_urls ?? [])
-    .map((u) => normalizePersistedCommunityMediaPath(String(u)))
+    .map((u) => normalizeDurableCommunityMediaUrl(String(u)))
     .filter(Boolean);
   const nick =
     (p.author_nickname && String(p.author_nickname).trim()) || p.user_id.slice(0, 8);
@@ -120,7 +123,7 @@ export function mapApiPostToCommunityPost(p: ApiPostInput): CommunityPost {
   const walletShort = formatWalletOrDidShort(p.author_default_wallet ?? undefined);
   const coverTrim =
     p.cover_url != null && String(p.cover_url).trim()
-      ? normalizePersistedCommunityMediaPath(String(p.cover_url).trim())
+      ? normalizeDurableCommunityMediaUrl(String(p.cover_url).trim())
       : undefined;
   const assetTrim =
     p.primary_media_asset_id != null && String(p.primary_media_asset_id).trim()
@@ -132,6 +135,11 @@ export function mapApiPostToCommunityPost(p: ApiPostInput): CommunityPost {
     p.commerce_market_listing_id != null && String(p.commerce_market_listing_id).trim()
       ? String(p.commerce_market_listing_id).trim()
       : undefined;
+  const authorAvatarRaw =
+    p.author_avatar_url != null && String(p.author_avatar_url).trim()
+      ? String(p.author_avatar_url).trim()
+      : "";
+  const authorAvatar = authorAvatarRaw ? normalizeDurableCommunityMediaUrl(authorAvatarRaw) : null;
   return {
     id: p.id,
     type,
@@ -146,7 +154,7 @@ export function mapApiPostToCommunityPost(p: ApiPostInput): CommunityPost {
     author: {
       id: p.user_id,
       nickname: nick,
-      avatar_url: p.author_avatar_url ?? null,
+      avatar_url: authorAvatar,
       role: mapApiUserRoleToCommunity(p.author_role),
       ...(p.author_is_escrow_guide === true ? { isEscrowGuide: true } : {}),
       ...(walletShort ? { wallet: walletShort } : {}),
@@ -201,7 +209,10 @@ export function mapApiCommentToCommunityComment(c: ApiCommentInput): CommunityCo
   const avRaw = c.author_avatar_url != null && String(c.author_avatar_url).trim()
     ? String(c.author_avatar_url).trim()
     : "";
-  const avatarResolved = avRaw ? communityMediaAbsoluteUrlForRender(avRaw) : null;
+  // Durable OCS remap first, then browser/SSR absolute resolve（禁止 legacy upload 出站）
+  const avatarResolved = avRaw
+    ? communityMediaAbsoluteUrlForRender(normalizeDurableCommunityMediaUrl(avRaw))
+    : null;
   const vis = mapApiCommentVisibility(c.visibility_status);
   return {
     id: c.id,

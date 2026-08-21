@@ -63,8 +63,8 @@ describe("communityPostTagWithinServerUtf8Limit / communityPostTagExceedsServerU
 });
 
 describe("buildCommunityPostCommentsQueryString (pure; aligned with posts.rs CommentsQuery)", () => {
-  it("default chronological omits sort param", () => {
-    expect(buildCommunityPostCommentsQueryString()).toBe("");
+  it("default is hot (sort=hot)", () => {
+    expect(buildCommunityPostCommentsQueryString()).toBe("sort=hot");
     expect(buildCommunityPostCommentsQueryString({ sort: "chronological" })).toBe("");
   });
 
@@ -89,8 +89,10 @@ describe("buildCommunityPostCommentsQueryString (pure; aligned with posts.rs Com
   });
 
   it("clamps limit to API max", () => {
-    expect(buildCommunityPostCommentsQueryString({ limit: 9999 })).toBe(`limit=${COMMUNITY_COMMENT_LIST_API_MAX}`);
-    expect(buildCommunityPostCommentsQueryString({ limit: 0 })).toBe("limit=1");
+    expect(buildCommunityPostCommentsQueryString({ sort: "chronological", limit: 9999 })).toBe(
+      `limit=${COMMUNITY_COMMENT_LIST_API_MAX}`,
+    );
+    expect(buildCommunityPostCommentsQueryString({ sort: "chronological", limit: 0 })).toBe("limit=1");
   });
 
   it("combines sort hot with limit", () => {

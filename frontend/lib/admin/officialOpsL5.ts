@@ -2,6 +2,71 @@
 
 export const OFFICIAL_OPS_L5_PROBE = "official-growth-ops-l5-v1" as const;
 
+/** Batch-11 HU-341 · 账号类型产品文案键（option value 仍 eng） */
+export const OFFICIAL_ACCOUNT_KIND_LABEL_KEYS: Record<string, string> = {
+  traveler: "admin_official_kind_traveler",
+  guide: "admin_official_kind_guide",
+  merchant: "admin_official_kind_merchant",
+  community_author: "admin_official_kind_community_author",
+};
+
+/** Batch-11 HU-345 · 审核状态产品文案键 */
+export const OFFICIAL_ACCOUNT_REVIEW_LABEL_KEYS: Record<string, string> = {
+  draft: "admin_official_review_draft",
+  in_review: "admin_official_review_in_review",
+  published: "admin_official_review_published",
+  archived: "admin_official_review_archived",
+};
+
+export function officialAccountKindLabelKey(kind: string): string {
+  return OFFICIAL_ACCOUNT_KIND_LABEL_KEYS[kind] ?? "admin_official_kind_unknown";
+}
+
+export function officialAccountReviewLabelKey(status: string): string {
+  return OFFICIAL_ACCOUNT_REVIEW_LABEL_KEYS[status] ?? "admin_official_review_unknown";
+}
+
+/** Batch-11 HU-342 · 探针/种子行（默认隐藏） */
+export function isOfficialAccountProbeRow(row: {
+  data_origin?: string | null;
+  display_label?: string | null;
+  user_email?: string | null;
+}): boolean {
+  const origin = (row.data_origin ?? "").toLowerCase();
+  if (origin === "test" || origin === "demo" || origin === "official_seed") return true;
+  const label = (row.display_label ?? "").toLowerCase();
+  const email = (row.user_email ?? "").toLowerCase();
+  if (label.includes("diag") || email.includes("diag") || email.includes("@ocs")) return true;
+  return false;
+}
+
+/**
+ * Batch-11 HU-347 · 按审核态只亮合法动作（submit → request → publish）。
+ */
+export function officialAccountPublishShowFlags(reviewStatus: string): {
+  submit: boolean;
+  request: boolean;
+  publish: boolean;
+} {
+  const s = reviewStatus || "draft";
+  if (s === "draft") return { submit: true, request: false, publish: false };
+  if (s === "in_review") return { submit: false, request: true, publish: true };
+  return { submit: false, request: false, publish: false };
+}
+
+/**
+ * Batch-11 HU-346 / HU-373 · 已发布行公众验真深链（Staging 诚实面）。
+ * community_author → 社区；其余 → 官方攻略列表（消费侧入口）。
+ */
+export function officialAccountVerifyHref(row: {
+  account_kind?: string | null;
+  is_active?: boolean;
+}): string | null {
+  if (!row.is_active) return null;
+  if (row.account_kind === "community_author") return "/community";
+  return "/admin/official/guides";
+}
+
 /** 冷启动 consumer surfaces · 下拉 SSOT（替代手填 CSV） */
 export const OFFICIAL_COLD_START_SURFACE_OPTIONS = [
   { id: "home_hero", labelKey: "admin_official_cold_start_surface_home_hero" },

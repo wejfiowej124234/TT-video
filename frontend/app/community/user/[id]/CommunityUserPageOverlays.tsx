@@ -38,6 +38,12 @@ export function CommunityUserPageOverlays({ core }: { core: CommunityUserPageCor
     closeWithFocusReturn,
     handleCommentSend,
     handleReportComment,
+    handleDeleteComment,
+    deleteConfirmCommentOpen,
+    deleteCommentConfirmBusy,
+    deleteCommentError,
+    cancelDeleteComment,
+    confirmDeleteComment,
     commentSendFailed,
     commentSendErrorMessage,
     commentFieldMessages,
@@ -120,6 +126,7 @@ export function CommunityUserPageOverlays({ core }: { core: CommunityUserPageCor
           onReport={handleReport}
           meUserId={meUser?.id ?? null}
           onReportComment={(c) => handleReportComment(detailPost, c)}
+          onDeleteComment={(c) => void handleDeleteComment(detailPost, c)}
           commentSendError={commentSendFailed}
           commentSendErrorMessage={commentSendErrorMessage}
           commentFieldMessages={commentFieldMessages}
@@ -171,6 +178,16 @@ export function CommunityUserPageOverlays({ core }: { core: CommunityUserPageCor
         surface="page"
         onCancel={cancelDeletePost}
         onConfirm={confirmDeletePostAction}
+      />
+      <CommunityDeletePostConfirmDialog
+        open={deleteConfirmCommentOpen}
+        busy={deleteCommentConfirmBusy}
+        t={t}
+        surface="page"
+        variant="comment"
+        error={deleteCommentError}
+        onCancel={cancelDeleteComment}
+        onConfirm={() => void confirmDeleteComment()}
       />
     </>
   );

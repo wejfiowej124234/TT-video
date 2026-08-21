@@ -54,6 +54,7 @@ describe("community modals & drawers contract (G-03 · ①)", () => {
     expect(dataTt.communityReportDrawer).toBe('[data-tt-community-report-drawer="1"]');
     expect(dataTt.communityMeQuickLinksDrawer).toBe('[data-tt-community-me-quick-links-drawer="1"]');
     expect(dataTt.communityDeletePostConfirm).toBe('[data-tt-community-delete-post-confirm="1"]');
+    expect(dataTt.communityDeleteCommentConfirm).toBe('[data-tt-community-delete-comment-confirm="1"]');
     expect(dataTt.communityUncollectConfirm).toBe('[data-tt-community-uncollect-confirm="1"]');
     expect(dataTt.communityUnlikeConfirm).toBe('[data-tt-community-unlike-confirm="1"]');
     expect(dataTt.communityOrderCancelConfirm).toBe('[data-tt-community-order-cancel-confirm="1"]');
@@ -64,7 +65,10 @@ describe("community modals & drawers contract (G-03 · ①)", () => {
     const uncollectDlg = read("CommunityMeUncollectConfirmDialog.tsx");
     const unlikeDlg = read("CommunityMeUnlikeConfirmDialog.tsx");
     const cancelDlg = read("CommunityMeOrderCancelConfirmDialog.tsx");
-    expect(deleteDlg).toContain('data-tt-community-delete-post-confirm="1"');
+    expect(deleteDlg).toContain("data-tt-community-delete-post-confirm");
+    expect(deleteDlg).toContain("data-tt-community-delete-comment-confirm");
+    expect(deleteDlg).toContain('variant === "comment"');
+    expect(deleteDlg).toContain("community_delete_comment_confirm");
     expect(uncollectDlg).toContain('data-tt-community-uncollect-confirm="1"');
     expect(unlikeDlg).toContain('data-tt-community-unlike-confirm="1"');
     expect(cancelDlg).toContain('data-tt-community-order-cancel-confirm="1"');

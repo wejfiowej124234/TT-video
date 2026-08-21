@@ -6,8 +6,12 @@ import { buildCommunityPostCommentsQueryString } from "./comments";
 import { COMMUNITY_COMMENT_LIST_API_MAX } from "./constants";
 
 describe("buildCommunityPostCommentsQueryString", () => {
-  it("returns empty string when only default chronological (no redundant sort=)", () => {
-    expect(buildCommunityPostCommentsQueryString()).toBe("");
+  it("defaults to sort=hot", () => {
+    expect(buildCommunityPostCommentsQueryString()).toBe("sort=hot");
+    expect(buildCommunityPostCommentsQueryString({ sort: "hot" })).toBe("sort=hot");
+  });
+
+  it("omits sort when chronological (no redundant default)", () => {
     expect(buildCommunityPostCommentsQueryString({ sort: "chronological" })).toBe("");
   });
 

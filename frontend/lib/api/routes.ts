@@ -108,6 +108,10 @@ export const routes = {
     return `/api/v1/me/security-notifications${qs ? `?${qs}` : ""}`;
   },
   meSessionCurrent: "/api/v1/me/sessions/current",
+  /** UGC 用户内容翻译（非 Admin catalog_translation_entries） */
+  ugcTranslate: "/api/v1/ugc/translate",
+  ugcTranslations: "/api/v1/ugc/translations",
+  ugcTranslationStatus: "/api/v1/ugc/translation-status",
   meSessionBySuffix: (suffix: string) => `/api/v1/me/sessions/${encodeURIComponent(suffix)}`,
   /** 自由市场星标（`market_travel_bookmarks`；与 `lib/apiClient/marketTravelBookmarks/` barrel 同源） */
   meMarketBookmarks: "/api/v1/me/market-bookmarks",

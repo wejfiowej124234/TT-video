@@ -7,7 +7,7 @@ import {
   getMeStewardApplication,
   getMeRoleApplications,
   getOnboardingEntitlementsMe,
-  getAuthHeaders,
+  canProbeAccountSession,
 } from "@/lib/apiClient";
 import { getProviderRegistrationServerDraft } from "@/lib/provider/providerRegisterServerDraft";
 import type { MeIdentitySlotId, MeIdentitySlotState } from "@/lib/meIdentitySlots";
@@ -55,8 +55,7 @@ export function useMeIdentitiesCoreCardSignals(
     const gen = ++genRef.current;
     if (typeof window === "undefined") return;
 
-    const auth = getAuthHeaders();
-    const loggedIn = !!(auth.Authorization || auth["X-User-Id"]);
+    const loggedIn = canProbeAccountSession();
 
     if (!loggedIn) {
       if (gen !== genRef.current) return;

@@ -161,9 +161,7 @@ describe("admin home L5", () => {
     expect(src).toContain("writeAdminHomeInboxPendingTotalCache");
     expect(src).toContain("resolveAdminHomeInboxPendingTotal");
     expect(src).toContain("adminHomeKpiFoldDefaultOpen");
-    expect(src).toContain("kpiFoldDefaultOpen");
     expect(src).toContain("data-tt-admin-home-inbox-focus");
-    expect(src).toContain("admin_home_kpi_fold_title");
     expect(src).toContain("data-tt-admin-home-shell-preview-banner-collapsible");
     expect(src).toContain("adminShellLinkTierBadgeVisible");
     expect(src).toContain("adminHomeModuleCardTierBadgeVisible");
@@ -180,7 +178,6 @@ describe("admin home L5", () => {
     expect(src).toContain("data-tt-admin-home-recent");
     expect(src).toContain("/admin/inbox");
     expect(src).toContain("data-tt-admin-home-inbox-unified-link");
-    expect(src).toContain("data-tt-admin-home-inbox-operator-guide");
 
     const inboxStrip = readFileSync(join(__dir, "AdminHomeInboxStrip.tsx"), "utf8");
     const maintainer = readFileSync(join(__dir, "AdminHomeMaintainerFold.tsx"), "utf8");
@@ -197,10 +194,7 @@ describe("admin home L5", () => {
     expect(src).toContain("ADMIN_HOME_FOCUS_CANVAS_CLASS");
     expect(src).toContain("data-tt-admin-home-workspace-header-compact");
     expect(src).toContain("useAdminHomeInboxFocusMode");
-    expect(src).toContain("admin_home_kpi_collapsed_summary");
-    expect(src).toContain('frame="compact"');
     expect(src).toContain("ADMIN_HOME_SECTION_COMPACT_FRAME_CLASS");
-    expect(src).toContain("persistOpen={false}");
     expect(src).toContain("adminHomeMaintainerFoldVisible");
     expect(src).toContain("AdminHomeFocusCompanion");
     expect(src).toContain("data-tt-admin-home-focus-companion");
@@ -226,8 +220,8 @@ describe("admin home L5", () => {
     expect(src).toContain("admin_home_workspace_heading");
     expect(src).toContain("data-tt-admin-home-workspace-heading");
     expect(src).toContain("data-tt-admin-home-shell-preview-deferred");
-    expect(inboxStrip).toContain("data-tt-admin-home-inbox-operator-guide");
-    expect(inboxStrip).toContain("/admin/operator-guide");
+    expect(inboxStrip).not.toContain("data-tt-admin-home-inbox-operator-guide");
+    expect(inboxStrip).not.toContain("/admin/operator-guide");
 
     const operatorGuide = readFileSync(join(__dir, "AdminHomeOperatorGuide.tsx"), "utf8");
     expect(operatorGuide).toContain("AdminWarmL5Surface");
@@ -263,17 +257,18 @@ describe("admin home L5", () => {
     expect(focusInboxIdx).toBeLessThan(focusOverviewIdx);
     const nonFocusTail = homeClient.slice((focusMatch!.index ?? 0) + focusCol.length);
     const calmFragment = nonFocusTail.match(
-      /<>[\s\S]*?<AdminHomeInboxStrip[\s\S]*?<AdminHomeKpiStrip[\s\S]*?<AdminHomeSystemOverviewSection[\s\S]*?\/>/,
+      /<>[\s\S]*?<AdminHomeInboxStrip[\s\S]*?<AdminHomeSystemOverviewSection[\s\S]*?\/>/,
     )?.[0];
     expect(calmFragment).toBeTruthy();
     const calmInbox = calmFragment!.indexOf("<AdminHomeInboxStrip");
-    const calmKpi = calmFragment!.indexOf("<AdminHomeKpiStrip");
     const calmSys = calmFragment!.indexOf("<AdminHomeSystemOverviewSection");
     expect(calmInbox).toBeGreaterThan(-1);
-    expect(calmKpi).toBeGreaterThan(-1);
     expect(calmSys).toBeGreaterThan(-1);
-    expect(calmInbox).toBeLessThan(calmKpi);
-    expect(calmKpi).toBeLessThan(calmSys);
+    expect(calmInbox).toBeLessThan(calmSys);
+    expect(homeClient).not.toContain("AdminHomeKpiStrip");
+    expect(homeClient).not.toContain("AdminHomeFocusCompanion");
+    expect(homeClient).not.toContain("AdminHomeMaintainerFold");
+    expect(homeClient).not.toContain("admin_home_kpi_fold_title");
     expect(homeClient).not.toContain("data-tt-admin-home-tech-fold");
     expect(homeClient).not.toContain("data-tt-admin-home-modules-fold");
     expect(homeClient).not.toContain("data-tt-admin-home-modules-expand-all");

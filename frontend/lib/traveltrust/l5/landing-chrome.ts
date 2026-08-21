@@ -56,12 +56,23 @@ export const TT_PULSE_TICKER_L5 = {
     "relative min-h-[2.125rem] min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_4%,black_96%,transparent)]",
   marqueeListClass:
     "flex w-max flex-nowrap shrink-0 items-center gap-8 pr-12 sm:gap-10 sm:pr-14 [isolation:isolate]",
-  marqueeItemClass: "relative z-0 shrink-0 list-none [contain:layout] [isolation:isolate]",
-  itemBodyClass: "max-w-[10.5rem] truncate text-white/95 sm:max-w-[12.5rem]",
-  itemSeparatorClass: "shrink-0 text-ref-sun/35",
+  /** Official www: overflow-visible so chip glow is not clipped while the track translates */
+  marqueeItemClass: "relative z-0 shrink-0 list-none overflow-visible [isolation:isolate]",
+  itemBodyClass: "relative z-[1] max-w-[10.5rem] truncate text-white/95 sm:max-w-[12.5rem]",
+  itemSeparatorClass: "relative z-[1] shrink-0 text-ref-sun/35",
   itemDateClass: "hidden shrink-0 font-mono text-[10px] tabular-nums text-slate-200/88 sm:inline",
+  itemKindClass: "relative z-[1] shrink-0 font-mono text-[10px] uppercase tracking-wide",
+  itemShimmerClass: "tt-pulse-chip-shimmer",
   itemClass:
-    "inline-flex min-h-[1.875rem] w-max min-w-[10rem] shrink-0 items-center gap-2 whitespace-nowrap rounded-md border border-ref-sun/16 bg-ref-sun/[0.06] px-2.5 py-1 text-meta leading-none text-slate-100 backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-ref-sun/32 hover:bg-ref-sun/10 hover:shadow-[0_0_16px_-6px_rgba(252,164,124,0.3)] motion-sub motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:min-w-[11.5rem] sm:gap-2.5 sm:px-3 sm:py-1",
+    "tt-pulse-chip-glow relative overflow-hidden inline-flex min-h-[1.875rem] w-max min-w-[10rem] shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-2.5 py-1 text-meta leading-none text-slate-100 backdrop-blur-sm transition hover:-translate-y-0.5 sm:min-w-[11.5rem] sm:gap-2.5 sm:px-3 sm:py-1",
+  itemPlateCampaignClass:
+    "border border-[#ff8a6a] bg-[rgba(255,90,60,0.18)] shadow-[inset_0_0_16px_rgba(255,110,80,0.55),0_0_14px_rgba(255,90,60,0.45)]",
+  itemPlateProductClass:
+    "border border-[#f9d779] bg-[rgba(249,215,121,0.16)] shadow-[inset_0_0_16px_rgba(249,215,121,0.5),0_0_14px_rgba(249,215,121,0.4)]",
+  itemPlateGovernanceClass:
+    "border border-[#34d399] bg-[rgba(16,185,129,0.16)] shadow-[inset_0_0_16px_rgba(52,211,153,0.5),0_0_14px_rgba(52,211,153,0.38)]",
+  itemPlateProtocolClass:
+    "border border-[#fbbf24] bg-[rgba(251,191,36,0.16)] shadow-[inset_0_0_16px_rgba(251,191,36,0.5),0_0_14px_rgba(251,191,36,0.38)]",
 } as const;
 
 export const TT_PULSE_UPDATES_PANEL_L5 = {
@@ -188,7 +199,7 @@ export const TT_ANNOUNCEMENTS_MOTION_L5 = {
 export const TT_ANNOUNCEMENTS_LIST_L5 = {
   warmPlateClass: `${TT_FAQ_ACCORDION_L5.warmPlateClass} p-0.5`,
   innerListClass: TT_FAQ_ACCORDION_L5.listClass,
-  itemShellClass: TT_FAQ_ACCORDION_L5.itemShellClass,
+  itemShellClass: `tt-announcement-row-glow ${TT_FAQ_ACCORDION_L5.itemShellClass}`,
   rowInnerClass:
     "px-5 py-4 transition-colors sm:px-6 sm:py-5",
   rowIdleClass: TT_FAQ_ACCORDION_L5.itemIdle,
@@ -199,6 +210,7 @@ export const TT_ANNOUNCEMENTS_LIST_L5 = {
   phaseChipClass:
     "inline-flex shrink-0 min-h-[1.375rem] items-center justify-center rounded-md border border-ref-sun/20 bg-ref-sun/8 px-2 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-ref-sun/90",
   rowTitleClass: "mt-2 text-small font-semibold leading-snug text-slate-50",
+  rowBodyClass: "mt-1.5 text-small leading-relaxed text-slate-300/88",
   dateChipClass:
     "inline-flex items-center rounded-full border border-ref-sun/14 bg-ink-950/55 px-2.5 py-0.5 font-mono text-[10px] tabular-nums text-slate-300/88",
 } as const;
@@ -226,8 +238,16 @@ export const TT_ANNOUNCEMENTS_PAGE_L5 = {
   backRowClass: "mb-5 sm:mb-6",
   pageHeaderClass: "relative mb-6 sm:mb-7",
   pageKickerClass: TT_SECTION_KICKER_L5,
-  pageTitleClass: `${TT_SECTION_CONTENT_L5.kickerToHeadingClass} ${TT_SECTION_CONTENT_L5.headingClass}`,
-  pageSubtitleClass: TT_SECTION_CONTENT_L5.introClass,
+  pageTitleClass: `${TT_SECTION_CONTENT_L5.kickerToHeadingClass} max-w-3xl text-h4 font-bold text-white sm:text-h3`,
+  pageSubtitleClass: "mt-3 max-w-3xl text-meta leading-relaxed text-slate-300/92",
+  filterRowClass: "mt-4 flex flex-wrap gap-2",
+  filterChipBaseClass:
+    "rounded-full border px-3.5 py-1.5 text-meta font-medium transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] motion-sub",
+  filterChipActiveClass:
+    "border-[#f9d779]/70 bg-[rgba(249,215,121,0.14)] text-[#f9d779] shadow-[inset_0_0_12px_rgba(249,215,121,0.28),0_0_14px_rgba(249,215,121,0.22)]",
+  filterChipIdleClass:
+    "border-white/12 bg-white/[0.03] text-slate-400 hover:border-white/22 hover:text-slate-200",
+  laneNoteClass: "mt-3 text-meta leading-relaxed text-slate-400/90",
   listPlateClass: TT_ANNOUNCEMENTS_LIST_L5.warmPlateClass,
   backLinkClass:
     "inline-flex min-h-[44px] items-center rounded-lg border border-ref-sun/16 bg-[#0a0908]/88 px-3 py-1.5 text-meta font-semibold text-ref-sun/90 shadow-[0_4px_18px_-12px_rgba(252,164,124,0.22)] ring-1 ring-inset ring-ref-sun/12 backdrop-blur-md transition duration-200 hover:-translate-x-0.5 hover:border-ref-sun/32 hover:text-ref-sun focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] motion-sub motion-reduce:transition-none motion-reduce:hover:translate-x-0",

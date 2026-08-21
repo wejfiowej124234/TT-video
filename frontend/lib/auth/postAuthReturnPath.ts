@@ -9,8 +9,8 @@ import { ME_SETTINGS_PROFILE_PATH } from "@/lib/me/meSettingsL5";
 /** TT 社区动态（小红书式：登录先进 Feed，「我」仅主动点 Tab） */
 export const COMMUNITY_FEED_PATH = "/community" as const;
 
-/** 登录/注册成功且无 `returnUrl` 时的默认落点 */
-export const POST_AUTH_DEFAULT_RETURN_PATH = COMMUNITY_FEED_PATH;
+/** 登录/注册成功且无 `returnUrl` 时的默认落点：官网地球仪首页 */
+export const POST_AUTH_DEFAULT_RETURN_PATH = "/" as const;
 
 /**
  * 裸 `/community/me`（无 `?tab=` 深链）→ `/me/settings/profile`；

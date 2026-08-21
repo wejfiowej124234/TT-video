@@ -14,7 +14,7 @@ test.describe("52 行程与金额展示", () => {
   });
 
   test("Landing Hero 创建行程 CTA 锚点至 #form（25 中央规划）", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/plan");
     await expect(page.locator("body")).toBeVisible();
     await page.locator("#form").getByRole("link", { name: /Create itinerary|创建行程/i }).click();
     await expect(page).toHaveURL(/#form($|[/?#])/, { timeout: 30_000 });
@@ -22,7 +22,7 @@ test.describe("52 行程与金额展示", () => {
   });
 
   test("Landing Hero 自由市场进入 /market（25→29）", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/plan");
     await expect(page.locator("body")).toBeVisible();
     const toMarket = page.locator("#form").locator('a[href="/market"]');
     await expect(toMarket).toBeVisible({ timeout: 15_000 });
@@ -34,7 +34,7 @@ test.describe("52 行程与金额展示", () => {
   });
 
   test("首页 Footer 链至 /itinerary/new（25/80 入口）", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/plan");
     await expect(page.locator("body")).toBeVisible();
     await page.getByRole("contentinfo").getByRole("link", { name: /Create itinerary|创建行程/i }).click();
     await expect(page).toHaveURL(/\/itinerary\/new/, { timeout: 15_000 });
@@ -100,7 +100,7 @@ test.describe("52 行程与金额展示", () => {
   });
 
   test("首页结果区卡片解锁后含金额分项或总价入口", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/plan");
     await expect(page.locator("body")).toBeVisible();
     const resultsHeading = page.getByText(/结果|行程卡|Results|Itinerary/i).first();
     await expect(resultsHeading).toBeVisible({ timeout: 10000 }).catch(() => null);

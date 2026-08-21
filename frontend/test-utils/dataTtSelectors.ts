@@ -25,6 +25,7 @@ export const dataTt = {
   communityFeedbackPage: '[data-tt-community-feedback-page="1"]',
   communityFriendsPage: '[data-tt-community-friends-page="1"]',
   communityGuidelinesPage: '[data-tt-community-guidelines-page="1"]',
+  communityDeleteCommentConfirm: '[data-tt-community-delete-comment-confirm="1"]',
   communityDeletePostConfirm: '[data-tt-community-delete-post-confirm="1"]',
   communityLoginForPublish: '[data-tt-community-login-for-publish="1"]',
   communityOrderCancelConfirm: '[data-tt-community-order-cancel-confirm="1"]',

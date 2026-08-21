@@ -29,6 +29,10 @@ describe("Wallet Connection Center L5 contract (①)", () => {
     expect(src).toContain("bimi-logo.png");
     expect(src).toContain("icons: [appIconUrl]");
     expect(src).toContain("iconUrl: appIconUrl");
+    expect(src).toContain("process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID");
+    expect(src).not.toMatch(
+      /NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID\?: string \} = typeof process/
+    );
     expect(src).not.toMatch(/icons:\s*\[\s*\]/);
     const providers = readFileSync(join(ROOT, "components/Providers.tsx"), "utf8");
     expect(providers).toContain('appName: "TravelTrust"');

@@ -25,8 +25,45 @@ export type UgcTranslationLookup = {
   source_locale?: string;
   target_locale?: string;
   provider?: string;
+  enabled?: boolean;
   error?: string;
 };
+
+export type UgcTranslationStatus = {
+  status: string;
+  enabled: boolean;
+  live: boolean;
+  provider?: string;
+};
+
+let translationStatusPromise: Promise<UgcTranslationStatus> | null = null;
+
+export function getUgcTranslationStatus(): Promise<UgcTranslationStatus> {
+  if (!translationStatusPromise) {
+    translationStatusPromise = fetchUgcTranslationStatus();
+  }
+  return translationStatusPromise;
+}
+
+async function fetchUgcTranslationStatus(): Promise<UgcTranslationStatus> {
+  try {
+    const res = await fetch(apiUrl(routes.ugcTranslationStatus), {
+      headers: { "x-request-id": requestId() },
+    });
+    const parsed = (await parseResponse(res)) as Partial<UgcTranslationStatus>;
+    if (!res.ok) {
+      return { status: "error", enabled: false, live: false };
+    }
+    return {
+      status: typeof parsed?.status === "string" ? parsed.status : "ok",
+      enabled: parsed?.enabled === true,
+      live: parsed?.live === true,
+      provider: typeof parsed?.provider === "string" ? parsed.provider : undefined,
+    };
+  } catch {
+    return { status: "error", enabled: false, live: false };
+  }
+}
 
 export function hasUgcTranslateSession(): boolean {
   const auth = getAuthHeaders();

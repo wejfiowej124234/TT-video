@@ -31,7 +31,7 @@ describe("admin theme L5 (① · U8)", () => {
     expect(adminUi).toContain("adminShellTopNavLinkClass");
     expect(adminUi).toContain("adminTableInlineLinkClass");
     expect(adminUi).toContain("ADMIN_TABLE_INLINE_LINK_CLASS");
-    expect(adminUi).toMatch(/ADMIN_TABLE_INLINE_LINK_CLASS[\s\S]*text-travel-700/);
+    expect(adminUi).toMatch(/ADMIN_TABLE_INLINE_LINK_CLASS[\s\S]*text-slate-200/);
     expect(adminUi).toContain("ADMIN_TABLE_TD_MONO_CLASS");
     expect(adminUi).toContain("ADMIN_TABLE_TD_TIMESTAMP_CLASS");
     expect(adminUi).toMatch(/ADMIN_SHELL_NAV_IDLE_CLASS[\s\S]*text-slate-200/);

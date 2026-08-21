@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { CommunityDeletePostConfirmDialog } from "@/components/community/CommunityDeletePostConfirmDialog";
 import { communityDrawerCommentCountHonestWithApiCache } from "@/components/community/communityFeedMappers";
 import type { CommunityFeedMainPortalsProps } from "./communityFeedMainPortalsTypes";
 
@@ -23,6 +24,12 @@ type PostDetailSlice = Pick<
   | "authLoading"
   | "meUserId"
   | "handleReportComment"
+  | "handleDeleteComment"
+  | "deleteConfirmCommentOpen"
+  | "deleteConfirmBusy"
+  | "deleteCommentError"
+  | "cancelDeleteComment"
+  | "confirmDeleteComment"
   | "handleReport"
   | "likedPostIds"
   | "collectedPostIds"
@@ -60,6 +67,12 @@ export function CommunityFeedMainPostDetailPortal(props: PostDetailSlice) {
     authLoading,
     meUserId,
     handleReportComment,
+    handleDeleteComment,
+    deleteConfirmCommentOpen,
+    deleteConfirmBusy,
+    deleteCommentError,
+    cancelDeleteComment,
+    confirmDeleteComment,
     handleReport,
     likedPostIds,
     collectedPostIds,
@@ -85,8 +98,9 @@ export function CommunityFeedMainPostDetailPortal(props: PostDetailSlice) {
     onDetailVideoFeedLoadMore,
     detailVideoFeedLoadingMore,
   } = props;
-  if (!detailPost) return null;
   return (
+    <>
+      {detailPost ? (
     <PostDetailDrawerPortal
       post={detailPost}
       comments={commentsForDetail}
@@ -104,6 +118,7 @@ export function CommunityFeedMainPostDetailPortal(props: PostDetailSlice) {
       authPending={authLoading}
       meUserId={meUserId}
       onReportComment={(c) => handleReportComment(detailPost, c)}
+      onDeleteComment={(c) => void handleDeleteComment(detailPost, c)}
       onReport={handleReport}
       liked={likedPostIds.has(detailPost.id)}
       collected={collectedPostIds.has(detailPost.id)}
@@ -137,5 +152,16 @@ export function CommunityFeedMainPostDetailPortal(props: PostDetailSlice) {
       onVideoFeedLoadMore={onDetailVideoFeedLoadMore}
       videoFeedLoadingMore={detailVideoFeedLoadingMore}
     />
+      ) : null}
+      <CommunityDeletePostConfirmDialog
+        open={deleteConfirmCommentOpen}
+        busy={deleteConfirmBusy}
+        t={t}
+        variant="comment"
+        error={deleteCommentError}
+        onCancel={cancelDeleteComment}
+        onConfirm={() => void confirmDeleteComment()}
+      />
+    </>
   );
 }

@@ -163,3 +163,12 @@ export function communityFeedCardCommentDisplayCountHonest(
 export function withPostServerCommentCountBumped(post: CommunityPost): CommunityPost {
   return { ...post, comments: post.comments + 1 };
 }
+
+/** R-COMM-COMMENT-DELETE-1 · 删除成功后本地 `comments` 按可见删除数回退（≥0）。 */
+export function withPostServerCommentCountDecremented(
+  post: CommunityPost,
+  removedVisibleCount = 1,
+): CommunityPost {
+  const n = Number.isFinite(removedVisibleCount) ? Math.max(0, Math.floor(removedVisibleCount)) : 1;
+  return { ...post, comments: Math.max(0, post.comments - n) };
+}

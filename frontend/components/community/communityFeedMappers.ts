@@ -46,6 +46,7 @@ export {
   communityFeedCardCommentDisplayCountHonest,
 
   withPostServerCommentCountBumped,
+  withPostServerCommentCountDecremented,
 
 } from "./communityFeedMappersCounts";
 
