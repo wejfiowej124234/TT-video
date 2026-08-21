@@ -11,7 +11,7 @@ schema: traveltrust.role_promo_media_assets.v1
 version: 1
 machine_key: TT_ROLE_PROMO_MEDIA_ASSETS
 status: ACTIVE_BOUND_TO_FINAL_RELEASE
-recorded_utc: "2026-08-21T13:20:00Z"
+recorded_utc: "2026-08-21T14:20:00Z"
 equals_production_go: false
 equals_staging_grade_go: false
 
@@ -65,6 +65,13 @@ assets:
     sha256: eb01e846feec32c4ad9b45929cb2594a6cf136f62692f6a768175108d1871605
     note: merchant alias · must match merchant sha256
     aliases: []
+  - role: region_steward
+    path: frontend/public/media/traveltrust/roles/region_steward.mp4
+    public_url: /media/traveltrust/roles/region_steward.mp4
+    bytes: 82695358
+    sha256: b89e81ece67678179cc80285c5304daae1c9567e88d59b06ac32007665959955
+    note: Owner promo batch · must match PROMO-MANIFEST · Git LFS required (no pointer-only bake)
+    aliases: []
 
 posters:
   - role: traveler
@@ -77,15 +84,14 @@ posters:
     path: frontend/public/media/traveltrust/roles/provider.poster.jpg
   - role: acquisition
     path: frontend/public/media/traveltrust/roles/acquisition.poster.jpg
-
-region_steward:
-  path: frontend/public/media/traveltrust/roles/region_steward.mp4
-  status: TIER1_PLACEHOLDER_UNTIL_OWNER_BATCH
-  note: Not in Owner promo batch · tier-1 placeholder retained
+  - role: region_steward
+    path: frontend/public/media/traveltrust/roles/region_steward.poster.jpg
 
 honesty: >
   Role promo Media Asset SSOT ≠ Staging-grade GO ≠ Production GO.
   Clean tip worktree bake requires git lfs pull so MP4 pointers are smudged.
-  Checksum triple must agree: registry YAML ↔ PROMO-MANIFEST.json ↔ on-disk/LFS-smudged MP4 bytes.
+  Checksum quadruple must agree: registry YAML ↔ PROMO-MANIFEST.json ↔ on-disk/LFS-smudged MP4 bytes ↔ .gitattributes LFS track.
+  Pointer-only / unsmdged / sha|bytes drift MUST fail TT_ROLE_PROMO_MEDIA_ASSETS at --check-only (no false green).
+  2026-08-21: region_steward promoted into assets + LFS track (closes STG-PROMO-LFS-STEWARD bake gap).
   2026-08-21: registry sha256/bytes realigned to FASTSTART_REMUX manifest (unblocks Staging bake gate).
   HU-003 2026-07-24: Owner drop-zone ingest (游客/向导/商家/旅行收购) + JPG posters.

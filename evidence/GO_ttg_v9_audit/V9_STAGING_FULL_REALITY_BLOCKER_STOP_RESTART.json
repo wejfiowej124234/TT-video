@@ -1,0 +1,44 @@
+{
+  "stamp": "V9_STAGING_FULL_REALITY_BLOCKER_STOP",
+  "wave": "V9_STAGING_FULL_REALITY_REGRESSION_RESTART",
+  "recorded_at_utc": "2026-08-21T14:11:52Z",
+  "verdict": "STOP",
+  "V9_STAGING_FULL_REALITY_PASS": "NOT_STAMPED",
+  "release_artifact_tip": "93bf318259efdfa5962eacde88760605f9e72a1b",
+  "preflight": {
+    "worktree_clean": true,
+    "forge_guide_bond": "23_PASS",
+    "phase1_address_present": true,
+    "check_only": "PASS"
+  },
+  "blocker": {
+    "id": "STG-PROMO-LFS-STEWARD",
+    "layer": "Local bake context / Media SSOT gap",
+    "symptom": "Fly remote Docker bake FAIL: LFS pointer public/media/traveltrust/roles/region_steward.mp4",
+    "root_cause": [
+      "region_steward.mp4 is Git LFS pointer locally (133 B); git lfs ls-files shows unsmdged (-)",
+      "TT_ROLE_PROMO_MEDIA_ASSETS / --verify gate does NOT include region_steward (batch note: region_steward not in batch) \u2192 check-only false green",
+      "Docker bake validates ALL PROMO-MANIFEST entries including region_steward \u2192 deploy fail-closed"
+    ],
+    "staging_mutation": "NONE \u2014 image still OPS Mother 3e356617\u2026 (deploy failed before publish)",
+    "forbidden": [
+      "Staging hotfix",
+      "SFTP overlay",
+      "manual Staging media replace",
+      "Production deploy"
+    ]
+  },
+  "required_local_unblock": [
+    "git lfs pull / fetch+checkout region_steward.mp4 to match PROMO-MANIFEST sha256 b89e81ece6\u2026 (82695358 B)",
+    "OR ingest from drop zone then refresh registry+manifest if LFS object unavailable",
+    "Close gate gap: include region_steward in TT_ROLE_PROMO_MEDIA_ASSETS verify OR exclude from bake/manifest consistently",
+    "Re-run check-only then controlled deploy; secrets+image must atomically match tip"
+  ],
+  "guide_bond_reality": "NOT_REACHED \u2014 blocked before Staging artifact live",
+  "still_forbidden": [
+    "Production deploy",
+    "Mainnet broadcast",
+    "/meta Indexer Production cutover",
+    "TT_PRODUCTION_GO"
+  ]
+}

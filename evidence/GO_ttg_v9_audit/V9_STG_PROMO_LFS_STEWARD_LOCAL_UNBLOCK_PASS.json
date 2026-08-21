@@ -1,0 +1,32 @@
+{
+  "stamp": "V9_STG_PROMO_LFS_STEWARD_LOCAL_UNBLOCK_PASS",
+  "recorded_at_utc": "2026-08-21T14:19:55Z",
+  "parent_candidate": "93bf318259efdfa5962eacde88760605f9e72a1b",
+  "blocker_closed": "STG-PROMO-LFS-STEWARD",
+  "region_steward": {
+    "sha256": "b89e81ece67678179cc80285c5304daae1c9567e88d59b06ac32007665959955",
+    "bytes": 82695358,
+    "source": "git_lfs_object_store_exact_oid",
+    "gitattributes_lfs": true
+  },
+  "gate": {
+    "TT_ROLE_PROMO_MEDIA_SSOT_GATE": "PASS",
+    "roles_required": [
+      "traveler",
+      "guide",
+      "merchant",
+      "acquisition",
+      "provider",
+      "region_steward"
+    ],
+    "pointer_probe_exit": 1,
+    "check_only_skips_fly_secrets": true
+  },
+  "still_forbidden": [
+    "Staging deploy without Owner re-auth",
+    "Production",
+    "Mainnet broadcast",
+    "TT_PRODUCTION_GO"
+  ],
+  "next": "Owner re-authorize controlled Staging deploy + V9_STAGING_FULL_REALITY_REGRESSION"
+}

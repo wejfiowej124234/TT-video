@@ -1,0 +1,20 @@
+{
+  "stamp": "V9_STAGING_FULL_REALITY_PRESTATE_RESTART",
+  "recorded_at_utc": "2026-08-21T14:01:56Z",
+  "release_artifact": {
+    "tip_sha": "93bf318259efdfa5962eacde88760605f9e72a1b",
+    "allowlist": "04f970580ed85727a547d66ff53bc650be8d4a86",
+    "guide_bond_candidate": "93bf318259efdfa5962eacde88760605f9e72a1b"
+  },
+  "pre_web_release_identity": {
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T10:50:46Z",
+    "image_digest": "gitsha:3e356617a498b0faac42e4ae457343d36294a770"
+  },
+  "preflight": {
+    "porcelain": 0,
+    "forge_guide_bond_pass": 23,
+    "check_only": "PASS",
+    "phase1_address_present": true
+  }
+}

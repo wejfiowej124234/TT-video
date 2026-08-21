@@ -3,12 +3,13 @@
  * Role promo media — Git LFS SSOT sync / verify.
  *
  * Canonical (bake SSOT):
- *   frontend/public/media/traveltrust/roles/{traveler,guide,merchant,acquisition,provider}.mp4
+ *   frontend/public/media/traveltrust/roles/{traveler,guide,merchant,acquisition,provider,region_steward}.mp4
  *   registry/traveltrust-role-promo-media-assets.v1.yaml
  *   frontend/public/media/traveltrust/roles/PROMO-MANIFEST.json
+ *   .gitattributes LFS track (all six roles)
  *
  * Optional ingest (gitignored):
- *   首页角色宣传片/{旅行者,向导,商家,旅行收购}.mp4
+ *   首页角色宣传片/{旅行者,向导,商家,旅行收购,…}.mp4
  *
  * Usage (repo root):
  *   node scripts/dev/sync-traveltrust-role-promo-videos.cjs --verify
@@ -57,6 +58,12 @@ const MAP = [
     posterCandidates: ["旅行收购-封面.jpg"],
     aliases: [],
   },
+  {
+    role: "region_steward",
+    zhCandidates: ["主理人.mp4", "区域主理人.mp4", "region_steward.mp4"],
+    posterCandidates: ["主理人-封面.jpg", "区域主理人-封面.jpg"],
+    aliases: [],
+  },
 ];
 
 function firstExisting(dir, names) {
@@ -67,7 +74,8 @@ function firstExisting(dir, names) {
   return null;
 }
 
-const ROLES = ["traveler", "guide", "merchant", "acquisition", "provider"];
+/** Bake-critical roles — must appear in registry + manifest + disk + LFS smudge. */
+const ROLES = ["traveler", "guide", "merchant", "acquisition", "provider", "region_steward"];
 
 function sha256File(filePath) {
   const h = crypto.createHash("sha256");
@@ -123,7 +131,7 @@ function writeManifest(entries, recordedUtc) {
     replace_howto:
       "git lfs track + replace MP4s, or --ingest from drop zone, then refresh registry sha256 and re-verify",
     equals_staging_bake: true,
-    note: "Canonical bake SSOT via Git LFS + registry. Drop zone optional. region_steward not in batch.",
+    note: "Canonical bake SSOT via Git LFS + registry. Drop zone optional. region_steward required in verify/bake.",
     entries,
   };
   if (!dryRun) {
@@ -131,6 +139,17 @@ function writeManifest(entries, recordedUtc) {
     console.log(`TT_ROLE_PROMO_SYNC: wrote ${path.relative(ROOT, MANIFEST)}`);
   }
   return manifest;
+}
+
+function isLfsPointerFile(abs) {
+  const fd = fs.openSync(abs, "r");
+  try {
+    const buf = Buffer.alloc(64);
+    const n = fs.readSync(fd, buf, 0, 64, 0);
+    return buf.slice(0, n).toString("utf8").startsWith("version https://git-lfs.github.com/spec/v1");
+  } finally {
+    fs.closeSync(fd);
+  }
 }
 
 function verify() {
@@ -143,49 +162,78 @@ function verify() {
     process.exit(1);
   }
   const assets = parseRegistryAssets(fs.readFileSync(REG, "utf8"));
-  if (assets.length < 5) {
-    console.error(`TT_ROLE_PROMO_SYNC: FAIL registry assets=${assets.length} expected>=5`);
+  if (assets.length < ROLES.length) {
+    console.error(
+      `TT_ROLE_PROMO_SYNC: FAIL registry assets=${assets.length} expected>=${ROLES.length}`,
+    );
     process.exit(1);
   }
   const man = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
-  const manByRole = Object.fromEntries((man.entries || []).map((e) => [e.role, e]));
+  const manEntries = man.entries || [];
+  const manByRole = Object.fromEntries(manEntries.map((e) => [e.role, e]));
+  const regByRole = Object.fromEntries(assets.map((a) => [a.role, a]));
   let fail = 0;
-  for (const a of assets) {
+
+  // Required roles: registry + manifest + disk + smudge (quadruple)
+  for (const role of ROLES) {
+    const a = regByRole[role];
+    const m = manByRole[role];
+    if (!a) {
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL registry missing role ${role}`);
+      fail += 1;
+      continue;
+    }
+    if (!m) {
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL manifest missing role ${role}`);
+      fail += 1;
+      continue;
+    }
     const abs = path.join(ROOT, a.path);
     if (!fs.existsSync(abs)) {
       console.error(`TT_ROLE_PROMO_SYNC: FAIL missing file ${a.path}`);
       fail += 1;
       continue;
     }
-    // LFS pointer fail-closed
-    const head = fs.readFileSync(abs, { encoding: "utf8", flag: "r" }).slice(0, 64);
-    if (head.startsWith("version https://git-lfs.github.com/spec/v1")) {
-      console.error(`TT_ROLE_PROMO_SYNC: FAIL LFS pointer not smudged: ${a.path} (run git lfs pull)`);
+    if (isLfsPointerFile(abs)) {
+      console.error(
+        `TT_ROLE_PROMO_SYNC: FAIL LFS pointer not smudged: ${a.path} (run git lfs pull / materialize oid)`,
+      );
       fail += 1;
       continue;
     }
     const st = fs.statSync(abs);
     const digest = sha256File(abs);
-    const m = manByRole[a.role];
     if (digest !== a.sha256) {
-      console.error(`TT_ROLE_PROMO_SYNC: FAIL sha registry mismatch ${a.role}`);
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL sha registry≠disk ${role}`);
       fail += 1;
-    } else if (m && m.sha256 !== digest) {
-      console.error(`TT_ROLE_PROMO_SYNC: FAIL sha manifest mismatch ${a.role}`);
+    } else if (m.sha256 !== digest) {
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL sha manifest≠disk ${role}`);
       fail += 1;
     } else if (typeof a.bytes === "number" && st.size !== a.bytes) {
-      console.error(`TT_ROLE_PROMO_SYNC: FAIL bytes mismatch ${a.role}`);
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL bytes registry≠disk ${role}`);
+      fail += 1;
+    } else if (typeof m.bytes === "number" && st.size !== m.bytes) {
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL bytes manifest≠disk ${role}`);
+      fail += 1;
+    } else if (typeof a.bytes === "number" && typeof m.bytes === "number" && a.bytes !== m.bytes) {
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL bytes registry≠manifest ${role}`);
+      fail += 1;
+    } else if (a.sha256 !== m.sha256) {
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL sha registry≠manifest ${role}`);
       fail += 1;
     } else {
-      console.log(`TT_ROLE_PROMO_SYNC: OK ${a.role} sha256=${digest.slice(0, 12)}… (${st.size} B)`);
+      console.log(`TT_ROLE_PROMO_SYNC: OK ${role} sha256=${digest.slice(0, 12)}… (${st.size} B)`);
     }
   }
-  for (const role of ROLES) {
-    if (!assets.some((a) => a.role === role)) {
-      console.error(`TT_ROLE_PROMO_SYNC: FAIL registry missing role ${role}`);
+
+  // Manifest must not carry bake entries outside registry SSOT
+  for (const e of manEntries) {
+    if (!regByRole[e.role]) {
+      console.error(`TT_ROLE_PROMO_SYNC: FAIL manifest role not in registry ${e.role}`);
       fail += 1;
     }
   }
+
   if (fail) {
     console.error(`TT_ROLE_PROMO_SYNC: VERIFY FAIL count=${fail}`);
     process.exit(1);

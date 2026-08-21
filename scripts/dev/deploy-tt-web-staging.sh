@@ -131,17 +131,23 @@ export NEXT_PUBLIC_CMS_BASELINE="${NEXT_PUBLIC_CMS_BASELINE:-${TRAVELTRUST_CMS_B
 export FLY_WEB_NO_CACHE="${FLY_WEB_NO_CACHE:-1}"
 info "attestation bake git_sha=$NEXT_PUBLIC_GIT_SHA catalog=$NEXT_PUBLIC_CATALOG_API_ENABLED no_cache=$FLY_WEB_NO_CACHE"
 
-# Stale Fly secrets TRAVELTRUST_GIT_SHA* override empty bake → old tip forever. Sync to tip each deploy.
-info "syncing runtime attestation secrets to tip (clears stale TRAVELTRUST_GIT_SHA pins) …"
-fly secrets set -a "$APP" \
-  "TRAVELTRUST_GIT_SHA=${NEXT_PUBLIC_GIT_SHA}" \
-  "TRAVELTRUST_ARTIFACT_SHA=${NEXT_PUBLIC_ARTIFACT_SHA}" \
-  "TRAVELTRUST_IMAGE_DIGEST=${NEXT_PUBLIC_IMAGE_DIGEST}" \
-  "TRAVELTRUST_BUILD_TIME=${NEXT_PUBLIC_BUILD_TIME}" \
-  "TRAVELTRUST_PSG_RELEASE_VERSION=${NEXT_PUBLIC_PSG_RELEASE_VERSION}" \
-  "TRAVELTRUST_CONTRACT_PROFILE=${NEXT_PUBLIC_CONTRACT_PROFILE}" \
-  >/dev/null \
-  || fail "fly secrets set attestation failed — stale TRAVELTRUST_GIT_SHA would keep old tip in /api/release-identity"
+# Stale Fly secrets TRAVELTRUST_GIT_SHA* override empty bake → old tip forever.
+# Sync to tip ONLY on real deploy — --check-only must NOT mutate Staging attestation
+# (otherwise tip secrets + live OPS image = identity drift / false Staging state).
+if [[ "$CHECK_ONLY" -eq 0 ]]; then
+  info "syncing runtime attestation secrets to tip (clears stale TRAVELTRUST_GIT_SHA pins) …"
+  fly secrets set -a "$APP" \
+    "TRAVELTRUST_GIT_SHA=${NEXT_PUBLIC_GIT_SHA}" \
+    "TRAVELTRUST_ARTIFACT_SHA=${NEXT_PUBLIC_ARTIFACT_SHA}" \
+    "TRAVELTRUST_IMAGE_DIGEST=${NEXT_PUBLIC_IMAGE_DIGEST}" \
+    "TRAVELTRUST_BUILD_TIME=${NEXT_PUBLIC_BUILD_TIME}" \
+    "TRAVELTRUST_PSG_RELEASE_VERSION=${NEXT_PUBLIC_PSG_RELEASE_VERSION}" \
+    "TRAVELTRUST_CONTRACT_PROFILE=${NEXT_PUBLIC_CONTRACT_PROFILE}" \
+    >/dev/null \
+    || fail "fly secrets set attestation failed — stale TRAVELTRUST_GIT_SHA would keep old tip in /api/release-identity"
+else
+  info "check-only: skip fly secrets set (preserve live Staging attestation)"
+fi
 
 [[ -n "${NEXT_PUBLIC_API_BASE_URL:-}" ]] || fail "NEXT_PUBLIC_API_BASE_URL empty"
 [[ -n "${NEXT_PUBLIC_SITE_URL:-}" ]] || fail "NEXT_PUBLIC_SITE_URL empty"

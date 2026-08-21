@@ -5,5 +5,6 @@ frontend/public/media/traveltrust/roles/guide.mp4 filter=lfs diff=lfs merge=lfs 
 frontend/public/media/traveltrust/roles/merchant.mp4 filter=lfs diff=lfs merge=lfs -text
 frontend/public/media/traveltrust/roles/acquisition.mp4 filter=lfs diff=lfs merge=lfs -text
 frontend/public/media/traveltrust/roles/provider.mp4 filter=lfs diff=lfs merge=lfs -text
+frontend/public/media/traveltrust/roles/region_steward.mp4 filter=lfs diff=lfs merge=lfs -text
 frontend/public/media/traveltrust/roles/*.poster.jpg filter=lfs diff=lfs merge=lfs -text
 frontend/public/media/landing/brand-ambient-default.jpg filter=lfs diff=lfs merge=lfs -text
