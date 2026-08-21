@@ -70,6 +70,7 @@ Fee 45/55    = 平台费分账
 | Label | Meaning |
 |-------|---------|
 | **`NEW_ORDER_BOND_MODULE_REQUIRED`** | Owner ACTIVE 真源 = 逐订单 USDC Bond；现 81 池 **不符合** orderId 绑定与按单返还/裁决罚没闭环 |
+| **Local Candidate** | `TtgV9GuideOrderPerformanceBond` · [Local Candidate](TT-TTG-V9-GUIDE-ORDER-PERFORMANCE-BOND-LOCAL-CANDIDATE-LATEST.md) · Forge 23 PASS · **未** Staging/Mainnet |
 | 81 Identity pool | **LEGACY / NOT_ACTIVE_PERFORMANCE_BOND** · 可作历史身份下限参考 · **禁止**再标成 ACTIVE「履约=81 Identity」 |
 | Escrow | **KEEP** 游客本金轨 · **正交** · 不替代 Guide Bond 模块 |
 | Future engineering | 新模块须：`orderId` · lock-before-fulfill · full refund on success · slash gated by dispute outcome · Guide-only until Merchant confirmed |

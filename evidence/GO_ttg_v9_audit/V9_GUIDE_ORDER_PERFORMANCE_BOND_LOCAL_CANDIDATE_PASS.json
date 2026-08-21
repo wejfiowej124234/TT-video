@@ -1,0 +1,54 @@
+{
+  "stamp": "V9_GUIDE_ORDER_PERFORMANCE_BOND_LOCAL_CANDIDATE_PASS",
+  "status": "PASS",
+  "recorded_at_utc": "2026-08-21T13:57:02Z",
+  "module": "TtgV9GuideOrderPerformanceBond",
+  "impl_verdict_prior": "NEW_ORDER_BOND_MODULE_REQUIRED",
+  "impl_status": "LOCAL_CANDIDATE_IMPLEMENTED",
+  "forge": {
+    "profile": "ttg_v9",
+    "match_contract": "TtgV9GuideOrder",
+    "passed": 23,
+    "failed": 0
+  },
+  "findings": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0
+  },
+  "coverage": [
+    "orderId_unique_lock",
+    "wrong_guide",
+    "fulfillment_started_block",
+    "duplicate_lock",
+    "complete_refund_original_guide",
+    "eoa_complete_denied",
+    "dispute_blocks_complete",
+    "cancel_refund",
+    "partial_slash_complete",
+    "eoa_slash_denied",
+    "full_slash_settle",
+    "partial_slash_settle_remainder",
+    "slash_exceeds",
+    "refund_during_dispute_denied",
+    "pause_lock_slash_ok",
+    "rescue_non_usdc",
+    "upgrade_timelock_only",
+    "cross_order_isolation",
+    "double_complete",
+    "wrong_orderId",
+    "reentrancy_lock"
+  ],
+  "merchant_wired": false,
+  "phase1_mutated": false,
+  "mainnet_broadcast": false,
+  "staging_deploy": false,
+  "tt_production_go": "NO_GO",
+  "doc": "docs/runbook/TT-TTG-V9-GUIDE-ORDER-PERFORMANCE-BOND-LOCAL-CANDIDATE-LATEST.md",
+  "paths": [
+    "contracts/src/ttg-v9/TtgV9GuideOrderPerformanceBond.sol",
+    "contracts/src/ttg-v9/ITtgV9GuideOrderBondLifecycle.sol",
+    "contracts/src/ttg-v9/mocks/MockGuideOrderBondLifecycle.sol",
+    "contracts/test/ttg-v9/TtgV9GuideOrderPerformanceBond.t.sol"
+  ]
+}

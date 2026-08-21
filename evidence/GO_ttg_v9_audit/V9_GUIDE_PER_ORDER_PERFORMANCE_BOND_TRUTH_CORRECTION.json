@@ -30,7 +30,8 @@
     "orderId_binding": false,
     "per_order_refund_loop": false,
     "escrow_dispute_hard_bind": false,
-    "verdict": "NEW_ORDER_BOND_MODULE_REQUIRED"
+    "verdict": "NEW_ORDER_BOND_MODULE_REQUIRED_SATISFIED_BY_NEW_MODULE_LOCAL",
+    "local_module": "TtgV9GuideOrderPerformanceBond"
   },
   "doc": "docs/runbook/TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md",
   "tt_production_go": "NO_GO",
@@ -39,5 +40,6 @@
     "Staging/Production mutate",
     "TT_PRODUCTION_GO flip",
     "twist business to fit 81 aggregate lockedOrder"
-  ]
+  ],
+  "local_candidate": "V9_GUIDE_ORDER_PERFORMANCE_BOND_LOCAL_CANDIDATE_PASS"
 }
