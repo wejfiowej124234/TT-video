@@ -48,11 +48,13 @@ describe("ttgPublicUnlockScheduleLocal", () => {
     expect(formatUnlockUnitPrice(0.000009)).toBe("0.00000900");
   });
 
-  it("resolves focus to batch 1 before 2026-10-15", () => {
-    const focus = resolveTtgPublicSaleFocus(Date.parse("2026-08-18T00:00:00Z"));
-    expect(focus.batch.id).toBe(1);
-    expect(focus.kind).toBe("upcoming");
-    const quote = quoteTtgPublicSaleFromUsdc("100", focus.batch.unitPriceUsdc);
+  it("never date-drives open — Phase1 cutover pending (W-P0-05)", () => {
+    const before = resolveTtgPublicSaleFocus(Date.parse("2026-08-18T00:00:00Z"));
+    const during = resolveTtgPublicSaleFocus(Date.parse("2026-11-01T00:00:00Z"));
+    expect(before.batch.id).toBe(1);
+    expect(before.kind).toBe("upcoming");
+    expect(during.kind).toBe("upcoming");
+    const quote = quoteTtgPublicSaleFromUsdc("100", before.batch.unitPriceUsdc);
     expect(quote?.receiveTtg).toBe("100000000");
     expect(quote?.rateUsdcPerTtg).toBe("0.00000100");
     expect(TTG_PUBLIC_UNLOCK_META).toEqual({

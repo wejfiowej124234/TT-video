@@ -1,0 +1,92 @@
+{
+  "stamp": "V9_OFFICIAL_WEBSITE_PRODUCTION_RELEASE_MANIFEST",
+  "status": "READY_FOR_OWNER_STAGING_DECISION",
+  "deploy": "NOT_AUTHORIZED_THIS_TURN",
+  "tt_production_go": "NO_GO",
+  "mother": {
+    "pin": "OPS-2026.08.20-v9",
+    "sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "role": "Official product / UI / UX / page-behavior mother"
+  },
+  "baseline": {
+    "tag": "OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE",
+    "sha": "92cc3057a22e919bb52dde0425e23487677da1be",
+    "note": "HEAD frontend product tree currently blob-aligned to OPS mother"
+  },
+  "overlay_patch": {
+    "name": "V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE P0+P1 allowlist",
+    "candidate_stamp": "V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_PASS",
+    "files": [
+      "frontend/lib/governance/governanceParamsTokenomicsModel.ts",
+      "frontend/lib/governance/governanceParamsTokenomicsModel.test.ts",
+      "frontend/lib/governance/governanceParamsProtocolReferenceMirror.ts",
+      "frontend/lib/governance/primaryMarketRuntimePriceSsot.ts",
+      "frontend/lib/governance/v9PublicContractRegistry.ts",
+      "frontend/lib/governance/ttgPublicUnlockScheduleLocal.ts",
+      "frontend/lib/governance/ttgPublicUnlockScheduleLocal.test.ts",
+      "frontend/lib/governance/ttgReferencePriceV1.ts",
+      "frontend/lib/traveltrustTtgPublicRounds.ts",
+      "frontend/lib/traveltrustTtgPublicRounds.test.ts",
+      "frontend/lib/traveltrustOfficialMainnetProtocolDirectory.ts",
+      "frontend/locales/en.ts",
+      "frontend/locales/zh.ts"
+    ],
+    "nonproduct_pack": [
+      "scripts/dev/run-ttg-v9-official-website-alignment-gate.py",
+      "evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_BASE_SHA.json",
+      "evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_PASS.json",
+      "docs/runbook/TT-TTG-V9-OFFICIAL-WEBSITE-ALIGNMENT-CANDIDATE-LOCAL-RC-LATEST.md"
+    ]
+  },
+  "do_not_ship_from_local_rc": {
+    "same_path_mother_wins": [
+      "frontend/Dockerfile.fly-staging",
+      "frontend/app/(home)/homeMarketing.contract.test.ts",
+      "frontend/app/(home)/loading.tsx",
+      "frontend/app/(home)/page.tsx",
+      "frontend/app/admin/content/announcements/AdminContentAnnouncementsPageMain.tsx",
+      "frontend/app/admin/inbox/adminUnifiedInboxL5.contract.test.ts",
+      "frontend/app/community/README.md",
+      "frontend/app/community/explore/CommunityExplorePageAuthorsSection.tsx",
+      "frontend/app/community/friends/CommunityFriendsRelationRow.tsx",
+      "frontend/app/community/friends/FriendsSentRequestRow.tsx",
+      "frontend/app/community/friends/RequestReceivedApiRow.tsx",
+      "frontend/app/community/friends/page.tsx",
+      "frontend/app/community/messages/CommunityMessagesConversationRow.tsx",
+      "frontend/app/community/messages/[id]/CommunityConversationPageHeader.tsx",
+      "frontend/app/community/user/[id]/CommunityUserPageMain.tsx",
+      "frontend/app/community/user/[id]/CommunityUserPageOverlays.tsx",
+      "frontend/app/community/user/[id]/CommunityUserPostsFeedSection.tsx",
+      "frontend/app/community/user/[id]/CommunityUserProfileHeader.tsx",
+      "frontend/app/community/user/[id]/communityUserPage.contract.test.ts",
+      "frontend/app/community/user/[id]/useCommunityUserPageCore.ts",
+      "frontend/app/community/user/[id]/useCommunityUserRemoteLists.ts",
+      "frontend/app/global-error.tsx",
+      "frontend/app/globals.css"
+    ],
+    "head_only_absent_from_ops": [
+      "frontend/app/assurance/AssurancePageMain.tsx",
+      "frontend/app/assurance/layout.tsx",
+      "frontend/app/assurance/page.tsx",
+      "frontend/app/brand/BrandMarkPageMain.tsx",
+      "frontend/app/brand/layout.tsx",
+      "frontend/app/brand/page.tsx",
+      "frontend/app/contact/ContactPageMain.tsx",
+      "frontend/app/contact/layout.tsx",
+      "frontend/app/contact/page.tsx",
+      "frontend/app/protocol/ProtocolPaperPageMain.tsx",
+      "frontend/app/protocol/layout.tsx",
+      "frontend/app/protocol/page.tsx",
+      "frontend/app/protocol/protocolPaperPage.contract.test.ts",
+      "frontend/components/traveltrust/cinematic/TravelTrustListingDocPage.tsx"
+    ]
+  },
+  "gates": {
+    "UNAUTHORIZED_PRODUCTION_DRIFT": 0,
+    "UI_UX_DRIFT": 0,
+    "ADMIN_COMMUNITY_DRIFT": 0,
+    "UNKNOWN": 0,
+    "OPS_MOTHER_PARITY_UNKNOWN": 0
+  },
+  "next": "Owner decides whether to enter Staging; no auto-deploy"
+}

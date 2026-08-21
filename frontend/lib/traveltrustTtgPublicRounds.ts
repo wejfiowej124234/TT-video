@@ -30,12 +30,16 @@ export type TraveltrustTtgPublicRound = {
   requiresGovernanceApproval?: boolean;
 };
 
-/** Official V8 Public Sale 50% of 25T · sum = 12_500_000_000_000 */
+/**
+ * LEGACY three long-bucket cards (2T/3T/7.5T) — SUPERSEDED for ACTIVE UI.
+ * ACTIVE public sale = five Norm batches (`ttgPublicUnlockScheduleLocal.ts`).
+ * Kept for import / type stability; `listTraveltrustTtgPublicRounds()` returns [].
+ */
 export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
   {
     id: "public_round_1",
     roundNumber: 1,
-    status: "upcoming",
+    status: "closed",
     allocationTtg: 2_000_000_000_000,
     perWalletCapTtg: 0,
     distributionKey: "traveltrust_ttg_round_distribution_r1",
@@ -47,7 +51,7 @@ export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
   {
     id: "public_round_2",
     roundNumber: 2,
-    status: "governance_approval_required",
+    status: "closed",
     allocationTtg: 3_000_000_000_000,
     perWalletCapTtg: 0,
     distributionKey: "traveltrust_ttg_round_distribution_governance_gated",
@@ -60,7 +64,7 @@ export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
   {
     id: "public_round_3",
     roundNumber: 3,
-    status: "governance_approval_required",
+    status: "closed",
     allocationTtg: 7_500_000_000_000,
     perWalletCapTtg: 0,
     distributionKey: "traveltrust_ttg_round_distribution_governance_gated",
@@ -75,8 +79,9 @@ export const TRAVELTRUST_TTG_PUBLIC_ROUNDS: TraveltrustTtgPublicRound[] = [
 /** Round 1 计划开放日与 product lane 同源（非 Production GO 承诺） */
 export const TRAVELTRUST_TTG_ROUND_1_PLANNED_OPEN_ISO = TRAVELTRUST_PLATFORM_LAUNCH_ISO;
 
+/** W-P0-06: ACTIVE UI disables legacy three-round cards */
 export function listTraveltrustTtgPublicRounds(): TraveltrustTtgPublicRound[] {
-  return [...TRAVELTRUST_TTG_PUBLIC_ROUNDS];
+  return [];
 }
 
 export function traveltrustTtgRoundStatusLabelKey(status: TraveltrustTtgPublicRoundStatus): string {

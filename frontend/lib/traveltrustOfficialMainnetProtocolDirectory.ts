@@ -1,9 +1,11 @@
 /**
  * Official www 「协议总清单」 rows — mainnet read-only disclosure (chain_id=1).
- * SSOT: registry/mainnet-address-registry.v1.yaml · frontend/.env.mainnet.local
- * Official create path: Wired → SR-FT (not Track1 SR 0xe5C3…).
- * ≠ Production GO · do not send funds.
+ * ACTIVE SSOT: frontend/lib/governance/v9PublicContractRegistry.ts (Phase1).
+ * Status: DEPLOYED_PENDING_CUTOVER · ≠ Production GO · sale window not open.
+ * KEEP Money Path rows are KEEP (historical funds path); FeeRouter cutover pending.
  */
+
+import { V9_PUBLIC_CONTRACTS } from "@/lib/governance/v9PublicContractRegistry";
 
 export type OfficialProtocolDirectoryGroup = "money_path" | "governance" | "primary_market";
 
@@ -16,60 +18,60 @@ export type OfficialProtocolDirectoryRow = {
   descriptionKey: string;
 };
 
-/** Official live disclosure set (matches www 2026-08-16 product pin + FTB). */
+/** ACTIVE Phase1 disclosure set + KEEP Money Path (W-P1-06). */
 export const OFFICIAL_MAINNET_PROTOCOL_DIRECTORY_ROWS: OfficialProtocolDirectoryRow[] = [
   {
-    id: "escrow_factory_v2_wired",
+    id: "keep_escrow_factory",
     order: 1,
-    address: "0xEE0BE3a8a8658E06c44539deD758Fb70A7f3C1C6",
+    address: V9_PUBLIC_CONTRACTS.keepEscrowFactory,
     group: "money_path",
     titleKey: "traveltrust_protocol_directory_row_escrow_factory_title",
     descriptionKey: "traveltrust_protocol_directory_row_escrow_factory_desc",
   },
   {
-    id: "settlement_router_ft",
+    id: "keep_settlement_router",
     order: 2,
-    address: "0xD1DAE665eDc16FCEc7b7530Ead3504A846457147",
+    address: V9_PUBLIC_CONTRACTS.keepSettlementRouter,
     group: "money_path",
     titleKey: "traveltrust_protocol_directory_row_settlement_router_title",
     descriptionKey: "traveltrust_protocol_directory_row_settlement_router_desc",
   },
   {
-    id: "fee_router",
+    id: "country_fee_router",
     order: 3,
-    address: "0x2aF47CB6390d7e51C210920b0A62d4d3abD68A72",
+    address: V9_PUBLIC_CONTRACTS.countryFeeRouter,
     group: "money_path",
     titleKey: "traveltrust_protocol_directory_row_fee_router_title",
     descriptionKey: "traveltrust_protocol_directory_row_fee_router_desc",
   },
   {
-    id: "governance_timelock",
+    id: "solo_timelock",
     order: 4,
-    address: "0x50F0B26167EC73e327D97c54C81F1c1B9eFB22f7",
+    address: V9_PUBLIC_CONTRACTS.soloTimelock,
     group: "governance",
     titleKey: "traveltrust_protocol_directory_row_timelock_title",
     descriptionKey: "traveltrust_protocol_directory_row_timelock_desc",
   },
   {
-    id: "governor",
+    id: "governor_v9",
     order: 5,
-    address: "0x46Ce671b04d21760e496646bb370ADEbC374ea4d",
+    address: V9_PUBLIC_CONTRACTS.governor,
     group: "governance",
     titleKey: "traveltrust_protocol_directory_row_governor_title",
     descriptionKey: "traveltrust_protocol_directory_row_governor_desc",
   },
   {
-    id: "governance_token",
+    id: "ttg_v9",
     order: 6,
-    address: "0x3cB1b328E7a4ea01006b0697813aFEEdafe8512A",
+    address: V9_PUBLIC_CONTRACTS.ttg,
     group: "governance",
     titleKey: "traveltrust_protocol_directory_row_governance_token_title",
     descriptionKey: "traveltrust_protocol_directory_row_governance_token_desc",
   },
   {
-    id: "primary_market",
+    id: "batch_primary_market",
     order: 7,
-    address: "0xf7B7BBa2a5f21b91Fbb016d6B8853DEFa34f56ce",
+    address: V9_PUBLIC_CONTRACTS.market,
     group: "primary_market",
     titleKey: "traveltrust_protocol_directory_row_primary_market_title",
     descriptionKey: "traveltrust_protocol_directory_row_primary_market_desc",

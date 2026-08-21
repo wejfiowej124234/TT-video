@@ -6,25 +6,22 @@ import {
   TRAVELTRUST_TTG_PUBLIC_ROUNDS,
 } from "./traveltrustTtgPublicRounds";
 
-describe("traveltrustTtgPublicRounds", () => {  it("lists three public rounds with frozen allocations", () => {
-    const rounds = listTraveltrustTtgPublicRounds();
-    expect(rounds).toHaveLength(3);
-    expect(rounds[0]?.allocationTtg).toBe(2_000_000_000_000);
-    expect(rounds[1]?.allocationTtg).toBe(3_000_000_000_000);
-    expect(rounds[2]?.allocationTtg).toBe(7_500_000_000_000);
-    expect(rounds.reduce((s, r) => s + r.allocationTtg, 0)).toBe(12_500_000_000_000);
-    expect(rounds.every((r) => r.perWalletCapTtg === 0)).toBe(true);
+describe("traveltrustTtgPublicRounds", () => {
+  it("ACTIVE list is empty (legacy three-round UI disabled)", () => {
+    expect(listTraveltrustTtgPublicRounds()).toEqual([]);
   });
 
-  it("round 1 defaults to upcoming until ops flips status", () => {
-    expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS[0]?.status).toBe("upcoming");
+  it("legacy constant keeps three closed long buckets for import stability", () => {
+    expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS).toHaveLength(3);
+    expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS.reduce((s, r) => s + r.allocationTtg, 0)).toBe(
+      12_500_000_000_000,
+    );
+    expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS.every((r) => r.status === "closed")).toBe(true);
+    expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS.every((r) => r.perWalletCapTtg === 0)).toBe(true);
+  });
+
+  it("legacy round 1 still links params; rounds 2–3 still reference proposals", () => {
     expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS[0]?.paramsHref).toBe("/governance/params");
-    expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS[0]?.ctaHref).toBe("/governance/params");
-  });
-
-  it("rounds 2–3 require governance approval and link to proposals", () => {
-    expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS[1]?.status).toBe("governance_approval_required");
-    expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS[2]?.status).toBe("governance_approval_required");
     expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS[1]?.requiresGovernanceApproval).toBe(true);
     expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS[1]?.ctaHref).toBe("/governance/proposals");
     expect(TRAVELTRUST_TTG_PUBLIC_ROUNDS[2]?.ctaHref).toBe("/governance/proposals");
@@ -40,6 +37,7 @@ describe("traveltrustTtgPublicRounds", () => {  it("lists three public rounds wi
     );
     expect(text).toContain("2026");
   });
+
   it("public rounds do not declare purchase lock-up (steward stake is separate)", () => {
     for (const round of TRAVELTRUST_TTG_PUBLIC_ROUNDS) {
       expect(round).not.toHaveProperty("lockMonths");

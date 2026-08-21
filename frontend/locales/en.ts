@@ -146,7 +146,7 @@ export default {
   escrow_meta_description: "Order details, amount, participants and payment progress",
   pay_meta_title: "Pay & Escrow | TravelTrust",
   pay_meta_description: "Pay travel funds into order escrow via your wallet; business state is shown from the API.",
-  staking_meta_title: "Guide staking | TravelTrust",
+  staking_meta_title: "Guide identity staking (≠ V9 Role Stake) | TravelTrust",
   staking_meta_description:
     "Scheme B: on-chain stake on Sepolia ② when Registry is configured; off-chain review, on-chain eligibility.",
   community_meta_title: "Community | TravelTrust",
@@ -204,8 +204,8 @@ export default {
   governance_meta_title: "Governance | TravelTrust",
   governance_meta_description:
     "Official governance hub: Mainnet Money Path PARTIAL · Timelock wait window; pool/rewards snapshots, steward entry, proposals and protocol params per 04/82/83. Sepolia is a demoted side track only — not Production GO.",
-  governance_fee_routes_meta_title: "Governance · Fee routes | TravelTrust",
-  governance_fee_routes_meta_description: "FeeRouter read-only routes and audit entry summary.",
+  governance_fee_routes_meta_title: "Governance · Fee routes (KEEP vs V9) | TravelTrust",
+  governance_fee_routes_meta_description: "KEEP FeeRouter event index vs ACTIVE CountryFeeRouter / ProjectPool (cutover pending).",
   governance_vault_forwards_meta_title: "Governance · Region Vault forwards | TravelTrust",
   governance_vault_forwards_meta_description:
     "Regional vault forward and reconciliation entry; on-chain and API state wins.",
@@ -463,7 +463,7 @@ export default {
     "Submit Retry runs the Next.js error boundary reset (re-renders the failed segment). The other button is a normal navigation link.",
   notFound_relatedNav_aria: "Related links on page not found",
   staking_pageTitle: "Guide staking & eligibility",
-  staking_pageSubtitle: "Registry scheme B: parameters are governed by protocol docs and ops.",
+  staking_pageSubtitle: "Guide/Provider identity collateral pools (USDC). This page is NOT V9 Role Stake — Steward Role Stake is separate; Merchant/Guide Role Stake = DISABLED.",
   staking_intro: "Guides apply, pass review, then stake on-chain to receive orders.",
   staking_point1: "Application: submit profile and bind the wallet you will sign with.",
   staking_point2: "Asset amounts follow contract + SSOT parameters; check gas and balance on your network.",
@@ -7596,7 +7596,7 @@ export default {
   traveltrust_ttg_round_2_title: "Round 2",
   traveltrust_ttg_round_3_title: "Round 3",
   traveltrust_ttg_round_disclaimer:
-    "Near-term batches, ratios, and prices follow the five public-unlock rows on this page (first batch 15 October 2026, then every two months). The three cards below are long-horizon buckets for the 50% public share — not the first-batch size. Contracts will be updated to match the five-batch plan. The window is not open to the public.",
+    "ACTIVE public sale = five Norm batches on this page (window not open · Phase1 cutover pending). The legacy three long-bucket cards are retired from ACTIVE UI.",
   traveltrust_ttg_round_status_upcoming: "Upcoming",
   traveltrust_ttg_round_status_active: "Active",
   traveltrust_ttg_round_status_paused: "Paused",
@@ -7864,7 +7864,7 @@ export default {
   traveltrust_liquidity_governance_link: "Governance hub",
   traveltrust_liquidity_escrow_link: "Trip escrow (USDC)",
   traveltrust_liquidity_disclaimer:
-    "TTG exchange rules preview only — the window is not open to the public. Not a securities or investment offer. Trip deposits use USDC order escrow.",
+    "Illustrative Norm batch math only. Window not open. Not an offer. Contracts: V9 Phase1 ACTIVE registry.",
   traveltrust_liquidity_rate_line:
     "Estimate: {{pay}} USDC → ~{{receive}} TTG · 1 TTG ≈ {{rate}} USDC",
   traveltrust_liquidity_mock_swap_hint:
@@ -7928,9 +7928,9 @@ export default {
   traveltrust_settlement_eyebrow: "Settlement",
   traveltrust_settlement_title: "Protocol rules",
   traveltrust_settlement_body:
-    "Public-unlock batches, ratios, and prices follow the published plan on this page. Contracts will be updated to match. Trip deposits use USDC escrow, separate from obtaining TTG. No fake audit seal; no independent third-party audit has been commissioned.",
+    "V9 Phase1 Mainnet contracts are DEPLOYED_PENDING_CUTOVER. ACTIVE addresses: TTG and Batch Primary Market below; ProjectPool 0x7B21b421981A3B61cc08c8E22D4fd690E457Df37 receives sale USDC when the window opens. Sale window is not open. Trip deposits use USDC escrow, separate from obtaining TTG. No fake audit seal.",
   traveltrust_settlement_disclaimer:
-    "Product-rules summary only; batches and prices follow the published plan on this page, and contracts will be updated to match — not a securities or investment offer.",
+    "Phase1 cutover pending · not Fully Active · not a securities or investment offer. Verify ACTIVE registry addresses before any transfer.",
   traveltrust_settlement_protocol_toggle_expand: "Show protocol notes",
   traveltrust_settlement_protocol_toggle_collapse: "Hide protocol notes",
   traveltrust_webgl_fallback_lost:
@@ -8062,9 +8062,9 @@ export default {
   traveltrust_role_traveler_name: "Traveler",
   traveltrust_role_traveler_tag: "Trips · TTG network",
   traveltrust_role_guide_name: "Guide",
-  traveltrust_role_guide_tag: "Host · protocol",
+  traveltrust_role_guide_tag: "Host · protocol (Role Stake DISABLED)",
   traveltrust_role_merchant_name: "Merchant",
-  traveltrust_role_merchant_tag: "Shopfront · USDC",
+  traveltrust_role_merchant_tag: "Shopfront · USDC (Role Stake DISABLED)",
   traveltrust_role_acquisition_name: "Travel acquisition",
   traveltrust_role_acquisition_tag: "Carry · network ID",
   traveltrust_role_steward_name: "Region steward",
@@ -10023,7 +10023,7 @@ export default {
   governance_params_treasury_priorities_kicker: "Usage order",
   governance_params_treasury_priorities_heading_short: "What gets paid first",
   governance_params_treasury_priorities_lead: "P1～P3 must be covered first; P4 surplus stays in treasury by default, deploy cap 30% per cycle.",
-  governance_params_treasury_scope_note_short: "① Product disclosure · ② Sepolia Treasury aligned (P4Cap + Legacy); mainnet in Phase③.",
+  governance_params_treasury_scope_note_short: "Product disclosure · ACTIVE fee sink = ProjectPool (CountryFeeRouter) · P4Cap/globalStakers = LEGACY · mainnet Phase1 cutover pending.",
   governance_params_treasury_policy_kicker: "Governance & subscription",
   governance_params_treasury_policy_title_short: "Treasury surplus · public TTG rounds",
   governance_params_treasury_policy_lead_short: "P4 requires a governance vote; recommended path is buyback → burn. Public sale in three rounds; Round 1 = 800K TTG (Registry initial · 8% of supply).",
@@ -10038,7 +10038,7 @@ export default {
   governance_params_tokenomics_freeze_title_short: "GOV-01～04 frozen parameters",
   governance_params_tokenomics_freeze_lead_short: "Sepolia economics SSOT: no automatic cash by holding; P4 requires votes.",
   governance_params_tokenomics_freeze_scope_note_short: "① Doc frozen · ② Sepolia governance stack deployed · mainnet enforce in Phase③ · ③ Legal/KYC separate gate.",
-  governance_params_ttg_supply_kicker: "10M total supply",
+  governance_params_ttg_supply_kicker: "25T total supply",
   governance_params_ttg_supply_section_title_short: "How TTG is allocated",
   governance_params_ttg_supply_lead_short: "Separate layer from Global Treasury cash; Region Steward stakes self-held TTG (no Country Shelf genesis bucket).",
   governance_params_ttg_global_usage_kicker: "HQ TTG",
@@ -10066,37 +10066,39 @@ export default {
   governance_params_treasury_priority_remainder_hint_v2:
     "USDC surplus after P1～P3 stays in treasury by default; needs a governance vote; deploy cap 30% of USDC balance per cycle. Options include USDC buyback + TTG burn — not automatic cash to all holders.",
   governance_params_treasury_policy_lead_short_v2:
-    "About how USDC in treasury is spent. Recommended: buy TTG → burn TTG. Subscription caps are under “How 10M TTG is allocated”.",
+    "About how USDC in ProjectPool / Treasury is spent. Recommended: buy TTG then burn TTG. Batch caps are under How 25T TTG is allocated.",
   governance_params_treasury_policy_recommended_path: "Recommended pair: A spend USDC to buy TTG → B burn the TTG bought (USDC is not burned).",
   governance_params_treasury_policy_options_lead_v2: "All require GlobalDAO / Timelock votes; spends treasury USDC or approved TTG incentives.",
   governance_params_treasury_policy_option_buyback_hint_v2: "Use treasury USDC to buy TTG on market/DEX; TWAP + per-trade cap recommended.",
   governance_params_treasury_policy_option_burn_hint_v2: "Burns TTG tokens from buyback — not USDC. USDC was paid to sellers during buyback.",
   governance_params_treasury_policy_option_ecosystem_hint_v2: "Inject USDC into P3 or grants — separate from Genesis supply (TTG ecosystem grants via DAO Treasury).",
-  governance_params_treasury_policy_public_rounds_pointer: "Round 1/2/3 caps are in “How 10M TTG is allocated” — not the same as Web3 deploy Phase 1/2/3.",
+  governance_params_treasury_policy_public_rounds_pointer: "Five Norm batch caps are in How 25T TTG is allocated — not the same as Web3 deploy Phase 1/2/3.",
   governance_params_governance_rules_kicker: "Governance",
   governance_params_governance_rules_title: "Governance vote rules (summary)",
   governance_params_governance_rules_lead: "Product disclosure below; internal doc IDs GOV-01～04 — see data sources at page bottom.",
   governance_params_tokenomics_freeze_GOV_01_title_user: "Treasury deploy cap",
   governance_params_tokenomics_freeze_GOV_02_title_user: "Proposal thresholds",
   governance_params_tokenomics_freeze_GOV_03_title_user: "Seat concentration",
-  governance_params_tokenomics_freeze_GOV_04_title_user: "Per-wallet subscription cap",
-  governance_params_ttg_supply_unified_title: "How 10M TTG is allocated (single supply table)",
-  governance_params_ttg_supply_unified_lead: "Total {{supply}} TTG · SSOT {{doc}} · four rows below sum to 100%; no second percentage table.",
+  governance_params_tokenomics_freeze_GOV_04_title_user: "Public sale purchase floor",
+  governance_params_ttg_supply_unified_title: "How 25T TTG is allocated (single supply table)",
+  governance_params_ttg_supply_unified_lead: "Total {{supply}} TTG · SSOT {{doc}} · five rows below sum to 100%; no second percentage table.",
   governance_params_ttg_supply_unified_notice:
-    "Genesis V2: Team 15% · Community Incentive Allocation 5% · DAO Treasury 30% · Public Sale 50%. P3 USDC ecosystem subsidies remain a separate cash layer.",
+    "Design Lock ACTIVE: Public 50% · DAO 35% · Team 3% · Marketing 5% · Treasury 7%. Legacy Genesis V2 10M/15/5/30/50 is SUPERSEDED.",
   governance_params_ttg_supply_col_ttg: "TTG amount",
   governance_params_ttg_supply_col_note: "Note",
-  governance_params_ttg_supply_community_incentive_hint: "Genesis Community Incentive Allocation; Program rules in Community Incentive Policy.",
-  governance_params_ttg_supply_public_hint: "Public Sale 50%; Round 1/2/3 amounts in Registry — see nested table.",
-  governance_params_ttg_supply_community_incentive: "Community Incentive Allocation",
-  governance_params_ttg_supply_team_hint: "Founding team vesting; single wallet; not merchant listing fees.",
+  governance_params_ttg_supply_community_incentive_hint: "Genesis Marketing 5%; Norm Marketing wallet; not Community Incentive Program cash.",
+  governance_params_ttg_supply_public_hint: "Public 50%; ACTIVE sale = five Norm batches (window not open · Phase1 cutover pending). Legacy Round 1/2/3 retired from ACTIVE UI.",
+  governance_params_ttg_supply_community_incentive: "Marketing",
+  governance_params_ttg_supply_team_hint: "Founding team 3%; Norm Team wallet; vesting per Design Lock.",
   governance_params_ttg_supply_advisors_hint: "(Removed in Genesis V2)",
-  governance_params_ttg_supply_treasury_dao_hint: "DAO Treasury 30%; governance spend only; not ops cash; not automatic voting power.",
+  governance_params_ttg_supply_treasury_dao_hint: "DAO 35%; governance spend; not ops cash; not automatic voting power.",
+  governance_params_ttg_supply_treasury_ops: "Treasury",
+  governance_params_ttg_supply_treasury_ops_hint: "Treasury 7%; Norm Treasury/Guardian wallet; access fee sink USDC to Treasury.",
   governance_params_ttg_supply_total_hint: "Frozen in protocol-ssot §1",
-  governance_params_ttg_supply_doc_ref: "Docs: {{doc}} · TTG-TOKENOMICS-GENESIS-V2 · protocol-ssot",
-  governance_params_ttg_public_nested_title: "Inside public 50% · three subscription rounds (≠ deploy Phase)",
-  governance_params_ttg_public_nested_lead: "Rounds 2/3 need governance proposals — not the same as Web3 Phase 1/2/3.",
-  governance_params_ttg_public_nested_total: "Public total",
+  governance_params_ttg_supply_doc_ref: "Docs: {{doc}} · TTG-V9 Design Lock DL_R1 · NO-MINT 25T",
+  governance_params_ttg_public_nested_title: "Inside public 50% · five Norm primary batches (≠ deploy Phase)",
+  governance_params_ttg_public_nested_lead: "ACTIVE Norm ladder only · window not open · DEPLOYED_PENDING_CUTOVER. Legacy 800k/1.2M/3M three-round model is not ACTIVE.",
+  governance_params_ttg_public_nested_total: "Norm ladder total (near-term)",
   governance_params_phase_contrast_kicker: "Do not mix",
   governance_params_phase_contrast_title: "Web3 deploy phases vs TTG subscription rounds",
   governance_params_phase_contrast_lead: "Left = product/contract rollout; right = how the 50% Public Sale TTG is sold in tranches.",
@@ -10108,22 +10110,22 @@ export default {
   governance_params_phase_contrast_deploy_p1_name: "Web3 Phase 1",
   governance_params_phase_contrast_deploy_p1_timing: "Jul 2026 · done",
   governance_params_phase_contrast_deploy_p1_is:
-    "Mainnet Money Path Official live (PARTIAL) · Escrow/Settlement/FeeRouter deployed · Timelock wait",
-  governance_params_phase_contrast_deploy_p1_is_not: "Not Production GO; Round 2/3 do not auto-open",
-  governance_params_phase_contrast_round_1_name: "TTG Round 1 Early",
-  governance_params_phase_contrast_round_1_timing: "With Phase 1 open",
-  governance_params_phase_contrast_round_1_is: "800K TTG public sale (Registry initial · 8% of supply) · USDC → Primary Market",
-  governance_params_phase_contrast_round_1_is_not: "Not Web3 Phase 2; not country Seat stake",
+    "V9 Mainnet Phase1 contracts DEPLOYED_PENDING_CUTOVER · SoloTimelock cutover pending · sale window not open",
+  governance_params_phase_contrast_deploy_p1_is_not: "Not Production GO; not Fully Active; Norm batches do not auto-open",
+  governance_params_phase_contrast_round_1_name: "Norm Batch 1",
+  governance_params_phase_contrast_round_1_timing: "Calendar disclosure · window not open",
+  governance_params_phase_contrast_round_1_is: "First Norm primary batch · USDC to ProjectPool when open",
+  governance_params_phase_contrast_round_1_is_not: "Not Web3 Phase 2; not an invitation to buy now",
   governance_params_phase_contrast_deploy_p2_name: "Web3 Phase 2",
   governance_params_phase_contrast_deploy_p2_timing: "Mainnet Reality Finalize wait · Sepolia demoted side track",
   governance_params_phase_contrast_deploy_p2_is:
     "Official Runtime = mainnet · Vacancy/Treasury rules disclosed · ≠ Production GO",
   governance_params_phase_contrast_deploy_p2_is_not: "Not Escrow release execute; not TTG Round 2",
-  governance_params_phase_contrast_round_2_name: "TTG Round 2",
-  governance_params_phase_contrast_round_2_timing: "Governance proposal required",
-  governance_params_phase_contrast_round_2_is: "1.2M TTG public sale (Registry initial · 12% of supply)",
-  governance_params_phase_contrast_round_2_is_not: "Not a synonym for deploy Phase 2",
-  governance_params_phase_contrast_footnote: "Round 3 (3M TTG · Registry initial · 30% of supply) also requires governance · see supply table.",
+  governance_params_phase_contrast_round_2_name: "Norm Batch 2+",
+  governance_params_phase_contrast_round_2_timing: "Per published unlock calendar",
+  governance_params_phase_contrast_round_2_is: "Later Norm batches · same ProjectPool sink",
+  governance_params_phase_contrast_round_2_is_not: "Not legacy Round 2 1.2M TTG model",
+  governance_params_phase_contrast_footnote: "Batches 3–5 follow the published five-batch ladder · see /traveltrust unlock. Legacy Round 3 3M model retired.",
   governance_params_l5_kicker: "Governance · TTG protocol disclosure",
   governance_params_doc_notice:
     "Technical note: data comes from the protocol-reference doc mirror. Platform fee split = FeeRouter layer 1; fundraising = country-pool-fundraise-governance-v1; stake & Fee Points = protocol-ssot.",
@@ -10135,14 +10137,14 @@ export default {
     "Net profit means platform service fees from completed orders, after books close—not the tourist’s full order amount, and not the fee paid when applying to become a steward.",
   governance_params_overview_reading_2: "Each country pool accounts for that net profit separately over a period (quarter or year).",
   governance_params_overview_reading_3:
-    "Step 1: 45% of that country’s net profit goes to the regional steward; 55% goes to the TravelTrust global project pool (Global Treasury).",
+    "ACTIVE: platform fee 5% to CountryFeeRouter. With a steward: 45% steward / 55% ProjectPool; otherwise 100% ProjectPool.",
   governance_params_overview_reading_4:
-    "Global Treasury pays platform ops, security reserve, and ecosystem incentives first; only the remainder is re-allocated by governance—not pro-rata to all TTG holders.",
+    "ProjectPool holds sale USDC and fee residual. Ops/security follow governance + P4 90d ≤30% cap. Legacy globalStakers pro-rata = EXIT — not ACTIVE.",
   governance_params_overview_tracks_title: "How it splits",
   governance_params_overview_tracks_lead:
-    "First country net profit 45/55, then Global Treasury usage order and full TTG supply structure.",
+    "CountryFeeRouter 45/55|100% → ProjectPool, then full TTG 25T supply structure (Design Lock).",
   governance_params_dual_track_summary:
-    "Country net profit: 45% regional steward / 55% Global Treasury (P4Cap DAO Treasury · governed by GOV parameters); Treasury pays ops and security first, remainder by governance.",
+    "ACTIVE: 5% platform fee → CountryFeeRouter; with steward 45/55 else 100% ProjectPool. P4Cap/globalStakers = LEGACY EXIT.",
   governance_params_dual_track_disclaimer:
     "Net profit = platform service fee profit from completed orders; Seat collateral TTG is separate. DE Sepolia country-pool split is live on-chain; ten-country rollout and mainnet are Phase③.",
   governance_params_page_notice: "Parameter changes go through governance proposals.",
@@ -10155,12 +10157,12 @@ export default {
   governance_params_dimension_b_title: "Step 1 · How each country’s order net profit splits",
   governance_params_dimension_b_tag: "Core rule",
   governance_params_dimension_b_body:
-    "After books close on platform service fee net profit: 45% to that country’s regional steward, 55% to Global Treasury.",
-  governance_params_dimension_b_formula: "45% regional steward · 55% Global Treasury",
-  governance_params_dimension_c_title: "Global Treasury · 55% usage order",
+    "ACTIVE: platform fee 5% to CountryFeeRouter. With a region steward: 45% steward / 55% ProjectPool; otherwise 100% ProjectPool. Legacy P4Cap Global Treasury narrative is SUPERSEDED.",
+  governance_params_dimension_b_formula: "45% steward · 55% ProjectPool (else 100% Pool)",
+  governance_params_dimension_c_title: "ProjectPool · fee residual usage",
   governance_params_dimension_c_tag: "Core rule",
   governance_params_dimension_c_body:
-    "The 55% entering Global Treasury must cover HQ ops, security, and ecosystem costs first; only the remainder may be re-allocated by governance proposal.",
+    "ProjectPool holds sale USDC and fee residual per Design Lock. Ops/security spends follow governance + 90d <=30% P4 cap. Legacy globalStakers 65/20/15 = EXIT — not ACTIVE holder dividends.",
   governance_params_dimension_c_formula: "Ops / security / reserve first · remainder by governance",
   governance_params_dimension_jump: "Jump to section →",
   governance_params_dimension_jump_data: "See order-fee split section →",
@@ -10206,6 +10208,11 @@ export default {
   governance_params_treasury_policy_round_round_1_early: "Round 1 · Early",
   governance_params_treasury_policy_round_round_2: "Round 2",
   governance_params_treasury_policy_round_round_3: "Round 3",
+  governance_params_treasury_policy_round_norm_batch_1: "Norm Batch 1",
+  governance_params_treasury_policy_round_norm_batch_2: "Norm Batch 2",
+  governance_params_treasury_policy_round_norm_batch_3: "Norm Batch 3",
+  governance_params_treasury_policy_round_norm_batch_4: "Norm Batch 4",
+  governance_params_treasury_policy_round_norm_batch_5: "Norm Batch 5",
   governance_params_treasury_policy_public_total_row: "Total",
   governance_params_treasury_policy_seat_exit_note:
     "Seat exit: apply → 180-day cooling → KPI review → unlock TTG to wallet; no USDC refund; TTG price is market-driven.",
@@ -10228,9 +10235,9 @@ export default {
   governance_params_tokenomics_freeze_GOV_03_title: "Seat concentration",
   governance_params_tokenomics_freeze_GOV_03_value:
     "Max {{seats}} active Seat per controlling entity; max aggregate Seat stake {{stakeBps}}%. Per-address TTG vote weight uncapped (cap disabled — not “no vote”); team/treasury protected via Vesting · Safe · Proposal · Vote · Timelock.",
-  governance_params_tokenomics_freeze_GOV_04_title: "Per-wallet subscription cap",
+  governance_params_tokenomics_freeze_GOV_04_title: "Public sale purchase floor",
   governance_params_tokenomics_freeze_GOV_04_value:
-    "Default max {{walletTtg}} TTG per wallet (0.25%) across public rounds; min {{minUsdc}} USDC.",
+    "No per-wallet cap in ACTIVE Norm ({{walletTtg}}); min {{minUsdc}} USDC. Window not open.",
   governance_params_tokenomics_freeze_scope_note:
     "① FROZEN · ② on-chain Governor/PrimaryMarket enforce NOT STARTED · ③ legal/KYC separate gate · TTG-TOKENOMICS-FREEZE-V1-FINAL-AUDIT-REPORT.",
   governance_params_phase1_table_bridge:
@@ -10277,7 +10284,7 @@ export default {
   governance_params_ttg_supply_ecosystem: "(Folded into DAO / Program)",
   governance_params_ttg_supply_team: "Founding team",
   governance_params_ttg_supply_advisors: "(Removed)",
-  governance_params_ttg_supply_treasury_dao: "DAO Treasury",
+  governance_params_ttg_supply_treasury_dao: "DAO",
   governance_params_ttg_supply_total_row: "Total",
   governance_params_ttg_supply_table_caption: "Full TTG supply structure",
   governance_params_ttg_supply_notice:
@@ -10362,7 +10369,7 @@ export default {
   governance_params_country_revenue_model_bullet_stake:
     "Regional stewards must lock TTG collateral per Seat tier for 24 months, then unlock on the published schedule.",
   governance_params_fee_split_global_lead:
-    "Inside the global 55% share: TTG staking incentive 65% · protocol reserve 20% · day-to-day operations 15%.",
+    "ACTIVE Design Lock: platform fee 5% to CountryFeeRouter; with steward 45% steward / 55% ProjectPool, else 100% ProjectPool. Legacy globalStakers 65/20/15 = EXIT.",
   governance_params_phase1_lead:
     "Ten countries, one Seat each · TTG collateral lock by tier (separate from Global Treasury 55% cash use and public Round 1 subscription).",
   governance_params_mirror_fallback_note:
@@ -10432,7 +10439,7 @@ export default {
   governance_params_fee_split_lead: "Design-target ratios (read-only—not live balances).",
   governance_params_layer1_country: "Share for all countries combined (~45%)",
   governance_params_layer1_global: "Globally shared share (~55%)",
-  governance_params_stakers: "Staking incentive",
+  governance_params_stakers: "Legacy stakers (EXIT · not ACTIVE)",
   governance_params_reserve: "Protocol reserve",
   governance_params_operations: "Day-to-day operations",
   governance_params_phase1_countries: "Ten countries / regions",
@@ -10501,9 +10508,9 @@ export default {
   governance_params_checksum_key_country_bucket_percent: "Share of order fees routed to all countries",
   governance_params_checksum_key_phase1_open_over_country_bucket: "Phase-1 open as share of country-routed portion",
 
-  governance_fee_routes_title: "Fee routes (on-chain index)",
+  governance_fee_routes_title: "Fee routes · KEEP Money Path index",
   governance_fee_routes_desc:
-    "Read-only list of FeeRouter PlatformFeeRouted events indexed by the API (when DATABASE_URL and indexer-tick with FEE_ROUTER_ADDRESS are configured). Values are wei as hex; hover cells for full strings. Not a substitute for your own RPC verification.",
+    "Read-only list of KEEP FeeRouter PlatformFeeRouted events (historical Money Path index). ACTIVE V9 fee sink is CountryFeeRouter to ProjectPool; KEEP setFeeRouter(NEW) is still pending cutover. Not a substitute for RPC verification.",
   governance_fee_routes_empty: "No indexed fee-route events yet. Ensure the API has PostgreSQL, FEE_ROUTER_ADDRESS set, and run internal indexer-tick.",
   governance_fee_routes_note_prefix: "API note:",
   governance_fee_routes_col_block: "Block:log",
@@ -10523,7 +10530,7 @@ export default {
   governance_fee_routes_filter_all: "All chains",
   governance_fee_routes_wiring_title: "FeeRouter wiring (read-only)",
   governance_fee_routes_wiring_lead:
-    "Aligned with 07 §5.2A / Runbook §7.1: API and frontend build-time addresses should match for operator self-checks.",
+    "API/build wiring may still show KEEP FeeRouter until cutover. ACTIVE Design Lock sink = CountryFeeRouter to ProjectPool (DEPLOYED_PENDING_CUTOVER).",
   governance_fee_routes_wiring_api: "GET /meta · chain.contracts (fee_router_address / escrow_platform_fee_recipient)",
   governance_fee_routes_wiring_build: "NEXT_PUBLIC_FEE_ROUTER_ADDRESS (build-time)",
   governance_fee_routes_wiring_none: "Not set",
@@ -13449,7 +13456,7 @@ export default {
   traveltrust_protocol_directory_kicker: "Protocol registry",
   traveltrust_protocol_directory_title: "Protocol master list",
   traveltrust_protocol_directory_disclaimer:
-    "Addresses below are from the official registry, read-only. Deployed on Ethereum mainnet does not mean Production GO — do not send funds.",
+    "Addresses below are V9 Phase1 ACTIVE registry + KEEP Money Path (read-only). DEPLOYED_PENDING_CUTOVER ≠ Production GO · sale window not open — do not send funds.",
   traveltrust_protocol_directory_table_caption: "Protocol master list",
   traveltrust_protocol_directory_col_order: "#",
   traveltrust_protocol_directory_col_contract: "Contract",
@@ -13457,27 +13464,27 @@ export default {
   traveltrust_protocol_directory_group_money_path: "Funds path",
   traveltrust_protocol_directory_group_governance: "Governance",
   traveltrust_protocol_directory_group_primary_market: "Primary market",
-  traveltrust_protocol_directory_row_escrow_factory_title: "Itinerary escrow factory",
+  traveltrust_protocol_directory_row_escrow_factory_title: "KEEP itinerary escrow factory",
   traveltrust_protocol_directory_row_escrow_factory_desc:
-    "Entry for creating itinerary escrow contracts. Deposits stay in-contract, not in platform accounts.",
-  traveltrust_protocol_directory_row_settlement_router_title: "Settlement router",
+    "KEEP Money Path entry for itinerary escrow. Deposits stay in-contract, not in platform accounts.",
+  traveltrust_protocol_directory_row_settlement_router_title: "KEEP settlement router",
   traveltrust_protocol_directory_row_settlement_router_desc:
-    "After both sides confirm, distributes funds per published rules.",
-  traveltrust_protocol_directory_row_fee_router_title: "Fee allocation",
+    "KEEP Money Path settlement. setFeeRouter(NEW CountryFeeRouter) still pending cutover.",
+  traveltrust_protocol_directory_row_fee_router_title: "CountryFeeRouter (ACTIVE)",
   traveltrust_protocol_directory_row_fee_router_desc:
-    "Platform and regional fees split per published ratios.",
-  traveltrust_protocol_directory_row_timelock_title: "Governance timelock",
+    "ACTIVE V9 Design Lock: platform fee 5% → 45/55|100% ProjectPool. Not legacy P4Cap/globalStakers.",
+  traveltrust_protocol_directory_row_timelock_title: "SoloTimelock (ACTIVE)",
   traveltrust_protocol_directory_row_timelock_desc:
-    "Passed proposals wait through timelock before on-chain changes.",
-  traveltrust_protocol_directory_row_governor_title: "Governance voting contract",
+    "V9 SoloTimelock 48h. Legacy KEEP Timelock is not ACTIVE admin.",
+  traveltrust_protocol_directory_row_governor_title: "Governor V9 (ACTIVE)",
   traveltrust_protocol_directory_row_governor_desc:
-    "On-chain voting and proposal execution. Public voting follows the governance page.",
-  traveltrust_protocol_directory_row_governance_token_title: "Governance voting token",
+    "V9 on-chain voting. Public voting follows the governance page. Cutover pending.",
+  traveltrust_protocol_directory_row_governance_token_title: "TTG V9 (ACTIVE)",
   traveltrust_protocol_directory_row_governance_token_desc:
-    "Token contract for governance votes. Listed here ≠ tradable or public.",
-  traveltrust_protocol_directory_row_primary_market_title: "TTG primary market",
+    "25T NO-MINT TTG V9. Listed here ≠ tradable or public sale open.",
+  traveltrust_protocol_directory_row_primary_market_title: "Batch Primary Market (ACTIVE)",
   traveltrust_protocol_directory_row_primary_market_desc:
-    "Contract deployed. Trading not yet open.",
+    "V9 Market DEPLOYED_PENDING_CUTOVER. Sale window not open. USDC → ProjectPool when open.",
 
   traveltrust_hero_cta_ttg: "View TTG",
   traveltrust_hero_cta_ttg_aria: "Scroll to TTG rules",
@@ -13562,7 +13569,7 @@ export default {
   traveltrust_liquidity_rail_disclaimer:
     "This rail shows public-unlock batch prices. Minimum 1 USDC. The exchange window is not open to the public. Not a securities or investment offer.",
   traveltrust_liquidity_exchange_window_closed:
-    "The exchange window is not open to the public. This page is a rules preview and does not start an exchange.",
+    "Exchange window not open · Phase1 DEPLOYED_PENDING_CUTOVER · rules preview only",
   traveltrust_unlock_eyebrow: "Unlock schedule",
   traveltrust_unlock_title: "TTG public unlock",
   traveltrust_unlock_tagline:
@@ -13584,14 +13591,14 @@ export default {
   traveltrust_nav_unlock: "Unlock",
   traveltrust_faq_q_get_ttg: "How does the TTG exchange window work?",
   traveltrust_faq_a_get_ttg:
-    "When the window opens, exchange stablecoin for TTG at the published batch; minimum 1 USDC. After a batch closes, unsold remainder may be burned in part and is not kept as inventory. Obtaining TTG is not a trip deposit. This page is not an offer and does not promise a price.",
+    "The exchange window is not open. This page is rules preview only — not an invitation to buy. When opened later, stablecoin to TTG at the published Norm batch; USDC settles to ProjectPool; minimum 1 USDC. See Mainnet Edition Whitepaper and docs/github-official in the repository. Obtaining TTG is not a trip deposit.",
   traveltrust_settlement_announcements_cta: "View protocol rules",
   traveltrust_settlement_assurance_cta: "Audit note",
   traveltrust_settlement_copy: "Copy address",
   traveltrust_settlement_copied: "Copied",
   traveltrust_settlement_open_explorer: "Open block explorer",
-  traveltrust_settlement_contract_ttg: "TTG",
-  traveltrust_settlement_contract_pm: "TTG exchange contract",
+  traveltrust_settlement_contract_ttg: "TTG V9",
+  traveltrust_settlement_contract_pm: "Batch Primary Market",
   traveltrust_settlement_contract_chain: "Ethereum Mainnet",
   traveltrust_settlement_notice:
     "Verify the address before sending; do not send from an exchange hot wallet. Obtaining TTG is not a trip deposit (deposits use escrow).",
@@ -13667,7 +13674,7 @@ export default {
   traveltrust_footer_disclosure_terms: "Terms",
   traveltrust_footer_disclosure_privacy: "Privacy",
   traveltrust_footer_disclosure_brand: "Brand mark",
-  traveltrust_footer_disclosure_assurance: "Audit note",
+  traveltrust_footer_disclosure_assurance: "Audit note · no commissioned audit yet",
   traveltrust_footer_disclosure_contact: "Contact",
 
 } as const;

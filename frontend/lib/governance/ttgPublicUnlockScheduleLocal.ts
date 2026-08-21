@@ -116,20 +116,12 @@ export function ttgPerUsdcFromUnitPrice(usdcPerTtg: number): number {
   return Math.round(1 / usdcPerTtg);
 }
 
-export function resolveTtgPublicSaleFocus(nowMs = Date.now()): TtgPublicSaleFocus {
-  const batches = TTG_PUBLIC_UNLOCK_BATCHES;
-  const times = batches.map((b) => Date.parse(b.at));
-  if (nowMs < times[0]) {
-    return { batch: batches[0], kind: "upcoming" };
-  }
-  for (let i = 0; i < batches.length; i++) {
-    const start = times[i];
-    const end = i + 1 < times.length ? times[i + 1] : Number.POSITIVE_INFINITY;
-    if (nowMs >= start && nowMs < end) {
-      return { batch: batches[i], kind: "open" };
-    }
-  }
-  return { batch: batches[batches.length - 1], kind: "complete" };
+/**
+ * W-P0-05: Phase1 cutover pending — never date-drive an `open` sale window.
+ * Calendar remains disclosure-only; ACTIVE CTA = window not open.
+ */
+export function resolveTtgPublicSaleFocus(_nowMs = Date.now()): TtgPublicSaleFocus {
+  return { batch: TTG_PUBLIC_UNLOCK_BATCHES[0], kind: "upcoming" };
 }
 
 export function quoteTtgPublicSaleFromUsdc(

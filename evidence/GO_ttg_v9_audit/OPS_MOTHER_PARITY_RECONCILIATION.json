@@ -1,0 +1,550 @@
+{
+  "stamp": "OPS_MOTHER_PARITY_RECONCILIATION",
+  "status": "PASS",
+  "read_only": true,
+  "staging_production_deploy": "DEFERRED_STOP",
+  "tt_production_go": "NO_GO",
+  "ops_mother_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "ops_pin": "OPS-2026.08.20-v9",
+  "clean_baseline_sha": "92cc3057a22e919bb52dde0425e23487677da1be",
+  "clean_baseline_tag": "OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE",
+  "scope_note": "37-item set = prior Frontend HEAD vs OPS non-match (23 same-path-different + 14 HEAD-only). Current Clean Baseline HEAD frontend is blob-identical to OPS for the product tree; Local RC V9 patches remain worktree allowlist overlay only.",
+  "totals": {
+    "same_path_different": 23,
+    "head_only": 14,
+    "total_37": 37,
+    "UNKNOWN": 0,
+    "OFFICIAL_MOTHER_WINS": 37,
+    "V9_ALLOWLIST_PATCH_in_37": 0,
+    "INTENTIONAL_RUNTIME_DIFFERENCE": 0,
+    "GENERATED_OR_NONPRODUCT_in_37": 0
+  },
+  "release_metrics": {
+    "UNAUTHORIZED_PRODUCTION_DRIFT": 0,
+    "UI_UX_DRIFT": 0,
+    "ADMIN_COMMUNITY_DRIFT": 0,
+    "UNKNOWN": 0
+  },
+  "rows_37": [
+    {
+      "path": "frontend/Dockerfile.fly-staging",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "DOCKER",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/(home)/homeMarketing.contract.test.ts",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "HOME",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/(home)/loading.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "HOME",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/(home)/page.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "HOME",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/admin/content/announcements/AdminContentAnnouncementsPageMain.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "ADMIN",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/admin/inbox/adminUnifiedInboxL5.contract.test.ts",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "ADMIN",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/README.md",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/explore/CommunityExplorePageAuthorsSection.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/friends/CommunityFriendsRelationRow.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/friends/FriendsSentRequestRow.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/friends/RequestReceivedApiRow.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/friends/page.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/messages/CommunityMessagesConversationRow.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/messages/[id]/CommunityConversationPageHeader.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/user/[id]/CommunityUserPageMain.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/user/[id]/CommunityUserPageOverlays.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/user/[id]/CommunityUserPostsFeedSection.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/user/[id]/CommunityUserProfileHeader.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/user/[id]/communityUserPage.contract.test.ts",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/user/[id]/useCommunityUserPageCore.ts",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/community/user/[id]/useCommunityUserRemoteLists.ts",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "COMMUNITY",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/global-error.tsx",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "HOME",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/globals.css",
+      "kind": "same_path_different",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "HOME",
+      "rationale": "Not in V9 P0+P1 allowlist. Production ships OPS mother bytes. Clean Baseline already aligned HEAD to OPS; must not reintroduce prior Local/HEAD drift into release.",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ALIGNED_TO_MOTHER"
+    },
+    {
+      "path": "frontend/app/assurance/AssurancePageMain.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/assurance/layout.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/assurance/page.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/brand/BrandMarkPageMain.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/brand/layout.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/brand/page.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/contact/ContactPageMain.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/contact/layout.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/contact/page.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/protocol/ProtocolPaperPageMain.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/protocol/layout.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/protocol/page.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/app/protocol/protocolPaperPage.contract.test.ts",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    },
+    {
+      "path": "frontend/components/traveltrust/cinematic/TravelTrustListingDocPage.tsx",
+      "kind": "head_only_absent_from_ops",
+      "verdict": "OFFICIAL_MOTHER_WINS",
+      "bucket": "LISTING_ABSENT_FROM_OPS",
+      "rationale": "Path absent from Production OPS pin. Do not add to Production release. Already removed at Clean Baseline (f3fc8ace2).",
+      "ship_in_production": false,
+      "current_head_vs_ops": "ABSENT_AS_MOTHER"
+    }
+  ],
+  "v9_allowlist_overlay": [
+    {
+      "path": "frontend/lib/governance/governanceParamsTokenomicsModel.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/governance/governanceParamsTokenomicsModel.test.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/governance/governanceParamsProtocolReferenceMirror.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/governance/primaryMarketRuntimePriceSsot.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/governance/v9PublicContractRegistry.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/governance/ttgPublicUnlockScheduleLocal.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/governance/ttgPublicUnlockScheduleLocal.test.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/governance/ttgReferencePriceV1.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/traveltrustTtgPublicRounds.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/traveltrustTtgPublicRounds.test.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/lib/traveltrustOfficialMainnetProtocolDirectory.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/locales/en.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "frontend/locales/zh.ts",
+      "verdict": "V9_ALLOWLIST_PATCH",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "ship_in_production": true,
+      "overlay_on": "OPS_MOTHER"
+    },
+    {
+      "path": "scripts/dev/run-ttg-v9-official-website-alignment-gate.py",
+      "verdict": "GENERATED_OR_NONPRODUCT",
+      "rationale": "Gate/evidence/runbook for Local RC — not a product UI page; may accompany release pack but does not alter OPS UI mother.",
+      "ship_in_production": "RELEASE_PACK_ONLY",
+      "overlay_on": null
+    },
+    {
+      "path": "evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_BASE_SHA.json",
+      "verdict": "GENERATED_OR_NONPRODUCT",
+      "rationale": "Gate/evidence/runbook for Local RC — not a product UI page; may accompany release pack but does not alter OPS UI mother.",
+      "ship_in_production": "RELEASE_PACK_ONLY",
+      "overlay_on": null
+    },
+    {
+      "path": "evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_PASS.json",
+      "verdict": "GENERATED_OR_NONPRODUCT",
+      "rationale": "Gate/evidence/runbook for Local RC — not a product UI page; may accompany release pack but does not alter OPS UI mother.",
+      "ship_in_production": "RELEASE_PACK_ONLY",
+      "overlay_on": null
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OFFICIAL-WEBSITE-ALIGNMENT-CANDIDATE-LOCAL-RC-LATEST.md",
+      "verdict": "GENERATED_OR_NONPRODUCT",
+      "rationale": "Gate/evidence/runbook for Local RC — not a product UI page; may accompany release pack but does not alter OPS UI mother.",
+      "ship_in_production": "RELEASE_PACK_ONLY",
+      "overlay_on": null
+    }
+  ],
+  "production_composition": {
+    "formula": "Production_OPS_Mother(3e356617) + V9_Approved_Allowlist_Patch_only",
+    "exclude_from_release": [
+      "frontend/Dockerfile.fly-staging",
+      "frontend/app/(home)/homeMarketing.contract.test.ts",
+      "frontend/app/(home)/loading.tsx",
+      "frontend/app/(home)/page.tsx",
+      "frontend/app/admin/content/announcements/AdminContentAnnouncementsPageMain.tsx",
+      "frontend/app/admin/inbox/adminUnifiedInboxL5.contract.test.ts",
+      "frontend/app/community/README.md",
+      "frontend/app/community/explore/CommunityExplorePageAuthorsSection.tsx",
+      "frontend/app/community/friends/CommunityFriendsRelationRow.tsx",
+      "frontend/app/community/friends/FriendsSentRequestRow.tsx",
+      "frontend/app/community/friends/RequestReceivedApiRow.tsx",
+      "frontend/app/community/friends/page.tsx",
+      "frontend/app/community/messages/CommunityMessagesConversationRow.tsx",
+      "frontend/app/community/messages/[id]/CommunityConversationPageHeader.tsx",
+      "frontend/app/community/user/[id]/CommunityUserPageMain.tsx",
+      "frontend/app/community/user/[id]/CommunityUserPageOverlays.tsx",
+      "frontend/app/community/user/[id]/CommunityUserPostsFeedSection.tsx",
+      "frontend/app/community/user/[id]/CommunityUserProfileHeader.tsx",
+      "frontend/app/community/user/[id]/communityUserPage.contract.test.ts",
+      "frontend/app/community/user/[id]/useCommunityUserPageCore.ts",
+      "frontend/app/community/user/[id]/useCommunityUserRemoteLists.ts",
+      "frontend/app/global-error.tsx",
+      "frontend/app/globals.css",
+      "frontend/app/assurance/AssurancePageMain.tsx",
+      "frontend/app/assurance/layout.tsx",
+      "frontend/app/assurance/page.tsx",
+      "frontend/app/brand/BrandMarkPageMain.tsx",
+      "frontend/app/brand/layout.tsx",
+      "frontend/app/brand/page.tsx",
+      "frontend/app/contact/ContactPageMain.tsx",
+      "frontend/app/contact/layout.tsx",
+      "frontend/app/contact/page.tsx",
+      "frontend/app/protocol/ProtocolPaperPageMain.tsx",
+      "frontend/app/protocol/layout.tsx",
+      "frontend/app/protocol/page.tsx",
+      "frontend/app/protocol/protocolPaperPage.contract.test.ts",
+      "frontend/components/traveltrust/cinematic/TravelTrustListingDocPage.tsx"
+    ],
+    "include_overlay": [
+      "frontend/lib/governance/governanceParamsTokenomicsModel.ts",
+      "frontend/lib/governance/governanceParamsTokenomicsModel.test.ts",
+      "frontend/lib/governance/governanceParamsProtocolReferenceMirror.ts",
+      "frontend/lib/governance/primaryMarketRuntimePriceSsot.ts",
+      "frontend/lib/governance/v9PublicContractRegistry.ts",
+      "frontend/lib/governance/ttgPublicUnlockScheduleLocal.ts",
+      "frontend/lib/governance/ttgPublicUnlockScheduleLocal.test.ts",
+      "frontend/lib/governance/ttgReferencePriceV1.ts",
+      "frontend/lib/traveltrustTtgPublicRounds.ts",
+      "frontend/lib/traveltrustTtgPublicRounds.test.ts",
+      "frontend/lib/traveltrustOfficialMainnetProtocolDirectory.ts",
+      "frontend/locales/en.ts",
+      "frontend/locales/zh.ts"
+    ],
+    "forbidden": [
+      "Admin/Community/Home/loading/Dockerfile drift from Local RC",
+      "UI/UX redesign",
+      "Staging/Production deploy this turn",
+      "/meta or Indexer cutover",
+      "DL_R1 / Mainnet Phase1 mutation",
+      "TT_PRODUCTION_GO flip"
+    ]
+  },
+  "recorded_at_utc": "2026-08-21T12:49:41Z"
+}

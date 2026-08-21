@@ -1,16 +1,16 @@
-/** TTG 10M Genesis V2 supply · Public Sale rounds · FE read-only SSOT mirror */
+/** TTG V9 Design Lock · 25T Genesis 50/35/3/5/7 · FE read-only SSOT mirror (ACTIVE) */
 
-export const TTG_TOTAL_SUPPLY = 10_000_000 as const;
+export const TTG_TOTAL_SUPPLY = 25_000_000_000_000 as const;
 
-export const PROTOCOL_SSOT_DOC_ID = "protocol-ssot.v1" as const;
-export const PROTOCOL_SSOT_DOC_VERSION = "1.0.4" as const;
-export const TTG_ALLOCATION_FLOWS_DOC_ID = "ttg-allocation-permissions-flows-ssot-v1" as const;
+export const PROTOCOL_SSOT_DOC_ID = "TT-TTG-V9-OWNER-DESIGN-LOCK" as const;
+export const PROTOCOL_SSOT_DOC_VERSION = "DL_R1" as const;
+export const TTG_ALLOCATION_FLOWS_DOC_ID = "ttg-v9-design-lock-allocation-v1" as const;
 
-/** Allocation business SSOT (supersedes Freeze V1 supply table) */
-export const GOVERNANCE_TOKENOMICS_GENESIS_DOC_ID = "TTG-TOKENOMICS-GENESIS-V2" as const;
-export const GOVERNANCE_TOKENOMICS_GENESIS_DATE = "2026-07-12" as const;
+/** ACTIVE allocation SSOT (Design Lock · supersedes Genesis V2 10M table) */
+export const GOVERNANCE_TOKENOMICS_GENESIS_DOC_ID = "TTG-V9-DESIGN-LOCK-GENESIS" as const;
+export const GOVERNANCE_TOKENOMICS_GENESIS_DATE = "2026-08-18" as const;
 
-/** @deprecated Use GOVERNANCE_TOKENOMICS_GENESIS_DOC_ID for allocation */
+/** @deprecated LEGACY 10M Genesis V2 — do not render as ACTIVE */
 export const GOVERNANCE_TOKENOMICS_FREEZE_DOC_ID = "TTG-TOKENOMICS-FREEZE-V1" as const;
 export const GOVERNANCE_TOKENOMICS_FREEZE_DATE = "2026-06-16" as const;
 
@@ -28,8 +28,9 @@ export const GOVERNANCE_FREEZE_V1 = {
     max_aggregate_seat_stake_per_entity_bps: 400,
   },
   GOV_04: {
-    public_sale_per_wallet_cap_ttg: 25_000,
-    public_sale_min_purchase_usdc: 100,
+    /** Design Lock Norm: no per-wallet cap in ACTIVE disclosure */
+    public_sale_per_wallet_cap_ttg: 0,
+    public_sale_min_purchase_usdc: 1,
   },
 } as const;
 
@@ -41,35 +42,42 @@ export type GovernanceParamsSupplyRow = {
   ttgUnits: number;
 };
 
-/** Genesis V2 · 15/5/30/50 — sole supply breakdown (10M = 100%) */
+/** Design Lock Genesis · 50/35/3/5/7 — sole ACTIVE supply breakdown (25T = 100%) */
 export const GOVERNANCE_TTG_SUPPLY_ROWS: readonly GovernanceParamsSupplyRow[] = [
-  {
-    id: "team",
-    labelKey: "governance_params_ttg_supply_team",
-    hintKey: "governance_params_ttg_supply_team_hint",
-    sharePct: 15,
-    ttgUnits: 1_500_000,
-  },
-  {
-    id: "community_incentive",
-    labelKey: "governance_params_ttg_supply_community_incentive",
-    hintKey: "governance_params_ttg_supply_community_incentive_hint",
-    sharePct: 5,
-    ttgUnits: 500_000,
-  },
-  {
-    id: "treasury_dao",
-    labelKey: "governance_params_ttg_supply_treasury_dao",
-    hintKey: "governance_params_ttg_supply_treasury_dao_hint",
-    sharePct: 30,
-    ttgUnits: 3_000_000,
-  },
   {
     id: "public_sale",
     labelKey: "governance_params_ttg_supply_public",
     hintKey: "governance_params_ttg_supply_public_hint",
     sharePct: 50,
-    ttgUnits: 5_000_000,
+    ttgUnits: 12_500_000_000_000,
+  },
+  {
+    id: "dao",
+    labelKey: "governance_params_ttg_supply_treasury_dao",
+    hintKey: "governance_params_ttg_supply_treasury_dao_hint",
+    sharePct: 35,
+    ttgUnits: 8_750_000_000_000,
+  },
+  {
+    id: "team",
+    labelKey: "governance_params_ttg_supply_team",
+    hintKey: "governance_params_ttg_supply_team_hint",
+    sharePct: 3,
+    ttgUnits: 750_000_000_000,
+  },
+  {
+    id: "marketing",
+    labelKey: "governance_params_ttg_supply_community_incentive",
+    hintKey: "governance_params_ttg_supply_community_incentive_hint",
+    sharePct: 5,
+    ttgUnits: 1_250_000_000_000,
+  },
+  {
+    id: "treasury",
+    labelKey: "governance_params_ttg_supply_treasury_ops",
+    hintKey: "governance_params_ttg_supply_treasury_ops_hint",
+    sharePct: 7,
+    ttgUnits: 1_750_000_000_000,
   },
 ] as const;
 
@@ -94,35 +102,52 @@ export type GovernanceParamsPublicRoundRow = {
   ofPublicPct: number;
 };
 
-/** Public Sale 50% · Registry initial split (mutable via governance · sum must stay 5M) */
+/**
+ * ACTIVE: five Norm primary batches (unlock ladder) — not legacy 800k/1.2M/3M rounds.
+ * Sum is the near-term Norm ladder; remainder of public 50% stays unscheduled until governance.
+ */
 export const GOVERNANCE_PUBLIC_SALE_ROUNDS: readonly GovernanceParamsPublicRoundRow[] = [
   {
-    id: "round_1_early",
-    labelKey: "governance_params_treasury_policy_round_round_1_early",
-    ttgUnits: 800_000,
-    ofSupplyPct: 8,
-    ofPublicPct: 16,
+    id: "norm_batch_1",
+    labelKey: "governance_params_treasury_policy_round_norm_batch_1",
+    ttgUnits: 1_250_000_000,
+    ofSupplyPct: 0.005,
+    ofPublicPct: 0.01,
   },
   {
-    id: "round_2",
-    labelKey: "governance_params_treasury_policy_round_round_2",
-    ttgUnits: 1_200_000,
-    ofSupplyPct: 12,
-    ofPublicPct: 24,
+    id: "norm_batch_2",
+    labelKey: "governance_params_treasury_policy_round_norm_batch_2",
+    ttgUnits: 3_750_000_000,
+    ofSupplyPct: 0.015,
+    ofPublicPct: 0.03,
   },
   {
-    id: "round_3",
-    labelKey: "governance_params_treasury_policy_round_round_3",
-    ttgUnits: 3_000_000,
-    ofSupplyPct: 30,
-    ofPublicPct: 60,
+    id: "norm_batch_3",
+    labelKey: "governance_params_treasury_policy_round_norm_batch_3",
+    ttgUnits: 18_750_000_000,
+    ofSupplyPct: 0.075,
+    ofPublicPct: 0.15,
+  },
+  {
+    id: "norm_batch_4",
+    labelKey: "governance_params_treasury_policy_round_norm_batch_4",
+    ttgUnits: 168_750_000_000,
+    ofSupplyPct: 0.675,
+    ofPublicPct: 1.35,
+  },
+  {
+    id: "norm_batch_5",
+    labelKey: "governance_params_treasury_policy_round_norm_batch_5",
+    ttgUnits: 2_025_000_000_000,
+    ofSupplyPct: 8.1,
+    ofPublicPct: 16.2,
   },
 ] as const;
 
 export const GOVERNANCE_PUBLIC_SALE_TOTAL = {
-  ttgUnits: 5_000_000,
-  ofSupplyPct: 50,
-  ofPublicPct: 100,
+  ttgUnits: 2_217_500_000_000,
+  ofSupplyPct: 8.87,
+  ofPublicPct: 17.74,
 } as const;
 
 export type GovernanceParamsPhaseContrastRow = {
@@ -133,7 +158,7 @@ export type GovernanceParamsPhaseContrastRow = {
   isNotKey: string;
 };
 
-/** Web3 product deploy phases ≠ Public Sale Round 1/2/3 */
+/** Web3 product deploy phases ≠ Public Sale Norm batches */
 export const GOVERNANCE_PHASE_CONTRAST_ROWS: readonly GovernanceParamsPhaseContrastRow[] = [
   {
     id: "deploy_p1",
@@ -221,7 +246,10 @@ export function governanceFreezeLocaleVars(locale: string): Record<string, strin
     timelock: GOVERNANCE_FREEZE_V1.GOV_02.governance_timelock_delay_hours,
     seats: GOVERNANCE_FREEZE_V1.GOV_03.max_active_seats_per_controlling_entity,
     stakeBps: GOVERNANCE_FREEZE_V1.GOV_03.max_aggregate_seat_stake_per_entity_bps / 100,
-    walletTtg: GOVERNANCE_FREEZE_V1.GOV_04.public_sale_per_wallet_cap_ttg.toLocaleString(locale),
+    walletTtg:
+      GOVERNANCE_FREEZE_V1.GOV_04.public_sale_per_wallet_cap_ttg === 0
+        ? "NONE"
+        : GOVERNANCE_FREEZE_V1.GOV_04.public_sale_per_wallet_cap_ttg.toLocaleString(locale),
     minUsdc: GOVERNANCE_FREEZE_V1.GOV_04.public_sale_min_purchase_usdc,
     supply: TTG_TOTAL_SUPPLY.toLocaleString(locale),
     doc: GOVERNANCE_TOKENOMICS_GENESIS_DOC_ID,

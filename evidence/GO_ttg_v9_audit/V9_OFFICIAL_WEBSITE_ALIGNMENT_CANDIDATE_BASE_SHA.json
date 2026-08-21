@@ -1,0 +1,8 @@
+{
+  "stamp": "V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_BASE_SHA",
+  "base_sha": "92cc3057a22e919bb52dde0425e23487677da1be",
+  "tag": "OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE",
+  "porcelain": 0,
+  "scope": "P0+P1_allowlist_only",
+  "tt_production_go": "NO_GO"
+}

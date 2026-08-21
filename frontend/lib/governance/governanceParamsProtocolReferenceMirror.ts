@@ -1,44 +1,48 @@
 /**
- * Frontend bundled mirror of `governance_doc_reference::protocol_reference_json()`.
- * Used when API is unavailable so `/governance/params` stays readable offline / dev-without-backend.
- * Keep in sync with crates/api/src/routes/governance_doc_reference.rs
+ * Frontend bundled mirror of protocol fee disclosure for `/governance/params` offline.
+ * ACTIVE = Design Lock DL_R1 CountryFeeRouter (5% platform → 45/55|100% ProjectPool).
+ * global_pool_split ttg_stakers = 0 (LEGACY EXIT — do not present as ACTIVE holder dividends).
  */
 import type { ProtocolRef84Mirror } from "@/lib/governanceParams84Readonly";
 
-export const GOVERNANCE_PARAMS_PROTOCOL_MIRROR_DOC_VERSION = "1.0.22" as const;
+export const GOVERNANCE_PARAMS_PROTOCOL_MIRROR_DOC_VERSION = "v9-dl-r1" as const;
+export const GOVERNANCE_PARAMS_PROTOCOL_MIRROR_CLASS = "LEGACY_SHAPE_ACTIVE_ECONOMICS_OVERLAY" as const;
 
 export const GOVERNANCE_PARAMS_PROTOCOL_REFERENCE_MIRROR: ProtocolRef84Mirror = {
   status: "ok",
-  doc_ref: "docs/spec/84-第一阶段10国Country-Pool发行参数总表.md",
+  doc_ref: "docs/runbook/TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md",
   doc_version: GOVERNANCE_PARAMS_PROTOCOL_MIRROR_DOC_VERSION,
-  note: "Target 叙事参数；非链上读数。三轨独立：募资目标=治理委员会逐国参数；Seat质押=责任锁仓；Fee Points=收益分配等级。无自动换算。TTG参考价仅用于Mock/FDV。",
+  note:
+    "ACTIVE Design Lock DL_R1: platform fee 500 bps → CountryFeeRouter; with steward 45/55 else 100% ProjectPool. global_pool_split.ttg_stakers=0 EXIT (LEGACY P4Cap/globalStakers must not be ACTIVE UI truth). Valuation anchor below is LEGACY mock — not ACTIVE sale price.",
   fee_router: {
     layer1_percent_of_allocatable_platform_fee: {
       country_bucket: 45,
       global_pool: 55,
     },
+    /** LEGACY shape retained for type/substance; ACTIVE economics = ProjectPool sink, not staker dividends */
     global_pool_split_percent: {
-      ttg_stakers: 65,
-      reserve: 20,
-      operations: 15,
+      ttg_stakers: 0,
+      reserve: 0,
+      operations: 100,
     },
-    orthogonality_ref: "84 §1.1.1：仲裁费、Staking.slash 等与 45/55 正交；Runbook §7.1",
+    orthogonality_ref:
+      "DL_R1: CountryFeeRouter → ProjectPool; KEEP Money Path FeeRouter setFeeRouter pending cutover",
   },
   valuation_anchor: {
-    id: "ttg-reference-price-v1-draft-20260615",
-    doc_ref: "docs/spec/governance-token/ttg-reference-price-v1-draft.md",
-    status: "engineering_default_phase1",
+    id: "ttg-reference-price-v1-LEGACY-DO-NOT-USE-AS-ACTIVE",
+    doc_ref: "frontend/lib/governance/ttgReferencePriceV1.ts",
+    status: "LEGACY_engineering_default_superseded",
     reference_price_cny_per_ttg: 200,
     fdv_cny: 2_000_000_000,
-    total_supply_ttg: 10_000_000,
+    total_supply_ttg: 25_000_000_000_000,
     mock_usdc_cny_fx: 7.2,
     mock_usdc_per_ttg: 200 / 7.2,
-    fundraise_model: "governance_board_per_country_independent",
-    fundraise_governance_ref: "docs/spec/governance-token/country-pool-fundraise-governance-v1.md",
+    fundraise_model: "v9_five_norm_batches_window_not_open",
+    fundraise_governance_ref: "docs/runbook/TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md",
     independent_parameter_systems: {
-      fundraise_target: "governance_board_market_size_per_country",
-      seat_stake_ttg: "seat_tier_protocol_ssot_liability_lock",
-      fee_points: "country_revenue_grade_and_seat_tier",
+      fundraise_target: "five_norm_primary_batches",
+      seat_stake_ttg: "role_stake_steward_live_supply_bps",
+      fee_points: "country_fee_router_project_pool",
       auto_conversion_between_systems: false,
     },
   },
@@ -59,7 +63,9 @@ export const GOVERNANCE_PARAMS_PROTOCOL_REFERENCE_MIRROR: ProtocolRef84Mirror = 
     national_pool_cap_fee_points_sum: 29,
     country_bucket_percent: 45,
     phase1_open_over_country_bucket: "22/45≈48.9%",
-    valuation_anchor_id: "ttg-reference-price-v1-draft-20260615",
+    valuation_anchor_id: "ttg-reference-price-v1-LEGACY-DO-NOT-USE-AS-ACTIVE",
+    active_fee_sink: "ProjectPool",
+    active_stakers_bps: 0,
   },
 };
 
