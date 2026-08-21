@@ -15,7 +15,7 @@ optimizer = true
 optimizer_runs = 200
 # V8 token family is Solidity 0.8.26 (Etherscan CVE banner). Do not compile it with 0.8.19.
 # Run: bash scripts/dev/run-ttg-v8-forge.sh
-skip = ["src/ttg-meme-denom", "test/ttg-v8"]
+skip = ["src/ttg-meme-denom", "test/ttg-v8", "src/ttg-v9", "test/ttg-v9"]
 
 fs_permissions = [
   { access = "read-write", path = "../docs/spec/governance-token/evidence/vacancy-w7-dry-run" },
@@ -65,3 +65,46 @@ fs_permissions = [
 
 [profile.default.fmt]
 line_length = 120
+
+
+# Isolated V9 Batch PM (solc >= 0.8.36). Local only — no broadcast.
+[profile.ttg_v9]
+src = "src/ttg-v9"
+test = "test/ttg-v9"
+script = "src/ttg-v9"
+out = "out-ttg-v9"
+cache_path = "cache-ttg-v9"
+libs = ["lib"]
+solc_version = "0.8.36"
+auto_detect_solc = true
+evm_version = "paris"
+remappings = ["forge-std/=lib/forge-std/src"]
+via_ir = true
+optimizer = true
+optimizer_runs = 200
+fs_permissions = [
+  { access = "read", path = "./" },
+  { access = "read-write", path = "./out-ttg-v9" },
+]
+
+# ② Sepolia V9 Batch PM rehearsal broadcast only (chain_id 11155111).
+[profile.ttg_v9_broadcast]
+src = "src/ttg-v9"
+test = "test/ttg-v9"
+script = "src/ttg-v9"
+out = "out-ttg-v9"
+cache_path = "cache-ttg-v9"
+libs = ["lib"]
+solc_version = "0.8.36"
+auto_detect_solc = true
+evm_version = "paris"
+remappings = ["forge-std/=lib/forge-std/src"]
+via_ir = true
+optimizer = true
+optimizer_runs = 200
+fs_permissions = [
+  { access = "read", path = "./" },
+  { access = "read-write", path = "./out-ttg-v9" },
+  { access = "read-write", path = "../evidence/GO_ttg_v9_sepolia_rehearsal" },
+  { access = "read-write", path = "../evidence/GO_ttg_v9_remint_sepolia" },
+]

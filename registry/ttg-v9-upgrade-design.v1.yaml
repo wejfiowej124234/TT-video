@@ -1,0 +1,220 @@
+# TTG V9 upgrade design lock (machine companion)
+# Human SSOT: docs/runbook/TT-TTG-V9-UPGRADE-DESIGN-LATEST.md
+# Remint SSOT: docs/runbook/TT-TTG-V9-FULL-25T-REMINT-DESIGN-LATEST.md
+schema: traveltrust.ttg_v9_upgrade_design.v1
+status: V9_AUDIT_CANDIDATE_R1
+final_norm: docs/runbook/TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md
+monetary_invariant: docs/runbook/TT-TTG-V9-MONETARY-INVARIANT-LATEST.md
+monetary_invariant_status: FROZEN
+security_audit_ladder: docs/runbook/TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md
+internal_audit_findings: docs/runbook/TT-TTG-V9-INTERNAL-AUDIT-WAVE-FINDINGS-LATEST.md
+audit_candidate_manifest: evidence/GO_ttg_v9_audit/V9_AUDIT_CANDIDATE_MANIFEST.json
+internal_audit_wave: evidence/GO_ttg_v9_audit/V9_INTERNAL_AUDIT_WAVE_R1.json
+audit_counts:
+  critical_open: 0
+  high_open: 0
+  next_gate: SEPOLIA_REGRESSION
+sepolia_stamp: evidence/GO_ttg_v9_remint_sepolia/V9_REMINT_SEPOLIA_PASS_STOP.json
+sepolia_status: PASS_STOP_PENDING_REGRESSION_AFTER_R1
+monetary_invariant_en: >-
+  Genesis Supply: 25,000,000,000,000 TTG. No additional TTG may ever be minted after genesis.
+  Protocol, governance, treasury, distribution, primary-market, pricing, vesting, burn and
+  operational rules may evolve through authorized governance and upgrade mechanisms, provided no
+  upgrade can create TTG beyond the original genesis supply.
+architecture:
+  token: NON_UPGRADEABLE_PERMANENT_ASSET
+  business_layer: UPGRADEABLE_UNDER_GOVERNANCE
+  slogan: coin_fixed_system_evolves
+  forever_forbidden:
+    - mint_beyond_genesis_max_supply
+    - create_public_allocation_via_new_mint
+    - rewrite_settled_primary_market_history
+    - bypass_governor_timelock_for_mint_or_protocol_burn
+  forever_allowed_under_governance:
+    - vault_pm_bugfix_gas_events
+    - unopened_batch_schedule_price
+    - new_batches_from_existing_public_inventory_only
+    - governor_replace_params
+    - burn_policy_refinements
+    - money_path_independent_upgrades
+    - frontend_api_meta
+v8_disposition: LEGACY_NON_OFFICIAL_NO_MIGRATION
+hard_gates_g1_g7: CLOSED_LOCAL
+production_go: NO_GO
+mainnet_broadcast: FORBIDDEN_UNTIL_OWNER_AUTH
+sepolia: PASS_STOP_PENDING_REGRESSION_AFTER_R1
+agent_private_key_custody: FORBIDDEN
+owner_signs_ops_split: true
+
+governance_g4:
+  quorum_numerator_bps: 100
+  proposal_threshold_votes_floor: 0
+  max_voting_power_per_address_bps: 0
+  ordinary_propose_bps: 50
+  important_propose_bps: 100
+  core_propose_bps: 200
+  absolute_max_votes_caps: REMOVED_FOR_25T
+  denominator: getPastTotalSupply_snapshot
+  ssot: contracts/src/ttg-v9/TtgV9GovernanceParams.sol
+
+deploy_topology_g7: contracts/src/ttg-v9/TtgV9DeployTopology.sol
+g1_g7_tests: contracts/test/ttg-v9/TtgV9RemintG1G7HardGates.t.sol
+
+economics:
+  max_supply: "25T"
+  max_supply_whole_ttg: "25000000000000"
+  total_supply_equals_max_forever: FALSE
+  no_further_mint: true
+  total_supply_may_decrease_via_governance_burn: true
+  total_supply: "25T"
+  total_supply_whole_ttg: "25000000000000"
+  public_bps: 5000
+  dao_bps: 3500
+  team_bps: 300
+  marketing_bps: 500
+  treasury_bps: 700
+  note: "3+5+7=15 former ops bucket; public+dao unchanged; genesis credits immutable history"
+  genesis_direct_to_ops_wallets: true
+  public_50pct_single_address: TtgPublicSaleVault
+
+genesis_allocation_whole_ttg:
+  public_sale_vault: "12500000000000"
+  timelock_dao: "8750000000000"
+  team: "750000000000"
+  marketing: "1250000000000"
+  treasury: "1750000000000"
+  sum_must_equal_total_supply: true
+
+primary_market:
+  model: batch_ladder
+  upgradeable: UUPS_TIMELOCK_ONLY
+  vault_upgradeable: UUPS_TIMELOCK_ONLY
+  batch1_ttg_per_usdc: 1000000
+  min_purchase_usdc: 1
+  close_default: RETURN_TO_PUBLIC_VAULT
+  close_burn: REMOVED_FROM_BATCH_CLOSE
+  protocol_burn: GOVERNANCE_ONLY
+  protocol_burn_copy: "maxSupply=25T · no mint · optional deflation via governance burn"
+  protocol_burn_path: "Governor propose → vote PASS → queue → Timelock delay → executeGovernanceBurn → protocolBurn"
+  no_public_holder_burn: true
+  no_dead_address_fallback: true
+  no_in_window_or_armed_batch_burn: true
+  unarmed_close_event: BatchCancelledUnarmed
+  governance_burn_event: GovernanceBurnExecuted
+  protocol_burn_forbidden_actors:
+    - owner_team_marketing_treasury_eoa
+    - guardian
+    - batch_primary_market
+    - vault_unilateral
+    - timelock_admin_schedule_bypass_policy
+  batch_unsold: ALWAYS_RETURN_TO_PUBLIC_VAULT
+  no_per_batch_preset_burn: true
+  price_frozen_after_open: true
+  unopened_batch_editable_via_timelock: true
+  v8_three_round_inventory: SUPERSEDED
+  denom_for_ui_pct: TOTAL_SUPPLY_25T
+  not_pct_of_public_50pct_wallet: true
+  pin_absolute_amount_caps: true
+  forbid_bps_only_encoding: true
+  price_encoding: usdc_raw_per_whole_ttg
+  usdc_raw_per_whole_ttg: [1, 3, 5, 7, 9]
+  five_batch_checksum:
+    sum_pct_of_total: "8.870%"
+    sum_amount_ttg: "2217500000000"
+    batch5_share_of_five: "~91.319%"
+    five_share_of_public_50pct: "17.740%"
+    public_remainder_after_five_caps_ttg: "10282500000000"
+  batches_pinned:
+    - { id: 1, start_utc: "2026-10-15T09:00:00Z", amount_ttg: "1250000000", pct_of_total: "0.005%", usdc_raw_per_ttg: 1 }
+    - { id: 2, start_utc: "2026-12-15T09:00:00Z", amount_ttg: "3750000000", pct_of_total: "0.015%", usdc_raw_per_ttg: 3 }
+    - { id: 3, start_utc: "2027-02-15T09:00:00Z", amount_ttg: "18750000000", pct_of_total: "0.075%", usdc_raw_per_ttg: 5 }
+    - { id: 4, start_utc: "2027-04-15T09:00:00Z", amount_ttg: "168750000000", pct_of_total: "0.675%", usdc_raw_per_ttg: 7 }
+    - { id: 5, start_utc: "2027-06-15T09:00:00Z", amount_ttg: "2025000000000", pct_of_total: "8.100%", usdc_raw_per_ttg: 9 }
+  fe_ssot: frontend/lib/governance/ttgPublicUnlockScheduleLocal.ts
+
+compiler:
+  legacy_v8_token_solc: "0.8.26"
+  legacy_banner_bugs:
+    - UnsoundSpillInMutualRecursion
+    - LostStorageArrayWriteOnSlotOverflow
+    - VerbatimInvalidDeduplication
+    - FullInlinerNonExpressionSplitArgumentEvaluationOrder
+    - MissingSideEffectsOnSelectorAccess
+  v9_new_contracts_solc_min: "0.8.36"
+  v9_solc_pin_policy: MIN_0_8_36_PLUS_DEPLOY_DAY_LATEST_STABLE_AFTER_BUG_DB_RECHECK
+  forever_exact_0_8_36: FORBIDDEN
+  via_ir: true
+  etherscan_compiler_warning_gate: ZERO_WARNINGS_REQUIRED
+  remint_token_to_clear_banner: SELECTED_FULL_25T_NEW_TOKEN
+  remint_design: docs/runbook/TT-TTG-V9-FULL-25T-REMINT-DESIGN-LATEST.md
+
+keep:
+  - money_path
+  - governance_timelock
+  - governance_treasury_p4_cap
+  - live_v8_ttg_token_instance_as_LEGACY
+  - regional_45_55_copy_confirm_design_only
+
+redeploy_for_full_remint:
+  - ttg_v9_token_25t_non_proxy
+  - traveltrust_governor  # token immutable binding
+  - ttg_public_sale_vault_uups
+  - ttg_batch_primary_market_uups
+
+token_trust_model:
+  upgradeable_token: FORBIDDEN
+  second_remint: FORBIDDEN
+  one_shot_mint_then_no_mint: REQUIRED
+  max_supply_25t_may_decrease_only_via_governance_burn: true
+  public_50pct_custody: TtgPublicSaleVault_SINGLE_CONTRACT_ADDRESS
+  vault_pull_only_bound_market: REQUIRED
+  pm_no_arbitrary_inventory_transfer: REQUIRED
+  pm_no_close_batch_burn: REQUIRED
+  protocol_burn: GOVERNANCE_ONLY
+  timelock_rescue_events_and_delay: REQUIRED
+  genesis_sum_equals_25t: REQUIRED
+  holder_self_burn_own_balance: FORBIDDEN
+  protocol_burn_callers: [publicSaleVault, daoTimelock]
+  execute_governance_burn: Vault.executeGovernanceBurn
+  max_supply_constant: MAX_SUPPLY_25T
+
+hard_gates_before_mainnet:
+  - HG_V8_HOLDERS_READONLY
+  - HG_COMPILER_BUG_GATE_DEPLOY_DAY
+  - HG_OPEN_SOURCE_EXACT_MATCH_PLAN
+  - HG_ADDRESS_RISK_SCAN
+  - OWNER_WRITTEN_AUTH
+
+v8_holder_policy:
+  owner_statement_not_sold_externally_yet: true
+  still_measure_before_mainnet: true
+  if_external_holders_gt_0: BLOCK_UNTIL_MIGRATION_POLICY
+  if_external_holders_0: NO_MIGRATOR_LEGACY_DISCLOSURE_OK
+
+natspec_language: en
+
+owner_decisions_frozen: true
+frozen_at_utc: "2026-08-21"
+ops_wallets:
+  team_3pct: "0x010365F0835323826569D61D0E13E6F8d25F6828"
+  marketing_5pct: "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4"
+  treasury_7pct: "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736"
+  ops_split_already_on_chain: true
+  v9_genesis_mint_directly_to_these_wallets: true
+usdc_proceeds:
+  sink: "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF"
+  sink_name: GovernanceTreasuryP4Cap
+  governance_deploy_cap_bps: 3000
+  accounting_period_days: 90
+batch_window: half_open_to_next_start
+batch5_hard_end_days_after_start: 60
+current_batch_only: true
+per_wallet_cap_launch: 0
+vesting_default:
+  # Remint wave: Owner chose direct wallet credit at genesis (not forced vesting contracts)
+  team_and_marketing: DIRECT_WALLET_AT_GENESIS
+  treasury_7pct: DIRECT_WALLET_AT_GENESIS
+old_pm: "0x882Ad1926cCea965C189a83aB12a02dBcCB8B6D2"
+reality_evidence: evidence/GO_ttg_v9_design/V8_REALITY_READONLY_20260820.json
+delta_evidence: evidence/GO_ttg_v9_design/V8_REALITY_TO_V9_TARGET_DELTA_20260820.md
+remint_design_evidence: evidence/GO_ttg_v9_design/TT-TTG-V9-FULL-25T-REMINT-DESIGN.md

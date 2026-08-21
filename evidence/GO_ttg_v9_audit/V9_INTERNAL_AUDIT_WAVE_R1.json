@@ -1,0 +1,41 @@
+{
+  "schema": "traveltrust.ttg_v9_internal_audit_wave.v1",
+  "wave": "INTERNAL_FIRM_GRADE",
+  "candidate": "V9_AUDIT_CANDIDATE",
+  "remediation": "R1",
+  "status": "OPEN_CRITICAL_0_OPEN_HIGH_0_R1_APPLIED",
+  "not_external_firm_attestation": true,
+  "not_mainnet": true,
+  "not_production_go": true,
+  "ladder_ssot": "docs/runbook/TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md",
+  "findings_ssot": "docs/runbook/TT-TTG-V9-INTERNAL-AUDIT-WAVE-FINDINGS-LATEST.md",
+  "counts": {
+    "critical_open": 0,
+    "high_open": 0,
+    "medium_fixed_r1": [
+      "M-01",
+      "M-02",
+      "M-03"
+    ],
+    "high_mitigated_by_deploy_invariant": [
+      "H-01"
+    ],
+    "low_info_accepted_or_backlog": [
+      "L-01",
+      "L-02",
+      "L-03",
+      "L-04",
+      "L-05",
+      "L-06",
+      "L-07",
+      "L-08",
+      "L-09"
+    ]
+  },
+  "next_gate": "SEPOLIA_REGRESSION",
+  "mainnet_requires": [
+    "sepolia_regression_pass",
+    "optional_external_firm_on_r1_bytes",
+    "owner_written_mainnet_auth"
+  ]
+}

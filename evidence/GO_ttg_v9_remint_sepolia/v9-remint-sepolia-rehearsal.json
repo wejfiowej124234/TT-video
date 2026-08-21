@@ -1,0 +1,159 @@
+{
+  "stamp": "V9_REMINT_SEPOLIA_PASS_STOP",
+  "phase": "\u2461",
+  "chain_id": 11155111,
+  "not_production_go": true,
+  "mainnet_broadcast": "FORBIDDEN",
+  "tt_production_go": "UNCHANGED",
+  "monetary_invariant": "MAX_SUPPLY=25T NO_FURTHER_MINT",
+  "timelock_delay_seconds_rehearsal": 90,
+  "timelock_delay_mainnet_keep_hours": 48,
+  "ops_wallets_mode": "SEPOLIA_DEPLOYER_TRIPLE_ALIAS",
+  "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+  "addresses": {
+    "usdc_mock": "0x81a82695a8B4f76309f0D66834C7c8B00c3A0D2B",
+    "ttg_v9": "0xE472FEF27c115642865dD0657af6bf0C697edb3E",
+    "vault": "0x91a48a4F8D303d041F0aA9e227725EE0D5586BDB",
+    "market": "0x40cd86128dC1017157F6eb56D1aAF1253739cBD1",
+    "governor_v9": "0x70B16c9F785E14B1ed9724A594d82B763F1f0308",
+    "legacy_governor": "0x38fb913041735846b467dB1f20BD76fE4b7F2AC5",
+    "mock_timelock": "0x3E6318B1cc3f2d98381D743556A5E5b3BA39d13A",
+    "p4cap_keep": "0xfB906ae34521E0BC884AB1a8D0dcf986aBD59BbF",
+    "vault_v2": "0x1505a9C3F79ED1bA4fF37B3592A5088E6F0331Ec",
+    "market_v2": "0xfA02fa4FE8da2B29E69305c602C625a5F48781D8",
+    "junk": "0x76d3Ca26FeAFb9b168f25011947416d606cB611B"
+  },
+  "drills_pass": [
+    "genesis_25t_allocation",
+    "batch1_cancelled_unarmed_after_deploy_overrun",
+    "batch2_buy_return",
+    "batch3_buy_return",
+    "batch4_buy_return",
+    "batch5_buy_return",
+    "pause_unpause_via_timelock",
+    "rescue_foreign_deny_ttg",
+    "uups_deny_eoa",
+    "uups_timelock_upgrade",
+    "governor_cutover_legacy_cannot_schedule",
+    "gov_propose_vote_queue_delay_execute_burn",
+    "supply_decreased_never_increases"
+  ],
+  "max_supply_wei": "25000000000000000000000000000000",
+  "supply_after_burn": "24999000000000000000000000000000",
+  "governance_burn_wei": "1000000000000000000000000000",
+  "transactions": [
+    {
+      "label": "closeBatchReturn_1_cancelled",
+      "tx": "0x7a1a6aa9e0a843310cfb54fc1db957f7d6efd0428ec06be2b459921c72df924a"
+    },
+    {
+      "label": "buy_batch_2",
+      "tx": "0x96d303af148a9c747a7e4039b7aa17a2ab149dd2289b0e6048cad0d26650b579"
+    },
+    {
+      "label": "schedule_resched_3",
+      "tx": "0x2fc5ab817acef5b7c30a9f404da8035acbf7e96fac118541dd26aac1e68156f1"
+    },
+    {
+      "label": "schedule_resched_4",
+      "tx": "0x53a036e8b796c275d151b0f01a537220257677fbdb8fc768e8f22ea4e724880b"
+    },
+    {
+      "label": "schedule_resched_5",
+      "tx": "0x4398f77e7030f74d54405846893490d004fa859dbd17dae1dbab7564e6e7f5fa"
+    },
+    {
+      "label": "execute_resched_3",
+      "tx": ""
+    },
+    {
+      "label": "execute_resched_4",
+      "tx": "0xca3bc590d3fad12e16336e1f8f83ae6fcb887f77c52fb9421c882f2bc3fc06fb"
+    },
+    {
+      "label": "execute_resched_5",
+      "tx": "0xffc32805080944c5d199074d9ccdcc71b303a7790083f47ba9c9657c5911fc3c"
+    },
+    {
+      "label": "closeBatchReturn_2",
+      "tx": "0x6b1b3d5a886e1639ec43eb4e773f22bf92abd050ce657a8a29a8bb5aef620587"
+    },
+    {
+      "label": "buy_batch_3",
+      "tx": "0x898caa32923235d7831038ffcb9fe223e46d11cd2349be67a09d965bda8af3fa"
+    },
+    {
+      "label": "closeBatchReturn_3",
+      "tx": "0x7c8bfb620c40d5ebb587bbd042df2ba66c7c986b937e81944f3b24340c587e17"
+    },
+    {
+      "label": "buy_batch_4",
+      "tx": "0x31809b0521ef5369843d2153e6fcd477aabb4c8402a7fd0f389f7f82d4db9350"
+    },
+    {
+      "label": "closeBatchReturn_4",
+      "tx": "0x1d8b8586a3f15524cb53908a0d74b21587b95769266dc37d114ce0acb3d8a2ea"
+    },
+    {
+      "label": "buy_batch_5",
+      "tx": "0xf4d5cd96db54877b46e9aa336e3f99e239eba236e36bf83a76dfd09b9ebdc87c"
+    },
+    {
+      "label": "closeBatchReturn_5",
+      "tx": "0xb21bb47291008e5ed52f0b889694c4ed06e91ca959abfe6556fd98cf3a7329c8"
+    },
+    {
+      "label": "pause",
+      "tx": "0xf315cbb93ea4d30bed8e013ea9e184f210aabe0395d487c874b6b73109845e6e"
+    },
+    {
+      "label": "schedule_unpause",
+      "tx": "0x14056ba2885480cbc9575123d46d427ce45b67e862d98c0c98a823bd1725993f"
+    },
+    {
+      "label": "execute_unpause",
+      "tx": "0xf7de21c0a1bb99d35c2a2a684b0a7053568a9c3b86851d960c0b7af8d68b3020"
+    },
+    {
+      "label": "junk_mint_vault",
+      "tx": "0x798386b9ba35e674226239e70e0d57ef07bb8042b752c3ed8c03ec6303f362cd"
+    },
+    {
+      "label": "schedule_rescue",
+      "tx": "0x25171b452cf75003144d8cbead2e12cf910e0dfb257fecb8fae47484a95a1e06"
+    },
+    {
+      "label": "execute_rescue",
+      "tx": "0x1887b06abbb51cd4d817bb8ffdaf4f4d618c48b3bb1b442eeee18983c28fc123"
+    },
+    {
+      "label": "schedule_uups",
+      "tx": "0x597fe921a9789e04dd9b1f4095c15ee533ca00ba200a24194328c6cb9331fc94"
+    },
+    {
+      "label": "execute_uups",
+      "tx": "0xf591e24a47f0011b4e1a2e14af8438e6a1d1b8c74995cee5ec66007069c46658"
+    },
+    {
+      "label": "delegate",
+      "tx": "0x948ac5edeeee609d1cfdd2857d1ad4016e7ef898dfe6494e0333faa3931d1d49"
+    },
+    {
+      "label": "gov_propose",
+      "tx": "0x69e6470bc698904db93806decc645f2d7a5ec7c3a4eade3bd2df0f27d663e413"
+    },
+    {
+      "label": "gov_vote",
+      "tx": "0xa6074c84eff368935b0320e155a11265f4d1cf2aa70aecd5738959e5e21d6295"
+    },
+    {
+      "label": "gov_queue",
+      "tx": "0x40d10965658fc6735070565afb564ae126a65ada1be7e631f9447b2867362c50"
+    },
+    {
+      "label": "gov_execute_burn",
+      "tx": "0x00be3d4226868e9469f956005ccae43df67ca4db46a056ed728fe37e50b8876c"
+    }
+  ],
+  "issued_at": "2026-08-21T02:42:46Z"
+}
