@@ -32,7 +32,9 @@
       "queue": "POST_PARITY_FIX_QUEUE",
       "fix_this_wave": false,
       "batch": "functional_defects",
-      "status": "PENDING"
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T09:46:34Z",
+      "pass_stop": "POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_PASS_STOP_LATEST.json"
     },
     {
       "id": "BA-01",
@@ -164,5 +166,5 @@
     "functional_defects",
     "assets_i18n"
   ],
-  "active_batch": "functional_defects"
+  "active_batch": "assets_i18n"
 }

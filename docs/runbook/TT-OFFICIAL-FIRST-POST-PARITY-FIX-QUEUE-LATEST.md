@@ -28,8 +28,35 @@ Machine: [`POST_PARITY_FIX_QUEUE_20260822.json`](../../evidence/GO_official_prod
 | **1 · CMS/OCS** | 公告公开路由 · OCS 媒体可读 | M7-07 · M7-08 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_PASS_STOP` (`2026-08-22T08:48:33Z`) |
 | **2 · Admin/Auth** | Auth/Admin HTTP · STRICT_SESSION · login→me · OCS admin · RBAC | BA-01～BA-06 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP` (`2026-08-22T09:17:58Z`) |
 | **3 · UI/UX** | FIVE-MAIN 已冻结 · 仅数据链/门闸 | UX-01～UX-06 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_PASS_STOP` (`2026-08-22T09:35:40Z`) |
-| **4 · 功能缺陷** | M8-07 等 | M8-07 | **ACTIVE** |
-| 5 · Assets/i18n | M8-08 等 | M8-08 | PENDING |
+| **4 · 功能缺陷** | M8-07 等 | M8-07 · FD-01～FD-05 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_PASS_STOP` (`2026-08-22T09:46:34Z`) |
+| **5 · Assets/i18n** | M8-08 等 | M8-08 | **ACTIVE** |
+
+---
+
+## Batch 4 · 功能缺陷（CLOSED）
+
+| ID | 检查项 | 修复/验证 |
+|----|--------|-----------|
+| **M8-07** | `/me/payments` · `/legal/*` GAP 与 Official AS-IS 对拍 | Official PRODUCT SSOT · staging 同码 |
+| **FD-01** | GAP 路由 staging：`/me/payments` `/legal/privacy` `/legal/terms` `/legal` = 404 | HTTP no-redirect 探针 |
+| **FD-02** | 规范路由 staging：`/privacy` `/terms` `/help` = 200 | HTTP 探针 |
+| **FD-03** | Official live spot-check 与 frozen baseline 一致 | 只读探针 · 不改 Production |
+| **FD-04** | 产品树无内部 `href` 指向 GAP 路径 | `app/` `components/` `lib/` 静态扫描 |
+| **FD-05** | ① API auth 回归（可选本地） | `cargo test -p traveltrust-api auth_placeholder_strict_gate_tests` |
+
+**Disposition：** M8-07 = `REGISTER_DEFECT_ALIGN_AFTER_PARITY_GATE` — Official 当前 AS-IS 为 GAP 404；canonical `/privacy` `/terms` 200；**未**新增页面/重定向（Production 不动 · FIVE-MAIN 未动）。
+
+**Local：**
+
+```bash
+python scripts/gates/run-post-parity-fix-queue-batch4-functional-defects.py --web http://127.0.0.1:3000
+```
+
+**Staging（② only）：**
+
+```bash
+bash scripts/dev/official-first-staging-post-parity-batch4-functional-defects.sh
+```
 
 ---
 

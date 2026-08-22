@@ -1,0 +1,129 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch4_functional_defects.v1",
+  "recorded_utc": "2026-08-22T09:47:06Z",
+  "batch": "4_functional_defects",
+  "baseline": "POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_PASS_STOP",
+  "official_product_ssot": "www.web3-ttg.com OPS-v9",
+  "items": [
+    "M8-07",
+    "FD-01",
+    "FD-02",
+    "FD-03",
+    "FD-04",
+    "FD-05"
+  ],
+  "web": "https://tt-web-staging.fly.dev",
+  "official": "https://www.web3-ttg.com",
+  "checks": {
+    "official_baseline_cite": "CAPTURE_DEEPEN_20260822.json",
+    "fd01_m8_07_gap_routes_staging": {
+      "/me/payments": {
+        "status_code": 404,
+        "location": "",
+        "expected": 404,
+        "pass": true
+      },
+      "/legal/privacy": {
+        "status_code": 404,
+        "location": "",
+        "expected": 404,
+        "pass": true
+      },
+      "/legal/terms": {
+        "status_code": 404,
+        "location": "",
+        "expected": 404,
+        "pass": true
+      },
+      "/legal": {
+        "status_code": 404,
+        "location": "",
+        "expected": 404,
+        "pass": true
+      }
+    },
+    "fd02_canonical_routes_staging": {
+      "/privacy": {
+        "status_code": 200,
+        "location": "",
+        "expected": 200,
+        "pass": true
+      },
+      "/terms": {
+        "status_code": 200,
+        "location": "",
+        "expected": 200,
+        "pass": true
+      },
+      "/help": {
+        "status_code": 200,
+        "location": "",
+        "expected": 200,
+        "pass": true
+      }
+    },
+    "fd03_official_live_spot_check": {
+      "/me/payments": {
+        "status_code": 404,
+        "location": "",
+        "expected": 404,
+        "pass": true
+      },
+      "/legal/privacy": {
+        "status_code": 404,
+        "location": "",
+        "expected": 404,
+        "pass": true
+      },
+      "/legal/terms": {
+        "status_code": 404,
+        "location": "",
+        "expected": 404,
+        "pass": true
+      },
+      "/legal": {
+        "status_code": 404,
+        "location": "",
+        "expected": 404,
+        "pass": true
+      },
+      "/privacy": {
+        "status_code": 200,
+        "location": "",
+        "expected": 200,
+        "pass": true
+      },
+      "/terms": {
+        "status_code": 200,
+        "location": "",
+        "expected": 200,
+        "pass": true
+      },
+      "/help": {
+        "status_code": 200,
+        "location": "",
+        "expected": 200,
+        "pass": true
+      }
+    },
+    "fd04_no_gap_internal_links": {
+      "hits": [],
+      "pass": true
+    },
+    "fd05_local_api_regression": {
+      "pass": true,
+      "note": "skipped"
+    }
+  },
+  "gaps": [],
+  "BATCH4_FUNCTIONAL_DEFECTS_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "tt_production_go": "NO_GO",
+  "non_target_drift": {
+    "candidate_solidity": "0",
+    "production_db_mutation": "0",
+    "tt_production_go_flip": "0",
+    "production_mutation": "0"
+  }
+}

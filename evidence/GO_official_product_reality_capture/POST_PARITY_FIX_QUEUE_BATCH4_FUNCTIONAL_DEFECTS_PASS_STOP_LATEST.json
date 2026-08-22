@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch4_functional_defects_pass_stop.v1",
+  "issued_utc": "2026-08-22T09:46:34Z",
+  "stamp": "20260822T094634Z",
+  "track": "POST_PARITY_FIX_QUEUE",
+  "batch": "4_functional_defects",
+  "baseline": "POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_PASS_STOP",
+  "deploy_git_sha": "3c1128ebd6df0974291580db46cd922c3fd27176",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "official_product_ssot": "https://www.web3-ttg.com",
+  "items_closed": [
+    "M8-07",
+    "FD-01",
+    "FD-02",
+    "FD-03",
+    "FD-04",
+    "FD-05"
+  ],
+  "POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_PASS_STOP": "ISSUED",
+  "BATCH4_FUNCTIONAL_DEFECTS_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "tt_production_go": "NO_GO",
+  "next_batch": "assets_i18n",
+  "web3_ladder": "sepolia_reality_independent",
+  "five_main_ui_frozen": true,
+  "m8_07_disposition": "REGISTER_DEFECT_ALIGN_AFTER_PARITY_GATE \u2014 Official AS-IS 404 parity verified; canonical /privacy /terms 200; no internal GAP hrefs",
+  "artifacts": {
+    "batch_gate": "POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_20260822T094634Z.json",
+    "batch_gate_latest": "POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_LATEST.json",
+    "meta": "staging_batch4_meta_20260822T094634Z.json"
+  }
+}
