@@ -136,7 +136,7 @@ This GitHub repo     → filtered official docs for investors / reviewers
 Etherscan / chain    → verified bytecode & deployed contract facts
 ```
 
-Smart contract **source** is verified on **Etherscan** after deployment — it is **not** published in this repository.
+Smart contract **source will be verified on Etherscan** for finalized Mainnet deployments — it is **not** published in this repository until that cutover is complete.
 
 ## TravelTrust in one paragraph
 
