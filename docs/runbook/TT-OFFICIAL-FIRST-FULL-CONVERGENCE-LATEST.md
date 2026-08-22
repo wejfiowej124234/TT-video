@@ -1,7 +1,7 @@
 # Official-First Full Convergence（官网母版 · 全量产品/文档对齐）
 
-**STATUS:** `IN_PROGRESS`  
-**Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **FAIL**（身份层 1:1 已 PASS · **深度模块未闭** · **禁止**开始产品优化 / CMS 修复 / UI·UX 改造）  
+**STATUS:** `STOP_PRODUCTION_REALITY_DRIFT`  
+**Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **FAIL**（身份层 1:1 已 PASS · live schema 已 Capture · **Git↔Prod migration drift STOP** · **禁止**开始产品优化 / CMS 修复 / UI·UX 改造）  
 **Identity gates (2026-08-22):** `TT_OFFICIAL_V9_1TO1_MAP: PASS` · `TT_OFFICIAL_V9_PLANE_MAP: PASS`  
 **Recorded:** 2026-08-22  
 **Constitution:** [Dual Truth Planes](TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md)  
@@ -124,16 +124,17 @@ Plane: `bash scripts/gates/check-official-v9-plane-map.sh`
 | M3 | Staging www → Official pin | **PASS**（`git_sha` pin） |
 | M4 | main := tip（Solo 本地） | **PASS_LOCAL** · push 另令 |
 | M5 | Local Runtime / env / flags vs Official | **DEPTH_SCAN_REGISTERED** · see `M5_M9_DEPTH_RESIDUALS_20260822.json` |
-| M6 | API product behavior / DB schema inventory | **DEPTH_SCAN_REGISTERED**（API `/meta` ED 已录 · DB schema dump OPEN） |
+| M6 | API product behavior / DB schema inventory | **LIVE_SCHEMA_CAPTURED** · **DRIFT_STOP**（Prod `_sqlx` 157 vs Git 154 · 3 CMS migrations missing from Git） |
 | M7 | CMS/OCS / media refs | **DEPTH_SCAN_REGISTERED**（只登记 · 不修内容） |
 | M8 | Auth/Admin/UI/routes/i18n | **DEPTH_SCAN_REGISTERED** |
 | M9 | Registry / Release Identity / Runbook / 白皮书非 Web3 | **DEPTH_SCAN_REGISTERED** |
-| M10 | `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` | **NOT_ISSUED** |
+| M10 | `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` | **NOT_ISSUED** · blocked by `RUNTIME_PARITY_GAPS` |
 
 **Alignment plan:** [`TT-OFFICIAL-FIRST-M5-M9-ALIGNMENT-PLAN-LATEST`](TT-OFFICIAL-FIRST-M5-M9-ALIGNMENT-PLAN-LATEST.md) — **OWNED_PLAN_ISSUED**  
-**Parity closure (active):** [`TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST`](TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST.md) — Capture deepen + DOC_RETAG wave1 + ED close + DEFECT queued · **PASS NOT_ISSUED**
+**Parity closure:** [`TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST`](TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST.md)  
+**Execution parity:** [`TT-OFFICIAL-FIRST-EXECUTION-PARITY-LATEST`](TT-OFFICIAL-FIRST-EXECUTION-PARITY-LATEST.md) — **STOP_PRODUCTION_REALITY_DRIFT**
 
-**Next:** finish DOC_TRUTH / RUNTIME zero gates → then Official→Git→Local→Staging 1:1 execution → only then `PRODUCT_AND_DOCUMENTATION_PARITY_PASS`。**禁止**本波 CMS/UI/功能优化。
+**Next:** Owner resolve Production↔Git migration drift（**不**改官网 DB）→ re-compare → four zeros → `PRODUCT_AND_DOCUMENTATION_PARITY_PASS`。**禁止**本波 CMS/UI/功能优化 · **禁止** ACCEPT_ED 过闸。
 
 Staging align command（Owner Solo）:
 

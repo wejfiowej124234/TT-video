@@ -1,11 +1,23 @@
 # schema: traveltrust.official_first_full_convergence.v1
 schema: traveltrust.official_first_full_convergence.v1
-status: IN_PROGRESS
+status: STOP_PRODUCTION_REALITY_DRIFT
 gate: PRODUCT_AND_DOCUMENTATION_PARITY
 gate_result: FAIL
-recorded_utc: "2026-08-22T03:20:00Z"
+recorded_utc: "2026-08-22T05:16:30Z"
 tt_production_go: NO_GO
 forbid_product_optimization_until_parity_pass: true
+forbid_accept_ed_for_runtime_gaps: true
+runtime_parity_gaps: NOT_ZERO
+production_schema_reality:
+  capture: PASS_CAPTURE
+  stamp: "20260822T051209Z"
+  aggregate_schema_sha256: "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478"
+  drift: MIGRATION_STATE_NOT_IN_GIT
+  drift_versions:
+    - 20260816180000
+    - 20260816190000
+    - 20260816200000
+  evidence: evidence/GO_official_product_reality_capture/PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json
 
 official_baseline:
   pin_id: TT-OFFICIAL-OPS-20260820-V9

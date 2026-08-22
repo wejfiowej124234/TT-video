@@ -1,29 +1,44 @@
 {
   "schema": "traveltrust.runtime_parity_gaps_rollup.v1",
-  "recorded_utc": "2026-08-22T04:40:00Z",
+  "recorded_utc": "2026-08-22T05:17:36Z",
   "closed_surfaces": [
     "API unauth depth probes",
     "CMS announcements inventory + home assets sample",
     "Auth/Admin HTTP AS-IS",
     "Env/flags policy (DEV_ONLY quarantine)",
-    "DB migration tree fingerprint (not live dump)",
-    "www/api/staging www identity"
+    "DB migration tree fingerprint (crates/api; prior cargo-home pollution noted)",
+    "www/api/staging www identity",
+    "Official Production live schema Reality Capture (schema-only read)"
   ],
   "open_gaps": [
     {
-      "id": "RT-DB-LIVE-DUMP",
-      "class": "OWNER_BLOCKED",
-      "surface": "Production live DB schema dump",
+      "id": "RT-DB-PROD-GIT-MIGRATION-DRIFT",
+      "class": "PRODUCTION_REALITY_DRIFT",
+      "surface": "Official Production _sqlx_migrations vs crates/api/migrations",
+      "status": "OPEN_STOP",
+      "detail": "prod has 3 applied versions not in Git: 20260816180000, 20260816190000, 20260816200000",
+      "artifact": "PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json",
+      "forbid_accept_ed": true,
+      "forbid_prod_db_mutation": true
+    },
+    {
+      "id": "RT-DB-LOCAL-STAGING-SCHEMA",
+      "class": "NOT_CAPTURED",
+      "surface": "Local/Staging live schema fingerprint compare",
       "status": "OPEN",
-      "mitigation": "Local migration fingerprint recorded; Official database_baseline=production_surface cited"
+      "detail": "Optional layer not captured this wave; does not waive Production drift STOP"
     }
   ],
   "RUNTIME_PARITY_GAPS": "NOT_ZERO",
-  "note": "PASS requires RUNTIME_PARITY_GAPS=0 including live DB dump OR Owner ACCEPT_ED that migration fingerprint + database_baseline cite suffices.",
+  "PRODUCT_AND_DOCUMENTATION_PARITY_PASS": "NOT_ISSUED",
+  "note": "Live schema capture succeeded; layered compare found Production Reality drift. STOP. No ACCEPT_ED. No Official DB mutation.",
   "artifacts": {
     "api": "RUNTIME_API_DEPTH_20260822.json",
     "cms": "RUNTIME_CMS_ASSETS_INVENTORY_20260822.json",
-    "db": "RUNTIME_DB_MIGRATION_FINGERPRINT_20260822.json",
+    "db_git_fp": "RUNTIME_DB_MIGRATION_FINGERPRINT_20260822.json",
+    "db_live_capture": "OFFICIAL_PROD_SCHEMA_CAPTURE_LATEST.json",
+    "db_layered_compare": "OFFICIAL_PROD_SCHEMA_LAYERED_COMPARE_LATEST.json",
+    "db_drift": "PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json",
     "env": "RUNTIME_ENV_FLAGS_PARITY_20260822.json",
     "auth": "RUNTIME_AUTH_ADMIN_I18N_IDENTITY_20260822.json"
   }

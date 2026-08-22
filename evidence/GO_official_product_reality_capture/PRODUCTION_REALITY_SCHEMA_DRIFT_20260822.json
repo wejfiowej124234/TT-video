@@ -1,0 +1,71 @@
+{
+  "schema": "traveltrust.official_production_reality_schema_drift.v1",
+  "status": "STOP",
+  "recorded_utc": "2026-08-22T05:17:36Z",
+  "capture_stamp": "20260822T051209Z",
+  "capture_artifact": "evidence/GO_official_product_reality_capture/OFFICIAL_PROD_SCHEMA_CAPTURE_LATEST.json",
+  "compare_artifact": "evidence/GO_official_product_reality_capture/OFFICIAL_PROD_SCHEMA_LAYERED_COMPARE_LATEST.json",
+  "aggregate_schema_sha256": "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478",
+  "prod_counts": {
+    "extensions": 3,
+    "tables": 168,
+    "columns": 1849,
+    "indexes": 507,
+    "constraints": 507,
+    "enums": 0
+  },
+  "verdict": "PRODUCTION_REALITY_DRIFT",
+  "class": "MIGRATION_STATE_NOT_IN_GIT",
+  "summary": "Official Production _sqlx_migrations contains 3 applied versions absent from crates/api/migrations on current branch tip. Git has 154 SQL migrations; Production has 157 applied. All Git versions are present on Production; Production is ahead of Git with unknown SQL sources.",
+  "drift_items": [
+    {
+      "version": 20260816180000,
+      "description": "cms announcements hub roles campaign",
+      "installed_on": "2026-08-16 09:00:02.442245+00:00",
+      "success": true,
+      "in_git_crates_api_migrations": false
+    },
+    {
+      "version": 20260816190000,
+      "description": "cms announcements role gov copy",
+      "installed_on": "2026-08-16 09:42:29.791747+00:00",
+      "success": true,
+      "in_git_crates_api_migrations": false
+    },
+    {
+      "version": 20260816200000,
+      "description": "cms announcements role copy short",
+      "installed_on": "2026-08-16 10:11:55.671901+00:00",
+      "success": true,
+      "in_git_crates_api_migrations": false
+    }
+  ],
+  "git_migration_dir": "crates/api/migrations",
+  "git_sql_file_count": 154,
+  "prod_migration_count": 157,
+  "official_baseline_cite": "production_surface",
+  "live_vs_baseline": "LIVE_IS_BASELINE",
+  "local_schema_compare": "NOT_CAPTURED_THIS_WAVE",
+  "staging_schema_compare": "NOT_CAPTURED_THIS_WAVE",
+  "actions_forbidden": [
+    "DDL/DML on Official Production DB",
+    "migration/repair on Official Production",
+    "ACCEPT_ED to clear RUNTIME_PARITY_GAPS",
+    "PRODUCT_AND_DOCUMENTATION_PARITY_PASS",
+    "CMS/UI/feature optimize",
+    "Exact-Match/Mainnet/TT_PRODUCTION_GO flip"
+  ],
+  "RUNTIME_PARITY_GAPS": "NOT_ZERO",
+  "PRODUCT_AND_DOCUMENTATION_PARITY": "FAIL",
+  "post_parity_defects_untouched": [
+    "M7-07",
+    "M7-08",
+    "M8-07"
+  ],
+  "tt_production_go": "NO_GO",
+  "web3_isolation": {
+    "candidate": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+    "eta_ready_at": 1787408352,
+    "note": "ETA interrupt remains P0; this STOP does not touch Web3 Candidate"
+  }
+}
