@@ -7,7 +7,8 @@ status: DESIGN_FREEZE
 design_freeze: LOCKED
 design_phase: CLOSED
 next_phase: engineering_from_clean_worktree
-next_gate: CLEAN_WORKTREE
+next_gate: TRIAGE
+clean_worktree: PASS
 recorded_at_utc: "2026-08-22"
 tt_production_go: NO_GO
 mainnet_broadcast: NOT_AUTHORIZED
