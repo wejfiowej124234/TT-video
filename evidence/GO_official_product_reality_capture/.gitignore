@@ -1,0 +1,4 @@
+# Keep machine JSON / headers; omit bulky route HTML snapshots and align logs
+*.html
+*.log
+www-api-meta.json

@@ -8,8 +8,10 @@
 **交付模式：** **个人独立开发（Solo）** · **不开任何 PR** · Owner Self Review + push + Evidence / Gate / Archive — SSOT [`TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST`](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)
 
 > 凡写「当前 Official www / 官网产品真源 / living www pin」→ **只认本页 + Freeze JSON**。  
-> 本 pin = **Final Truth Baseline 的 Product Truth 平面**（全系统唯一 SSOT 之下 · 禁止另起第二套）。  
-> Web3/链/API 地址真源仍是 [FTB](./TT-FINAL-TRUTH-BASELINE-LATEST.md) Web3 Active Truth（**≠** 本 pin 的镜像字节）。  
+> 本 pin = **PRODUCT / WEBSITE 平面 Living SSOT**（Local / Staging **必须向本 pin 对齐** · **禁止**以 Local/Staging 当产品母版）。  
+> **Active program:** [Official-First Full Convergence](./TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md) — 未取得 `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` 前 **禁止**产品优化 / CMS 修复 / UI·UX 改造。  
+> 双平面宪法：[Dual Truth Planes](./TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md) · Capture：[Official Product Reality Capture](./TT-OFFICIAL-PRODUCT-REALITY-CAPTURE-LATEST.md)。  
+> Web3/链真源仍是 [FTB](./TT-FINAL-TRUTH-BASELINE-LATEST.md) + V9 Candidate（**≠** 官网 Web3 文案；官网 Web3 用 LIVE/TARGET/LEGACY）。  
 > **OPS-v9 本窗口暂不可改产品字节**；矩阵/文档对齐本真源，不以 M07 overlay 冒充 OPS-v9。  
 > **本项目 = 个人独立开发。禁止**把 GitHub「Create a pull request」提示、团队 Reviewer、双人 Approver 写成默认流程或硬闸。
 

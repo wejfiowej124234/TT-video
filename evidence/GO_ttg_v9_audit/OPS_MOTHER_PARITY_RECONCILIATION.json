@@ -364,119 +364,119 @@
     {
       "path": "frontend/lib/governance/governanceParamsTokenomicsModel.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/governance/governanceParamsTokenomicsModel.test.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/governance/governanceParamsProtocolReferenceMirror.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/governance/primaryMarketRuntimePriceSsot.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/governance/v9PublicContractRegistry.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/governance/ttgPublicUnlockScheduleLocal.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/governance/ttgPublicUnlockScheduleLocal.test.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/governance/ttgReferencePriceV1.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/traveltrustTtgPublicRounds.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/traveltrustTtgPublicRounds.test.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/lib/traveltrustOfficialMainnetProtocolDirectory.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/locales/en.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "frontend/locales/zh.ts",
       "verdict": "V9_ALLOWLIST_PATCH",
-      "rationale": "Approved Website V9 P0+P1 allowlist only \u2014 copy/data/addresses/i18n. No UI/UX/layout/CSS.",
+      "rationale": "Approved Website V9 P0+P1 allowlist only — copy/data/addresses/i18n. No UI/UX/layout/CSS.",
       "ship_in_production": true,
       "overlay_on": "OPS_MOTHER"
     },
     {
       "path": "scripts/dev/run-ttg-v9-official-website-alignment-gate.py",
       "verdict": "GENERATED_OR_NONPRODUCT",
-      "rationale": "Gate/evidence/runbook for Local RC \u2014 not a product UI page; may accompany release pack but does not alter OPS UI mother.",
+      "rationale": "Gate/evidence/runbook for Local RC — not a product UI page; may accompany release pack but does not alter OPS UI mother.",
       "ship_in_production": "RELEASE_PACK_ONLY",
       "overlay_on": null
     },
     {
       "path": "evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_BASE_SHA.json",
       "verdict": "GENERATED_OR_NONPRODUCT",
-      "rationale": "Gate/evidence/runbook for Local RC \u2014 not a product UI page; may accompany release pack but does not alter OPS UI mother.",
+      "rationale": "Gate/evidence/runbook for Local RC — not a product UI page; may accompany release pack but does not alter OPS UI mother.",
       "ship_in_production": "RELEASE_PACK_ONLY",
       "overlay_on": null
     },
     {
       "path": "evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_ALIGNMENT_CANDIDATE_PASS.json",
       "verdict": "GENERATED_OR_NONPRODUCT",
-      "rationale": "Gate/evidence/runbook for Local RC \u2014 not a product UI page; may accompany release pack but does not alter OPS UI mother.",
+      "rationale": "Gate/evidence/runbook for Local RC — not a product UI page; may accompany release pack but does not alter OPS UI mother.",
       "ship_in_production": "RELEASE_PACK_ONLY",
       "overlay_on": null
     },
     {
       "path": "docs/runbook/TT-TTG-V9-OFFICIAL-WEBSITE-ALIGNMENT-CANDIDATE-LOCAL-RC-LATEST.md",
       "verdict": "GENERATED_OR_NONPRODUCT",
-      "rationale": "Gate/evidence/runbook for Local RC \u2014 not a product UI page; may accompany release pack but does not alter OPS UI mother.",
+      "rationale": "Gate/evidence/runbook for Local RC — not a product UI page; may accompany release pack but does not alter OPS UI mother.",
       "ship_in_production": "RELEASE_PACK_ONLY",
       "overlay_on": null
     }
@@ -546,9 +546,5 @@
       "TT_PRODUCTION_GO flip"
     ]
   },
-  "recorded_at_utc": "2026-08-21T12:49:41Z",
-  "truth_plane": "RECONCILIATION_ONLY_ARCHIVED",
-  "demoted_at_utc": "2026-08-21T13:20:14Z",
-  "demotion_stamp": "HISTORICAL_37_FRONTEND_DIFF_RECONCILIATION_ONLY",
-  "living_truth": "real_tree_diff_vs_ops_3e356617 + allowlist_manifest; do not use totals.total_37 as Release truth"
+  "recorded_at_utc": "2026-08-22T03:16:01Z"
 }

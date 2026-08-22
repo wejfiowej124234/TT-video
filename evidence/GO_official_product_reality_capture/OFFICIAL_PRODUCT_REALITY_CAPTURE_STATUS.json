@@ -1,0 +1,84 @@
+{
+  "schema": "traveltrust.official_product_reality_capture.v1",
+  "status": "IN_PROGRESS",
+  "gate": "OFFICIAL_PRODUCT_REALITY_CAPTURE",
+  "gate_result": "NOT_YET_PASS",
+  "plane": "PRODUCT_WEBSITE",
+  "recorded_utc": "2026-08-22T03:07:00Z",
+  "tt_production_go": "NO_GO",
+  "living_pin": {
+    "id": "TT-OFFICIAL-OPS-20260820-V9",
+    "external_name": "TravelTrust Official · OPS-2026.08.20-v9",
+    "web": "https://www.web3-ttg.com",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_image_digest": "sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16",
+    "session_bootstrap": "v8",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51"
+  },
+  "observe_20260822": {
+    "release_identity": {
+      "url": "https://www.web3-ttg.com/api/release-identity",
+      "http": 200,
+      "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "build_time": "2026-08-20T00:51:57Z",
+      "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+      "attestation_status": "ok",
+      "matches_living_pin": true
+    },
+    "fly_status_image": "tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "fly_status_matches_pin": true,
+    "home_title": "TravelTrust Network | TravelTrust",
+    "api_meta": {
+      "url": "https://api.web3-ttg.com/meta",
+      "git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "deployed_at": "2026-08-12T23:44:18Z",
+      "deployment_profile": "production"
+    },
+    "routes_sampled": {
+      "/": 200,
+      "/traveltrust": 200,
+      "/market": 200,
+      "/did-rank": 200,
+      "/community": 200,
+      "/auth/login": 200,
+      "/auth/register": 200,
+      "/guides": 200,
+      "/me": 200,
+      "/admin": 307
+    }
+  },
+  "layers": {
+    "Identity": "PARTIAL",
+    "Routes": "PARTIAL",
+    "UI": "OPEN",
+    "API": "PARTIAL",
+    "CMS": "OPEN",
+    "Assets": "OPEN",
+    "Auth": "OPEN",
+    "Admin": "OPEN",
+    "Config": "OPEN",
+    "i18n": "OPEN",
+    "DB": "OPEN",
+    "Release": "PARTIAL",
+    "Web3_display_LIVE_TARGET_LEGACY": "OPEN"
+  },
+  "forbidden_until_pass": [
+    "treat_local_or_staging_as_product_master",
+    "rebase_local_from_unofficial_source",
+    "overwrite_web3_candidate_from_official_web3_copy",
+    "main_track_cms_ui_fixes_before_parity",
+    "stamp_capture_pass_early"
+  ],
+  "next_after_pass": [
+    "M-OFFICIAL-vs-LOCAL",
+    "M-LOCAL-REBASE",
+    "M-OFFICIAL-vs-STAGING",
+    "M-STAGING-ALIGN",
+    "PRODUCT_PARITY_GATE"
+  ],
+  "p0_interrupt": "V9_PERIPHERY_SEPOLIA_ETA_REALITY",
+  "dual_planes_ssot": "docs/runbook/TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md",
+  "human_ssot": "docs/runbook/TT-OFFICIAL-PRODUCT-REALITY-CAPTURE-LATEST.md"
+}

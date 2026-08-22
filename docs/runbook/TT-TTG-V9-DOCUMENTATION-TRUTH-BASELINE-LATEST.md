@@ -1,29 +1,43 @@
-# TT · TTG V9 Documentation Truth Baseline（全仓文档唯一上游 · DL_R1）
+# TT · TTG V9 Documentation Truth Baseline（全仓文档唯一上游 · DL_R1 + Periphery Candidate plane）
 
-**STATUS:** `V9_DOCUMENTATION_TRUTH_BASELINE` · **`V9_DOCUMENTATION_FULL_CONVERGENCE_PASS`** · Whitepaper **`TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS`** · GitHub Official **`V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT_PASS`**  
-**Stamp:** `2026-08-21T11:45:00Z`  
-**Residue:** `OLD_V9_ACTIVE_DOCUMENT_REFERENCES=0` · `ACTIVE_TRUTH_CONFLICTS=0` · `UNRESOLVED_V9_DOC_DRIFT=0` — [Residue Report](TT-TTG-V9-DOCUMENTATION-TRUTH-CONVERGENCE-RESIDUE-LATEST.md) · PASS [`V9_DOCUMENTATION_FULL_CONVERGENCE_PASS.json`](../../evidence/GO_ttg_v9_audit/V9_DOCUMENTATION_FULL_CONVERGENCE_PASS.json)  
-**Mainnet Edition Whitepaper:** [zh](../whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md) · [en](../whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-EN-LATEST.md) · PASS [`TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS.json`](../../evidence/GO_ttg_v9_audit/TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS.json)  
-**GitHub Official Docs pack:** [`docs/github-official/README.md`](../github-official/README.md) · PASS [`V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT_PASS.json`](../../evidence/GO_ttg_v9_audit/V9_GITHUB_OFFICIAL_REPOSITORY_ALIGNMENT_PASS.json) · **no auto push/publicize**  
+**STATUS:** `V9_DOCUMENTATION_TRUTH_BASELINE` · Phase1 convergence stamp retained as **historical FULL_CONVERGENCE for DL_R1 Mainnet Edition**  
+**Living overlay (2026-08-22):** **THREE TRUTH PLANES (Web3 docs only)** — do not collapse Candidate into Official Live  
+**PRODUCT plane (orthogonal):** Official Production → Local → Staging — [Dual Truth Planes](TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md) · Capture [IN_PROGRESS](TT-OFFICIAL-PRODUCT-REALITY-CAPTURE-LATEST.md). **This file is not the product master.**  
+**`TT_PRODUCTION_GO`:** **NO_GO**  
+
+| Plane | What it is | Living now? |
+|-------|------------|-------------|
+| **A · Mainnet Phase1 Reality** | chain_id=1 addresses below · Solo 48h · FeeRouter/Pool Phase1 · `DEPLOYED_PENDING_CUTOVER` | **YES** (Official Web3 facts) |
+| **B · Periphery Governance Upgrade Candidate** | Audit #1 SHA `b19b85810…` · FeeRouterV2 · PoolV2 · NEW Governor+12h Timelock · Sepolia `IN_PROGRESS` | **YES as Candidate** · **≠** Official Live |
+| **C · LEGACY / SUPERSEDED narratives** | R2_FINAL remint · Safe-as-V9-admin · globalStakers ACTIVE · old Exact-Match inheritance | **DO_NOT_USE as living** |
+
+**Plane B SSOT:** [Periphery Freeze](TT-TTG-V9-PERIPHERY-GOVERNANCE-UPGRADE-FREEZE-LATEST.md) · [Audit #1](TT-TTG-V9-AI-AUDIT1-PERIPHERY-GOVERNANCE-UPGRADE-LATEST.md) · [Sepolia WAITING_ETA](TT-TTG-V9-PERIPHERY-GOVERNANCE-SEPOLIA-REALITY-WAITING-ETA-LATEST.md) · [ETA Ops P0](TT-TTG-V9-PERIPHERY-SEPOLIA-ETA-OPS-CHECKLIST-LATEST.md)  
+**Plane B whitepaper:** [Periphery Delta DRAFT](../whitepaper/TT-TTG-V9-PERIPHERY-GOVERNANCE-UPGRADE-DELTA-DRAFT-EN-LATEST.md) — **not** Mainnet Edition PASS substitute  
+**Exact-Match:** Plane B **NOT_ISSUED** · prior DL_R1 Exact-Match **must not** be inherited for Plane B  
+
+**Stamp (DL_R1 historical):** `2026-08-21T11:45:00Z`  
+**Residue (DL_R1 pack):** `OLD_V9_ACTIVE_DOCUMENT_REFERENCES=0` … — [Residue Report](TT-TTG-V9-DOCUMENTATION-TRUTH-CONVERGENCE-RESIDUE-LATEST.md) · PASS [`V9_DOCUMENTATION_FULL_CONVERGENCE_PASS.json`](../../evidence/GO_ttg_v9_audit/V9_DOCUMENTATION_FULL_CONVERGENCE_PASS.json)  
+**Mainnet Edition Whitepaper (Plane A):** [zh](../whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md) · [en](../whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-EN-LATEST.md) · PASS [`TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS.json`](../../evidence/GO_ttg_v9_audit/TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS.json)  
+**GitHub Official Docs pack (Plane A + Candidate pointers):** [`docs/github-official/README.md`](../github-official/README.md)  
 **Machine:** [`registry/ttg-v9-documentation-truth-baseline.v1.yaml`](../../registry/ttg-v9-documentation-truth-baseline.v1.yaml) · [`evidence/GO_ttg_v9_audit/V9_DOCUMENTATION_TRUTH_BASELINE.json`](../../evidence/GO_ttg_v9_audit/V9_DOCUMENTATION_TRUTH_BASELINE.json)  
 **Conflict scan:** [`V9_DOC_TRUTH_CONVERGENCE_SCAN.json`](../../evidence/GO_ttg_v9_audit/V9_DOC_TRUTH_CONVERGENCE_SCAN.json)  
 **Gate:** `python scripts/dev/run-ttg-v9-doc-truth-convergence-gate.py --require-zero`  
 **Whitepaper gate:** `python scripts/dev/run-ttg-v9-mainnet-edition-whitepaper-gate.py --require-zero`  
 **GitHub Official gate:** `python scripts/dev/run-ttg-v9-github-official-alignment-gate.py --require-zero`
 
-**Forbidden this convergence:** mutate DL_R1 Solidity · redeploy/swap addresses · live on-chain param edits · flip `TT_PRODUCTION_GO` · rewrite Official www / Production `/meta`·Indexer as automatic next step without Owner open · auto `git push` / publicize
+**Forbidden this convergence:** mutate Plane B Candidate Solidity (`b19b85810…`) · redeploy/swap Mainnet addresses as “docs fix” · live on-chain param edits · flip `TT_PRODUCTION_GO` · rewrite Official www / Production `/meta`·Indexer as automatic next step without Owner open · auto `git push` / publicize · claim Plane B is Official Live · inherit old Audit triad PASS for Plane B
 
 **唯一事实基线（本文件上游输入）：**
 
-| Input | Role |
-|-------|------|
-| `V9_AUDIT_CANDIDATE_DESIGN_LOCK` · **DL_R1** | Audited Exact Match candidate |
-| [Owner Design Lock](TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md) | Economics / topology lock |
-| `V9_SEPOLIA_REGRESSION_DL_R1_PASS` | ② lifecycle Exact |
-| `V9_MAINNET_PRE_BROADCAST_FINAL_PASS` + Artifact Pin | Pre-broadcast Exact |
-| Mainnet Phase1 chain reality | Addresses / genesis / scheduled ops |
-| [Phase2 Freeze Wait](TT-TTG-V9-MAINNET-DL-R1-PHASE2-FREEZE-WAIT-LATEST.md) | Cutover pending clock |
-| [`TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS`](../whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md) | Formal whitepaper (downstream of this Baseline) |
+| Input | Role | Plane |
+|-------|------|-------|
+| Mainnet Phase1 chain reality | Addresses / genesis / scheduled ops | **A** |
+| `V9_AUDIT_CANDIDATE_DESIGN_LOCK` · **DL_R1** | Historical audited Exact Match candidate | **A** (historical bind) |
+| [Owner Design Lock](TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md) | Economics / topology lock (Phase1) | **A** |
+| `V9_PERIPHERY_GOVERNANCE_UPGRADE_FREEZE` · Audit #1 `b19b85810…` | Periphery upgrade Candidate | **B** |
+| Sepolia Reality WAITING_ETA / PASS_STOP | ② Candidate lifecycle | **B** |
+| [Phase2 Freeze Wait](TT-TTG-V9-MAINNET-DL-R1-PHASE2-FREEZE-WAIT-LATEST.md) | Cutover pending clock (Phase1) | **A** |
+| [`TTG_V9_MAINNET_EDITION_WHITEPAPER_PASS`](../whitepaper/TT-TTG-V9-MAINNET-EDITION-WHITEPAPER-LATEST.md) | Formal whitepaper Plane A | **A** |
 
 ---
 

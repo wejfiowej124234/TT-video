@@ -1,0 +1,110 @@
+{
+  "schema": "traveltrust.official_first_full_convergence_residuals.v1",
+  "recorded_utc": "2026-08-22T03:20:00Z",
+  "gate": "PRODUCT_AND_DOCUMENTATION_PARITY",
+  "gate_result": "FAIL",
+  "residuals": [
+    {
+      "id": "R-01",
+      "class": "STAGING_PRODUCT_DRIFT",
+      "surface": "tt-web-staging release-identity",
+      "observed": {
+        "git_sha": "f64e7185df07314f84d621b82eb5c4a5d5332aa3",
+        "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+        "build_time": "2026-08-21T14:33:54Z"
+      },
+      "required": {
+        "git_sha": "3e356617a498b0faac42e4ae457343d36294a770"
+      },
+      "action": "align-staging-www-official-v9",
+      "optimize_official": false
+    },
+    {
+      "id": "R-02",
+      "class": "REPO_NOT_1TO1",
+      "surface": "main vs tip",
+      "observed": {
+        "main": "e929f655981b37ee21c30f064ddff1421004ef0c",
+        "tip": "c40444835894bbac394c8cddf7dc64fdbcb304a6"
+      },
+      "required": "main==tip",
+      "action": "solo_align_main_to_tip_no_push_unless_owner",
+      "optimize_official": false
+    },
+    {
+      "id": "R-03",
+      "class": "WEB3_CANDIDATE_PROTECTED",
+      "surface": "tip commits beyond pin",
+      "note": "V9 Candidate b19b85810 must not be reverted by Official Web3 copy",
+      "optimize_official": false
+    },
+    {
+      "id": "R-04",
+      "class": "CAPTURE_PARTIAL",
+      "surface": "Official Reality Capture layers",
+      "open": [
+        "UI",
+        "CMS",
+        "Auth",
+        "Admin",
+        "Assets",
+        "i18n",
+        "DB"
+      ],
+      "partial": [
+        "Identity",
+        "Routes",
+        "API",
+        "Release"
+      ],
+      "optimize_official": false
+    },
+    {
+      "id": "R-05",
+      "class": "CONVERGENCE_META",
+      "surface": "dirty worktree",
+      "by_action": {
+        "COMMIT": 6,
+        "LEGACY_KEEP": 17
+      },
+      "optimize_official": false
+    },
+    {
+      "id": "R-06",
+      "class": "GATE_FAIL",
+      "surface": "check-official-v9-1to1 / plane-map",
+      "result": "FAIL",
+      "optimize_official": false
+    },
+    {
+      "id": "R-07",
+      "class": "DOC_ALIGN_OPEN",
+      "surface": "non-Web3 runbooks/whitepapers Official-first",
+      "action": "scan_and_retag_local_master_slogans",
+      "optimize_official": false
+    },
+    {
+      "id": "R-08",
+      "class": "OFFICIAL_ROUTE_AS_IS",
+      "surface": "www route inventory 2026-08-22",
+      "http_404_as_is": [
+        "/market/guides",
+        "/market/hotels",
+        "/community/feed",
+        "/escrow"
+      ],
+      "note": "Capture facts only \u2014 do not invent Local routes to green Official",
+      "optimize_official": false
+    }
+  ],
+  "official_live_ok": {
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "hybrid-live-auth-pin-nontarget-v9-20260820"
+  },
+  "staging_api_expected_difference": {
+    "url": "https://tt-api-staging.fly.dev/meta",
+    "git_sha": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+    "note": "Web3/staging plane ED \u2014 not product www pin"
+  }
+}

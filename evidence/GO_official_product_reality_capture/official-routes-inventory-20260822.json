@@ -1,0 +1,78 @@
+{
+  "/": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/"
+  },
+  "/traveltrust": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/traveltrust"
+  },
+  "/market": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/market"
+  },
+  "/market/guides": {
+    "http": 404,
+    "error": "HTTP Error 404: Not Found"
+  },
+  "/market/hotels": {
+    "http": 404,
+    "error": "HTTP Error 404: Not Found"
+  },
+  "/did-rank": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/did-rank"
+  },
+  "/community": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/community"
+  },
+  "/community/feed": {
+    "http": 404,
+    "error": "HTTP Error 404: Not Found"
+  },
+  "/auth/login": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/auth/login"
+  },
+  "/auth/register": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/auth/register"
+  },
+  "/guides": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/guides"
+  },
+  "/me": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/me"
+  },
+  "/me/identities": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/me/identities"
+  },
+  "/provider/register": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/provider/register"
+  },
+  "/escrow": {
+    "http": 404,
+    "error": "HTTP Error 404: Not Found"
+  },
+  "/governance": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/governance"
+  },
+  "/governance/proposals": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/governance/proposals"
+  },
+  "/admin": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/auth/login?returnUrl=%2Fadmin"
+  },
+  "/admin/login": {
+    "http": 200,
+    "final": "https://www.web3-ttg.com/auth/login?returnUrl=%2Fadmin%2Flogin"
+  }
+}

@@ -1,0 +1,84 @@
+# schema: traveltrust.dual_truth_planes.v1
+schema: traveltrust.dual_truth_planes.v1
+status: ACTIVE_EXECUTION_CONSTITUTION
+recorded_utc: "2026-08-22T03:05:00Z"
+tt_production_go: NO_GO
+
+forbidden_product_master_ladder:
+  - "Local → Staging → Production as product SSOT"
+
+planes:
+  PRODUCT_WEBSITE:
+    first_truth: Official Production living pin
+    living_pin_ssot: docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md
+    living_pin_id: TT-OFFICIAL-OPS-20260820-V9
+    official_url: https://www.web3-ttg.com
+    identity:
+      git_sha: "3e356617a498b0faac42e4ae457343d36294a770"
+      build_time: "2026-08-20T00:51:57Z"
+      fly_image: "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820"
+    local_staging_role: mirror_rebase_from_official
+    includes:
+      - routes
+      - ui_ux
+      - auth
+      - market_community_guides
+      - me_admin
+      - cms_display
+      - product_api_behavior
+      - assets
+      - i18n
+      - runtime_config
+      - production_db_reality
+      - release_identity
+    excludes_as_ssot:
+      - official_website_web3_copy
+
+  WEB3_PROTOCOL:
+    first_truth: Final Truth Baseline + V9 Periphery Governance Upgrade Design Freeze + Frozen Candidate
+    ftb: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+    freeze: docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-UPGRADE-FREEZE-LATEST.md
+    candidate_sha: "b19b85810c22677d243a82d06ebec8ebcb4d4b47"
+    audit_1: PASS
+    sepolia_reality: IN_PROGRESS
+    local_role: implement_and_test
+    sepolia_role: reality_certification
+    official_web3_display: LIVE_TARGET_LEGACY_only_until_mainnet_reality
+    protected_paths_hint:
+      - contracts/src/ttg-v9/
+      - contracts/test/ttg-v9/
+      - evidence/GO_ttg_v9_*
+      - docs/runbook/TT-TTG-V9-*
+      - registry/ttg-v9-*
+
+product_ladder:
+  - M-OFFICIAL-REALITY
+  - M-OFFICIAL-vs-LOCAL
+  - M-LOCAL-REBASE
+  - M-OFFICIAL-vs-STAGING
+  - M-STAGING-ALIGN
+  - PRODUCT_PARITY_GATE
+  - FREEZE_PRODUCT_BASELINE
+  - THEN_FIX_DEFECTS
+
+web3_ladder_summary:
+  - design_freeze
+  - local_pass
+  - audit_1_pass
+  - sepolia_reality
+  - audit_2
+  - scanner_compiler_english
+  - exact_match
+  - audit_3
+  - owner_mainnet_auth
+  - mainnet
+  - old_active_refs_0
+  - update_official_web3
+
+waiting_eta_priority:
+  P0: sepolia_eta_waiter_reality
+  P1: official_product_reality_capture_then_rebase
+  P2: deferred_cms_ui_docs_after_parity
+
+human_ssot: docs/runbook/TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md
+capture_ssot: docs/runbook/TT-OFFICIAL-PRODUCT-REALITY-CAPTURE-LATEST.md

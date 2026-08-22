@@ -1,47 +1,48 @@
-# OPS Mother Parity · Frontend Mother Consistency (living)
+# OPS Mother Parity Reconciliation · Website V9 (read-only)
 
+**Status:** PASS · **UNKNOWN=0** · **STOP** (no Staging/Production deploy this turn)  
 **Mother:** Production OPS `OPS-2026.08.20-v9` · SHA `3e356617a498b0faac42e4ae457343d36294a770`  
+**Clean Baseline:** `OFFICIAL_V9_PRODUCT_AND_WEB3_CLEAN_BASELINE` · `92cc3057a22e919bb52dde0425e23487677da1be`  
 **`TT_PRODUCTION_GO`:** NO_GO (unchanged)
 
-## Git / Release 真源（写死）
+## Scope
 
-以后 frontend 母版一致性 **只认** OPS `3e356617…` 的 **真实 tree diff**：
+Reconcile the **37** Frontend HEAD↔OPS non-matches from the prior count (**23** same-path-different + **14** HEAD-only).  
+Mother = Official product/UI/UX/page behavior.  
+Only approved Website V9 **P0+P1 allowlist** may overlay.
 
-| 规则 | 要求 |
-|------|------|
-| Shared-path | `byte_diff = 0`（相对 OPS） |
-| HEAD-only 14 | **永久** `EXCLUDED_FROM_RELEASE` |
-| V9 P0+P1 | **仅**原子 allowlist manifest 作为批准叠加层 |
-| 历史「37」 | **RECONCILIATION_ONLY** · **不是** Git/Release 真源 |
+## Metrics
 
-**禁止**继续追溯或人为凑齐「37 条」。
+| Metric | Value |
+|--------|------:|
+| UNKNOWN | **0** |
+| OFFICIAL_MOTHER_WINS (of 37) | **37** |
+| V9_ALLOWLIST_PATCH (of 37) | **0** |
+| INTENTIONAL_RUNTIME_DIFFERENCE | **0** |
+| UNAUTHORIZED_PRODUCTION_DRIFT | **0** |
+| UI_UX_DRIFT | **0** |
+| ADMIN_COMMUNITY_DRIFT | **0** |
 
-### Permanent EXCLUDED_FROM_RELEASE（14）
+## Verdict summary
 
-- `frontend/app/assurance/**`（3）
-- `frontend/app/brand/**`（3）
-- `frontend/app/contact/**`（3）
-- `frontend/app/protocol/**`（4）
-- `frontend/components/traveltrust/cinematic/TravelTrustListingDocPage.tsx`（1）
+All **37** → **OFFICIAL_MOTHER_WINS** (none are V9 allowlist).  
+Current Clean Baseline HEAD already matches OPS for these paths (23 aligned; 14 absent).  
+**Do not** carry Admin / Community / home / loading / Dockerfile / listing-page drift into Production from Local RC.
 
-### Production / Staging Candidate composition
+## Production Release composition
 
 ```
-Release Candidate = OPS Mother (3e356617)
-                  + V9 Approved Allowlist Patch (atomic manifest only)
-                  − HEAD-only 14 (EXCLUDED_FROM_RELEASE)
+Production = OPS Mother (3e356617a498b0faac42e4ae457343d36294a770)
+           + V9 Approved Allowlist Patch (frontend data/copy/address/i18n only)
 ```
 
-Machine:
+Machine manifests:
 
-- Allowlist: `evidence/GO_ttg_v9_audit/V9_WEBSITE_ALLOWLIST_ATOMIC_COMMIT_MANIFEST.json` · commit `04f970580…`
-- Historical reconciliation archive (not truth): `evidence/GO_ttg_v9_audit/OPS_MOTHER_PARITY_RECONCILIATION.json`
-- Demotion stamp: `evidence/GO_ttg_v9_audit/HISTORICAL_37_FRONTEND_DIFF_RECONCILIATION_ONLY.json`
+- `evidence/GO_ttg_v9_audit/OPS_MOTHER_PARITY_RECONCILIATION.json`
+- `evidence/GO_ttg_v9_audit/V9_OFFICIAL_WEBSITE_PRODUCTION_RELEASE_MANIFEST.json`
 
-## Historical note（降级）
+## Explicitly deferred
 
-先前「23 same-path + 14 HEAD-only = 37」仅为对账清单统计；后台 tip 探针无法复现为单一 tree 的 37 条真差。已正式降级，**不得**再作 Release / Gate / Identity 依据。
+Staging/Production deploy · `/meta`/Indexer cutover · DL_R1/Phase1 mutation · `TT_PRODUCTION_GO` flip · any UI/UX redesign.
 
-## Forbidden
-
-Staging hotfix · Production deploy · 修改现有 OPS / V9 UI·UX 母版 · `/meta`/Indexer Production 切针 · Mainnet Phase2 · `TT_PRODUCTION_GO` flip
+**Next:** Owner decides whether to enter Staging.

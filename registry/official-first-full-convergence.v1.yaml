@@ -1,0 +1,37 @@
+# schema: traveltrust.official_first_full_convergence.v1
+schema: traveltrust.official_first_full_convergence.v1
+status: IN_PROGRESS
+gate: PRODUCT_AND_DOCUMENTATION_PARITY
+gate_result: FAIL
+recorded_utc: "2026-08-22T03:20:00Z"
+tt_production_go: NO_GO
+forbid_product_optimization_until_parity_pass: true
+
+official_baseline:
+  pin_id: TT-OFFICIAL-OPS-20260820-V9
+  git_sha: "3e356617a498b0faac42e4ae457343d36294a770"
+  build_time: "2026-08-20T00:51:57Z"
+  fly_image: "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820"
+  frozen_for_convergence: true
+  identity_sha_is_not_product_bytes: true
+
+web3_exception:
+  candidate_sha: "b19b85810c22677d243a82d06ebec8ebcb4d4b47"
+  overwrite_candidate_from_official_web3: forbidden
+  candidate_as_official_live_before_mainnet_reality: forbidden
+  mainnet_broadcast: NOT_AUTHORIZED
+
+parity_formula:
+  official_www: pin
+  staging_www: pin
+  release_wt: pin
+  main_equals_tip: required
+  staging_api_sepolia_sha_diff: expected_difference_web3_plane
+
+human_ssot: docs/runbook/TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md
+dual_planes: docs/runbook/TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md
+capture: docs/runbook/TT-OFFICIAL-PRODUCT-REALITY-CAPTURE-LATEST.md
+gates:
+  - scripts/gates/check-official-v9-local-staging-repo-1to1.sh
+  - scripts/gates/check-official-v9-plane-map.sh
+staging_align: scripts/dev/align-staging-www-official-v9.sh

@@ -39,7 +39,7 @@ ROLE_SRC="$ROOT/frontend/public/media/traveltrust/roles"
 ROLE_DST="$RELEASE_WT/frontend/public/media/traveltrust/roles"
 if [[ -d "$ROLE_SRC" && -d "$ROLE_DST" ]]; then
   info "seeding role-promo media + PROMO-MANIFEST from tip into cite bake tree"
-  for f in traveler guide merchant acquisition provider; do
+  for f in traveler guide merchant acquisition provider region_steward; do
     [[ -f "$ROLE_SRC/${f}.mp4" ]] || fail "tip missing $ROLE_SRC/${f}.mp4 (run git lfs pull on tip)"
     # reject LFS pointer (~133B) as source
     sz="$(wc -c <"$ROLE_SRC/${f}.mp4" | tr -d ' ')"
