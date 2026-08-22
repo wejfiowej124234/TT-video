@@ -1,8 +1,8 @@
 {
   "schema": "traveltrust.official_first_execution_parity_status.v1",
-  "status": "STOP_PRODUCTION_REALITY_DRIFT",
-  "recorded_utc": "2026-08-22T05:17:36Z",
-  "pre_db_commit": "a6fafe3d1",
+  "status": "MIGRATION_RECOVERED_SCHEMA_CONVERGENCE_PENDING",
+  "recorded_utc": "2026-08-22T05:39:41Z",
+  "drift_stop_commit": "da5f5798a",
   "gate": "PRODUCT_AND_DOCUMENTATION_PARITY",
   "gate_result": "FAIL",
   "tt_production_go": "NO_GO",
@@ -15,19 +15,14 @@
     "OLD_PRODUCT_REFS": "0",
     "RUNTIME_PARITY_GAPS": "NOT_ZERO"
   },
-  "runtime_blocker": "RT-DB-PROD-GIT-MIGRATION-DRIFT \u2014 see PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json",
-  "live_schema_capture": {
-    "status": "PASS_CAPTURE",
-    "stamp": "20260822T051209Z",
-    "aggregate_schema_sha256": "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478",
-    "tables": 168
-  },
+  "migration_bookkeeping": "MATCH_1TO1",
+  "migration_verify": "PROD_GIT_MIGRATION_VERIFY_LATEST.json",
+  "schema_convergence": "SCHEMA_CONVERGENCE_STATUS_LATEST.json",
+  "runtime_blocker": "3 view columns + Staging schema capture blocked",
   "defects_post_parity_only": [
     "M7-07",
     "M7-08",
     "M8-07"
   ],
-  "human_ssot": "docs/runbook/TT-OFFICIAL-FIRST-EXECUTION-PARITY-LATEST.md",
-  "rollup": "evidence/GO_official_product_reality_capture/RUNTIME_PARITY_GAPS_ROLLUP_20260822.json",
-  "drift": "evidence/GO_official_product_reality_capture/PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json"
+  "human_ssot": "docs/runbook/TT-OFFICIAL-FIRST-EXECUTION-PARITY-LATEST.md"
 }

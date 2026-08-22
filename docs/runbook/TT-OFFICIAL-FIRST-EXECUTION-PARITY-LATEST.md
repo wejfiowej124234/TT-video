@@ -1,7 +1,7 @@
 # Official-First · Execution Parity（Official→Git→Local→Staging）
 
-**STATUS:** `STOP_PRODUCTION_REALITY_DRIFT`  
-**Pre-DB commit:** `a6fafe3d1` (execution-parity-pre-db-only)  
+**STATUS:** `MIGRATION_RECOVERED_SCHEMA_CONVERGENCE_PENDING`  
+**Pre-DB commit:** `a6fafe3d1` · **Drift-stop commit:** `da5f5798a`  
 **Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **FAIL** · **PASS NOT_ISSUED**  
 **`TT_PRODUCTION_GO`:** NO_GO  
 
@@ -12,36 +12,31 @@
 | `UNAUTHORIZED_DRIFT` | **0** (identity plane) | 1to1 + plane-map PASS · Staging www=`3e356617…` |
 | `DOC_TRUTH_CONFLICTS` | **0** (Local-SSOT ladder banner set) | DOC_RETAG wave1+2 |
 | `OLD_PRODUCT_REFS` | **0** | [`OLD_PRODUCT_REFS_CLOSURE_20260822.json`](../../evidence/GO_official_product_reality_capture/OLD_PRODUCT_REFS_CLOSURE_20260822.json) |
-| `RUNTIME_PARITY_GAPS` | **NOT_ZERO** | Live schema capture **PASS** · layered compare **DRIFT STOP** |
+| `RUNTIME_PARITY_GAPS` | **NOT_ZERO** | Migration bookkeeping **MATCH_1TO1** · schema convergence **PENDING** (3 view columns + Staging capture) |
 
 **因此禁止盖** `PRODUCT_AND_DOCUMENTATION_PARITY_PASS`。  
 **禁止** `ACCEPT_ED` 清零 RUNTIME。**禁止**为过闸改官网 DB（DDL/DML/migration/repair）。
 
-## Official Production schema Reality Capture
+## Migration recovery (Official Production API container)
 
 | Item | Value |
 |------|-------|
-| Status | `PASS_CAPTURE` (schema-only · read path · no user/business rows) |
-| Stamp | `20260822T051209Z` |
-| Aggregate | `1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478` |
-| Counts | extensions=3 · tables=168 · columns=1849 · indexes=507 · constraints=507 |
-| Scripts | `scripts/dev/capture-official-prod-schema-readonly.sh` · `.py` |
-| Compare | `scripts/dev/compare-official-prod-schema-layers.py` |
+| Source | `tt-api-prod` `/app/crates/api/migrations` (read-only `fly ssh cat`) |
+| Recovered | `20260816180000` · `20260816190000` · `20260816200000` |
+| Checksum resync | **13** additional files synced from container (Git bytes ≠ Prod applied checksum) |
+| Verify | `PROD_GIT_MIGRATION_VERIFY_LATEST.json` → **`MATCH_1TO1`** (157/157) |
+| Evidence | `PROD_MIGRATION_RECOVERY_LATEST.json` |
 
-## Production Reality drift (STOP)
+## Production Reality drift (resolved bookkeeping / open schema)
 
-| Version | Description (from `_sqlx_migrations`) | In `crates/api/migrations` |
-|---------|----------------------------------------|----------------------------|
-| `20260816180000` | cms announcements hub roles campaign | **NO** |
-| `20260816190000` | cms announcements role gov copy | **NO** |
-| `20260816200000` | cms announcements role copy short | **NO** |
+| Version | Description | Git |
+|---------|-------------|-----|
+| `20260816180000` | cms announcements hub roles campaign | **RESTORED** |
+| `20260816190000` | cms announcements role gov copy | **RESTORED** |
+| `20260816200000` | cms announcements role copy short | **RESTORED** |
 
-- Production applied migrations: **157**
-- Git `crates/api/migrations` SQL files: **154** (prior “167” fingerprint included cargo-home sqlx test noise — not authoritative)
-- All Git versions **are** on Production; Production is **ahead** of Git with 3 unknown SQL sources
-- Artifact: [`PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json`](../../evidence/GO_official_product_reality_capture/PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json)
-
-Local/Staging live schema compare: **NOT_CAPTURED_THIS_WAVE** (does not waive this STOP).
+**Open schema gap (STOP · no guess-write):** 3 `SELECT *` view columns on Production not reproduced by fresh Git migrate — see `SCHEMA_CONVERGENCE_STATUS_LATEST.json`.  
+**Staging:** schema capture blocked (no reachable DSN this wave).
 
 ## RUNTIME closed this wave
 

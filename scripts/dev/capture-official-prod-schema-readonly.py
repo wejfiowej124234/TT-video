@@ -138,9 +138,11 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--stamp", required=True)
+    ap.add_argument("--label", default="production", help="production|local|staging")
     args = ap.parse_args()
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    label = args.label.lower()
 
     prod_dsn = os.environ.get("PRODUCTION_DATABASE_URL") or ""
     if not prod_dsn:
@@ -204,6 +206,7 @@ def main() -> int:
         "schema": "traveltrust.official_prod_schema_reality_capture.v1",
         "status": status,
         "stamp": args.stamp,
+        "capture_label": label,
         "policy": {
             "read_only": True,
             "schema_only": True,
@@ -242,8 +245,12 @@ def main() -> int:
         "RUNTIME_PARITY_GAPS_candidate": "0" if status == "PASS_CAPTURE" else "NOT_ZERO",
     }
 
-    out_path = out_dir / f"OFFICIAL_PROD_SCHEMA_CAPTURE_{args.stamp}.json"
-    latest = out_dir / "OFFICIAL_PROD_SCHEMA_CAPTURE_LATEST.json"
+    if label == "production":
+        out_path = out_dir / f"OFFICIAL_PROD_SCHEMA_CAPTURE_{args.stamp}.json"
+        latest = out_dir / "OFFICIAL_PROD_SCHEMA_CAPTURE_LATEST.json"
+    else:
+        out_path = out_dir / f"OFFICIAL_PROD_SCHEMA_CAPTURE_{label.upper()}_{args.stamp}.json"
+        latest = out_dir / f"{label.upper()}_SCHEMA_CAPTURE_LATEST.json"
     text = json.dumps(result, indent=2, ensure_ascii=False, default=str) + "\n"
     out_path.write_text(text, encoding="utf-8")
     latest.write_text(text, encoding="utf-8")

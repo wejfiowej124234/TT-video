@@ -1,0 +1,22 @@
+{
+  "schema": "traveltrust.schema_convergence_status.v1",
+  "status": "STOP_SCHEMA_VIEW_EXPANSION_PENDING",
+  "recorded_utc": "2026-08-22T05:39:05Z",
+  "migration_bookkeeping": "MATCH_1TO1",
+  "application_schema_symdiff_columns": 3,
+  "gap_columns": [
+    "governed_discover_orders_v1.service_guide_confirmed",
+    "governed_discover_orders_v1.service_tourist_confirmed",
+    "governed_market_listings_v1.canonical_key"
+  ],
+  "cause": "PostgreSQL SELECT * views created in 20260704110000 do not auto-expand when base tables gain columns in later migrations; Production live view metadata includes expanded columns not reproduced by fresh migrate-from-Git alone.",
+  "hosting_extension_diff": [
+    "pg_stat_monitor",
+    "pgaudit"
+  ],
+  "local_migrations_applied": 157,
+  "staging_capture": "BLOCKED_NO_DSN",
+  "RUNTIME_PARITY_GAPS": "NOT_ZERO",
+  "PRODUCT_AND_DOCUMENTATION_PARITY": "FAIL",
+  "no_guess_write": true
+}

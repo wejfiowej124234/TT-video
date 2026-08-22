@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.runtime_parity_gaps_rollup.v1",
-  "recorded_utc": "2026-08-22T05:17:36Z",
+  "recorded_utc": "2026-08-22T05:39:41Z",
   "closed_surfaces": [
     "API unauth depth probes",
     "CMS announcements inventory + home assets sample",
@@ -8,25 +8,24 @@
     "Env/flags policy (DEV_ONLY quarantine)",
     "DB migration tree fingerprint (crates/api; prior cargo-home pollution noted)",
     "www/api/staging www identity",
-    "Official Production live schema Reality Capture (schema-only read)"
+    "Official Production live schema Reality Capture (schema-only read)",
+    "Prod\u2194Git migration bookkeeping MATCH_1TO1 (157/157 checksum)"
   ],
   "open_gaps": [
     {
-      "id": "RT-DB-PROD-GIT-MIGRATION-DRIFT",
-      "class": "PRODUCTION_REALITY_DRIFT",
-      "surface": "Official Production _sqlx_migrations vs crates/api/migrations",
+      "id": "RT-DB-SCHEMA-VIEW-EXPANSION",
+      "class": "SCHEMA_CONVERGENCE_PENDING",
+      "surface": "3 SELECT * view columns on Production not reproduced by fresh Git migrate",
       "status": "OPEN_STOP",
-      "detail": "prod has 3 applied versions not in Git: 20260816180000, 20260816190000, 20260816200000",
-      "artifact": "PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json",
-      "forbid_accept_ed": true,
-      "forbid_prod_db_mutation": true
+      "artifact": "SCHEMA_CONVERGENCE_STATUS_LATEST.json",
+      "forbid_guess_write": true
     },
     {
-      "id": "RT-DB-LOCAL-STAGING-SCHEMA",
+      "id": "RT-DB-STAGING-CAPTURE",
       "class": "NOT_CAPTURED",
-      "surface": "Local/Staging live schema fingerprint compare",
+      "surface": "Staging live schema/migration state",
       "status": "OPEN",
-      "detail": "Optional layer not captured this wave; does not waive Production drift STOP"
+      "detail": "No reachable Staging DATABASE_URL this wave"
     }
   ],
   "RUNTIME_PARITY_GAPS": "NOT_ZERO",

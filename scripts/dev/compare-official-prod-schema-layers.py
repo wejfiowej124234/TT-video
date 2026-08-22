@@ -191,31 +191,37 @@ def main() -> int:
         }
 
     # Overall verdict for RUNTIME_PARITY_GAPS closure
-    # Primary: live schema capture PASS + version set relationship classified honestly
     live_ok = cap.get("status") == "PASS_CAPTURE"
     vs = mig_cmp["version_set_verdict"]
+    local_layer = layers.get("local_schema", {})
+    staging_layer = layers.get("staging_schema", {})
+    local_ok = local_layer.get("status") == "COMPARED" and local_layer.get("aggregate_match") is True
+    staging_ok = staging_layer.get("status") == "COMPARED" and staging_layer.get("aggregate_match") is True
 
     if not live_ok:
         overall = "STOP_CAPTURE_FAILED"
         runtime_gaps = "NOT_ZERO"
         parity_pass_allowed = False
         drift = True
-    elif vs == "VERSION_SET_MATCH":
-        overall = "MATCH_LIVE_SCHEMA_AND_GIT_MIGRATION_SET"
-        runtime_gaps = "0"
-        parity_pass_allowed = True
-        drift = False
-    elif vs == "DRIFT_GIT_AHEAD_OF_PROD":
-        # Git has migrations not yet applied on Official Production — Production Reality drift vs Git tip
-        overall = "PRODUCTION_REALITY_DRIFT_GIT_AHEAD"
+    elif vs != "VERSION_SET_MATCH":
+        overall = (
+            "PRODUCTION_REALITY_DRIFT_GIT_AHEAD"
+            if vs == "DRIFT_GIT_AHEAD_OF_PROD"
+            else "PRODUCTION_REALITY_DRIFT_UNKNOWN_PROD_MIGRATIONS"
+        )
+        runtime_gaps = "NOT_ZERO"
+        parity_pass_allowed = False
+        drift = True
+    elif not local_ok or not staging_ok:
+        overall = "GIT_PROD_MATCH_LOCAL_OR_STAGING_SCHEMA_PENDING"
         runtime_gaps = "NOT_ZERO"
         parity_pass_allowed = False
         drift = True
     else:
-        overall = "PRODUCTION_REALITY_DRIFT_UNKNOWN_PROD_MIGRATIONS"
-        runtime_gaps = "NOT_ZERO"
-        parity_pass_allowed = False
-        drift = True
+        overall = "MATCH_PROD_GIT_LOCAL_STAGING"
+        runtime_gaps = "0"
+        parity_pass_allowed = True
+        drift = False
 
     out = {
         "schema": "traveltrust.official_prod_schema_layered_compare.v1",

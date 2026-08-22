@@ -1,0 +1,78 @@
+{
+  "schema": "traveltrust.prod_migration_recovery_sync.v1",
+  "source": "Official Production API container /app/crates/api/migrations",
+  "mismatch_count": 13,
+  "synced": [],
+  "failed": [
+    {
+      "version": 20260708120000,
+      "file": "20260708120000_orders_service_completion_bilateral.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260709140000,
+      "file": "20260709140000_cms_public_announcements.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260709180000,
+      "file": "20260709180000_governance_starter_proposals_prod_copy.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260709200000,
+      "file": "20260709200000_cms_roadmap_independent.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260709210000,
+      "file": "20260709210000_cms_public_surface_production_polish.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260709220000,
+      "file": "20260709220000_cms_public_lane_hygiene.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260709230000,
+      "file": "20260709230000_cms_protocol_lane_seed.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260713060000,
+      "file": "20260713060000_region_reward_wallets.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260713140000,
+      "file": "20260713140000_fee_router_v2_reward_paid_events.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260715120000,
+      "file": "20260715120000_platform_safe_runtime.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260719190000,
+      "file": "20260719190000_l5c_settlement_router_projection.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260802120000,
+      "file": "20260802120000_role_applications_kind_status_submitted_idx.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    },
+    {
+      "version": 20260802180000,
+      "file": "20260802180000_cms_home_announcements_time_window.sql",
+      "error": "Connecting to fdaa:7a:3e05:a7b:187:8174:2b36:2...\nWarning: Metrics token unavailable: failed to run query($slug: String!) { organization(slug: $slug) { id internalNumericId slug rawSlug name type bill"
+    }
+  ],
+  "already_recovered_three": [
+    20260816180000,
+    20260816190000,
+    20260816200000
+  ]
+}
