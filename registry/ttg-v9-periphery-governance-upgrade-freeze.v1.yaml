@@ -9,6 +9,10 @@ design_phase: CLOSED
 next_phase: sepolia_reality_waiting_eta
 next_gate: SEPOLIA_REALITY_IN_PROGRESS
 sepolia_reality: IN_PROGRESS
+timelock_status_probe: scripts/dev/probe-ttg-v9-sepolia-timelock-reality-status.py
+timelock_status_evidence: evidence/GO_ttg_v9_periphery_governance_upgrade/SEPOLIA_TIMELOCK_REALITY_STATUS_LATEST.json
+ready_at_unix: 1787408352
+web3_mainline_active_runbook: docs/runbook/TT-V9-WEB3-MAINLINE-SEPOLIA-REALITY-ACTIVE-LATEST.md
 next_after_sepolia_pass: AUDIT_2
 timelock_reality_cert: SINGLE_12H_CYCLE_THIS_ROUND
 owner_sepolia_auth: evidence/GO_ttg_v9_periphery_governance_upgrade/V9_OWNER_SEPOLIA_REALITY_AUTHORIZATION.json

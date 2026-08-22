@@ -9,6 +9,9 @@ recorded_utc: "2026-08-22T10:15:54Z"
 gate: PRODUCT_AND_DOCUMENTATION_PARITY
 gate_result: PASS
 official_first_full_convergence_pass_stop: ISSUED
+product_convergence_track: FROZEN
+active_execution_plane: WEB3_V9_SEPOLIA_REALITY
+forbid_product_convergence_churn: true
 pass_stop_artifact: evidence/GO_official_product_reality_capture/OFFICIAL_FIRST_FULL_CONVERGENCE_PASS_STOP_LATEST.json
 certification_gate: scripts/gates/run-official-first-final-convergence-certification.py
 certification_entry: scripts/dev/official-first-final-convergence-certification.sh

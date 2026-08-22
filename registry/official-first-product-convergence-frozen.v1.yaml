@@ -1,0 +1,23 @@
+# schema: traveltrust.official_first_product_convergence_frozen.v1
+schema: traveltrust.official_first_product_convergence_frozen.v1
+status: FROZEN
+frozen_utc: "2026-08-22T10:19:00Z"
+reason: OFFICIAL_FIRST_FULL_CONVERGENCE_PASS_STOP issued
+pass_stop: evidence/GO_official_product_reality_capture/OFFICIAL_FIRST_FULL_CONVERGENCE_PASS_STOP_LATEST.json
+tt_production_go: NO_GO
+
+forbidden:
+  - local_staging_git_realignment
+  - product_optimization
+  - cms_ui_ux_functional_churn
+  - post_parity_queue_reopen
+  - official_production_mutation
+
+active_plane: WEB3_V9_SEPOLIA_REALITY
+web3_ssot:
+  ftb: docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md
+  candidate_sha: "b19b85810c22677d243a82d06ebec8ebcb4d4b47"
+  periphery_freeze: registry/ttg-v9-periphery-governance-upgrade-freeze.v1.yaml
+  sepolia_reality_runbook: docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-SEPOLIA-REALITY-WAITING-ETA-LATEST.md
+
+human_ssot: docs/runbook/TT-OFFICIAL-FIRST-PRODUCT-CONVERGENCE-FROZEN-LATEST.md

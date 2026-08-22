@@ -5,6 +5,8 @@
 **Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **PASS** · 四零闸 **0** · `RUNTIME_PARITY_GAPS=0`  
 **Identity gates:** `TT_OFFICIAL_V9_1TO1_MAP: PASS` · `TT_OFFICIAL_V9_PLANE_MAP: PASS`  
 **Certification:** `bash scripts/dev/official-first-final-convergence-certification.sh`  
+**PRODUCT 轨：** **FROZEN** — [TT-OFFICIAL-FIRST-PRODUCT-CONVERGENCE-FROZEN-LATEST](TT-OFFICIAL-FIRST-PRODUCT-CONVERGENCE-FROZEN-LATEST.md)  
+**ACTIVE 轨：** [V9 Web3 Sepolia Reality](TT-V9-WEB3-MAINLINE-SEPOLIA-REALITY-ACTIVE-LATEST.md)  
 **Recorded:** 2026-08-22  
 **Constitution:** [Dual Truth Planes](TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md)  
 **Official Living Pin:** [OPS-2026.08.20-v9](TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)  

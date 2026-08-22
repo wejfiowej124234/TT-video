@@ -1,6 +1,6 @@
 # schema: traveltrust.official_first_clean_rebuild_convergence.v1
 schema: traveltrust.official_first_clean_rebuild_convergence.v1
-status: ACTIVE
+status: FROZEN
 track: OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE
 supersedes: local_staging_archaeological_drift_repair
 gate: PRODUCT_AND_DOCUMENTATION_PARITY
@@ -14,6 +14,8 @@ post_parity_fix_queue: CLOSED
 post_parity_fix_queue_closed_utc: "2026-08-22T10:00:53Z"
 official_first_full_convergence_pass_stop: ISSUED
 official_first_full_convergence_pass_stop_utc: "2026-08-22T10:15:54Z"
+product_convergence_frozen: true
+product_convergence_frozen_registry: registry/official-first-product-convergence-frozen.v1.yaml
 tt_production_go: NO_GO
 
 official_product_motherboard:
