@@ -169,7 +169,7 @@ contract TtgV9DesignLockLocalTest is Test {
         uint256 usdcIn = 1e6; // 1 USDC — within batch1 amountCap
         uint256 poolBefore = usdc.balanceOf(address(pool));
         vm.prank(buyer);
-        market.buy(1, usdcIn);
+        market.buy(1, usdcIn, 0, type(uint256).max);
         assertEq(usdc.balanceOf(address(pool)), poolBefore + usdcIn);
         assertEq(usdc.balanceOf(LEGACY_P4CAP), 0);
     }

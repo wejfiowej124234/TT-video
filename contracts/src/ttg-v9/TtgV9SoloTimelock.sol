@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.36;
 
+import {TtgV9DesignLockConstants} from "./TtgV9DesignLockConstants.sol";
+
 /**
  * @title TtgV9SoloTimelock
- * @notice Official Design Lock Solo Timelock — admin schedules; Governor queues; delay then execute.
- * @dev No Safe. Admin immutable at construct. No bootstrap shortcuts (use schedule+warp in tests).
- *      English NatSpec only. Owner Design LOCK: admin = Marketing deployer EOA.
- *      Build: solc 0.8.36 + via_IR. No mutual recursion; explorer compiler banners N/A for this source.
+ * @notice Official Solo Timelock — admin schedules; Governor queues; delay then execute.
+ * @dev No Safe. Admin immutable at construct. Delay is storage (NEW root default 12h) and may be
+ *      updated only via self-call (Governor→schedule→execute updateDelay) within [12h, 7d].
+ *      English NatSpec only. Build: solc 0.8.36 + via_IR.
  */
 contract TtgV9SoloTimelock {
     struct Operation {
@@ -18,13 +20,14 @@ contract TtgV9SoloTimelock {
     }
 
     address public immutable admin;
-    uint256 public immutable delay;
+    uint256 public delay;
     address public governor;
     mapping(bytes32 => Operation) public operations;
     mapping(address => bool) public allowedExecutionTarget;
 
     error OnlyAdmin();
     error OnlyGovernor();
+    error OnlySelf();
     error OperationExists();
     error UnknownOperation();
     error TooEarly();
@@ -32,16 +35,24 @@ contract TtgV9SoloTimelock {
     error CallFailed();
     error TargetNotAllowed();
     error InvalidAddress();
+    error InvalidDelay();
 
     event AllowedExecutionTargetSet(address indexed target, bool allowed);
     event GovernorSet(address indexed governor);
+    event DelayUpdated(uint256 previous, uint256 next);
     event OperationScheduled(
         bytes32 indexed id, address indexed target, uint256 value, bytes data, uint256 executeAfter
     );
     event OperationExecuted(bytes32 indexed id);
 
     constructor(address admin_, uint256 delay_) {
-        if (admin_ == address(0) || delay_ == 0) revert InvalidAddress();
+        if (admin_ == address(0)) revert InvalidAddress();
+        if (
+            delay_ < TtgV9DesignLockConstants.TIMELOCK_MIN_DELAY_SECONDS
+                || delay_ > TtgV9DesignLockConstants.TIMELOCK_MAX_DELAY_SECONDS
+        ) {
+            revert InvalidDelay();
+        }
         admin = admin_;
         delay = delay_;
     }
@@ -59,6 +70,20 @@ contract TtgV9SoloTimelock {
         if (msg.sender != admin) revert OnlyAdmin();
         allowedExecutionTarget[target] = allowed;
         emit AllowedExecutionTargetSet(target, allowed);
+    }
+
+    /// @notice Governor→Timelock self-execute only. Bounds: [12h, 7d].
+    function updateDelay(uint256 newDelay) external {
+        if (msg.sender != address(this)) revert OnlySelf();
+        if (
+            newDelay < TtgV9DesignLockConstants.TIMELOCK_MIN_DELAY_SECONDS
+                || newDelay > TtgV9DesignLockConstants.TIMELOCK_MAX_DELAY_SECONDS
+        ) {
+            revert InvalidDelay();
+        }
+        uint256 prev = delay;
+        delay = newDelay;
+        emit DelayUpdated(prev, newDelay);
     }
 
     function hashOperation(address target, uint256 value, bytes calldata data, bytes32 salt)

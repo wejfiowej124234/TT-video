@@ -6,10 +6,11 @@ machine_key: V9_PERIPHERY_GOVERNANCE_UPGRADE_FREEZE
 status: DESIGN_FREEZE
 design_freeze: LOCKED
 design_phase: CLOSED
-next_phase: engineering_from_clean_worktree
-next_gate: LOCAL
+next_phase: audit_1_smart_contract
+next_gate: AUDIT_1
 clean_worktree: PASS
 triage: PASS_WITH_OWNER_RESOLUTION
+local: PASS
 governor_migration: NEW
 timelock_migration: NEW_12H
 old_governor_timelock: ACTIVE_UNTIL_CUTOVER
@@ -19,6 +20,7 @@ tt_production_go: NO_GO
 mainnet_broadcast: NOT_AUTHORIZED
 old_audit_inheritance: FORBIDDEN
 audit_ladder: "1->2->3"
+local_pass_evidence: evidence/GO_ttg_v9_periphery_governance_upgrade/V9_PERIPHERY_GOVERNANCE_UPGRADE_LOCAL_PASS.json
 
 freeze_rule: |
   Do not reopen for general security optimization that changes 25T,

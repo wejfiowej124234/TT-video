@@ -12,7 +12,8 @@ import {TtgV9UUPSUpgradeable} from "./TtgV9UUPSUpgradeable.sol";
  * @dev UUPS under Timelock-only upgrade. Pricing: ttgOut = usdcAmount * 1e18 / usdcRawPerWholeTtg (floor).
  *      Batch close ALWAYS returns unsold to PublicSaleVault. No closeBatchBurn.
  *      Protocol inventory burn is GOVERNANCE_ONLY (Governor → Timelock execute → Vault.burnProtocolInventory).
- *      `setUsdcTreasury` is Timelock-only (Governor→SoloTimelock 48h on Mainnet) — no new storage slots.
+ *      `setUsdcTreasury` is Timelock-only (Governor→Timelock) — no new storage slots.
+ *      `buy` requires minTtgOut + deadline (user slippage protection).
  *      English NatSpec only. solc >= 0.8.36.
  */
 contract TtgBatchPrimaryMarket is TtgV9UUPSUpgradeable {
@@ -63,6 +64,8 @@ contract TtgBatchPrimaryMarket is TtgV9UUPSUpgradeable {
     error AlreadySeeded();
     error BatchFrozenOrOpen();
     error CannotRescueTtg();
+    error DeadlineExpired();
+    error SlippageExceeded();
 
     event TimelockUpdated(address indexed previous, address indexed next);
     event GuardianUpdated(address indexed previous, address indexed next);
@@ -252,7 +255,12 @@ contract TtgBatchPrimaryMarket is TtgV9UUPSUpgradeable {
         emit BatchArmed(batchId, need);
     }
 
-    function buy(uint256 batchId, uint256 usdcAmount) external whenNotPaused {
+    /// @notice Purchase with user slippage protection against governance price changes in-flight.
+    function buy(uint256 batchId, uint256 usdcAmount, uint256 minTtgOut, uint256 deadline)
+        external
+        whenNotPaused
+    {
+        if (block.timestamp > deadline) revert DeadlineExpired();
         Batch storage b = batches[batchId];
         if (b.amountCap == 0) revert BatchNotSeeded();
         if (b.closed) revert BatchAlreadyClosed();
@@ -273,6 +281,7 @@ contract TtgBatchPrimaryMarket is TtgV9UUPSUpgradeable {
 
         uint256 ttgOut = quoteTtg(batchId, usdcAmount);
         if (ttgOut == 0) revert BelowMinPurchase();
+        if (ttgOut < minTtgOut) revert SlippageExceeded();
         uint256 soldNext = uint256(b.sold) + ttgOut;
         if (soldNext > uint256(b.amountCap)) revert CapExceeded();
 

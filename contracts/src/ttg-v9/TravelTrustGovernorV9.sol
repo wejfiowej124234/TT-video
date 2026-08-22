@@ -35,8 +35,8 @@ enum TtgV9ProposalState {
 
 /**
  * @title TravelTrustGovernorV9
- * @notice Governor bound to TTG V9 votes token; queues through existing Timelock.
- * @dev Non-proxy. English NatSpec only. KEEP Timelock address on Mainnet; redeploy this Governor only.
+ * @notice Governor bound to TTG V9 votes token; queues through Timelock.
+ * @dev Non-proxy. English NatSpec only. `timelock` is immutable — NEW 12h root requires NEW Governor deploy.
  */
 contract TravelTrustGovernorV9 {
     ITtgV9GovernanceVotes public immutable token;

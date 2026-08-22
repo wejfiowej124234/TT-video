@@ -1,0 +1,40 @@
+{
+  "stamp": "V9_PERIPHERY_GOVERNANCE_UPGRADE_LOCAL_PASS",
+  "machine_key": "V9_PERIPHERY_GOVERNANCE_UPGRADE_LOCAL_PASS",
+  "recorded_at_utc": "2026-08-22T01:57:30Z",
+  "git_sha_at_triage_unlock": "52170f21eac859c30e40bc01be372c814215c504",
+  "note": "Local Candidate implementation + FOUNDRY_PROFILE=ttg_v9 forge test --match-path test/ttg-v9/* PASS (89/0). This commit is the Local PASS Candidate body. AUDIT_1_CANDIDATE_SHA is pinned in a follow-up stamp to THIS commit SHA. Prior Exact-Match pins INVALIDATED for this Candidate; no new Exact-Match conclusion is issued here.",
+  "LOCAL": "PASS",
+  "NEXT_GATE": "AUDIT_1",
+  "forge_profile": "ttg_v9",
+  "forge_version": "1.5.1-stable",
+  "solc": "0.8.36",
+  "test_suites_passed": 9,
+  "tests_passed": 89,
+  "tests_failed": 0,
+  "console_log": "evidence/GO_ttg_v9_periphery_governance_upgrade/forge-local-ttg-v9.console.log",
+  "local_deliverables": [
+    "TtgV9SoloTimelock.delay storage + updateDelay self-only bounds [12h,7d]",
+    "TIMELOCK_DELAY_SECONDS_NEW_ROOT = 12 hours (historical 48h constant retained)",
+    "NEW TtgV9CountryFeeRouterV2: platformFeeBps + Active split governable; no-steward fixed 100% independent branch",
+    "TtgBatchPrimaryMarket.buy(batchId, usdcAmount, minTtgOut, deadline)",
+    "TravelTrustGovernorV9 NatSpec: immutable timelock => NEW Governor for NEW 12h root",
+    "Unit coverage: FeeRouterV2 + Timelock updateDelay + PM slippage/deadline + PreTreasury upgrade path"
+  ],
+  "NOT_DONE": [
+    "Audit #1",
+    "Sepolia Reality / broadcast",
+    "Exact-Match Candidate Freeze",
+    "Mainnet broadcast",
+    "TT_PRODUCTION_GO flip"
+  ],
+  "AUDIT_LADDER": "1->2->3",
+  "OLD_AUDIT_INHERITANCE": "FORBIDDEN",
+  "MAINNET_BROADCAST": "NOT_AUTHORIZED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "NO_OWNER_ECONOMIC_OR_AUTHORITY_DRIFT": true,
+  "GOVERNOR_MIGRATION": "NEW",
+  "TIMELOCK_MIGRATION": "NEW_12H",
+  "OLD_GOVERNOR_TIMELOCK": "ACTIVE_UNTIL_CUTOVER",
+  "exact_match": "NOT_ISSUED"
+}

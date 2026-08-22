@@ -106,7 +106,7 @@ contract TtgV9RemintLocalTest is Test {
         vm.prank(buyer);
         usdc.approve(address(market), type(uint256).max);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         // Armed unclosed → burn blocked.
         vm.expectRevert(TtgPublicSaleVault.BurnWhileBatchActiveOrArmed.selector);
         vm.prank(address(timelock));
@@ -221,7 +221,7 @@ contract TtgV9RemintLocalTest is Test {
         vm.prank(buyer);
         usdc.approve(address(market), type(uint256).max);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         assertEq(ttg.balanceOf(buyer), 1_000_000 ether);
         assertEq(usdc.balanceOf(p4cap), 1e6);
 
@@ -229,7 +229,7 @@ contract TtgV9RemintLocalTest is Test {
         market.pause();
         vm.expectRevert(TtgBatchPrimaryMarket.Paused.selector);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         // Close must work while paused (cannot trap RETURN inventory).
         vm.warp(TtgV9Constants.batchStartTimestamp(2));
         market.closeBatchReturn(1);
@@ -254,9 +254,9 @@ contract TtgV9RemintLocalTest is Test {
         usdc.approve(address(market), type(uint256).max);
         vm.expectRevert(TtgBatchPrimaryMarket.BatchNotOpen.selector);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         vm.prank(buyer);
-        market.buy(2, 1e6);
+        market.buy(2, 1e6, 0, type(uint256).max);
         assertEq(ttg.balanceOf(buyer), (uint256(1e6) * 1 ether) / 3);
     }
 

@@ -100,12 +100,12 @@ contract TtgV9BatchPrimaryMarketTreasuryGovernedTest is Test {
     }
 
     function test_upgrade_zero_drift_then_setTreasury_and_buy_to_poolV2() public {
-        // Pre-upgrade purchase to legacy pool (proves PreTreasury path)
+        // Pre-upgrade purchase to legacy pool (proves PreTreasury 2-arg buy path)
         vm.warp(TtgV9Constants.batchStartTimestamp(1));
         vm.prank(buyer);
         usdc.approve(address(market), type(uint256).max);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        TtgBatchPrimaryMarketPreTreasury(address(market)).buy(1, 1e6);
         assertEq(usdc.balanceOf(legacyPool), 1e6);
         assertEq(usdc.balanceOf(address(poolV2)), 0);
 
@@ -192,7 +192,7 @@ contract TtgV9BatchPrimaryMarketTreasuryGovernedTest is Test {
         uint256 legacyBefore = usdc.balanceOf(legacyPool);
         uint256 v2Before = usdc.balanceOf(address(poolV2));
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         assertEq(usdc.balanceOf(legacyPool), legacyBefore);
         assertEq(usdc.balanceOf(address(poolV2)), v2Before + 1e6);
     }

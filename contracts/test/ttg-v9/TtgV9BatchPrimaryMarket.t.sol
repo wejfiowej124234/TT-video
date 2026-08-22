@@ -76,7 +76,7 @@ contract TtgV9BatchPrimaryMarketTest is Test {
         usdc.approve(address(market), type(uint256).max);
         vm.expectRevert(TtgBatchPrimaryMarket.BatchNotOpen.selector);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
     }
 
     function test_batch1_one_usdc_yields_one_million_ttg() public {
@@ -85,7 +85,7 @@ contract TtgV9BatchPrimaryMarketTest is Test {
         vm.prank(buyer);
         usdc.approve(address(market), type(uint256).max);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         assertEq(ttg.balanceOf(buyer), 1_000_000 ether);
         assertEq(usdc.balanceOf(p4cap), 1e6);
         (,,,, uint256 sold,,,,) = market.batches(1);
@@ -103,9 +103,9 @@ contract TtgV9BatchPrimaryMarketTest is Test {
         usdc.approve(address(market), type(uint256).max);
         vm.expectRevert(TtgBatchPrimaryMarket.BatchNotOpen.selector);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         vm.prank(buyer);
-        market.buy(2, 1e6);
+        market.buy(2, 1e6, 0, type(uint256).max);
         assertEq(ttg.balanceOf(buyer), (uint256(1e6) * 1 ether) / 3);
     }
 
@@ -117,11 +117,11 @@ contract TtgV9BatchPrimaryMarketTest is Test {
         usdc.approve(address(market), type(uint256).max);
         vm.expectRevert(TtgBatchPrimaryMarket.Paused.selector);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         vm.prank(timelock);
         market.unpause();
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         assertEq(ttg.balanceOf(buyer), 1_000_000 ether);
     }
 
@@ -137,7 +137,7 @@ contract TtgV9BatchPrimaryMarketTest is Test {
         vm.prank(buyer);
         usdc.approve(address(market), type(uint256).max);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
         uint256 vaultAfterArmBuy = vault.inventory();
         assertEq(vaultAfterArmBuy, PUBLIC_INVENTORY - 1_250_000_000 ether);
         vm.warp(end);
@@ -158,10 +158,38 @@ contract TtgV9BatchPrimaryMarketTest is Test {
         vm.prank(buyer);
         usdc.approve(address(market), type(uint256).max);
         vm.prank(buyer);
-        market.buy(1, 1250e6);
+        market.buy(1, 1250e6, 0, type(uint256).max);
         vm.expectRevert(TtgBatchPrimaryMarket.CapExceeded.selector);
         vm.prank(buyer);
-        market.buy(1, 1e6);
+        market.buy(1, 1e6, 0, type(uint256).max);
+    }
+
+    function test_buy_deadline_expired() public {
+        vm.warp(TtgV9Constants.batchStartTimestamp(1));
+        vm.prank(buyer);
+        usdc.approve(address(market), type(uint256).max);
+        vm.expectRevert(TtgBatchPrimaryMarket.DeadlineExpired.selector);
+        vm.prank(buyer);
+        market.buy(1, 1e6, 0, block.timestamp - 1);
+    }
+
+    function test_buy_slippage_exceeded() public {
+        vm.warp(TtgV9Constants.batchStartTimestamp(1));
+        vm.prank(buyer);
+        usdc.approve(address(market), type(uint256).max);
+        // Batch1: 1 USDC -> 1_000_000 TTG; require one wei more → SlippageExceeded
+        vm.expectRevert(TtgBatchPrimaryMarket.SlippageExceeded.selector);
+        vm.prank(buyer);
+        market.buy(1, 1e6, 1_000_000 ether + 1, type(uint256).max);
+    }
+
+    function test_buy_minTtgOut_exact_ok() public {
+        vm.warp(TtgV9Constants.batchStartTimestamp(1));
+        vm.prank(buyer);
+        usdc.approve(address(market), type(uint256).max);
+        vm.prank(buyer);
+        market.buy(1, 1e6, 1_000_000 ether, block.timestamp);
+        assertEq(ttg.balanceOf(buyer), 1_000_000 ether);
     }
 
     function test_too_early_permissionless_close() public {

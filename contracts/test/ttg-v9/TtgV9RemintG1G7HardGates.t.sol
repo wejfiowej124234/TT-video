@@ -100,7 +100,7 @@ contract TtgV9RemintG1G7HardGatesTest is Test {
         vm.prank(buyer);
         usdc.approve(address(b.market), type(uint256).max);
         vm.prank(buyer);
-        b.market.buy(1, 1e6);
+        b.market.buy(1, 1e6, 0, type(uint256).max);
         uint256 buyerBal = b.token.balanceOf(buyer);
         assertGt(buyerBal, 0);
 
@@ -226,7 +226,7 @@ contract TtgV9RemintG1G7HardGatesTest is Test {
         vm.prank(buyer);
         usdc.approve(address(b.market), type(uint256).max);
         vm.prank(buyer);
-        b.market.buy(1, 10e6);
+        b.market.buy(1, 10e6, 0, type(uint256).max);
         assertEq(b.token.totalSupply(), s0);
         vm.warp(TtgV9Constants.batchStartTimestamp(2));
         b.market.closeBatchReturn(1);

@@ -3,12 +3,15 @@
 **STATUS:** `DESIGN_FREEZE` · **`LOCKED`** · design-phase **CLOSED**  
 **Machine:** `V9_PERIPHERY_GOVERNANCE_UPGRADE_FREEZE`  
 **Recorded:** 2026-08-22  
-**Next phase:** Engineering from **Clean worktree** (not further scheme debate)  
+**Engineering:** Clean → Triage → **Local PASS**  
+**Next gate:** **Audit #1** (smart-contract / ACL / UUPS / Timelock / governance hygiene)  
 **`TT_PRODUCTION_GO`:** NO_GO · independent · not flipped by this freeze  
 
 | Machine flag | Value |
 |--------------|-------|
 | `DESIGN_FREEZE` | **LOCKED** |
+| `CLEAN` / `TRIAGE` / `LOCAL` | **PASS** / **PASS_WITH_OWNER_RESOLUTION** / **PASS** |
+| `NEXT_GATE` | **AUDIT_1** |
 | `AUDIT_LADDER` | **#1 → #2 → #3** |
 | `OLD_AUDIT_INHERITANCE` | **FORBIDDEN** |
 | `MAINNET_BROADCAST` | **NOT_AUTHORIZED** |
