@@ -1,0 +1,26 @@
+{
+  "stamp": "V9_PERIPHERY_GOVERNANCE_UPGRADE_WAITING_ETA_DOCUMENTATION_CLOSURE",
+  "machine_key": "V9_PERIPHERY_GOVERNANCE_UPGRADE_WAITING_ETA_DOCUMENTATION_CLOSURE",
+  "recorded_at_utc": "2026-08-22T02:47:27Z",
+  "AUDIT_1_CANDIDATE_SHA": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+  "candidate_solidity_modified": false,
+  "SEPOLIA_REALITY": "IN_PROGRESS",
+  "TIMELOCK_REALITY_CERT": "SINGLE_12H_CYCLE_THIS_ROUND",
+  "NEXT_AFTER_PASS": "AUDIT_2",
+  "EXACT_MATCH": "NOT_ISSUED",
+  "OLD_AUDIT_INHERITANCE": "FORBIDDEN",
+  "MAINNET_BROADCAST": "NOT_AUTHORIZED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "audit_2": "PREP_ONLY_NO_PASS",
+  "release_gates": "PREP_SKELETON_ONLY_NO_PASS",
+  "committed_surfaces": [
+    "TtgV9PeripheryGovernanceSepoliaRehearsal.s.sol",
+    "run-ttg-v9-periphery-governance-sepolia-reality.sh",
+    "V9_OWNER_SEPOLIA_REALITY_AUTHORIZATION.json",
+    "V9_PERIPHERY_GOVERNANCE_UPGRADE_SEPOLIA_DEPLOYED_WAITING_ETA.json",
+    "sepolia-reality.addresses.env",
+    "Freeze/Audit1/Sepolia runbooks + Registry",
+    "Audit2 prep + release-gates prep skeleton"
+  ],
+  "stop": "continue waiting ETA; do not claim Sepolia PASS"
+}

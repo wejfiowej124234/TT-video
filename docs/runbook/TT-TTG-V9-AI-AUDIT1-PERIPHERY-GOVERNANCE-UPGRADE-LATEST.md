@@ -33,7 +33,8 @@
 | `TravelTrustGovernorV9.sol` | NatSpec only (immutable timelock ⇒ NEW Governor) |
 | Tests under `contracts/test/ttg-v9/*` | Local gate evidence |
 
-Out of scope for this stamp: Sepolia Reality, Audit #2/#3, Exact-Match Freeze, Mainnet wiring.
+Out of scope for this stamp: Audit #2/#3 PASS claims, Exact-Match Freeze, Mainnet wiring.  
+**Sepolia:** Owner-authorized · **IN_PROGRESS** (WAITING_ETA) on this same Candidate SHA — does **not** alter this Audit #1 PASS.
 
 ---
 
@@ -108,13 +109,15 @@ Solo admin unilateral schedule / allowlist = **ACCEPT_DESIGN** (NO SAFE · Owner
 ## Next (hard)
 
 ```text
-Audit #1 PASS (this Candidate SHA)
-  → Sepolia Reality  (REQUIRES Owner auth; broadcast NOT auto)
-  → Audit #2
+Audit #1 PASS (this Candidate SHA) — FROZEN binding
+  → Sepolia Reality = IN_PROGRESS (WAITING_ETA · single 12h Timelock cert · same-ETA gov batch)
+  → on Sepolia PASS_STOP → Audit #2 only
   → … ladder …
 Exact-Match = NOT_ISSUED
 MAINNET_BROADCAST = NOT_AUTHORIZED
+OLD_AUDIT_INHERITANCE = FORBIDDEN
 TT_PRODUCTION_GO = NO_GO
 ```
 
-If any Audit #1 remediation edits Solidity under this Candidate ⇒ **invalidate this PASS**, pin new `AUDIT_1_CANDIDATE_SHA`, re-run Audit #1.
+If any Audit #1 remediation edits Solidity under this Candidate ⇒ **invalidate this PASS**, pin new `AUDIT_1_CANDIDATE_SHA`, re-run Audit #1.  
+WAITING_ETA documentation closure must **not** modify Candidate-bound Solidity.

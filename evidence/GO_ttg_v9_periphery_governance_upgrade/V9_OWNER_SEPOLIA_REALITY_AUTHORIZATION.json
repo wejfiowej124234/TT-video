@@ -1,0 +1,25 @@
+{
+  "stamp": "V9_OWNER_SEPOLIA_REALITY_AUTHORIZATION",
+  "recorded_at_utc": "2026-08-22T02:12:52Z",
+  "owner_auth": "SEPOLIA_REALITY",
+  "AUDIT_1_CANDIDATE_SHA": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+  "scope": "controlled Sepolia deploy + full lifecycle Reality for periphery governance upgrade Candidate",
+  "must_verify": [
+    "NEW Governor + 12h Timelock",
+    "ProjectPoolV2",
+    "FeeRouterV2",
+    "platform fee governance",
+    "Active Steward Split governance sum=10000",
+    "no-steward fixed 100%\u2192ProjectPool",
+    "Pool cap 0\u2013100%",
+    "PM Treasury + minTtgOut/deadline",
+    "TTG KEEP/no-remint",
+    "frozen economics/authority/Money Path zero drift"
+  ],
+  "on_code_fix_required": "STOP; invalidate Audit #1 PASS; return Local\u2192Audit #1",
+  "on_all_pass": "freeze Sepolia Reality evidence STOP; NEXT_GATE=AUDIT_2 only",
+  "EXACT_MATCH": "NOT_ISSUED",
+  "MAINNET_BROADCAST": "NOT_AUTHORIZED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "TRAVELTRUST_TTG_V9_PERIPHERY_SEPOLIA_OK": "1"
+}

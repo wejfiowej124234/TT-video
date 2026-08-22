@@ -3,17 +3,19 @@
 **STATUS:** `DESIGN_FREEZE` · **`LOCKED`** · design-phase **CLOSED**  
 **Machine:** `V9_PERIPHERY_GOVERNANCE_UPGRADE_FREEZE`  
 **Recorded:** 2026-08-22  
-**Engineering:** Clean → Triage → **Local PASS**  
-**Next gate:** **Sepolia Reality** (broadcast NOT_AUTHORIZED) · Audit #1 PASS on `b19b85810c22677d243a82d06ebec8ebcb4d4b47` (smart-contract / ACL / UUPS / Timelock / governance hygiene)  
+**Engineering:** Clean → Triage → Local PASS → **Audit #1 PASS** → **Sepolia Reality IN_PROGRESS**  
+**Living gate:** waiting Timelock ETA (`READY_AT=1787408352` · ~2026-08-22 14:19 UTC) on Candidate `b19b85810c22677d243a82d06ebec8ebcb4d4b47`  
+**After Sepolia PASS:** **NEXT = Audit #2 only**  
 **`TT_PRODUCTION_GO`:** NO_GO · independent · not flipped by this freeze  
 
 | Machine flag | Value |
 |--------------|-------|
 | `DESIGN_FREEZE` | **LOCKED** |
 | `CLEAN` / `TRIAGE` / `LOCAL` | **PASS** / **PASS_WITH_OWNER_RESOLUTION** / **PASS** |
-| `AUDIT_1` | **PASS** (candidate-scoped) |
-| `NEXT_GATE` | **SEPOLIA_REALITY** |
-| `SEPOLIA_BROADCAST` | **NOT_AUTHORIZED** |
+| `AUDIT_1` | **PASS** (candidate-scoped · SHA below) |
+| `SEPOLIA_REALITY` | **IN_PROGRESS** (deployed 29/29 · WAITING_ETA) |
+| `TIMELOCK_REALITY_CERT` | **SINGLE_12H_CYCLE_THIS_ROUND** (TooEarly→12h→Executable once; same-ETA gov batch) |
+| `NEXT_AFTER_SEPOLIA_PASS` | **AUDIT_2** |
 | `AUDIT_1_CANDIDATE_SHA` | `b19b85810c22677d243a82d06ebec8ebcb4d4b47` |
 | `EXACT_MATCH` | **NOT_ISSUED** |
 | `AUDIT_LADDER` | **#1 → #2 → #3** |
@@ -22,7 +24,10 @@
 | `TT_PRODUCTION_GO` | **NO_GO** |  
 
 **Parents:** [Security Audit Ladder](TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md) · Owner Design Lock · Monetary Invariant  
-**Registry:** [`registry/ttg-v9-periphery-governance-upgrade-freeze.v1.yaml`](../../registry/ttg-v9-periphery-governance-upgrade-freeze.v1.yaml)
+**Registry:** [`registry/ttg-v9-periphery-governance-upgrade-freeze.v1.yaml`](../../registry/ttg-v9-periphery-governance-upgrade-freeze.v1.yaml)  
+**Audit #1:** [TT-TTG-V9-AI-AUDIT1-PERIPHERY-GOVERNANCE-UPGRADE-LATEST](TT-TTG-V9-AI-AUDIT1-PERIPHERY-GOVERNANCE-UPGRADE-LATEST.md)  
+**Sepolia waiting:** `evidence/GO_ttg_v9_periphery_governance_upgrade/V9_PERIPHERY_GOVERNANCE_UPGRADE_SEPOLIA_DEPLOYED_WAITING_ETA.json`  
+**Owner Sepolia auth:** `evidence/GO_ttg_v9_periphery_governance_upgrade/V9_OWNER_SEPOLIA_REALITY_AUTHORIZATION.json`
 
 ---
 
