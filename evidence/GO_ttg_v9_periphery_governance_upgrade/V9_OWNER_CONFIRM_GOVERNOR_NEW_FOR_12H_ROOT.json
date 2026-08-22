@@ -1,0 +1,43 @@
+{
+  "stamp": "V9_OWNER_CONFIRM_GOVERNOR_NEW_FOR_12H_ROOT",
+  "machine_key": "OWNER_CONFIRM_GOVERNOR_NEW_FOR_12H_ROOT",
+  "recorded_at_utc": "2026-08-22T01:51:52Z",
+  "git_sha_at_record": "1b5e929edcdbacef16bb2e9b6fa07e4c36f60224",
+  "verdict": "APPROVED",
+  "resolves_conflict": "GOVERNOR_TIMELOCK_IMMUTABLE_BLOCKS_REBIND",
+  "approved": {
+    "NEW_Governor": true,
+    "NEW_SoloTimelock_default_delay_seconds": 43200,
+    "NO_SAFE": true,
+    "old_governor": "0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c",
+    "old_solo_timelock_48h": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+    "legacy_when": "after_new_root_wired_and_OLD_ACTIVE_REFS_eq_0",
+    "TTG_KEEP": "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9",
+    "forbid_new_genesis_remint": true
+  },
+  "no_drift": [
+    "25T",
+    "Genesis_allocation",
+    "platform_fee_governable_semantics",
+    "active_steward_split_sum_10000",
+    "no_steward_100_to_project_pool_fixed",
+    "project_pool_cap_0_10000",
+    "wallet_roles",
+    "money_path_semantics",
+    "other_design_freeze_facts"
+  ],
+  "this_auth_does_NOT": [
+    "sepolia_broadcast",
+    "mainnet_broadcast",
+    "tt_production_go_flip"
+  ],
+  "status_after": {
+    "TRIAGE": "PASS_WITH_OWNER_RESOLUTION",
+    "GOVERNOR_MIGRATION": "NEW",
+    "TIMELOCK_MIGRATION": "NEW_12H",
+    "OLD_GOVERNOR_TIMELOCK": "ACTIVE_UNTIL_CUTOVER",
+    "NEXT_GATE": "LOCAL",
+    "MAINNET_BROADCAST": "NOT_AUTHORIZED",
+    "TT_PRODUCTION_GO": "NO_GO"
+  }
+}

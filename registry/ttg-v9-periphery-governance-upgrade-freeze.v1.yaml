@@ -7,9 +7,13 @@ status: DESIGN_FREEZE
 design_freeze: LOCKED
 design_phase: CLOSED
 next_phase: engineering_from_clean_worktree
-next_gate: OWNER_CONFIRM_GOVERNOR_NEW_FOR_12H_ROOT
+next_gate: LOCAL
 clean_worktree: PASS
-triage: STOP_OWNER_CONFIRM
+triage: PASS_WITH_OWNER_RESOLUTION
+governor_migration: NEW
+timelock_migration: NEW_12H
+old_governor_timelock: ACTIVE_UNTIL_CUTOVER
+owner_confirm_governor_new_12h: APPROVED
 recorded_at_utc: "2026-08-22"
 tt_production_go: NO_GO
 mainnet_broadcast: NOT_AUTHORIZED
