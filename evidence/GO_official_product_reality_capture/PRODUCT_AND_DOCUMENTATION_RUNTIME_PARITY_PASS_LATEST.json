@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.product_and_documentation_runtime_parity_pass.v1",
-  "issued_utc": "2026-08-22T07:50:56Z",
+  "issued_utc": "2026-08-22T08:48:33Z",
   "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
   "compare_artifact": "OFFICIAL_RUNTIME_REALITY_COMPARE_LATEST.json",
   "schema_parity_artifact": "OFFICIAL_PRODUCT_REALITY_COMPARE_LATEST.json",

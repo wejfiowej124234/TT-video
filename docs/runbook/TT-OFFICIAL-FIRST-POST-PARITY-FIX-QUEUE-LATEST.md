@@ -25,8 +25,8 @@ Machine: [`POST_PARITY_FIX_QUEUE_20260822.json`](../../evidence/GO_official_prod
 
 | Batch | 范围 | Items | Gate |
 |-------|------|-------|------|
-| **1 · CMS/OCS** | 公告公开路由 · OCS 媒体可读 | M7-07 · M7-08 | `python scripts/gates/run-post-parity-fix-queue-batch1-cms-ocs.py --api …` |
-| 2 · Admin/Auth | （待 Batch 1 PASS） | — | TBD |
+| **1 · CMS/OCS** | 公告公开路由 · OCS 媒体可读 | M7-07 · M7-08 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_PASS_STOP` (`2026-08-22T08:48:33Z`) |
+| **2 · Admin/Auth** | （ACTIVE） | — | TBD |
 | 3 · UI/UX | FIVE-MAIN 已冻结 · 仅数据链/门闸 | — | TBD |
 | 4 · 功能缺陷 | M8-07 等 | M8-07 | TBD |
 | 5 · Assets/i18n | M8-08 等 | M8-08 | TBD |

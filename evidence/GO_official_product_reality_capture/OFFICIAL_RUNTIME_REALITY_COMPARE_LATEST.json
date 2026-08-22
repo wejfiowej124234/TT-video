@@ -1,11 +1,11 @@
 {
   "schema": "traveltrust.official_runtime_reality_compare.v1",
-  "recorded_utc": "2026-08-22T07:50:56Z",
+  "recorded_utc": "2026-08-22T08:48:25Z",
   "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
   "targets": {
     "api": "https://tt-api-staging.fly.dev",
     "web": "https://tt-web-staging.fly.dev",
-    "git_head": "2275b68342cb4381a3f6f096ed7590a3fd070296"
+    "git_head": "3c1128ebd6df0974291580db46cd922c3fd27176"
   },
   "checks": {
     "health": {
@@ -17,8 +17,8 @@
     },
     "meta": {
       "status_code": 200,
-      "git_sha": "2275b68342cb4381a3f6f096ed7590a3fd070296",
-      "expected_git_head": "2275b68342cb4381a3f6f096ed7590a3fd070296",
+      "git_sha": "3c1128ebd6df0974291580db46cd922c3fd27176",
+      "expected_git_head": "3c1128ebd6df0974291580db46cd922c3fd27176",
       "sha_matches_git_head": true,
       "not_stale_1915ec4d": true,
       "migration_startup_ok": true,
@@ -53,7 +53,7 @@
       "pass": true
     },
     "cms_public_announcements": {
-      "status_code": 401,
+      "status_code": 200,
       "pass": true,
       "note": "200 after OCS seed; 401/404 acceptable pre-auth or empty"
     }

@@ -11,7 +11,7 @@
   },
   "matrix_version": "admin-rbac-v4-cms-ops-growth-2026-06-07",
   "registry_version": "adm-u01-staging-2026-06-03",
-  "generated_at": "20260822T072812Z",
+  "generated_at": "20260822T083735Z",
   "roles": [
     "SuperAdmin",
     "Ops",

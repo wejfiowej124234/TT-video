@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch1_cms_ocs_pass_stop.v1",
+  "issued_utc": "2026-08-22T08:49:51Z",
+  "stamp": "20260822T083122Z",
+  "track": "POST_PARITY_FIX_QUEUE",
+  "batch": "1_cms_ocs",
+  "baseline": "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS",
+  "deploy_git_sha": "3c1128ebd6df0974291580db46cd922c3fd27176",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "items_closed": [
+    "M7-07",
+    "M7-08"
+  ],
+  "POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_PASS_STOP": "ISSUED",
+  "BATCH1_CMS_OCS_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "RUNTIME_PARITY_GAPS": "0",
+  "tt_production_go": "NO_GO",
+  "next_batch": "admin_auth",
+  "web3_ladder": "sepolia_reality_independent",
+  "artifacts": {
+    "batch_gate": "POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_LATEST.json",
+    "post_deploy_log": "staging_post_deploy_batch1_closure_20260822T083122Z.log",
+    "ocs_seed": "staging_ocs_seed_20260822T083122Z",
+    "ocs_asset_bootstrap": "staging_ocs_asset_bootstrap_20260822T083122Z.json",
+    "runtime_compare": "OFFICIAL_RUNTIME_REALITY_COMPARE_LATEST.json"
+  },
+  "notes": {
+    "web_release_identity": "3e356617 pin ED (www not redeployed)",
+    "ocs_asset_bootstrap": "fly_ssh failed; http_probe_existing remote_ok=60"
+  }
+}

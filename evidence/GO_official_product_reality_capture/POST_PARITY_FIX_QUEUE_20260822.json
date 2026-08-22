@@ -9,19 +9,21 @@
       "class": "DEFECT",
       "surface": "Official community media upload URLs 404",
       "queue": "POST_PARITY_FIX_QUEUE",
-      "fix_this_wave": true,
+      "fix_this_wave": false,
       "batch": "cms_ocs",
-      "status": "ACTIVE"
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T08:50:25Z"
     },
     {
       "id": "M7-08",
       "class": "DEFECT",
       "surface": "cms/public/announcements 401 vs public 200",
       "queue": "POST_PARITY_FIX_QUEUE",
-      "fix_this_wave": true,
+      "fix_this_wave": false,
       "note": "public announcements API 200 confirmed on /api/v1/public/announcements",
       "batch": "cms_ocs",
-      "status": "ACTIVE"
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T08:50:25Z"
     },
     {
       "id": "M8-07",
@@ -42,5 +44,5 @@
     "functional_defects",
     "assets_i18n"
   ],
-  "active_batch": "cms_ocs"
+  "active_batch": "admin_auth"
 }

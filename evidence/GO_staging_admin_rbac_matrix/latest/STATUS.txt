@@ -3,4 +3,4 @@ phase: ②
 artifact: ADM-U01
 release_gate: GO
 api_base: https://tt-api-staging.fly.dev
-at: 20260822T072812Z
+at: 20260822T083735Z

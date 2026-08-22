@@ -2,7 +2,7 @@
   "schema": "traveltrust.official_first_clean_rebuild_status.v1",
   "status": "ACTIVE",
   "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
-  "recorded_utc": "2026-08-22T07:50:56Z",
+  "recorded_utc": "2026-08-22T08:48:33Z",
   "supersedes": "local_staging_archaeological_drift_repair",
   "gate": "PRODUCT_AND_DOCUMENTATION_SCHEMA_PARITY",
   "gate_result": "PASS",

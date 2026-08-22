@@ -1,0 +1,43 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch1_cms_ocs.v1",
+  "recorded_utc": "2026-08-22T08:48:33Z",
+  "batch": "1_cms_ocs",
+  "baseline": "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS",
+  "api": "https://tt-api-staging.fly.dev",
+  "checks": {
+    "m7_08_public_announcements": {
+      "status_code": 200,
+      "pass": true
+    },
+    "m7_08_cms_public_announcements": {
+      "status_code": 200,
+      "pass": true,
+      "note": "must not return 401 under STRICT_SESSION_GATE"
+    },
+    "m7_07_community_media_sample": [
+      {
+        "filename": "ocs-tokyo-photo-guide-avatar.jpg",
+        "status_code": 200,
+        "pass": true
+      },
+      {
+        "filename": "ocs-tokyo-photo-provider-cover.jpg",
+        "status_code": 200,
+        "pass": true
+      },
+      {
+        "filename": "ocs-tokyo-photo-acquisition-cover.jpg",
+        "status_code": 200,
+        "pass": true
+      }
+    ]
+  },
+  "gaps": [],
+  "BATCH1_CMS_OCS_PASS": "ISSUED",
+  "tt_production_go": "NO_GO",
+  "non_target_drift": {
+    "candidate_solidity": "0",
+    "production_db_mutation": "0",
+    "tt_production_go_flip": "0"
+  }
+}
