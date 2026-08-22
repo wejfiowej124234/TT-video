@@ -7,7 +7,10 @@ status: DESIGN_FREEZE
 design_freeze: LOCKED
 design_phase: CLOSED
 next_phase: audit_1_smart_contract
-next_gate: AUDIT_1_IN_PROGRESS
+next_gate: SEPOLIA_REALITY
+audit_1: PASS
+audit_1_pass_stamp: evidence/GO_ttg_v9_periphery_governance_upgrade/V9_AI_AUDIT1_PERIPHERY_GOVERNANCE_UPGRADE_PASS.json
+sepolia_broadcast: NOT_AUTHORIZED
 clean_worktree: PASS
 triage: PASS_WITH_OWNER_RESOLUTION
 local: PASS

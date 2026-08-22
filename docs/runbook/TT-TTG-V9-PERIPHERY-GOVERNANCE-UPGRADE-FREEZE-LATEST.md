@@ -4,14 +4,16 @@
 **Machine:** `V9_PERIPHERY_GOVERNANCE_UPGRADE_FREEZE`  
 **Recorded:** 2026-08-22  
 **Engineering:** Clean → Triage → **Local PASS**  
-**Next gate:** **Audit #1 IN_PROGRESS** · candidate `b19b85810c22677d243a82d06ebec8ebcb4d4b47` (smart-contract / ACL / UUPS / Timelock / governance hygiene)  
+**Next gate:** **Sepolia Reality** (broadcast NOT_AUTHORIZED) · Audit #1 PASS on `b19b85810c22677d243a82d06ebec8ebcb4d4b47` (smart-contract / ACL / UUPS / Timelock / governance hygiene)  
 **`TT_PRODUCTION_GO`:** NO_GO · independent · not flipped by this freeze  
 
 | Machine flag | Value |
 |--------------|-------|
 | `DESIGN_FREEZE` | **LOCKED** |
 | `CLEAN` / `TRIAGE` / `LOCAL` | **PASS** / **PASS_WITH_OWNER_RESOLUTION** / **PASS** |
-| `NEXT_GATE` | **AUDIT_1_IN_PROGRESS** |
+| `AUDIT_1` | **PASS** (candidate-scoped) |
+| `NEXT_GATE` | **SEPOLIA_REALITY** |
+| `SEPOLIA_BROADCAST` | **NOT_AUTHORIZED** |
 | `AUDIT_1_CANDIDATE_SHA` | `b19b85810c22677d243a82d06ebec8ebcb4d4b47` |
 | `EXACT_MATCH` | **NOT_ISSUED** |
 | `AUDIT_LADDER` | **#1 → #2 → #3** |
