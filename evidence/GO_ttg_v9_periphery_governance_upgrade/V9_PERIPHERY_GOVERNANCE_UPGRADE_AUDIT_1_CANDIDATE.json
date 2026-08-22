@@ -1,0 +1,19 @@
+{
+  "stamp": "V9_PERIPHERY_GOVERNANCE_UPGRADE_AUDIT_1_CANDIDATE",
+  "machine_key": "V9_PERIPHERY_GOVERNANCE_UPGRADE_AUDIT_1_CANDIDATE",
+  "recorded_at_utc": "2026-08-22T02:01:55Z",
+  "AUDIT_1_CANDIDATE_SHA": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+  "local_pass_stamp": "V9_PERIPHERY_GOVERNANCE_UPGRADE_LOCAL_PASS",
+  "binds_to_commit_message": "feat(v9): Local PASS periphery governance Candidate (FeeRouterV2, 12h Timelock, PM slippage)",
+  "INVALIDATION_RULE": "Any security-relevant code fix after Audit #1 starts MUST produce a new AUDIT_1_CANDIDATE_SHA and INVALIDATE prior Audit #1 results; re-audit required.",
+  "EXACT_MATCH": "NOT_ISSUED",
+  "prior_exact_match_pins": "INVALIDATED_FOR_THIS_CANDIDATE_NOT_REISSUED",
+  "NEXT_GATE": "AUDIT_1_IN_PROGRESS",
+  "MAINNET_BROADCAST": "NOT_AUTHORIZED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "OLD_AUDIT_INHERITANCE": "FORBIDDEN",
+  "AUDIT_PASS_IS_CANDIDATE_SCOPED": true,
+  "NO_OWNER_ECONOMIC_OR_AUTHORITY_DRIFT": true,
+  "GOVERNOR_MIGRATION": "NEW",
+  "TIMELOCK_MIGRATION": "NEW_12H"
+}
