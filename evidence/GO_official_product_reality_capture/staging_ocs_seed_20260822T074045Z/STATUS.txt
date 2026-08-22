@@ -1,0 +1,5 @@
+TT_OFFICIAL_COLD_START_DATASET: APPLIED
+at=20260822T074045Z
+api=https://tt-api-staging.fly.dev
+manifest=data/official-cold-start/dataset.v1.json
+evidence=evidence/GO_official_product_reality_capture/staging_ocs_seed_20260822T074045Z

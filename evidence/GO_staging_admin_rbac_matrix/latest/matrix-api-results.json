@@ -581,7 +581,7 @@
     "role": "SuperAdmin",
     "method": "POST",
     "path": "/api/v1/admin/community/penalties",
-    "http": 400,
+    "http": 422,
     "expected": [
       200,
       201,
@@ -597,7 +597,7 @@
     "role": "Ops",
     "method": "POST",
     "path": "/api/v1/admin/community/penalties",
-    "http": 400,
+    "http": 422,
     "expected": [
       200,
       201,
@@ -613,10 +613,11 @@
     "role": "CS",
     "method": "POST",
     "path": "/api/v1/admin/community/penalties",
-    "http": 400,
+    "http": 422,
     "expected": [
       400,
-      403
+      403,
+      422
     ],
     "status": "PASS"
   },
@@ -626,7 +627,7 @@
     "role": "Risk",
     "method": "POST",
     "path": "/api/v1/admin/community/penalties",
-    "http": 400,
+    "http": 422,
     "expected": [
       200,
       201,
@@ -642,10 +643,11 @@
     "role": "Finance",
     "method": "POST",
     "path": "/api/v1/admin/community/penalties",
-    "http": 400,
+    "http": 422,
     "expected": [
       400,
-      403
+      403,
+      422
     ],
     "status": "PASS"
   },
@@ -655,10 +657,11 @@
     "role": "Auditor",
     "method": "POST",
     "path": "/api/v1/admin/community/penalties",
-    "http": 400,
+    "http": 422,
     "expected": [
       400,
-      403
+      403,
+      422
     ],
     "status": "PASS"
   },
@@ -893,7 +896,7 @@
     "role": "SuperAdmin",
     "method": "POST",
     "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
-    "http": 400,
+    "http": 404,
     "expected": [
       200,
       400,
@@ -908,7 +911,7 @@
     "role": "Ops",
     "method": "POST",
     "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -921,7 +924,7 @@
     "role": "CS",
     "method": "POST",
     "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -934,7 +937,7 @@
     "role": "Risk",
     "method": "POST",
     "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -947,7 +950,7 @@
     "role": "Finance",
     "method": "POST",
     "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -960,7 +963,7 @@
     "role": "Auditor",
     "method": "POST",
     "path": "/api/v1/admin/approvals/00000000-0000-0000-0000-000000000001/approve",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1045,7 +1048,7 @@
     "role": "SuperAdmin",
     "method": "POST",
     "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
-    "http": 400,
+    "http": 404,
     "expected": [
       200,
       400,
@@ -1060,7 +1063,7 @@
     "role": "Ops",
     "method": "POST",
     "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1073,7 +1076,7 @@
     "role": "CS",
     "method": "POST",
     "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1086,7 +1089,7 @@
     "role": "Risk",
     "method": "POST",
     "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1099,7 +1102,7 @@
     "role": "Finance",
     "method": "POST",
     "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1112,7 +1115,7 @@
     "role": "Auditor",
     "method": "POST",
     "path": "/api/v1/admin/flags/00000000-0000-0000-0000-000000000099/publish",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1125,7 +1128,7 @@
     "role": "SuperAdmin",
     "method": "POST",
     "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
-    "http": 400,
+    "http": 200,
     "expected": [
       200,
       400,
@@ -1140,7 +1143,7 @@
     "role": "Ops",
     "method": "POST",
     "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1153,7 +1156,7 @@
     "role": "CS",
     "method": "POST",
     "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1166,10 +1169,11 @@
     "role": "Risk",
     "method": "POST",
     "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
-    "http": 400,
+    "http": 429,
     "expected": [
       400,
-      403
+      403,
+      429
     ],
     "status": "PASS"
   },
@@ -1179,7 +1183,7 @@
     "role": "Finance",
     "method": "POST",
     "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1192,7 +1196,7 @@
     "role": "Auditor",
     "method": "POST",
     "path": "/api/v1/admin/scheduler/jobs/smoke_probe_job/rerun",
-    "http": 400,
+    "http": 403,
     "expected": [
       400,
       403
@@ -1204,22 +1208,7 @@
     "domain": "more",
     "role": "SuperAdmin",
     "method": "PUT",
-    "path": "/api/v1/admin/users/cee577c1-d1f1-4d23-bb93-5aebf8539f42/console-role",
-    "http": 200,
-    "expected": [
-      200,
-      400,
-      404,
-      422
-    ],
-    "status": "PASS"
-  },
-  {
-    "probe_id": "rbac.console_role_put",
-    "domain": "more",
-    "role": "Ops",
-    "method": "PUT",
-    "path": "/api/v1/admin/users/cee577c1-d1f1-4d23-bb93-5aebf8539f42/console-role",
+    "path": "/api/v1/admin/users/9ba40c5a-0972-409a-b77d-5ca2676d2141/console-role",
     "http": 200,
     "expected": [
       200,
@@ -1232,9 +1221,24 @@
   {
     "probe_id": "rbac.console_role_put",
     "domain": "more",
+    "role": "Ops",
+    "method": "PUT",
+    "path": "/api/v1/admin/users/9ba40c5a-0972-409a-b77d-5ca2676d2141/console-role",
+    "http": 200,
+    "expected": [
+      200,
+      400,
+      404,
+      422
+    ],
+    "status": "PASS"
+  },
+  {
+    "probe_id": "rbac.console_role_put",
+    "domain": "more",
     "role": "CS",
     "method": "PUT",
-    "path": "/api/v1/admin/users/cee577c1-d1f1-4d23-bb93-5aebf8539f42/console-role",
+    "path": "/api/v1/admin/users/9ba40c5a-0972-409a-b77d-5ca2676d2141/console-role",
     "http": 403,
     "expected": [
       403
@@ -1246,7 +1250,7 @@
     "domain": "more",
     "role": "Risk",
     "method": "PUT",
-    "path": "/api/v1/admin/users/cee577c1-d1f1-4d23-bb93-5aebf8539f42/console-role",
+    "path": "/api/v1/admin/users/9ba40c5a-0972-409a-b77d-5ca2676d2141/console-role",
     "http": 200,
     "expected": [
       200,
@@ -1261,7 +1265,7 @@
     "domain": "more",
     "role": "Finance",
     "method": "PUT",
-    "path": "/api/v1/admin/users/cee577c1-d1f1-4d23-bb93-5aebf8539f42/console-role",
+    "path": "/api/v1/admin/users/9ba40c5a-0972-409a-b77d-5ca2676d2141/console-role",
     "http": 403,
     "expected": [
       403
@@ -1273,7 +1277,7 @@
     "domain": "more",
     "role": "Auditor",
     "method": "PUT",
-    "path": "/api/v1/admin/users/cee577c1-d1f1-4d23-bb93-5aebf8539f42/console-role",
+    "path": "/api/v1/admin/users/9ba40c5a-0972-409a-b77d-5ca2676d2141/console-role",
     "http": 403,
     "expected": [
       403

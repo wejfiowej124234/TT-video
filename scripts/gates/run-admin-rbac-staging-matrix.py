@@ -388,6 +388,34 @@ def pg_user_exists(dsn: str, uid: str) -> bool:
         return False
 
 
+def pg_register_user(dsn: str, email: str, nickname: str) -> str:
+    """Staging cold DB may require verification_code on /auth/register — insert via PG."""
+    import uuid
+
+    uid = str(uuid.uuid4())
+    safe_email = email.replace("'", "''")
+    safe_nick = nickname.replace("'", "''")
+    bcrypt = os.environ.get(
+        "ADM_U01_PASSWORD_BCRYPT",
+        "$2b$12$FL0raem8dnHmMB0sGI.qQO061ZZBa6TTf/08kutFMLThVBNR6.VJi",
+    )
+    template_email = os.environ.get("ADM_U01_PG_PASSWORD_TEMPLATE_EMAIL", "tourist@test.com").replace(
+        "'", "''"
+    )
+    psql_exec(
+        dsn,
+        f"""
+INSERT INTO users (id, email, password_hash, role, kyc_status, nickname, created_at, updated_at, email_verified_at, growth_points, growth_fraud_status)
+SELECT '{uid}'::uuid, '{safe_email}',
+       COALESCE((SELECT password_hash FROM users WHERE lower(email) = lower('{template_email}') LIMIT 1), '{bcrypt}'),
+       'traveler', 'none', '{safe_nick}', now(), now(), now(), 0, 'normal'
+ON CONFLICT (email) DO UPDATE SET updated_at = now(), email_verified_at = COALESCE(users.email_verified_at, now());
+""".strip(),
+    )
+    row = psql_query_scalar(dsn, f"SELECT id::text FROM users WHERE lower(email) = lower('{safe_email}') LIMIT 1;")
+    return row or uid
+
+
 def register_user_persisted(base: str, email: str, nickname: str, dsn: str) -> tuple[str, str]:
     attempts = int(os.environ.get("ADM_U01_REGISTER_PG_RETRIES", "6"))
     for attempt in range(attempts):
@@ -396,6 +424,10 @@ def register_user_persisted(base: str, email: str, nickname: str, dsn: str) -> t
         except RuntimeError as err:
             msg = str(err)
             if "409" in msg or "email_already" in msg:
+                return login_user_with_retry(base, email)
+            if "verification_code" in msg and dsn:
+                eprint(f"ADM-U01: register {email} needs verification_code — PG provision …")
+                pg_register_user(dsn, email, nickname)
                 return login_user_with_retry(base, email)
             if attempt + 1 >= attempts:
                 raise
@@ -425,8 +457,33 @@ def email_domain() -> str:
     return raw if raw.startswith("@") else f"@{raw}"
 
 
+def staging_api_restart_for_pg_hydrate(base: str) -> None:
+    """Fly staging login reads chain_off memory; PG-only users need post-insert restart hydrate."""
+    if os.environ.get("ADM_U01_SKIP_FLY_RESTART", "").strip() == "1":
+        return
+    if "tt-api-staging" not in base:
+        return
+    if not shutil.which("fly"):
+        eprint("ADM-U01: fly CLI missing — skip restart hydrate (login may fail for PG-only users)")
+        return
+    eprint("ADM-U01: fly apps restart tt-api-staging (hydrate PG users into memory) …")
+    subprocess.run(
+        ["fly", "apps", "restart", "tt-api-staging"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    for attempt in range(36):
+        code, _ = http_json_curl("GET", f"{base.rstrip('/')}/health")
+        if code == 200:
+            eprint("ADM-U01: staging API healthy after restart")
+            return
+        time.sleep(5)
+    raise RuntimeError("staging API not healthy after fly restart")
+
+
 def provision_tokens(base: str, dsn: str) -> dict[str, str]:
-    """Register via staging API + PG console_role（持久 Fly 多实例安全；不依赖 seed_promote 内存）。"""
+    """PG provision console roles + fly restart hydrate + login (Fly 多实例安全)。"""
     stamp = int(time.time())
     domain = email_domain()
     emails = {
@@ -437,15 +494,17 @@ def provision_tokens(base: str, dsn: str) -> dict[str, str]:
         "Finance": f"adm-u01-fin-{stamp}{domain}",
         "Auditor": f"adm-u01-aud-{stamp}{domain}",
     }
-    ids: dict[str, str] = {}
     tokens: dict[str, str] = {}
     for role, email in emails.items():
         eprint(f"ADM-U01: provision {role} via PG …")
-        reg_tok, uid = register_user_persisted(base, email, f"ADM-U01 {role}", dsn)
+        uid = pg_register_user(dsn, email, f"ADM-U01 {role}")
         promote_admin_via_pg(dsn, uid, role)
-        tokens[role] = reg_tok
-        ids[role] = uid
         eprint(f"ADM-U01: provision {role} OK user_id={uid[:8]}…")
+    staging_api_restart_for_pg_hydrate(base)
+    for role, email in emails.items():
+        tok, uid = login_user_with_retry(base, email)
+        tokens[role] = tok
+        eprint(f"ADM-U01: login {role} OK user_id={uid[:8]}…")
     return tokens
 
 

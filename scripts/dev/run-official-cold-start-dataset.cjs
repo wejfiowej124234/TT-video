@@ -62,6 +62,65 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+/** Staging login is memory-only; PG-only official accounts need API restart to hydrate. */
+async function stagingHydrateApiMemoryAfterOpsAccounts() {
+  if (process.env.TRAVELTRUST_OCS_STAGING_HYDRATE_RESTART !== '1') return;
+  const { execSync } = require('child_process');
+  console.log('ocs: hydrate — fly apps restart tt-api-staging (PG official accounts → memory)');
+  execSync('fly apps restart tt-api-staging', { stdio: 'inherit' });
+  for (let i = 0; i < 36; i += 1) {
+    await sleep(5000);
+    try {
+      const r = await client.req('GET', '/health');
+      if (r.status === 200) {
+        console.log('ocs: API healthy after ops-account hydrate restart');
+        return;
+      }
+    } catch (_) {
+      /* retry */
+    }
+  }
+  throw new Error('API not healthy after OCS ops-account hydrate restart');
+}
+
+async function precreateAllChainOfficialAccounts(adminTok, state, password) {
+  for (const chain of dataset.chains || []) {
+    const specs = [
+      [
+        `guide-acc:${chain.id}`,
+        {
+          slug: chain.guide.slug,
+          account_kind: 'guide',
+          display_label: chain.guide.nickname,
+          nickname: chain.guide.nickname,
+        },
+      ],
+      [
+        `provider-acc:${chain.id}`,
+        {
+          slug: chain.provider.slug,
+          account_kind: 'merchant',
+          display_label: chain.provider.title.slice(0, 40),
+          nickname: chain.provider.title.slice(0, 20),
+        },
+      ],
+      [
+        `acquisition-acc:${chain.id}`,
+        {
+          slug: chain.acquisition.slug,
+          account_kind: 'merchant',
+          display_label: chain.acquisition.title.slice(0, 40),
+          nickname: chain.acquisition.title.slice(0, 20),
+        },
+      ],
+    ];
+    for (const [key, spec] of specs) {
+      await ensureOfficialAccount(adminTok, state, key, spec, password);
+      saveState(state);
+    }
+  }
+}
+
 async function ensureOfficialAccount(adminTok, state, key, spec, password) {
   if (state.accounts[key]?.id) return state.accounts[key];
   const em = email(spec.slug);
@@ -377,27 +436,36 @@ async function ensureCampaigns(adminTok, state) {
     }
   }
 
-  const adminTok = await client.adminLogin(ADMIN_EMAIL, ADMIN_PASS);  const state = loadState();
+  const adminTok = await client.adminLogin(ADMIN_EMAIL, ADMIN_PASS);
+  const state = loadState();
 
   for (const ops of dataset.ops_accounts || []) {
     await ensureOfficialAccount(adminTok, state, ops.slug, ops, OCS_PASS);
     saveState(state);
   }
 
+  await precreateAllChainOfficialAccounts(adminTok, state, OCS_PASS);
+
+  await stagingHydrateApiMemoryAfterOpsAccounts();
+  let chainAdminTok = adminTok;
+  if (process.env.TRAVELTRUST_OCS_STAGING_HYDRATE_RESTART === '1') {
+    chainAdminTok = await client.adminLogin(ADMIN_EMAIL, ADMIN_PASS);
+  }
+
   for (const chain of dataset.chains || []) {
-    await ensureGuideChain(adminTok, state, chain, OCS_PASS);
+    await ensureGuideChain(chainAdminTok, state, chain, OCS_PASS);
     saveState(state);
-    await ensureListing(adminTok, state, chain, 'provider', OCS_PASS);
+    await ensureListing(chainAdminTok, state, chain, 'provider', OCS_PASS);
     saveState(state);
-    await ensureListing(adminTok, state, chain, 'acquisition', OCS_PASS);
+    await ensureListing(chainAdminTok, state, chain, 'acquisition', OCS_PASS);
     saveState(state);
-    await ensureOfficialGuidePost(adminTok, state, chain);
+    await ensureOfficialGuidePost(chainAdminTok, state, chain);
     saveState(state);
-    await ensureCommunityPost(adminTok, state, chain, OCS_PASS);
+    await ensureCommunityPost(chainAdminTok, state, chain, OCS_PASS);
     saveState(state);
   }
 
-  await ensureCampaigns(adminTok, state);
+  await ensureCampaigns(chainAdminTok, state);
   saveState(state);
 
   const report = {

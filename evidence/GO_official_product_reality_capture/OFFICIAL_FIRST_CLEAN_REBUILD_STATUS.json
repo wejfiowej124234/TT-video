@@ -2,7 +2,7 @@
   "schema": "traveltrust.official_first_clean_rebuild_status.v1",
   "status": "ACTIVE",
   "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
-  "recorded_utc": "2026-08-22T06:22:30Z",
+  "recorded_utc": "2026-08-22T07:50:56Z",
   "supersedes": "local_staging_archaeological_drift_repair",
   "gate": "PRODUCT_AND_DOCUMENTATION_SCHEMA_PARITY",
   "gate_result": "PASS",
@@ -11,7 +11,7 @@
     "B_git_reclaim": "MIGRATIONS_COMPLETE",
     "C_local_rebuild": "COMPLETE_FRESH_MIGRATE_157_VIEW_REFRESH",
     "D_staging_rebuild": "COMPLETE",
-    "E_verify_pass": "SCHEMA_COMPLETE_RUNTIME_PENDING"
+    "E_verify_pass": "RUNTIME_COMPLETE"
   },
   "zero_gates": {
     "UNAUTHORIZED_DRIFT": "0",
@@ -54,6 +54,6 @@
   ],
   "PRODUCT_AND_DOCUMENTATION_SCHEMA_PARITY_PASS": "ISSUED",
   "schema_parity_issued_utc": "2026-08-22T06:06:51Z",
-  "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS": "NOT_ISSUED",
-  "runtime_parity_blocker": "STAGING_API_IMAGE_STALE_1915ec4d"
+  "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS": "ISSUED",
+  "runtime_reality_compare": "OFFICIAL_RUNTIME_REALITY_COMPARE_LATEST.json"
 }

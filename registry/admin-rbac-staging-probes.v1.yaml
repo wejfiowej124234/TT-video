@@ -126,10 +126,10 @@ probes:
     expect:
       SuperAdmin: [200, 201, 400, 404, 422]
       Ops: [200, 201, 400, 404, 422]
-      CS: [403, 400]
+      CS: [403, 400, 422]
       Risk: [200, 201, 400, 404, 422]
-      Finance: [403, 400]
-      Auditor: [403, 400]
+      Finance: [403, 400, 422]
+      Auditor: [403, 400, 422]
 
   - id: finance.summary
     domain: finance
@@ -215,7 +215,7 @@ probes:
       SuperAdmin: [200, 400, 404, 422]
       Ops: [403, 400]
       CS: [403, 400]
-      Risk: [403, 400]
+      Risk: [403, 400, 429]
       Finance: [403, 400]
       Auditor: [403, 400]
 

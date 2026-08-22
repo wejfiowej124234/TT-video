@@ -1,0 +1,65 @@
+{
+  "schema": "traveltrust.official_runtime_reality_compare.v1",
+  "recorded_utc": "2026-08-22T07:50:56Z",
+  "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
+  "targets": {
+    "api": "https://tt-api-staging.fly.dev",
+    "web": "https://tt-web-staging.fly.dev",
+    "git_head": "2275b68342cb4381a3f6f096ed7590a3fd070296"
+  },
+  "checks": {
+    "health": {
+      "status_code": 200,
+      "body": {
+        "raw": "ok"
+      },
+      "pass": true
+    },
+    "meta": {
+      "status_code": 200,
+      "git_sha": "2275b68342cb4381a3f6f096ed7590a3fd070296",
+      "expected_git_head": "2275b68342cb4381a3f6f096ed7590a3fd070296",
+      "sha_matches_git_head": true,
+      "not_stale_1915ec4d": true,
+      "migration_startup_ok": true,
+      "pass": true
+    },
+    "release_identity": {
+      "status_code": 200,
+      "body": {
+        "psg_release_version": "PSG-REL-20260720-WEB3-CAND-V2",
+        "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+        "artifact_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+        "image_digest": "gitsha:3e356617a498b0faac42e4ae457343d36294a770",
+        "build_time": "2026-08-22T03:27:28Z",
+        "contract_profile": "v311_fund_safety_candidate_v2",
+        "database_baseline": "staging_rc_ssot_alignment.v1#expected_staging_surface",
+        "cms_baseline": "public_display_10x4 + catalog_bake=1",
+        "attestation_status": "ok",
+        "identity_source": "docker-bake"
+      },
+      "pass": true
+    },
+    "auth_me_unauth": {
+      "status_code": 401,
+      "pass": true,
+      "note": "expect 401/403/404 without session"
+    },
+    "admin_meta_surface": {
+      "pass": true,
+      "note": "admin_exports in /meta"
+    },
+    "schema_parity_carryforward": {
+      "pass": true
+    },
+    "cms_public_announcements": {
+      "status_code": 401,
+      "pass": true,
+      "note": "200 after OCS seed; 401/404 acceptable pre-auth or empty"
+    }
+  },
+  "RUNTIME_API_GAPS": "0",
+  "SCHEMA_PARITY_CARRYFORWARD": "PASS",
+  "RUNTIME_PARITY_GAPS": "0",
+  "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS": "ISSUED"
+}

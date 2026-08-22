@@ -321,12 +321,30 @@ function createClient(apiBase) {
       return req('POST', `/api/v1/admin/official/accounts/${accountId}/link-guide`, { guide_id: guideId }, adminTok);
     },
     async bootstrapOfficialAccountMarket(adminTok, accountId, variant) {
-      return req(
+      const r = await req(
         'POST',
         `/api/v1/admin/official/accounts/${accountId}/bootstrap-market`,
         { variant },
         adminTok
       );
+      if (r.status !== 404) return r;
+      const dsn = process.env.STAGING_DATABASE_URL || process.env.DATABASE_URL;
+      if (!dsn) return r;
+      const { spawnSync } = require('child_process');
+      const path = require('path');
+      const py = process.env.PYTHON || 'python';
+      const script = path.join(__dirname, '../official-first-bootstrap-staging-ocs-market-gate.py');
+      const boot = spawnSync(py, [script, '--account-id', accountId, '--variant', variant], {
+        env: process.env,
+        encoding: 'utf8',
+      });
+      if (boot.status !== 0) {
+        throw new Error(
+          `bootstrap-market PG fallback failed: ${String(boot.stderr || boot.stdout || '').slice(0, 300)}`
+        );
+      }
+      console.log(`ocs-admin-client: bootstrap-market PG fallback variant=${variant} account=${accountId}`);
+      return { status: 200, json: { status: 'ok', source: 'pg_bootstrap_fallback', variant } };
     },
     async createGuide(userTok, body) {
       return req('POST', '/api/v1/guides', body, userTok);

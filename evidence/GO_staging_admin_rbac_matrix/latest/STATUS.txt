@@ -3,6 +3,4 @@ phase: ②
 artifact: ADM-U01
 release_gate: GO
 api_base: https://tt-api-staging.fly.dev
-fe_base: https://tt-web-staging.fly.dev
-deployment_kind: persistent_host
-at: 20260701T093412Z
+at: 20260822T072812Z

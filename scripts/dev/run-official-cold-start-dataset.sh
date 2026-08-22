@@ -12,7 +12,10 @@ export OCS_EVIDENCE_DIR="$EVID"
 export OCS_STAMP="$STAMP"
 
 echo "== OCS apply · $STAMP =="
+set -o pipefail
 node "$ROOT/scripts/dev/run-official-cold-start-dataset.cjs" 2>&1 | tee "$EVID/run.log"
+node_rc="${PIPESTATUS[0]}"
+[[ "$node_rc" -eq 0 ]] || exit "$node_rc"
 
 echo "== post-apply DDG scan =="
 API="$API_BASE" FS_DG_JSON="$EVID/fs-dg-post.json" \
