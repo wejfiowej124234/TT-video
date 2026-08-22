@@ -1,0 +1,44 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch2_admin_auth_pass_stop.v1",
+  "issued_utc": "2026-08-22T09:17:58Z",
+  "stamp": "20260822T091102Z",
+  "track": "POST_PARITY_FIX_QUEUE",
+  "batch": "2_admin_auth",
+  "baseline": "POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_PASS_STOP",
+  "deploy_git_sha": "3c1128ebd6df0974291580db46cd922c3fd27176",
+  "staging_api": "https://tt-api-staging.fly.dev",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "items_closed": [
+    "BA-01",
+    "BA-02",
+    "BA-03",
+    "BA-04",
+    "BA-05",
+    "BA-06"
+  ],
+  "POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP": "ISSUED",
+  "BATCH2_ADMIN_AUTH_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "tt_production_go": "NO_GO",
+  "next_batch": "ui_ux",
+  "web3_ladder": "sepolia_reality_independent",
+  "artifacts": {
+    "batch_gate": "POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_20260822T091102Z.json",
+    "batch_gate_latest": "POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_LATEST.json",
+    "seed_accounts": "staging_batch2_seed_accounts_20260822T091102Z.json",
+    "meta": "staging_batch2_meta_20260822T091102Z.json",
+    "rbac_report": "evidence/GO_staging_admin_rbac_matrix/latest/report.json"
+  },
+  "checks_summary": {
+    "official_baseline_cite": "RUNTIME_AUTH_ADMIN_I18N_IDENTITY_20260822.json",
+    "ba01_me_unauth": true,
+    "ba01_admin_capabilities_unauth": true,
+    "ba02_web_admin_redirect": true,
+    "ba02_web_auth_pages": null,
+    "ba03_strict_session_x_user_id": true,
+    "ba04_test_account_login_me": true,
+    "ba05_ocs_admin_capabilities": true,
+    "ba06_admin_rbac_matrix": true
+  }
+}

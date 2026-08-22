@@ -1,0 +1,81 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch2_admin_auth.v1",
+  "recorded_utc": "2026-08-22T09:17:13Z",
+  "batch": "2_admin_auth",
+  "baseline": "POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_PASS_STOP",
+  "official_product_ssot": "www.web3-ttg.com OPS-v9",
+  "api": "https://tt-api-staging.fly.dev",
+  "web": "https://tt-web-staging.fly.dev",
+  "checks": {
+    "official_baseline_cite": "RUNTIME_AUTH_ADMIN_I18N_IDENTITY_20260822.json",
+    "ba01_me_unauth": {
+      "status_code": 401,
+      "expected": 401,
+      "pass": true
+    },
+    "ba01_admin_capabilities_unauth": {
+      "status_code": 401,
+      "pass": true,
+      "note": "STRICT_SESSION protected admin surface"
+    },
+    "ba02_web_admin_redirect": {
+      "status_code": 307,
+      "location": "/auth/login?returnUrl=%2Fadmin",
+      "expected_status": 307,
+      "expected_redirect": "/auth/login?returnUrl=%2Fadmin",
+      "pass": true
+    },
+    "ba02_web_auth_pages": {
+      "login": {
+        "status_code": 200,
+        "expected": 200,
+        "pass": true
+      },
+      "register": {
+        "status_code": 200,
+        "expected": 200,
+        "pass": true
+      }
+    },
+    "ba03_strict_session_x_user_id": {
+      "strict_session_gate": true,
+      "status_code": 401,
+      "pass": true
+    },
+    "ba04_test_account_login_me": {
+      "login_status": 200,
+      "me_status": 200,
+      "pass": true,
+      "email": "tourist@test.com",
+      "token_redacted": true
+    },
+    "ba05_ocs_admin_capabilities": {
+      "login_status": 200,
+      "capabilities_status": 200,
+      "pass": true,
+      "email": "adm-10x4-20260719143519@traveltrust.test"
+    },
+    "ba06_admin_rbac_matrix": {
+      "pass": true,
+      "note": "TT_ADMIN_RBAC_STAGING_MATRIX: OK"
+    }
+  },
+  "gaps": [],
+  "items": [
+    "BA-01",
+    "BA-02",
+    "BA-03",
+    "BA-04",
+    "BA-05",
+    "BA-06"
+  ],
+  "BATCH2_ADMIN_AUTH_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "tt_production_go": "NO_GO",
+  "non_target_drift": {
+    "candidate_solidity": "0",
+    "production_db_mutation": "0",
+    "tt_production_go_flip": "0"
+  }
+}

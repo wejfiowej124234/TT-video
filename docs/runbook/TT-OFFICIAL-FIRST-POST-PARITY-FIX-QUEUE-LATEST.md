@@ -26,14 +26,40 @@ Machine: [`POST_PARITY_FIX_QUEUE_20260822.json`](../../evidence/GO_official_prod
 | Batch | 范围 | Items | Gate |
 |-------|------|-------|------|
 | **1 · CMS/OCS** | 公告公开路由 · OCS 媒体可读 | M7-07 · M7-08 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_PASS_STOP` (`2026-08-22T08:48:33Z`) |
-| **2 · Admin/Auth** | （ACTIVE） | — | TBD |
-| 3 · UI/UX | FIVE-MAIN 已冻结 · 仅数据链/门闸 | — | TBD |
-| 4 · 功能缺陷 | M8-07 等 | M8-07 | TBD |
-| 5 · Assets/i18n | M8-08 等 | M8-08 | TBD |
+| **2 · Admin/Auth** | Auth/Admin HTTP · STRICT_SESSION · login→me · OCS admin · RBAC | BA-01～BA-06 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP` (`2026-08-22T09:17:58Z`) |
+| **3 · UI/UX** | FIVE-MAIN 已冻结 · 仅数据链/门闸 | — | **ACTIVE** |
+| 4 · 功能缺陷 | M8-07 等 | M8-07 | PENDING |
+| 5 · Assets/i18n | M8-08 等 | M8-08 | PENDING |
 
 ---
 
-## Batch 1 · CMS/OCS（ACTIVE）
+## Batch 2 · Admin/Auth（CLOSED）
+
+| ID | 检查项 | 修复/验证 |
+|----|--------|-----------|
+| **BA-01** | `/api/v1/me` unauth=401 · admin/capabilities 受 STRICT_SESSION 保护 | Official capture 对拍 |
+| **BA-02** | `GET /admin` → 307 `/auth/login?returnUrl=%2Fadmin` · `/auth/login`/`register` 200 | 门闸脚本 no-redirect 探针 |
+| **BA-03** | `STRICT_SESSION_GATE=1` 时 `X-User-Id`  alone 不得 bypass | `/meta` + orders 探针 |
+| **BA-04** | registry test account `login→me`（含 `Idempotency-Key`） | `seed-test-accounts` + Bearer |
+| **BA-05** | OCS super admin `login→capabilities` | `adm-10x4-…@traveltrust.test` |
+| **BA-06** | ADM-U01 六角色 RBAC staging 矩阵 | `run-admin-rbac-staging-matrix.py` |
+
+**Local：**
+
+```bash
+cargo test -p traveltrust-api auth_placeholder_strict_gate_tests
+python scripts/gates/run-post-parity-fix-queue-batch2-admin-auth.py --api http://127.0.0.1:8080
+```
+
+**Staging（② only · 含 fly proxy DSN + seed）：**
+
+```bash
+bash scripts/dev/official-first-staging-post-parity-batch2-admin-auth.sh
+```
+
+---
+
+## Batch 1 · CMS/OCS（CLOSED）
 
 | ID | 缺陷 | 修复 |
 |----|------|------|
