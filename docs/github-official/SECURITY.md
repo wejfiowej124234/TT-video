@@ -3,8 +3,9 @@
 If you believe you have found a security vulnerability in TravelTrust Web3 contracts or public integrations:
 
 1. **Do not** open a public GitHub issue with exploit details.
-2. Prefer GitHub Security Advisories when the Official public repository is enabled, or contact the Owner via the private ops channel.
-3. Include: affected address/module, chain_id, impact summary, and minimal reproduction **without** mainnet fund-risk instructions.
+2. Prefer GitHub Security Advisories when the Official public repository is enabled.
+3. **Official contact (human):** `traveltrust.ir@gmail.com` — see [TT-OFFICIAL-CONTACT-EMAIL-POLICY-LATEST](../runbook/TT-OFFICIAL-CONTACT-EMAIL-POLICY-LATEST.md). (**Do not** use `noreply@web3-ttg.com`; that address is system-only via Resend.)
+4. Include: affected address/module, chain_id, impact summary, and minimal reproduction **without** mainnet fund-risk instructions.
 
 ## Scope notes
 

@@ -6,6 +6,7 @@
 **STATUS:** ACTIVE · **② 邮件信誉收口**（≠ ③ Production GO · ≠ Mainnet Hard Gate）  
 **Checked:** 2026-07-24 · DNS machine twin [`TT-EMAIL-DELIVERABILITY-DNS-CHECK-LATEST.json`](./TT-EMAIL-DELIVERABILITY-DNS-CHECK-LATEST.json)  
 **Domain:** `web3-ttg.com` · **FROM:** `TravelTrust <noreply@web3-ttg.com>`（Resend）  
+**Official human contact（Etherscan / 合作 / 媒体）：** `traveltrust.ir@gmail.com` — [TT-OFFICIAL-CONTACT-EMAIL-POLICY-LATEST](./TT-OFFICIAL-CONTACT-EMAIL-POLICY-LATEST.md) · **≠** Resend `from`  
 **Pin cite:** `PSG-REL-20260720-WEB3-CAND-V2` · tip `ea71c577`（cite-only）  
 **Owner 观察截图：** 2026-07-24 12:40～12:51 · 垃圾箱 + TravelTr 折行  
 **Round-8（Owner 授权抛光 · 2026-07-24）：** 修短 `alt=TT` + 金框头标 + 码字距 · **再冻**模板；DNS 仍冻；信誉闸仍 OPEN

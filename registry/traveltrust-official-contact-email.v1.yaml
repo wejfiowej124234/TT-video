@@ -1,0 +1,49 @@
+# TravelTrust · Official contact email policy (PRODUCT plane)
+# Human SSOT: docs/runbook/TT-OFFICIAL-CONTACT-EMAIL-POLICY-LATEST.md
+schema: traveltrust.official_contact_email.v1
+status: ACTIVE
+recorded_utc: "2026-08-22"
+official_product_pin: TT-OFFICIAL-OPS-20260820-V9
+
+channels:
+  system_automated:
+    address: "noreply@web3-ttg.com"
+    display_from: "TravelTrust <noreply@web3-ttg.com>"
+    transport: resend
+    purpose:
+      - registration_verification_code
+      - password_reset
+      - system_notifications
+    env_keys:
+      - TRAVELTRUST_EMAIL_TRANSPORT
+      - TRAVELTRUST_RESEND_API_KEY
+      - TRAVELTRUST_RESEND_FROM
+    must_not_use_for:
+      - etherscan_submission
+      - human_support_replies
+      - partnership_inquiries
+      - security_disclosure_primary_contact
+
+  official_human_contact:
+    address: "traveltrust.ir@gmail.com"
+    transport: gmail
+    purpose:
+      - etherscan_project_email
+      - partnerships
+      - media
+      - manual_owner_replies
+      - security_disclosure_when_no_github_advisory
+    public_surfaces_must_match:
+      - official_website_contact
+      - etherscan_token_info_project_email
+      - docs_github_official_security
+      - whitepaper_contact_block_when_present
+
+deferred:
+  contact_at_domain:
+    address: "contact@web3-ttg.com"
+    status: NOT_REQUIRED_FOR_CURRENT_PHASE
+    note: "Optional later via Cloudflare Email Routing; not blocking Etherscan if website shows Gmail consistently."
+
+etherscan_preflight_runbook: docs/runbook/TT-ETHERSCAN-SUBMISSION-PREFLIGHT-LATEST.md
+email_deliverability_runbook: docs/runbook/TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md
