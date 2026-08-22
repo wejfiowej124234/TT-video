@@ -9,7 +9,7 @@ import LandingFooter from "./LandingFooter";
 
 function renderFooter() {
   return render(
-    <LocaleProvider>
+    <LocaleProvider initialLocale="zh">
       <LandingFooter />
     </LocaleProvider>
   );

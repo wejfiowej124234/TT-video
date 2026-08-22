@@ -1,6 +1,6 @@
 {
   "schema": "traveltrust.official_first_post_parity_fix_queue.v1",
-  "recorded_utc": "2026-08-22T09:17:58Z",
+  "recorded_utc": "2026-08-22T09:37:31Z",
   "policy": "ACTIVE_POST_RUNTIME_PARITY_PASS",
   "tt_production_go": "NO_GO",
   "items": [
@@ -93,6 +93,66 @@
       "batch": "admin_auth",
       "status": "CLOSED",
       "closed_utc": "2026-08-22T09:17:58Z"
+    },
+    {
+      "id": "UX-01",
+      "class": "DEFECT",
+      "surface": "FIVE-MAIN data-link/visibility parity",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false,
+      "batch": "ui_ux",
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T09:37:31Z"
+    },
+    {
+      "id": "UX-02",
+      "class": "DEFECT",
+      "surface": "FIVE-MAIN data-link/visibility parity",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false,
+      "batch": "ui_ux",
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T09:37:31Z"
+    },
+    {
+      "id": "UX-03",
+      "class": "DEFECT",
+      "surface": "FIVE-MAIN data-link/visibility parity",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false,
+      "batch": "ui_ux",
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T09:37:31Z"
+    },
+    {
+      "id": "UX-04",
+      "class": "DEFECT",
+      "surface": "FIVE-MAIN data-link/visibility parity",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false,
+      "batch": "ui_ux",
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T09:37:31Z"
+    },
+    {
+      "id": "UX-05",
+      "class": "DEFECT",
+      "surface": "FIVE-MAIN data-link/visibility parity",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false,
+      "batch": "ui_ux",
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T09:37:31Z"
+    },
+    {
+      "id": "UX-06",
+      "class": "DEFECT",
+      "surface": "FIVE-MAIN data-link/visibility parity",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false,
+      "batch": "ui_ux",
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T09:37:31Z"
     }
   ],
   "baseline": "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS",
@@ -104,5 +164,5 @@
     "functional_defects",
     "assets_i18n"
   ],
-  "active_batch": "ui_ux"
+  "active_batch": "functional_defects"
 }

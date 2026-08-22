@@ -74,9 +74,7 @@ describe("generate_itinerary_mock days SSOT (L-001/L-011)", () => {
 
     const src = readFileSync(mock, "utf8");
 
-    expect(src).toContain(".take(body.days.max(1).min(30) as usize)");
-
-    expect(src).toContain("let days = body.days.max(1).min(30)");
+    expect(src).toContain("body.days.clamp(1, 30)");
 
   });
 

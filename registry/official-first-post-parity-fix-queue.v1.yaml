@@ -8,7 +8,7 @@ baseline:
   schema_parity_artifact: evidence/GO_official_product_reality_capture/PRODUCT_AND_DOCUMENTATION_SCHEMA_PARITY_PASS_LATEST.json
   runtime_parity_artifact: evidence/GO_official_product_reality_capture/PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS_LATEST.json
 tt_production_go: NO_GO
-active_batch: ui_ux
+active_batch: functional_defects
 
 batch_order:
   - cms_ocs
@@ -33,10 +33,14 @@ batches:
     evidence: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_LATEST.json
     pass_stop: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP_LATEST.json
   ui_ux:
-    status: ACTIVE
-    items: []
+    status: CLOSED
+    closed_utc: "2026-08-22T09:35:40Z"
+    items: [UX-01, UX-02, UX-03, UX-04, UX-05, UX-06]
+    gate: scripts/gates/run-post-parity-fix-queue-batch3-ui-ux.py
+    evidence: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_LATEST.json
+    pass_stop: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_PASS_STOP_LATEST.json
   functional_defects:
-    status: PENDING
+    status: ACTIVE
     items: [M8-07]
   assets_i18n:
     status: PENDING

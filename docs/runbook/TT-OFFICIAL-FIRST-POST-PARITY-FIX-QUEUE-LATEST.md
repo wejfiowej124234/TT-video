@@ -27,9 +27,35 @@ Machine: [`POST_PARITY_FIX_QUEUE_20260822.json`](../../evidence/GO_official_prod
 |-------|------|-------|------|
 | **1 · CMS/OCS** | 公告公开路由 · OCS 媒体可读 | M7-07 · M7-08 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_PASS_STOP` (`2026-08-22T08:48:33Z`) |
 | **2 · Admin/Auth** | Auth/Admin HTTP · STRICT_SESSION · login→me · OCS admin · RBAC | BA-01～BA-06 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP` (`2026-08-22T09:17:58Z`) |
-| **3 · UI/UX** | FIVE-MAIN 已冻结 · 仅数据链/门闸 | — | **ACTIVE** |
-| 4 · 功能缺陷 | M8-07 等 | M8-07 | PENDING |
+| **3 · UI/UX** | FIVE-MAIN 已冻结 · 仅数据链/门闸 | UX-01～UX-06 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_PASS_STOP` (`2026-08-22T09:35:40Z`) |
+| **4 · 功能缺陷** | M8-07 等 | M8-07 | **ACTIVE** |
 | 5 · Assets/i18n | M8-08 等 | M8-08 | PENDING |
+
+---
+
+## Batch 3 · UI/UX（CLOSED）
+
+| ID | 检查项 | 修复/验证 |
+|----|--------|-----------|
+| **UX-01** | FIVE-MAIN 五路由 HTTP 200 | staging web 探针 |
+| **UX-02** | `release-identity` = Official OPS `3e356617` | pin 对拍 |
+| **UX-03** | `tt-session-cookie-bootstrap.js` + chunk recovery 接线 | 五主 + `/auth/login` |
+| **UX-04** | 首页 `<title>` 可见性 | capture 对拍 |
+| **UX-05** | FIVE-MAIN antiregression vitest | `five-main-routes-ui-antiregression-gate.sh` |
+| **UX-06** | landing/market data-link contracts | vitest 子集 |
+
+**Local：**
+
+```bash
+bash scripts/gates/five-main-routes-ui-antiregression-gate.sh
+python scripts/gates/run-post-parity-fix-queue-batch3-ui-ux.py --web http://127.0.0.1:3000
+```
+
+**Staging（② only）：**
+
+```bash
+bash scripts/dev/official-first-staging-post-parity-batch3-ui-ux.sh
+```
 
 ---
 

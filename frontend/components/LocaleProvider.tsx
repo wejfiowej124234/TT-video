@@ -21,12 +21,19 @@ type LocaleContextValue = {
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
-export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+export function LocaleProvider({
+  children,
+  initialLocale,
+}: {
+  children: React.ReactNode;
+  initialLocale?: Locale;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale ?? DEFAULT_LOCALE);
 
   useEffect(() => {
+    if (initialLocale) return;
     setLocaleState(getStoredLocale() ?? DEFAULT_LOCALE);
-  }, []);
+  }, [initialLocale]);
 
   useEffect(() => {
     if (typeof document !== "undefined") document.documentElement.lang = LANG_MAP[locale];

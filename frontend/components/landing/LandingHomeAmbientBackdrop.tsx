@@ -182,6 +182,7 @@ function LandingHomeAmbientBackdropInner({ country }: Props) {
 
   const kenBurns = !reducedMotion;
   const kenBurnsPaused = kenBurns && !pageVisible;
+  const displaySrc = committedSrc;
 
   return (
     <div
@@ -199,7 +200,7 @@ function LandingHomeAmbientBackdropInner({ country }: Props) {
     >
       <div className="absolute inset-0 z-[1]">
         <AmbientPhotoLayer
-          src={committedSrc}
+          src={displaySrc}
           kenBurns={kenBurns}
           kenBurnsPaused={kenBurnsPaused}
           fetchPriority="high"

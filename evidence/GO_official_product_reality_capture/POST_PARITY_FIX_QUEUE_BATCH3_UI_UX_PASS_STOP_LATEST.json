@@ -1,0 +1,32 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch3_ui_ux_pass_stop.v1",
+  "issued_utc": "2026-08-22T09:37:31Z",
+  "stamp": "20260822T093540Z",
+  "track": "POST_PARITY_FIX_QUEUE",
+  "batch": "3_ui_ux",
+  "baseline": "POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP",
+  "deploy_git_sha": "3c1128ebd6df0974291580db46cd922c3fd27176",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "items_closed": [
+    "UX-01",
+    "UX-02",
+    "UX-03",
+    "UX-04",
+    "UX-05",
+    "UX-06"
+  ],
+  "POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_PASS_STOP": "ISSUED",
+  "BATCH3_UI_UX_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "UI_UX_STRUCTURAL_DIFF": "0",
+  "tt_production_go": "NO_GO",
+  "next_batch": "functional_defects",
+  "web3_ladder": "sepolia_reality_independent",
+  "five_main_ui_frozen": true,
+  "artifacts": {
+    "batch_gate": "POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_20260822T093540Z.json",
+    "batch_gate_latest": "POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_LATEST.json",
+    "meta": "staging_batch3_meta_20260822T093540Z.json"
+  }
+}

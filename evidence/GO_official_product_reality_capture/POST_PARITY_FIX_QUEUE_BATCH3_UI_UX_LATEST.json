@@ -1,0 +1,132 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch3_ui_ux.v1",
+  "recorded_utc": "2026-08-22T09:36:30Z",
+  "batch": "3_ui_ux",
+  "baseline": "POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP",
+  "official_product_ssot": "www.web3-ttg.com OPS-v9",
+  "five_main_ui_frozen": true,
+  "web": "https://tt-web-staging.fly.dev",
+  "checks": {
+    "official_baseline_cite": "CAPTURE_DEEPEN_20260822.json",
+    "ux01_five_main_routes": {
+      "/": {
+        "status_code": 200,
+        "pass": true
+      },
+      "/traveltrust": {
+        "status_code": 200,
+        "pass": true
+      },
+      "/market": {
+        "status_code": 200,
+        "pass": true
+      },
+      "/did-rank": {
+        "status_code": 200,
+        "pass": true
+      },
+      "/community": {
+        "status_code": 200,
+        "pass": true
+      }
+    },
+    "ux02_release_identity": {
+      "status_code": 200,
+      "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+      "expected_prefix": "3e356617a498",
+      "pass": true
+    },
+    "ux03_session_bootstrap_wiring": {
+      "expected_bootstrap": "v8",
+      "routes": {
+        "/": {
+          "status_code": 200,
+          "markers": {
+            "tt-session-cookie-bootstrap.js": true,
+            "tt-dev-chunk-recovery.js": true
+          },
+          "pass": true
+        },
+        "/traveltrust": {
+          "status_code": 200,
+          "markers": {
+            "tt-session-cookie-bootstrap.js": true,
+            "tt-dev-chunk-recovery.js": true
+          },
+          "pass": true
+        },
+        "/market": {
+          "status_code": 200,
+          "markers": {
+            "tt-session-cookie-bootstrap.js": true,
+            "tt-dev-chunk-recovery.js": true
+          },
+          "pass": true
+        },
+        "/did-rank": {
+          "status_code": 200,
+          "markers": {
+            "tt-session-cookie-bootstrap.js": true,
+            "tt-dev-chunk-recovery.js": true
+          },
+          "pass": true
+        },
+        "/community": {
+          "status_code": 200,
+          "markers": {
+            "tt-session-cookie-bootstrap.js": true,
+            "tt-dev-chunk-recovery.js": true
+          },
+          "pass": true
+        },
+        "/auth/login": {
+          "status_code": 200,
+          "markers": {
+            "tt-session-cookie-bootstrap.js": true,
+            "tt-dev-chunk-recovery.js": true
+          },
+          "pass": true
+        }
+      }
+    },
+    "ux04_home_title_visibility": {
+      "title": "TravelTrust Network | TravelTrust",
+      "expected_capture": "TravelTrust Network | TravelTrust",
+      "pass": true
+    },
+    "ux05_five_main_antiregression": {
+      "pass": true,
+      "note": "skipped"
+    },
+    "ux06_data_link_contracts": {
+      "pass": true,
+      "note": "skipped",
+      "files": [
+        "app/(home)/homeMarketing.contract.test.ts",
+        "lib/landingItinerarySession.test.ts",
+        "components/market/useMarketPage.contract.test.ts",
+        "lib/marketTravelBookmarksSync.test.ts"
+      ]
+    }
+  },
+  "gaps": [],
+  "items": [
+    "UX-01",
+    "UX-02",
+    "UX-03",
+    "UX-04",
+    "UX-05",
+    "UX-06"
+  ],
+  "BATCH3_UI_UX_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "UI_UX_STRUCTURAL_DIFF": "0",
+  "tt_production_go": "NO_GO",
+  "non_target_drift": {
+    "candidate_solidity": "0",
+    "production_db_mutation": "0",
+    "tt_production_go_flip": "0",
+    "five_main_structure_ui": "0"
+  }
+}
