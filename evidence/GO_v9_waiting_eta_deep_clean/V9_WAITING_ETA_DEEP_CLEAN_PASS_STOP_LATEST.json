@@ -1,0 +1,26 @@
+{
+  "stamp": "V9_WAITING_ETA_DEEP_CLEAN_PASS_STOP",
+  "recorded_utc": "2026-08-22T10:30:23Z",
+  "program": "V9_WAITING_ETA_REPOSITORY_AND_DOCUMENTATION_DEEP_CLEAN",
+  "status": "BLOCKED",
+  "metrics": {
+    "REPOSITORY_HYGIENE": "PASS",
+    "STALE_BRANCHES_WORKTREES": 0,
+    "UNREFERENCED_SCRATCH": 0,
+    "DOCUMENTATION_TRUTH_CONFLICTS": 0,
+    "ACTIVE_POINTER_CONFLICTS": 0,
+    "CANDIDATE_SOLIDITY_DIFF": 0,
+    "WORKTREE": "CLEAN",
+    "GIT_PORCELAIN": "DIRTY"
+  },
+  "c0_freeze": "evidence\\GO_v9_waiting_eta_deep_clean\\C0_SAFETY_FREEZE_LATEST.json",
+  "timelock_state": "UNKNOWN",
+  "tt_production_go": "NO_GO",
+  "forbidden_this_program": [
+    "production_modify",
+    "candidate_solidity_modify",
+    "exact_match",
+    "mainnet_broadcast",
+    "flip_tt_production_go"
+  ]
+}

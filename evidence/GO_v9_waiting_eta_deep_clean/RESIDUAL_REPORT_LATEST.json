@@ -1,0 +1,26 @@
+{
+  "stamp": "RESIDUAL_REPORT",
+  "recorded_utc": "2026-08-22T10:30:23Z",
+  "residual": {
+    "STALE_BRANCHES_WORKTREES": 0,
+    "UNREFERENCED_SCRATCH": 0,
+    "DOCUMENTATION_TRUTH_CONFLICTS": 0,
+    "ACTIVE_POINTER_CONFLICTS": 0,
+    "CANDIDATE_SOLIDITY_DIFF": 0,
+    "GIT_PORCELAIN_LINES": 15
+  },
+  "target_zeros": {
+    "STALE_BRANCHES_WORKTREES": 0,
+    "UNREFERENCED_SCRATCH": 0,
+    "DOCUMENTATION_TRUTH_CONFLICTS": 0,
+    "ACTIVE_POINTER_CONFLICTS": 0,
+    "CANDIDATE_SOLIDITY_DIFF": 0,
+    "GIT_PORCELAIN": 0
+  },
+  "residual_zero": false,
+  "notes": [
+    "PRODUCT plane follows Official OPS-v9; WEB3 plane follows FTB+V9 Candidate+evidence.",
+    "Official www Web3 copy must not overwrite Candidate; mark LEGACY/PENDING_UPDATE only.",
+    "Do not claim Mainnet LIVE from Sepolia Candidate state in whitepapers."
+  ]
+}

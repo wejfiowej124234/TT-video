@@ -1,0 +1,4123 @@
+{
+  "stamp": "DOCUMENTATION_TRUTH_MATRIX",
+  "recorded_utc": "2026-08-22T10:30:23Z",
+  "dual_truth": {
+    "product_ssot": "Official OPS-v9 (3e356617a498…)",
+    "web3_ssot": "FTB + V9 Freeze + Candidate b19b85810c22… + chain evidence",
+    "official_web3_display": "LEGACY/PENDING_UPDATE until Mainnet Reality"
+  },
+  "entries": [
+    {
+      "path": "docs/runbook/TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FIRST-PRODUCT-CONVERGENCE-FROZEN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-TRUTH-BASELINE-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-UPGRADE-FREEZE-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V9-WEB3-MAINLINE-SEPOLIA-REALITY-ACTIVE-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-SEPOLIA-REALITY-WAITING-ETA-LATEST.md",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PERIPHERY-SEPOLIA-ETA-OPS-CHECKLIST-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md",
+      "plane": "CONSTITUTION",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-BASELINE-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-MAINNET-CUTOVER-FINAL-REVIEW-DESIGN-LOCK-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/github-official/README.md",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/github-official/PUBLIC-README.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/github-official/en/TTG-V9.md",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/github-official/zh/TTG-V9.md",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/github-official/en/Mainnet-Deployments.md",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/github-official/zh/Mainnet-Deployments.md",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/spec/83-区域治理与收益分配-协议白皮书.md",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-dual-truth-planes.v1.yaml",
+      "plane": "CONSTITUTION",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v9-periphery-governance-upgrade-freeze.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/official-first-product-convergence-frozen.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v9-github-official-alignment.v1.yaml",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-ADMIN-UAT-DEFERRED-UX-WAIT-WINDOW-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-AXIS05-ROLES-MATRIX-REALITY-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BACKEND-TRUTH-ARCHITECTURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH-B-1USDC-L7-REALITY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-CAPABILITY-FULL-SCORE-UPGRADE-PLAN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-FAST-PATH-REMEDIATION-PLAN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-FP-A-CONTRAST-CROSSCUT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-FP-B-CAPABILITY-BLOCKERS-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-FP-C-OWNER-HARD-PAGES-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-FP-D-LEAVES-CHROME-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-FP-E-TOTAL-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-L5-RELEASE-GRADE-FULL-SCORE-PATH-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-NOT-FULL-SCORE-BACKLOG-AND-UPGRADE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-OPEN-RECORDING-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-SYSTEM-CAPABILITY-RELEASE-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH13-WORKBENCH-RELEASE-GRADE-ENTERPRISE-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH14-ADMIN-RELEASE-REALITY-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH14-COLLECTIVE-FIX-IN-PROGRESS-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-BATCH14-OPEN-RECORDING-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-CLEAN-SEPOLIA-REDEPLOY-V311-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-COMMERCIAL-MONEY-LIFECYCLE-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-CROSS-LAYER-CAPABILITY-MAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-CURRENT-FOCUS-DASHBOARD-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-DATA-TRUTH-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-DEPENDENCY-BLOCKER-GATE-ARCHITECTURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-ECONOMIC-CONSTITUTION-V3.1-TARGET-BASELINE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-EMAIL-DELIVERABILITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-END-TO-END-USER-SYSTEM-JOURNEY-ARCHITECTURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-ENGINEERING-SSOT-ANCHOR-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FCG-PAY-01-G-RC-05-CLOSE-EVIDENCE-BUNDLE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FCG-PAY-01-G-RC-WAIT-WINDOW-S1-ARM-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FCG-PAY-01-GOV-RC-CLOSURE-PREAUTH-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FCG-PAY-01-GOV-RC-CLOSURE-PREP-V2-REDEPLOY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FCG-PAY-01-PROTOCOL-FREEZE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FCG-PAY-01-STEP25-AMBIGUITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FG15-ANOMALY-EVIDENCE-MAINTENANCE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FG15-PARALLEL-LAUNCH-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FG15-SIX-PARALLEL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-COMPLETION-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-REALITY-RELEASE-CERTIFICATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-RELEASE-BASELINE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-RELEASE-CLOSURE-CF-WAIT-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-RELEASE-CLOSURE-MODE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-RELEASE-DEEP-CONSISTENCY-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-RELEASE-DEEP-CONSISTENCY-AUDIT-V2-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-RELEASE-SYSTEM-ARCHITECTURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-RISK-REGISTER-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-TRUTH-BASELINE-FINAL-ALIGNMENT-CLOSURE-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-TRUTH-OWNER-DEEP-CLOSURE-AUDIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-TRUTH-PARALLEL-TRACK-BOARD-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FINAL-TRUTH-RELEASE-COMPOSITION-MANIFEST-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-FRONTEND-SCREEN-ROUTE-ARCHITECTURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-GAP-1USDC-HANDOFF-OFFICIAL-READONLY-STOP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-GOVERNANCE-MUTATION-AUTHORITY-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-INCIDENT-DIAGNOSTIC-ARCHITECTURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-L7-L8-CONTRACT-RUNTIME-REALITY-RECONCILIATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-MAINLINE-RESUME-AFTER-PSG-GOVERNANCE-V1-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-MAINNET-CONTRACT-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-MAINNET-CUTOVER-HARD-GATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-MAINNET-REALITY-FUNDS-TEST-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-MODULE-RELEASE-COCKPIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OA01-WALLETCONNECT-ACTIVATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OA01-WALLETCONNECT-OFFICIAL-ACTIVATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md",
+      "plane": "CONSTITUTION",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FIRST-EXECUTION-PARITY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FIRST-M5-M9-ALIGNMENT-PLAN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FIRST-POST-PARITY-FIX-QUEUE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FIRST-WHITEPAPER-DOCS-ALIGN-NOTE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-FULL-REALITY-RECONCILIATION-1-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-PRODUCT-REALITY-CAPTURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-V9-PRODUCT-BASELINE-DIRTY-RECONCILIATION-PREVIEW-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OPS-MOTHER-PARITY-RECONCILIATION-WEBSITE-V9-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OWNER-FINAL-HUMAN-QUEUE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-OWNER-RESUME-AUTOPILOT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PERFORMANCE-CERTIFICATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PERFORMANCE-OPTIMIZATION-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PERFORMANCE-PROBLEM-LEDGER-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PERFORMANCE-RUNTIME-REVALIDATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PFA-RELEASE-WINDOW-MIN-FIX-CANDIDATES-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PFA-UI-01-RUNTIME-UI-BINDING-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PHASE-2A-FULL-MATRIX-CONVERGENCE-LATEST.md",
+      "plane": "CONSTITUTION",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PHASE1-ARCHITECTURE-COMPLETENESS-REVERSE-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PHASE2-PRODUCTION-GRADE-GAP-REGISTER-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PHASE2-STAGING-REALITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-POST-BASELINE-INDEPENDENT-BACKLOG-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-POST-BASELINE-REALITY-CLOSURE-EXECUTION-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-POST-PSG-REALITY-CLOSURE-PLANNING-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-BATCH-14-PLAN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-BATCHES-1-6-FINAL-TRUTH-BASELINE-CITE-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRE-MAINNET-HUMAN-UIUX-DEFECT-REGISTER-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCT-BUSINESS-ARCHITECTURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-EXECUTION-CHECKLIST-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-FEATURE-INVENTORY-GATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-GAP-E2E-STOP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-GO-FINAL-CLOSURE-BATCH-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-CYCLE2-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-GRADE-FULL-SYSTEM-COMPLETION-PROGRAM-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-GRADE-PARALLEL-ENGINEERING-TRACK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-IMPLEMENTATION-REALITY-MAPPING-AUDIT-DRY-RUN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-LAUNCH-FINAL-PACK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-PERFORMANCE-CERTIFICATION-DEEP-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-READINESS-DOSSIER-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-READINESS-REGISTER-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PRODUCTION-RELEASE-RUNBOOK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PROJECT-A-FINAL-RELEASE-CHAIN-ALIGNMENT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PROJECT-ARCHITECTURE-COVERAGE-DASHBOARD-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PROJECT-MASTER-MAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PROJECT-PACK-DEPTH-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PROTOCOL-V2-CLEAN-DEPLOY-READY-CHECKLIST-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PROTOCOL-V2-TESTNET-DEPLOYMENT-PLAN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-CANDIDATE-V2-CHANGE-BOUNDARY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-CANDIDATE-V2-FORMAL-BASELINE-SIGNOFF-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COMPLETION-MATRIX-RECALCULATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-ACCEPTANCE-BASELINE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-ACCEPTANCE-THRESHOLD-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-COMPLETION-PACK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CLOSURE-BOARD-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-CONSISTENCY-CONTROL-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-GAP-COMPLETION-NON-WEB3-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-GAP-NON-WEB3-AUTHENTICITY-AUDIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-FINAL-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-MEASUREMENT-RECALCULATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-METRICS-BASELINE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-COVERAGE-MODEL-SEVEN-DIMENSIONS-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-DELTA-RECERTIFY-AUTH-IDENTITY-DRY-RUN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-DRY-RUN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-DELTA-RECERTIFY-THREE-BASELINE-FORMAL-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-DEPLOY-FRESHNESS-GATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-DOMAIN-BATCH-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-DUAL-TRACK-RELEASE-STAGING-PATCH-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-FG-WEB3-AUDIT-MATRIX-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-FG-WEB3-COVERAGE-CASES-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-FG-WEB3-EVIDENCE-SCHEMA-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-GOVERNANCE-V1-BASELINE-ESTABLISHED-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PATCH-PROMOTION-GATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-POLLUTION-CLEANUP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-POST-ETA-COMMAND-SHEET-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PRODUCTION-BASELINE-DEV-STRATEGY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PRODUCTION-COMPLETION-DEFINITION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PRODUCTION-COMPLETION-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PRODUCTION-REALITY-CONSISTENCY-AUDIT-DRY-RUN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PRODUCTION-RELEASE-BASELINE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PRODUCTION-RELEASE-READINESS-GATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-PUBLIC-DISPLAY-10X4-LOCK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-RELEASE-SOURCE-OF-TRUTH-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-RUNTIME-ATTESTATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-ENTERPRISE-DEEPENING-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-RUNTIME-CHANGE-PROPAGATION-GATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-SSOT-CONSISTENCY-AUDIT-DRY-RUN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-STAGING-DISPLAY-WALLET-DRIFT-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-STAGING-PUBLIC-PAGE-SURFACES-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-V311-PRODUCTION-GAP-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-V311-SEPOLIA-CLEAN-BASELINE-CERT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PSG-WALLET-COVERAGE-SPLIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-PUBLIC-SURFACE-REGRESSION-ENTERPRISE-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-REALITY-CLOSURE-WAVE-ACCEPTANCE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-REALITY-W3-ADMIN-STEPUP-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-REALITY-W3-BUG-BOUNTY-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-REALITY-W3-DISPUTE-ARBITRATION-RUNBOOK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-REALITY-W3-GDPR-PATHS-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-REALITY-W3-PENTEST-PLAN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-REALITY-W3-THIRD-PARTY-AUDIT-SOW-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-REALITY-W3-THREAT-MODEL-V1-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-RELEASE-COMPLETENESS-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-RELEASE-CONTROL-STANDBY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-RELEASE-EXECUTION-PREPARATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-RELEASE-LOCK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-RELEASE-RUNTIME-CONSISTENCY-AUDIT-DRY-RUN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-RELEASE-RUNTIME-DRIFT-AUDIT-DRY-RUN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-RELEASE-RUNTIME-EVIDENCE-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-SECURITY-IDENTITY-ACCESS-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGE83-PACK-FREEZE-CONFIRMATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGE83-REGION-FEE-NEW-RULE-CROSS-LAYER-CONVERGENCE-AUDIT-LATEST.md",
+      "plane": "CONSTITUTION",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGE83-VACANCY-CONTRACT-IMPACT-CLOSURE-CHECKLIST-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGE83-VACANCY-REGION-FEE-TARGET-FROZEN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGE83-WAIT-WINDOW-HOLD-FROZEN-MONITOR-ONLY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGE83-WAIT-WINDOW-PARALLEL-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGING-OLD-RUNTIME-MULTI-DIM-CHECKLIST-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGING-PATCH-LEDGER-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-STAGING-TO-MAINNET-SYNC-CLOSURE-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TRAVELTRUST-HOME-MODULAR-RELEASE-V1-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-25USDC-CROSS-LAYER-IMPACT-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-TOKEN-SCANNER-EVIDENCE-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-API-RUNTIME-DECOUPLING-NO-WEB-TOUCH-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-FUSION-3-OWNER-AUTH-GATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-FUSION-3-PREFLIGHT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-FUSION-CANDIDATE-PIN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-LIVE-LOGIC-FUSION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-OFFICIAL-CONTRACT-REGISTRY-CUTOVER-PRECHECK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-OFFICIAL-PRODUCT-RUNTIME-CUTOVER-PRECHECK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-OFFICIAL-QUOTE-SURFACE-CUTOVER-PRECHECK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-OFFICIAL-RUNTIME-CONTRACT-CUTOVER-NO-UI-BAKE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-REGISTRY-RUNTIME-MAINNET-REALITY-CONSISTENCY-CERT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-AI-AUDIT1-DESIGN-LOCK-LATEST.md",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-AI-AUDIT1-PERIPHERY-GOVERNANCE-UPGRADE-LATEST.md",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-AI-AUDIT2-DESIGN-LOCK-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-AI-AUDIT2-PERIPHERY-GOVERNANCE-UPGRADE-PREP-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-AI-AUDIT3-DESIGN-LOCK-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-DESIGN-LOCK-LOCAL-PASS-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-DOCUMENTATION-TRUTH-CONVERGENCE-RESIDUE-LATEST.md",
+      "plane": "CONSTITUTION",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-EXTERNAL-FIRM-AUDIT-PACK-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-FULL-25T-REMINT-DESIGN-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-GOV-ROOT-LOCAL-PASS-AND-BUCKET-AUDIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-GOVERNANCE-ROOT-REPLACEMENT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-GUIDE-ORDER-PERFORMANCE-BOND-LOCAL-CANDIDATE-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-INTERNAL-AUDIT-WAVE-FINDINGS-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MAINNET-BROADCAST-PHASE1-STOP-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MAINNET-DEPLOY-AUTHORIZATION-AWAIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MAINNET-DL-R1-PHASE2-FREEZE-WAIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MAINNET-PRE-BROADCAST-FINAL-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MAINNET-RELEASE-AUDIT3-FINDINGS-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MONETARY-INVARIANT-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-MONEY-FLOW-ECONOMIC-TRUTH-RECONCILIATION-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OFFICIAL-FULL-TOPOLOGY-AUDIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OFFICIAL-WEBSITE-ALIGNMENT-CANDIDATE-LOCAL-RC-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OFFICIAL-WEBSITE-ALIGNMENT-CANDIDATE-OWNER-CHECKLIST-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-ANSWERS-AND-REMAINING-CONFLICTS-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-DECISION-CHECKLIST-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-DESIGN-LOCK-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-ECONOMIC-MODEL-FEE-VS-STAKE-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-ECONOMIC-TARGET-FREEZE-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-MAINNET-CUTOVER-FINAL-REVIEW-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-MAINNET-GATE-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-OPS-FEE-MODEL-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-RELEASE-GATES-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-RELEASE-GATES-PREP-SKELETON-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PRE-AUDIT-ALIGNMENT-REGISTER-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PRE-DEPLOY-COMPILER-AND-WALLET-SCAN-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PRE-MAINNET-FINAL-SECURITY-AUDIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PRIMARY-MARKET-TREASURY-GOVERNED-CUTOVER-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PROJECT-POOL-GOVERNANCE-CAP-V2-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-PROJECT-POOL-V2-AND-PM-TREASURY-MAINNET-CUTOVER-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-RED-TEAM-AUDIT2-FINDINGS-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-REMAINING-OWNER-CONFIRM-SHORTLIST-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-REMINT-FINAL-NORM-G1-G7-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-SAFE-DEPRECATION-FULL-PRIVILEGE-REAUDIT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V9-UPGRADE-DESIGN-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-UI-DELTA-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-UI-UX-REALITY-ALIGNMENT-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-ALERT-MONITOR-OWNER-ACCEPT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-F02-TIMELOCK-WAIT-PARALLEL-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-FINAL-RELEASE-ENGINEERING-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-FULL-SYSTEM-DRIFT-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-OWNER-ENV-READINESS-PRE-ETA-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-POST-EXECUTE-LADDER-DRY-RUN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-POST-EXECUTE-OPERATOR-CARD-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-PRE-ETA-STANDBY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-PRODUCTION-EXIT-CRITERIA-V1-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-PSG-STATUS-AND-LADDER-LOCK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-RECOVERY-UPGRADE-INCIDENT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V311-WEB3-DEPLOYMENT-FUNCTIONAL-CERT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-1-ADMIN-UX-BATCH-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-BATCH-C-CUT-BLOCKERS-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-ENTERPRISE-L5-UX-REALITY-HARDENING-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-ENTERPRISE-UX-OPERABILITY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-L5-UX-QUALITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-OPERATIONAL-PRODUCT-EXPERIENCE-FINAL-REVIEW-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-OWNER-MATRIX-WALK-SHEET-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-PRODUCTION-REALITY-DEEP-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-PRODUCTION-REALITY-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-PRODUCTION-REALITY-INVENTORY-FREEZE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-PRODUCTION-REALITY-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-PRODUCTION-RELEASE-CERTIFICATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-REAL-VISUAL-EXPERIENCE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-CONSOLE-UX-REALITY-GAP-INVENTORY-ROUND2-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-LOGGED-IN-OPERATIONAL-UAT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ADMIN-UX-BATCH-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-BATCH-RELEASE-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-ENTERPRISE-ADMIN-CONSOLE-PRODUCT-QUALITY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-EXHAUSTIVE-CAPABILITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-FINAL-PRODUCT-QUALITY-COMMERCIAL-READINESS-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-FINAL-RUNTIME-TRUTH-SSOT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-FINAL-TRUTH-ALIGNMENT-REPORT-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-OPERATIONAL-REALITY-SIMULATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRE-GO-READINESS-REPORT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-B3-R006-REALITY-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-B-FINAL-STATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-CUT-C-DESIGN-CONFIRMATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-ENGINEERING-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-OWNER-UAT-EXPANSION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-RESIDUAL-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-RUNTIME-PARITY-GATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-DESIGN-CONFIRM-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-BATCH3-W2-WRITE-PATH-RUNTIME-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-DISCOVERY-WORKBENCH-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-PRV3B-ENTRY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-PRV3B-OWNER-UAT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PROD-003-PRV3B-OWNER-VALIDATED-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCT-CAPABILITY-REALITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCT-SURFACE-REALITY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCTION-BATCH-REPAIR-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCTION-CANDIDATE-FREEZE-CERTIFICATE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCTION-CMS-REALITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCTION-CONFIGURATION-INTEGRITY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCTION-HARDENING-FINAL-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCTION-QUALITY-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCTION-RELEASE-INTEGRITY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-PRODUCTION-RUNTIME-REALITY-VERIFICATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-RC-E-06-PRODUCTION-DEPLOY-UAT-PREPARATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-RELEASE-CANDIDATE-EVALUATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-RELEASE-CERTIFICATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-RUNTIME-TRUTH-DRIFT-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-UNIQUE-PRODUCTION-RC-COMPOSITION-INTEGRITY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V65-UNIQUE-PRODUCTION-RC-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V9-PRE-PRODUCTION-FULL-SYSTEM-CLEAN-CONVERGENCE-LATEST.md",
+      "plane": "CONSTITUTION",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V9-STAGING-FULL-REALITY-REGRESSION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-V9-WAITING-ETA-REPOSITORY-DOCUMENTATION-DEEP-CLEAN-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-W0-RUNTIME-ALIGNMENT-CHECKLIST-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-ETA-DISCOVERY-FREEZE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-ETA-PRODUCTION-READINESS-BACKLOG-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-ETA-RELEASE-HYGIENE-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-ADMIN-PUBLIC-FULL-MATRIX-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-CERT-OWNER-UAT-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-CUT-QUEUE-HOLD-PRE-ETA-READ-ONLY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-ETA-HOLD-PREFLIGHT-POLICY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-EXTENDED-ISSUE-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-EXTENDED-ISSUE-REMEDIATION-LADDER-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-FINAL-REALITY-AUDIT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-FINAL-REGRESSION-SOAK-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-FREEZE-UNTIL-ETA-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-FRESH-HARD-GATE-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-FRESH-HARD-GATE-AXIS-CLOSURE-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-INDEXER-REALITY-CLOSURE-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-L1-L2-FINAL-OPS-PACK-REHEARSAL-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-LEGAL-PAY-PRE-GO-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-MAXIMIZE-PRE-ETA-REMEDIATION-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-OFFICIAL-CONSOLE-HYGIENE-RECORD-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-OFFICIAL-UX-BATCH-CLOSURE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-WAVE2-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-PRE-ETA-DEEP-REALITY-CHECK-WAVE3-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-PRE-FINALIZE-REALITY-ASSURANCE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-PUBLIC-ROUTE-MATRIX-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-ADMIN-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-AUTH-SECURITY-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-AUTHENTICATED-BUSINESS-WRITE-REALITY-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-BUSINESS-STATE-AUTHZ-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-COMM-COMMENT-DELETE-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-COMM-COMMENT-IDENTITY-SORT-CONTRAST-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-COMM-TEXT-BAN-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-COMMUNITY-OCS-10X4-REALITY-RESTORE-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-FEE-PAYOUT-CONSISTENCY-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-MEDIA-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-MEDIA-DURABILITY-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-MEDIA-FE-OVERLAY-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-MKT-UAT-LEAK-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-NO-KYC-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-OFFICIAL-RUNTIME-ANOMALY-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-OWNER-OBSERVED-REALITY-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-PAY-IA-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-PUBLIC-COLD-START-GOVERNED-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-PUBLIC-COMMUNITY-BEYOND-FEED-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-PUBLIC-COMMUNITY-GOVERNED-FEED-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-PUBLIC-DATA-ISOLATION-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-PUBLIC-DISCOVER-FORCE-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-PUBLIC-GUIDES-DETAIL-PARITY-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-RBAC-PUBLIC-CROSS-AUDIT-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-SECRET-COMMUNITY-MEDIA-ROTATION-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-TTG-ETHERSCAN-VERIFY-PARAMS-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-TTG-MAINNET-TRUST-VERIFICATION-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-R-USDC-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B1-CLOSED-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B1-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B2-CLOSED-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B2-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B2-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B3-CLOSED-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B3-G001-G002-G006-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B3-G001-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B3-G002-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B3-G006-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B3-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B4-CLOSED-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B4-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B4-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B5-CLOSED-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B5-GAP-INVENTORY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-REALITY-AUDIT-B5-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-SEAL-AFTER-OFFICIAL-CUT-QUEUE-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-TRACK1-PF05-EXECUTOR-GAS-READONLY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-TRACK1-PRE-ETA-READONLY-PREFLIGHT-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UI-HYG-COMM-COMMENT-WALLET-CONTRAST-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B1-MARKET-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B10-GUIDES-DEPTH-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B10-GUIDES-DEPTH-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B11-GOVERNANCE-PUBLIC-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B11-GOVERNANCE-PUBLIC-RUNTIME-VERIFY-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B2-AUTH-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B3-ORDERS-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B4-ESCROW-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B5-ADMIN-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B6-CMS-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B7-ME-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B8-PROVIDER-GUIDE-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-UX-B9-COMMUNITY-GAP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-WC-REAL-DEVICE-1-LOCAL-PREP-LATEST.md",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WAIT-WINDOW-WEB3-GAP-CLOSURE-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WEB3-CANDIDATE-V2-FG15B-STANDBY-LATEST.md",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WEB3-CANDIDATE-V2-LATEST.md",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WEB3-CONTRACT-ARCHITECTURE-MATRIX-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "docs/runbook/TT-WEB3-L5-FLOW-V311-STEWARD-GOVERNANCE-LATEST.md",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-checklist.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-four-centers-enterprise-audit.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-four-centers-governance.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-functional-usability-audit.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-platform-production-readiness.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-rbac-permissions.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-rbac-production-probes.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-rbac-route-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-rbac-staging-probes.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/admin-staging-go-claim-ssot.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/api-build-health.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/architecture-constitution.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/asset-denomination-treasury-separation.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/backend-truth-architecture.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/business-content-integrity.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/business-data-readiness.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/business-flow-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/catalog-asset-migration.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/ci-anchor-manifest.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/ci-build-stability.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/cloud-local-ai-self-healing-ci.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/cms-content-l5.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/cms-master-registry.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/cms-ownership-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/cms-p1-content-family-standard.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/community-deep-audit-probes.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/complexity-convergence-fix-ledger.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/cross-domain-integration-audit-probes.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/dashboard-config.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/deployment-dashboard.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/deployment-identity-gate.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/deployment-three-state.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/display-data-governance.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/engineering-ssot-anchor.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/enterprise-capability-audit.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/enterprise-final-acceptance.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/enterprise-ssot-alignment.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/env-key-catalog-web3.v1.yaml",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/escrow-bilateral-mainnet-policy.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/escrow-final-freeze-mainnet.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/evidence-reuse-policy.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/executive-dashboard.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/fg15-a-historical-archive.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/fg15-b-candidate-v2.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/final-release-baseline.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/final-release-closure-mode.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/fpc-100-risk-register.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/fpc-100-version-registry.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/frontend-api-consistency-audit.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/frontend-design-matrix-seed.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/frontend-runtime-consistency-gate.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/full-production-certification-checklist.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/full-test-account-e2e.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/g24-p-upgrade-01-contract-posture.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/g3-production-cdn-official-assets.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/governance-freeze.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/governance-phase-transition.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/hat-six-role-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/identity-trust-governance-audit-probes.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/l7-l8-contract-runtime-reality-reconciliation.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/live-closure-chain-ssot.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/mainnet-address-registry.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/mainnet-cutover-hard-gate.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/mainnet-deployment-package.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/mainnet-deployment-plan.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/mainnet-release-freeze.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/manual-validation-checklist.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/market-listings-display-governance.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/market-media-ddg-remediation.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/media-cdn-production-acceptance.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/media-three-tier-architecture.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/ocs-content-l5.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/official-catalog-identity-policy.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/official-cold-start-dataset.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/official-first-clean-rebuild-convergence.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/official-first-full-convergence.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/official-first-post-parity-fix-queue.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/official-ops-1.1-delivery-manifest.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/official-ops-capability-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/official-ops-domain.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/open-issues.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/order-escrow-dispute-audit-probes.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/patch-promotion-gate.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/payment-architecture-classification.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/pc-08-consistency-paths.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/per-wave-backlog.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/performance-certification.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/performance-runtime-revalidation.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase-2a-full-matrix-convergence.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase-dashboard.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase12-final-convergence.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase2-production-grade-gap-register.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/phase2-staging-reality-closure.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase2-staging-sepolia-production-validation.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase2-testnet-surface-coverage-registry.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase3-deployment-prerequisite-review.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase3-production-entry-baseline.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/phase3-production-infrastructure.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/pi3-media-infrastructure.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/platform-capability-registry.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/product-capability-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-go-closure-sequence.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-go-four-gate-framework.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-go-remaining-work.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/production-governance-closure.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-governance-principles.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-grade-parallel-engineering-track.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-payment-readiness-checklist.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-performance-certification-deep-audit.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-readiness-master-checklist.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-readiness-master-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-readiness-open-issues.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-readiness-phase-gates.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-readiness-program.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-readiness-rc-registry-freeze.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-release-prep.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-release-review.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/production-usdc-go-live-master-checklist.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/project-architecture-taxonomy.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/project-cross-maps-10-13.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/protocol-convergence-deployments.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-04-data-foundation-phase1-audit-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-07-admin-phase1-audit-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-08-operations-phase1-audit-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-09-web3-phase1-audit-20260716.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-10-certification-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-10-engineering-implementation-report-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-10-governance-exit-review-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-10-payment-closure-plan-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-10-payment-phase1-audit-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-11-engineering-blocking-verification-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-11-engineering-implementation-report-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-11-governance-exit-review-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-11-governance-wave1-definition-report-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-11-governance-wave2-implementation-report-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-11-wallet-closure-plan-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-11-wallet-phase1-audit-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-13-deploy-phase1-audit-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-20-certification-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-20-engineering-blocking-verification-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-20-engineering-implementation-report-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-20-governance-exit-review-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-20-governance-wave1-definition-report-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-20-governance-wave2-implementation-report-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-20-platform-financial-closure-plan-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-20-platform-financial-phase1-audit-20260716.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-capability-lifecycle-standard.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-clean-sepolia-redeploy-v311.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-coverage-acceptance-baseline.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-coverage-acceptance-threshold-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-coverage-consistency-control.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-coverage-measurement-final.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-coverage-measurement-recalculate.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-coverage-model-seven-dimensions.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-domain-batch-closure.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-domain-coverage-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-execution-control.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-execution-lock-ACTIVE.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fcg-pay01-g-rc-wait-window-s1-arm.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fcg-pay01-g-rc05-close-evidence-bundle.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fcg-pay01-gov-rc-closure-preauth.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fcg-pay01-gov-rc-closure-prep-v2-redeploy.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fcg-pay01-protocol-freeze.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fcg-pay01-step25-ambiguity-closure.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fg-web3-audit-matrix.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fg-web3-coverage-cases.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-fg-web3-evidence-schema.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-foundation-gate-LATEST.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-governance-v1-baseline.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-p0-4-cos-permanent.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-phase-b-production-cert.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-post-baseline-governance-evolution.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-production-baseline-dev-strategy.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-production-completion-definition.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-production-completion-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-production-release-baseline-LATEST.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-production-release-readiness-gate.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-protocol-v2-clean-deploy-ready-checklist.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-protocol-v2-testnet-deployment-plan.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-public-surface-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-release-candidate-freeze-LATEST.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-release-candidate-sequence.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-release-source-of-truth.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-release-version-LATEST.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-runtime-change-propagation.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-solo-developer-workflow.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-v311-production-gap-audit.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-v311-sepolia-clean-baseline-cert.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/psg-v311-web3-full-function-cert.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/public-content-platform.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/public-operations-mvp.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/release-pipeline.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/release-runtime-evidence-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/runtime-activation-plan.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/runtime-activation-signoff.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/runtime-dependency-registry.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/security-identity-authority-matrix.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/sepolia-full-web3-lifecycle-validation.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/single-official-public-catalog-policy.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/spec-path-dependencies.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/staging-patch-queue.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/staging-rc-baseline.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/staging-rc-runtime-convergence.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/staging-rc-ssot-alignment.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/test-accounts-business-immutable.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-announcement-lane-governance.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-home-module-registry.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-operations-platform.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-operations-workflow.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-public-disclosure.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-public-surface-audit.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-role-promo-media-assets.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-three-dimension-status.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/traveltrust-web3-protocol-master-matrix.v1.yaml",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-governance-cert-gates.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-governance-mtm-counts.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v8-live-logic-fusion.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v8-official-quote-surface-allowlist.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v9-documentation-truth-baseline.v1.yaml",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v9-mainnet-edition-whitepaper-fact-matrix.v1.yaml",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v9-primary-market-treasury-governed-cutover.v1.yaml",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v9-project-pool-governance-cap-v2.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-v9-upgrade-design.v1.yaml",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/ttg-vesting-registry.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-cert-dataset-sepolia-only.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-configuration-baseline.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-dao-proposal-thresholds.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-final-release-engineering.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-genesis-allocation-delivery.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-order-destination-country.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-platform-access-fee.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-platform-service-fee.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-production-exit-criteria.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-recovery-budget.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-stake-minimum-by-country.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-steward-lifecycle.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/v311-treasury-rails.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/vacancy-runtime-migration-inventory.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/vacancy-v1-runtime-deployment-status.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/vacancy-w7-dry-run.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-active-execution-matrix.v1.yaml",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-candidate-v2.v1.yaml",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-final-alignment-matrix.v2.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-freeze.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-gate-layering.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-mainline.v1.yaml",
+      "plane": "WEB3",
+      "class": "HISTORICAL",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-mainnet-production-readiness-gate.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-payment-production-gate.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-protocol-grade-audit-framework.v1.yaml",
+      "plane": "WEB3",
+      "class": "SUPERSEDED",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-system-master-map.v1.yaml",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-system-production-gate.v1.yaml",
+      "plane": "WEB3",
+      "class": "V9_TARGET",
+      "exists": true
+    },
+    {
+      "path": "registry/web3-three-phase-closure-discipline.v1.yaml",
+      "plane": "WEB3",
+      "class": "ACTIVE",
+      "exists": true
+    }
+  ],
+  "entry_count": 685,
+  "active_latest_marked": 125
+}

@@ -1,0 +1,22 @@
+# V9 waiting-ETA deep clean — machine SSOT
+schema: traveltrust.v9_waiting_eta_deep_clean.v1
+status: IN_PROGRESS
+recorded_utc: "2026-08-22T10:30:23Z"
+program: V9_WAITING_ETA_REPOSITORY_AND_DOCUMENTATION_DEEP_CLEAN
+tt_production_go: NO_GO
+audit_1_candidate_sha: "b19b85810c22677d243a82d06ebec8ebcb4d4b47"
+official_ops_v9_sha: "3e356617a498b0faac42e4ae457343d36294a770"
+ready_at_unix: 1787408352
+timelock_probe_state: UNKNOWN
+dual_truth_registry: registry/traveltrust-dual-truth-planes.v1.yaml
+evidence_dir: evidence/GO_v9_waiting_eta_deep_clean
+runbook: docs/runbook/TT-V9-WAITING-ETA-REPOSITORY-DOCUMENTATION-DEEP-CLEAN-LATEST.md
+orchestrator: scripts/dev/run-v9-waiting-eta-repository-documentation-deep-clean.py
+metrics:
+  REPOSITORY_HYGIENE: PASS
+  STALE_BRANCHES_WORKTREES: 0
+  UNREFERENCED_SCRATCH: 0
+  DOCUMENTATION_TRUTH_CONFLICTS: 0
+  ACTIVE_POINTER_CONFLICTS: 0
+  CANDIDATE_SOLIDITY_DIFF: 0
+eta_preempt: scripts/dev/probe-ttg-v9-sepolia-timelock-reality-status.sh

@@ -1,0 +1,70 @@
+{
+  "stamp": "V9_WAITING_ETA_C0_SAFETY_FREEZE",
+  "recorded_utc": "2026-08-22T10:30:19Z",
+  "git": {
+    "head": "2547be70de83f669b9a5722a59160125a825b3fe",
+    "branch": "release/official-ops-v9-product-ssot"
+  },
+  "official_ops_v9_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "audit_1_candidate_sha": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+  "ready_at_unix": 1787408352,
+  "timelock_probe": {
+    "state": "UNKNOWN",
+    "ready_at": 1787408352,
+    "remain_seconds": null,
+    "raw": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\��P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\nN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\n\u0000\n\u0000<3>WSL (96608 - Relay) ERROR: CreateProcessCommon:798: execvpe(/bin/bash) failed: No such file or directory"
+  },
+  "worktrees": [
+    {
+      "worktree": "D:/TravelTrust-V1.1",
+      "HEAD": "2547be70de83f669b9a5722a59160125a825b3fe",
+      "branch": "refs/heads/release/official-ops-v9-product-ssot"
+    },
+    {
+      "worktree": "D:/TravelTrust-official-ops-v9-release",
+      "HEAD": "3e356617a498b0faac42e4ae457343d36294a770",
+      "branch": "refs/heads/release/official-ops-v9-workspace-baseline"
+    }
+  ],
+  "sepolia_addresses": {
+    "AUDIT_1_CANDIDATE_SHA": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+    "USDC": "0xF61EC8EAd1f1A362F4Ac97cC0f5002F4FE17B6BD",
+    "TTG": "0xADBf44AaC18016bD662D4DA5957Cf2a018001903",
+    "VAULT": "0xf769e3634bd4E8c168EDb3C81F68BAeeC9825123",
+    "MARKET": "0x93d718CAc198a5CAf2B8b0DF8545E88310145800",
+    "GOVERNOR": "0x8E20f2892772e02e36aed9c86c4250493ffC7EF2",
+    "TIMELOCK": "0x81D480D0f94359ac8e6ed4a92f1a08aa75374a5a",
+    "POOL": "0xb93F096C95eC23e5Dc3571afD874A1769DA01Cea",
+    "FEE_ROUTER": "0xd31AD3e01aC3346414d75011a4544ff0654102f0",
+    "FEE_INGRESS": "0x340461F7558D9f8172AA9c0Ec5f8bd730c003e07",
+    "STAKE_POOL": "0x87b84a59Ed894B51F693aD259075F07ab556bEE6",
+    "BATCH1_START": "1787408160",
+    "TIMELOCK_DELAY": "43200",
+    "ID_BIND": "0x1f91b7184c74c3f3cc78a9b2bc52961c0fbe59cbedebc8bdf42768cd6756f4be",
+    "ID_SEED": "0x0a27648eac836ee5aa6065a5c35a7d7db98c920777718e35695f9911265e6b4a",
+    "ID_CALLER": "0xa36a00d2fe1a0365832c4337a74aff990ab91f5310af5078c968fc147e61b7a5",
+    "ID_STEWARD": "0xbb63f1a8d845b4bccc81bbfe4a96520b12ca1c69aaf69f074fc39d7f49dbb9a7",
+    "ID_FEE_BPS": "0x29679879309fddb0eb6f7911826a7e27e0efa48a9d4accf6fbcb0ebf451c5a62",
+    "ID_SPLIT": "0x55f87721f4a54e1cccd46e5259f676053e2831fd5fb517e6de3ee2db248912c1",
+    "ID_CAP": "0x6ac41fcc6b078d713051e054c3fd5485e59e680f19fc5bd0ecf934bdf9d0a7ba",
+    "ID_UNPAUSE": "0x0f5f60709e977418309a123b0743508fa5e96778f250938cc6c177e3d59d2584",
+    "ID_P4": "0x34ec59f1971d5208142075e4a01e690d8c2cdb798a3197709635bf346e19775e",
+    "ID_BAD_SPLIT": "0x9a431ce1807ad36e6e99e7a3441352a381ae43634debf54d431f058a0a456a1a",
+    "DEPLOYER": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+    "WINDOW": "900",
+    "READY_AT": "1787408352"
+  },
+  "protected_evidence": {
+    "owner_authorization": "evidence\\GO_ttg_v9_periphery_governance_upgrade\\V9_OWNER_SEPOLIA_REALITY_AUTHORIZATION.json",
+    "audit_1_pass": "evidence\\GO_ttg_v9_periphery_governance_upgrade\\V9_AI_AUDIT1_PERIPHERY_GOVERNANCE_UPGRADE_PASS.json",
+    "timelock_status": "evidence\\GO_ttg_v9_periphery_governance_upgrade\\SEPOLIA_TIMELOCK_REALITY_STATUS_LATEST.json"
+  },
+  "forbidden": [
+    "delete_active_v9_candidate",
+    "delete_pass_stop_evidence",
+    "modify_candidate_solidity",
+    "production_deploy",
+    "exact_match",
+    "flip_tt_production_go"
+  ]
+}

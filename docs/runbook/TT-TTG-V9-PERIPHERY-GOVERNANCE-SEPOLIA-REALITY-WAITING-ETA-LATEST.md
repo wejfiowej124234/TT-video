@@ -40,3 +40,5 @@ Forge script: `contracts/src/ttg-v9/TtgV9PeripheryGovernanceSepoliaRehearsal.s.s
 - Audit #2 prep (NOT PASS): [TT-TTG-V9-AI-AUDIT2-PERIPHERY-GOVERNANCE-UPGRADE-PREP-LATEST](TT-TTG-V9-AI-AUDIT2-PERIPHERY-GOVERNANCE-UPGRADE-PREP-LATEST.md)  
 
 **STOP:** do not claim Sepolia PASS until ETA lifecycle completes.
+
+**ETA window (P2):** repository + documentation deep clean — [TT-V9-WAITING-ETA-REPOSITORY-DOCUMENTATION-DEEP-CLEAN-LATEST](TT-V9-WAITING-ETA-REPOSITORY-DOCUMENTATION-DEEP-CLEAN-LATEST.md) (preempted when `EXECUTABLE`).
