@@ -1,0 +1,22 @@
+{
+  "stamp": "V9_PROJECT_POOL_V2_SEPOLIA_SECURITY_FREEZE_STOP",
+  "wave": "V9_PROJECT_POOL_V2_SEPOLIA_REHEARSAL_AND_SECURITY",
+  "recorded_at_utc": "2026-08-21T15:32:48Z",
+  "verdict": "STOP",
+  "sepolia_rehearsal": "PASS",
+  "security_audit": "PASS_OPEN_CHM_0",
+  "exact_match_artifact": "V9_PROJECT_POOL_V2_EXACT_MATCH_ARTIFACT",
+  "candidate_frozen": true,
+  "next_requires_owner_mainnet_auth": [
+    "deploy ProjectPoolV2 on Ethereum Mainnet",
+    "retarget Primary Market USDC sink + CountryFeeRouter projectPool to V2",
+    "label 0x7B21\u2026 LEGACY_PHASE1_PROJECT_POOL"
+  ],
+  "still_forbidden": [
+    "Mainnet broadcast without separate Owner auth",
+    "TT_PRODUCTION_GO flip",
+    "mutate 25T/no-mint/five-batch/5pct-45-55/90d-period-constant",
+    "Guide Bond Staging resume as blocker of this freeze"
+  ],
+  "tt_production_go": "NO_GO"
+}

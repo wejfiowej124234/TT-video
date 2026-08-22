@@ -112,4 +112,6 @@ fs_permissions = [
   { access = "read-write", path = "../evidence/GO_ttg_v9_remint_sepolia" },
   { access = "read-write", path = "../evidence/GO_ttg_v9_design_lock_sepolia" },
   { access = "read-write", path = "../evidence/GO_ttg_v9_mainnet_dl_r1" },
+  { access = "read-write", path = "../evidence/GO_ttg_v9_project_pool_v2_sepolia" },
+  { access = "read-write", path = "../evidence/GO_ttg_v9_pm_treasury_governed_sepolia" },
 ]

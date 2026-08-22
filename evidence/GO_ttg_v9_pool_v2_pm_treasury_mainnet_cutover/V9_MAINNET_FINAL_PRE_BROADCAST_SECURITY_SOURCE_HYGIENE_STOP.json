@@ -1,0 +1,15 @@
+{
+  "stamp": "V9_MAINNET_FINAL_PRE_BROADCAST_SECURITY_SOURCE_HYGIENE_STOP",
+  "verdict": "STOP",
+  "recorded_at_utc": "2026-08-22T00:18:27Z",
+  "reason": "DIRTY_WORKTREE",
+  "dirty_worktree_count": 34,
+  "OPEN_C": 0,
+  "OPEN_H": 0,
+  "OPEN_M": 0,
+  "NON_ENGLISH_SOURCE_COMMENTS": 0,
+  "exact_match_ok": true,
+  "storage_layout_ok": true,
+  "phase_a_broadcast": "FORBIDDEN_UNTIL_PASS",
+  "tt_production_go": "NO_GO"
+}

@@ -1,0 +1,56 @@
+# TravelTrust · TtgV9 ProjectPool Governance Cap V2
+# Human: docs/runbook/TT-TTG-V9-PROJECT-POOL-GOVERNANCE-CAP-V2-LATEST.md
+# Adjudication: evidence/GO_ttg_v9_audit/V9_PROJECT_POOL_UPGRADEABILITY_ADJUDICATION.json
+
+schema: traveltrust.ttg_v9_project_pool_governance_cap_v2.v1
+version: 1
+machine_key: V9_PROJECT_POOL_GOVERNANCE_CAP_V2
+status: MAINNET_CUTOVER_AUTH_RECORDED_PHASE_A_AWAITING_BROADCAST
+equals_production_go: false
+guide_bond_staging_track: PAUSED
+mainnet_cutover:
+  owner_auth_recorded: true
+  broadcast: false
+  blocker_code: PM_USDC_TREASURY_IMMUTABLE
+  evidence_dir: evidence/GO_ttg_v9_project_pool_v2_mainnet/
+
+phase1_project_pool:
+  address: "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37"
+  verdict: NON_UPGRADEABLE
+  legacy_label: LEGACY_PHASE1_PROJECT_POOL
+  usdc_balance_at_adjudication: "0"
+
+owner_economic_lock:
+  period_seconds: 7776000  # 90 days — FROZEN this wave
+  default_cap_bps: 3000
+  cap_bps_min: 0
+  cap_bps_max: 10000
+  set_cap_authority: Governor_to_SoloTimelock_48h
+  eoa_guardian_admin_direct_set: FORBIDDEN
+  set_cap_resets_period_or_spent: false
+
+local_candidate:
+  contract: contracts/src/ttg-v9/TtgV9ProjectPoolV2.sol
+  tests: contracts/test/ttg-v9/TtgV9ProjectPoolV2.t.sol
+  pattern: UUPS_proxy_Timelock_owner
+
+keep_frozen:
+  - TTG_V9_25T_NO_MINT
+  - five_batch_primary_market
+  - fee_5pct_45_55
+  - RoleStake
+  - Governor_V9
+  - SoloTimelock
+
+forbidden:
+  - mainnet_broadcast_without_owner_auth
+  - tt_production_go_flip
+  - mutate_phase1_bytecode_in_place
+  - infer_upgradeability_from_legacy_p4cap
+
+combined_cutover:
+  machine_key: V9_PROJECT_POOL_V2_AND_PM_TREASURY_MAINNET_CUTOVER
+  pm_candidate_pin: 968d9ca61f00be35395d913e8e6a86759643eaf992836101817f4fb3854b34cb
+  pool_v2_pin: a93ae30f436a4c1a75faee8b6b7d5d7e24904481a159bc746bab7a4bbf0cbaa3
+  evidence_dir: evidence/GO_ttg_v9_pool_v2_pm_treasury_mainnet_cutover/
+  runbook: docs/runbook/TT-TTG-V9-PROJECT-POOL-V2-AND-PM-TREASURY-MAINNET-CUTOVER-LATEST.md

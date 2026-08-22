@@ -1,0 +1,12 @@
+{
+  "schema": "traveltrust.ttg_v9_primary_market_treasury_governed_sepolia_status.v1",
+  "machine_key": "V9_PRIMARY_MARKET_TREASURY_GOVERNED_CUTOVER",
+  "status": "SEPOLIA_REALITY_PASS_EXACT_MATCH_SECURITY_FREEZE_STOP",
+  "equals_production_go": false,
+  "tt_production_go": "NO_GO",
+  "long_window_reality": "PASS",
+  "exact_match": "FROZEN",
+  "security_open_c_h_m": 0,
+  "evidence_dir": "evidence/GO_ttg_v9_pm_treasury_governed_sepolia",
+  "stamped_at": "2026-08-21T17:13:48Z"
+}

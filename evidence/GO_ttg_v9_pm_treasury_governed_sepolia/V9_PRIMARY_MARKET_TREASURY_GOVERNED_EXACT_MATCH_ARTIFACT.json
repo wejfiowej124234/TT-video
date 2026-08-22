@@ -1,0 +1,33 @@
+{
+  "stamp": "V9_PRIMARY_MARKET_TREASURY_GOVERNED_EXACT_MATCH_ARTIFACT",
+  "recorded_at_utc": "2026-08-21T16:24:41Z",
+  "compiler": {
+    "solc": "0.8.36",
+    "via_ir": true,
+    "optimizer_runs": 200,
+    "evm": "paris",
+    "profile": "ttg_v9"
+  },
+  "contract": "TtgBatchPrimaryMarket",
+  "source": "contracts/src/ttg-v9/TtgBatchPrimaryMarket.sol",
+  "version_tag": "ttg_batch_primary_market_v9_uups_treasury_governed",
+  "patch": "setUsdcTreasury(address) Timelock-only; zero rejected; no new storage slots",
+  "deployed_bytecode_sha256": "968d9ca61f00be35395d913e8e6a86759643eaf992836101817f4fb3854b34cb",
+  "deployed_bytecode_len": 8274,
+  "sepolia": {
+    "dl_r1_market": "0x5010f46F2dE4500B3f9d6E164093B7a30EaA707a",
+    "dl_r1_pm_new_impl": "0xB488DD86DE59e9D0fF33C153566cF2de776CCfEA",
+    "fresh_pm": "0xb8A191e84C16CB6E4e1Fc634D1bAc85a338989BC",
+    "fresh_pm_new_impl": "0xa841d481C0dcF5B85033CbF9D44ffA0daC4A4695",
+    "pool_v2_frozen": "0xF59E120F846f07Fc011c9d592CF613e27BFa1F50",
+    "fresh_pool_v2": "0xc49C28E9883405087Cb734a48206a5eE7A370Ff0"
+  },
+  "project_pool_v2_candidate": "FROZEN_KEEP",
+  "mainnet_broadcast": false,
+  "status": "FROZEN",
+  "sepolia_impl_verified": "0xcbde44046F8288059150fAfD07C2DA2E0A0DF569",
+  "immutable_normalize": "UUPS __self address(this) zero-placeholder runs >=20 bytes",
+  "long_window_reality": "PASS",
+  "freeze": true,
+  "stamped_at": "2026-08-21T17:13:48Z"
+}

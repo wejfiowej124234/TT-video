@@ -1,0 +1,34 @@
+{
+  "stamp": "V9_PROJECT_POOL_V2_MAINNET_CUTOVER_STOP",
+  "wave": "V9_PROJECT_POOL_V2_MAINNET_CUTOVER",
+  "recorded_at_utc": "2026-08-21T15:37:46Z",
+  "verdict": "STOP",
+  "mainnet_broadcast": false,
+  "tt_production_go": "NO_GO",
+  "blocker_code": "PM_USDC_TREASURY_IMMUTABLE",
+  "blocker": "TtgBatchPrimaryMarket.usdcTreasury is initialize-only; ABI has no setUsdcTreasury; on-chain probe reverts. Authorized cutover requires retargeting Primary Market public-sale USDC sink from 0x7B21… to NEW ProjectPoolV2 without ad-hoc source changes — funds-routing mismatch → STOP before any Mainnet V2 deploy.",
+  "evidence": {
+    "owner_auth": "V9_OWNER_PROJECT_POOL_V2_MAINNET_CUTOVER_AUTHORIZATION_RECORDED",
+    "preflight": "V9_PROJECT_POOL_V2_MAINNET_CUTOVER_PREFLIGHT",
+    "pm_address": "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b",
+    "pm_usdcTreasury_live": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+    "pm_abi_setUsdcTreasury": false,
+    "fee_router_setProjectPool": "AVAILABLE_via_SoloTimelock_48h",
+    "legacy_pool_usdc_balance": "0",
+    "exact_match_bytecode_ready": true
+  },
+  "still_possible_without_source_change": [
+    "Deploy Exact-Match ProjectPoolV2 (UUPS) on Mainnet with owner=spender=SoloTimelock, USDC=Circle, capBps=3000",
+    "Timelock schedule+execute CountryFeeRouter.setProjectPool(NEW_V2) after 48h"
+  ],
+  "requires_separate_owner_auth": [
+    "Exact-Match freeze a Timelock-only Primary Market UUPS patch that adds ONLY setUsdcTreasury(address), then cutover PM sink",
+    "OR Owner written acceptance of FeeRouter-only cutover while PM remains on LEGACY until PM patch (incomplete vs original cutover wording)"
+  ],
+  "forbidden_this_stop": [
+    "Ad-hoc edit of TtgBatchPrimaryMarket to add setter mid-cutover",
+    "Redeploy five-batch PM / mutate 25T/no-mint/45-55/90d",
+    "TT_PRODUCTION_GO flip",
+    "Mainnet V2 broadcast until Owner resolves PM path"
+  ]
+}

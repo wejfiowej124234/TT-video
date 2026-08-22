@@ -1,0 +1,24 @@
+{
+  "stamp": "V9_OWNER_PROJECT_POOL_V2_AND_PM_TREASURY_MAINNET_CUTOVER_AUTHORIZATION_RECORDED",
+  "machine_key": "V9_PROJECT_POOL_V2_AND_PM_TREASURY_MAINNET_CUTOVER",
+  "recorded_at_utc": "2026-08-21T17:51:54Z",
+  "chain_id": 1,
+  "owner_auth": "written_this_session",
+  "status": "AUTH_RECORDED_AWAITING_PHASE_A_BROADCAST_APPROVAL",
+  "candidates": {
+    "project_pool_v2_exact_match_sha256": "a93ae30f436a4c1a75faee8b6b7d5d7e24904481a159bc746bab7a4bbf0cbaa3",
+    "pm_treasury_governed_exact_match_sha256": "968d9ca61f00be35395d913e8e6a86759643eaf992836101817f4fb3854b34cb",
+    "sepolia_status_required": "SEPOLIA_REALITY_PASS_EXACT_MATCH_SECURITY_FREEZE_STOP",
+    "sepolia_pm_freeze_present": true,
+    "sepolia_pool_freeze_present": true
+  },
+  "forbidden": [
+    "rebuild_unfrozen_bytecode",
+    "ad_hoc_source_or_param_edit",
+    "guide_bond",
+    "staging",
+    "www_production",
+    "tt_production_go_flip"
+  ],
+  "tt_production_go": "NO_GO"
+}

@@ -1,0 +1,54 @@
+{
+  "stamp": "V9_PROJECT_POOL_V2_AND_PM_TREASURY_MAINNET_CUTOVER_PREFLIGHT",
+  "recorded_at_utc": "2026-08-21T17:51:54Z",
+  "chain_id": 1,
+  "rpc": "https://ethereum.publicnode.com",
+  "exact_match_local": {
+    "pm_sha256": "968d9ca61f00be35395d913e8e6a86759643eaf992836101817f4fb3854b34cb",
+    "pm_len": 8274,
+    "pm_match": true,
+    "pool_v2_sha256": "a93ae30f436a4c1a75faee8b6b7d5d7e24904481a159bc746bab7a4bbf0cbaa3",
+    "pool_v2_len": 3713,
+    "pool_match": true,
+    "rebuild_forbidden": true,
+    "deploy_mode": "forge_create_offline"
+  },
+  "live": {
+    "solo_timelock": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+    "timelock_admin": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+    "timelock_delay": "172800",
+    "primary_market": "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b",
+    "pm_version": "\"ttg_batch_primary_market_v9_uups\"",
+    "pm_timelock": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+    "pm_usdcTreasury": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+    "pm_usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "pm_seededBatchCount": "0",
+    "country_fee_router": "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970",
+    "fee_owner": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+    "fee_projectPool": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+    "legacy_pool": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+    "legacy_usdc_balance": "0",
+    "circle_usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+  },
+  "economic_lock": {
+    "default_cap_bps": 3000,
+    "cap_range": [
+      0,
+      10000
+    ],
+    "period_seconds": 7776000
+  },
+  "timelock_ladder": {
+    "delay_seconds": 172800,
+    "phase_a": "deploy PoolV2 + schedule PM upgrade + schedule Fee setProjectPool",
+    "phase_b_after_eta": "execute upgrade + execute Fee setProjectPool + schedule setUsdcTreasury",
+    "phase_c_after_second_eta": "execute setUsdcTreasury + Reality + LEGACY + FREEZE STOP"
+  },
+  "note_seeded_batch_count_0": "PM write-buy Reality blocked until separate Timelock seedBatches; Fee wiring Reality still required",
+  "scripts": {
+    "phase_a": "scripts/dev/run-ttg-v9-pool-v2-pm-treasury-mainnet-cutover-phase-a.sh",
+    "phase_b": "scripts/dev/run-ttg-v9-pool-v2-pm-treasury-mainnet-cutover-phase-b.sh",
+    "phase_c": "scripts/dev/run-ttg-v9-pool-v2-pm-treasury-mainnet-cutover-phase-c.sh"
+  },
+  "broadcast_status": "NOT_STARTED_AWAITING_RUNTIME_APPROVAL"
+}

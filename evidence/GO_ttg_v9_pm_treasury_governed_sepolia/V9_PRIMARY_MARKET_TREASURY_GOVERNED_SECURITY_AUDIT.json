@@ -1,0 +1,54 @@
+{
+  "stamp": "V9_PRIMARY_MARKET_TREASURY_GOVERNED_SECURITY_AUDIT",
+  "recorded_at_utc": "2026-08-21T16:24:41Z",
+  "scope": "Minimal UUPS patch setUsdcTreasury on TtgBatchPrimaryMarket",
+  "open_critical": 0,
+  "open_high": 0,
+  "open_medium": 0,
+  "findings": [
+    {
+      "severity": "INFO",
+      "id": "ACL-01",
+      "title": "setUsdcTreasury onlyTimelock",
+      "status": "PASS",
+      "note": "EOA/Guardian denied on Sepolia DL_R1 + Local Forge"
+    },
+    {
+      "severity": "INFO",
+      "id": "ACL-02",
+      "title": "reject address(0)",
+      "status": "PASS",
+      "note": "Local Forge + Timelock execute path"
+    },
+    {
+      "severity": "INFO",
+      "id": "UPG-01",
+      "title": "UUPS Timelock-only; storage layout match PreTreasury",
+      "status": "PASS",
+      "note": "check-ttg-v9-pm-treasury-storage-layout.sh + Sepolia 0-drift snaps"
+    },
+    {
+      "severity": "INFO",
+      "id": "ECO-01",
+      "title": "No change to 25T/batches/prices/buy math",
+      "status": "PASS"
+    },
+    {
+      "severity": "INFO",
+      "id": "GAP-01",
+      "title": "Sepolia post-cutover buy window expired mid-run",
+      "status": "OPEN_FOLLOWUP",
+      "note": "Need long-window buy Reality; Local Forge purchase\u2192PoolV2 PASS; ACL cutover on Sepolia PASS"
+    }
+  ],
+  "verdict": "PASS_OPEN_CHM_0_WITH_FOLLOWUP_BUY",
+  "tt_production_go": "NO_GO",
+  "status": "PASS_FREEZE",
+  "OPEN_C": 0,
+  "OPEN_H": 0,
+  "OPEN_M": 0,
+  "follow_up_buy": "CLOSED_LONG_WINDOW_PASS",
+  "long_window_reality": "PASS",
+  "freeze": true,
+  "stamped_at": "2026-08-21T17:13:48Z"
+}

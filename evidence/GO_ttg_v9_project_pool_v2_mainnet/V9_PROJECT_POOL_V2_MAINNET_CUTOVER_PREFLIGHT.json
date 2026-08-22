@@ -1,0 +1,27 @@
+{
+  "stamp": "V9_PROJECT_POOL_V2_MAINNET_CUTOVER_PREFLIGHT",
+  "recorded_at_utc": "2026-08-21T15:37:46Z",
+  "chain_id": 1,
+  "exact_match_local_bytecode_sha256": "a93ae30f436a4c1a75faee8b6b7d5d7e24904481a159bc746bab7a4bbf0cbaa3",
+  "exact_match_artifact_sha256": "a93ae30f436a4c1a75faee8b6b7d5d7e24904481a159bc746bab7a4bbf0cbaa3",
+  "exact_match": true,
+  "circle_usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+  "solo_timelock": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+  "timelock_admin": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+  "timelock_delay_seconds": 172800,
+  "deploy_key_is_timelock_admin": true,
+  "legacy_phase1_pool": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+  "legacy_pool_usdc_balance": "0",
+  "primary_market": "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b",
+  "primary_market_usdcTreasury": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+  "primary_market_has_setUsdcTreasury": false,
+  "country_fee_router": "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970",
+  "country_fee_router_projectPool": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+  "country_fee_router_owner": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+  "fee_router_setProjectPool_available": true,
+  "economic_lock": {
+    "default_cap_bps": 3000,
+    "cap_range": [0, 10000],
+    "period_seconds": 7776000
+  }
+}

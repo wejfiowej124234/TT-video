@@ -1,0 +1,12 @@
+{
+  "stamp": "V9_STAGING_FULL_REALITY_PRESTATE_DEPLOY_AUTH",
+  "recorded_at_utc": "2026-08-21T14:33:03Z",
+  "release_artifact": "f64e7185df07314f84d621b82eb5c4a5d5332aa3",
+  "includes_bond_candidate": "93bf318259efdfa5962eacde88760605f9e72a1b",
+  "preflight": {
+    "porcelain": 0,
+    "ssot_six_role": "PASS",
+    "check_only": "PASS",
+    "live_ops": "3e356617a498b0faac42e4ae457343d36294a770"
+  }
+}

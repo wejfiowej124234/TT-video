@@ -177,7 +177,7 @@ contract TtgV9BatchPrimaryMarketTest is Test {
 
     function test_version_and_min() public view {
         assertEq(market.minPurchaseUsdc(), uint256(1e6));
-        assertEq(market.version(), string("ttg_batch_primary_market_v9_uups"));
+        assertEq(market.version(), string("ttg_batch_primary_market_v9_uups_treasury_governed"));
     }
 
     function test_seed_batches_rehearsal_short_windows() public {

@@ -1,0 +1,22 @@
+{
+  "stamp": "V9_PERIPHERY_GOVERNANCE_UPGRADE_CLEAN_WORKTREE",
+  "machine_key": "V9_PERIPHERY_GOVERNANCE_UPGRADE_CLEAN_WORKTREE",
+  "recorded_at_utc": "2026-08-22T01:42:23Z",
+  "DESIGN_FREEZE": "LOCKED",
+  "NEXT_GATE": "CLEAN_WORKTREE",
+  "AUDIT_LADDER": "1->2->3",
+  "OLD_AUDIT_INHERITANCE": "FORBIDDEN",
+  "MAINNET_BROADCAST": "NOT_AUTHORIZED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "NO_OWNER_ECONOMIC_OR_AUTHORITY_DRIFT": true,
+  "forbidden": [
+    "hard_reset",
+    "git_clean",
+    "stash_overwrite",
+    "design_expansion",
+    "mainnet_broadcast"
+  ],
+  "generated_handling": "gitignore contracts/out-ttg-v9/ and contracts/cache-ttg-v9/; keep local Exact-Match artifacts on disk",
+  "UNKNOWN_BLOCKER": 0,
+  "commit_intent": "single atomic commit of KEEP set + Design Freeze SSOT + gitignore"
+}

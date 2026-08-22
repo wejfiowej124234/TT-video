@@ -1,0 +1,29 @@
+{
+  "stamp": "V9_OWNER_PROJECT_POOL_V2_MAINNET_CUTOVER_AUTHORIZATION_RECORDED",
+  "wave": "V9_PROJECT_POOL_V2_MAINNET_CUTOVER",
+  "recorded_at_utc": "2026-08-21T15:37:46Z",
+  "owner_auth": true,
+  "scope": [
+    "Deploy Exact-Match frozen TtgV9ProjectPoolV2 UUPS on Ethereum Mainnet chain_id=1",
+    "Verify proxy/impl/owner/spender/cap/USDC Exact Match to Sepolia freeze artifact",
+    "Cutover Primary Market USDC sink + CountryFeeRouter projectPool from 0x7B21… to NEW V2",
+    "Label 0x7B21… LEGACY_PHASE1_PROJECT_POOL after funds path points to V2 and legacy balance 0",
+    "STOP on any mismatch; no ad-hoc source/param change",
+    "Do not flip TT_PRODUCTION_GO"
+  ],
+  "prerequisites_cited": {
+    "sepolia_rehearsal": "V9_PROJECT_POOL_V2_SEPOLIA_REHEARSAL_PASS",
+    "security_audit": "V9_PROJECT_POOL_V2_SECURITY_AUDIT OPEN_C/H/M=0",
+    "exact_match": "V9_PROJECT_POOL_V2_EXACT_MATCH_ARTIFACT",
+    "deployed_bytecode_sha256": "a93ae30f436a4c1a75faee8b6b7d5d7e24904481a159bc746bab7a4bbf0cbaa3"
+  },
+  "keep_frozen": [
+    "TTG_25T_NO_MINT",
+    "five_batch_PM",
+    "fee_5pct_45_55",
+    "P4_PERIOD_SECONDS_90d",
+    "Guide_Bond",
+    "TT_PRODUCTION_GO_independent"
+  ],
+  "tt_production_go": "NO_GO"
+}

@@ -1,0 +1,41 @@
+{
+  "stamp": "V9_PROJECT_POOL_UPGRADEABILITY_ADJUDICATION",
+  "wave": "V9_PROJECT_POOL_GOVERNANCE_CAP_V2",
+  "recorded_at_utc": "2026-08-21T15:08:37Z",
+  "chain_id": 1,
+  "address": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+  "verdict": "NON_UPGRADEABLE",
+  "method": "read_only_mainnet_cast",
+  "findings": {
+    "codesize": 1867,
+    "eip1967_implementation_slot": "0x0",
+    "eip1967_admin_slot": "0x0",
+    "eip1967_beacon_slot": "0x0",
+    "proxiableUUID": "revert",
+    "implementation()": "revert",
+    "capBps()": "revert_absent",
+    "owner": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+    "spender": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+    "reserveToken_USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    "usdc_balance": "0",
+    "p4SpentInPeriod": "0",
+    "source_shape": "plain_constructor_contract_TtgV9ProjectPool_no_UUPS",
+    "forbidden_inference": "MUST_NOT_infer_upgradeability_from_legacy_GovernanceTreasuryP4Cap_proxy"
+  },
+  "path_decision": "NEW_DEPLOY_ProjectPoolV2_then_cutover_sinks_label_0x7B21_LEGACY",
+  "owner_cap_lock": {
+    "period_seconds": 7776000,
+    "default_cap_bps": 3000,
+    "cap_bps_min": 0,
+    "cap_bps_max": 10000,
+    "setter": "Governor_to_SoloTimelock_48h_only",
+    "setCap_resets_spent": false
+  },
+  "guide_bond_staging_track": "PAUSED",
+  "tt_production_go": "NO_GO",
+  "mainnet_broadcast_this_wave": false,
+  "local_v2": {
+    "contract": "contracts/src/ttg-v9/TtgV9ProjectPoolV2.sol",
+    "tests": "contracts/test/ttg-v9/TtgV9ProjectPoolV2.t.sol"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "stamp": "V9_STAGING_FULL_REALITY_BLOCKER_STOP",
+  "wave": "V9_STAGING_FULL_REALITY_REGRESSION",
+  "recorded_at_utc": "2026-08-21T14:49:42Z",
+  "verdict": "STOP",
+  "V9_STAGING_FULL_REALITY_PASS": "NOT_STAMPED",
+  "Production_Candidate_freeze": "NOT_FROZEN",
+  "release_artifact_deployed": "f64e7185df07314f84d621b82eb5c4a5d5332aa3",
+  "post_deploy_identity": {
+    "git_sha": "f64e7185df07314f84d621b82eb5c4a5d5332aa3",
+    "build_time": "2026-08-21T14:33:54Z",
+    "image_digest": "gitsha:f64e7185df07314f84d621b82eb5c4a5d5332aa3",
+    "artifact_sha": "f64e7185df07314f84d621b82eb5c4a5d5332aa3"
+  },
+  "product_surface_metrics": {
+    "FRONTEND_DRIFT": 0,
+    "ADMIN_UI_UX_DRIFT": 0,
+    "BACKEND_DRIFT": 0,
+    "DB_SCHEMA_DRIFT": 0,
+    "CMS_DATA_TRUTH_CONFLICTS": 0,
+    "OBJECT_STORAGE_DRIFT": 0,
+    "INDEXER_DRIFT": 0,
+    "STALE_RUNTIME_OVERLAY": 0,
+    "OLD_VERSION_ACTIVE_REFS": 0,
+    "WEB3_TRUTH_CONFLICTS": 0
+  },
+  "product_surface_all_zero": true,
+  "forge_guide_bond_local": "23_PASS",
+  "blocker": {
+    "id": "STG-GUIDE-BOND-ONCHAIN-REALITY",
+    "metric": "GUIDE_BOND_LIFECYCLE",
+    "count": 1,
+    "reason": "Guide Order Performance Bond remains Local Candidate only (Forge 23 PASS in artifact). No Staging/Sepolia deployment, Escrow lifecycle wiring, or /meta address \u2014 cannot claim 1:1 on-chain orderId USDC lock/refund/slash/settle Reality on Staging.",
+    "forbidden_this_stop": [
+      "Staging hotfix",
+      "fake PASS",
+      "Production Candidate freeze"
+    ]
+  },
+  "deploy_status": "tt-web-staging LIVE on tip f64e7185d (product surfaces probed; bond on-chain Reality missing)",
+  "still_forbidden": [
+    "Production deploy",
+    "Mainnet broadcast",
+    "Production /meta Indexer cutover",
+    "TT_PRODUCTION_GO"
+  ],
+  "next": "Owner authorize Sepolia/Staging deploy of TtgV9GuideOrderPerformanceBond (+ lifecycle adapter) then re-run Guide Bond lifecycle Reality only; do not flip PASS until GUIDE_BOND_LIFECYCLE=0 with on-chain evidence"
+}

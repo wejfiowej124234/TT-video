@@ -1,0 +1,227 @@
+{
+  "stamp": "V9_STAGING_FULL_REALITY_REGRESSION_RESULT",
+  "recorded_at_utc": "2026-08-21T14:48:46Z",
+  "release_artifact": "f64e7185df07314f84d621b82eb5c4a5d5332aa3",
+  "post_deploy_identity": {
+    "git_sha": "f64e7185df07314f84d621b82eb5c4a5d5332aa3",
+    "build_time": "2026-08-21T14:33:54Z",
+    "image_digest": "gitsha:f64e7185df07314f84d621b82eb5c4a5d5332aa3",
+    "artifact_sha": "f64e7185df07314f84d621b82eb5c4a5d5332aa3"
+  },
+  "metrics": {
+    "FRONTEND_DRIFT": 0,
+    "ADMIN_UI_UX_DRIFT": 0,
+    "BACKEND_DRIFT": 0,
+    "DB_SCHEMA_DRIFT": 0,
+    "CMS_DATA_TRUTH_CONFLICTS": 0,
+    "OBJECT_STORAGE_DRIFT": 0,
+    "INDEXER_DRIFT": 0,
+    "STALE_RUNTIME_OVERLAY": 0,
+    "OLD_VERSION_ACTIVE_REFS": 0,
+    "WEB3_TRUTH_CONFLICTS": 0,
+    "GUIDE_BOND_LIFECYCLE": 1
+  },
+  "checks": [
+    {
+      "name": "release_identity_http",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "release_identity_sha",
+      "ok": true,
+      "detail": "f64e7185df07314f84d621b82eb5c4a5d5332aa3"
+    },
+    {
+      "name": "no_ops_mother_as_tip",
+      "ok": true,
+      "detail": "f64e7185df07314f84d621b82eb5c4a5d5332aa3"
+    },
+    {
+      "name": "build_time_present",
+      "ok": true,
+      "detail": "2026-08-21T14:33:54Z"
+    },
+    {
+      "name": "page/",
+      "ok": true,
+      "detail": "status=200 len=188493"
+    },
+    {
+      "name": "page/market",
+      "ok": true,
+      "detail": "status=200 len=142125"
+    },
+    {
+      "name": "page/traveltrust",
+      "ok": true,
+      "detail": "status=200 len=190080"
+    },
+    {
+      "name": "page/did-rank",
+      "ok": true,
+      "detail": "status=200 len=108237"
+    },
+    {
+      "name": "page/community",
+      "ok": true,
+      "detail": "status=200 len=86535"
+    },
+    {
+      "name": "page/auth/login",
+      "ok": true,
+      "detail": "status=200 len=34727"
+    },
+    {
+      "name": "page/auth/register",
+      "ok": true,
+      "detail": "status=200 len=34253"
+    },
+    {
+      "name": "page/governance/proposals",
+      "ok": true,
+      "detail": "status=200 len=44632"
+    },
+    {
+      "name": "market_has_content",
+      "ok": true,
+      "detail": "market markers"
+    },
+    {
+      "name": "promo_traveler",
+      "ok": true,
+      "detail": "status=200 size=53120809 ptr=False"
+    },
+    {
+      "name": "promo_guide",
+      "ok": true,
+      "detail": "status=200 size=56740572 ptr=False"
+    },
+    {
+      "name": "promo_merchant",
+      "ok": true,
+      "detail": "status=200 size=70281841 ptr=False"
+    },
+    {
+      "name": "promo_provider",
+      "ok": true,
+      "detail": "status=200 size=70281841 ptr=False"
+    },
+    {
+      "name": "promo_acquisition",
+      "ok": true,
+      "detail": "status=200 size=75418479 ptr=False"
+    },
+    {
+      "name": "promo_region_steward",
+      "ok": true,
+      "detail": "status=200 size=82695358 ptr=False"
+    },
+    {
+      "name": "steward_size",
+      "ok": true,
+      "detail": "82695358"
+    },
+    {
+      "name": "admin_surface/admin",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "admin_surface/admin/login",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "admin_surface/adm",
+      "ok": true,
+      "detail": "status=404"
+    },
+    {
+      "name": "api_meta",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "api_sepolia",
+      "ok": true,
+      "detail": "11155111"
+    },
+    {
+      "name": "meta_escrow_factory_address",
+      "ok": true,
+      "detail": "0xbf746B6a330e61416c6D87aB9b0758f7107C8006"
+    },
+    {
+      "name": "meta_fee_router_address",
+      "ok": true,
+      "detail": "0xf406e6f1277b990544d4f0556421c3c14df0ab28"
+    },
+    {
+      "name": "meta_governor_address",
+      "ok": true,
+      "detail": "0x1ce4fbE80557bC2111A814f60A2334de41032116"
+    },
+    {
+      "name": "api_health",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "api_me_unauth_shape",
+      "ok": true,
+      "detail": "status=401"
+    },
+    {
+      "name": "api/api/v1/catalog/destinations",
+      "ok": true,
+      "detail": "status=404"
+    },
+    {
+      "name": "api/api/v1/cms/health",
+      "ok": true,
+      "detail": "status=401"
+    },
+    {
+      "name": "api/api/v1/discover/orders",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "name": "object_storage_endpoint",
+      "ok": true,
+      "detail": "status=403"
+    },
+    {
+      "name": "indexer_status_surface",
+      "ok": true,
+      "detail": "status=401"
+    },
+    {
+      "name": "bake_sha_match",
+      "ok": true,
+      "detail": "f64e7185df07314f84d621b82eb5c4a5d5332aa3"
+    },
+    {
+      "name": "admin_health_or_auth",
+      "ok": true,
+      "detail": "status=401"
+    },
+    {
+      "name": "bond_local_candidate_doc",
+      "ok": true,
+      "detail": "doc"
+    },
+    {
+      "name": "bond_staging_onchain_reality",
+      "ok": false,
+      "detail": "NOT_DEPLOYED_ON_STAGING_CHAIN_PER_LOCAL_CANDIDATE_SSOT"
+    }
+  ],
+  "notes": [
+    "GUIDE_BOND_LIFECYCLE:bond_staging_onchain_reality:NOT_DEPLOYED_ON_STAGING_CHAIN_PER_LOCAL_CANDIDATE_SSOT"
+  ],
+  "all_zero_product_metrics": true,
+  "guide_bond_lifecycle_pass": false,
+  "V9_STAGING_FULL_REALITY_PASS": "NOT_STAMPED"
+}

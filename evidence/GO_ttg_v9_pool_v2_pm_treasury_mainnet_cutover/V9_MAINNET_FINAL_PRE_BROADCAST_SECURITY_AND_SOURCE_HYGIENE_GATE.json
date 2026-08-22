@@ -1,0 +1,94 @@
+{
+  "stamp": "V9_MAINNET_FINAL_PRE_BROADCAST_SECURITY_AND_SOURCE_HYGIENE_GATE",
+  "machine_key": "V9_MAINNET_FINAL_PRE_BROADCAST_SECURITY_AND_SOURCE_HYGIENE_GATE",
+  "recorded_at_utc": "2026-08-22T00:18:27Z",
+  "verdict": "STOP",
+  "stop_reason": "DIRTY_WORKTREE",
+  "broadcast": false,
+  "tt_production_go": "NO_GO",
+  "candidates_only": {
+    "project_pool_v2_pin": "a93ae30f436a4c1a75faee8b6b7d5d7e24904481a159bc746bab7a4bbf0cbaa3",
+    "pm_treasury_governed_pin": "968d9ca61f00be35395d913e8e6a86759643eaf992836101817f4fb3854b34cb"
+  },
+  "metrics": {
+    "OPEN_C": 0,
+    "OPEN_H": 0,
+    "OPEN_M": 0,
+    "NON_ENGLISH_SOURCE_COMMENTS": 0,
+    "TODO_FIXME_HACK_ACTIVE": 0,
+    "SECRETS_IN_ACTIVE_SOL": 0,
+    "DIRTY_WORKTREE_COUNT": 34,
+    "EXACT_MATCH_OK": true,
+    "STORAGE_LAYOUT_OK": true
+  },
+  "blockers": [
+    {
+      "code": "DIRTY_WORKTREE",
+      "severity": "gate_blocker",
+      "detail": "clean worktree required; count=34",
+      "sample": [
+        " M contracts/foundry.toml",
+        " M contracts/src/ttg-v9/TtgBatchPrimaryMarket.sol",
+        " M contracts/test/ttg-v9/TtgV9BatchPrimaryMarket.t.sol",
+        "?? contracts/cache-ttg-v9/",
+        "?? contracts/out-ttg-v9/",
+        "?? contracts/src/ttg-v9/TtgV9ProjectPoolV2.sol",
+        "?? contracts/src/ttg-v9/TtgV9ProjectPoolV2SepoliaRehearsal.s.sol",
+        "?? contracts/src/ttg-v9/legacy/",
+        "?? contracts/test/ttg-v9/TtgV9BatchPrimaryMarketTreasuryGoverned.t.sol",
+        "?? contracts/test/ttg-v9/TtgV9ProjectPoolV2.t.sol",
+        "?? contracts/test/ttg-v9/fixtures/",
+        "?? docs/runbook/TT-TTG-V9-PRIMARY-MARKET-TREASURY-GOVERNED-CUTOVER-LATEST.md",
+        "?? docs/runbook/TT-TTG-V9-PROJECT-POOL-GOVERNANCE-CAP-V2-LATEST.md",
+        "?? docs/runbook/TT-TTG-V9-PROJECT-POOL-V2-AND-PM-TREASURY-MAINNET-CUTOVER-LATEST.md",
+        "?? evidence/GO_ttg_v9_audit/V9_PROJECT_POOL_UPGRADEABILITY_ADJUDICATION.json",
+        "?? evidence/GO_ttg_v9_audit/V9_STAGING_FULL_REALITY_BLOCKER_STOP_AFTER_DEPLOY.json",
+        "?? evidence/GO_ttg_v9_audit/V9_STAGING_FULL_REALITY_PRESTATE_DEPLOY_AUTH.json",
+        "?? evidence/GO_ttg_v9_audit/V9_STAGING_FULL_REALITY_REGRESSION_RESULT.json",
+        "?? evidence/GO_ttg_v9_pm_treasury_governed_sepolia/",
+        "?? evidence/GO_ttg_v9_pool_v2_pm_treasury_mainnet_cutover/",
+        "?? evidence/GO_ttg_v9_project_pool_v2_mainnet/",
+        "?? evidence/GO_ttg_v9_project_pool_v2_sepolia/",
+        "?? registry/ttg-v9-primary-market-treasury-governed-cutover.v1.yaml",
+        "?? registry/ttg-v9-project-pool-governance-cap-v2.v1.yaml",
+        "?? scripts/dev/check-ttg-v9-pm-treasury-storage-layout.sh",
+        "?? scripts/dev/run-ttg-v9-pm-treasury-governed-sepolia-b-resume.sh",
+        "?? scripts/dev/run-ttg-v9-pm-treasury-governed-sepolia-long-window.sh",
+        "?? scripts/dev/run-ttg-v9-pm-treasury-governed-sepolia-resume.sh",
+        "?? scripts/dev/run-ttg-v9-pm-treasury-governed-sepolia.sh",
+        "?? scripts/dev/run-ttg-v9-pool-v2-pm-treasury-mainnet-cutover-phase-a.sh"
+      ]
+    }
+  ],
+  "security_code_review_open_c_h_m": [
+    0,
+    0,
+    0
+  ],
+  "security_and_hygiene_checks_summary": {
+    "pm_setUsdcTreasury_timelock_only": "PASS",
+    "uups_acl_pm_pool_vault": "PASS",
+    "pool_v2_cap_3000_range_0_10000_90d": "PASS",
+    "fee_router_owner_setProjectPool": "PASS",
+    "circle_usdc_mainnet": "PASS",
+    "ttg_no_mint_blacklist_honeypot_setBalance": "PASS",
+    "genesis_50_35_3_5_7_and_vault_50pct": "PASS",
+    "non_english_comments": 0,
+    "exact_match_offline_no_rebuild": "PASS",
+    "compiler_0_8_36_via_ir_opt200_paris": "PASS",
+    "compiler_known_bug_applicability": "PASS_NO_AFFECTED_CONDITION_IDENTIFIED",
+    "storage_layout_pm_treasury": "PASS"
+  },
+  "hard_rules": {
+    "comment_only_fix_is_candidate_mutation": true,
+    "must_re_run_local_sepolia_security_exact_match_after_any_source_edit": true,
+    "forbid_fix_then_mainnet_direct": true,
+    "phase_a_blocked_until_pass_stamp": true
+  },
+  "required_to_clear": [
+    "Produce dirty_worktree_count=0 for the cutover Candidate path",
+    "Re-run gate \u2192 stamp V9_MAINNET_FINAL_PRE_BROADCAST_SECURITY_SOURCE_HYGIENE_PASS",
+    "Then resume Owner-authorized Phase A only"
+  ],
+  "pass_stamp_if_cleared": "V9_MAINNET_FINAL_PRE_BROADCAST_SECURITY_SOURCE_HYGIENE_PASS"
+}

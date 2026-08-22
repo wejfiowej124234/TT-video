@@ -1,0 +1,66 @@
+{
+  "stamp": "V9_PROJECT_POOL_V2_SECURITY_AUDIT",
+  "wave": "V9_PROJECT_POOL_V2_SEPOLIA_REHEARSAL_AND_SECURITY",
+  "recorded_at_utc": "2026-08-21T15:32:48Z",
+  "scope": [
+    "contracts/src/ttg-v9/TtgV9ProjectPoolV2.sol",
+    "TtgV9UUPSUpgradeable",
+    "Sepolia rehearsal PASS"
+  ],
+  "method": "independent_ai_security_regression",
+  "open_critical": 0,
+  "open_high": 0,
+  "open_medium": 0,
+  "OPEN_C_H_M": 0,
+  "findings": [
+    {
+      "id": "ACL-001",
+      "sev": "PASS",
+      "title": "setCapBps/upgrade/spend gated to Timelock owner/spender",
+      "note": "EOA denied on Sepolia"
+    },
+    {
+      "id": "CAP-001",
+      "sev": "PASS",
+      "title": "capBps bounds 0..10000; default 3000",
+      "note": "ladder 30\u21925\u219250\u2192100\u21920 rehearsed"
+    },
+    {
+      "id": "CAP-002",
+      "sev": "PASS",
+      "title": "setCapBps does not reset period or spent",
+      "note": "over-cap subsequent spend rejected"
+    },
+    {
+      "id": "ASSET-001",
+      "sev": "PASS",
+      "title": "spendP4Reserve USDC-only",
+      "note": "non-USDC execute failed"
+    },
+    {
+      "id": "UUPS-001",
+      "sev": "PASS",
+      "title": "upgradeToAndCall onlyOwner Timelock",
+      "note": "EOA upgrade rejected; Timelock upgrade PASS"
+    },
+    {
+      "id": "CEI-001",
+      "sev": "PASS",
+      "title": "spent incremented before transfer",
+      "note": "limits reentrancy on standard USDC"
+    },
+    {
+      "id": "INFO-001",
+      "sev": "INFO",
+      "title": "No nonReentrant modifier",
+      "note": "Acceptable for canonical USDC; residual if exotic ERC20 used as reserve \u2014 Mainnet uses USDC"
+    },
+    {
+      "id": "INFO-002",
+      "sev": "INFO",
+      "title": "No rescue for non-USDC airdrops",
+      "note": "By design; Timelock can upgrade if needed"
+    }
+  ],
+  "verdict": "PASS_OPEN_CHM_0"
+}

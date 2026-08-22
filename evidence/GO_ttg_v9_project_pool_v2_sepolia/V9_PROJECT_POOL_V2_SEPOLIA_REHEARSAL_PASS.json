@@ -1,0 +1,38 @@
+{
+  "stamp": "V9_PROJECT_POOL_V2_SEPOLIA_REHEARSAL_PASS",
+  "wave": "V9_PROJECT_POOL_V2_SEPOLIA_REHEARSAL_AND_SECURITY",
+  "recorded_at_utc": "2026-08-21T15:32:02Z",
+  "chain_id": 11155111,
+  "addresses": {
+    "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+    "timelock": "0xE359bf8281FAe8Fc615E95315FB27aC6495a17E3",
+    "usdc_mock": "0x9322Af16B1690c1c3B4687B8AE2a630456687B9e",
+    "pool_v2_proxy": "0xF59E120F846f07Fc011c9d592CF613e27BFa1F50",
+    "pool_v2_impl_initial": "0x1847E87c2286336D5C1CA5e74c76137a78c5d981",
+    "pool_v2_impl_upgraded": "0x03B5E096367d3B8e9248f9179d0089C8f91Be34D",
+    "fee_router": "0xDD245A5cF9edB21d5a810Ab2122D2089e4D0E6A0"
+  },
+  "checks": {
+    "default_cap_bps": 3000,
+    "cap_ladder": [
+      500,
+      5000,
+      10000,
+      0,
+      3000
+    ],
+    "eoa_setCap_rejected": true,
+    "eoa_upgrade_rejected": true,
+    "period_not_reset_on_setCap": true,
+    "spent_not_cleared_on_setCap": true,
+    "over_cap_spend_rejected": true,
+    "fee_router_to_v2": true,
+    "pm_standin_usdc_to_v2": true,
+    "usdc_only": true,
+    "uups_timelock_upgrade": true
+  },
+  "mainnet_phase1_frozen": true,
+  "mainnet_broadcast": false,
+  "tt_production_go": "NO_GO",
+  "legacy_mainnet_pool": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37"
+}

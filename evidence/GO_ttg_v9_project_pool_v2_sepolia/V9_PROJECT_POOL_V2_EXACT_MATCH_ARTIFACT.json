@@ -1,0 +1,26 @@
+{
+  "stamp": "V9_PROJECT_POOL_V2_EXACT_MATCH_ARTIFACT",
+  "recorded_at_utc": "2026-08-21T15:32:48Z",
+  "compiler": {
+    "solc": "0.8.36",
+    "via_ir": true,
+    "optimizer_runs": 200,
+    "evm": "paris",
+    "profile": "ttg_v9"
+  },
+  "contract": "TtgV9ProjectPoolV2",
+  "source": "contracts/src/ttg-v9/TtgV9ProjectPoolV2.sol",
+  "deployed_bytecode_sha256": "a93ae30f436a4c1a75faee8b6b7d5d7e24904481a159bc746bab7a4bbf0cbaa3",
+  "deployed_bytecode_len": 3713,
+  "sepolia": {
+    "deployer": "0x104FCb93B5e097F92c93Ee4621C487C6C953D212",
+    "timelock": "0xE359bf8281FAe8Fc615E95315FB27aC6495a17E3",
+    "usdc_mock": "0x9322Af16B1690c1c3B4687B8AE2a630456687B9e",
+    "pool_v2_proxy": "0xF59E120F846f07Fc011c9d592CF613e27BFa1F50",
+    "pool_v2_impl_initial": "0x1847E87c2286336D5C1CA5e74c76137a78c5d981",
+    "pool_v2_impl_upgraded": "0x03B5E096367d3B8e9248f9179d0089C8f91Be34D",
+    "fee_router": "0xDD245A5cF9edB21d5a810Ab2122D2089e4D0E6A0"
+  },
+  "mainnet_legacy_phase1_pool": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+  "mainnet_broadcast": false
+}

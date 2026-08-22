@@ -1,0 +1,165 @@
+# TTG V9 · Periphery Governance Upgrade · DESIGN FREEZE
+# SSOT narrative: docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-UPGRADE-FREEZE-LATEST.md
+# Audit process parent: docs/runbook/TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST.md
+schema_version: 1
+machine_key: V9_PERIPHERY_GOVERNANCE_UPGRADE_FREEZE
+status: DESIGN_FREEZE
+design_freeze: LOCKED
+design_phase: CLOSED
+next_phase: engineering_from_clean_worktree
+next_gate: CLEAN_WORKTREE
+recorded_at_utc: "2026-08-22"
+tt_production_go: NO_GO
+mainnet_broadcast: NOT_AUTHORIZED
+old_audit_inheritance: FORBIDDEN
+audit_ladder: "1->2->3"
+
+freeze_rule: |
+  Do not reopen for general security optimization that changes 25T,
+  economic-ratio semantics, wallet roles, governance targets, or authority model.
+  Prefer fix implementation; purpose changes require STOP + new Owner Design Lock.
+  Design debate CLOSED — execute frozen ladder from Clean worktree.
+
+audit_pass_is_candidate_scoped: true
+prior_candidate_triad_not_inherited: true
+audit_pass_binds:
+  - source_sha
+  - artifact_hashes
+  - compiler_profile
+  - storage_layout
+  - deployment_topology
+  - this_design_freeze
+
+audit_triad:
+  audit_1:
+    role: smart_contract_auditor
+    decides: code_itself_has_vulnerabilities
+    covers:
+      - acl
+      - uups
+      - storage
+      - init
+      - reentrancy
+      - upgrade
+      - timelock
+      - governance
+      - source_hygiene
+  audit_2:
+    role: economic_red_team
+    decides: combinations_can_steal_bypass_governance_or_break_economics
+    covers:
+      - treasury
+      - fee
+      - split
+      - primary_market
+      - governance_combination
+      - timelock_bypass
+      - routing_attack
+  audit_3:
+    role: mainnet_release_auditor
+    decides: broadcast_artifact_is_frozen_audited_tested_candidate_and_wiring_correct
+    covers:
+      - exact_match
+      - deployment_artifact
+      - governance_topology
+      - monetary_invariant
+      - migration
+      - old_to_new_cutover
+      - legacy_isolation
+
+remediate_after_audit_2:
+  implementation_only: retest_affected_surface_plus_regression
+  purpose_change: STOP_owner_reapprove_design_lock
+
+approved_scope:
+  - periphery_migration_no_safe
+  - platform_fee_bps_governable_default_500_max_10000_no_auto_commercial_cap
+  - active_steward_fee_split_governable_sum_10000_only_no_auto_commercial_caps
+  - no_steward_100_to_pool_fixed_independent_branch
+  - project_pool_cap_bps_0_to_10000
+  - new_timelock_target_12h_bounds_12h_to_7d_no_safe
+  - pm_treasury_slippage_quota_ceiling_no_batch_redesign
+  - wallet_scanner_compiler_english_exact_match_gates
+
+no_owner_economic_or_authority_drift: true
+redeploy_periphery_not_remint_ttg: true
+deploy_script_new_ttg_genesis: FAIL_CLOSED
+
+timelock:
+  target_default_seconds: 43200  # 12h new stack only
+  suggested_min_seconds: 43200
+  suggested_max_seconds: 604800  # 7d
+  truth_reporting: |
+    Until Governor cutover to NEW Timelock, /meta Registry Official www
+    MUST report old ACTIVE Timelock real delay.
+
+fee:
+  platform_fee_bps_default: 500
+  platform_fee_governable: true
+  active_split_default_steward_bps: 4500
+  active_split_default_project_bps: 5500
+  active_split_hard_bound: sum_eq_10000_only
+  active_split_applies_to: platform_fee_bucket_only
+  no_steward_platform_fee: fixed_100_to_project_pool_independent_branch
+
+project_pool:
+  default_cap_bps: 3000
+  cap_bps_min: 0
+  cap_bps_max: 10000
+
+execution_ladder_compact:
+  - clean
+  - triage
+  - local
+  - audit_1
+  - sepolia_reality
+  - audit_2
+  - scanner_compiler_english
+  - exact_match_freeze
+  - audit_3
+  - owner_mainnet_authorization
+  - mainnet_migration
+  - old_active_refs_eq_0
+  - legacy
+  - mainnet_reality
+  - stop
+
+execution_ladder:
+  - design_lock
+  - clean_worktree
+  - per_contract_triage_3_state
+  - local_implementation
+  - local_full_tests
+  - audit_1_smart_contract
+  - sepolia_reality
+  - audit_2_economic_red_team
+  - remediate_blockers
+  - wallet_scanner
+  - compiler_known_bug_applicability
+  - english_comments_natspec
+  - exact_match_candidate_freeze
+  - audit_3_mainnet_release
+  - owner_mainnet_written_authorization
+  - mainnet_migration_new_or_upgrade
+  - governor_to_new_timelock_12h
+  - pm_fee_projectpool_fund_routing_cutover
+  - old_active_refs_eq_0
+  - legacy_labels
+  - mainnet_reality
+  - stop
+
+gates:
+  DESIGN_FREEZE: LOCKED
+  AUDIT_LADDER: "1->2->3"
+  OLD_AUDIT_INHERITANCE: FORBIDDEN
+  MAINNET_BROADCAST: NOT_AUTHORIZED
+  NO_SAFE_CRITICAL_ROLES: 0
+  OLD_ACTIVE_REFS_BEFORE_LEGACY: 0
+  NON_ENGLISH_SOURCE_COMMENTS: 0
+  UNRESOLVED_COMPILER_KNOWN_BUG_APPLICABILITY: 0
+  WALLET_SCANNER_CRITICAL_FINDINGS: 0
+  PUBLIC_VAULT_50_PERCENT: EXPLAINED_ACCEPT
+  DIRTY_WORKTREE: 0
+  AUDIT_PASS_IS_CANDIDATE_SCOPED: PASS
+  PRIOR_CANDIDATE_TRIAD_NOT_INHERITED: PASS
+  TT_PRODUCTION_GO: NO_GO

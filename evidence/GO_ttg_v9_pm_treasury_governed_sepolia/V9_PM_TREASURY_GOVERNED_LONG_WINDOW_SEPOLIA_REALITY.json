@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.ttg_v9_pm_treasury_governed_long_window_sepolia_reality.v1",
+  "machine_key": "V9_PM_TREASURY_GOVERNED_LONG_WINDOW_SEPOLIA_REALITY",
+  "status": "PASS",
+  "phase": "2_sepolia_only",
+  "equals_production_go": false,
+  "tt_production_go": "NO_GO",
+  "window_seconds": 3600,
+  "exact_match_artifact_sha256": "968d9ca61f00be35395d913e8e6a86759643eaf992836101817f4fb3854b34cb",
+  "exact_match_note": "Artifact deployedBytecode sha256 pinned; on-chain runtime may differ only at UUPS __self immutable fill (normalized compare PASS)",
+  "impl": "0xcbde44046F8288059150fAfD07C2DA2E0A0DF569",
+  "pm_proxy": "0xaAC4e430b343be5Ef9F2B34ad0EDDdf2402c7740",
+  "vault": "0x0aFf142f337901356fFe77E5622B30571Fb3B440",
+  "project_pool_v2": "0xc49C28E9883405087Cb734a48206a5eE7A370Ff0",
+  "project_pool_v2_frozen_keep": "0xF59E120F846f07Fc011c9d592CF613e27BFa1F50",
+  "fee_router": "0xF3fC481BEE172E8Ad90c65CC25F8e7A906A1DAfb",
+  "timelock": "0x7aaEAC6D890EFe85ddA37Cf366ceA585592F91E4",
+  "usdc": "0x50D593b4eA94FBF3E2aa0B0C5887CeD7EdA35814",
+  "ttg": "0x23a888fCe200eDbF8a2D6ae78428B87fc0bA4240",
+  "legacy_sink": "0x000000000000000000000000000000000000bEEF",
+  "proofs": {
+    "pre_upgrade_buy_usdc_to_legacy": true,
+    "post_cutover_buy_usdc_100pct_to_pool_v2": true,
+    "post_cutover_legacy_delta_0": true,
+    "fee_router_10_usdc_to_pool_v2": true,
+    "pool_v2_cap_period_spent_start_0_drift": true,
+    "pm_upgrade_inventory_batches_prices_acl_impl_exact_match": true,
+    "batch_not_open_resolved_by_window_3600_only": true
+  },
+  "on_chain_spotcheck": {
+    "usdcTreasury": "0xc49C28E9883405087Cb734a48206a5eE7A370Ff0",
+    "version": "ttg_batch_primary_market_v9_uups_treasury_governed",
+    "pool_usdc_balance": "11000000",
+    "legacy_usdc_balance_shared_sink": "2000000",
+    "pool_cap_bps": "3000",
+    "pool_p4_spent": "0"
+  },
+  "log": "long_window.run9.log",
+  "stamped_at": "2026-08-21T17:13:48Z",
+  "stop": true,
+  "next_requires": "separate Owner Mainnet Cutover Authorization",
+  "forbidden_this_wave": [
+    "mainnet_broadcast",
+    "production_deploy",
+    "guide_bond_resume",
+    "staging_full_reality_resume",
+    "tt_production_go_flip"
+  ]
+}

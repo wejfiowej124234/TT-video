@@ -102,3 +102,7 @@ tmp-recon-classify.py
 # Canonical binaries: frontend/public/media/traveltrust/roles/*.mp4 (Git LFS)
 # + registry/traveltrust-role-promo-media-assets.v1.yaml
 首页角色宣传片/*.mp4
+
+# TTG V9 Foundry profile artifacts (local Exact-Match; do not commit)
+contracts/out-ttg-v9/
+contracts/cache-ttg-v9/

@@ -1,0 +1,47 @@
+# TravelTrust · Primary Market Treasury Governed Cutover
+# Human: docs/runbook/TT-TTG-V9-PRIMARY-MARKET-TREASURY-GOVERNED-CUTOVER-LATEST.md
+
+schema: traveltrust.ttg_v9_primary_market_treasury_governed_cutover.v1
+version: 1
+machine_key: V9_PRIMARY_MARKET_TREASURY_GOVERNED_CUTOVER
+status: SEPOLIA_REALITY_PASS_EXACT_MATCH_SECURITY_FREEZE_STOP
+equals_production_go: false
+long_window_reality: PASS
+window_seconds_sepolia_test_only: 3600
+exact_match_sha256: 968d9ca61f00be35395d913e8e6a86759643eaf992836101817f4fb3854b34cb
+security_open_c_h_m: 0
+next_gate: phase_a_mainnet_broadcast_awaiting_runtime_approval
+mainnet_combined_cutover: V9_PROJECT_POOL_V2_AND_PM_TREASURY_MAINNET_CUTOVER
+dual_pool_active_carveout: REJECTED
+project_pool_v2_candidate: FROZEN_KEEP
+
+patch:
+  contract: contracts/src/ttg-v9/TtgBatchPrimaryMarket.sol
+  function: setUsdcTreasury(address)
+  authority: SoloTimelock_only
+  reject_zero: true
+  new_storage_slots: 0
+  version_tag: ttg_batch_primary_market_v9_uups_treasury_governed
+  legacy_fixture: contracts/src/ttg-v9/legacy/TtgBatchPrimaryMarketPreTreasury.sol
+
+keep_frozen:
+  - TTG_V9_25T_NO_MINT
+  - allocation_50_35_3_5_7
+  - five_batch_caps_prices_state
+  - buy_close_logic
+  - ProjectPoolV2_ExactMatch_candidate
+  - P4_PERIOD_SECONDS_90d
+
+mainnet_order_after_separate_auth:
+  - deploy_ProjectPoolV2
+  - timelock_upgrade_PM
+  - setUsdcTreasury_V2
+  - feeRouter_setProjectPool_V2
+  - funds_path_reality
+  - label_0x7B21_LEGACY_PHASE1_PROJECT_POOL
+
+forbidden:
+  - mainnet_without_new_owner_auth
+  - tt_production_go_flip
+  - dual_pool_as_final_active_topology
+  - ad_hoc_source_change_mid_cutover

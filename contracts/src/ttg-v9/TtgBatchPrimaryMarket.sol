@@ -12,6 +12,7 @@ import {TtgV9UUPSUpgradeable} from "./TtgV9UUPSUpgradeable.sol";
  * @dev UUPS under Timelock-only upgrade. Pricing: ttgOut = usdcAmount * 1e18 / usdcRawPerWholeTtg (floor).
  *      Batch close ALWAYS returns unsold to PublicSaleVault. No closeBatchBurn.
  *      Protocol inventory burn is GOVERNANCE_ONLY (Governor → Timelock execute → Vault.burnProtocolInventory).
+ *      `setUsdcTreasury` is Timelock-only (Governor→SoloTimelock 48h on Mainnet) — no new storage slots.
  *      English NatSpec only. solc >= 0.8.36.
  */
 contract TtgBatchPrimaryMarket is TtgV9UUPSUpgradeable {
@@ -65,6 +66,7 @@ contract TtgBatchPrimaryMarket is TtgV9UUPSUpgradeable {
 
     event TimelockUpdated(address indexed previous, address indexed next);
     event GuardianUpdated(address indexed previous, address indexed next);
+    event UsdcTreasuryUpdated(address indexed previous, address indexed next);
     event PausedSet(bool paused);
     event BatchesSeededFromNorm(uint256 count);
     event BatchArmed(uint256 indexed batchId, uint256 allocated);
@@ -125,6 +127,13 @@ contract TtgBatchPrimaryMarket is TtgV9UUPSUpgradeable {
         if (next == address(0)) revert InvalidAddress();
         emit GuardianUpdated(guardian, next);
         guardian = next;
+    }
+
+    /// @notice Governor→SoloTimelock→execute only. Retargets public-sale USDC sink; no other state change.
+    function setUsdcTreasury(address next) external onlyTimelock {
+        if (next == address(0)) revert InvalidAddress();
+        emit UsdcTreasuryUpdated(usdcTreasury, next);
+        usdcTreasury = next;
     }
 
     function pause() external {
@@ -319,6 +328,6 @@ contract TtgBatchPrimaryMarket is TtgV9UUPSUpgradeable {
     function _authorizeUpgrade(address) internal view override onlyTimelock {}
 
     function version() external pure virtual returns (string memory) {
-        return "ttg_batch_primary_market_v9_uups";
+        return "ttg_batch_primary_market_v9_uups_treasury_governed";
     }
 }
