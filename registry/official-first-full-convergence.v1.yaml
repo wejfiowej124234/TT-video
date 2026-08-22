@@ -1,6 +1,10 @@
 # schema: traveltrust.official_first_full_convergence.v1
 schema: traveltrust.official_first_full_convergence.v1
-status: STOP_PRODUCTION_REALITY_DRIFT
+status: CLEAN_REBUILD_ACTIVE
+clean_rebuild_track: OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE
+clean_rebuild_ssot: docs/runbook/TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md
+clean_rebuild_registry: registry/official-first-clean-rebuild-convergence.v1.yaml
+recorded_utc: "2026-08-22T05:43:00Z"
 gate: PRODUCT_AND_DOCUMENTATION_PARITY
 gate_result: FAIL
 recorded_utc: "2026-08-22T05:16:30Z"
@@ -12,12 +16,11 @@ production_schema_reality:
   capture: PASS_CAPTURE
   stamp: "20260822T051209Z"
   aggregate_schema_sha256: "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478"
-  drift: MIGRATION_STATE_NOT_IN_GIT
-  drift_versions:
-    - 20260816180000
-    - 20260816190000
-    - 20260816200000
-  evidence: evidence/GO_official_product_reality_capture/PRODUCTION_REALITY_SCHEMA_DRIFT_LATEST.json
+  migration_verify: MATCH_1TO1
+  migration_count: 157
+  motherboard_freeze: evidence/GO_official_product_reality_capture/OFFICIAL_PRODUCT_MOTHERBOARD_FREEZE_LATEST.json
+  prior_drift: RESOLVED_BY_GIT_RECLAIM
+  convergence_mode: OFFICIAL_FIRST_CLEAN_REBUILD
 
 official_baseline:
   pin_id: TT-OFFICIAL-OPS-20260820-V9

@@ -1,0 +1,31 @@
+{
+  "schema": "traveltrust.official_product_motherboard_freeze.v1",
+  "status": "FROZEN",
+  "recorded_utc": "2026-08-22T05:45:13Z",
+  "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
+  "official_living_pin": {
+    "pin_id": "TT-OFFICIAL-OPS-20260820-V9",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "fly_image": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "database_baseline": "production_surface"
+  },
+  "capture_surfaces": {
+    "schema": "OFFICIAL_PROD_SCHEMA_CAPTURE_LATEST.json",
+    "migrations_verify": "PROD_GIT_MIGRATION_VERIFY_LATEST.json",
+    "api_depth": "RUNTIME_API_DEPTH_20260822.json",
+    "auth_admin": "RUNTIME_AUTH_ADMIN_I18N_IDENTITY_20260822.json",
+    "cms_assets": "RUNTIME_CMS_ASSETS_INVENTORY_20260822.json",
+    "env_flags": "RUNTIME_ENV_FLAGS_PARITY_20260822.json",
+    "identity": "release-identity.json"
+  },
+  "aggregate_schema_sha256": "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478",
+  "migration_count": 157,
+  "migration_verify": "MATCH_1TO1",
+  "forbidden": [
+    "production_mutation",
+    "copy_prod_business_data",
+    "accept_ed"
+  ]
+}

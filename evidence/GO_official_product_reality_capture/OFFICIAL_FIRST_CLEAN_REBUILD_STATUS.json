@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.official_first_clean_rebuild_status.v1",
+  "status": "ACTIVE",
+  "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
+  "recorded_utc": "2026-08-22T05:46:48Z",
+  "supersedes": "local_staging_archaeological_drift_repair",
+  "gate": "PRODUCT_AND_DOCUMENTATION_PARITY",
+  "gate_result": "FAIL",
+  "phases": {
+    "A_capture_freeze": "PARTIAL_COMPLETE",
+    "B_git_reclaim": "MIGRATIONS_COMPLETE",
+    "C_local_rebuild": "COMPLETE_FRESH_MIGRATE_157",
+    "D_staging_rebuild": "NOT_STARTED",
+    "E_verify_pass": "NOT_STARTED",
+    "C_local_schema_match_prod": "PENDING_VIEW_HOSTING_LAYER"
+  },
+  "zero_gates": {
+    "UNAUTHORIZED_DRIFT": "0",
+    "DOC_TRUTH_CONFLICTS": "0",
+    "OLD_PRODUCT_REFS": "0",
+    "RUNTIME_PARITY_GAPS": "NOT_ZERO"
+  },
+  "human_ssot": "docs/runbook/TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md",
+  "local_rebuild": {
+    "migration_verify": "LOCAL_REBUILD_MIGRATION_VERIFY_LATEST.json",
+    "schema_capture": "LOCAL_SCHEMA_CAPTURE_LATEST.json",
+    "aggregate_schema_sha256": "814650a8e9a090a9a5b7dbe91cec15139fc59afb158089d0656c376c8ecd06ca",
+    "note": "Fresh rebuild from Git; schema symdiff vs Prod remains (SELECT * views + MPG extensions)"
+  }
+}

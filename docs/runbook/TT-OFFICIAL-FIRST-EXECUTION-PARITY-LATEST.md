@@ -1,9 +1,11 @@
 # Official-First · Execution Parity（Official→Git→Local→Staging）
 
-**STATUS:** `MIGRATION_RECOVERED_SCHEMA_CONVERGENCE_PENDING`  
-**Pre-DB commit:** `a6fafe3d1` · **Drift-stop commit:** `da5f5798a`  
+**STATUS:** `SUPERSEDED_BY_CLEAN_REBUILD`  
+**Active track:** [`TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST`](TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md) · `OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE`  
 **Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **FAIL** · **PASS NOT_ISSUED**  
 **`TT_PRODUCTION_GO`:** NO_GO  
+
+> **策略切换（2026-08-22）：** 停止 Local/Staging **考古修复**。Official Production = PRODUCT 活面 SSOT → Capture/冻结 → Git 收回 → **彻底清理并从零重建** Local/Staging → 验证 `Official=Git=Local=Staging`。
 
 ## Zero gates (this wave)
 
@@ -12,31 +14,15 @@
 | `UNAUTHORIZED_DRIFT` | **0** (identity plane) | 1to1 + plane-map PASS · Staging www=`3e356617…` |
 | `DOC_TRUTH_CONFLICTS` | **0** (Local-SSOT ladder banner set) | DOC_RETAG wave1+2 |
 | `OLD_PRODUCT_REFS` | **0** | [`OLD_PRODUCT_REFS_CLOSURE_20260822.json`](../../evidence/GO_official_product_reality_capture/OLD_PRODUCT_REFS_CLOSURE_20260822.json) |
-| `RUNTIME_PARITY_GAPS` | **NOT_ZERO** | Migration bookkeeping **MATCH_1TO1** · schema convergence **PENDING** (3 view columns + Staging capture) |
+| `RUNTIME_PARITY_GAPS` | **NOT_ZERO** | Clean rebuild track **ACTIVE** — 见 [`OFFICIAL_FIRST_CLEAN_REBUILD_STATUS.json`](../../evidence/GO_official_product_reality_capture/OFFICIAL_FIRST_CLEAN_REBUILD_STATUS.json) |
 
 **因此禁止盖** `PRODUCT_AND_DOCUMENTATION_PARITY_PASS`。  
-**禁止** `ACCEPT_ED` 清零 RUNTIME。**禁止**为过闸改官网 DB（DDL/DML/migration/repair）。
+**禁止** `ACCEPT_ED` · **禁止** Local/Staging 考古修复 · **禁止**为过闸改官网 DB。
 
-## Migration recovery (Official Production API container)
+## Historical (execution-parity wave · retained evidence)
 
-| Item | Value |
-|------|-------|
-| Source | `tt-api-prod` `/app/crates/api/migrations` (read-only `fly ssh cat`) |
-| Recovered | `20260816180000` · `20260816190000` · `20260816200000` |
-| Checksum resync | **13** additional files synced from container (Git bytes ≠ Prod applied checksum) |
-| Verify | `PROD_GIT_MIGRATION_VERIFY_LATEST.json` → **`MATCH_1TO1`** (157/157) |
-| Evidence | `PROD_MIGRATION_RECOVERY_LATEST.json` |
-
-## Production Reality drift (resolved bookkeeping / open schema)
-
-| Version | Description | Git |
-|---------|-------------|-----|
-| `20260816180000` | cms announcements hub roles campaign | **RESTORED** |
-| `20260816190000` | cms announcements role gov copy | **RESTORED** |
-| `20260816200000` | cms announcements role copy short | **RESTORED** |
-
-**Open schema gap (STOP · no guess-write):** 3 `SELECT *` view columns on Production not reproduced by fresh Git migrate — see `SCHEMA_CONVERGENCE_STATUS_LATEST.json`.  
-**Staging:** schema capture blocked (no reachable DSN this wave).
+Migration recovery **MATCH_1TO1** (157/157) — [`PROD_GIT_MIGRATION_VERIFY_LATEST.json`](../../evidence/GO_official_product_reality_capture/PROD_GIT_MIGRATION_VERIFY_LATEST.json).  
+View-column archaeology **STOPPED** — superseded by clean rebuild from Official motherboard.
 
 ## RUNTIME closed this wave
 
@@ -54,12 +40,11 @@
 
 Still **POST_PARITY_FIX_QUEUE** only (M7-07, M7-08, M8-07) — **no fix** until Parity PASS.
 
-## Next (Owner only · not this agent auto-fix)
+## Next
 
-1. Recover or reconstruct the 3 Production-only migration SQL sources into Git **without** mutating Production, **or** Owner-written Reality decision that is **not** ACCEPT_ED-for-gate
-2. Re-run layered compare → only if MATCH then `RUNTIME_PARITY_GAPS=0`
-3. Four zeros true → then `PRODUCT_AND_DOCUMENTATION_PARITY_PASS`
-4. Only after Parity PASS → POST_PARITY_FIX_QUEUE
+→ **[Clean Rebuild Convergence](TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md)** Phase C/D/E  
+Local: `TRAVELTRUST_OFFICIAL_FIRST_LOCAL_CLEAN_REBUILD_OK=1 bash scripts/dev/official-first-clean-rebuild-local.sh`  
+Staging: Owner gate + `official-first-clean-rebuild-staging.sh`
 
 ## Forbidden
 

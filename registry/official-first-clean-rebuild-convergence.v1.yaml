@@ -1,0 +1,67 @@
+# schema: traveltrust.official_first_clean_rebuild_convergence.v1
+schema: traveltrust.official_first_clean_rebuild_convergence.v1
+status: ACTIVE
+track: OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE
+supersedes: local_staging_archaeological_drift_repair
+gate: PRODUCT_AND_DOCUMENTATION_PARITY
+gate_result: FAIL
+recorded_utc: "2026-08-22T05:43:00Z"
+tt_production_go: NO_GO
+
+official_product_motherboard:
+  pin_id: TT-OFFICIAL-OPS-20260820-V9
+  git_sha: "3e356617a498b0faac42e4ae457343d36294a770"
+  build_time: "2026-08-20T00:51:57Z"
+  fly_image: "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820"
+  api_git_sha: "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51"
+  database_baseline: production_surface
+  schema_capture_stamp: "20260822T051209Z"
+  aggregate_schema_sha256: "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478"
+  migration_count: 157
+  migration_verify: MATCH_1TO1
+
+phases:
+  A_official_capture_freeze:
+    status: PARTIAL_COMPLETE
+    evidence: evidence/GO_official_product_reality_capture/OFFICIAL_PRODUCT_MOTHERBOARD_FREEZE_LATEST.json
+  B_git_reclaim:
+    status: IN_PROGRESS
+    migrations_restored: true
+    migration_verify_artifact: evidence/GO_official_product_reality_capture/PROD_GIT_MIGRATION_VERIFY_LATEST.json
+  C_local_clean_rebuild:
+    status: NOT_STARTED
+    entry_script: scripts/dev/official-first-clean-rebuild-local.sh
+    owner_gate_env: TRAVELTRUST_OFFICIAL_FIRST_LOCAL_CLEAN_REBUILD_OK
+  D_staging_clean_rebuild:
+    status: NOT_STARTED
+    entry_script: scripts/dev/official-first-clean-rebuild-staging.sh
+    owner_gate_env: TRAVELTRUST_OFFICIAL_FIRST_STAGING_CLEAN_REBUILD_OK
+  E_verify_pass:
+    status: NOT_STARTED
+
+data_policy:
+  copy_production_user_order_wallet_data: forbidden
+  local_staging_data: sanitized_seed_only
+  clear_overlays_fallbacks_cache: required
+
+web3_plane:
+  candidate_sha: "b19b85810c22677d243a82d06ebec8ebcb4d4b47"
+  overwrite_candidate_from_official_web3: forbidden
+  ladder: local_sepolia_audit_mainnet_then_reverse_update_official
+  mainnet_broadcast: NOT_AUTHORIZED
+
+zero_gates:
+  UNAUTHORIZED_DRIFT: "0"
+  DOC_TRUTH_CONFLICTS: "0"
+  OLD_PRODUCT_REFS: "0"
+  RUNTIME_PARITY_GAPS: NOT_ZERO
+
+forbidden_before_pass:
+  - cms_ui_ux_optimize
+  - post_parity_defect_fix
+  - exact_match_mainnet_tt_production_go
+  - production_db_mutation
+  - local_staging_archaeological_repair
+
+human_ssot: docs/runbook/TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md
+prior_track: docs/runbook/TT-OFFICIAL-FIRST-EXECUTION-PARITY-LATEST.md

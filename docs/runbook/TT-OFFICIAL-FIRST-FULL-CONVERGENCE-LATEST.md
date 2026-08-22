@@ -1,7 +1,8 @@
 # Official-First Full Convergence（官网母版 · 全量产品/文档对齐）
 
-**STATUS:** `STOP_PRODUCTION_REALITY_DRIFT`  
-**Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **FAIL**（身份层 1:1 已 PASS · live schema 已 Capture · **Git↔Prod migration drift STOP** · **禁止**开始产品优化 / CMS 修复 / UI·UX 改造）  
+**STATUS:** `CLEAN_REBUILD_ACTIVE`  
+**Active track:** [`TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST`](TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md)  
+**Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **FAIL**（身份层 1:1 已 PASS · **clean rebuild 进行中** · **禁止** CMS/UI/功能优化）  
 **Identity gates (2026-08-22):** `TT_OFFICIAL_V9_1TO1_MAP: PASS` · `TT_OFFICIAL_V9_PLANE_MAP: PASS`  
 **Recorded:** 2026-08-22  
 **Constitution:** [Dual Truth Planes](TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md)  
