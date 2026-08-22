@@ -1,10 +1,10 @@
 {
-  "stamp": "TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1",
-  "recorded_utc": "2026-08-22T12:47:50Z",
-  "output_dir": "D:\\TravelTrust-TTG-Official-push",
-  "file_count": 42,
+  "stamp": "TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1_1",
+  "recorded_utc": "2026-08-22T12:57:39Z",
+  "output_dir": "D:\\TravelTrust-TTG-Official-staging",
+  "file_count": 44,
   "github_remote": "https://github.com/wejfiowej124234/TravelTrust-TTG-Official",
-  "wave": 1,
+  "wave": "1.1",
   "excluded": [
     "Contract-Registry",
     "Mainnet-Deployments",
@@ -15,7 +15,9 @@
   "metrics": {
     "SECRET_EXPOSURES": 0,
     "FORBIDDEN_PATHS": 0,
-    "MAINNET_PACK_LEAK": 0
+    "MAINNET_PACK_LEAK": 0,
+    "DEAD_LINKS": 0
   },
+  "dead_link_samples": [],
   "pass": true
 }

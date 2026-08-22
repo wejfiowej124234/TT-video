@@ -34,9 +34,9 @@
 python scripts/dev/export-traveltrust-ttg-official-public-repo.py --require-pass
 ```
 
-Evidence: `evidence/GO_ttg_v9_public_repo_export/TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1_LATEST.json`
+Metrics must be zero: `SECRET_EXPOSURES`, `FORBIDDEN_PATHS`, `MAINNET_PACK_LEAK`, **`DEAD_LINKS`**.
 
-Metrics must be zero: `SECRET_EXPOSURES`, `FORBIDDEN_PATHS`, `MAINNET_PACK_LEAK`.
+Evidence: `evidence/GO_ttg_v9_public_repo_export/TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1_1_LATEST.json` (wave **1.1** · dead-link gate)
 
 ---
 

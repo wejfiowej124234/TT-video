@@ -13,3 +13,4 @@ Governor → SoloTimelock (48h delay)
 - Governance Burn: Governor → SoloTimelock → authorized burner
 - Phase1 Governor: `0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c`
 - Phase1 SoloTimelock: `0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f`
+- **Timelock delay:** Mainnet Phase1 SoloTimelock = **48h**; Sepolia V9 periphery rehearsal = **12h** ([Sepolia deployments](../deployments/sepolia.md)) — **do not conflate**.

@@ -6,7 +6,7 @@ Three planes (must not mix):
   - This public pack = filtered official docs only (no source code)
   - On-chain / Etherscan = deployed contract facts
 
-Wave 1: NO mainnet.md · Sepolia TESTNET only · NO contracts/API/scripts/evidence.
+Wave 1.1: dead-link gate · public markdown sanitization · glossary · no private runbook paths.
 """
 from __future__ import annotations
 
@@ -68,6 +68,105 @@ FORBIDDEN_PARTS = {
     ".git",
     "node_modules",
 }
+
+
+FORBIDDEN_LINK_PREFIXES = ("/runbook/", "/registry/", "/scripts/", "runbook/", "registry/", "scripts/")
+
+
+def sanitize_public_markdown(text: str) -> str:
+    """Strip private-monorepo links and internal gate lines from exported markdown."""
+    text = re.sub(
+        r"\[([^\]]+)\]\((?:\.\./)+runbook/[^)]+\)",
+        r"\1",
+        text,
+    )
+    text = re.sub(
+        r"\[([^\]]+)\]\((?:\.\./)+registry/[^)]+\)",
+        r"\1 (internal fact matrix; public summary in this repository)",
+        text,
+    )
+    text = re.sub(
+        r"\*\*Gate:\*\* `python scripts/[^\n]+",
+        "**Public review:** documentation-only pack in this repository (no private CI gates).",
+        text,
+    )
+    text = re.sub(
+        r"\*\*Upstream \(sole\):\*\*[^\n]+\n",
+        "**Public edition:** derived from Design Lock DL_R1 documentation baseline (private monorepo not published).\n",
+        text,
+        count=2,
+    )
+    text = re.sub(
+        r"\*\*Fact matrix:\*\*[^\n]+\n",
+        "",
+        text,
+    )
+    text = re.sub(
+        r"Also mirrored at repository root \[`SECURITY\.md`\]\([^)]+\)\.\n?",
+        "",
+        text,
+    )
+    text = text.replace(
+        "see [TT-OFFICIAL-CONTACT-EMAIL-POLICY-LATEST](../runbook/TT-OFFICIAL-CONTACT-EMAIL-POLICY-LATEST.md)",
+        "see [CONTACT.md](CONTACT.md)",
+    )
+    return text
+
+
+def find_dead_links(out: Path) -> list[str]:
+    dead: list[str] = []
+    for md in out.rglob("*.md"):
+        try:
+            text = md.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for raw in re.findall(r"\[[^\]]*\]\(([^)]+)\)", text):
+            link = raw.strip().split()[0]
+            if link.startswith(("http://", "https://", "mailto:", "#")):
+                continue
+            target = (md.parent / link).resolve()
+            try:
+                target.relative_to(out.resolve())
+            except ValueError:
+                dead.append(f"{md.relative_to(out)} -> {link} (escapes export root)")
+                continue
+            if not target.exists():
+                dead.append(f"{md.relative_to(out)} -> {link}")
+    return dead
+
+
+def glossary_md() -> str:
+    return """# Glossary (public documentation)
+
+| Term | Meaning in this repository |
+|------|----------------------------|
+| **DL_R1** | Design Lock for TTG V9 periphery / economics — target semantics |
+| **V9_TARGET** | Design-frozen target; **not** a claim of Mainnet fully live |
+| **TESTNET** | Sepolia rehearsal (`docs/deployments/sepolia.md`) — **≠** Official Mainnet |
+| **MAINNET_DEPLOYED_PHASE1** | Historical Phase1 deploy facts in whitepaper §0 — **≠** `MAINNET_FULLY_ACTIVE` |
+| **TIMELOCK_CUTOVER_PENDING** | Solo timed operations / KEEP wiring not finished |
+| **TT_PRODUCTION_GO** | Owner Production GO verdict — currently **NO_GO** |
+| **LEGACY / SUPERSEDED** | Old stacks (V8, Remint, R2_FINAL, Safe-as-V9-admin) — not ACTIVE truth |
+| **NO-MINT** | No TTG mint after 25T genesis |
+| **Norm wallets** | Disclosed operational addresses in Tokenomics / whitepaper |
+
+**“Mainnet Edition” whitepaper** names the protocol edition — **not** “everything is live on Mainnet today.”
+"""
+
+
+def github_about_md() -> str:
+    return """# GitHub repository About (owner setup)
+
+Set on https://github.com/wejfiowej124234/TravelTrust-TTG-Official → **About** → **Edit**:
+
+| Field | Value |
+|-------|-------|
+| **Description** | Official TravelTrust / TTG documentation — governance, tokenomics, whitepaper and verified deployment references. |
+| **Website** | https://www.web3-ttg.com |
+| **Topics** | `traveltrust` `ttg` `ethereum` `web3` `governance` `tokenomics` `travel` `documentation` |
+
+This file documents the intended About metadata; GitHub UI must be updated by the repository owner if not already set.
+"""
 
 
 def utc_now() -> str:
@@ -144,6 +243,8 @@ TravelTrust is a decentralized travel-commerce protocol: marketplace matching, o
 
 **TTG** is the governance token (25T genesis · **NO-MINT** after). It is **not** the default settlement asset for travel orders.
 
+> **“Mainnet Edition” whitepaper** names the target protocol edition — **not** a claim that V9 is fully live on Mainnet today. See [GLOSSARY.md](GLOSSARY.md).
+
 ## Documentation map
 
 | | |
@@ -157,13 +258,14 @@ TravelTrust is a decentralized travel-commerce protocol: marketplace matching, o
 | Sepolia (TESTNET) | [docs/deployments/sepolia.md](docs/deployments/sepolia.md) |
 | Contact | [CONTACT.md](CONTACT.md) |
 | Security | [SECURITY.md](SECURITY.md) |
+| Glossary | [GLOSSARY.md](GLOSSARY.md) |
 
 ## Deployment status (public)
 
 | Network | Status in this repo |
 |---------|---------------------|
 | **Sepolia** | [TESTNET / V9_TARGET](docs/deployments/sepolia.md) — rehearsal in progress |
-| **Mainnet** | **Not published in wave 1** — `docs/deployments/mainnet.md` after V9 Mainnet Reality |
+| **Mainnet** | **Wave 2** — `docs/deployments/mainnet.md` after V9 Mainnet Reality |
 
 ## Official links
 
@@ -179,7 +281,7 @@ Not investment advice. Smart contracts involve risk of loss. Historical V8 / Rem
 
 ---
 
-*Wave 1 public export · documentation only · does not replace on-chain truth.*
+*Wave 1.1 public export · documentation only · does not replace on-chain truth.*
 """
 
 
@@ -202,9 +304,19 @@ Security vulnerabilities: see [SECURITY.md](SECURITY.md).
 
 
 def changelog_md() -> str:
+    today = utc_now()[:10]
     return f"""# Public changelog (documentation pack)
 
-## {utc_now()[:10]} — wave 1 initial export
+## {today} — wave 1.1 quality pass
+
+- Fixed all internal navigation dead links (removed Wave 2-only pages from hubs)
+- Sanitized private `runbook/` / `registry/` / `scripts/` links from exported markdown
+- Added [GLOSSARY.md](GLOSSARY.md) · GitHub About metadata doc
+- SECURITY.md points to CONTACT.md only
+- Governance: explicit **48h Mainnet** vs **12h Sepolia** timelock note
+- Export gate: `DEAD_LINKS=0` required
+
+## 2026-08-22 — wave 1 initial export
 
 - Documentation-only public repository created
 - English / Chinese doc hubs, governance, tokenomics, whitepapers
@@ -312,6 +424,17 @@ def export_pack(out: Path) -> None:
 
     # .gitignore for export dir hygiene
     (out / ".gitignore").write_text(".DS_Store\nThumbs.db\n", encoding="utf-8")
+    (out / "GLOSSARY.md").write_text(glossary_md(), encoding="utf-8")
+    (out / "GITHUB-ABOUT.md").write_text(github_about_md(), encoding="utf-8")
+
+    for md in out.rglob("*.md"):
+        md.write_text(sanitize_public_markdown(md.read_text(encoding="utf-8")), encoding="utf-8")
+
+    # docs/governance/* is one level deeper — fix deployment links copied from docs/{lang}/Governance.md
+    for gov_copy in (out / "docs/governance").glob("*.md"):
+        text = gov_copy.read_text(encoding="utf-8")
+        text = text.replace("../../deployments/", "../deployments/")
+        gov_copy.write_text(text, encoding="utf-8")
 
 
 def main() -> int:
@@ -327,27 +450,31 @@ def main() -> int:
 
     export_pack(args.out)
     scan = scan_export_tree(args.out)
+    dead_links = find_dead_links(args.out)
     file_count = sum(1 for p in args.out.rglob("*") if p.is_file())
 
     report = {
-        "stamp": "TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1",
+        "stamp": "TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1_1",
         "recorded_utc": utc_now(),
         "output_dir": str(args.out),
         "file_count": file_count,
         "github_remote": "https://github.com/wejfiowej124234/TravelTrust-TTG-Official",
-        "wave": 1,
+        "wave": "1.1",
         "excluded": sorted(EXCLUDE_TOPICS) + ["mainnet.md", "source_code"],
         "metrics": {
             "SECRET_EXPOSURES": scan["SECRET_EXPOSURES"],
             "FORBIDDEN_PATHS": scan["FORBIDDEN_PATHS"],
             "MAINNET_PACK_LEAK": scan["MAINNET_PACK_LEAK"],
+            "DEAD_LINKS": len(dead_links),
         },
+        "dead_link_samples": dead_links[:20],
         "pass": scan["SECRET_EXPOSURES"] == 0
         and scan["FORBIDDEN_PATHS"] == 0
-        and scan["MAINNET_PACK_LEAK"] == 0,
+        and scan["MAINNET_PACK_LEAK"] == 0
+        and len(dead_links) == 0,
     }
     EVIDENCE.mkdir(parents=True, exist_ok=True)
-    write_path = EVIDENCE / "TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1_LATEST.json"
+    write_path = EVIDENCE / "TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1_1_LATEST.json"
     write_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
     print(json.dumps(report["metrics"], indent=2))

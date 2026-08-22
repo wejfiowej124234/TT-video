@@ -13,3 +13,4 @@ Governor → SoloTimelock（延迟 48h）
 - Governance Burn：Governor → SoloTimelock → 授权 burner
 - Phase1 Governor：`0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c`
 - Phase1 SoloTimelock：`0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f`
+- **Timelock 延迟：** 主网 Phase1 SoloTimelock = **48h**；Sepolia V9 外围排练 = **12h**（[Sepolia 部署](../deployments/sepolia.md)）— **勿混用**。

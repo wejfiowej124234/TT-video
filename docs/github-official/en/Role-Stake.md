@@ -1,6 +1,6 @@
 # Role Stake
 
-**Upstream:** Documentation Truth Baseline · Design Lock **DL_R1** · [Stake Layer Split](../../runbook/TT-TTG-V9-OWNER-STAKE-LAYER-SPLIT-LATEST.md) · [Guide Per-Order Bond](../../runbook/TT-TTG-V9-GUIDE-PER-ORDER-PERFORMANCE-BOND-LATEST.md) · Whitepaper PASS  
+**Upstream:** Documentation Truth Baseline · Design Lock **DL_R1** · Whitepaper PASS (Stake Layer Split · Guide Per-Order Bond)  
 **Mainnet:** `MAINNET_DEPLOYED_PHASE1` / `TIMELOCK_CUTOVER_PENDING` · **≠** Fully Active · **≠** `TT_PRODUCTION_GO`
 
 | Role | Status | Threshold / performance |
