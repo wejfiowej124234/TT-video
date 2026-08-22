@@ -43,9 +43,9 @@
     },
     "git_migrations": {
       "dir": "crates/api/migrations",
-      "sql_file_count": 154,
-      "versioned_count": 154,
-      "aggregate_sha256_of_file_sha256s": "dca5c2043fb7b6cdc100b73ea2efceca7665109bc6a51f401c7cf59de8b9e8e6",
+      "sql_file_count": 157,
+      "versioned_count": 157,
+      "aggregate_sha256_of_file_sha256s": "7c447b15fc22ad630d3f766baf20f26826679640f0f22f348e274de5a4a5dd05",
       "first_versions": [
         20250228000001,
         20250228000002,
@@ -54,11 +54,11 @@
         20250228000005
       ],
       "last_versions": [
-        20260724120000,
-        20260727120000,
-        20260802120000,
         20260802180000,
-        20260816120000
+        20260816120000,
+        20260816180000,
+        20260816190000,
+        20260816200000
       ]
     },
     "migration_bookkeeping_compare": {
@@ -78,18 +78,14 @@
         20260816190000,
         20260816200000
       ],
-      "git_sql_file_count": 154,
-      "git_versioned_count": 154,
-      "git_aggregate_sha256_of_file_sha256s": "dca5c2043fb7b6cdc100b73ea2efceca7665109bc6a51f401c7cf59de8b9e8e6",
-      "only_in_prod_not_git": [
-        20260816180000,
-        20260816190000,
-        20260816200000
-      ],
+      "git_sql_file_count": 157,
+      "git_versioned_count": 157,
+      "git_aggregate_sha256_of_file_sha256s": "7c447b15fc22ad630d3f766baf20f26826679640f0f22f348e274de5a4a5dd05",
+      "only_in_prod_not_git": [],
       "only_in_git_not_prod": [],
-      "intersection_count": 154,
+      "intersection_count": 157,
       "checksum_match_known_algo": 0,
-      "checksum_mismatch_or_unknown_algo_count": 154,
+      "checksum_mismatch_or_unknown_algo_count": 157,
       "checksum_mismatch_sample": [
         {
           "version": 20250228000001,
@@ -152,18 +148,29 @@
           "file": "20250305000010_governance.sql"
         }
       ],
-      "version_set_verdict": "DRIFT_PROD_HAS_UNKNOWN_MIGRATIONS"
+      "version_set_verdict": "VERSION_SET_MATCH"
     },
     "local_schema": {
-      "status": "NOT_CAPTURED_THIS_WAVE",
-      "note": "Optional schema-only capture not provided; migration version-set is primary gate vs Git"
+      "status": "COMPARED",
+      "path": "evidence/GO_official_product_reality_capture/LOCAL_SCHEMA_CAPTURE_LATEST.json",
+      "aggregate_match": false,
+      "other_aggregate": "931c56aed44ac4641bbdeafa6faee3601592be66e9a50a4c70ef54dc6ce8b907",
+      "prod_aggregate": "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478",
+      "counts": {
+        "extensions": 1,
+        "tables": 167,
+        "columns": 1781,
+        "indexes": 505,
+        "constraints": 507,
+        "enums": 0
+      }
     },
     "staging_schema": {
       "status": "NOT_CAPTURED_THIS_WAVE",
       "note": "Optional schema-only capture not provided; migration version-set is primary gate vs Git"
     }
   },
-  "overall_verdict": "PRODUCTION_REALITY_DRIFT_UNKNOWN_PROD_MIGRATIONS",
+  "overall_verdict": "GIT_PROD_MATCH_LOCAL_OR_STAGING_SCHEMA_PENDING",
   "production_reality_drift": true,
   "RUNTIME_PARITY_GAPS_if_applied": "NOT_ZERO",
   "parity_pass_allowed_by_schema_layer": false,
