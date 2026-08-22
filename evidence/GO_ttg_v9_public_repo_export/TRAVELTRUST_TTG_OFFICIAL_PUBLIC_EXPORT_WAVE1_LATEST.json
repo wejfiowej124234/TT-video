@@ -1,0 +1,21 @@
+{
+  "stamp": "TRAVELTRUST_TTG_OFFICIAL_PUBLIC_EXPORT_WAVE1",
+  "recorded_utc": "2026-08-22T12:44:48Z",
+  "output_dir": "D:\\TravelTrust-TTG-Official",
+  "file_count": 42,
+  "github_remote": "https://github.com/wejfiowej124234/TravelTrust-TTG-Official",
+  "wave": 1,
+  "excluded": [
+    "Contract-Registry",
+    "Mainnet-Deployments",
+    "Verification",
+    "mainnet.md",
+    "source_code"
+  ],
+  "metrics": {
+    "SECRET_EXPOSURES": 0,
+    "FORBIDDEN_PATHS": 0,
+    "MAINNET_PACK_LEAK": 0
+  },
+  "pass": true
+}
