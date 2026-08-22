@@ -1,0 +1,20 @@
+{
+  "schema": "traveltrust.runtime_env_flags_parity.v1",
+  "recorded_utc": "2026-08-22T04:30:00Z",
+  "official_expected": {
+    "SKIP_ME_FETCH": "0",
+    "session_bootstrap": "v8",
+    "NEXT_PUBLIC_MARKET_DEV_VARIETY": "absent_or_0",
+    "NEXT_PUBLIC_ESCROW_DEV_TOOLS": "absent_or_0_on_product"
+  },
+  "frontend_env_example_keys_of_interest": {},
+  "frontend_env_local_exists_DEV_ONLY": true,
+  "staging_build_env_devish": {
+    "NEXT_PUBLIC_CATALOG_API_ENABLED": "1"
+  },
+  "disposition": {
+    "frontend_.env.local": "DEV_ONLY_QUARANTINE_not_product_ssot",
+    "staging_dev_flags": "must_remain_absent_for_product_parity"
+  },
+  "gap_status": "CHECK_STAGING_FLAGS"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.runtime_auth_admin_i18n_identity.v1",
+  "recorded_utc": "2026-08-22T04:40:00Z",
+  "official_www_identity": {
+    "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "artifact_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "image_digest": "gitsha:3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "contract_profile": "mainnet_deployed_official_partial",
+    "database_baseline": "production_surface",
+    "cms_baseline": "public_display_10x4 + catalog_bake=1",
+    "attestation_status": "ok",
+    "identity_source": "docker-bake"
+  },
+  "auth": {
+    "login_http": 200,
+    "register_http": 200,
+    "me_unauth_http": 401
+  },
+  "admin": {
+    "http": 307,
+    "redirect": "/auth/login?returnUrl=%2Fadmin"
+  },
+  "i18n": "see CAPTURE_DEEPEN home_zh/en titles",
+  "runtime_identity": {
+    "www_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "api_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+    "staging_www_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "staging_api_git_sha_ED": "1915ec4da828e0139e90a85cd321415fdb6e53d9"
+  },
+  "gap_status": "CLOSED_FOR_IDENTITY_AND_AUTH_ADMIN_SURFACE"
+}

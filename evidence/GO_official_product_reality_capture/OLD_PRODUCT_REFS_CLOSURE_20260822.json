@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.old_product_refs_closure.v1",
+  "recorded_utc": "2026-08-22T04:40:00Z",
+  "scan_living_risk_before": 2,
+  "closures": [
+    {
+      "path": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.json",
+      "needle": "daa5ae87",
+      "disposition": "HISTORICAL_ED_FACT_SUPERSEDED_BY_OPS_V9",
+      "note": "File already has living_product_truth_amendment OPS-2026.08.20-v9; daa5ae87 appears only as Owner-accepted historical ED fact — not living Official."
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-OFFICIAL-QUOTE-SURFACE-CUTOVER-PRECHECK-LATEST.md",
+      "needle": "daa5ae87",
+      "disposition": "FORBIDDEN_CHECKOUT_LISTED",
+      "note": "Document lists checkout daa5ae87 as FORBIDDEN and cites living OPS-v9 pin."
+    }
+  ],
+  "OLD_PRODUCT_REFS": "0",
+  "definition": "No remaining docs treat superseded pins (daa5ae87/v8-misname/M07/01M05…) as living Official product SSOT without SUPERSEDED/FORBIDDEN/OPS-v9 living cite."
+}

@@ -1,0 +1,111 @@
+{
+  "schema": "traveltrust.runtime_db_migration_fingerprint.v1",
+  "recorded_utc": "2026-08-22T04:30:00Z",
+  "official_database_baseline_cite": "production_surface",
+  "official_live_schema_dump": "NOT_AVAILABLE_NEEDS_OWNER",
+  "local_repo_migration_file_count": 167,
+  "aggregate_sha256_of_file_digests": "abc75a1f6a43a93abba368cd55cfc8eb6ab258a3e240ea3b6ce8868cd48204c4",
+  "sample": [
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/mysql/migrations/1_user.sql",
+      "sha256": "b67c1e4888e144548b1b5dc86c6510d75ab45e3cbf088e22dd2455cc463a4da8",
+      "bytes": 227
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/mysql/migrations/2_post.sql",
+      "sha256": "887848d7f70c359975c7a8b26f3276d1892098f52cdcac28f2d42ec37a03228c",
+      "bytes": 323
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/mysql/migrations/3_comment.sql",
+      "sha256": "dae1438bd59a26296677b3dee31d609906214ecc156372a19e55cdba31878642",
+      "bytes": 326
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/postgres/migrations/0_setup.sql",
+      "sha256": "2e9a106cf03e8ed50e6800686abeefef21fe5684d5128f3383696c03fcaf4db6",
+      "bytes": 98
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/postgres/migrations/1_user.sql",
+      "sha256": "902f7e1106e6b172b2771193e5c6c304fe497246f7bb7cdea95a3cba15122ef7",
+      "bytes": 119
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/postgres/migrations/2_post.sql",
+      "sha256": "c991509bae4b2e2f9be0ab2b9cb5ea2a6fb18f2ec1fe72005f9e23809c58b46b",
+      "bytes": 244
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/postgres/migrations/3_comment.sql",
+      "sha256": "b788227008e72478ec20b0177162b5cd83693b2941749c6397d50e4239b835f2",
+      "bytes": 314
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/sqlite/migrations/1_user.sql",
+      "sha256": "554f3699379adac1162a251f70c4f2a0c75fbb4059e9317ea5526b8d20650974",
+      "bytes": 152
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/sqlite/migrations/2_post.sql",
+      "sha256": "6a21693d3488820a7c6e90deedac6c4705b69aba7a5a3104ead565d8593cdf22",
+      "bytes": 308
+    },
+    {
+      "path": ".cargo-home-mig-evidence/registry/src/index.crates.io-1949cf8c6b5b557f/sqlx-0.8.6/tests/sqlite/migrations/3_comment.sql",
+      "sha256": "ea619f0b4b851f9c01dcb2874182a84ef20d82bb44d1cc7a93a7428989cb6798",
+      "bytes": 328
+    },
+    {
+      "path": "crates/api/migrations/20250228000001_users_sessions.sql",
+      "sha256": "90c48be7ac733f3a4c97199de071beb97478e435bdba068e56908c4156c11a35",
+      "bytes": 1024
+    },
+    {
+      "path": "crates/api/migrations/20250228000002_guides.sql",
+      "sha256": "cfe56998b18c183fa62e20e99ae38009e9fd9a5dcc9dd9429db2a59a089ba725",
+      "bytes": 1080
+    },
+    {
+      "path": "crates/api/migrations/20250228000003_orders.sql",
+      "sha256": "dd654e6a78a7b0d7f8fde86e69151d555068b944c5018d990b7bed24ac62fa81",
+      "bytes": 1033
+    },
+    {
+      "path": "crates/api/migrations/20250228000004_reviews_disputes.sql",
+      "sha256": "f18f9fa2240bdb2099a8d67e9d20eaadac934489bfc443a15cbabd522dbc5cbc",
+      "bytes": 1442
+    },
+    {
+      "path": "crates/api/migrations/20250228000005_guides_license.sql",
+      "sha256": "8f640ef207abb58bc7e14bbab2f23cb3dbe98644177716a84536667714f0b519",
+      "bytes": 176
+    },
+    {
+      "path": "crates/api/migrations/20250228000006_itineraries.sql",
+      "sha256": "d69d0ab131a7d4db3d8ae1d4b005a793bb89003b248c4b52994dfff04913e646",
+      "bytes": 1027
+    },
+    {
+      "path": "crates/api/migrations/20250228000007_order_messages.sql",
+      "sha256": "5f6abd6e4cc5e5032af1f1e9bf1c1712a3666ac4b1107322d38aa82e1c23201f",
+      "bytes": 709
+    },
+    {
+      "path": "crates/api/migrations/20250303000008_orders_start_end_date.sql",
+      "sha256": "3a423ae743ecd0b47d855c2dd4e0355e74d934ffd772a27e2fa327bc51473b2c",
+      "bytes": 226
+    },
+    {
+      "path": "crates/api/migrations/20250304000009_evidence_receipts.sql",
+      "sha256": "122e4d4bd6878f8390fc46563184c7fa5d814373c6821014983e1b7a0db65d9b",
+      "bytes": 665
+    },
+    {
+      "path": "crates/api/migrations/20250305000010_governance.sql",
+      "sha256": "bf58ed75c0efc896fa56052568abefaada7ad9ba58443a09b6286dd2d63c0161",
+      "bytes": 1022
+    }
+  ],
+  "note": "Fingerprint is Local/Git migration tree \u2014 not a live Production DB dump. RUNTIME gap remains until Owner provides dump or read-only schema probe."
+}

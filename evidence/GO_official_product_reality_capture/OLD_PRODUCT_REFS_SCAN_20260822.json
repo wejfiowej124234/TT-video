@@ -1,0 +1,21 @@
+{
+  "schema": "traveltrust.old_product_refs_scan.v1",
+  "recorded_utc": "2026-08-22T04:30:00Z",
+  "living_risk_count": 2,
+  "archaeology_ok_count": 661,
+  "living_risk": [
+    {
+      "path": "docs/runbook/TT-PRODUCTION-GO-REASSESSMENT-LATEST.json",
+      "kind": "superseded_08_16_pin",
+      "needle": "daa5ae87",
+      "living_risk": true
+    },
+    {
+      "path": "docs/runbook/TT-TTG-V8-OFFICIAL-QUOTE-SURFACE-CUTOVER-PRECHECK-LATEST.md",
+      "kind": "superseded_08_16_pin",
+      "needle": "daa5ae87",
+      "living_risk": true
+    }
+  ],
+  "gate_candidate": "NOT_ZERO"
+}

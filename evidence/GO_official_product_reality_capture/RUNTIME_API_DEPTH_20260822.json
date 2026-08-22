@@ -1,0 +1,53 @@
+{
+  "schema": "traveltrust.runtime_api_depth_parity.v1",
+  "recorded_utc": "2026-08-22T04:35:00Z",
+  "official_api": {
+    "/meta": {
+      "http": 200,
+      "ctype": "application/json",
+      "bytes": 75302,
+      "json_ok": true
+    },
+    "/health": {
+      "http": 200,
+      "ctype": "text/plain; charset=utf-8",
+      "bytes": 2,
+      "json_ok": false
+    },
+    "/api/v1/public/announcements": {
+      "http": 200,
+      "ctype": "application/json",
+      "bytes": 18810,
+      "json_ok": true
+    },
+    "/api/v1/me": {
+      "http": 401,
+      "error": "HTTP Error 401: Unauthorized"
+    },
+    "/api/v1/discover/orders": {
+      "http": 200,
+      "ctype": "application/json",
+      "bytes": 26,
+      "json_ok": true
+    },
+    "/api/v1/governance/proposals": {
+      "http": 401,
+      "error": "HTTP Error 401: Unauthorized"
+    }
+  },
+  "official_www": {
+    "/api/release-identity": {
+      "http": 200,
+      "ctype": "application/json",
+      "bytes": 475,
+      "json_ok": true
+    },
+    "/api/v1/public/announcements": {
+      "http": 200,
+      "ctype": "application/json",
+      "bytes": 18810,
+      "json_ok": true
+    }
+  },
+  "note": "Unauthenticated probes only. /api/v1/me expected 401 AS-IS. Defects remain POST_PARITY."
+}
