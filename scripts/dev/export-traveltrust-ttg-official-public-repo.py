@@ -413,8 +413,10 @@ def export_pack(out: Path) -> None:
     logo = out / "assets/logo"
     logo.mkdir(parents=True, exist_ok=True)
     for name in (
+        "ttg-logo-32.svg",
         "ttg-logo-64.png",
         "ttg-logo-64.svg",
+        "ttg-avatar-32.svg",
         "ttg-avatar-256.png",
         "ttg-avatar.png",
     ):

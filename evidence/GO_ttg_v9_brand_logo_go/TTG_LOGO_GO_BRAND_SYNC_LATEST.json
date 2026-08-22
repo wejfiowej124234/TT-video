@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-08-22T13:07:07.055598+00:00",
+  "go_asset_id": "Gemini_Generated_Image_v542kqv542kqv542",
+  "source_path": "D:\\下载\\Gemini_Generated_Image_v542kqv542kqv542.jpg",
+  "crop_bottom_y": 860,
+  "outputs": [
+    "frontend\\public\\brand\\bimi-logo.png",
+    "frontend\\public\\brand\\traveltrust-email-mark.png",
+    "frontend\\public\\brand\\token\\ttg-logo-64.png",
+    "frontend\\public\\brand\\token\\ttg-avatar.png",
+    "frontend\\public\\brand\\token\\ttg-avatar-256.png",
+    "frontend\\public\\brand\\bimi-logo.svg",
+    "frontend\\public\\brand\\traveltrust-mark.svg",
+    "frontend\\public\\favicon.svg",
+    "frontend\\public\\brand\\token\\ttg-logo-32.svg",
+    "frontend\\public\\brand\\token\\ttg-logo-64.svg",
+    "frontend\\public\\brand\\token\\ttg-avatar-32.svg"
+  ],
+  "public_urls": {
+    "site_brand_png": "https://www.web3-ttg.com/brand/bimi-logo.png",
+    "site_brand_svg": "https://www.web3-ttg.com/brand/bimi-logo.svg",
+    "etherscan_logo_32_svg": "https://www.web3-ttg.com/brand/token/ttg-logo-32.svg",
+    "etherscan_avatar_256_png": "https://www.web3-ttg.com/brand/token/ttg-avatar-256.png"
+  }
+}
