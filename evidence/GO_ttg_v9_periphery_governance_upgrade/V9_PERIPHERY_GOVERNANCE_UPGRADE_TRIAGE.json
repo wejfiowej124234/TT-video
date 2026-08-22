@@ -1,0 +1,149 @@
+{
+  "stamp": "V9_PERIPHERY_GOVERNANCE_UPGRADE_TRIAGE",
+  "machine_key": "V9_PERIPHERY_GOVERNANCE_UPGRADE_TRIAGE",
+  "recorded_at_utc": "2026-08-22T01:50:38Z",
+  "git_sha": "9b920f08d24417e9d20906c1a7e85d1b0af161ad",
+  "chain_id": 1,
+  "method": "read_only_cast_plus_source_plus_prior_adjudication",
+  "DESIGN_FREEZE": "LOCKED",
+  "NO_CODE_CHANGE": true,
+  "NO_DEPLOY": true,
+  "NO_ROUTE_CUTOVER": true,
+  "MAINNET_BROADCAST": "NOT_AUTHORIZED",
+  "TT_PRODUCTION_GO": "NO_GO",
+  "rows": [
+    {
+      "component": "TTG_V9_Token",
+      "address": "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9",
+      "proxy_uups": "NON_PROXY plain",
+      "auth_root": "N/A immutable monetary",
+      "storage_notes": "25T genesis no post-mint",
+      "deps_fund_routing": "Referenced by Vault/PM/Stake",
+      "triage": "KEEP_IMMUTABLE",
+      "upgrade_state": "NON_UPGRADEABLE",
+      "migration_action": "KEEP; deploy scripts MUST FAIL on new Genesis",
+      "evidence": "Phase1 STOP pin; freeze NO_REMINT"
+    },
+    {
+      "component": "SoloTimelock_ACTIVE",
+      "address": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+      "proxy_uups": "NON_PROXY EIP-1967=0 codesize~3472",
+      "auth_root": "admin immutable 0xe1e732; delay immutable 172800 (48h)",
+      "storage_notes": "delay/admin immutable; no updateDelay",
+      "deps_fund_routing": "Root for PM/Vault/Fee/Pool/RoleStake/Governor",
+      "triage": "NON_UPGRADEABLE",
+      "upgrade_state": "NON_UPGRADEABLE",
+      "migration_action": "NEW Timelock 12h no Safe; old LEGACY after OLD_ACTIVE_REFS=0",
+      "evidence": "cast; TtgV9SoloTimelock.sol immutable delay"
+    },
+    {
+      "component": "Governor_V9",
+      "address": "0xA0DfC4C5C544488AfEfE696AfB8e5823911e5A9c",
+      "proxy_uups": "NON_PROXY EIP-1967=0 codesize~11173",
+      "auth_root": "timelock -> SoloTimelock 0x99e43",
+      "storage_notes": "timelock is immutable; cannot rebind",
+      "deps_fund_routing": "schedules via SoloTimelock only",
+      "triage": "NON_UPGRADEABLE_FOR_ROOT_CUTOVER",
+      "upgrade_state": "NON_UPGRADEABLE",
+      "migration_action": "OWNER_CONFIRM_REQUIRED: NEW Governor with NEW 12h Timelock",
+      "evidence": "TravelTrustGovernorV9.sol immutable timelock; cast",
+      "design_conflict": "FREEZE_SAID_KEEP_OR_REBIND_BUT_REBIND_IMPOSSIBLE"
+    },
+    {
+      "component": "ProjectPool_Phase1",
+      "address": "0x7B21b421981A3B61cc08c8E22D4fd690E457Df37",
+      "proxy_uups": "NON_PROXY EIP-1967=0",
+      "auth_root": "owner/spender SoloTimelock 0x99e43",
+      "storage_notes": "plain pool; USDC bal 0",
+      "deps_fund_routing": "PM treasury + Fee projectPool still here",
+      "triage": "NON_UPGRADEABLE",
+      "upgrade_state": "NON_UPGRADEABLE",
+      "migration_action": "NEW ProjectPoolV2; cutover sinks; LEGACY label",
+      "evidence": "V9_PROJECT_POOL_UPGRADEABILITY_ADJUDICATION.json"
+    },
+    {
+      "component": "CountryFeeRouter_Phase1",
+      "address": "0x5afD2e0C8b9fa4eecfde4bf582d3B282D28F4970",
+      "proxy_uups": "NON_PROXY EIP-1967=0 codesize~2389",
+      "auth_root": "owner SoloTimelock 0x99e43",
+      "storage_notes": "fee/split constants in deployed source shape",
+      "deps_fund_routing": "projectPool->0x7B21; callers pending",
+      "triage": "NON_UPGRADEABLE",
+      "upgrade_state": "NON_UPGRADEABLE",
+      "migration_action": "NEW FeeRouter governable fee+Active split; no-steward fixed branch",
+      "evidence": "cast; TtgV9CountryFeeRouter.sol no UUPS"
+    },
+    {
+      "component": "BatchPrimaryMarket_V9",
+      "address": "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b",
+      "proxy_uups": "UUPS impl 0x1d09eed5Ee0975af781d27AFc1724AF64616b56C",
+      "auth_root": "timelock SoloTimelock 0x99e43 48h",
+      "storage_notes": "usdcTreasury->0x7B21; seededBatchCount=0",
+      "deps_fund_routing": "USDC->Pool; TTG from Vault",
+      "triage": "UPGRADE_REQUIRES_LEGACY_TIMELOCK",
+      "upgrade_state": "UPGRADEABLE",
+      "migration_action": "After NEW root: UUPS upgrade treasury+slippage; avoid kneeling old 48h solely to keep address",
+      "evidence": "cast EIP-1967; preflight JSON"
+    },
+    {
+      "component": "PublicSaleVault_V9",
+      "address": "0xe87378e49Ead2E1a422B8cae118d3C905Ee45B6C",
+      "proxy_uups": "UUPS impl 0x59efd968A22Dd942463CD7b47FC92042ac165D0c",
+      "auth_root": "SoloTimelock 0x99e43",
+      "storage_notes": "50 percent public inventory locked economics",
+      "deps_fund_routing": "onlyMarket pull to PM",
+      "triage": "UPGRADE_REQUIRES_LEGACY_TIMELOCK",
+      "upgrade_state": "UPGRADEABLE",
+      "migration_action": "KEEP unless required; upgrade under NEW root if needed",
+      "evidence": "cast; freeze KEEP"
+    },
+    {
+      "component": "RoleStakePool_V9",
+      "address": "0xf6A1Fb4435E463117a666818611F49D03F91E7A7",
+      "proxy_uups": "UUPS impl 0x5ed06445FEc342Ae5405c2c91969A52c28D653e3",
+      "auth_root": "owner SoloTimelock 0x99e43",
+      "storage_notes": "bps x live totalSupply; configureJurisdiction exists",
+      "deps_fund_routing": "TTG stake custody",
+      "triage": "UPGRADE_REQUIRES_LEGACY_TIMELOCK",
+      "upgrade_state": "UPGRADEABLE",
+      "migration_action": "KEEP this wave; transfer ownership to NEW Timelock after root cutover",
+      "evidence": "cast; TtgV9RoleStakePool.sol"
+    },
+    {
+      "component": "Escrow_Settlement_MoneyPath",
+      "address": "KEEP_OFFICIAL_MONEY_PATH",
+      "proxy_uups": "KEEP stack",
+      "auth_root": "KEEP Timelock/Safe paths for some ops",
+      "storage_notes": "Order/Escrow semantics LOCKED",
+      "deps_fund_routing": "Retarget feeRouter to NEW FeeRouter only",
+      "triage": "KEEP_REWIRE_ONLY",
+      "upgrade_state": "N/A_THIS_WAVE",
+      "migration_action": "Rewire to NEW FeeRouter; no remint; no principal-path redesign",
+      "evidence": "Phase1 STOP; Design Lock KEEP EF/SR"
+    },
+    {
+      "component": "Legacy_Safe_GovernanceTimelock",
+      "address": "0x50f0b26167ec73e327d97c54c81f1c1b9efb22f7",
+      "proxy_uups": "historical",
+      "auth_root": "Safe admin FORBIDDEN as V9 Official ACTIVE root",
+      "storage_notes": "Not V9 Solo ACTIVE root",
+      "deps_fund_routing": "May still gate some KEEP ops until rewired",
+      "triage": "LEGACY_NOT_V9_ACTIVE_ROOT",
+      "upgrade_state": "N/A",
+      "migration_action": "Remain LEGACY for V9 Official; isolate",
+      "evidence": "freeze NO_SAFE"
+    }
+  ],
+  "design_conflict": {
+    "id": "GOVERNOR_TIMELOCK_IMMUTABLE_BLOCKS_REBIND",
+    "severity": "blocking_for_12h_root_cutover",
+    "fact": "Governor.timelock immutable; SoloTimelock.delay immutable at 48h",
+    "freeze_tension": "Freeze allowed Governor KEEP or rebind to NEW 12h Timelock; rebind impossible on-chain",
+    "owner_choices": [
+      "A: Approve NEW Governor + NEW 12h Timelock (no Safe, no remint, same economic intent)",
+      "B: Revise Design Lock to keep 48h SoloTimelock as permanent root (drop 12h target)"
+    ]
+  },
+  "verdict": "TRIAGE_STOP_OWNER_CONFIRM",
+  "NEXT_GATE": "OWNER_CONFIRM_GOVERNOR_NEW_FOR_12H_ROOT"
+}
