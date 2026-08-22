@@ -130,9 +130,11 @@ Plane: `bash scripts/gates/check-official-v9-plane-map.sh`
 | M9 | Registry / Release Identity / Runbook / 白皮书非 Web3 | **DEPTH_SCAN_REGISTERED** |
 | M10 | `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` | **NOT_ISSUED** |
 
-**Identity-layer commit:** `8ca90a08a` · **Depth residual pack:** [`M5_M9_DEPTH_RESIDUALS_20260822.json`](../../evidence/GO_official_product_reality_capture/M5_M9_DEPTH_RESIDUALS_20260822.json)
+**Identity-layer commit:** `8ca90a08a` · **Depth residuals commit:** `508a006e8`  
+**Depth residual pack:** [`M5_M9_DEPTH_RESIDUALS_20260822.json`](../../evidence/GO_official_product_reality_capture/M5_M9_DEPTH_RESIDUALS_20260822.json)  
+**28-item alignment plan:** [`TT-OFFICIAL-FIRST-M5-M9-ALIGNMENT-PLAN-LATEST`](TT-OFFICIAL-FIRST-M5-M9-ALIGNMENT-PLAN-LATEST.md) · [`M5_M9_ALIGNMENT_PLAN_20260822.json`](../../evidence/GO_official_product_reality_capture/M5_M9_ALIGNMENT_PLAN_20260822.json) — **OWNED_PLAN_ISSUED** · **execution NOT_STARTED_NO_FIX**
 
-**Next (still REGISTER_ONLY until full residual list Owner-closed):** unify Official→Git→Local→Staging product alignment execution — **not** product optimization.
+**Next:** Capture deepen + DOC_RETAG + ED/DESIGN confirm + DEFECT 入 Parity-后队列 → 再 Official→Git→Local→Staging 1:1 执行 → 才可申请 `PRODUCT_AND_DOCUMENTATION_PARITY_PASS`。**禁止**本波 CMS/UI/功能优化。
 
 Staging align command（Owner Solo）:
 
