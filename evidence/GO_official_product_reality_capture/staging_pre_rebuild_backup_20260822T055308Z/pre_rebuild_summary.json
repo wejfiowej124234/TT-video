@@ -1,0 +1,15 @@
+{
+  "schema": "traveltrust.staging_pre_rebuild_backup.v1",
+  "api": "https://tt-api-staging.fly.dev",
+  "status": "PASS_CAPTURE",
+  "counts": {
+    "extensions": 1,
+    "tables": 166,
+    "columns": 1772,
+    "indexes": 503,
+    "constraints": 499,
+    "enums": 0
+  },
+  "aggregate_schema_sha256": "8ca39077ff78d4ae6a2655a129020d1cee59af012458487935b82660936e461c",
+  "migration_count": 153
+}

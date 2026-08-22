@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.official_prod_schema_reality_capture.v1",
   "status": "PASS_CAPTURE",
-  "stamp": "LOCAL_20260822T055039Z",
+  "stamp": "LOCAL_20260822T054615Z",
   "capture_label": "local",
   "policy": {
     "read_only": true,
@@ -19,7 +19,7 @@
     "counts": {
       "extensions": 1,
       "tables": 167,
-      "columns": 1784,
+      "columns": 1781,
       "indexes": 505,
       "constraints": 507,
       "enums": 0
@@ -27,12 +27,12 @@
     "fingerprints": {
       "extensions_sha256": "92798bd8eba4fa5c279463e70718f920201afc3d5c4de544b92f7f3d4aa5cf4e",
       "tables_sha256": "e8d8d5a5784274594b7b4c253ffd96b02680923279abeedc71ebd1cc83359a29",
-      "columns_sha256": "e981010b10472c3694cb84cc626b9f1f7561c811b2b91d3bb8098e56303463e1",
+      "columns_sha256": "c935caebc330cfa83e826f43ca1ffa607e5b6d4d04b4cf7991f7499405407200",
       "indexes_sha256": "ee142b96d636b6ac9fdbe54c595350afe23c54a36dd6a40acad6a073d390e482",
       "constraints_sha256": "b01ffa7c829879734eadf0f7c4641a3b644cffc4fc2f87ed96864c4b78cdc03f",
       "enums_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
       "migration_state_sha256": "5e99b07b87c7f3f46d2eb5beef62b2e6aaf71104bf57aa96c3159f7d9ece4523",
-      "aggregate_schema_sha256": "a7c6f344b5a0d91a6dabd4e164bd4f4c2d2f0c00721f5d252279f5e0fc7764b3"
+      "aggregate_schema_sha256": "814650a8e9a090a9a5b7dbe91cec15139fc59afb158089d0656c376c8ecd06ca"
     },
     "migration_state_tables": [
       "_sqlx_migrations"
@@ -2158,7 +2158,7 @@
       ]
     },
     "columns": {
-      "count": 1784,
+      "count": 1781,
       "rows": [
         [
           "public",
@@ -13473,32 +13473,6 @@
         [
           "public",
           "governed_discover_orders_v1",
-          "service_guide_confirmed",
-          35,
-          "boolean",
-          "bool",
-          "YES",
-          null,
-          null,
-          null,
-          null
-        ],
-        [
-          "public",
-          "governed_discover_orders_v1",
-          "service_tourist_confirmed",
-          34,
-          "boolean",
-          "bool",
-          "YES",
-          null,
-          null,
-          null,
-          null
-        ],
-        [
-          "public",
-          "governed_discover_orders_v1",
           "start_date",
           15,
           "date",
@@ -14255,19 +14229,6 @@
           "governed_market_guides_v1",
           "wallet_address",
           8,
-          "text",
-          "text",
-          "YES",
-          null,
-          null,
-          null,
-          null
-        ],
-        [
-          "public",
-          "governed_market_listings_v1",
-          "canonical_key",
-          17,
           "text",
           "text",
           "YES",
@@ -31950,9 +31911,9 @@
   },
   "staging": null,
   "compare": {
-    "prod_aggregate_schema_sha256": "a7c6f344b5a0d91a6dabd4e164bd4f4c2d2f0c00721f5d252279f5e0fc7764b3",
+    "prod_aggregate_schema_sha256": "814650a8e9a090a9a5b7dbe91cec15139fc59afb158089d0656c376c8ecd06ca",
     "prod_tables_count": 167,
-    "prod_columns_count": 1784,
+    "prod_columns_count": 1781,
     "prod_indexes_count": 505,
     "prod_constraints_count": 507,
     "git_migration_file_count": 167,

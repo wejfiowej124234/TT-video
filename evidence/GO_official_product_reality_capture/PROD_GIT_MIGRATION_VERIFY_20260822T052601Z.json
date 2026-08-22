@@ -1,0 +1,102 @@
+{
+  "schema": "traveltrust.prod_git_migration_verify.v1",
+  "recorded_utc": "2026-08-22T05:26:01Z",
+  "capture_artifact": "evidence/GO_official_product_reality_capture/OFFICIAL_PROD_SCHEMA_CAPTURE_LATEST.json",
+  "migrations_dir": "crates/api/migrations",
+  "prod_migration_count": 157,
+  "git_sql_file_count": 157,
+  "version_set_match": true,
+  "checksum_all_match": false,
+  "execution_order_match": true,
+  "checksum_pass_count": 144,
+  "checksum_fail_count": 13,
+  "checksum_fail_sample": [
+    {
+      "version": 20260708120000,
+      "file": "20260708120000_orders_service_completion_bilateral.sql",
+      "git_checksum": -602632175343604426,
+      "prod_checksum": 6738967256868616832
+    },
+    {
+      "version": 20260709140000,
+      "file": "20260709140000_cms_public_announcements.sql",
+      "git_checksum": -609657671396238900,
+      "prod_checksum": 2617647930748245130
+    },
+    {
+      "version": 20260709180000,
+      "file": "20260709180000_governance_starter_proposals_prod_copy.sql",
+      "git_checksum": -3865998528501443415,
+      "prod_checksum": -5832262209580013674
+    },
+    {
+      "version": 20260709200000,
+      "file": "20260709200000_cms_roadmap_independent.sql",
+      "git_checksum": -3186830637504088206,
+      "prod_checksum": 2802030499812373910
+    },
+    {
+      "version": 20260709210000,
+      "file": "20260709210000_cms_public_surface_production_polish.sql",
+      "git_checksum": -3562878645884447593,
+      "prod_checksum": -28520060985623862
+    },
+    {
+      "version": 20260709220000,
+      "file": "20260709220000_cms_public_lane_hygiene.sql",
+      "git_checksum": 6615995889257059615,
+      "prod_checksum": -4476541653990043279
+    },
+    {
+      "version": 20260709230000,
+      "file": "20260709230000_cms_protocol_lane_seed.sql",
+      "git_checksum": -7845006596851689347,
+      "prod_checksum": -3987090853888069552
+    },
+    {
+      "version": 20260713060000,
+      "file": "20260713060000_region_reward_wallets.sql",
+      "git_checksum": 6817890332639599995,
+      "prod_checksum": -5028143176280919227
+    },
+    {
+      "version": 20260713140000,
+      "file": "20260713140000_fee_router_v2_reward_paid_events.sql",
+      "git_checksum": -7457730522804960767,
+      "prod_checksum": 8088816456535689457
+    },
+    {
+      "version": 20260715120000,
+      "file": "20260715120000_platform_safe_runtime.sql",
+      "git_checksum": 1682979110554071695,
+      "prod_checksum": 1527051498319491171
+    },
+    {
+      "version": 20260719190000,
+      "file": "20260719190000_l5c_settlement_router_projection.sql",
+      "git_checksum": 1917985096028479441,
+      "prod_checksum": -7935874576205217912
+    },
+    {
+      "version": 20260802120000,
+      "file": "20260802120000_role_applications_kind_status_submitted_idx.sql",
+      "git_checksum": -3832799301747458428,
+      "prod_checksum": 987495752523033431
+    },
+    {
+      "version": 20260802180000,
+      "file": "20260802180000_cms_home_announcements_time_window.sql",
+      "git_checksum": 162288219859455383,
+      "prod_checksum": 4664906202126229224
+    }
+  ],
+  "only_in_prod_not_git": [],
+  "only_in_git_not_prod": [],
+  "verdict": "DRIFT",
+  "recovery_source": "Official Production API container /app/crates/api/migrations (read-only fly ssh cat)",
+  "recovered_versions": [
+    20260816180000,
+    20260816190000,
+    20260816200000
+  ]
+}

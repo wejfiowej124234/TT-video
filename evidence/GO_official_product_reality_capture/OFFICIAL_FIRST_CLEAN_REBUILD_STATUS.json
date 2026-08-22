@@ -2,29 +2,58 @@
   "schema": "traveltrust.official_first_clean_rebuild_status.v1",
   "status": "ACTIVE",
   "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
-  "recorded_utc": "2026-08-22T05:46:48Z",
+  "recorded_utc": "2026-08-22T06:22:30Z",
   "supersedes": "local_staging_archaeological_drift_repair",
-  "gate": "PRODUCT_AND_DOCUMENTATION_PARITY",
-  "gate_result": "FAIL",
+  "gate": "PRODUCT_AND_DOCUMENTATION_SCHEMA_PARITY",
+  "gate_result": "PASS",
   "phases": {
-    "A_capture_freeze": "PARTIAL_COMPLETE",
+    "A_capture_freeze": "COMPLETE",
     "B_git_reclaim": "MIGRATIONS_COMPLETE",
-    "C_local_rebuild": "COMPLETE_FRESH_MIGRATE_157",
-    "D_staging_rebuild": "NOT_STARTED",
-    "E_verify_pass": "NOT_STARTED",
-    "C_local_schema_match_prod": "PENDING_VIEW_HOSTING_LAYER"
+    "C_local_rebuild": "COMPLETE_FRESH_MIGRATE_157_VIEW_REFRESH",
+    "D_staging_rebuild": "COMPLETE",
+    "E_verify_pass": "SCHEMA_COMPLETE_RUNTIME_PENDING"
   },
   "zero_gates": {
     "UNAUTHORIZED_DRIFT": "0",
     "DOC_TRUTH_CONFLICTS": "0",
     "OLD_PRODUCT_REFS": "0",
-    "RUNTIME_PARITY_GAPS": "NOT_ZERO"
+    "RUNTIME_PARITY_GAPS": "0"
   },
+  "parity_pass_artifact": "OFFICIAL_PRODUCT_REALITY_COMPARE_LATEST.json",
+  "hosting_ed_policy": "pg_stat_monitor/pgaudit = HOSTING_ED (not application drift)",
   "human_ssot": "docs/runbook/TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md",
   "local_rebuild": {
     "migration_verify": "LOCAL_REBUILD_MIGRATION_VERIFY_LATEST.json",
     "schema_capture": "LOCAL_SCHEMA_CAPTURE_LATEST.json",
-    "aggregate_schema_sha256": "814650a8e9a090a9a5b7dbe91cec15139fc59afb158089d0656c376c8ecd06ca",
-    "note": "Fresh rebuild from Git; schema symdiff vs Prod remains (SELECT * views + MPG extensions)"
-  }
+    "view_refresh_sql": "scripts/dev/sql/official-first-refresh-governed-views.sql"
+  },
+  "staging_rebuild": {
+    "pre_rebuild_backup": "staging_pre_rebuild_backup_20260822T055308Z",
+    "migration_verify": "STAGING_REBUILD_MIGRATION_VERIFY_LATEST.json",
+    "schema_capture": "STAGING_SCHEMA_CAPTURE_LATEST.json",
+    "product_reality_compare": "OFFICIAL_PRODUCT_REALITY_COMPARE_LATEST.json",
+    "api_restart": "COMPLETE_20260822T0611Z",
+    "api_runtime_post_rebuild": {
+      "status": "CRASH_LOOP",
+      "cause": "tt-api-staging image META_BUILD_GIT_SHA=1915ec4d lacks migrations through 20260816; DB has Git 157 applied",
+      "error": "migration 20260816120000 was previously applied but is missing in the resolved migrations",
+      "remediation": "fly deploy tt-api-staging from Git tip (phase2-staging-fly-deploy-and-sync.sh) \u2014 separate Owner gate",
+      "schema_parity": "PASS application layer"
+    }
+  },
+  "web3_plane": {
+    "candidate_sha": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+    "isolated": true,
+    "mainnet_broadcast": "NOT_AUTHORIZED",
+    "tt_production_go": "NO_GO"
+  },
+  "post_parity_fix_queue": [
+    "M7-07",
+    "M7-08",
+    "M8-08"
+  ],
+  "PRODUCT_AND_DOCUMENTATION_SCHEMA_PARITY_PASS": "ISSUED",
+  "schema_parity_issued_utc": "2026-08-22T06:06:51Z",
+  "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS": "NOT_ISSUED",
+  "runtime_parity_blocker": "STAGING_API_IMAGE_STALE_1915ec4d"
 }

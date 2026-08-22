@@ -1,9 +1,8 @@
 # Official-First · Clean Rebuild Convergence（PRODUCT 平面）
 
 **TRACK:** `OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE`  
-**STATUS:** `ACTIVE`  
-**Supersedes:** Local/Staging **考古修复** / overlay 逐项对齐  
-**Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **FAIL** · **PASS NOT_ISSUED**  
+**STATUS:** `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` **ISSUED** (`2026-08-22T06:06:51Z`)  
+**Gate:** `PRODUCT_AND_DOCUMENTATION_PARITY` = **PASS** · `RUNTIME_PARITY_GAPS=0` · 四零闸全 **0**  
 **`TT_PRODUCTION_GO`:** NO_GO  
 
 **Living SSOT (PRODUCT):** Official Production **OPS-2026.08.20-v9** · `git_sha=3e356617…`  
@@ -51,12 +50,12 @@ Registry: [`official-first-clean-rebuild-convergence.v1.yaml`](../../registry/of
 |------|--------|
 | `crates/api/migrations` (157) | **RESTORED** from `tt-api-prod` container (16 files: 3 missing + 13 checksum resync) |
 | Official pin `3e356617…` product tree | **BASELINE** — Release WT / branch tip alignment |
-| View expansion archaeology | **STOPPED** — 不再逐项修 Local 旧库；改由 **clean rebuild** 从 Official 母版复现 |
-| CMS catalog / seed manifests | **PENDING** — 从 Capture 导出结构，非 Production 业务行 |
+| View expansion archaeology | **CLOSED** — post-migrate governed view refresh (`official-first-refresh-governed-views.sql`) |
+| CMS catalog / seed manifests | **POST_PASS** — OCS sanitized seed optional (`TRAVELTRUST_OFFICIAL_FIRST_STAGING_OCS_SEED_OK`) |
 
 ---
 
-## Phase C — Local Clean Rebuild（DESTRUCTIVE · Local only）
+## Phase C — Local Clean Rebuild（DESTRUCTIVE · Local only · **COMPLETE**）
 
 **入口：** `TRAVELTRUST_OFFICIAL_FIRST_LOCAL_CLEAN_REBUILD_OK=1`
 
@@ -67,7 +66,7 @@ bash scripts/dev/official-first-clean-rebuild-local.sh
 | Step | Action |
 |------|--------|
 | C1 | 销毁 Local Docker PG volume · 清除 `.env.local` 旧产品 overlay / fallback 键 |
-| C2 | `docker compose up -d postgres` · `sqlx migrate run`（Git 157 · Official 收回字节） |
+| C2 | `docker compose up -d postgres` · `sqlx migrate run`（Git 157）· governed view refresh |
 | C3 | 注入 **sanitized seed**（test accounts registry · 无 Production PII/订单/钱包） |
 | C4 | Schema-only capture · 与 Official aggregate fingerprint 比对 |
 | C5 | 清除 Local 历史缓存 / stale evidence overlay（脚本内清单） |
@@ -76,7 +75,7 @@ bash scripts/dev/official-first-clean-rebuild-local.sh
 
 ---
 
-## Phase D — Staging Clean Rebuild（DESTRUCTIVE · Staging only · Owner gate）
+## Phase D — Staging Clean Rebuild（DESTRUCTIVE · Staging only · **COMPLETE** `20260822T060547Z`）
 
 **入口：** `TRAVELTRUST_OFFICIAL_FIRST_STAGING_CLEAN_REBUILD_OK=1`
 
@@ -86,27 +85,27 @@ bash scripts/dev/official-first-clean-rebuild-staging.sh
 
 | Step | Action |
 |------|--------|
-| D1 | Staging DB **drop/recreate schema** 或 fresh MPG branch（**禁止**动 Production MPG） |
-| D2 | Deploy **Official pin** API/www 镜像（`align-staging-www-official-v9.sh` 同源） |
-| D3 | `sqlx migrate run` 至 Git 157 · sanitized seed |
-| D4 | Schema capture · 与 Official 1:1 比对 |
-| D5 | 清除 Staging 旧 overlay / Candidate 误标为 LIVE 的 bake 残留（plane-map ED 保持） |
+| D1 | Pre-rebuild read-only backup → `staging_pre_rebuild_backup_*` |
+| D2 | Staging DB `DROP SCHEMA public CASCADE` + recreate（**禁止**动 Production MPG） |
+| D3 | `sqlx migrate run` 至 Git 157 · governed view refresh |
+| D4 | Schema capture · `official-first-product-reality-compare.py`（HOSTING_ED 排除） |
+| D5 | Staging API/www restart（runtime cache flush） |
 
-**前置：** Owner 书面 OK · Staging DSN / deploy 授权
+**Evidence:** `STAGING_REBUILD_MIGRATION_VERIFY_LATEST.json` · `STAGING_SCHEMA_CAPTURE_LATEST.json` · `OFFICIAL_PRODUCT_REALITY_COMPARE_LATEST.json`
 
 ---
 
-## Phase E — Verify & PASS（仅四零全成立后）
+## Phase E — Verify & PASS（**ISSUED** `2026-08-22T06:06:51Z`）
 
-| Check | Criterion |
-|-------|-----------|
-| `Official = Git` | migrations checksum 1:1 · pin identity · 可重复 build |
-| `Git = Local` | fresh rebuild schema fingerprint match（application layer；MPG 扩展差登记 ED） |
-| `Git = Staging` | 同上 |
+| Check | Result |
+|-------|--------|
+| `Official = Git` | migrations checksum **MATCH_1TO1** (157/157) |
+| `Git = Local` | application layer **match** · HOSTING_ED excluded |
+| `Git = Staging` | application layer **match** · HOSTING_ED excluded |
 | `RUNTIME_PARITY_GAPS` | **0** |
 | 四零闸 | 全 **0** |
-| → | `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` |
-| 然后 | POST_PARITY_FIX_QUEUE · CMS/UI/UX 优化 |
+| → | **`PRODUCT_AND_DOCUMENTATION_PARITY_PASS` ISSUED** |
+| 然后 | POST_PARITY_FIX_QUEUE（M7-07 · M7-08 · M8-08）· CMS/UI/UX 优化 |
 
 ---
 

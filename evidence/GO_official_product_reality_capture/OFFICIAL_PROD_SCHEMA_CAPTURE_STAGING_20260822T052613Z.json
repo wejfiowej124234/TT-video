@@ -1,0 +1,7 @@
+{
+  "schema": "traveltrust.official_prod_schema_reality_capture.v1",
+  "status": "FAIL",
+  "error": "failed to resolve host 'tt-traveltrust-staging.flycast': [Errno 11001] getaddrinfo failed",
+  "stamp": "STAGING_20260822T052613Z",
+  "policy": "READ_ONLY_SCHEMA_ONLY_NO_ROW_DUMP_NO_DDL"
+}

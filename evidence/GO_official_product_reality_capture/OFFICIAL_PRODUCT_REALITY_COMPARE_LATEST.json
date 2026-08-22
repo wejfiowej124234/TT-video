@@ -1,0 +1,78 @@
+{
+  "schema": "traveltrust.official_product_reality_compare.v1",
+  "recorded_utc": "2026-08-22T06:06:51Z",
+  "track": "OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE",
+  "migration_bookkeeping_match_1to1": true,
+  "application_layers_all_match": true,
+  "RUNTIME_PARITY_GAPS": "0",
+  "parity_pass_allowed": true,
+  "hosting_ed_policy": "pg_stat_monitor/pgaudit excluded from application drift",
+  "layers": {
+    "official_production": {
+      "status": "BASELINE"
+    },
+    "local": {
+      "layer": "local",
+      "application_schema_match": true,
+      "app_columns_fp": "46cf9ddb80b48ba6adb67d553d6125bf232b5b4e620cf0372a423ffb646ae663",
+      "prod_app_columns_fp": "46cf9ddb80b48ba6adb67d553d6125bf232b5b4e620cf0372a423ffb646ae663",
+      "app_tables_fp": "e8d8d5a5784274594b7b4c253ffd96b02680923279abeedc71ebd1cc83359a29",
+      "prod_app_tables_fp": "e8d8d5a5784274594b7b4c253ffd96b02680923279abeedc71ebd1cc83359a29",
+      "column_symdiff_count": 0,
+      "column_symdiff_sample": [],
+      "hosting_ed": {
+        "class": "HOSTING_ED",
+        "prod_hosting_extensions": [
+          [
+            "pg_stat_monitor",
+            "2.3"
+          ],
+          [
+            "pgaudit",
+            "16.1"
+          ]
+        ],
+        "other_hosting_extensions": [],
+        "note": "MPG-managed observability/audit extensions \u2014 not application drift"
+      },
+      "aggregate_raw_match": false,
+      "status": "COMPARED",
+      "path": "evidence\\GO_official_product_reality_capture\\LOCAL_SCHEMA_CAPTURE_LATEST.json"
+    },
+    "staging": {
+      "layer": "staging",
+      "application_schema_match": true,
+      "app_columns_fp": "46cf9ddb80b48ba6adb67d553d6125bf232b5b4e620cf0372a423ffb646ae663",
+      "prod_app_columns_fp": "46cf9ddb80b48ba6adb67d553d6125bf232b5b4e620cf0372a423ffb646ae663",
+      "app_tables_fp": "e8d8d5a5784274594b7b4c253ffd96b02680923279abeedc71ebd1cc83359a29",
+      "prod_app_tables_fp": "e8d8d5a5784274594b7b4c253ffd96b02680923279abeedc71ebd1cc83359a29",
+      "column_symdiff_count": 0,
+      "column_symdiff_sample": [],
+      "hosting_ed": {
+        "class": "HOSTING_ED",
+        "prod_hosting_extensions": [
+          [
+            "pg_stat_monitor",
+            "2.3"
+          ],
+          [
+            "pgaudit",
+            "16.1"
+          ]
+        ],
+        "other_hosting_extensions": [],
+        "note": "MPG-managed observability/audit extensions \u2014 not application drift"
+      },
+      "aggregate_raw_match": false,
+      "status": "COMPARED",
+      "path": "evidence\\GO_official_product_reality_capture\\STAGING_SCHEMA_CAPTURE_LATEST.json"
+    }
+  },
+  "zero_gates": {
+    "UNAUTHORIZED_DRIFT": "0",
+    "DOC_TRUTH_CONFLICTS": "0",
+    "OLD_PRODUCT_REFS": "0",
+    "RUNTIME_PARITY_GAPS": "0"
+  },
+  "PRODUCT_AND_DOCUMENTATION_PARITY_PASS": "ISSUED"
+}

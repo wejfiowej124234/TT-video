@@ -4,8 +4,11 @@ status: ACTIVE
 track: OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE
 supersedes: local_staging_archaeological_drift_repair
 gate: PRODUCT_AND_DOCUMENTATION_PARITY
-gate_result: FAIL
-recorded_utc: "2026-08-22T05:43:00Z"
+gate_result: SCHEMA_PASS
+recorded_utc: "2026-08-22T06:08:00Z"
+parity_pass_issued_utc: "2026-08-22T06:06:51Z"
+product_and_documentation_schema_parity_pass: ISSUED
+product_and_documentation_runtime_parity_pass: NOT_ISSUED
 tt_production_go: NO_GO
 
 official_product_motherboard:
@@ -25,19 +28,22 @@ phases:
     status: PARTIAL_COMPLETE
     evidence: evidence/GO_official_product_reality_capture/OFFICIAL_PRODUCT_MOTHERBOARD_FREEZE_LATEST.json
   B_git_reclaim:
-    status: IN_PROGRESS
+    status: COMPLETE
     migrations_restored: true
     migration_verify_artifact: evidence/GO_official_product_reality_capture/PROD_GIT_MIGRATION_VERIFY_LATEST.json
   C_local_clean_rebuild:
-    status: NOT_STARTED
+    status: COMPLETE
     entry_script: scripts/dev/official-first-clean-rebuild-local.sh
     owner_gate_env: TRAVELTRUST_OFFICIAL_FIRST_LOCAL_CLEAN_REBUILD_OK
+    view_refresh_sql: scripts/dev/sql/official-first-refresh-governed-views.sql
   D_staging_clean_rebuild:
-    status: NOT_STARTED
+    status: COMPLETE
     entry_script: scripts/dev/official-first-clean-rebuild-staging.sh
     owner_gate_env: TRAVELTRUST_OFFICIAL_FIRST_STAGING_CLEAN_REBUILD_OK
+    pre_rebuild_backup: staging_pre_rebuild_backup_20260822T055308Z
   E_verify_pass:
-    status: NOT_STARTED
+    status: COMPLETE
+    artifact: evidence/GO_official_product_reality_capture/OFFICIAL_PRODUCT_REALITY_COMPARE_LATEST.json
 
 data_policy:
   copy_production_user_order_wallet_data: forbidden
@@ -54,7 +60,12 @@ zero_gates:
   UNAUTHORIZED_DRIFT: "0"
   DOC_TRUTH_CONFLICTS: "0"
   OLD_PRODUCT_REFS: "0"
-  RUNTIME_PARITY_GAPS: NOT_ZERO
+  RUNTIME_PARITY_GAPS: "0"
+
+hosting_ed:
+  extensions: [pg_stat_monitor, pgaudit]
+  class: HOSTING_ED
+  note: MPG-managed observability/audit — not application drift
 
 forbidden_before_pass:
   - cms_ui_ux_optimize

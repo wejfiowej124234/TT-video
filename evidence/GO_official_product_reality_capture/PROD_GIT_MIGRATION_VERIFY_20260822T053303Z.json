@@ -1,0 +1,23 @@
+{
+  "schema": "traveltrust.prod_git_migration_verify.v1",
+  "recorded_utc": "2026-08-22T05:33:03Z",
+  "capture_artifact": "evidence/GO_official_product_reality_capture/OFFICIAL_PROD_SCHEMA_CAPTURE_LATEST.json",
+  "migrations_dir": "crates/api/migrations",
+  "prod_migration_count": 157,
+  "git_sql_file_count": 157,
+  "version_set_match": true,
+  "checksum_all_match": true,
+  "execution_order_match": true,
+  "checksum_pass_count": 157,
+  "checksum_fail_count": 0,
+  "checksum_fail_sample": [],
+  "only_in_prod_not_git": [],
+  "only_in_git_not_prod": [],
+  "verdict": "MATCH_1TO1",
+  "recovery_source": "Official Production API container /app/crates/api/migrations (read-only fly ssh cat)",
+  "recovered_versions": [
+    20260816180000,
+    20260816190000,
+    20260816200000
+  ]
+}

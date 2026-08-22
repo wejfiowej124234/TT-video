@@ -154,20 +154,31 @@
       "status": "COMPARED",
       "path": "evidence/GO_official_product_reality_capture/LOCAL_SCHEMA_CAPTURE_LATEST.json",
       "aggregate_match": false,
-      "other_aggregate": "931c56aed44ac4641bbdeafa6faee3601592be66e9a50a4c70ef54dc6ce8b907",
+      "other_aggregate": "a7c6f344b5a0d91a6dabd4e164bd4f4c2d2f0c00721f5d252279f5e0fc7764b3",
       "prod_aggregate": "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478",
       "counts": {
         "extensions": 1,
         "tables": 167,
-        "columns": 1781,
+        "columns": 1784,
         "indexes": 505,
         "constraints": 507,
         "enums": 0
       }
     },
     "staging_schema": {
-      "status": "NOT_CAPTURED_THIS_WAVE",
-      "note": "Optional schema-only capture not provided; migration version-set is primary gate vs Git"
+      "status": "COMPARED",
+      "path": "evidence/GO_official_product_reality_capture/STAGING_SCHEMA_CAPTURE_LATEST.json",
+      "aggregate_match": false,
+      "other_aggregate": "4a5fb3c49608198d215c45761d37af016eda0c260c45670f51be61d106170122",
+      "prod_aggregate": "1362c3a24908fb2aff0bf1985fe5658054ef0e39d69fbd3728bd033a1b9b7478",
+      "counts": {
+        "extensions": 1,
+        "tables": 167,
+        "columns": 1784,
+        "indexes": 505,
+        "constraints": 507,
+        "enums": 0
+      }
     }
   },
   "overall_verdict": "GIT_PROD_MATCH_LOCAL_OR_STAGING_SCHEMA_PENDING",

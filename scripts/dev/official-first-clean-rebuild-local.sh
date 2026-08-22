@@ -30,6 +30,18 @@ export DATABASE_URL="${LOCAL_DATABASE_URL:-postgres://traveltrust:traveltrust@12
 echo "official-first-clean-rebuild-local: migrate Git tip (Official-reclaimed)"
 sqlx migrate run --source crates/api/migrations
 
+echo "official-first-clean-rebuild-local: refresh governed views (reproducible product structure)"
+python - <<'PY'
+import os, psycopg
+from pathlib import Path
+sql = Path("scripts/dev/sql/official-first-refresh-governed-views.sql").read_text(encoding="utf-8")
+with psycopg.connect(os.environ["DATABASE_URL"], connect_timeout=30) as conn:
+    with conn.cursor() as cur:
+        cur.execute(sql)
+    conn.commit()
+print("views refreshed")
+PY
+
 echo "official-first-clean-rebuild-local: verify migration bookkeeping"
 python "$ROOT/scripts/dev/verify-prod-git-migrations-1to1.py" \
   --capture "$EV/OFFICIAL_PROD_SCHEMA_CAPTURE_LATEST.json" \
