@@ -1,0 +1,384 @@
+{
+  "schema": "traveltrust.official_first_m5_m9_depth_residuals.v1",
+  "recorded_utc": "2026-08-22T03:50:00Z",
+  "gate": "PRODUCT_AND_DOCUMENTATION_PARITY",
+  "gate_result": "FAIL",
+  "commit_identity_layer": "8ca90a08ab9ac94bd86cf4f4e55dd3705c203d66",
+  "forbid_fix_until_parity_pass": true,
+  "tt_production_go": "NO_GO",
+  "web3_candidate_protected": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+  "action_policy": "REGISTER_ONLY_NO_OPTIMIZE_OFFICIAL",
+  "m5_suspect_files": [
+    {
+      "file": "frontend/.env.example",
+      "needle": "SKIP_ME_FETCH"
+    },
+    {
+      "file": "frontend/.env.local",
+      "needle": "SKIP_ME_FETCH"
+    },
+    {
+      "file": "frontend/README.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    },
+    {
+      "file": "frontend/evidence/TRAVELER-CONVERSION-EXCELLENCE-SPRINT-MATRIX.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    },
+    {
+      "file": "frontend/evidence/GO_local_marketing_front_closure/MARKET-L5-CLOSURE.md",
+      "needle": "MARKET_DEV_VARIETY"
+    },
+    {
+      "file": "frontend/evidence/GO_local_marketing_front_closure/MARKET-L5-CLOSURE.md",
+      "needle": "MOCK_"
+    },
+    {
+      "file": "frontend/evidence/GO_local_marketing_front_closure/MARKET-UI-THAW.md",
+      "needle": "MARKET_DEV_VARIETY"
+    },
+    {
+      "file": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    },
+    {
+      "file": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    },
+    {
+      "file": "frontend/components/escrow/EscrowDetail/README.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    }
+  ],
+  "m6_api_compare": [
+    {
+      "path": "build.git_sha",
+      "official": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "staging": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "class": "DIFF_OR_ED"
+    },
+    {
+      "path": "build.deployment_profile",
+      "official": "production",
+      "staging": "staging",
+      "class": "DIFF_OR_ED"
+    },
+    {
+      "path": "build.deployed_at",
+      "official": "2026-08-12T23:44:18Z",
+      "staging": "2026-08-06T03:07:41Z",
+      "class": "DIFF_OR_ED"
+    },
+    {
+      "path": "chain.chain_id",
+      "official": "1",
+      "staging": "11155111",
+      "class": "DIFF_OR_ED"
+    },
+    {
+      "path": "service",
+      "official": "traveltrust-api",
+      "staging": "traveltrust-api",
+      "class": "SAME"
+    },
+    {
+      "path": "api_version",
+      "official": "0.1.0",
+      "staging": "0.1.0",
+      "class": "SAME"
+    }
+  ],
+  "items": [
+    {
+      "id": "M5-01",
+      "module": "M5",
+      "class": "RESIDUAL",
+      "surface": "Local frontend/.env.local SKIP_ME_FETCH",
+      "observed": "needle present in local env",
+      "required_official": "Official bootstrap v8 SKIP_ME_FETCH=0",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M5-02",
+      "module": "M5",
+      "class": "CONFIRM_DESIGN",
+      "surface": "ESCROW_DEV_TOOLS / MARKET_DEV_VARIETY docs",
+      "observed": "Local/dev-only in freezes",
+      "required_official": "must not enable on Official/Staging product bake",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M5-03",
+      "module": "M5",
+      "class": "RESIDUAL",
+      "surface": "Local Runtime vs Official image",
+      "observed": "Capture Config OPEN",
+      "required_official": "Fly secrets/runtime inventory vs pin",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M6-01",
+      "module": "M6",
+      "class": "ED",
+      "surface": "API build.git_sha",
+      "observed": "8df2ab21 vs 1915ec4d",
+      "required_official": "Official API pin 8df2ab21",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M6-02",
+      "module": "M6",
+      "class": "ED",
+      "surface": "API chain.chain_id",
+      "observed": "1 vs 11155111",
+      "required_official": "Official mainnet API",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M6-03",
+      "module": "M6",
+      "class": "CONFIRM_DESIGN",
+      "surface": "API service/api_version",
+      "observed": "SAME",
+      "required_official": "keep",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M6-04",
+      "module": "M6",
+      "class": "RESIDUAL",
+      "surface": "DB schema/migrations",
+      "observed": "local migrationish sql=157; Official database_baseline=production_surface",
+      "required_official": "Production DB schema Capture",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M6-05",
+      "module": "M6",
+      "class": "RESIDUAL",
+      "surface": "API product behavior depth",
+      "observed": "only /meta compared",
+      "required_official": "GP API behavior matrix",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M7-01",
+      "module": "M7",
+      "class": "RESIDUAL",
+      "surface": "Capture CMS",
+      "observed": "OPEN",
+      "required_official": "Official CMS inventory",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M7-02",
+      "module": "M7",
+      "class": "RESIDUAL",
+      "surface": "Capture Assets",
+      "observed": "OPEN",
+      "required_official": "Official asset/CDN map",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M7-03",
+      "module": "M7",
+      "class": "DOC_DRIFT",
+      "surface": "cms-asset-matrix ambient",
+      "observed": "unsplash_fallback vs catalog target",
+      "required_official": "Cite live www Ambient source",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M7-04",
+      "module": "M7",
+      "class": "RESIDUAL",
+      "surface": "cms-asset-matrix placeholders",
+      "observed": "poi/hotel/transport/video placeholder",
+      "required_official": "Official runtime media source",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M7-05",
+      "module": "M7",
+      "class": "CONFIRM_DESIGN",
+      "surface": "OCS-owned rows",
+      "observed": "cms_operable=false",
+      "required_official": "Keep OCS vs CMS split",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M7-06",
+      "module": "M7",
+      "class": "ED",
+      "surface": "JP Content QA CLOSED",
+      "observed": "neq Official CMS Capture PASS",
+      "required_official": "Do not equate",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M7-07",
+      "module": "M7",
+      "class": "DEFECT",
+      "surface": "community media URLs",
+      "observed": "uploads 404 DRC",
+      "required_official": "AS-IS register",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M7-08",
+      "module": "M7",
+      "class": "DEFECT",
+      "surface": "cms/public/announcements",
+      "observed": "401 vs public 200",
+      "required_official": "AS-IS register",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M8-01",
+      "module": "M8",
+      "class": "RESIDUAL",
+      "surface": "Capture Auth/Admin/UI/i18n",
+      "observed": "OPEN",
+      "required_official": "Depth Capture",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M8-02",
+      "module": "M8",
+      "class": "CONFIRM_DESIGN",
+      "surface": "FIVE-MAIN freeze",
+      "observed": "structure locked",
+      "required_official": "Do not thaw",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M8-03",
+      "module": "M8",
+      "class": "CONFIRM_DESIGN",
+      "surface": "Auth UI freezes",
+      "observed": "login/register frozen",
+      "required_official": "Local freeze neq Capture PASS",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M8-04",
+      "module": "M8",
+      "class": "ED",
+      "surface": "historical login 405",
+      "observed": "CLOSED_REALITY",
+      "required_official": "Do not reopen",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M8-05",
+      "module": "M8",
+      "class": "OFFICIAL_ROUTE_AS_IS",
+      "surface": "route 404s",
+      "observed": "market/guides hotels community/feed escrow",
+      "required_official": "Capture facts",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M8-06",
+      "module": "M8",
+      "class": "CONFIRM_DESIGN",
+      "surface": "/admin 307",
+      "observed": "auth redirect",
+      "required_official": "AS-IS",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M8-07",
+      "module": "M8",
+      "class": "DEFECT",
+      "surface": "/me/payments /legal",
+      "observed": "GAP 404s",
+      "required_official": "AS-IS register",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M8-08",
+      "module": "M8",
+      "class": "RESIDUAL",
+      "surface": "i18n Capture",
+      "observed": "OPEN",
+      "required_official": "zh/en inventory",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M9-01",
+      "module": "M9",
+      "class": "DOC_DRIFT",
+      "surface": "whitepaper/docs Official-first",
+      "observed": "NOTE_OPEN",
+      "required_official": "Cite OPS-v9 or Web3 plane",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M9-02",
+      "module": "M9",
+      "class": "DOC_DRIFT",
+      "surface": "Handbook local-first slogan",
+      "observed": "git delivery",
+      "required_official": "neq product SSOT",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M9-03",
+      "module": "M9",
+      "class": "DOC_DRIFT",
+      "surface": "parallel engineering tracks",
+      "observed": "Local SSOT narrative",
+      "required_official": "Official-first cite",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    },
+    {
+      "id": "M9-04",
+      "module": "M9",
+      "class": "CONFIRM_DESIGN",
+      "surface": "Dual Truth Planes",
+      "observed": "ACTIVE",
+      "required_official": "Keep split",
+      "action": "REGISTER_ONLY",
+      "optimize_official": false
+    }
+  ],
+  "counts": {
+    "total": 28,
+    "by_class": {
+      "RESIDUAL": 9,
+      "CONFIRM_DESIGN": 7,
+      "ED": 4,
+      "DOC_DRIFT": 4,
+      "DEFECT": 3,
+      "OFFICIAL_ROUTE_AS_IS": 1
+    }
+  }
+}

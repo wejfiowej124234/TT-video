@@ -1,0 +1,63 @@
+{
+  "recorded_utc": "2026-08-22T03:45:00Z",
+  "module": "M6",
+  "compare_rows": [
+    {
+      "path": "build.git_sha",
+      "official": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+      "staging": "1915ec4da828e0139e90a85cd321415fdb6e53d9",
+      "class": "DIFF_OR_ED"
+    },
+    {
+      "path": "build.deployment_profile",
+      "official": "production",
+      "staging": "staging",
+      "class": "DIFF_OR_ED"
+    },
+    {
+      "path": "build.deployed_at",
+      "official": "2026-08-12T23:44:18Z",
+      "staging": "2026-08-06T03:07:41Z",
+      "class": "DIFF_OR_ED"
+    },
+    {
+      "path": "chain.chain_id",
+      "official": "1",
+      "staging": "11155111",
+      "class": "DIFF_OR_ED"
+    },
+    {
+      "path": "service",
+      "official": "traveltrust-api",
+      "staging": "traveltrust-api",
+      "class": "SAME"
+    },
+    {
+      "path": "api_version",
+      "official": "0.1.0",
+      "staging": "0.1.0",
+      "class": "SAME"
+    }
+  ],
+  "off_only_top": [],
+  "stg_only_top": [],
+  "local_sql_migrationish_count": 157,
+  "local_sql_migrationish_sample": [
+    "crates/api/migrations/20250228000001_users_sessions.sql",
+    "crates/api/migrations/20250228000002_guides.sql",
+    "crates/api/migrations/20250228000003_orders.sql",
+    "crates/api/migrations/20250228000004_reviews_disputes.sql",
+    "crates/api/migrations/20250228000005_guides_license.sql",
+    "crates/api/migrations/20250228000006_itineraries.sql",
+    "crates/api/migrations/20250228000007_order_messages.sql",
+    "crates/api/migrations/20250303000008_orders_start_end_date.sql",
+    "crates/api/migrations/20250304000009_evidence_receipts.sql",
+    "crates/api/migrations/20250305000010_governance.sql",
+    "crates/api/migrations/20250306000011_community.sql",
+    "crates/api/migrations/20250307000012_community_posts.sql",
+    "crates/api/migrations/20250308000013_idempotency_keys.sql",
+    "crates/api/migrations/20250309000014_orders_53_substatus.sql",
+    "crates/api/migrations/20250310000015_orders_guide_id_nullable.sql"
+  ],
+  "note": "Staging API sha/chain DIFF = Expected Difference (Web3/staging plane). Official API pin 8df2ab21 is product API identity."
+}

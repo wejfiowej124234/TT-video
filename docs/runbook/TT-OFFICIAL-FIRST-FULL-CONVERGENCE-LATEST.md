@@ -123,12 +123,16 @@ Plane: `bash scripts/gates/check-official-v9-plane-map.sh`
 | M2 | Residual register | **OPEN**（上表） |
 | M3 | Staging www → Official pin | **PASS**（`git_sha` pin） |
 | M4 | main := tip（Solo 本地） | **PASS_LOCAL** · push 另令 |
-| M5 | Local Runtime / env / flags vs Official | PENDING |
-| M6 | API product behavior / DB schema inventory | PENDING（API pin 已录） |
-| M7 | CMS/OCS / media refs | PENDING（只登记，不修内容） |
-| M8 | Auth/Admin/UI/routes/i18n | PENDING |
-| M9 | Registry / Release Identity / Runbook / 白皮书非 Web3 | NOTE_OPEN |
+| M5 | Local Runtime / env / flags vs Official | **DEPTH_SCAN_REGISTERED** · see `M5_M9_DEPTH_RESIDUALS_20260822.json` |
+| M6 | API product behavior / DB schema inventory | **DEPTH_SCAN_REGISTERED**（API `/meta` ED 已录 · DB schema dump OPEN） |
+| M7 | CMS/OCS / media refs | **DEPTH_SCAN_REGISTERED**（只登记 · 不修内容） |
+| M8 | Auth/Admin/UI/routes/i18n | **DEPTH_SCAN_REGISTERED** |
+| M9 | Registry / Release Identity / Runbook / 白皮书非 Web3 | **DEPTH_SCAN_REGISTERED** |
 | M10 | `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` | **NOT_ISSUED** |
+
+**Identity-layer commit:** `8ca90a08a` · **Depth residual pack:** [`M5_M9_DEPTH_RESIDUALS_20260822.json`](../../evidence/GO_official_product_reality_capture/M5_M9_DEPTH_RESIDUALS_20260822.json)
+
+**Next (still REGISTER_ONLY until full residual list Owner-closed):** unify Official→Git→Local→Staging product alignment execution — **not** product optimization.
 
 Staging align command（Owner Solo）:
 

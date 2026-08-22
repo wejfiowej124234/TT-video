@@ -3,36 +3,28 @@
   "status": "IN_PROGRESS",
   "gate": "PRODUCT_AND_DOCUMENTATION_PARITY",
   "gate_result": "FAIL",
-  "note": "Identity 1:1 PASS (Official=Staging www pin \u00b7 main=tip \u00b7 Release WT=pin). Full PRODUCT_AND_DOCUMENTATION_PARITY still FAIL until Capture depth + API/DB/CMS/docs modules close. No product optimization allowed yet.",
-  "recorded_utc": "2026-08-22T03:40:00Z",
+  "recorded_utc": "2026-08-22T03:50:00Z",
+  "identity_layer_commit": "8ca90a08ab9ac94bd86cf4f4e55dd3705c203d66",
   "tt_production_go": "NO_GO",
   "forbid_product_optimization_until_parity_pass": true,
   "official_baseline_frozen_for_convergence": true,
   "gates": {
     "check-official-v9-local-staging-repo-1to1": "PASS",
-    "check-official-v9-plane-map": "SEE_LOG"
+    "check-official-v9-plane-map": "PASS"
   },
   "modules": {
     "M0_ETA": "ACTIVE",
     "M1_CAPTURE_BASELINE": "IDENTITY_FROZEN_DEPTH_OPEN",
     "M2_RESIDUALS": "OPEN",
     "M3_STAGING_WWW_ALIGN": "PASS_git_sha_pin",
-    "M4_MAIN_EQ_TIP": "PASS_local_main_forced_to_tip_no_push",
-    "M5_LOCAL_RUNTIME": "PENDING",
-    "M6_API_DB": "PENDING",
-    "M7_CMS_OCS_MEDIA": "PENDING",
-    "M8_AUTH_ADMIN_UI_I18N": "PENDING",
-    "M9_DOCS_WHITEPAPAPER": "NOTE_OPEN",
+    "M4_MAIN_EQ_TIP": "PASS_local",
+    "M5_LOCAL_RUNTIME": "DEPTH_SCAN_REGISTERED",
+    "M6_API_DB": "DEPTH_SCAN_REGISTERED",
+    "M7_CMS_OCS_MEDIA": "DEPTH_SCAN_REGISTERED",
+    "M8_AUTH_ADMIN_UI_I18N": "DEPTH_SCAN_REGISTERED",
+    "M9_DOCS_WHITEPAPAPER": "DEPTH_SCAN_REGISTERED",
     "M10_PARITY_PASS": "NOT_ISSUED"
   },
-  "identity_now": {
-    "official_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
-    "staging_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
-    "staging_build_time": "2026-08-22T03:27:28Z",
-    "staging_psg_release_version_ED": "PSG-REL-20260720-WEB3-CAND-V2",
-    "main": "c40444835894bbac394c8cddf7dc64fdbcb304a6",
-    "tip": "c40444835894bbac394c8cddf7dc64fdbcb304a6",
-    "release_wt": "3e356617a498b0faac42e4ae457343d36294a770"
-  },
+  "depth_residuals": "evidence/GO_official_product_reality_capture/M5_M9_DEPTH_RESIDUALS_20260822.json",
   "human_ssot": "docs/runbook/TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md"
 }

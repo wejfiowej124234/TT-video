@@ -1,0 +1,46 @@
+{
+  "module": "M5",
+  "suspects": [
+    {
+      "file": "frontend/.env.example",
+      "needle": "SKIP_ME_FETCH"
+    },
+    {
+      "file": "frontend/.env.local",
+      "needle": "SKIP_ME_FETCH"
+    },
+    {
+      "file": "frontend/README.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    },
+    {
+      "file": "frontend/evidence/TRAVELER-CONVERSION-EXCELLENCE-SPRINT-MATRIX.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    },
+    {
+      "file": "frontend/evidence/GO_local_marketing_front_closure/MARKET-L5-CLOSURE.md",
+      "needle": "MARKET_DEV_VARIETY"
+    },
+    {
+      "file": "frontend/evidence/GO_local_marketing_front_closure/MARKET-L5-CLOSURE.md",
+      "needle": "MOCK_"
+    },
+    {
+      "file": "frontend/evidence/GO_local_marketing_front_closure/MARKET-UI-THAW.md",
+      "needle": "MARKET_DEV_VARIETY"
+    },
+    {
+      "file": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-DRAFT-EXPERIENCE-FREEZE.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    },
+    {
+      "file": "frontend/evidence/GO_local_web3_itinerary_l5/ESCROW-ORDER-PAGE-PHASE1-CLOSURE.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    },
+    {
+      "file": "frontend/components/escrow/EscrowDetail/README.md",
+      "needle": "ESCROW_DEV_TOOLS"
+    }
+  ],
+  "note": "REGISTER_ONLY \u2014 presence in repo/examples \u2260 Official runtime"
+}
