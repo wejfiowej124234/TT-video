@@ -1,0 +1,141 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch5_assets_i18n.v1",
+  "recorded_utc": "2026-08-22T10:00:53Z",
+  "batch": "5_assets_i18n",
+  "baseline": "POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_PASS_STOP",
+  "official_product_ssot": "www.web3-ttg.com OPS-v9",
+  "items": [
+    "M8-08",
+    "AI-01",
+    "AI-02",
+    "AI-03",
+    "AI-04",
+    "AI-05"
+  ],
+  "web": "https://tt-web-staging.fly.dev",
+  "official": "https://www.web3-ttg.com",
+  "checks": {
+    "official_baseline_cite": "CAPTURE_DEEPEN_20260822.json",
+    "ai01_m8_08_i18n_official_staging_parity": {
+      "/": {
+        "official": {
+          "status_code": "200",
+          "title": "TravelTrust Network | TravelTrust",
+          "html_lang": "en"
+        },
+        "staging": {
+          "status_code": "200",
+          "title": "TravelTrust Network | TravelTrust",
+          "html_lang": "en"
+        },
+        "pass": true
+      },
+      "/?lang=zh": {
+        "official": {
+          "status_code": "200",
+          "title": "TravelTrust Network | TravelTrust",
+          "html_lang": "en"
+        },
+        "staging": {
+          "status_code": "200",
+          "title": "TravelTrust Network | TravelTrust",
+          "html_lang": "en"
+        },
+        "pass": true
+      },
+      "/?lang=en": {
+        "official": {
+          "status_code": "200",
+          "title": "TravelTrust Network | TravelTrust",
+          "html_lang": "en"
+        },
+        "staging": {
+          "status_code": "200",
+          "title": "TravelTrust Network | TravelTrust",
+          "html_lang": "en"
+        },
+        "pass": true
+      }
+    },
+    "ai02_staging_live_static_assets": {
+      "sample_count": 20,
+      "bad": [],
+      "pass": true
+    },
+    "ai03_official_i18n_capture_spot_check": {
+      "live": {
+        "status_code": "200",
+        "title": "TravelTrust Network | TravelTrust",
+        "html_lang": "en"
+      },
+      "capture_title": "TravelTrust Network | TravelTrust",
+      "capture_lang": "en",
+      "pass": true
+    },
+    "ai04_zh_en_core_locale_inventory": {
+      "keys": {
+        "landing_hero_title": {
+          "zh": true,
+          "en": true,
+          "pass": true
+        },
+        "landing_hero_subtitle": {
+          "zh": true,
+          "en": true,
+          "pass": true
+        },
+        "landing_btn_generate": {
+          "zh": true,
+          "en": true,
+          "pass": true
+        },
+        "home_consumer_value_title": {
+          "zh": true,
+          "en": true,
+          "pass": true
+        },
+        "footer_link_terms": {
+          "zh": true,
+          "en": true,
+          "pass": true
+        },
+        "footer_link_privacy": {
+          "zh": true,
+          "en": true,
+          "pass": true
+        },
+        "nav_guides": {
+          "zh": true,
+          "en": true,
+          "pass": true
+        },
+        "nav_orders": {
+          "zh": true,
+          "en": true,
+          "pass": true
+        }
+      },
+      "missing": [],
+      "pass": true
+    },
+    "ai05_i18n_contract_vitest": {
+      "pass": true,
+      "note": "skipped",
+      "files": [
+        "lib/homeConsumerExperienceL5.contract.test.ts",
+        "app/help/helpPage.i18n.contract.test.ts"
+      ]
+    }
+  },
+  "gaps": [],
+  "BATCH5_ASSETS_I18N_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "tt_production_go": "NO_GO",
+  "non_target_drift": {
+    "candidate_solidity": "0",
+    "production_db_mutation": "0",
+    "tt_production_go_flip": "0",
+    "five_main_structure_ui": "0"
+  }
+}

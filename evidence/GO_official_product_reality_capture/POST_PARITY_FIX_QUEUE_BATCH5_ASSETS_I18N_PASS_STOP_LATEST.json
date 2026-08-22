@@ -1,0 +1,33 @@
+{
+  "schema": "traveltrust.post_parity_fix_queue_batch5_assets_i18n_pass_stop.v1",
+  "issued_utc": "2026-08-22T10:00:53Z",
+  "stamp": "20260822T100053Z",
+  "track": "POST_PARITY_FIX_QUEUE",
+  "batch": "5_assets_i18n",
+  "baseline": "POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_PASS_STOP",
+  "deploy_git_sha": "3c1128ebd6df0974291580db46cd922c3fd27176",
+  "release_identity_pin": "3e356617a498b0faac42e4ae457343d36294a770",
+  "staging_web": "https://tt-web-staging.fly.dev",
+  "official_product_ssot": "https://www.web3-ttg.com",
+  "items_closed": [
+    "M8-08",
+    "AI-01",
+    "AI-02",
+    "AI-03",
+    "AI-04",
+    "AI-05"
+  ],
+  "POST_PARITY_FIX_QUEUE_BATCH5_ASSETS_I18N_PASS_STOP": "ISSUED",
+  "BATCH5_ASSETS_I18N_PASS": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "OUT_OF_SCOPE": "0",
+  "tt_production_go": "NO_GO",
+  "next_batch": null,
+  "queue_status": "POST_PARITY_FIX_QUEUE_CLOSED",
+  "web3_ladder": "sepolia_reality_independent",
+  "five_main_ui_frozen": true,
+  "artifacts": {
+    "batch_gate": "POST_PARITY_FIX_QUEUE_BATCH5_ASSETS_I18N_20260822T100053Z.json",
+    "batch_gate_latest": "POST_PARITY_FIX_QUEUE_BATCH5_ASSETS_I18N_LATEST.json"
+  }
+}

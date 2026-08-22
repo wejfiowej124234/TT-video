@@ -8,7 +8,8 @@ baseline:
   schema_parity_artifact: evidence/GO_official_product_reality_capture/PRODUCT_AND_DOCUMENTATION_SCHEMA_PARITY_PASS_LATEST.json
   runtime_parity_artifact: evidence/GO_official_product_reality_capture/PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS_LATEST.json
 tt_production_go: NO_GO
-active_batch: assets_i18n
+active_batch: null
+queue_status: CLOSED
 
 batch_order:
   - cms_ocs
@@ -47,8 +48,12 @@ batches:
     evidence: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_LATEST.json
     pass_stop: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_PASS_STOP_LATEST.json
   assets_i18n:
-    status: PENDING
-    items: [M8-08]
+    status: CLOSED
+    closed_utc: "2026-08-22T10:00:53Z"
+    items: [M8-08, AI-01, AI-02, AI-03, AI-04, AI-05]
+    gate: scripts/gates/run-post-parity-fix-queue-batch5-assets-i18n.py
+    evidence: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH5_ASSETS_I18N_LATEST.json
+    pass_stop: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH5_ASSETS_I18N_PASS_STOP_LATEST.json
 
 non_target_zero_drift:
   - candidate_solidity

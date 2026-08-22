@@ -29,7 +29,37 @@ Machine: [`POST_PARITY_FIX_QUEUE_20260822.json`](../../evidence/GO_official_prod
 | **2 · Admin/Auth** | Auth/Admin HTTP · STRICT_SESSION · login→me · OCS admin · RBAC | BA-01～BA-06 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP` (`2026-08-22T09:17:58Z`) |
 | **3 · UI/UX** | FIVE-MAIN 已冻结 · 仅数据链/门闸 | UX-01～UX-06 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_PASS_STOP` (`2026-08-22T09:35:40Z`) |
 | **4 · 功能缺陷** | M8-07 等 | M8-07 · FD-01～FD-05 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_PASS_STOP` (`2026-08-22T09:46:34Z`) |
-| **5 · Assets/i18n** | M8-08 等 | M8-08 | **ACTIVE** |
+| **5 · Assets/i18n** | M8-08 等 | M8-08 · AI-01～AI-05 | **CLOSED** `POST_PARITY_FIX_QUEUE_BATCH5_ASSETS_I18N_PASS_STOP` (`2026-08-22T10:00:53Z`) |
+
+**队列状态：** `POST_PARITY_FIX_QUEUE` **CLOSED**（五批全部 PASS_STOP · `TT_PRODUCTION_GO=NO_GO` 不变）
+
+---
+
+## Batch 5 · Assets/i18n（CLOSED）
+
+| ID | 检查项 | 修复/验证 |
+|----|--------|-----------|
+| **M8-08** | i18n Capture zh/en 可观测对拍 | Official PRODUCT SSOT · staging 同 title/html lang |
+| **AI-01** | `/` `/?lang=zh` `/?lang=en` Official↔Staging 对拍 | HTTP 探针 |
+| **AI-02** | Staging 首页 live `/_next/static/*` 自检 200/206 | 实时 HTML 取样 |
+| **AI-03** | Official live i18n vs `CAPTURE_DEEPEN` frozen baseline | 只读 spot-check |
+| **AI-04** | zh/en 核心 locale key 清单对称 | `locales/zh.ts` · `locales/en.ts` |
+| **AI-05** | i18n contract vitest 子集 | `homeConsumerExperienceL5` · `helpPage.i18n` |
+
+**Disposition：** M8-08 = `DEEPEN_CAPTURE_THEN_REBASE_PLAN` 收口 — 可观测 zh/en 对拍 + 核心 key 清单已验；**未**改 FIVE-MAIN 结构/视觉 · **未**触 Production。
+
+**Local：**
+
+```bash
+cd frontend && npx vitest run lib/homeConsumerExperienceL5.contract.test.ts app/help/helpPage.i18n.contract.test.ts
+python scripts/gates/run-post-parity-fix-queue-batch5-assets-i18n.py --web http://127.0.0.1:3000
+```
+
+**Staging（② only）：**
+
+```bash
+bash scripts/dev/official-first-staging-post-parity-batch5-assets-i18n.sh
+```
 
 ---
 

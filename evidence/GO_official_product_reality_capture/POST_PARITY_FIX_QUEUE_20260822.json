@@ -155,6 +155,17 @@
       "batch": "ui_ux",
       "status": "CLOSED",
       "closed_utc": "2026-08-22T09:37:31Z"
+    },
+    {
+      "id": "M8-08",
+      "class": "RESIDUAL",
+      "surface": "i18n Capture zh/en inventory",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false,
+      "batch": "assets_i18n",
+      "status": "CLOSED",
+      "closed_utc": "2026-08-22T10:00:53Z",
+      "pass_stop": "POST_PARITY_FIX_QUEUE_BATCH5_ASSETS_I18N_PASS_STOP_LATEST.json"
     }
   ],
   "baseline": "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS",
@@ -166,5 +177,6 @@
     "functional_defects",
     "assets_i18n"
   ],
-  "active_batch": "assets_i18n"
+  "active_batch": null,
+  "queue_status": "CLOSED"
 }
