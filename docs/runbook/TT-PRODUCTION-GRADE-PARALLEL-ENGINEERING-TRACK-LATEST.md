@@ -1,5 +1,10 @@
 # Production Grade · Parallel Engineering Track LATEST
 
+> **OFFICIAL-FIRST PRODUCT SSOT (2026-08-22 retag):** Non-Web3 product Living SSOT = Official Production **OPS-2026.08.20-v9** (`https://www.web3-ttg.com` · pin `3e356617…`).  
+> Below “Local SSOT → Staging Reality” is an **engineering delivery ladder only** — **≠** product master. See [Dual Truth Planes](./TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md) · [Full Convergence](./TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md).  
+> **Web3 exception:** Candidate / Sepolia / FTB remain Web3 SSOT — Official website Web3 copy ≠ Web3 truth (LIVE/TARGET/LEGACY).  
+> `TT_PRODUCTION_GO: NO_GO`.
+
 **Phase:** ② Track B · **ENGINEERING ACTIVE** (Owner-authorized)  
 **Stamp:** `20260727T081945Z`  
 **Machine:** `TT_PG_PARALLEL_ENGINEERING: ACTIVE`  

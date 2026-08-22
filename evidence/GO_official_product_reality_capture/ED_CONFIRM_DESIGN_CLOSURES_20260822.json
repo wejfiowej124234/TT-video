@@ -1,0 +1,79 @@
+{
+  "schema": "traveltrust.official_first_ed_confirm_design_closures.v1",
+  "recorded_utc": "2026-08-22T04:05:00Z",
+  "policy": "CONFIRM_ONLY_NO_FIX",
+  "items": [
+    {
+      "id": "M5-02",
+      "class": "CONFIRM_DESIGN",
+      "status": "CLOSED_CONFIRM",
+      "statement": "DEV flags (ESCROW_DEV_TOOLS/MARKET_DEV_VARIETY) Local-only; forbidden on Official/Staging product bake"
+    },
+    {
+      "id": "M6-01",
+      "class": "ED",
+      "status": "CLOSED_CONFIRM",
+      "statement": "Official API sha 8df2ab21… vs Staging 1915ec4d… = Expected Difference (Web3/staging plane)"
+    },
+    {
+      "id": "M6-02",
+      "class": "ED",
+      "status": "CLOSED_CONFIRM",
+      "statement": "Official chain_id=1 vs Staging 11155111 = Expected Difference"
+    },
+    {
+      "id": "M6-03",
+      "class": "CONFIRM_DESIGN",
+      "status": "CLOSED_CONFIRM",
+      "statement": "service/api_version SAME across Official/Staging API"
+    },
+    {
+      "id": "M7-05",
+      "class": "CONFIRM_DESIGN",
+      "status": "CLOSED_CONFIRM",
+      "statement": "OCS-owned matrix rows stay OCS; not CMS operable"
+    },
+    {
+      "id": "M7-06",
+      "class": "ED",
+      "status": "CLOSED_CONFIRM",
+      "statement": "JP Content QA CLOSED != Official CMS Capture PASS"
+    },
+    {
+      "id": "M8-02",
+      "class": "CONFIRM_DESIGN",
+      "status": "CLOSED_CONFIRM",
+      "statement": "FIVE-MAIN structure freeze — do not thaw to green Official"
+    },
+    {
+      "id": "M8-03",
+      "class": "CONFIRM_DESIGN",
+      "status": "CLOSED_CONFIRM",
+      "statement": "Auth UI freezes are Local ① locks; not substitutes for Official Capture PASS"
+    },
+    {
+      "id": "M8-04",
+      "class": "ED",
+      "status": "CLOSED_CONFIRM",
+      "statement": "Historical www POST /auth/login 405 is CLOSED_REALITY — do not reopen Official fix track"
+    },
+    {
+      "id": "M8-05",
+      "class": "OFFICIAL_ROUTE_AS_IS",
+      "status": "CLOSED_CONFIRM",
+      "statement": "Official route 404s are product AS-IS facts"
+    },
+    {
+      "id": "M8-06",
+      "class": "CONFIRM_DESIGN",
+      "status": "CLOSED_CONFIRM",
+      "statement": "/admin 307 to login is Official AS-IS (Capture deepen confirmed)"
+    },
+    {
+      "id": "M9-04",
+      "class": "CONFIRM_DESIGN",
+      "status": "CLOSED_CONFIRM",
+      "statement": "Dual Truth Planes constitution remains ACTIVE"
+    }
+  ]
+}

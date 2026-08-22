@@ -1,8 +1,9 @@
 # Official Product Reality Capture（官网产品现实固化）
 
-**STATUS:** `IN_PROGRESS` · **Baseline identity FROZEN for Full Convergence**  
-**Gate stamp:** `OFFICIAL_PRODUCT_REALITY_CAPTURE` = **NOT_YET_PASS**（深度层仍 OPEN；身份层已够冻结母版）  
+**STATUS:** `IN_PROGRESS` · Capture deepen 2026-08-22 · see [Parity Closure](TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST.md)  
+**Gate stamp:** `OFFICIAL_PRODUCT_REALITY_CAPTURE` = **NOT_YET_PASS**（深度 PARTIAL 仍在；身份/Routes/Admin 已 CAPTURED）  
 **Convergence:** [Official-First Full Convergence](TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md)  
+**Deepen evidence:** [`CAPTURE_DEEPEN_20260822.json`](../../evidence/GO_official_product_reality_capture/CAPTURE_DEEPEN_20260822.json)  
 **Plane:** PRODUCT / WEBSITE only — see [Dual Truth Planes](TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md)  
 **`TT_PRODUCTION_GO`:** NO_GO  
 

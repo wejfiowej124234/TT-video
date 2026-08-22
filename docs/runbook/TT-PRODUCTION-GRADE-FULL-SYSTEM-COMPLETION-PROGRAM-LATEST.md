@@ -1,5 +1,11 @@
 # TravelTrust · Production Grade Full System Completion Program LATEST
 
+> **OFFICIAL-FIRST PRODUCT SSOT (2026-08-22 retag):** Non-Web3 product Living SSOT = Official Production **OPS-2026.08.20-v9**.  
+> Ladder “Local SSOT → Staging Reality” below = **engineering PCR delivery** only · **≠** product master.  
+> Web3: FTB + Candidate / Sepolia · Official Web3 UI = LIVE/TARGET/LEGACY only.  
+> Constitution: [Dual Truth Planes](./TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md) · [Full Convergence](./TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md).  
+> `TT_PRODUCTION_GO: NO_GO`.
+
 **Phase:** ② Program OPEN · **Phase 1 Blocking Clear ACTIVE** · **Parallel Eng ACTIVE**  
 **Stamp:** `20260727T081945Z` (prior Admin close `20260727T072759Z` · six-fix Local `081945Z`)  
 **Machine:** `TT_PG_FULL_SYSTEM_COMPLETION: PROGRAM_OPEN_PHASE1_BLOCKING_CLEAR` · `TT_PG_PARALLEL_ENGINEERING: ACTIVE` · `TT_FINAL_RELEASE_CLOSURE: MODE_ACTIVE`  

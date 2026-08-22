@@ -1,5 +1,9 @@
 # TravelTrust · Final Release Closure Mode LATEST
 
+> **OFFICIAL-FIRST PRODUCT SSOT (2026-08-22 retag):** Non-Web3 product Living SSOT = Official **OPS-2026.08.20-v9**.  
+> “Local SSOT” in this mode = **engineering PCR delivery** · **≠** product master. Web3 = FTB + Candidate (isolated).  
+> [Dual Truth Planes](./TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md) · [Parity Closure](./TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST.md). `TT_PRODUCTION_GO: NO_GO`.
+
 **Phase:** ② Mode ACTIVE · overlay on Full System Completion Program · **≠** ③ Production GO  
 **Stamp:** `20260727T081945Z`  
 **Machine:** `TT_FINAL_RELEASE_CLOSURE: MODE_ACTIVE`  

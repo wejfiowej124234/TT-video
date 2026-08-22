@@ -1,0 +1,288 @@
+{
+  "schema": "traveltrust.official_product_capture_deepen.v1",
+  "recorded_utc": "2026-08-22T04:05:00Z",
+  "pin": {
+    "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+    "git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "artifact_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+    "image_digest": "gitsha:3e356617a498b0faac42e4ae457343d36294a770",
+    "build_time": "2026-08-20T00:51:57Z",
+    "contract_profile": "mainnet_deployed_official_partial",
+    "database_baseline": "production_surface",
+    "cms_baseline": "public_display_10x4 + catalog_bake=1",
+    "attestation_status": "ok",
+    "identity_source": "docker-bake"
+  },
+  "layers": {
+    "Identity": {
+      "status": "CAPTURED",
+      "matches_ops_v9": true
+    },
+    "Routes": {
+      "status": "CAPTURED",
+      "inventory": {
+        "/": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/"
+        },
+        "/traveltrust": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/traveltrust"
+        },
+        "/market": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/market"
+        },
+        "/market/guides": {
+          "http": 404,
+          "error": "HTTP Error 404: Not Found"
+        },
+        "/market/hotels": {
+          "http": 404,
+          "error": "HTTP Error 404: Not Found"
+        },
+        "/did-rank": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/did-rank"
+        },
+        "/community": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/community"
+        },
+        "/community/feed": {
+          "http": 404,
+          "error": "HTTP Error 404: Not Found"
+        },
+        "/auth/login": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/auth/login"
+        },
+        "/auth/register": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/auth/register"
+        },
+        "/guides": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/guides"
+        },
+        "/me": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/me"
+        },
+        "/me/identities": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/me/identities"
+        },
+        "/provider/register": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/provider/register"
+        },
+        "/escrow": {
+          "http": 404,
+          "error": "HTTP Error 404: Not Found"
+        },
+        "/governance": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/governance"
+        },
+        "/governance/proposals": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/governance/proposals"
+        },
+        "/admin": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/auth/login?returnUrl=%2Fadmin"
+        },
+        "/admin/login": {
+          "http": 200,
+          "final": "https://www.web3-ttg.com/auth/login?returnUrl=%2Fadmin%2Flogin"
+        }
+      }
+    },
+    "UI": {
+      "status": "CAPTURED_PARTIAL",
+      "home": {
+        "title": "TravelTrust Network | TravelTrust",
+        "html_lang": [
+          "en"
+        ],
+        "asset_sample": [
+          "/_next/static/chunks/11085-9e39fa5b44948d38.js",
+          "/_next/static/chunks/15078-d1bbf49880f95c72.js",
+          "/_next/static/chunks/15239-9ecd71b069ea0050.js",
+          "/_next/static/chunks/15960-c5621ea3352085a2.js",
+          "/_next/static/chunks/16266-3cf3ebb465a3418f.js",
+          "/_next/static/chunks/20011-9b9778eca1c94ee4.js",
+          "/_next/static/chunks/2077-e6862f7af6c1a8e3.js",
+          "/_next/static/chunks/23613-50ec71a1c9878330.js",
+          "/_next/static/chunks/24337-704d2fdcd15e6e59.js",
+          "/_next/static/chunks/26340-d46bf7087b983ee3.js",
+          "/_next/static/chunks/31255-b1ccca2378c659d0.js",
+          "/_next/static/chunks/32378-03b73a2859371288.js",
+          "/_next/static/chunks/33691-06868243ef38c048.js",
+          "/_next/static/chunks/36344-9acad4ac5f9d5072.js",
+          "/_next/static/chunks/37621-2bf5d3b9c366c053.js",
+          "/_next/static/chunks/38369-af7df43f7fbca9a4.js",
+          "/_next/static/chunks/39847-72ddea95d174d5c4.js",
+          "/_next/static/chunks/44880-b4a42f02070d9fec.js",
+          "/_next/static/chunks/4520-3c8c93811822240a.js",
+          "/_next/static/chunks/47536-b0833e94b5e2e2dc.js"
+        ],
+        "bytes": 188572,
+        "has_password": false
+      },
+      "note": "OPS-v9 AS-IS; no structure change"
+    },
+    "Assets": {
+      "status": "CAPTURED_PARTIAL",
+      "home_asset_sample": [
+        "/_next/static/chunks/11085-9e39fa5b44948d38.js",
+        "/_next/static/chunks/15078-d1bbf49880f95c72.js",
+        "/_next/static/chunks/15239-9ecd71b069ea0050.js",
+        "/_next/static/chunks/15960-c5621ea3352085a2.js",
+        "/_next/static/chunks/16266-3cf3ebb465a3418f.js",
+        "/_next/static/chunks/20011-9b9778eca1c94ee4.js",
+        "/_next/static/chunks/2077-e6862f7af6c1a8e3.js",
+        "/_next/static/chunks/23613-50ec71a1c9878330.js",
+        "/_next/static/chunks/24337-704d2fdcd15e6e59.js",
+        "/_next/static/chunks/26340-d46bf7087b983ee3.js",
+        "/_next/static/chunks/31255-b1ccca2378c659d0.js",
+        "/_next/static/chunks/32378-03b73a2859371288.js",
+        "/_next/static/chunks/33691-06868243ef38c048.js",
+        "/_next/static/chunks/36344-9acad4ac5f9d5072.js",
+        "/_next/static/chunks/37621-2bf5d3b9c366c053.js",
+        "/_next/static/chunks/38369-af7df43f7fbca9a4.js",
+        "/_next/static/chunks/39847-72ddea95d174d5c4.js",
+        "/_next/static/chunks/44880-b4a42f02070d9fec.js",
+        "/_next/static/chunks/4520-3c8c93811822240a.js",
+        "/_next/static/chunks/47536-b0833e94b5e2e2dc.js"
+      ],
+      "cms_baseline": "public_display_10x4 + catalog_bake=1"
+    },
+    "i18n": {
+      "status": "CAPTURED_PARTIAL",
+      "home_zh_title": "TravelTrust Network | TravelTrust",
+      "home_en_title": "TravelTrust Network | TravelTrust",
+      "home_zh_lang": [
+        "en"
+      ],
+      "home_en_lang": [
+        "en"
+      ]
+    },
+    "Auth": {
+      "status": "CAPTURED_PARTIAL",
+      "login": {
+        "http": 200,
+        "title": "登录 | TravelTrust",
+        "has_password": false
+      },
+      "register": {
+        "http": 200,
+        "title": "注册 | TravelTrust",
+        "has_password": false
+      },
+      "historical_post_405": "CLOSED_REALITY_ED"
+    },
+    "Admin": {
+      "status": "CAPTURED",
+      "http": 307,
+      "redirect": "https://www.web3-ttg.com/auth/login?returnUrl=%2Fadmin"
+    },
+    "CMS": {
+      "status": "CAPTURED_PARTIAL",
+      "public_announcements_api": {
+        "url": "https://api.web3-ttg.com/api/v1/public/announcements",
+        "http": 200
+      },
+      "public_announcements_alt": {
+        "url": "https://api.web3-ttg.com/public/announcements",
+        "http": 404
+      },
+      "note": "M7-07/M8 defects remain POST_PARITY"
+    },
+    "API": {
+      "status": "CAPTURED_PARTIAL",
+      "build": {
+        "git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
+        "deployed_at": "2026-08-12T23:44:18Z",
+        "deployment_profile": "production",
+        "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
+        "image_digest": "sha256:510e768e24fc9cde65a62fb69edb25b53417a716a44e5e0e4f80a86e12f4c976",
+        "build_time": "2026-08-13T05:15:00Z",
+        "contract_profile": "mainnet_deployed_official_partial",
+        "attestation_status": "ok",
+        "rule": "120/140 + Runtime Attestation：注入 TRAVELTRUST_GIT_SHA、TRAVELTRUST_PSG_RELEASE_VERSION、TRAVELTRUST_IMAGE_DIGEST、TRAVELTRUST_BUILD_TIME、TRAVELTRUST_CONTRACT_PROFILE；attestation_status=unknown → Version Gate STRICT BLOCK；730 GET /meta build 对象 build_top_keys / build_top_keys_contract_730 与 META_BUILD_TOP_KEYS 顺序同源",
+        "build_top_keys": [
+          "git_sha",
+          "deployed_at",
+          "deployment_profile",
+          "psg_release_version",
+          "image_digest",
+          "build_time",
+          "contract_profile",
+          "attestation_status",
+          "rule",
+          "build_top_keys",
+          "build_top_keys_contract_730"
+        ],
+        "build_top_keys_contract_730": "**730**：**`build_top_keys`** **与 **`META_BUILD_TOP_KEYS`** **同源（顺序 `git_sha`****→**`deployed_at`****→**`deployment_profile`****→**`psg_release_version`****→**`image_digest`****→**`build_time`****→**`contract_profile`****→**`attestation_status`****→**`rule`****→**`build_top_keys`****→**`build_top_keys_contract_730`）"
+      },
+      "chain_id": "1",
+      "top_keys": [
+        "admin_exports",
+        "api_version",
+        "auth",
+        "authority",
+        "build",
+        "chain",
+        "chargeback_policy",
+        "database",
+        "database_connected",
+        "defaults",
+        "did_rank",
+        "discover",
+        "dispute_open",
+        "dispute_resolve",
+        "dual_write",
+        "evidence",
+        "finality_n",
+        "governance",
+        "guides",
+        "idempotency_cache",
+        "indexer",
+        "itineraries",
+        "meta_top_keys",
+        "meta_top_keys_contract_728",
+        "order_messages",
+        "orders",
+        "outbox",
+        "pause",
+        "product_countries",
+        "product_roles",
+        "rate_limits",
+        "reviews",
+        "seed_test_accounts",
+        "service",
+        "ssot",
+        "ssot_version",
+        "strict_mode"
+      ]
+    },
+    "DB": {
+      "status": "CAPTURED_PARTIAL",
+      "database_baseline": "production_surface",
+      "live_schema_dump": "NOT_THIS_WAVE_NEEDS_OWNER"
+    },
+    "Config": {
+      "status": "CAPTURED_PARTIAL",
+      "session_bootstrap": "v8",
+      "fly_image": "hybrid-live-auth-pin-nontarget-v9-20260820",
+      "SKIP_ME_FETCH_expected": "0"
+    },
+    "Web3_display": {
+      "status": "LABELED_ONLY",
+      "rule": "LIVE/TARGET/LEGACY; Official Web3 != Web3 SSOT"
+    }
+  }
+}

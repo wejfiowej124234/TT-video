@@ -1,0 +1,49 @@
+{
+  "schema": "traveltrust.official_first_parity_closure_status.v1",
+  "status": "IN_PROGRESS",
+  "recorded_utc": "2026-08-22T04:12:00Z",
+  "gate": "PRODUCT_AND_DOCUMENTATION_PARITY",
+  "gate_result": "FAIL",
+  "tt_production_go": "NO_GO",
+  "forbid_cms_ui_optimize_before_pass": true,
+  "web3_candidate_protected": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+  "sepolia_eta": "ACTIVE_WAITER_INTERRUPTIBLE",
+  "phases": {
+    "capture_deepen": "DONE_PARTIAL_LAYERS",
+    "doc_retag": "PARTIAL_WAVE1_PLUS_WAVE2",
+    "ed_confirm_design_close": "DONE_12",
+    "defect_post_parity_queue": "DONE_3_NO_FIX",
+    "official_git_local_staging_1to1_execution": "NOT_STARTED_PENDING_ZERO_GATES",
+    "parity_pass": "NOT_ISSUED"
+  },
+  "zero_gates": {
+    "OLD_PRODUCT_REFS": {
+      "value": "NOT_ZERO",
+      "note": "full corpus archaeology incomplete; Living Pin index correct"
+    },
+    "UNAUTHORIZED_DRIFT": {
+      "value": "0_IDENTITY_PLANE",
+      "note": "www 1to1/plane-map PASS; tree-level not fully re-scanned"
+    },
+    "DOC_TRUTH_CONFLICTS": {
+      "value": "NEAR_ZERO_LADDER_BANNER",
+      "remaining_docs_without_official_first_banner": [],
+      "count": 0
+    },
+    "RUNTIME_PARITY_GAPS": {
+      "value": "NOT_ZERO",
+      "open": [
+        "DB live schema dump",
+        "Local SKIP_ME_FETCH env",
+        "API product behavior matrix depth",
+        "CMS/Assets full inventory"
+      ]
+    }
+  },
+  "artifacts": {
+    "capture_deepen": "evidence/GO_official_product_reality_capture/CAPTURE_DEEPEN_20260822.json",
+    "ed_closures": "evidence/GO_official_product_reality_capture/ED_CONFIRM_DESIGN_CLOSURES_20260822.json",
+    "post_parity_queue": "evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_20260822.json",
+    "human": "docs/runbook/TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST.md"
+  }
+}

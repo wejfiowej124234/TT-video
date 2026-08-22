@@ -1,5 +1,9 @@
 # Final Release Closure · CF-wait Gap Inventory (read-only)
 
+> **OFFICIAL-FIRST PRODUCT SSOT (2026-08-22 retag):** Non-Web3 product Living SSOT = Official **OPS-2026.08.20-v9**.  
+> “Local SSOT PASS” rows below = **engineering PCR** · **≠** product master. Web3 Candidate isolated.  
+> [Parity Closure](./TT-OFFICIAL-FIRST-PARITY-CLOSURE-LATEST.md). `TT_PRODUCTION_GO: NO_GO`.
+
 **Phase:** ② Mode ACTIVE · CF wait window · **≠** release-ready · **≠** ③ GO  
 **Stamp:** `20260727T081945Z`  
 **Mode:** [TT-FINAL-RELEASE-CLOSURE-MODE-LATEST](./TT-FINAL-RELEASE-CLOSURE-MODE-LATEST.md)  

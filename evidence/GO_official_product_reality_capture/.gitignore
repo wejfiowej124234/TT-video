@@ -2,3 +2,5 @@
 *.html
 *.log
 www-api-meta.json
+
+capture-*.html

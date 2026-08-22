@@ -1,0 +1,30 @@
+{
+  "schema": "traveltrust.official_first_post_parity_fix_queue.v1",
+  "recorded_utc": "2026-08-22T04:05:00Z",
+  "policy": "NO_FIX_THIS_WAVE_UNTIL_PRODUCT_AND_DOCUMENTATION_PARITY_PASS",
+  "tt_production_go": "NO_GO",
+  "items": [
+    {
+      "id": "M7-07",
+      "class": "DEFECT",
+      "surface": "Official community media upload URLs 404",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false
+    },
+    {
+      "id": "M7-08",
+      "class": "DEFECT",
+      "surface": "cms/public/announcements 401 vs public 200",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false,
+      "note": "public announcements API 200 confirmed on /api/v1/public/announcements"
+    },
+    {
+      "id": "M8-07",
+      "class": "DEFECT",
+      "surface": "/me/payments and /legal/* GAP 404s",
+      "queue": "POST_PARITY_FIX_QUEUE",
+      "fix_this_wave": false
+    }
+  ]
+}
