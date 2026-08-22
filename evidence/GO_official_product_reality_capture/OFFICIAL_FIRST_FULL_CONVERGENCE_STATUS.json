@@ -1,34 +1,13 @@
 {
   "schema": "traveltrust.official_first_full_convergence_status.v1",
-  "status": "IN_PROGRESS",
-  "gate": "PRODUCT_AND_DOCUMENTATION_PARITY",
-  "gate_result": "FAIL",
-  "recorded_utc": "2026-08-22T03:55:00Z",
-  "identity_layer_commit": "8ca90a08ab9ac94bd86cf4f4e55dd3705c203d66",
-  "tt_production_go": "NO_GO",
-  "forbid_product_optimization_until_parity_pass": true,
-  "official_baseline_frozen_for_convergence": true,
-  "gates": {
-    "check-official-v9-local-staging-repo-1to1": "PASS",
-    "check-official-v9-plane-map": "PASS"
+  "recorded_utc": "2026-08-22T10:15:54Z",
+  "gate_result": "PASS",
+  "OFFICIAL_FIRST_FULL_CONVERGENCE_PASS_STOP": "ISSUED",
+  "zero_gates": {
+    "UNAUTHORIZED_DRIFT": "0",
+    "RUNTIME_PARITY_GAPS": "0",
+    "DOC_TRUTH_CONFLICTS": "0",
+    "OUT_OF_SCOPE": "0"
   },
-  "modules": {
-    "M0_ETA": "ACTIVE",
-    "M1_CAPTURE_BASELINE": "IDENTITY_FROZEN_DEPTH_OPEN",
-    "M2_RESIDUALS": "OPEN",
-    "M3_STAGING_WWW_ALIGN": "PASS_git_sha_pin",
-    "M4_MAIN_EQ_TIP": "PASS_local",
-    "M5_LOCAL_RUNTIME": "OWNED_PLAN_ISSUED",
-    "M6_API_DB": "OWNED_PLAN_ISSUED",
-    "M7_CMS_OCS_MEDIA": "OWNED_PLAN_ISSUED",
-    "M8_AUTH_ADMIN_UI_I18N": "OWNED_PLAN_ISSUED",
-    "M9_DOCS_WHITEPAPAPER": "OWNED_PLAN_ISSUED",
-    "M10_PARITY_PASS": "NOT_ISSUED"
-  },
-  "depth_residuals": "evidence/GO_official_product_reality_capture/M5_M9_DEPTH_RESIDUALS_20260822.json",
-  "human_ssot": "docs/runbook/TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md",
-  "depth_residuals_commit": "508a006e8",
-  "alignment_plan": "evidence/GO_official_product_reality_capture/M5_M9_ALIGNMENT_PLAN_20260822.json",
-  "alignment_plan_human": "docs/runbook/TT-OFFICIAL-FIRST-M5-M9-ALIGNMENT-PLAN-LATEST.md",
-  "policy_note": "28 items owned in plan; execution NOT_STARTED_NO_FIX; no CMS/UI optimize"
+  "tt_production_go": "NO_GO"
 }

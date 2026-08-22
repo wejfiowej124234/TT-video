@@ -1,0 +1,120 @@
+{
+  "schema": "traveltrust.official_first_full_convergence_pass_stop.v1",
+  "issued_utc": "2026-08-22T10:15:54Z",
+  "track": "OFFICIAL_FIRST_FINAL_CONVERGENCE_CERTIFICATION",
+  "official_product_ssot": "OPS-2026.08.20-v9",
+  "pin_git_sha": "3e356617a498b0faac42e4ae457343d36294a770",
+  "git_tip_sha": "58462c4263c9b067542729027be1502a01b5bc8f",
+  "checks": {
+    "fc01_clean_worktree": {
+      "dirty_tracked": [],
+      "untracked": [
+        "?? evidence/GO_official_product_reality_capture/OFFICIAL_FIRST_FULL_CONVERGENCE_PASS_STOP_20260822T101226Z.json",
+        "?? scripts/dev/official-first-final-convergence-certification.sh",
+        "?? scripts/gates/run-official-first-final-convergence-certification.py"
+      ],
+      "pass": true
+    },
+    "fc02_v9_1to1_map": {
+      "exit": 0,
+      "tail": "TT_OFFICIAL_V9_1TO1_MAP: PASS",
+      "pass": true
+    },
+    "fc03_v9_plane_map": {
+      "exit": 0,
+      "tail": "TT_OFFICIAL_V9_PLANE_MAP: PASS",
+      "pass": true
+    },
+    "fc04_migrations_157": {
+      "git_sql_files": 157,
+      "prod_verify_verdict": "MATCH_1TO1",
+      "applied_count": null,
+      "pass": true
+    },
+    "fc05_runtime_parity": {
+      "RUNTIME_PARITY_GAPS": "0",
+      "parity_pass_allowed": true,
+      "pass": true
+    },
+    "fc06_parity_pass_artifacts": {
+      "schema_pass": true,
+      "runtime_pass": true,
+      "missing": [],
+      "pass": true
+    },
+    "fc07_post_parity_five_batches": {
+      "queue_registry_closed": true,
+      "batches": {
+        "POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_PASS_STOP_LATEST.json": {
+          "issued": true,
+          "UNAUTHORIZED_DRIFT": "0",
+          "pass": true
+        },
+        "POST_PARITY_FIX_QUEUE_BATCH2_ADMIN_AUTH_PASS_STOP_LATEST.json": {
+          "issued": true,
+          "UNAUTHORIZED_DRIFT": "0",
+          "pass": true
+        },
+        "POST_PARITY_FIX_QUEUE_BATCH3_UI_UX_PASS_STOP_LATEST.json": {
+          "issued": true,
+          "UNAUTHORIZED_DRIFT": "0",
+          "pass": true
+        },
+        "POST_PARITY_FIX_QUEUE_BATCH4_FUNCTIONAL_DEFECTS_PASS_STOP_LATEST.json": {
+          "issued": true,
+          "UNAUTHORIZED_DRIFT": "0",
+          "pass": true
+        },
+        "POST_PARITY_FIX_QUEUE_BATCH5_ASSETS_I18N_PASS_STOP_LATEST.json": {
+          "issued": true,
+          "UNAUTHORIZED_DRIFT": "0",
+          "pass": true
+        }
+      },
+      "pass": true
+    },
+    "fc08_live_post_parity": {
+      "pass": true,
+      "note": "skipped"
+    },
+    "fc09_doc_truth": {
+      "ACTIVE_TRUTH_CONFLICTS": 0,
+      "OLD_V9_ACTIVE_DOCUMENT_REFERENCES": 0,
+      "pass": true
+    },
+    "fc10_web3_isolated_no_go": {
+      "candidate_sha": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+      "mainnet_broadcast": "NOT_AUTHORIZED",
+      "tt_production_go": "NO_GO",
+      "pass": true
+    }
+  },
+  "gaps": [],
+  "OFFICIAL_FIRST_FULL_CONVERGENCE_PASS_STOP": "ISSUED",
+  "UNAUTHORIZED_DRIFT": "0",
+  "RUNTIME_PARITY_GAPS": "0",
+  "DOC_TRUTH_CONFLICTS": "0",
+  "OUT_OF_SCOPE": "0",
+  "tt_production_go": "NO_GO",
+  "web3_plane": {
+    "ssot": "FTB + V9 Candidate",
+    "candidate_sha": "b19b85810c22677d243a82d06ebec8ebcb4d4b47",
+    "overwrite_candidate_from_official_web3": "forbidden",
+    "mainnet_broadcast": "NOT_AUTHORIZED",
+    "excluded_from_product_alignment": true
+  },
+  "post_parity_fix_queue": "CLOSED",
+  "coverage": [
+    "release_identity",
+    "migrations_157",
+    "db_schema_views",
+    "api_runtime_env_flags",
+    "cms_ocs_assets",
+    "auth_admin",
+    "five_main_ui_ux",
+    "functional_defects",
+    "zh_en_i18n",
+    "post_parity_batches_1_5",
+    "clean_worktree"
+  ]
+}

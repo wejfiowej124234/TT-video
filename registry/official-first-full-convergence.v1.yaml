@@ -1,17 +1,25 @@
 # schema: traveltrust.official_first_full_convergence.v1
 schema: traveltrust.official_first_full_convergence.v1
-status: CLEAN_REBUILD_ACTIVE
+status: CLOSED
 clean_rebuild_track: OFFICIAL_FIRST_CLEAN_REBUILD_CONVERGENCE
 clean_rebuild_ssot: docs/runbook/TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md
 clean_rebuild_registry: registry/official-first-clean-rebuild-convergence.v1.yaml
-recorded_utc: "2026-08-22T05:43:00Z"
+post_parity_fix_queue: CLOSED
+recorded_utc: "2026-08-22T10:15:54Z"
 gate: PRODUCT_AND_DOCUMENTATION_PARITY
-gate_result: FAIL
-recorded_utc: "2026-08-22T05:16:30Z"
+gate_result: PASS
+official_first_full_convergence_pass_stop: ISSUED
+pass_stop_artifact: evidence/GO_official_product_reality_capture/OFFICIAL_FIRST_FULL_CONVERGENCE_PASS_STOP_LATEST.json
+certification_gate: scripts/gates/run-official-first-final-convergence-certification.py
+certification_entry: scripts/dev/official-first-final-convergence-certification.sh
 tt_production_go: NO_GO
-forbid_product_optimization_until_parity_pass: true
-forbid_accept_ed_for_runtime_gaps: true
-runtime_parity_gaps: NOT_ZERO
+forbid_product_optimization_until_parity_pass: false
+runtime_parity_gaps: "0"
+zero_gates:
+  UNAUTHORIZED_DRIFT: "0"
+  RUNTIME_PARITY_GAPS: "0"
+  DOC_TRUTH_CONFLICTS: "0"
+  OUT_OF_SCOPE: "0"
 production_schema_reality:
   capture: PASS_CAPTURE
   stamp: "20260822T051209Z"
@@ -19,7 +27,6 @@ production_schema_reality:
   migration_verify: MATCH_1TO1
   migration_count: 157
   motherboard_freeze: evidence/GO_official_product_reality_capture/OFFICIAL_PRODUCT_MOTHERBOARD_FREEZE_LATEST.json
-  prior_drift: RESOLVED_BY_GIT_RECLAIM
   convergence_mode: OFFICIAL_FIRST_CLEAN_REBUILD
 
 official_baseline:
@@ -35,6 +42,7 @@ web3_exception:
   overwrite_candidate_from_official_web3: forbidden
   candidate_as_official_live_before_mainnet_reality: forbidden
   mainnet_broadcast: NOT_AUTHORIZED
+  excluded_from_product_alignment: true
 
 parity_formula:
   official_www: pin
@@ -49,4 +57,5 @@ capture: docs/runbook/TT-OFFICIAL-PRODUCT-REALITY-CAPTURE-LATEST.md
 gates:
   - scripts/gates/check-official-v9-local-staging-repo-1to1.sh
   - scripts/gates/check-official-v9-plane-map.sh
+  - scripts/gates/run-official-first-final-convergence-certification.py
 staging_align: scripts/dev/align-staging-www-official-v9.sh

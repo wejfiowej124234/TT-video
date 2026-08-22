@@ -10,7 +10,10 @@ parity_pass_issued_utc: "2026-08-22T06:06:51Z"
 product_and_documentation_schema_parity_pass: ISSUED
 product_and_documentation_runtime_parity_pass: ISSUED
 runtime_parity_pass_issued_utc: "2026-08-22T07:50:56Z"
-post_parity_fix_queue: ACTIVE
+post_parity_fix_queue: CLOSED
+post_parity_fix_queue_closed_utc: "2026-08-22T10:00:53Z"
+official_first_full_convergence_pass_stop: ISSUED
+official_first_full_convergence_pass_stop_utc: "2026-08-22T10:15:54Z"
 tt_production_go: NO_GO
 
 official_product_motherboard:

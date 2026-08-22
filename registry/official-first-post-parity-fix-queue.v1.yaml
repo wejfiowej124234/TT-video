@@ -1,6 +1,6 @@
 # schema: traveltrust.official_first_post_parity_fix_queue.v1
 schema: traveltrust.official_first_post_parity_fix_queue.v1
-status: ACTIVE
+status: CLOSED
 track: POST_PARITY_FIX_QUEUE
 baseline:
   product_and_documentation_runtime_parity_pass: ISSUED
