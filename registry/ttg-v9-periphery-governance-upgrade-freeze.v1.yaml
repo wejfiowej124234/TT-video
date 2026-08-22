@@ -15,7 +15,11 @@ owner_sepolia_auth: evidence/GO_ttg_v9_periphery_governance_upgrade/V9_OWNER_SEP
 sepolia_addresses_env: evidence/GO_ttg_v9_periphery_governance_upgrade/sepolia-reality.addresses.env
 sepolia_reality_runbook: docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-SEPOLIA-REALITY-WAITING-ETA-LATEST.md
 audit_2_prep: docs/runbook/TT-TTG-V9-AI-AUDIT2-PERIPHERY-GOVERNANCE-UPGRADE-PREP-LATEST.md
+release_gates: docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-RELEASE-GATES-LATEST.md
 release_gates_prep: docs/runbook/TT-TTG-V9-PERIPHERY-GOVERNANCE-RELEASE-GATES-PREP-SKELETON-LATEST.md
+ttg_token_scanner_evidence: evidence/GO_ttg_v9_audit/TTG_TOKEN_SCANNER_EVIDENCE_CLOSURE_LATEST.json
+ttg_token_scanner_runbook: docs/runbook/TT-TTG-TOKEN-SCANNER-EVIDENCE-CLOSURE-LATEST.md
+ttg_token_scanner_script: scripts/dev/run-ttg-token-scanner-evidence-closure.py
 sepolia_deployed_waiting_eta: evidence/GO_ttg_v9_periphery_governance_upgrade/V9_PERIPHERY_GOVERNANCE_UPGRADE_SEPOLIA_DEPLOYED_WAITING_ETA.json
 audit_1: PASS
 audit_1_pass_stamp: evidence/GO_ttg_v9_periphery_governance_upgrade/V9_AI_AUDIT1_PERIPHERY_GOVERNANCE_UPGRADE_PASS.json
@@ -136,6 +140,8 @@ execution_ladder_compact:
   - audit_1
   - sepolia_reality
   - audit_2
+  - v9_token_release_security_gate
+  - v9_periphery_release_security_gate
   - scanner_compiler_english
   - exact_match_freeze
   - audit_3
@@ -155,6 +161,8 @@ execution_ladder:
   - audit_1_smart_contract
   - sepolia_reality
   - audit_2_economic_red_team
+  - v9_token_release_security_gate
+  - v9_periphery_release_security_gate
   - remediate_blockers
   - wallet_scanner
   - compiler_known_bug_applicability
@@ -175,6 +183,13 @@ gates:
   AUDIT_LADDER: "1->2->3"
   OLD_AUDIT_INHERITANCE: FORBIDDEN
   MAINNET_BROADCAST: NOT_AUTHORIZED
+  V9_TOKEN_RELEASE_SECURITY_GATE: PASS
+  V9_PERIPHERY_RELEASE_SECURITY_GATE: NOT_RUN
+  ERC20_CONFORMANCE: PASS
+  POST_GENESIS_MINT_PATHS: "0"
+  HOLDER_DISTRIBUTION_RECONCILED: PASS
+  BURN_WARNING: DESIGN_INTENT_ACCEPTED
+  SUPPLY_WARNING: EXPLAINED_ACCEPT
   NO_SAFE_CRITICAL_ROLES: 0
   OLD_ACTIVE_REFS_BEFORE_LEGACY: 0
   NON_ENGLISH_SOURCE_COMMENTS: 0

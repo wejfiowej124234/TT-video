@@ -1,8 +1,8 @@
 # TT · TTG V9 Release Gates — PREP skeleton (Periphery Governance Upgrade)
 
-**STATUS:** `PREP_SKELETON_ONLY` · **NO PASS** · **NO Exact-Match**  
-**When to run for real:** after Audit #2 remediation (if any) and before Exact-Match Candidate Freeze  
-**Candidate bind (future):** `b19b85810c22677d243a82d06ebec8ebcb4d4b47` unless superseded by re-Audit #1  
+**STATUS:** `SUPERSEDED_BY` [`TT-TTG-V9-PERIPHERY-GOVERNANCE-RELEASE-GATES-LATEST`](TT-TTG-V9-PERIPHERY-GOVERNANCE-RELEASE-GATES-LATEST.md)  
+**Token gate:** **PASS** via `TTG_TOKEN_SCANNER_EVIDENCE_CLOSURE` (2026-08-22)  
+**Periphery gate:** **NOT_RUN** until Audit #2 PASS  
 
 | Gate | Prep intent | Now |
 |------|-------------|-----|

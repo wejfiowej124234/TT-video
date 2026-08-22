@@ -1,0 +1,120 @@
+{
+  "schema": "traveltrust.ttg_token_scanner_evidence_closure.v1",
+  "track": "TTG_TOKEN_SCANNER_EVIDENCE_CLOSURE",
+  "recorded_utc": "2026-08-22T07:52:38Z",
+  "stamp": "20260822T075238Z",
+  "policy": {
+    "read_only": true,
+    "no_solidity_edits": true,
+    "no_redeploy_broadcast": true,
+    "no_periphery_changes": true,
+    "tt_production_go": "NO_GO"
+  },
+  "token": {
+    "address": "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9",
+    "source": "contracts/src/ttg-v9/TravelTrustGovernanceTokenV9.sol",
+    "chain_id": 1,
+    "version_tag": "ttg_v9_25t_official"
+  },
+  "erc20_conformance": {
+    "status": "PASS",
+    "required_surface_present": true,
+    "findings": [],
+    "solidityscan_erc20_no_impact": "FALSE_POSITIVE",
+    "solidityscan_erc20_rationale": "SolidityScan 'IS ERC-20 TOKEN = No Impact' is assessed as detector false-positive: contract implements full ERC-20 surface (totalSupply/balanceOf/transfer/allowance/approve/transferFrom + Transfer/Approval + name/symbol/decimals) without inheriting OpenZeppelin IERC20. Optional EIP-20 extensions (increaseAllowance/decreaseAllowance) are absent but not required. Additional governance vote checkpoints are additive, not ERC-20 breaking."
+  },
+  "supply_mint_burn": {
+    "post_genesis_mint_paths": 0,
+    "arbitrary_balance_write_paths": 0,
+    "max_supply_constant_wei": "25000000000000000000000000000000",
+    "genesis_only_credit": true,
+    "protocol_burn_present": true,
+    "public_holder_burn_present": false,
+    "total_supply_can_only_decrease": true,
+    "burn_caller_gate": true,
+    "BURN_WARNING": "DESIGN_INTENT_ACCEPTED",
+    "SUPPLY_WARNING": "EXPLAINED_ACCEPT",
+    "supply_policy": "TTG maximum lifetime supply = 25T (MAX_SUPPLY). totalSupply starts at MAX_SUPPLY in constructor; may decrease only via protocolBurn from PublicSaleVault or daoTimelock. No post-genesis mint."
+  },
+  "on_chain": {
+    "chain_id": 1,
+    "token": "0xD5c1Ef9ec730F93e324A1966bD414a7f5ebc41c9",
+    "rpc": "https://ethereum.publicnode.com",
+    "total_supply_wei": "25000000000000000000000000000000",
+    "max_supply_wei": "25000000000000000000000000000000",
+    "genesis_sum_equals_total_supply": true,
+    "immutable_public_sale_vault_match": true,
+    "immutable_dao_timelock_match": true,
+    "holders": [
+      {
+        "bucket": "public_sale_vault",
+        "label": "PublicSaleVault",
+        "address": "0xe87378e49Ead2E1a422B8cae118d3C905Ee45B6C",
+        "expected_bps": 5000,
+        "expected_wei": "12500000000000000000000000000000",
+        "on_chain_wei": "12500000000000000000000000000000",
+        "pct_of_total_supply": 50.0,
+        "reconciled": true
+      },
+      {
+        "bucket": "dao_timelock",
+        "label": "DAO / SoloTimelock",
+        "address": "0x99e43FaBA8dC773888223f70e1dfCd18bea37D7f",
+        "expected_bps": 3500,
+        "expected_wei": "8750000000000000000000000000000",
+        "on_chain_wei": "8750000000000000000000000000000",
+        "pct_of_total_supply": 35.0,
+        "reconciled": true
+      },
+      {
+        "bucket": "team",
+        "label": "Team",
+        "address": "0x010365F0835323826569D61D0E13E6F8d25F6828",
+        "expected_bps": 300,
+        "expected_wei": "750000000000000000000000000000",
+        "on_chain_wei": "750000000000000000000000000000",
+        "pct_of_total_supply": 3.0,
+        "reconciled": true
+      },
+      {
+        "bucket": "marketing",
+        "label": "Marketing / Deploy",
+        "address": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+        "expected_bps": 500,
+        "expected_wei": "1250000000000000000000000000000",
+        "on_chain_wei": "1250000000000000000000000000000",
+        "pct_of_total_supply": 5.0,
+        "reconciled": true
+      },
+      {
+        "bucket": "treasury",
+        "label": "Treasury / Guardian",
+        "address": "0xF34804AA66bAeE02F3aF1C540B9997C7F46b2736",
+        "expected_bps": 700,
+        "expected_wei": "1750000000000000000000000000000",
+        "on_chain_wei": "1750000000000000000000000000000",
+        "pct_of_total_supply": 7.0,
+        "reconciled": true
+      }
+    ],
+    "PUBLIC_SALE_VAULT_BALANCE_RECONCILED": "PASS",
+    "HOLDER_DISTRIBUTION_RECONCILED": "PASS",
+    "scanner_insider_50pct_note": "PublicSaleVault holds 50% by Design Lock genesis \u2014 NOT team EOA insider. Wallet scanners flag >=15% as 'insider'; this is EXPLAINED_ACCEPT disclosure, not a PASS-by-ignoring. On-chain vault balance reconciled to 12.5T / 5000 bps."
+  },
+  "gates": {
+    "ERC20_CONFORMANCE": "PASS",
+    "HOLDER_DISTRIBUTION_RECONCILED": "PASS",
+    "PUBLIC_SALE_VAULT_BALANCE_RECONCILED": "PASS",
+    "POST_GENESIS_MINT_PATHS": "0",
+    "ARBITRARY_BALANCE_WRITE_PATHS": "0",
+    "BURN_WARNING": "DESIGN_INTENT_ACCEPTED",
+    "SUPPLY_WARNING": "EXPLAINED_ACCEPT",
+    "HONEYPOT": "NO",
+    "BLACKLIST_BACKDOOR": "0",
+    "WALLET_SCANNER_CRITICAL_FINDINGS": "0",
+    "WALLET_SCANNER_HIGH_FINDINGS": "0",
+    "UNRESOLVED_REAL_SECURITY_FINDINGS": "0",
+    "VERDICT": "PASS"
+  },
+  "json_artifact": "evidence/GO_ttg_v9_audit/TTG_TOKEN_SCANNER_EVIDENCE_CLOSURE_LATEST.json"
+}

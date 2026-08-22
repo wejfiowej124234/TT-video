@@ -132,6 +132,8 @@ Clean
   → Audit #1
   → Sepolia Reality
   → Audit #2
+  → V9_TOKEN_RELEASE_SECURITY_GATE
+  → V9_PERIPHERY_RELEASE_SECURITY_GATE
   → Scanner / Compiler / English
   → Exact-Match Freeze
   → Audit #3
@@ -163,6 +165,14 @@ Design Lock (this freeze · LOCKED)
        Governance Combination / Timelock Bypass / Routing Attack
        (Can combinations steal funds, bypass governance, or break economics?)
 
+  → V9_TOKEN_RELEASE_SECURITY_GATE
+       TTG body: ERC-20 · 25T/no-mint · burn adjudication · holder distribution
+       (scripts/dev/run-ttg-token-scanner-evidence-closure.py)
+
+  → V9_PERIPHERY_RELEASE_SECURITY_GATE
+       Governor / NEW 12h Timelock / PoolV2 / FeeRouterV2 / PM:
+       ACL · UUPS · funds routing · compiler · wallet scanners · English source
+
   → Remediate blockers
        ├─ Implementation-only fix → retest affected surface + regression
        └─ If frozen 25T / economic-ratio semantics / wallet roles /
@@ -170,9 +180,9 @@ Design Lock (this freeze · LOCKED)
           Owner must re-approve Design Lock
           (Do not relabel purpose changes as “security”)
 
-  → Wallet Scanner
-  → Compiler Known-Bug Applicability
-  → English Comments / NatSpec
+  → Wallet Scanner / Compiler / English
+       (Periphery Candidate only — TTG body covered by V9_TOKEN_RELEASE_SECURITY_GATE)
+
   → Exact-Match Candidate Freeze
 
   → Audit #3
@@ -215,6 +225,13 @@ Binding process parent: [TT-TTG-V9-SECURITY-AUDIT-LADDER-LATEST](TT-TTG-V9-SECUR
 ---
 
 ## 6 · Release gates (machine intent)
+
+**Dual security gates (Exact-Match prerequisites):** [TT-TTG-V9-PERIPHERY-GOVERNANCE-RELEASE-GATES-LATEST](TT-TTG-V9-PERIPHERY-GOVERNANCE-RELEASE-GATES-LATEST.md)
+
+| Gate layer | Scope | TTG body status |
+|------------|-------|-----------------|
+| `V9_TOKEN_RELEASE_SECURITY_GATE` | TTG ERC-20 · 25T · burn · holders | **PASS** (evidence closure 2026-08-22) |
+| `V9_PERIPHERY_RELEASE_SECURITY_GATE` | Candidate periphery | **NOT_RUN** (after Audit #2) |
 
 ```text
 TTG_KEEP_NO_REMINT = PASS
