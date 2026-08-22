@@ -78,6 +78,8 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
         || (read && path.starts_with("/api/v1/official/cold-start/surfaces/"))
         // CMS S0 · public announcements (governed view · no auth)
         || (read && path.starts_with("/api/v1/public/announcements"))
+        // POST_PARITY M7-08 · cms/public/* alias must not require STRICT_SESSION
+        || (read && path.starts_with("/api/v1/cms/public/announcements"))
         // CMS · product roadmap (independent public read · no auth)
         || (read && path.starts_with("/api/v1/public/roadmap"))
         // G-S1 · 102 §6.5：referral code validate is public read (invalid code → valid:false)

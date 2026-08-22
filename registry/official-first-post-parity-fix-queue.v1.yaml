@@ -1,0 +1,60 @@
+# schema: traveltrust.official_first_post_parity_fix_queue.v1
+schema: traveltrust.official_first_post_parity_fix_queue.v1
+status: ACTIVE
+track: POST_PARITY_FIX_QUEUE
+baseline:
+  product_and_documentation_runtime_parity_pass: ISSUED
+  issued_utc: "2026-08-22T07:50:56Z"
+  schema_parity_artifact: evidence/GO_official_product_reality_capture/PRODUCT_AND_DOCUMENTATION_SCHEMA_PARITY_PASS_LATEST.json
+  runtime_parity_artifact: evidence/GO_official_product_reality_capture/PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS_LATEST.json
+tt_production_go: NO_GO
+
+batch_order:
+  - cms_ocs
+  - admin_auth
+  - ui_ux
+  - functional_defects
+  - assets_i18n
+
+batches:
+  cms_ocs:
+    status: ACTIVE
+    items: [M7-07, M7-08]
+    gate: scripts/gates/run-post-parity-fix-queue-batch1-cms-ocs.py
+    evidence: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_LATEST.json
+  admin_auth:
+    status: PENDING
+    items: []
+  ui_ux:
+    status: PENDING
+    items: []
+  functional_defects:
+    status: PENDING
+    items: [M8-07]
+  assets_i18n:
+    status: PENDING
+    items: [M8-08]
+
+non_target_zero_drift:
+  - candidate_solidity
+  - production_db_mutation
+  - ftb_addresses
+  - tt_production_go_flip
+
+web3_ladder:
+  - sepolia_reality
+  - audit_2
+  - periphery_security_gate
+  - compiler_english
+  - exact_match
+  - audit_3
+  - owner_mainnet_auth
+
+forbidden:
+  - production_mutation
+  - candidate_solidity_semantic_change
+  - mainnet_broadcast_without_owner
+  - tt_production_go_flip
+
+human_ssot: docs/runbook/TT-OFFICIAL-FIRST-POST-PARITY-FIX-QUEUE-LATEST.md
+queue_artifact: evidence/GO_official_product_reality_capture/POST_PARITY_FIX_QUEUE_20260822.json

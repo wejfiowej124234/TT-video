@@ -1,7 +1,7 @@
 {
   "schema": "traveltrust.official_first_post_parity_fix_queue.v1",
   "recorded_utc": "2026-08-22T04:05:00Z",
-  "policy": "NO_FIX_THIS_WAVE_UNTIL_PRODUCT_AND_DOCUMENTATION_PARITY_PASS",
+  "policy": "ACTIVE_POST_RUNTIME_PARITY_PASS",
   "tt_production_go": "NO_GO",
   "items": [
     {
@@ -9,22 +9,38 @@
       "class": "DEFECT",
       "surface": "Official community media upload URLs 404",
       "queue": "POST_PARITY_FIX_QUEUE",
-      "fix_this_wave": false
+      "fix_this_wave": true,
+      "batch": "cms_ocs",
+      "status": "ACTIVE"
     },
     {
       "id": "M7-08",
       "class": "DEFECT",
       "surface": "cms/public/announcements 401 vs public 200",
       "queue": "POST_PARITY_FIX_QUEUE",
-      "fix_this_wave": false,
-      "note": "public announcements API 200 confirmed on /api/v1/public/announcements"
+      "fix_this_wave": true,
+      "note": "public announcements API 200 confirmed on /api/v1/public/announcements",
+      "batch": "cms_ocs",
+      "status": "ACTIVE"
     },
     {
       "id": "M8-07",
       "class": "DEFECT",
       "surface": "/me/payments and /legal/* GAP 404s",
       "queue": "POST_PARITY_FIX_QUEUE",
-      "fix_this_wave": false
+      "fix_this_wave": false,
+      "batch": "functional_defects",
+      "status": "PENDING"
     }
-  ]
+  ],
+  "baseline": "PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS",
+  "baseline_issued_utc": "2026-08-22T07:50:56Z",
+  "batch_order": [
+    "cms_ocs",
+    "admin_auth",
+    "ui_ux",
+    "functional_defects",
+    "assets_i18n"
+  ],
+  "active_batch": "cms_ocs"
 }

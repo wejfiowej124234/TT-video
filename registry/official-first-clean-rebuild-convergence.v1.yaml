@@ -8,7 +8,9 @@ gate_result: SCHEMA_PASS
 recorded_utc: "2026-08-22T06:08:00Z"
 parity_pass_issued_utc: "2026-08-22T06:06:51Z"
 product_and_documentation_schema_parity_pass: ISSUED
-product_and_documentation_runtime_parity_pass: NOT_ISSUED
+product_and_documentation_runtime_parity_pass: ISSUED
+runtime_parity_pass_issued_utc: "2026-08-22T07:50:56Z"
+post_parity_fix_queue: ACTIVE
 tt_production_go: NO_GO
 
 official_product_motherboard:
@@ -69,10 +71,14 @@ hosting_ed:
 
 forbidden_before_pass:
   - cms_ui_ux_optimize
-  - post_parity_defect_fix
   - exact_match_mainnet_tt_production_go
   - production_db_mutation
   - local_staging_archaeological_repair
+
+post_parity_fix_queue:
+  status: ACTIVE
+  registry: registry/official-first-post-parity-fix-queue.v1.yaml
+  human_ssot: docs/runbook/TT-OFFICIAL-FIRST-POST-PARITY-FIX-QUEUE-LATEST.md
 
 human_ssot: docs/runbook/TT-OFFICIAL-FIRST-CLEAN-REBUILD-CONVERGENCE-LATEST.md
 prior_track: docs/runbook/TT-OFFICIAL-FIRST-EXECUTION-PARITY-LATEST.md

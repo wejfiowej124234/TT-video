@@ -122,6 +122,10 @@ mod auth_placeholder_strict_gate_tests {
                 "/api/v1/governance/protocol-reference/pending",
                 get(|| async { "pending" }),
             )
+            .route(
+                "/api/v1/cms/public/announcements",
+                get(|| async { "cms-ann" }),
+            )
             .layer(axum::middleware::from_fn(auth_placeholder_layer))
     }
 
@@ -301,6 +305,29 @@ mod auth_placeholder_strict_gate_tests {
                 .oneshot(
                     Request::builder()
                         .uri("/api/v1/catalog/countries")
+                        .method(axum::http::Method::GET)
+                        .body(Body::empty())
+                        .unwrap(),
+                )
+                .await
+                .unwrap()
+        });
+        assert_eq!(res.status(), StatusCode::OK);
+    }
+
+    #[test]
+    fn strict_on_cms_public_announcements_get_public_without_auth() {
+        let _lock = env_lock();
+        let _g = StrictGateEnvGuard::set("1");
+        let rt = tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .expect("runtime");
+        let res = rt.block_on(async {
+            test_app()
+                .oneshot(
+                    Request::builder()
+                        .uri("/api/v1/cms/public/announcements?limit=1")
                         .method(axum::http::Method::GET)
                         .body(Body::empty())
                         .unwrap(),

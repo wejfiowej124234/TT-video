@@ -38,6 +38,16 @@ pub fn router() -> Router<ApiMetaState> {
         .route("/api/v1/public/announcements", get(get_public_announcements))
         .route("/api/v1/public/announcements/pulse", get(get_public_announcements_pulse))
         .route("/api/v1/public/announcements/:slug", get(get_public_announcement_by_slug))
+        // POST_PARITY M7-08: legacy/cms-named public read aliases (same handlers · no auth)
+        .route("/api/v1/cms/public/announcements", get(get_public_announcements))
+        .route(
+            "/api/v1/cms/public/announcements/pulse",
+            get(get_public_announcements_pulse),
+        )
+        .route(
+            "/api/v1/cms/public/announcements/:slug",
+            get(get_public_announcement_by_slug),
+        )
 }
 
 pub async fn get_public_announcements(

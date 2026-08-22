@@ -76,6 +76,11 @@ done
 # Avoid stale partial OCS state from prior attempts on the same stamp dir
 rm -f "$EV"/staging_ocs_seed_*/state.json 2>/dev/null || true
 
+info "Phase 4d — OCS asset baseline on API volume (M7-07 · community_post_media)"
+API_BASE="$API" FLY_APP=tt-api-staging OUT="$EV/staging_ocs_asset_bootstrap_${STAMP}.json" \
+  node "$ROOT/scripts/dev/bootstrap-ocs-official-assets.cjs" 2>&1 | tee "$EV/staging_ocs_asset_bootstrap_${STAMP}.log" \
+  || fail "OCS asset baseline bootstrap"
+
 info "Phase 5 — OCS sanitized seed"
 export TRAVELTRUST_OFFICIAL_FIRST_STAGING_OCS_SEED_OK=1
 export TRAVELTRUST_OCS_STAGING_HYDRATE_RESTART=1
@@ -94,6 +99,11 @@ for i in $(seq 1 36); do
 done
 [[ "$hc" == "200" ]] || fail "API not healthy before runtime compare (got $hc)"
 python "$ROOT/scripts/dev/official-first-runtime-reality-compare.py" --api "$API" --web "$WEB"
+
+info "Phase 6b — POST_PARITY Batch 1 CMS/OCS gate"
+python "$ROOT/scripts/gates/run-post-parity-fix-queue-batch1-cms-ocs.py" --api "$API" \
+  --out "$EV/POST_PARITY_FIX_QUEUE_BATCH1_CMS_OCS_${STAMP}.json" \
+  || fail "POST_PARITY Batch 1 CMS/OCS gate"
 
 python - <<'PY'
 import json

@@ -23,7 +23,8 @@ Registry: [`official-first-clean-rebuild-convergence.v1.yaml`](../../registry/of
 | 4 | **禁止复制** Production 用户/订单/钱包/私有业务数据 — 仅 **sanitized / seed** |
 | 5 | **验证链：** `Official PRODUCT = Git = Local = Staging`（fresh rebuild 可重复）→ 四零闸 → 才 `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` |
 | 6 | **WEB3 平面隔离** — 不得用官网旧 Web3 覆盖 Candidate；Mainnet V9 真部署验证后再反向更新 Official Web3 |
-| 7 | **Parity PASS 前禁止** CMS/UI/UX/功能优化 · POST_PARITY_FIX_QUEUE · Exact-Match/Mainnet/`TT_PRODUCTION_GO` |
+| 7 | **Runtime Parity PASS 前禁止** CMS/UI/UX/功能优化 · POST_PARITY_FIX_QUEUE · Exact-Match/Mainnet/`TT_PRODUCTION_GO` |
+| 8 | **Runtime Parity PASS 后** → [`POST_PARITY_FIX_QUEUE`](TT-OFFICIAL-FIRST-POST-PARITY-FIX-QUEUE-LATEST.md)（Local → Staging · 非目标 0-drift） |
 
 ---
 
@@ -104,8 +105,8 @@ bash scripts/dev/official-first-clean-rebuild-staging.sh
 | `Git = Staging` | application layer **match** · HOSTING_ED excluded |
 | `RUNTIME_PARITY_GAPS` | **0** |
 | 四零闸 | 全 **0** |
-| → | **`PRODUCT_AND_DOCUMENTATION_PARITY_PASS` ISSUED** |
-| 然后 | POST_PARITY_FIX_QUEUE（M7-07 · M7-08 · M8-08）· CMS/UI/UX 优化 |
+| → | **`PRODUCT_AND_DOCUMENTATION_RUNTIME_PARITY_PASS` ISSUED** |
+| 然后 | [`POST_PARITY_FIX_QUEUE`](TT-OFFICIAL-FIRST-POST-PARITY-FIX-QUEUE-LATEST.md) Batch 1 CMS/OCS（M7-07 · M7-08）→ Admin/Auth → UI/UX → 功能 → Assets/i18n |
 
 ---
 
