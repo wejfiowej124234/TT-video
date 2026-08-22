@@ -1,6 +1,6 @@
 {
   "stamp": "REPOSITORY_INVENTORY",
-  "recorded_utc": "2026-08-22T10:30:23Z",
+  "recorded_utc": "2026-08-22T10:31:11Z",
   "git": {
     "local_branches": [
       "main",
@@ -15,7 +15,7 @@
     "worktrees": [
       {
         "path": "D:/TravelTrust-V1.1",
-        "line": "D:/TravelTrust-V1.1                     2547be70d [release/official-ops-v9-product-ssot]"
+        "line": "D:/TravelTrust-V1.1                     b5bd7f5e8 [release/official-ops-v9-product-ssot]"
       },
       {
         "path": "D:/TravelTrust-official-ops-v9-release",
@@ -136,42 +136,5 @@
     "diff_files": [],
     "candidate_solidity_diff": 0
   },
-  "deleted_this_run": [
-    "evidence/.tmp-align-api-meta.json",
-    "evidence/.tmp-align-meta.json",
-    "evidence/.tmp-align-web-meta.json",
-    "evidence/.tmp-api-8081-chainoff.log",
-    "evidence/.tmp-audit-api-meta.json",
-    "evidence/.tmp-audit-web-meta.json",
-    "evidence/.tmp-d24-rerun.log",
-    "evidence/.tmp-d6-0df6665-rerun.log",
-    "evidence/.tmp-d6-rerun.log",
-    "evidence/.tmp-d6-rerun2.log",
-    "evidence/.tmp-d6-rerun3.log",
-    "evidence/.tmp-deep-gate-rerun.log",
-    "evidence/.tmp-deep-gate-rerun2.log",
-    "evidence/.tmp-enterprise-site-10-full.log",
-    "evidence/.tmp-enterprise-site-10-rerun.log",
-    "evidence/.tmp-enterprise-site-10.log",
-    "evidence/.tmp-full-revalidation-run.log",
-    "evidence/.tmp-guides.json",
-    "evidence/.tmp-local-first-closure-run.log",
-    "evidence/.tmp-phase28-hat-rerun.log",
-    "evidence/.tmp-phase28-hat-rerun3.log",
-    "evidence/.tmp-phase28-hat.log",
-    "evidence/.tmp-recon-meta.json",
-    "evidence/.tmp-six-account-l5-final.log",
-    "evidence/.tmp-six-account-l5-rerun2.log",
-    "evidence/.tmp-six-account-l5-run.log",
-    "evidence/.tmp-soak-launch.log",
-    "evidence/.tmp-soak-start.log",
-    "evidence/.tmp-ssot-deploy-api.log",
-    "evidence/.tmp-ssot-deploy-web-oom.log",
-    "evidence/.tmp-ssot-deploy-web-remote.log",
-    "evidence/.tmp-ssot-deploy-web.log",
-    "evidence/.tmp-ssot-meta.json",
-    "evidence/.tmp-ssot-recon-evidence.log",
-    "evidence/.tmp-ssot-web-meta.json",
-    "evidence/.tmp-web-oom-fix-0df6665.log"
-  ]
+  "deleted_this_run": []
 }

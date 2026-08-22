@@ -1,12 +1,12 @@
 {
   "stamp": "REPOSITORY_HYGIENE_REPORT",
-  "recorded_utc": "2026-08-22T10:30:23Z",
+  "recorded_utc": "2026-08-22T10:31:11Z",
   "metrics": {
     "REPOSITORY_HYGIENE": "PASS",
     "STALE_BRANCHES_WORKTREES": 0,
     "UNREFERENCED_SCRATCH": 0,
     "CANDIDATE_SOLIDITY_DIFF": 0,
-    "deleted_paths_count": 36
+    "deleted_paths_count": 0
   },
   "stale_local_branches": [],
   "stale_worktrees": [],

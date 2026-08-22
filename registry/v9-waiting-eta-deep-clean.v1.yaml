@@ -1,7 +1,7 @@
 # V9 waiting-ETA deep clean — machine SSOT
 schema: traveltrust.v9_waiting_eta_deep_clean.v1
 status: IN_PROGRESS
-recorded_utc: "2026-08-22T10:30:23Z"
+recorded_utc: "2026-08-22T10:31:12Z"
 program: V9_WAITING_ETA_REPOSITORY_AND_DOCUMENTATION_DEEP_CLEAN
 tt_production_go: NO_GO
 audit_1_candidate_sha: "b19b85810c22677d243a82d06ebec8ebcb4d4b47"

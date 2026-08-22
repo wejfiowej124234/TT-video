@@ -1,8 +1,8 @@
 {
   "stamp": "V9_WAITING_ETA_C0_SAFETY_FREEZE",
-  "recorded_utc": "2026-08-22T10:30:19Z",
+  "recorded_utc": "2026-08-22T10:31:08Z",
   "git": {
-    "head": "2547be70de83f669b9a5722a59160125a825b3fe",
+    "head": "b5bd7f5e807b6691fe46f45ffe7a15fb8ac4c189",
     "branch": "release/official-ops-v9-product-ssot"
   },
   "official_ops_v9_sha": "3e356617a498b0faac42e4ae457343d36294a770",
@@ -12,12 +12,12 @@
     "state": "UNKNOWN",
     "ready_at": 1787408352,
     "remain_seconds": null,
-    "raw": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\��P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\nN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\n\u0000\n\u0000<3>WSL (96608 - Relay) ERROR: CreateProcessCommon:798: execvpe(/bin/bash) failed: No such file or directory"
+    "raw": "w\u0000s\u0000l\u0000:\u0000 \u0000�hKm0R \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006tM�n\f�FO*g\\��P0R \u0000W\u0000S\u0000L\u0000\u00020N\u0000A\u0000T\u0000 \u0000!j\u000f_\u000bN�v \u0000W\u0000S\u0000L\u0000 \u0000\nN/e\u0001c \u0000l\u0000o\u0000c\u0000a\u0000l\u0000h\u0000o\u0000s\u0000t\u0000 \u0000�N\u0006t\u00020\n\u0000\n\u0000<3>WSL (96791 - Relay) ERROR: CreateProcessCommon:798: execvpe(/bin/bash) failed: No such file or directory"
   },
   "worktrees": [
     {
       "worktree": "D:/TravelTrust-V1.1",
-      "HEAD": "2547be70de83f669b9a5722a59160125a825b3fe",
+      "HEAD": "b5bd7f5e807b6691fe46f45ffe7a15fb8ac4c189",
       "branch": "refs/heads/release/official-ops-v9-product-ssot"
     },
     {

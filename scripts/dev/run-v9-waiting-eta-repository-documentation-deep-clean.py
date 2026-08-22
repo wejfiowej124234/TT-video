@@ -462,6 +462,8 @@ def main() -> int:
 
     EVIDENCE.mkdir(parents=True, exist_ok=True)
 
+    porcelain_clean_at_entry = git_porcelain_clean()
+
     freeze = c0_safety_freeze()
     probe_state = freeze["timelock_probe"]["state"]
     if probe_state == "EXECUTABLE" and not args.skip_eta_preempt_check:
@@ -524,7 +526,7 @@ def main() -> int:
     write_json(EVIDENCE / "REPOSITORY_HYGIENE_REPORT_LATEST.json", hygiene_report)
     write_json(EVIDENCE / "DOCUMENTATION_TRUTH_MATRIX_LATEST.json", matrix)
 
-    porcelain_clean = git_porcelain_clean()
+    porcelain_clean = porcelain_clean_at_entry
     full_pass = (
         hygiene_pass
         and doc_conflicts == 0

@@ -1,6 +1,6 @@
 {
   "stamp": "DOCUMENTATION_TRUTH_MATRIX",
-  "recorded_utc": "2026-08-22T10:30:23Z",
+  "recorded_utc": "2026-08-22T10:31:11Z",
   "dual_truth": {
     "product_ssot": "Official OPS-v9 (3e356617a498…)",
     "web3_ssot": "FTB + V9 Freeze + Candidate b19b85810c22… + chain evidence",
@@ -4028,6 +4028,12 @@
       "exists": true
     },
     {
+      "path": "registry/v9-waiting-eta-deep-clean.v1.yaml",
+      "plane": "PRODUCT",
+      "class": "ACTIVE",
+      "exists": true
+    },
+    {
       "path": "registry/vacancy-runtime-migration-inventory.v1.yaml",
       "plane": "PRODUCT",
       "class": "HISTORICAL",
@@ -4118,6 +4124,6 @@
       "exists": true
     }
   ],
-  "entry_count": 685,
+  "entry_count": 686,
   "active_latest_marked": 125
 }
