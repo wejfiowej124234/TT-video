@@ -3,7 +3,7 @@ import "./TravelTrustAnnouncementSurfaceGlow.css";
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { useTranslation } from "@/components/LocaleProvider";
 import { useTraveltrustPulseAnnouncements } from "@/lib/hooks/useTraveltrustCmsAnnouncements";
 import { traveltrustAnnouncementListText } from "@/lib/traveltrustCmsAnnouncements";
@@ -92,7 +92,16 @@ export function TravelTrustPulseTicker({ variant = "section" }: Props) {
   const { t } = useTranslation();
   const reduceMotion = useReducedMotion();
   const inline = variant === "inline";
-  const useStaticInline = inline && (reduceMotion || TT_PULSE_TICKER_L5.inlineUsesStaticScroll);
+  const [inlineMobileStatic, setInlineMobileStatic] = useState(false);
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const sync = () => setInlineMobileStatic(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  const useStaticInline =
+    inline && (reduceMotion || TT_PULSE_TICKER_L5.inlineUsesStaticScroll || inlineMobileStatic);
   const inlineScrollMode = useStaticInline ? "static" : "marquee";
   const { items: pulseItems } = useTraveltrustPulseAnnouncements();
   const visibleAnnouncements = pulseItems;
@@ -150,16 +159,18 @@ export function TravelTrustPulseTicker({ variant = "section" }: Props) {
         </Link>
       </div>
       {useStaticInline ? (
-        <ul className={TT_PULSE_TICKER_L5.inlineStaticListClass} data-tt-traveltrust-pulse-inline-static-l5="1">
-          {items.map((item) => (
-            <li key={item.id} className={TT_PULSE_TICKER_L5.inlineStaticItemClass}>
-              <TickerItem item={item} inline />
-            </li>
-          ))}
-        </ul>
+        <div className="min-w-0 flex-1 overflow-hidden max-w-full">
+          <ul className={TT_PULSE_TICKER_L5.inlineStaticListClass} data-tt-traveltrust-pulse-inline-static-l5="1">
+            {items.map((item) => (
+              <li key={item.id} className={TT_PULSE_TICKER_L5.inlineStaticItemClass}>
+                <TickerItem item={item} inline />
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : inline ? (
         <div
-          className={TT_PULSE_TICKER_L5.inlineMarqueeViewportClass}
+          className={`${TT_PULSE_TICKER_L5.inlineMarqueeViewportClass} max-w-full [contain:paint]`}
           data-tt-traveltrust-pulse-inline-marquee-l5="1"
         >
           <ul className={TT_PULSE_TICKER_L5.inlineMarqueeTrackClass}>
@@ -226,13 +237,7 @@ export function TravelTrustPulseTicker({ variant = "section" }: Props) {
         data-tt-traveltrust-pulse-l5="1"
         data-tt-traveltrust-cinematic-non-globe-l5={TRAVELTRUST_CINEMATIC_NON_GLOBE_L5_ID}
       >
-        <div
-          className={
-            inlineScrollMode === "marquee"
-              ? TT_PULSE_TICKER_L5.inlineRowMarqueeClass
-              : TT_PULSE_TICKER_L5.inlineRowClass
-          }
-        >
+        <div className={TT_PULSE_TICKER_L5.inlineRowMarqueeClass}>
           {tickerRow}
         </div>
       </section>
@@ -242,7 +247,7 @@ export function TravelTrustPulseTicker({ variant = "section" }: Props) {
   return (
     <motion.section
       id="pulse"
-      className="relative left-1/2 mb-3 w-screen max-w-[100vw] -translate-x-1/2 scroll-mt-28 border-y border-ref-sun/18"
+      className="relative left-1/2 mb-3 w-full max-w-[100vw] -translate-x-1/2 scroll-mt-28 border-y border-ref-sun/18 overflow-x-clip"
       style={{ background: TT_PULSE_GRADIENT_L5 }}
       data-tt-traveltrust-pulse-variant={variant}
       data-tt-traveltrust-pulse-scroll-mode={reduceMotion ? "static" : "marquee"}

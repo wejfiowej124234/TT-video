@@ -45,9 +45,16 @@ export function trackTrustGrowthEvent(
     typeof process !== "undefined" &&
     process.env.NEXT_PUBLIC_TRUST_GROWTH_INGEST_DISABLED !== "1"
   ) {
+    const idem =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `tg-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
     void fetch(trustGrowthApiUrl("ingest"), {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Idempotency-Key": idem,
+      },
       body: JSON.stringify({ event, payload }),
       keepalive: true,
     }).catch(() => {});

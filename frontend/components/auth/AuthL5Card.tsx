@@ -20,7 +20,7 @@ export default function AuthL5Card({
   return (
     <div className={TT_AUTH_L5_FORM.cardWrap}>
       <div className={TT_AUTH_L5_FORM.cardHalo} aria-hidden />
-      <div className="auth-l5-card-ambient pointer-events-none absolute left-1/2 top-1/2 z-0 h-[88%] w-[calc(100%+12px)] max-w-[calc(100%+12px)] -translate-x-1/2 -translate-y-1/2 rounded-xl" aria-hidden />
+      <div className="auth-l5-card-ambient pointer-events-none absolute left-1/2 top-1/2 z-0 h-[88%] w-full max-w-full -translate-x-1/2 -translate-y-1/2 rounded-xl" aria-hidden />
       <div
         className={`${TT_AUTH_L5_FORM.card} auth-l5-glass-vignette ${widthClass} ${className}`.trim()}
         {...(surface ? { "data-tt-auth-surface": surface } : {})}

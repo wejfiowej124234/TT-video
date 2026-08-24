@@ -73,12 +73,12 @@ export function ConversionFunnelRail({
                 className={
                   `inline-flex min-h-[44px] items-center rounded-full border px-3 py-1.5 text-meta whitespace-nowrap ` +
                   (active
-                    ? "border-cyan-400/55 bg-cyan-500/20 text-cyan-100 font-semibold"
+                    ? PES_UI.funnelChipActive
                     : done
-                      ? "border-emerald-400/30 bg-emerald-500/10 text-emerald-200/90"
+                      ? PES_UI.funnelChipDone
                       : variant === "light"
-                        ? "border-ink-200 bg-white/80 text-ink-600 dark:border-ink-600/50 dark:bg-ink-800/40 dark:text-ink-300"
-                        : "border-slate-600/50 bg-ink-800/40 text-slate-400") +
+                        ? PES_UI.funnelChipIdleLight
+                        : PES_UI.funnelChipIdleDark) +
                   ` ${travelFocusRingCoreOffset2Classes}`
                 }
               >

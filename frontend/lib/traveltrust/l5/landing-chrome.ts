@@ -66,13 +66,13 @@ export const TT_PULSE_TICKER_L5 = {
   itemClass:
     "tt-pulse-chip-glow relative overflow-hidden inline-flex min-h-[1.875rem] w-max min-w-[10rem] shrink-0 items-center gap-2 whitespace-nowrap rounded-md px-2.5 py-1 text-meta leading-none text-slate-100 backdrop-blur-sm transition hover:-translate-y-0.5 sm:min-w-[11.5rem] sm:gap-2.5 sm:px-3 sm:py-1",
   itemPlateCampaignClass:
-    "border border-[#ff8a6a] bg-[rgba(255,90,60,0.18)] shadow-[inset_0_0_16px_rgba(255,110,80,0.55),0_0_14px_rgba(255,90,60,0.45)]",
+    "border border-[#ff8a6a] bg-[#1a0c0a] shadow-[inset_0_0_16px_rgba(255,110,80,0.35),0_0_14px_rgba(255,90,60,0.35)]",
   itemPlateProductClass:
-    "border border-[#f9d779] bg-[rgba(249,215,121,0.16)] shadow-[inset_0_0_16px_rgba(249,215,121,0.5),0_0_14px_rgba(249,215,121,0.4)]",
+    "border border-[#f9d779] bg-[#14100d] shadow-[inset_0_0_16px_rgba(249,215,121,0.35),0_0_14px_rgba(249,215,121,0.3)]",
   itemPlateGovernanceClass:
-    "border border-[#34d399] bg-[rgba(16,185,129,0.16)] shadow-[inset_0_0_16px_rgba(52,211,153,0.5),0_0_14px_rgba(52,211,153,0.38)]",
+    "border border-[#34d399] bg-[#0c1814] shadow-[inset_0_0_16px_rgba(52,211,153,0.35),0_0_14px_rgba(52,211,153,0.3)]",
   itemPlateProtocolClass:
-    "border border-[#fbbf24] bg-[rgba(251,191,36,0.16)] shadow-[inset_0_0_16px_rgba(251,191,36,0.5),0_0_14px_rgba(251,191,36,0.38)]",
+    "border border-[#fbbf24] bg-[#161208] shadow-[inset_0_0_16px_rgba(251,191,36,0.35),0_0_14px_rgba(251,191,36,0.3)]",
 } as const;
 
 export const TT_PULSE_UPDATES_PANEL_L5 = {
@@ -104,7 +104,7 @@ export const TT_PULSE_UPDATES_PANEL_L5 = {
   rowCtaClass:
     "inline-flex min-h-[44px] items-center gap-1 text-meta font-medium text-ref-sun/85 underline-offset-[3px] transition duration-200 hover:text-ref-sun hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0c0a09] motion-sub",
   rowHighlightClass:
-    "border-ref-sun/30 bg-ref-sun/[0.08] shadow-[0_0_0_1px_rgba(252,164,124,0.2)_inset]",
+    "border-ref-sun/30 bg-[#1a1510] shadow-[0_0_0_1px_rgba(252,164,124,0.2)_inset]",
   detailBodyClass: "text-[15px] leading-7 text-slate-200/90",
   detailShimmerClass:
     "pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,transparent_44%,rgba(255,255,255,0.05)_50%,transparent_56%)]",
@@ -147,8 +147,8 @@ export const TT_ANNOUNCEMENT_DETAIL_V2_L5 = {
   metaRowClass: "flex flex-col gap-0.5",
   statusBadgeClass:
     "inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em]",
-  statusBadgePreviewClass: "border-amber-400/35 bg-amber-500/10 text-amber-200/95",
-  statusBadgeLiveClass: "border-emerald-400/35 bg-emerald-500/10 text-emerald-200/95",
+  statusBadgePreviewClass: "border-amber-400/40 bg-[#1a1408] text-amber-100",
+  statusBadgeLiveClass: "border-emerald-400/40 bg-[#0c1814] text-emerald-100",
 } as const;
 
 /** 2026 路线图时间轴 */
@@ -173,13 +173,13 @@ export const TT_ROADMAP_L5 = {
   benefitClass: "mt-2 text-meta leading-relaxed text-slate-300/88",
   statusBadgeClass:
     "mt-2 inline-flex w-fit rounded-full border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide",
-  statusUpcomingClass: "border-ref-sun/25 text-ref-sun/80",
-  statusLiveClass: "border-emerald-400/35 bg-emerald-400/10 text-emerald-200",
-  statusCompleteClass: "border-slate-500/30 text-slate-400",
-  statusInProgressClass: "border-sky-400/35 bg-sky-400/10 text-sky-200",
-  tierLiveClass: "border-emerald-400/30 bg-emerald-400/8 text-emerald-200/95",
-  tierUpcomingClass: "border-ref-sun/28 bg-ref-sun/8 text-ref-sun/90",
-  tierRoadmapClass: "border-slate-400/28 bg-slate-400/8 text-slate-300",
+  statusUpcomingClass: "border-ref-sun/35 bg-[#14100d] text-ref-sun/95",
+  statusLiveClass: "border-emerald-400/40 bg-[#0c1814] text-emerald-100",
+  statusCompleteClass: "border-slate-500/40 bg-[#12151a] text-slate-300",
+  statusInProgressClass: "border-sky-400/40 bg-[#0a1520] text-sky-100",
+  tierLiveClass: "border-emerald-400/40 bg-[#0c1814] text-emerald-100",
+  tierUpcomingClass: "border-ref-sun/35 bg-[#14100d] text-ref-sun/95",
+  tierRoadmapClass: "border-slate-400/40 bg-[#12151a] text-slate-200",
   ctaClass:
     "mt-3 inline-flex min-h-[40px] items-center text-meta font-semibold text-ref-sun/90 underline-offset-[3px] transition hover:text-ref-sun hover:underline",
 } as const;

@@ -55,7 +55,9 @@ export async function resolveMerchantShowcaseListing(id: string): Promise<Resolv
   const { ok, status, body } = await fetchCatalogListingJson(url);
   // 503：目录读路径明确不可服务，**禁止**再回落演示卡冒充已发布目录（与列表页 `database_required` 一致）。
   if (status === 503) return null;
-  if (ok && body && typeof body === "object" && !Array.isArray(body)) {
+  if (status === 404 || status === 410) return null;
+  if (!ok) return null;
+  if (body && typeof body === "object" && !Array.isArray(body)) {
     const o = body as Record<string, unknown>;
     if (o.status === "ok" && o.listing != null && typeof o.listing === "object" && !Array.isArray(o.listing)) {
       const row = o.listing as Record<string, unknown>;
@@ -92,7 +94,9 @@ export async function resolveAcquisitionListing(id: string): Promise<ResolvedAcq
   const url = apiUrl(routes.marketAcquisitionListingById(trimmed));
   const { ok, status, body } = await fetchCatalogListingJson(url);
   if (status === 503) return null;
-  if (ok && body && typeof body === "object" && !Array.isArray(body)) {
+  if (status === 404 || status === 410) return null;
+  if (!ok) return null;
+  if (body && typeof body === "object" && !Array.isArray(body)) {
     const o = body as Record<string, unknown>;
     if (o.status === "ok" && o.listing != null && typeof o.listing === "object" && !Array.isArray(o.listing)) {
       const row = o.listing as Record<string, unknown>;

@@ -13663,7 +13663,7 @@ export default {
   traveltrust_footer_official_team: "Official team",
   traveltrust_footer_official_team_aria: "Open the official studio team dialog",
   traveltrust_footer_protocol_paper: "Whitepaper",
-  traveltrust_footer_protocol_paper_aria: "Open the protocol paper reading page (placeholder)",
+  traveltrust_footer_protocol_paper_aria: "Open the protocol paper reading page",
   traveltrust_footer_supervision_nav_aria: "Technical development and supervision links",
   traveltrust_footer_supervision_title: "Technical development & supervision",
   traveltrust_footer_supervision_body:

@@ -15,7 +15,9 @@ import {
 } from "@/lib/wallet/connection";
 
 const targetChain = getTargetChain();
-const appUrl = readTravelTrustAppUrlFromEnv();
+/** Prefer live origin so WalletConnect metadata.url matches Staging/Official host (F8). */
+const appUrl =
+  typeof window !== "undefined" ? window.location.origin : readTravelTrustAppUrlFromEnv();
 
 /**
  * TravelTrust L5 Wallet Connection Center (enterprise · ①).

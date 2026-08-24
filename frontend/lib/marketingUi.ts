@@ -219,13 +219,19 @@ export const TT_MARKETING_HEADER_FOCUS_RING_LIGHT =
 export const TT_MARKETING_HEADER_FOCUS_RING_DARK =
   "focus:outline-none focus-visible:ring-2 focus-visible:ring-ref-sun/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950";
 
-/** 深色顶栏语言切换（`/traveltrust` · `/` 半透明条） */
+/**
+ * 深色顶栏语言切换（`/traveltrust` · `/` 半透明条）
+ * F7：不透明暖墨底 + 亮字，避免 `bg-white/5` 半透明自底把采样对比度压到 &lt;3:1。
+ */
 export const TT_MARKETING_HEADER_LANG_BTN_DARK =
-  "flex min-h-[32px] items-center gap-1.5 rounded-full border border-white/14 bg-white/5 px-3 py-1.5 text-meta text-[#e8e4e0] hover:bg-white/10 hover:text-white";
+  "flex min-h-[32px] items-center gap-1.5 rounded-full border border-white/22 bg-[#14100d] px-3 py-1.5 text-meta text-[#f5f0ea] hover:bg-[#1a1510] hover:text-white";
 
-/** `/auth/*` L5 · 暖金 utility 胶囊（与登录玻璃卡同温，非冷白描边） */
+/**
+ * `/auth/*` L5 · 暖金 utility 胶囊（与登录玻璃卡同温，非冷白描边）
+ * F7：`bg-[#14100d]` 不透明底（禁止 `bg-ref-sun/[0.08]` 自底低对比）。
+ */
 export const TT_MARKETING_HEADER_UTILITY_BTN_AUTH_L5 =
-  "inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border border-ref-sun/38 bg-ref-sun/[0.08] px-3 py-2 text-meta text-[#e8e4e0] hover:border-ref-sun/52 hover:bg-ref-sun/12 hover:text-ref-sun/95";
+  "inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full border border-ref-sun/38 bg-[#14100d] px-3 py-2 text-meta text-[#f5e6c8] hover:border-ref-sun/52 hover:bg-[#1a1510] hover:text-ref-sun/95";
 
 export const TT_MARKETING_HEADER_LANG_BTN_AUTH_L5 = TT_MARKETING_HEADER_UTILITY_BTN_AUTH_L5;
 export const TT_MARKETING_HEADER_WALLET_BTN_AUTH_L5 = TT_MARKETING_HEADER_UTILITY_BTN_AUTH_L5;
@@ -237,7 +243,7 @@ export const TT_MARKETING_HEADER_LANG_MENU_ITEM_AUTH_L5 =
   "w-full text-left px-3 py-2 text-meta text-slate-200 hover:bg-ref-sun/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/50";
 
 export const TT_MARKETING_HEADER_WALLET_CONNECTED_AUTH_L5 =
-  "inline-flex min-h-[32px] max-w-[11rem] items-center gap-1.5 rounded-full border border-ref-sun/38 bg-ref-sun/[0.08] px-3 py-1 text-meta text-[#e8e4e0]";
+  "inline-flex min-h-[32px] max-w-[11rem] items-center gap-1.5 rounded-full border border-ref-sun/38 bg-[#14100d] px-3 py-1 text-meta text-[#f5e6c8]";
 
 export const TT_MARKETING_HEADER_WALLET_MENU_AUTH_L5 = TT_MARKETING_HEADER_LANG_MENU_AUTH_L5;
 export const TT_MARKETING_HEADER_WALLET_MENU_ITEM_AUTH_L5 = TT_MARKETING_HEADER_LANG_MENU_ITEM_AUTH_L5;
@@ -261,7 +267,7 @@ export const TT_MARKETING_HEADER_WALLET_MENU_LIGHT = TT_MARKETING_HEADER_LANG_ME
 export const TT_MARKETING_HEADER_WALLET_MENU_ITEM_DARK = TT_MARKETING_HEADER_LANG_MENU_ITEM_DARK;
 export const TT_MARKETING_HEADER_WALLET_MENU_ITEM_LIGHT = TT_MARKETING_HEADER_LANG_MENU_ITEM_LIGHT;
 export const TT_MARKETING_HEADER_WALLET_CONNECTED_DARK =
-  "inline-flex min-h-[32px] max-w-[11rem] items-center gap-1.5 rounded-full border border-white/14 bg-white/5 px-3 py-1 text-meta text-[#e8e4e0]";
+  "inline-flex min-h-[32px] max-w-[11rem] items-center gap-1.5 rounded-full border border-white/22 bg-[#14100d] px-3 py-1 text-meta text-[#f5f0ea]";
 
 export const TT_MARKETING_HEADER_WALLET_CONNECTED_COMMUNITY = TT_MARKETING_HEADER_WALLET_CONNECTED_DARK;
 export const TT_MARKETING_HEADER_WALLET_CONNECTED_LIGHT =
@@ -1316,7 +1322,7 @@ export const TT_MARKETING_HEADER_USER_MENU_ITEM_DARK =
 
 /** `/auth/*` L5 · 用户菜单（与语言/钱包 utility 同温） */
 export const TT_MARKETING_HEADER_USER_MENU_BTN_AUTH_L5 =
-  "flex items-center gap-2 rounded-full ring-2 ring-ref-sun/38 pl-0.5 pr-2.5 py-1 min-h-[44px] min-w-0 max-w-[12rem] sm:max-w-[14rem] border border-ref-sun/38 bg-ref-sun/[0.08] hover:border-ref-sun/52 hover:bg-ref-sun/12 text-[#e8e4e0]";
+  "flex items-center gap-2 rounded-full ring-2 ring-ref-sun/38 pl-0.5 pr-2.5 py-1 min-h-[44px] min-w-0 max-w-[12rem] sm:max-w-[14rem] border border-ref-sun/38 bg-[#14100d] hover:border-ref-sun/52 hover:bg-[#1a1510] text-[#f5e6c8]";
 
 export const TT_MARKETING_HEADER_USER_MENU_DROPDOWN_AUTH_L5 =
   "border-ref-sun/22 bg-[#0c0a09]/98 text-slate-100 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur-md";

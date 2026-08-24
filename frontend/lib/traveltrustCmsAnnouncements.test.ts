@@ -61,7 +61,8 @@ describe("traveltrustCmsAnnouncements merge", () => {
     expect(ttg?.cmsCopy?.bodyZh).toMatch(/销毁不是价格保护/);
     expect(ttg?.cmsCopy?.bodyZh).not.toMatch(/认购市场|100,000 TTG|公众认购|保证收益/);
     expect(ttg?.cmsCopy?.summaryZh).toMatch(/官网治理代币为 25T 面额/);
-    expect(ttg?.cmsCopy?.summaryZh).toMatch(/团队 15 \/ DAO 35 \/ 公众 50/);
+    expect(ttg?.cmsCopy?.summaryZh).toMatch(/公开 50% · DAO 35%/);
+    expect(ttg?.cmsCopy?.summaryZh).toMatch(/团队 3%/);
     expect(merged.find((i) => i.id === "product-role-steward")?.cmsCopy?.bodyZh).not.toMatch(/收益分配/);
     expect(merged.find((i) => i.id === "campaign-referral")?.kind).toBe("campaign");
   });
@@ -91,7 +92,7 @@ describe("traveltrustCmsAnnouncements merge", () => {
       sort_order: 1,
       title_zh: "TTG 已按 25 万亿总量部署",
       title_en: "TTG is live at 25 trillion total supply",
-      summary_zh: "官网治理代币为 25T 面额：团队 15 / DAO 35 / 公众 50。",
+      summary_zh: "官网治理代币为 25T 面额：公开 50% · DAO 35% · 团队 3% · 营销 5% · 金库 7%（Design Lock）。",
       summary_en: "Official governance token is the 25T denomination.",
       body_zh: null,
       body_en: null,

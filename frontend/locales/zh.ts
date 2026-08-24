@@ -13295,7 +13295,7 @@ export default {
   traveltrust_footer_official_team: "官方团队",
   traveltrust_footer_official_team_aria: "打开官方团队工作室弹窗",
   traveltrust_footer_protocol_paper: "白皮书",
-  traveltrust_footer_protocol_paper_aria: "打开协议白皮书阅读页（当前为占位）",
+  traveltrust_footer_protocol_paper_aria: "打开协议白皮书阅读页",
   traveltrust_footer_supervision_nav_aria: "技术开发与监督入口",
   traveltrust_footer_supervision_title: "技术开发与监督",
   traveltrust_footer_supervision_body:

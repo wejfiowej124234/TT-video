@@ -133,38 +133,48 @@ async function proxyWwwSessionAuthInner(request: NextRequest): Promise<NextRespo
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  const withSecurityHeaders = (res: NextResponse): NextResponse => {
+    res.headers.set("X-Content-Type-Options", "nosniff");
+    res.headers.set("X-Frame-Options", "SAMEORIGIN");
+    res.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    if (request.nextUrl.protocol === "https:") {
+      res.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+    }
+    return res;
+  };
+
   if (pathname === "/market/travel" || pathname === "/market/travel/") {
     const url = request.nextUrl.clone();
     url.pathname = "/market";
-    return NextResponse.redirect(url);
+    return withSecurityHeaders(NextResponse.redirect(url));
   }
   if (pathname === "/discover" || pathname === "/discover/") {
     const url = request.nextUrl.clone();
     url.pathname = "/market";
-    return NextResponse.redirect(url);
+    return withSecurityHeaders(NextResponse.redirect(url));
   }
 
   if (isWwwSessionAuthPost(request.method, pathname)) {
-    return proxyWwwSessionAuth(request);
+    return withSecurityHeaders(await proxyWwwSessionAuth(request));
   }
 
   if (isApiV1Path(pathname)) {
-    return withBearerFromWwwSession(request);
+    return withSecurityHeaders(withBearerFromWwwSession(request));
   }
 
   if (!isAdminPath(pathname)) {
-    return NextResponse.next();
+    return withSecurityHeaders(NextResponse.next());
   }
 
   const session = request.cookies.get(WWW_SESSION_COOKIE)?.value?.trim();
   if (session) {
-    return withBearerFromWwwSession(request);
+    return withSecurityHeaders(withBearerFromWwwSession(request));
   }
 
   const loginUrl = request.nextUrl.clone();
   loginUrl.pathname = "/auth/login";
   loginUrl.searchParams.set("returnUrl", pathname);
-  return NextResponse.redirect(loginUrl);
+  return withSecurityHeaders(NextResponse.redirect(loginUrl));
 }
 
 export const config = {

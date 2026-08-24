@@ -21,6 +21,10 @@ fn public_cache_headers() -> HeaderMap {
         HeaderValue::from_static("public, max-age=60, stale-while-revalidate=120"),
     );
     h.insert("x-tt-announcements-source", HeaderValue::from_static("cms-rust"));
+    h.insert(
+        "x-tt-announcements-canonical",
+        HeaderValue::from_static("/api/v1/public/announcements"),
+    );
     h
 }
 

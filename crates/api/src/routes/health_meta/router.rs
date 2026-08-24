@@ -18,4 +18,8 @@ pub fn router() -> Router<ApiMetaState> {
         .route("/meta/build", get(meta_build_only))
         .route("/meta/release-identity", get(meta_release_identity))
         .route("/metrics", get(metrics))
+        // FE / probes: `/api/v1/meta` alias (same handlers · guest-readable)
+        .route("/api/v1/meta", get(meta))
+        .route("/api/v1/meta/build", get(meta_build_only))
+        .route("/api/v1/meta/release-identity", get(meta_release_identity))
 }

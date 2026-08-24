@@ -32,6 +32,10 @@ pub async fn auth_placeholder_layer(req: Request<Body>, next: axum::middleware::
         || (method == Method::POST && path == "/health/drill/inject")
         || path == "/meta"
         || path == "/meta/build"
+        || path == "/meta/release-identity"
+        || (read && path == "/api/v1/meta")
+        || (read && path == "/api/v1/meta/build")
+        || (read && path == "/api/v1/meta/release-identity")
         || path.starts_with("/auth/")
         || (read && path == "/api/v1/guides")
         || (read
@@ -355,7 +359,11 @@ pub async fn security_headers_layer(req: Request<Body>, next: axum::middleware::
         HeaderValue::from_static("geolocation=(), microphone=(), camera=()"),
     );
 
-    if env::var("HSTS").as_deref() == Ok("1") {
+    if env::var("HSTS").as_deref() == Ok("1")
+        || env::var("TRAVELTRUST_SECURITY_HEADERS_FULL").as_deref() == Ok("1")
+        || env::var("DISABLE_HSTS").as_deref() != Ok("1")
+            && env::var("RUST_ENV").as_deref() == Ok("production")
+    {
         res.headers_mut().insert(
             HeaderName::from_static("strict-transport-security"),
             HeaderValue::from_static("max-age=31536000; includeSubDomains"),

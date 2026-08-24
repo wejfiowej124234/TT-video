@@ -9,6 +9,7 @@ import { isUuidString } from "@/lib/isUuidString";
 import { localeFromAcceptLanguage, localeMessagesFromAcceptLanguage } from "@/lib/pickMetadataLocale";
 
 export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   if (!marketSubsiteDemoStudioFallbackEnabled()) return [];
@@ -52,11 +53,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 }
 
 export default async function AcquisitionListingDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const tid = id.trim();
-  if (!tid) notFound();
-  if (!marketSubsiteDemoStudioFallbackEnabled() && !isUuidString(tid)) notFound();
-  const resolved = await loadAcquisitionListingPage(tid);
-  if (!resolved) notFound();
-  return <AcquisitionListingDetailView listing={resolved.listing} provenance={resolved.provenance} />;
+  try {
+    const { id } = await params;
+    const tid = id.trim();
+    if (!tid) notFound();
+    if (!marketSubsiteDemoStudioFallbackEnabled() && !isUuidString(tid)) notFound();
+    const resolved = await loadAcquisitionListingPage(tid);
+    if (!resolved) notFound();
+    return <AcquisitionListingDetailView listing={resolved.listing} provenance={resolved.provenance} />;
+  } catch {
+    notFound();
+  }
 }

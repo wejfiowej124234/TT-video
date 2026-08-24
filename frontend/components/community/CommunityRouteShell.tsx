@@ -135,7 +135,7 @@ function CommunityLayoutInner({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className={darkRoutePageShellClass(communitySurface)}
+      className={`${darkRoutePageShellClass(communitySurface)} overflow-x-clip max-w-[100vw]`}
       data-tt-community-dark-surface={communitySurface}
       data-tt-community-phase1-frozen="1"
     >
@@ -210,7 +210,7 @@ function CommunityLayoutInner({ children }: { children: React.ReactNode }) {
       </header>
 
       <div
-        className={`relative z-0 pb-20 md:pb-0 md:pt-3 lg:pt-4 ${!isOnline || showOnlineRecovery ? "pt-10" : ""}`}
+        className={`relative z-0 pb-20 md:pb-0 md:pt-3 lg:pt-4 min-w-0 w-full overflow-x-clip ${!isOnline || showOnlineRecovery ? "pt-10" : ""}`}
       >
         {children}
       </div>

@@ -3,6 +3,29 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  #main-content,
+  main[data-tt-traveltrust-network-page="1"] {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  header {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -656,7 +679,8 @@ header[data-tt-header-utility-l5="1"] .header-utility-dropdown-panel {
 
 [data-tt-auth-visual="l5"] .auth-l5-callout-surface {
   border-color: rgba(249, 215, 121, 0.42) !important;
-  background-color: rgba(252, 164, 124, 0.07) !important;
+  /* F7: opaque warm ink — not sun/0.07 self-bg (fails 3:1 sample vs slate/cream text) */
+  background-color: rgba(20, 16, 13, 0.96) !important;
   box-shadow: inset 0 1px 0 rgba(252, 164, 124, 0.12) !important;
 }
 
@@ -680,17 +704,25 @@ header[data-tt-header-utility-l5="1"] .header-utility-dropdown-panel {
   background-color: rgba(252, 164, 124, 0.16) !important;
 }
 
-/** `/auth/*` 与 utility L5 顶栏：暖金胶囊（压 white/14 冷描边） */
+/**
+ * `/auth/*` 与 utility L5 顶栏：暖金描边胶囊
+ * F7：不透明暖墨底（禁止 sun/0.07 !important 覆盖 token → 自底对比度 &lt;3:1）
+ */
 header[data-tt-auth-header-l5="1"] button.rounded-full,
-header[data-tt-header-utility-l5="1"] button.rounded-full {
+header[data-tt-header-utility-l5="1"] button.rounded-full,
+header[data-tt-auth-header-l5="1"] a.rounded-full,
+header[data-tt-header-utility-l5="1"] a.rounded-full {
   border-color: rgba(249, 215, 121, 0.42) !important;
-  background-color: rgba(252, 164, 124, 0.07) !important;
+  background-color: #14100d !important;
+  color: #f5e6c8;
 }
 
 header[data-tt-auth-header-l5="1"] button.rounded-full:hover,
-header[data-tt-header-utility-l5="1"] button.rounded-full:hover {
+header[data-tt-header-utility-l5="1"] button.rounded-full:hover,
+header[data-tt-auth-header-l5="1"] a.rounded-full:hover,
+header[data-tt-header-utility-l5="1"] a.rounded-full:hover {
   border-color: rgba(249, 215, 121, 0.58) !important;
-  background-color: rgba(252, 164, 124, 0.12) !important;
+  background-color: #1a1510 !important;
 }
 
 .auth-login-l5-card-halo {

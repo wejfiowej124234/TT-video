@@ -193,6 +193,7 @@ const nextConfig = {
     const base = [
       { key: "X-Frame-Options", value: "SAMEORIGIN" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "X-Content-Type-Options", value: "nosniff" },
       /** 140 / 07 §5.6A：默认收紧敏感能力；社区 Feed GPS 需 geolocation=(self) */
       {
         key: "Permissions-Policy",
@@ -200,7 +201,6 @@ const nextConfig = {
       },
     ];
     if (process.env.NODE_ENV === "production") {
-      base.splice(1, 0, { key: "X-Content-Type-Options", value: "nosniff" });
       /** Align Production Apex to Staging Product Truth security headers (HSTS). */
       base.push({
         key: "Strict-Transport-Security",

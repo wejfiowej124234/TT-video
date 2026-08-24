@@ -10,6 +10,7 @@ import { localeFromAcceptLanguage, localeMessagesFromAcceptLanguage } from "@/li
 
 /** 允许任意 UUID 详情；`generateStaticParams` 仅预热内置 slug。 */
 export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   if (!marketSubsiteDemoStudioFallbackEnabled()) return [];
@@ -53,11 +54,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 }
 
 export default async function MerchantShowcaseDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const tid = id.trim();
-  if (!tid) notFound();
-  if (!marketSubsiteDemoStudioFallbackEnabled() && !isUuidString(tid)) notFound();
-  const resolved = await loadMerchantShowcaseListingPage(tid);
-  if (!resolved) notFound();
-  return <MerchantShowcaseDetailView listing={resolved.listing} provenance={resolved.provenance} />;
+  try {
+    const { id } = await params;
+    const tid = id.trim();
+    if (!tid) notFound();
+    if (!marketSubsiteDemoStudioFallbackEnabled() && !isUuidString(tid)) notFound();
+    const resolved = await loadMerchantShowcaseListingPage(tid);
+    if (!resolved) notFound();
+    return <MerchantShowcaseDetailView listing={resolved.listing} provenance={resolved.provenance} />;
+  } catch {
+    notFound();
+  }
 }

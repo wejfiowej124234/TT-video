@@ -14,9 +14,9 @@ export const TRAVELTRUST_STATIC_ANNOUNCEMENT_CMS_COPY: Record<string, TravelTrus
     titleZh: "TTG 已按 25 万亿总量部署",
     titleEn: "TTG is live at 25 trillion total supply",
     summaryZh:
-      "官网治理代币为 25T 面额：团队 15 / DAO 35 / 公众 50。认购市场已部署，交易尚未对公众开放。这不是 Production GO。",
+      "官网治理代币为 25T 面额：公开 50% · DAO 35% · 团队 3% · 营销 5% · 金库 7%（Design Lock）。认购市场已部署，交易尚未对公众开放。这不是 Production GO。",
     summaryEn:
-      "Official governance token is the 25T denomination: Team 15 / DAO 35 / Public 50. The primary market is deployed; trading is not open to the public. This is not Production GO.",
+      "Official governance token uses the 25T denomination: Public 50% · DAO 35% · Team 3% · Marketing 5% · Treasury 7% (Design Lock). The primary market is deployed; trading is not open to the public. This is not Production GO.",
     bodyZh:
       "治理代币 TTG 公示总量 25,000,000,000,000（25 万亿）。\n\n创世分配：公开份额 50%、DAO 35%、团队 3%、营销 5%、金库 7%（后三项合计 15%）。公开解锁五批：第一批 2026 年 10 月 15 日，之后每批间隔两个月。首批公示参考价约 1 USDC ≈ 1,000,000 TTG，最低 1 USDC。\n\n一级市场各批窗口结束后，未售出的公开份额可销毁一部分，不留作库存。这是公示目标，细则以随后公布的协议说明为准。销毁不是价格保护，也不是收益承诺。\n\n本页批次、比例与价格是产品公示计划；合约将按该计划更新。兑换窗口和公众投票尚未对公众开放。行程订金走 USDC 托管，与取得 TTG 分开。公示计划不等于可以买入。",
     bodyEn:
