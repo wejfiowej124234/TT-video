@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import zh from "@/locales/zh";
+import en from "@/locales/en";
 import TravelTrustAmbientCanvas from "@/components/traveltrust/TravelTrustAmbientCanvas";
 import { TravelTrustJsonLd } from "@/components/traveltrust/TravelTrustJsonLd";
 import { TravelTrustLayoutDeferredPreload } from "@/components/traveltrust/TravelTrustLayoutDeferredPreload";
@@ -14,13 +14,13 @@ import { getSiteMetadataBase } from "@/lib/siteMetadataBase";
 import { TT_Z, ttZClass } from "@/lib/traveltrustZ";
 import { TravelTrustHomePrefetchBoot } from "@/modules/traveltrust-home";
 
-const title = zh.traveltrust_meta_title;
-const description = zh.traveltrust_meta_description;
+const title = en.traveltrust_meta_title;
+const description = en.traveltrust_meta_description;
 export const metadata: Metadata = {
   metadataBase: getSiteMetadataBase(),
   title,
   description,
-  keywords: ["TravelTrust", "travel", "Web3", "escrow", "custom trip", "定制游", "托管"],
+  keywords: ["TravelTrust", "travel", "Web3", "escrow", "custom trip"],
   robots: { index: true, follow: true },
   alternates: {
     canonical: "/traveltrust",

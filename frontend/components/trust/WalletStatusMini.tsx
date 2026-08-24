@@ -44,7 +44,7 @@ function WalletGlyph({ className }: { className?: string }) {
 }
 
 const FALLBACK_DROPDOWN =
-  "absolute right-0 top-full z-50 mt-2 box-border flex w-[min(20.5rem,calc(100vw-1.5rem))] min-w-[16rem] flex-col overflow-hidden rounded-xl border border-ref-sun/40 bg-[#0c0a09]/96 py-0 shadow-[0_0_0_1px_rgba(252,164,124,0.16),0_18px_44px_-16px_rgba(0,0,0,0.78)] backdrop-blur-2xl outline-none";
+  "absolute right-0 top-full z-[320] mt-2 box-border flex w-[min(20.5rem,calc(100vw-1.5rem))] min-w-[16rem] flex-col overflow-hidden rounded-xl border border-ref-sun/40 bg-[#0c0a09]/96 py-0 shadow-[0_0_0_1px_rgba(252,164,124,0.16),0_18px_44px_-16px_rgba(0,0,0,0.78)] backdrop-blur-2xl outline-none";
 
 export default function WalletStatusMini({ variant = "dark", className = "" }: Props) {
   const { t } = useTranslation();

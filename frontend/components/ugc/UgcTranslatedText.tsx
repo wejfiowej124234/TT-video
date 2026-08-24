@@ -36,7 +36,7 @@ export function UgcTranslatedText({
   policy,
   className,
   as: Tag = "span",
-  showAction = true,
+  showAction = false,
   actionSurface = "feed",
 }: {
   contentClass: string;
@@ -46,7 +46,7 @@ export function UgcTranslatedText({
   policy: UgcTranslatePolicy;
   className?: string;
   as?: TagName;
-  /** false：瀑布流封面叠字等只出正文，翻译放到详情 / 列表卡 */
+  /** Durable catalog + community: follow header locale via cache_first; no click-to-translate unless true. */
   showAction?: boolean;
   /** `feed` = 社区文字链；`overlay` = 视频底部白字 */
   actionSurface?: "feed" | "overlay";

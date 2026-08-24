@@ -20,6 +20,8 @@ describe("traveltrust SEO surface (TT-PH1-167 · ①)", () => {
   it("exports layout metadata and JSON-LD", () => {
     expect(layout).toContain("export const metadata");
     expect(layout).toContain("traveltrust_meta_title");
+    expect(layout).toContain('import en from "@/locales/en"');
+    expect(layout).not.toContain('import zh from "@/locales/zh"');
     expect(layout).toContain("canonical: \"/traveltrust\"");
     expect(layout).toContain("applicationName");
     expect(jsonLd).toContain("data-tt-traveltrust-jsonld=\"1\"");

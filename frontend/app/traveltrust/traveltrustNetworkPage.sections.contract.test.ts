@@ -120,6 +120,7 @@ describe("traveltrust network page sections (contract)", () => {
     const heroSrc = readFileSync(join(cinematicDir, "TravelTrustCinematicHero.tsx"), "utf8");
 
     expect(navSlotSrc).toContain('data-tt-traveltrust-landing-nav-slot="fixed"');
+    expect(navSlotSrc).toContain("mounted ? createPortal(fixedShell, document.body) : null");
 
     expect(navSlotSrc).toContain("TravelTrustLandingChrome");
 

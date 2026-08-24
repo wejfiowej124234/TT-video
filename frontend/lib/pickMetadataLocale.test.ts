@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { localeFromAcceptLanguage, localeMessagesFromAcceptLanguage } from "@/lib/pickMetadataLocale";
 import { DEFAULT_LOCALE, LOCALES, LOCALE_STORAGE_KEY } from "@/lib/i18n";
 import zh from "@/locales/zh";
@@ -8,8 +10,11 @@ describe("localeMessagesFromAcceptLanguage", () => {
   it("product default locale is English", () => {
     expect(DEFAULT_LOCALE).toBe("en");
     expect(LOCALES[0]).toBe("en");
-    expect(LOCALE_STORAGE_KEY).toBe("traveltrust_locale_v2");
+    expect(LOCALE_STORAGE_KEY).toBe("traveltrust_locale_v3");
     expect(localeFromAcceptLanguage(null)).toBe("en");
+    const provider = readFileSync(join(process.cwd(), "components/LocaleProvider.tsx"), "utf8");
+    expect(provider).not.toContain("navigator.language");
+    expect(provider).toContain("getStoredLocale() ?? DEFAULT_LOCALE");
   });
   it("defaults to en for null/empty", () => {
     expect(localeMessagesFromAcceptLanguage(null)).toBe(en);

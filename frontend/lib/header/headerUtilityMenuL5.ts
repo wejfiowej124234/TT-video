@@ -20,7 +20,7 @@ const DROPDOWN_GLASS =
 
 const DROPDOWN_POS =
 
-  "absolute left-auto right-0 top-full z-50 mt-2 box-border flex flex-col outline-none";
+  "absolute left-auto right-0 top-full z-[320] mt-2 box-border flex flex-col outline-none";
 
 
 

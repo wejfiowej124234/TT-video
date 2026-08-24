@@ -14,6 +14,7 @@ describe("UgcTranslatedText", () => {
     expect(src).toContain("getUgcTranslationCache");
     expect(src).toContain("getUgcTranslationStatus");
     expect(src).toContain("enabled !== true");
+    expect(src).toContain("showAction = false");
     expect(src).toContain("showAction && Boolean(source.trim()) && !showTranslated");
     expect(src).toContain("showAction");
     expect(src).toContain("actionSurface");

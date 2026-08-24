@@ -29,6 +29,8 @@ describe("header utility menu L5 (①)", () => {
     expect(LANG).toContain("headerUtilityMenuL5ShellClass");
     expect(TOKENS).toContain("right-0 top-full");
     expect(TOKENS).toContain("DROPDOWN_POS");
+    expect(TOKENS).toContain("z-[320]");
+    expect(TOKENS).not.toContain("z-50 mt-2");
   });
 
   it("user menu uses shared chrome and profile avatar strip", () => {
@@ -36,5 +38,10 @@ describe("header utility menu L5 (①)", () => {
     expect(readFileSync(join(process.cwd(), "components/header/HeaderUserMenuNavLinks.tsx"), "utf8")).toContain(
       "profileAvatar",
     );
+    expect(USER).toContain("z-[320]");
+    expect(WALLET).toContain("z-[320]");
+    const marketing = readFileSync(join(process.cwd(), "lib/marketingUi.ts"), "utf8");
+    expect(marketing).toContain("TT_MARKETING_HEADER_LANG_MENU_DARK");
+    expect(marketing).toMatch(/TT_MARKETING_HEADER_LANG_MENU_DARK[\s\S]{0,220}z-\[320\]/);
   });
 });

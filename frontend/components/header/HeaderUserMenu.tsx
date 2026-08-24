@@ -84,8 +84,8 @@ export function HeaderUserMenu({
   const menuClass = isAuthL5
     ? TT_HEADER_USER_MENU_L5.dropdown
     : isDark
-      ? `absolute right-0 top-full mt-1 min-w-[10rem] rounded-[var(--radius-sm)] border py-1 shadow-strong z-50 ${TT_MARKETING_HEADER_USER_MENU_DROPDOWN_DARK}`
-      : "absolute right-0 top-full mt-1 min-w-[10rem] rounded-[var(--radius-sm)] border py-1 shadow-strong z-50 border-ink-200 bg-white text-ink-800 shadow-soft";
+      ? `absolute right-0 top-full mt-1 min-w-[10rem] rounded-[var(--radius-sm)] border py-1 shadow-strong z-[320] ${TT_MARKETING_HEADER_USER_MENU_DROPDOWN_DARK}`
+      : "absolute right-0 top-full mt-1 min-w-[10rem] rounded-[var(--radius-sm)] border py-1 shadow-strong z-[320] border-ink-200 bg-white text-ink-800 shadow-soft";
   const buttonClass = isAuthL5
     ? TT_MARKETING_HEADER_USER_MENU_BTN_AUTH_L5
     : isDark

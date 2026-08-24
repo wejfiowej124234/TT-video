@@ -39,7 +39,9 @@ export function TravelTrustHomeLandingNavSlot() {
         aria-hidden
         data-tt-traveltrust-landing-nav-slot-spacer="1"
       />
-      {mounted ? createPortal(fixedShell, document.body) : fixedShell}
+      {/* Never mount `position:fixed` inside `#main-content` / `isolate` — that containing
+          block makes L1 chrome scroll mid-page over allocation copy. Portal to body only. */}
+      {mounted ? createPortal(fixedShell, document.body) : null}
     </>
   );
 }

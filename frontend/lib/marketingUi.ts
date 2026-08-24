@@ -206,7 +206,7 @@ export const TT_MARKETING_HEADER_LANG_BTN_LIGHT =
   "flex min-h-[32px] items-center gap-1.5 rounded-full border border-ref-sun/20 bg-ref-sun/6 px-3 py-1.5 text-meta text-[#5c4528] hover:bg-ref-sun/10 hover:text-[#9a5f18]";
 
 export const TT_MARKETING_HEADER_LANG_MENU_LIGHT =
-  "absolute right-0 top-full z-50 mt-1 min-w-[8rem] rounded-[var(--radius-sm)] border border-ref-sun/16 bg-[#faf8f6] py-1 shadow-[0_12px_32px_-8px_rgba(92,69,40,0.18)]";
+  "absolute right-0 top-full z-[320] mt-1 min-w-[8rem] rounded-[var(--radius-sm)] border border-ref-sun/16 bg-[#faf8f6] py-1 shadow-[0_12px_32px_-8px_rgba(92,69,40,0.18)]";
 
 export const TT_MARKETING_HEADER_LANG_MENU_ITEM_LIGHT =
   "w-full px-3 py-2 text-left text-meta text-[#5c4528] hover:bg-ref-sun/8 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/45";
@@ -237,7 +237,7 @@ export const TT_MARKETING_HEADER_LANG_BTN_AUTH_L5 = TT_MARKETING_HEADER_UTILITY_
 export const TT_MARKETING_HEADER_WALLET_BTN_AUTH_L5 = TT_MARKETING_HEADER_UTILITY_BTN_AUTH_L5;
 
 export const TT_MARKETING_HEADER_LANG_MENU_AUTH_L5 =
-  "absolute right-0 top-full mt-1 min-w-[8rem] rounded-[var(--radius-sm)] border border-ref-sun/22 bg-[#0c0a09]/98 py-1 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur-md z-50";
+  "absolute right-0 top-full mt-1 min-w-[8rem] rounded-[var(--radius-sm)] border border-ref-sun/22 bg-[#0c0a09]/98 py-1 shadow-[0_12px_40px_rgba(0,0,0,0.5)] backdrop-blur-md z-[320]";
 
 export const TT_MARKETING_HEADER_LANG_MENU_ITEM_AUTH_L5 =
   "w-full text-left px-3 py-2 text-meta text-slate-200 hover:bg-ref-sun/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/50";
@@ -252,7 +252,7 @@ export const TT_MARKETING_HEADER_WALLET_MENU_ITEM_AUTH_L5 = TT_MARKETING_HEADER_
 export const TT_MARKETING_HEADER_UTILITY_BTN_COMMUNITY = TT_MARKETING_HEADER_LANG_BTN_DARK;
 
 export const TT_MARKETING_HEADER_LANG_MENU_DARK =
-  "absolute right-0 top-full mt-1 min-w-[8rem] rounded-[var(--radius-sm)] border border-white/15 bg-ink-950/98 py-1 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-md z-50";
+  "absolute right-0 top-full mt-1 min-w-[8rem] rounded-[var(--radius-sm)] border border-white/15 bg-ink-950/98 py-1 shadow-[0_12px_40px_rgba(0,0,0,0.45)] backdrop-blur-md z-[320]";
 
 export const TT_MARKETING_HEADER_LANG_MENU_ITEM_DARK =
   "w-full text-left px-3 py-2 text-meta text-slate-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ref-sun/50";

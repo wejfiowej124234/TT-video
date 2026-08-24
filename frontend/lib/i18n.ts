@@ -5,7 +5,8 @@
 
 export type Locale = "zh" | "en";
 
-export const LOCALE_STORAGE_KEY = "traveltrust_locale_v2";
+/** v3: drop inherited Official zh from v2 so first paint follows DEFAULT_LOCALE=en until the user picks a language. */
+export const LOCALE_STORAGE_KEY = "traveltrust_locale_v3";
 
 export const DEFAULT_LOCALE: Locale = "en";
 

@@ -1,0 +1,38 @@
+{
+  "stamp": "OWNER_UI_REGRESSION_NEW_CANDIDATE_LOCAL_RCA",
+  "at_utc": "2026-08-24T08:47:36Z",
+  "historical_pass_stop_preserved": "OFFICIAL_L5_RUNTIME_REALITY_PASS_STOP",
+  "historical_candidate": "2f2d907cd3cfa3296a7aa6e90d6046cfafbf1be2",
+  "tt_production_go": "NO_GO",
+  "scope_only": [
+    "L1 chrome containing-block / portal-only",
+    "UgcTranslatedText showAction default false",
+    "header utility/avatar/wallet/lang menu z-[320] above LANDING_CHROME 280",
+    "default locale en + storage key v3 + /traveltrust metadata en"
+  ],
+  "root_cause": {
+    "l1_chrome": "position:fixed fallback rendered inside #main-content isolate overflow-x-clip; fixed containing block sits mid-viewport over TTG allocation chart until portal mounts (and stays if portal fails).",
+    "translate": "UgcTranslatedText default showAction=true; cache_first catalog cards (GuideCard etc.) still rendered click-to-translate.",
+    "menus": "utility/avatar/wallet/lang dropdowns at z-50 under portaled L1 chrome z-280 and header z-300 so open menus paint invisible.",
+    "locale": "DEFAULT_LOCALE already en; Official chrome in zh came from traveltrust_locale_v2 persistence plus /traveltrust layout metadata using zh."
+  },
+  "forbidden": [
+    "overwrite PASS_STOP",
+    "dirty living tree bake",
+    "official hotpatch",
+    "mainnet broadcast"
+  ],
+  "local_visual_pass": {
+    "at_utc": "2026-08-24T08:58:03Z",
+    "host": "http://127.0.0.1:3012",
+    "breakpoints": [
+      "390",
+      "768",
+      "1280"
+    ],
+    "l1_chrome": "portal parent=BODY; not in #main-content; z=280; top under header (72 desktop/tablet, 116 mobile); not over allocation chart",
+    "locale": "documentElement.lang=en; title TravelTrust Network | TravelTrust; storage v3 empty",
+    "language_menu": "open listbox z=320 visible 168x108",
+    "market_translate": "translateCount=0 after listings wait; chrome English (document title still zh metadata on /market \u2014 out of this four-class layout sweep except /traveltrust)"
+  }
+}
