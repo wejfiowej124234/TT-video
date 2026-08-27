@@ -112,12 +112,12 @@ this_wave_release_policy:
   unlock: explicit RELEASE_SCOPE including that Module ID + Owner auth
 
 production_runtime_observation:
-  sampled_utc: "2026-08-27T10:33:00Z"
+  sampled_utc: "2026-08-27T11:20:00Z"
   url: https://www.web3-ttg.com/traveltrust
   pin_baseline_id: TT-OFFICIAL-OPS-20260820-V9
-  pin_git_sha: 5b98879c19d5630b29bfc236e1fba255219422d4
-  live_build_time: "2026-08-27T10:22:32Z"
-  fly_image_tag: deployment-01M11BXAWWAKPJXCG225AC69BG
+  pin_git_sha: aa3ca1b1e3d5a1fa3c53080c4e539c9b9f3e56b5
+  live_build_time: "2026-08-27T11:08:02Z"
+  fly_image_tag: deployment-01M11EJEXJ9EQRWW6QV7ZZ3NWT
   session_bootstrap: v8
   superseded_pin_git_sha: daa5ae87b8c1af548c6beff6dd3451e5d386acf2
   rolled_back_overlay_git_sha: 2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b
