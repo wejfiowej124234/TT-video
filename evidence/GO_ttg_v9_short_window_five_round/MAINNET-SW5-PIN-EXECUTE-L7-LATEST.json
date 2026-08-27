@@ -1,0 +1,23 @@
+{
+  "stamp": "TTG_V9_SHORT_WINDOW_FIVE_ROUND_MAINNET_EXECUTE",
+  "recorded_at_utc": "2026-08-26T23:53:00Z",
+  "chain_id": 1,
+  "TT_PRODUCTION_GO": "NO_GO",
+  "scope": "primary_market_sale_schedule_pin_only",
+  "timelock": "0xF61880fe9943BBc624F487782E2fB35d8Ae50E3A",
+  "operationId": "0x729fa76e43cfa7f4c3baca451111926fbafe2ef27642f49dce891e0b7ee959ab",
+  "execute_tx": "0x048c6d29075c4f61691049b5a1ba57d4178c30573509e99dbbfab3a2e83ae63c",
+  "execute_block": 25842808,
+  "execute_status": 1,
+  "executor": "0xe1e732EfBf9B010a9204054467256d3d93f3CdD4",
+  "pm_proxy": "0xc714E2567982ea92d5f3C5b66ab65532Cfc5f09b",
+  "pm_implementation": "0xf3c21d5c87cf70b12285454aaa4c1343d3c60bc9",
+  "operation_done": true,
+  "verify": {
+    "version": "ttg_batch_primary_market_v9_short_window_five_round",
+    "batch1_end": 1792659600,
+    "batch5_cap_wei": "625000000000000000000000000000",
+    "batch5_cap_ether_units": "625e9"
+  },
+  "verdict": "L7_PIN_PASS"
+}

@@ -103,8 +103,8 @@ export type GovernanceParamsPublicRoundRow = {
 };
 
 /**
- * ACTIVE: five Norm primary batches (unlock ladder) — not legacy 800k/1.2M/3M rounds.
- * Sum is the near-term Norm ladder; remainder of public 50% stays unscheduled until governance.
+ * ACTIVE: V9 短窗五轮 (V9_SHORT_WINDOW_FIVE_ROUND) — not legacy 800k/1.2M/3M rounds.
+ * Sum is the near-term public ladder (3.905% of 25T); remainder of public 50% stays in the vault.
  */
 export const GOVERNANCE_PUBLIC_SALE_ROUNDS: readonly GovernanceParamsPublicRoundRow[] = [
   {
@@ -117,37 +117,37 @@ export const GOVERNANCE_PUBLIC_SALE_ROUNDS: readonly GovernanceParamsPublicRound
   {
     id: "norm_batch_2",
     labelKey: "governance_params_treasury_policy_round_norm_batch_2",
-    ttgUnits: 3_750_000_000,
-    ofSupplyPct: 0.015,
-    ofPublicPct: 0.03,
+    ttgUnits: 6_250_000_000,
+    ofSupplyPct: 0.025,
+    ofPublicPct: 0.05,
   },
   {
     id: "norm_batch_3",
     labelKey: "governance_params_treasury_policy_round_norm_batch_3",
-    ttgUnits: 18_750_000_000,
-    ofSupplyPct: 0.075,
-    ofPublicPct: 0.15,
+    ttgUnits: 31_250_000_000,
+    ofSupplyPct: 0.125,
+    ofPublicPct: 0.25,
   },
   {
     id: "norm_batch_4",
     labelKey: "governance_params_treasury_policy_round_norm_batch_4",
-    ttgUnits: 168_750_000_000,
-    ofSupplyPct: 0.675,
-    ofPublicPct: 1.35,
+    ttgUnits: 312_500_000_000,
+    ofSupplyPct: 1.25,
+    ofPublicPct: 2.5,
   },
   {
     id: "norm_batch_5",
     labelKey: "governance_params_treasury_policy_round_norm_batch_5",
-    ttgUnits: 2_025_000_000_000,
-    ofSupplyPct: 8.1,
-    ofPublicPct: 16.2,
+    ttgUnits: 625_000_000_000,
+    ofSupplyPct: 2.5,
+    ofPublicPct: 5,
   },
 ] as const;
 
 export const GOVERNANCE_PUBLIC_SALE_TOTAL = {
-  ttgUnits: 2_217_500_000_000,
-  ofSupplyPct: 8.87,
-  ofPublicPct: 17.74,
+  ttgUnits: 976_250_000_000,
+  ofSupplyPct: 3.905,
+  ofPublicPct: 7.81,
 } as const;
 
 export type GovernanceParamsPhaseContrastRow = {

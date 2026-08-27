@@ -1,18 +1,25 @@
 /**
  * Local `/traveltrust` public-sale / unlock plan (product SSOT).
- * Amounts: 0.005% then ×3 ×5 ×9 ×12. Batch 1 from 2026-10-15, then +2 months.
+ * Plan: V9 短窗五轮 (`V9_SHORT_WINDOW_FIVE_ROUND`) — amounts 3.905% of 25T, short windows + gaps.
  * First-paint quotes this ladder only (batch 1 = 1 USDC ≈ 1,000,000 TTG).
- * Contracts are updated later to match this local batch mix — do not
- * overwrite homepage copy from live mainnet overlay / FTB / Official www.
+ * Live mainnet PM pin executed 2026-08-26 (tx 0x048c6d29…); Official www may lag until a V9 hop.
  * Not staking APY.
  */
+
+export const TTG_SALE_SCHEDULE_PIN = "V9_SHORT_WINDOW_FIVE_ROUND" as const;
+export const TTG_SALE_SCHEDULE_NAME_ZH = "V9 短窗五轮" as const;
 
 export const TTG_PUBLIC_SALE_MIN_USDC = 1 as const;
 
 export const TTG_TOTAL_SUPPLY = 25_000_000_000_000 as const;
 export const TTG_PUBLIC_UNLOCK_FIRST_PCT = 0.00005 as const;
-export const TTG_PUBLIC_UNLOCK_MULTIPLES = [1, 3, 5, 9, 12] as const;
+/** Quantity vs previous batch (rounds 4–5 taper; do not market as a permanent ×N law). */
+export const TTG_PUBLIC_UNLOCK_MULTIPLES = [1, 5, 5, 10, 2] as const;
 export const TTG_PUBLIC_UNLOCK_CLASS = "TTG_PUBLIC_SALE_BATCH_LADDER_LOCAL" as const;
+
+export const TTG_PUBLIC_UNLOCK_AMOUNTS_TTG = [
+  1_250_000_000, 6_250_000_000, 31_250_000_000, 312_500_000_000, 625_000_000_000,
+] as const;
 
 /** Owner sale prices (USDC per TTG) for batches 1–5. */
 export const TTG_PUBLIC_SALE_UNIT_PRICES_USDC = [
@@ -21,11 +28,21 @@ export const TTG_PUBLIC_SALE_UNIT_PRICES_USDC = [
 
 export const TTG_PUBLIC_UNLOCK_DATES = [
   "2026-10-15T09:00:00Z",
-  "2026-12-15T09:00:00Z",
-  "2027-02-15T09:00:00Z",
-  "2027-04-15T09:00:00Z",
-  "2027-06-15T09:00:00Z",
+  "2026-11-12T09:00:00Z",
+  "2027-01-12T09:00:00Z",
+  "2027-03-09T09:00:00Z",
+  "2027-05-06T09:00:00Z",
 ] as const;
+
+export const TTG_PUBLIC_UNLOCK_END_DATES = [
+  "2026-10-22T09:00:00Z",
+  "2026-11-26T09:00:00Z",
+  "2027-02-02T09:00:00Z",
+  "2027-04-08T09:00:00Z",
+  "2027-06-20T09:00:00Z",
+] as const;
+
+export const TTG_PUBLIC_UNLOCK_WINDOW_DAYS = [7, 14, 21, 30, 45] as const;
 
 export type TtgUnlockBatchStatus = "upcoming" | "planned" | "featured";
 
@@ -36,6 +53,8 @@ export type TtgUnlockBatch = {
   pctOfTotal: number;
   unitPriceUsdc: number;
   at: string;
+  endAt: string;
+  windowDays: number;
   status: TtgUnlockBatchStatus;
 };
 
@@ -47,14 +66,6 @@ export type TtgPublicSaleFocus = {
 };
 
 function buildBatches(): readonly TtgUnlockBatch[] {
-  const first = TTG_TOTAL_SUPPLY * TTG_PUBLIC_UNLOCK_FIRST_PCT;
-  const amounts: number[] = [];
-  let prev = first;
-  for (let i = 0; i < TTG_PUBLIC_UNLOCK_MULTIPLES.length; i++) {
-    const amount = i === 0 ? first : prev * TTG_PUBLIC_UNLOCK_MULTIPLES[i];
-    amounts.push(amount);
-    prev = amount;
-  }
   const statuses: TtgUnlockBatchStatus[] = [
     "upcoming",
     "planned",
@@ -62,13 +73,15 @@ function buildBatches(): readonly TtgUnlockBatch[] {
     "planned",
     "featured",
   ];
-  return amounts.map((amountTtg, i) => ({
+  return TTG_PUBLIC_UNLOCK_AMOUNTS_TTG.map((amountTtg, i) => ({
     id: (i + 1) as TtgUnlockBatch["id"],
     multipleFromPrev: TTG_PUBLIC_UNLOCK_MULTIPLES[i],
     amountTtg,
     pctOfTotal: amountTtg / TTG_TOTAL_SUPPLY,
     unitPriceUsdc: TTG_PUBLIC_SALE_UNIT_PRICES_USDC[i],
     at: TTG_PUBLIC_UNLOCK_DATES[i],
+    endAt: TTG_PUBLIC_UNLOCK_END_DATES[i],
+    windowDays: TTG_PUBLIC_UNLOCK_WINDOW_DAYS[i],
     status: statuses[i],
   }));
 }
@@ -85,6 +98,7 @@ export const TTG_PUBLIC_UNLOCK_TOTAL_PCT = TTG_PUBLIC_UNLOCK_TOTAL_TTG / TTG_TOT
 export const TTG_PUBLIC_UNLOCK_META = {
   unlockClass: TTG_PUBLIC_UNLOCK_CLASS,
   publicAllocationPct: 0.5,
+  saleSchedulePin: TTG_SALE_SCHEDULE_PIN,
 } as const;
 
 export function formatTtgUnlockAmount(amountTtg: number): string {
@@ -93,7 +107,9 @@ export function formatTtgUnlockAmount(amountTtg: number): string {
 
 export function formatUnlockPct(pctOfTotal: number): string {
   const asPercent = pctOfTotal * 100;
-  if (asPercent >= 1) return `${asPercent.toFixed(1)}%`;
+  if (asPercent >= 1) {
+    return `${asPercent.toFixed(3).replace(/\.?0+$/, "")}%`;
+  }
   return `${asPercent.toFixed(3)}%`;
 }
 
