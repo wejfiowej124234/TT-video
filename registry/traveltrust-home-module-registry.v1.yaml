@@ -112,12 +112,12 @@ this_wave_release_policy:
   unlock: explicit RELEASE_SCOPE including that Module ID + Owner auth
 
 production_runtime_observation:
-  sampled_utc: "2026-08-20T08:55:00Z"
+  sampled_utc: "2026-08-27T03:15:00Z"
   url: https://www.web3-ttg.com/traveltrust
   pin_baseline_id: TT-OFFICIAL-OPS-20260820-V9
-  pin_git_sha: 3e356617a498b0faac42e4ae457343d36294a770
-  live_build_time: "2026-08-20T00:51:57Z"
-  fly_image_tag: hybrid-live-auth-pin-nontarget-v9-20260820
+  pin_git_sha: 7b25440f9fe26dae3a5ed2c10c7b57eb1716c539
+  live_build_time: "2026-08-27T02:34:57Z"
+  fly_image_tag: deployment-01M10H54624RMXJ6XCAH986TG6
   session_bootstrap: v8
   superseded_pin_git_sha: daa5ae87b8c1af548c6beff6dd3451e5d386acf2
   rolled_back_overlay_git_sha: 2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b
@@ -138,10 +138,11 @@ production_runtime_observation:
     (no Public-windows Phase-1 overlay). Do not rename OPS-v9 to M07.
 
 staging_runtime_observation:
-  sampled_utc: "2026-08-20T11:25:00Z"
+  sampled_utc: "2026-08-26T04:00:00Z"
   url: https://tt-web-staging.fly.dev/traveltrust
-  git_sha: 3e356617a498b0faac42e4ae457343d36294a770
-  build_time: "2026-08-20T10:50:46Z"
+  git_sha: CANDIDATE_NOT_OFFICIAL_BUNDLE
+  living_staging_www: SEE_STAGING_RELEASE_IDENTITY
+  build_time: SEE_STAGING_RELEASE_IDENTITY
   psg_release_version: PSG-REL-20260720-WEB3-CAND-V2
   http_status: 200
   section_ids_present: [hero, trust, settlement, unlock, liquidity, roles, start]
@@ -153,10 +154,10 @@ staging_runtime_observation:
   superseded_probe_git_sha: 2ba08bd4ea4f018e71abd37fc76a9763c9cc8fb8
   superseded_probe_build_time: "2026-08-15T12:30:19Z"
   note: >
-    Living Staging www product identity = OPS-v9 pin 3e356617 (cite rebuild · staging env).
-    Wave-D2 probe 2ba08bd4 / 2026-08-15 = SUPERSEDED as living Staging www.
-    Expected Difference vs Official: build_time / Candidate contract_profile / Staging API Sepolia.
-    Do not claim Staging isomorphic to Official pixels or mainnet API.
+    CANDIDATE_NOT_OFFICIAL_BUNDLE — living Staging www SHA is Candidate identity
+    (GET https://tt-web-staging.fly.dev/api/release-identity). Do not copy Official
+    Bundle www SHA 7b25440f… here. Expected Difference vs Official: SHA / build_time /
+    Candidate contract_profile / Staging API Sepolia. Wave-D2 probe 2ba08bd4 SUPERSEDED.
 
 local_source_observation:
   sampled_utc: "2026-08-19T11:12:00Z"

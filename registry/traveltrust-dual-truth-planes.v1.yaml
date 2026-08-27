@@ -7,6 +7,10 @@ tt_production_go: NO_GO
 forbidden_product_master_ladder:
   - "Local → Staging → Production as product SSOT"
 
+unique_product_promotion_protocol: V9_FIX_WORKFLOW
+unique_product_promotion_human: V9修复工作流程
+unique_product_promotion_ssot: docs/runbook/TT-V9-FIX-WORKFLOW-LATEST.md
+
 planes:
   PRODUCT_WEBSITE:
     first_truth: Official Production living pin
@@ -14,9 +18,9 @@ planes:
     living_pin_id: TT-OFFICIAL-OPS-20260820-V9
     official_url: https://www.web3-ttg.com
     identity:
-      git_sha: "3e356617a498b0faac42e4ae457343d36294a770"
-      build_time: "2026-08-20T00:51:57Z"
-      fly_image: "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820"
+      git_sha: "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539"
+      build_time: "2026-08-27T02:34:57Z"
+      fly_image: "registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6"
     local_staging_role: mirror_rebase_from_official
     includes:
       - routes

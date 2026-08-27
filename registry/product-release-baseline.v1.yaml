@@ -1,0 +1,95 @@
+# Product / Release Integrity Bundle — Verified Release Baseline (living parent).
+# Gate: scripts/gates/check-product-release-baseline-invariants.sh
+# Companion: scripts/gates/check-rtvp-release-gate.py (V9修复工作流程 · alias RTVP_V1)
+# Missing any required invariant → RELEASE_INVARIANT_REGRESSION (no Staging/Official Promotion).
+# FTB / Web3 / KEEP-48h / TT_PRODUCTION_GO are out of scope for this file.
+schema: traveltrust.product_release_baseline.v1
+machine_key: TT_PRODUCT_RELEASE_BASELINE
+status: VERIFIED_RELEASE_BASELINE
+tt_production_go: NO_GO
+official_promotion: FORBIDDEN_UNTIL_OWNER
+
+verified_release_baseline_bundle:
+  www_sha: "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539"
+  www_build_time: "2026-08-27T02:34:57Z"
+  api_sha: "6255987700405ebaced1824b5838c25a2797f17c"
+  runtime_reality_stamp: OFFICIAL_RUNTIME_REALITY_PASS_STOP
+  identity_sha_is_not_git_checkout: true
+
+inherit:
+  any_future_candidate_must_parent_this_bundle: true
+  # RTVP: Local/Staging/Official must parent this Bundle + invariants.
+  # Do NOT require www_sha == api_sha == git checkout.
+  local_staging_official_must_parent_bundle: true
+  www_and_api_sha_may_differ: true
+  staging_api_must_not_equal_www_bundle_sha: true
+  do_not_git_checkout_identity_sha: true
+
+promotion_policy:
+  unique_product_promotion_protocol: true
+  unique_product_defect_protocol: V9_FIX_WORKFLOW_ONLY
+  agent_default_intake: true
+  id: V9_FIX_WORKFLOW
+  human_name: V9修复工作流程
+  alias_rtvp: RTVP_V1
+  revision: V9_FIX_WORKFLOW
+  rtvp_compat: V1.1_PLANE_CLOSED
+  required: true
+  ssot: docs/runbook/TT-V9-FIX-WORKFLOW-LATEST.md
+  machine_ssot: docs/runbook/TT-RISK-TIERED-VERIFIED-PROMOTION-FLOW.md
+  plane_closure_ssot: registry/rtvp-plane-closure.v1.yaml
+  cite_set: registry/rtvp-cite-set.v1.yaml
+  candidate_must_parent_verified_bundle: true
+  local_to_official_direct: forbidden
+  mixed_living_bake: forbidden
+  staging_hotfix: forbidden
+  delta_reality_default: true
+  plane_closure_required: true
+  inspect_before_repair: true
+  named_error_probe_derive: true
+  protocol_bar_ceiling: 95
+  official_promotion_is_not_tt_production_go: true
+  artifact_sha_unification_rebake: forbidden
+
+risk_tiers:
+  L1:
+    scope: frontend_ui_ux_copy_layout
+    default_verify: affected_fe_tests_build_staging_delta_official_delta
+  L2:
+    scope: api_login_crud_media_db_write_authz
+    default_verify: local_api_db_reality_staging_real_data_official_keypath
+  L3:
+    scope: migration_web3_money_governance_mainnet
+    default_verify: hard_gate_evidence_timelock_full_reality
+
+required_invariants:
+  frontend_production_build: REQUIRED
+  migration_history_immutable: REQUIRED
+  migration_lf_canonical: REQUIRED
+  docker_migration_crlf_normalization: REQUIRED
+  migration_checksum_gate: REQUIRED
+  gitattributes_migration_eol_lf: REQUIRED
+  clean_worktree_not_required_for_local_gate: true
+  parent_bundle_www_api: REQUIRED
+  runtime_identity: REQUIRED
+  release_manifest: REQUIRED
+  non_target_diff: REQUIRED
+  known_residuals_causal_split: REQUIRED
+
+parent:
+  official_www_sha: "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539"
+  official_api_sha: "6255987700405ebaced1824b5838c25a2797f17c"
+  superseded_ops_v9_www_sha: "3e356617a498b0faac42e4ae457343d36294a770"
+  superseded_ops_v9_api_sha: "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51"
+  product_reality_sha: "86287ff02b82c13056b36e6cb5a2f89769cafe39"
+  restored_from: "ddc022b6e57e8374a72a42b51e017020db2872e0"
+
+reconciliation:
+  docker_migration_crlf_normalization: RESTORED_INVARIANT
+
+migration_anchor:
+  version: "20260708120000"
+  file: crates/api/migrations/20260708120000_orders_service_completion_bilateral.sql
+  sha384: "5d859f03faa47a80f0ae4006f8d49620ec004213eb726151bbb61ed2beffd2680a3674d6f0fc686554ddd306e9da0efb"
+  line_ending: LF
+  immutable: true

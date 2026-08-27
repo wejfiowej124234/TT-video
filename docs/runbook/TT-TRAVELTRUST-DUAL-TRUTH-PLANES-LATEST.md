@@ -8,7 +8,12 @@
 
 ---
 
-## 0 · Forbidden slogan
+**UNIQUE_PRODUCT_PROMOTION_PROTOCOL:** 产品升阶只认 [V9修复工作流程](./TT-V9-FIX-WORKFLOW-LATEST.md)（`V9_FIX_WORKFLOW`）。Living Official www `7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` · API `6255987700405ebaced1824b5838c25a2797f17c`。
+
+**Forbidden slogan as product master:** `Local → Staging → Production`  
+**Required:** derive Candidate **from Official pin**, verify ① then ②, write back Official.
+
+**Not this protocol:** TTG V9 contracts · OPS-v9 program id · section 3 WEB3 ladder below · `TT_PRODUCTION_GO`.
 
 Do **not** treat as product SSOT:
 
@@ -54,7 +59,7 @@ Local → Staging → Production   ❌ as product master ladder
 ④ PRODUCT_PARITY PASS (Official = Local = Staging on product surface)
 ⑤ Freeze unified Product Baseline
 ⑥ Then discover/fix defects
-⑦ Local fix → Staging verify → Owner → Production publish
+⑦ **V9修复工作流程**（从官网 Pin 派生 → ①② 验证 → 写回官网）· **不是** Local 当母版
 ⑧ New Production becomes next Product SSOT
 ```
 
@@ -73,7 +78,8 @@ V9 Design Freeze → Clean → Triage → Local PASS → Audit #1 PASS
 → then update Official Web3 display /meta / Registry / Indexer / whitepaper Delta
 ```
 
-Locks: no Candidate Solidity edit · no Exact-Match early · no Mainnet · no `TT_PRODUCTION_GO` flip.
+Locks: no Candidate Solidity edit · no Exact-Match early · no Mainnet · no `TT_PRODUCTION_GO` flip.  
+**Name clash:** this WEB3 “V9 Design Freeze” ladder **≠** [V9修复工作流程](./TT-V9-FIX-WORKFLOW-LATEST.md) (product promotion).
 
 **ETA waiter is P0** over all product Capture/rebase modules (P1). Near ETA (−30m) drop docs; protect seed/buy window.
 

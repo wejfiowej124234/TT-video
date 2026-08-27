@@ -1,15 +1,16 @@
 # Official Living Pin Index（唯一入口）
 
-**STATUS:** `TODAYS_OFFICIAL_STABLE` · **Wave-0→D1/D2 closure track**  
-**Living baseline:** **TravelTrust Official · OPS-2026.08.20-v9**  
+**STATUS:** `TODAYS_OFFICIAL_STABLE` · **`OFFICIAL_RUNTIME_REALITY_PASS_STOP`**  
+**Living baseline:** **TravelTrust Official** · V9 hop-bake live (`7b25440f9` / `625598770`)  
 **Machine:** [`TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json`](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json)  
-**Human:** [`TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md`](./TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md)  
+**Human (historical OPS-v9 bake):** [`TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md`](./TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md) · **not** live identity after 2026-08-26  
 **`TT_PRODUCTION_GO`:** `NO_GO`  
 **交付模式：** **个人独立开发（Solo）** · **不开任何 PR** · Owner Self Review + push + Evidence / Gate / Archive — SSOT [`TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST`](./TT-PSG-SOLO-DEVELOPER-WORKFLOW-LATEST.md)
 
 > 凡写「当前 Official www / 官网产品真源 / living www pin」→ **只认本页 + Freeze JSON**。  
 > 本 pin = **PRODUCT / WEBSITE 平面 Living SSOT**（Local / Staging **必须向本 pin 对齐** · **禁止**以 Local/Staging 当产品母版）。  
 > **Active program:** [Official-First Full Convergence](./TT-OFFICIAL-FIRST-FULL-CONVERGENCE-LATEST.md) — 未取得 `PRODUCT_AND_DOCUMENTATION_PARITY_PASS` 前 **禁止**产品优化 / CMS 修复 / UI·UX 改造。  
+> **UNIQUE_PRODUCT_PROMOTION_PROTOCOL:** 产品升阶只认 [V9修复工作流程](./TT-V9-FIX-WORKFLOW-LATEST.md)。**口号：** 从本 pin **派生** → ①② 验证 → 写回；Local 不是产品母版。≠ TTG V9 合约 ≠ Dual-Plane Web3 Sepolia 梯。  
 > 双平面宪法：[Dual Truth Planes](./TT-TRAVELTRUST-DUAL-TRUTH-PLANES-LATEST.md) · Capture：[Official Product Reality Capture](./TT-OFFICIAL-PRODUCT-REALITY-CAPTURE-LATEST.md)。  
 > Web3/链真源仍是 [FTB](./TT-FINAL-TRUTH-BASELINE-LATEST.md) + V9 Candidate（**≠** 官网 Web3 文案；官网 Web3 用 LIVE/TARGET/LEGACY）。  
 > **OPS-v9 本窗口暂不可改产品字节**；矩阵/文档对齐本真源，不以 M07 overlay 冒充 OPS-v9。  
@@ -19,23 +20,25 @@
 
 | 项 | 值 |
 |----|-----|
-| 对外名 | TravelTrust Official · OPS-2026.08.20-v9 |
-| 机读 ID | `TT-OFFICIAL-OPS-20260820-V9` |
+| 对外名 | TravelTrust Official · living 2026-08-27 |
+| 机读 ID | `TT-OFFICIAL-OPS-20260820-V9`（program id retained · **live bytes ≠ 08-20 bake**） |
 | Web | `https://www.web3-ttg.com` |
-| Identity `git_sha` | `3e356617a498b0faac42e4ae457343d36294a770` |
-| `build_time` | `2026-08-20T00:51:57Z` |
-| Fly image | `registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820` |
-| Digest | `sha256:b80bccb5f5c8c0e2b6e854c49f83fbbeb2ecefad70290339a8db6105eb608b16` |
-| Session bootstrap | **v8**（baked in image tag **v9**） |
-| Header login | **OWNER_CONFIRMED**（C2 硬刷新 · 用户菜单正常） |
+| Identity `git_sha` | `7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` |
+| `build_time` | `2026-08-27T02:34:57Z` |
+| Fly image | `registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6` |
+| Digest | `sha256:13f3c0013788461fd119e88434a4e01e70f282fc9f4dd5a049cb23ae385ad8bf` |
+| Runtime Reality | **`OFFICIAL_RUNTIME_REALITY_PASS_STOP`** |
+| Header login | **OWNER_CONFIRMED**（Owner Official C1/C2 · 非 Staging `*@test.com`） |
 | Hybrid tip | `/` · `/traveltrust` · `/auth` |
 | Hybrid visual pin | `/market` · `/did-rank` · `/community` |
-| API | `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **untouched by www freeze** |
+| API | `6255987700405ebaced1824b5838c25a2797f17c` · Fly `tt-api-prod:625598770` |
 
 ## Forbidden as living Official
 
 | Handle | Why |
 |--------|-----|
+| `f148be96…` / `deployment-01M0XZE5709ZC2WABY6M44VNEP` | 2026-08-26 unified Candidate living pin · **SUPERSEDED as living** after V9 hop `7b25440f9…` |
+| `3e356617…` / `hybrid-live-auth-pin-nontarget-v9-20260820` | OPS-2026.08.20-v9 bake · **SUPERSEDED as living** after Runtime Reality PASS_STOP |
 | `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` | 08-16 pin · **SUPERSEDED** |
 | `hybrid-live-auth-pin-nontarget-v8-20260820` | Misnamed · bootstrap **v7** · breaks Header login |
 | `TT-OFFICIAL-OPS-20260820`（无 `-V9`） | Pre-v9 day stamp · **SUPERSEDED** |
@@ -45,10 +48,7 @@
 
 ## Restore
 
-```bash
-bash scripts/dev/restore-tt-web-production-product-pin.sh --check-only
-TT_OFFICIAL_WWW_RESTORE_PIN=1 bash scripts/dev/restore-tt-web-production-product-pin.sh
-```
+Living restore handle = current Fly tag `deployment-01M10H54624RMXJ6XCAH986TG6` (see Freeze JSON). Previous `f148be96…` / OPS-v9 images remain rollback archaeology only. **Do not** treat restore as Production GO.
 
 ## Plan track (this closure)
 
@@ -75,14 +75,15 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 
 ## Local / Staging / Repo 一比一映射（写死）
 
-**产品身份必须一致：** `git_sha=3e356617a498b0faac42e4ae457343d36294a770`（对外名 = 本页 OPS-v9）。
+**Living Official 产品身份（2026-08-27）：** `git_sha=7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` · `build_time=2026-08-27T02:34:57Z`。  
+**上一针** `f148be96…` / `2026-08-26T02:46:51Z` 与 **历史 OPS-v9 08-20 bake** `3e356617…` / `2026-08-20T00:51:57Z` = **SUPERSEDED as living**（表内仍作考古）。
 
 | 平面 | 映射 | 禁止 |
 |------|------|------|
 | **Repo** | `main` == `release/official-ops-v9-product-ssot` tip（工程 SSOT） | 旧 tip / `2ba08bd4` / `daa5` 当活工程线 |
 | **Local** | Release WT cite = `3e356617…`；本地开发对照本 pin | 用 Staging 旧针反推 Official；声称 checkout = 官网像素 |
-| **Staging www** | `release-identity.git_sha` = `3e356617…`（cite 重编 · staging env） | 把官网生产镜像原样钉进 Staging；`2ba08bd4` 当活面 |
-| **Official www** | Fly 镜像 `hybrid-…-v9-20260820` · `build_time=2026-08-20T00:51:57Z` | 无解锁 bake / M07 冒充 |
+| **Staging www** | Candidate（staging env · **≠** Official Fly tag · 禁止把官网 SHA 抄进 staging_runtime_observation） | 把官网生产镜像原样钉进 Staging；`2ba08bd4` 当活面 |
+| **Official www** | Fly `deployment-01M10H54624RMXJ6XCAH986TG6` · `build_time=2026-08-27T02:34:57Z` · `7b25440f9…` | 把 `f148be96` / `3e356617` / hybrid-v9-20260820 当活面；M07 冒充 |
 
 **Expected Difference：** Staging 新 bake 的 `build_time` / image tag 可 ≠ 官网冻结墙钟。  
 **本波实测（2026-08-20）：** Official `build_time=2026-08-20T00:51:57Z` · Staging `build_time=2026-08-20T10:50:46Z` · 双方 `git_sha=3e356617…`。
@@ -91,9 +92,9 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 
 | 平面 | 活面值 | 在 V9 下的角色 |
 |------|--------|----------------|
-| Official www | `3e356617…` / `2026-08-20T00:51:57Z` | Product Truth |
-| Staging www | `3e356617…` / `2026-08-20T10:50:46Z` | 产品身份 1:1 |
-| Official API | `8df2ab21…` / chain=`1` | **V9 配对**（≠ 产品 pin） |
+| Official www | `7b25440f9…` / `2026-08-27T02:34:57Z` | Product Truth（living） |
+| Staging www | Candidate（staging env · 禁止抄 Official www SHA） | 产品身份对齐 living Official · **≠** Production GO |
+| Official API | `625598770…` / chain=`1` | **living 配对**（≠ FTB） |
 | Staging API | `1915ec4d…` / chain=`11155111` | **V9 映射 ED**（sha≠pin · Sepolia · CONFIRM_DESIGN） |
 | Staging www→API | `tt-api-staging.fly.dev` | 禁止指向 Official API |
 | Web3 FTB 地址 | FTB Active Truth | **另闸**（本页不改链） |

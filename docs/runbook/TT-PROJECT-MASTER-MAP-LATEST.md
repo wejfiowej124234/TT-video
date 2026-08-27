@@ -12,9 +12,10 @@
 **Dashboard:** [`TT-PROJECT-ARCHITECTURE-COVERAGE-DASHBOARD-LATEST.md`](./TT-PROJECT-ARCHITECTURE-COVERAGE-DASHBOARD-LATEST.md)  
 **Gate:** `python scripts/dev/check-project-final-master-map.py` · `python scripts/dev/check-project-architecture-taxonomy.py`  
 **Official live surface:** `https://www.web3-ttg.com` · API `https://api.web3-ttg.com`  
-**`TT_PRODUCTION_GO`:** `NO_GO`（本包是导航地图，不翻转 GO）
+**`TT_PRODUCTION_GO`:** `NO_GO`（本包是导航地图，不翻转 GO）  
+**产品升阶唯一协议：** [V9修复工作流程](./TT-V9-FIX-WORKFLOW-LATEST.md)（`UNIQUE_PRODUCT_PROMOTION_PROTOCOL` · ≠ TTG V9 合约轨）
 
-> **Official 产品真源（活面 · OPS-2026.08.20-v9）：** `https://www.web3-ttg.com` · `git_sha=3e356617a498b0faac42e4ae457343d36294a770` · `build_time=2026-08-20T00:51:57Z` · image `hybrid-live-auth-pin-nontarget-v9-20260820` · bootstrap **v8** · API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` · **≠** git checkout · historical `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` = **SUPERSEDED** as living Official · **≠** Candidate v2 · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md)  
+> **Official 产品真源（活面）：** `https://www.web3-ttg.com` · `git_sha=7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` · `build_time=2026-08-27T02:34:57Z` · image `deployment-01M10H54624RMXJ6XCAH986TG6` · API `6255987700405ebaced1824b5838c25a2797f17c` · **≠** git checkout · previous Bundle `f148be96ef2155f5843ae6abd773941fcd719a24` / API `8e7e68028c91913bc44c715ec0f7bde5e923584b` SUPERSEDED as living · historical OPS-v9 bake `3e356617a498b0faac42e4ae457343d36294a770` / API `8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51` = **SUPERSEDED** as living Official · **≠** Candidate v2 · SSOT [`TT-OFFICIAL-LIVING-PIN-INDEX-LATEST`](./TT-OFFICIAL-LIVING-PIN-INDEX-LATEST.md) · 升阶协议 [`TT-V9-FIX-WORKFLOW-LATEST`](./TT-V9-FIX-WORKFLOW-LATEST.md)  
 > **GO 资格（Cycle2 overlay · 不改 freeze 8）：** `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · freeze unique entry `STOP` `required_before_go=8` · `current_required_before_go=0` · 下一步 = Owner 书面 **GO** 或 **继续 NO_GO**（`NOT_THIS_TURN`）· `TT_PRODUCTION_GO=NO_GO` · **禁止自动签发** · **禁止 bake www**
 
 这些包是 **把已有真源组织成能看懂、排障、开发、发布的工程地图**。  
@@ -329,7 +330,7 @@ Web3 须见 `OFFICIAL_LIVE` / `DEPLOYED` / `SCHEDULED_WAITING_ETA` / `NOT_DEPLOY
 1. **THREE_TRUTH_PLANES。** Official = 产品现实取证面；Web3 = L7+Timelock 最高真源；FTB = 冻结锚。地图组织真源，不是新 SSOT。  
 2. **矩阵服从 Reality。** 禁止为整齐而合并生命周期。  
 3. **一张矩阵一个问题。** 合约依赖 ≠ 一美元去向 ≠ 谁能改系统。  
-4. **先定位包和层，再动手。** 登录失败 = GP-01，不是改账号；Phase 1 不修 405 刷绿。  
+4. **先定位包和层，再动手。** 登录失败 = GP-01，不是改账号；Phase 1 不修 405 刷绿。官网产品缺陷升阶只走 [V9修复工作流程](./TT-V9-FIX-WORKFLOW-LATEST.md)，地图不是第二套 hop。  
 5. **L7 ≠ L8。** `DEPLOYED ≠ WIRED ≠ OFFICIAL_LIVE ≠ CLOSED_REALITY`。  
 6. **Pack 12 红绿灯图保留。** 静态地图 → 可导航工程地图。  
 7. **官网是活表面。** 登录故障记进 08 + 03，不换源。  
