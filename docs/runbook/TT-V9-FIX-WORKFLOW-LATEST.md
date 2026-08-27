@@ -6,7 +6,7 @@
 **Machine id:** `V9_FIX_WORKFLOW` · `V9_FIX_WORKFLOW_ONLY` · 机读别名 `RTVP_V1`（**不是**第二套流程）  
 **`TT_PRODUCTION_GO`:** **out of scope** · Official 写回 **≠** Production GO · **Not FTB**
 
-**Living Official parent:** www `5c70d833a684e665d255f458a0efa1aa2b56b0cf` · API `8c522cdcfc655cfdcc5866d219dfc3254d833e32`
+**Living Official parent:** www `5b98879c19d5630b29bfc236e1fba255219422d4` · API `8c522cdcfc655cfdcc5866d219dfc3254d833e32`
 
 **SSOT 只此一篇人读 +** [`registry/v9-fix-workflow.v1.yaml`](../../registry/v9-fix-workflow.v1.yaml)
 

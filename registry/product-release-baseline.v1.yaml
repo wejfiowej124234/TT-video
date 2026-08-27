@@ -10,8 +10,8 @@ tt_production_go: NO_GO
 official_promotion: FORBIDDEN_UNTIL_OWNER
 
 verified_release_baseline_bundle:
-  www_sha: "5c70d833a684e665d255f458a0efa1aa2b56b0cf"
-  www_build_time: "2026-08-27T09:31:29Z"
+  www_sha: "5b98879c19d5630b29bfc236e1fba255219422d4"
+  www_build_time: "2026-08-27T10:22:32Z"
   api_sha: "8c522cdcfc655cfdcc5866d219dfc3254d833e32"
   runtime_reality_stamp: OFFICIAL_RUNTIME_REALITY_PASS_STOP
   identity_sha_is_not_git_checkout: true
@@ -83,7 +83,7 @@ required_invariants:
   known_residuals_causal_split: REQUIRED
 
 parent:
-  official_www_sha: "5c70d833a684e665d255f458a0efa1aa2b56b0cf"
+  official_www_sha: "5b98879c19d5630b29bfc236e1fba255219422d4"
   official_api_sha: "8c522cdcfc655cfdcc5866d219dfc3254d833e32"
   superseded_ops_v9_www_sha: "3e356617a498b0faac42e4ae457343d36294a770"
   superseded_ops_v9_api_sha: "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51"

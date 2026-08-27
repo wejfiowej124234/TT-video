@@ -15,6 +15,12 @@
   },
   "supersedes_as_living_official_product_surface": [
     {
+      "git_sha": "5c70d833a684e665d255f458a0efa1aa2b56b0cf",
+      "build_time": "2026-08-27T09:31:29Z",
+      "fly_image": "registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS",
+      "note": "V9 hop-bake 5c70d833 SUPERSEDED as living Official after hop 5b98879c (KEEP FeeRouterV2 protocol directory) · keep image for rollback archaeology"
+    },
+    {
       "git_sha": "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539",
       "build_time": "2026-08-27T02:34:57Z",
       "fly_image": "registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6",
@@ -61,17 +67,17 @@
   "live": {
     "web": "https://www.web3-ttg.com",
     "release_identity_url": "https://www.web3-ttg.com/api/release-identity",
-    "git_sha": "5c70d833a684e665d255f458a0efa1aa2b56b0cf",
-    "artifact_sha": "5c70d833a684e665d255f458a0efa1aa2b56b0cf",
-    "build_time": "2026-08-27T09:31:29Z",
+    "git_sha": "5b98879c19d5630b29bfc236e1fba255219422d4",
+    "artifact_sha": "5b98879c19d5630b29bfc236e1fba255219422d4",
+    "build_time": "2026-08-27T10:22:32Z",
     "identity_source": "docker-bake",
     "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
     "contract_profile": "mainnet_deployed_official_partial",
     "database_baseline": "production_surface",
     "cms_baseline": "public_display_10x4 + catalog_bake=1",
     "next_build_id": "PcXlBjBkbR9ie6QMvbLjv",
-    "fly_image": "registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS",
-    "fly_image_digest": "sha256:2faf87adaacebb17486c819a62f3a2974a8f9efff01f63b52b9d6d6ca6ad50d4",
+    "fly_image": "registry.fly.io/tt-web-prod:deployment-01M11BXAWWAKPJXCG225AC69BG",
+    "fly_image_digest": "sha256:4dfeb87fa2567b49bfc5a58d3175baa6ee51c9ace8fc1f32abc66bb155048303",
     "session_bootstrap": "v8",
     "session_bootstrap_note": "Image tag v9 carries bootstrap v8 (SKIP_ME_FETCH=0). Misnamed tag hybrid-…-v8 still had bootstrap v7 and breaks Header login hydrate.",
     "composition": {
@@ -87,16 +93,16 @@
       ],
       "pin_visual_source": "2026-08-16 Official visual lock (o37WNTNObGxE3TiJPI7Sl)"
     },
-    "note": "Living Official www after V9 hop-bake 5c70d833 (empty itinerary mode switch + protocol hash scroll). Identity SHA is live bake, not git checkout. Not Production GO. Parent Bundle 7b25440 SUPERSEDED as living."
+    "note": "Living Official www after V9 hop-bake 5b98879c (KEEP FeeRouterV2 live trip fee path). Identity SHA is live bake, not git checkout. Not Production GO. Parent Bundle 5c70d833 SUPERSEDED as living."
   },
   "last_live_observe": {
-    "utc": "2026-08-27T09:47:00Z",
+    "utc": "2026-08-27T10:33:00Z",
     "wave": "OFFICIAL_RUNTIME_REALITY_PASS_STOP",
-    "www_git_sha": "5c70d833a684e665d255f458a0efa1aa2b56b0cf",
-    "www_build_time": "2026-08-27T09:31:29Z",
+    "www_git_sha": "5b98879c19d5630b29bfc236e1fba255219422d4",
+    "www_build_time": "2026-08-27T10:22:32Z",
     "www_identity_source": "docker-bake",
     "www_psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
-    "fly_image_tag": "deployment-01M11900S0BWPHAW5CW7T70YDS",
+    "fly_image_tag": "deployment-01M11BXAWWAKPJXCG225AC69BG",
     "matches_pin": true,
     "home_http": 200,
     "api_git_sha": "8c522cdcfc655cfdcc5866d219dfc3254d833e32",
@@ -113,10 +119,10 @@
   },
   "identity_sha_is_not_product_bytes": true,
   "restore": {
-    "handle": "registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS",
-    "digest": "sha256:2faf87adaacebb17486c819a62f3a2974a8f9efff01f63b52b9d6d6ca6ad50d4",
-    "command": "fly deploy --image registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS -a tt-web-prod --ha=false",
-    "rollback_previous_ops_v9": "registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6",
+    "handle": "registry.fly.io/tt-web-prod:deployment-01M11BXAWWAKPJXCG225AC69BG",
+    "digest": "sha256:4dfeb87fa2567b49bfc5a58d3175baa6ee51c9ace8fc1f32abc66bb155048303",
+    "command": "fly deploy --image registry.fly.io/tt-web-prod:deployment-01M11BXAWWAKPJXCG225AC69BG -a tt-web-prod --ha=false",
+    "rollback_previous_ops_v9": "registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS",
     "rollback_pre_promotion": "registry.fly.io/tt-web-prod:deployment-01M0XZE5709ZC2WABY6M44VNEP",
     "must_not": [
       "claim Production GO",
