@@ -15,6 +15,12 @@
   },
   "supersedes_as_living_official_product_surface": [
     {
+      "git_sha": "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539",
+      "build_time": "2026-08-27T02:34:57Z",
+      "fly_image": "registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6",
+      "note": "V9 hop-bake 7b25440 SUPERSEDED as living Official after hop 5c70d833 (empty itinerary switch + protocol hash) · keep image for rollback archaeology"
+    },
+    {
       "git_sha": "f148be96ef2155f5843ae6abd773941fcd719a24",
       "build_time": "2026-08-26T02:46:51Z",
       "fly_image": "registry.fly.io/tt-web-prod:deployment-01M0XZE5709ZC2WABY6M44VNEP",
@@ -55,17 +61,17 @@
   "live": {
     "web": "https://www.web3-ttg.com",
     "release_identity_url": "https://www.web3-ttg.com/api/release-identity",
-    "git_sha": "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539",
-    "artifact_sha": "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539",
-    "build_time": "2026-08-27T02:34:57Z",
+    "git_sha": "5c70d833a684e665d255f458a0efa1aa2b56b0cf",
+    "artifact_sha": "5c70d833a684e665d255f458a0efa1aa2b56b0cf",
+    "build_time": "2026-08-27T09:31:29Z",
     "identity_source": "docker-bake",
     "psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
     "contract_profile": "mainnet_deployed_official_partial",
     "database_baseline": "production_surface",
     "cms_baseline": "public_display_10x4 + catalog_bake=1",
     "next_build_id": "PcXlBjBkbR9ie6QMvbLjv",
-    "fly_image": "registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6",
-    "fly_image_digest": "sha256:13f3c0013788461fd119e88434a4e01e70f282fc9f4dd5a049cb23ae385ad8bf",
+    "fly_image": "registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS",
+    "fly_image_digest": "sha256:2faf87adaacebb17486c819a62f3a2974a8f9efff01f63b52b9d6d6ca6ad50d4",
     "session_bootstrap": "v8",
     "session_bootstrap_note": "Image tag v9 carries bootstrap v8 (SKIP_ME_FETCH=0). Misnamed tag hybrid-…-v8 still had bootstrap v7 and breaks Header login hydrate.",
     "composition": {
@@ -81,19 +87,19 @@
       ],
       "pin_visual_source": "2026-08-16 Official visual lock (o37WNTNObGxE3TiJPI7Sl)"
     },
-    "note": "Living Official www after V9 hop-bake 7b25440 (traveler-facing copy). Identity SHA is live bake, not git checkout. Not Production GO. Parent Bundle f148be96 SUPERSEDED as living."
+    "note": "Living Official www after V9 hop-bake 5c70d833 (empty itinerary mode switch + protocol hash scroll). Identity SHA is live bake, not git checkout. Not Production GO. Parent Bundle 7b25440 SUPERSEDED as living."
   },
   "last_live_observe": {
-    "utc": "2026-08-27T03:15:00Z",
+    "utc": "2026-08-27T09:47:00Z",
     "wave": "OFFICIAL_RUNTIME_REALITY_PASS_STOP",
-    "www_git_sha": "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539",
-    "www_build_time": "2026-08-27T02:34:57Z",
+    "www_git_sha": "5c70d833a684e665d255f458a0efa1aa2b56b0cf",
+    "www_build_time": "2026-08-27T09:31:29Z",
     "www_identity_source": "docker-bake",
     "www_psg_release_version": "MAINNET-OFFICIAL-LIVE-PARTIAL",
-    "fly_image_tag": "deployment-01M10H54624RMXJ6XCAH986TG6",
+    "fly_image_tag": "deployment-01M11900S0BWPHAW5CW7T70YDS",
     "matches_pin": true,
     "home_http": 200,
-    "api_git_sha": "6255987700405ebaced1824b5838c25a2797f17c",
+    "api_git_sha": "8c522cdcfc655cfdcc5866d219dfc3254d833e32",
     "header_login": "OWNER_CONFIRMED",
     "runtime_reality": "OFFICIAL_RUNTIME_REALITY_PASS_STOP",
     "tt_production_go": "NO_GO"
@@ -107,10 +113,10 @@
   },
   "identity_sha_is_not_product_bytes": true,
   "restore": {
-    "handle": "registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6",
-    "digest": "sha256:13f3c0013788461fd119e88434a4e01e70f282fc9f4dd5a049cb23ae385ad8bf",
-    "command": "fly deploy --image registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6 -a tt-web-prod --ha=false",
-    "rollback_previous_ops_v9": "registry.fly.io/tt-web-prod:hybrid-live-auth-pin-nontarget-v9-20260820",
+    "handle": "registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS",
+    "digest": "sha256:2faf87adaacebb17486c819a62f3a2974a8f9efff01f63b52b9d6d6ca6ad50d4",
+    "command": "fly deploy --image registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS -a tt-web-prod --ha=false",
+    "rollback_previous_ops_v9": "registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6",
     "rollback_pre_promotion": "registry.fly.io/tt-web-prod:deployment-01M0XZE5709ZC2WABY6M44VNEP",
     "must_not": [
       "claim Production GO",
@@ -142,10 +148,10 @@
     "web3_default": "chain + API /meta — not www bake"
   },
   "api_untouched": {
-    "note": "Living Official API after V9 ENVIRONMENTAL hop; previous 8e7e68028 SUPERSEDED as living API pin",
+    "note": "Living Official API after V9 hop 8c522cdc; previous 625598770 SUPERSEDED as living API pin. www-only hop did not rebake API.",
     "historical_git_sha": "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51",
-    "live_git_sha": "6255987700405ebaced1824b5838c25a2797f17c",
-    "live_fly_image": "registry.fly.io/tt-api-prod:625598770",
+    "live_git_sha": "8c522cdcfc655cfdcc5866d219dfc3254d833e32",
+    "live_fly_image": "registry.fly.io/tt-api-prod:deployment-01M10SC0G961DYH81RD4A5VPD1",
     "meta_build_url": "https://api.web3-ttg.com/meta/build"
   },
   "already_frozen_surfaces": [

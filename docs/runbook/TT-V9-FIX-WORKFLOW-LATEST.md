@@ -6,7 +6,7 @@
 **Machine id:** `V9_FIX_WORKFLOW` · `V9_FIX_WORKFLOW_ONLY` · 机读别名 `RTVP_V1`（**不是**第二套流程）  
 **`TT_PRODUCTION_GO`:** **out of scope** · Official 写回 **≠** Production GO · **Not FTB**
 
-**Living Official parent:** www `7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` · API `6255987700405ebaced1824b5838c25a2797f17c`
+**Living Official parent:** www `5c70d833a684e665d255f458a0efa1aa2b56b0cf` · API `8c522cdcfc655cfdcc5866d219dfc3254d833e32`
 
 **SSOT 只此一篇人读 +** [`registry/v9-fix-workflow.v1.yaml`](../../registry/v9-fix-workflow.v1.yaml)
 
@@ -64,7 +64,7 @@ python scripts/gates/check-rtvp-release-gate.py --phase pin-retarget-preflight
 **本流程唯一口号：**
 
 ```text
-从官网 Living Pin 派生 Candidate
+从官网 live SHA 派生 Candidate（`LIVING_PARENT.yaml` / `release-identity`；Pin 未改针时禁止从旧 Bundle 开新 hop）
 → inspect（①本地 / ②测试网 / ③官网身份 + 工作区 + 部署/UI 对齐 · 先于修复）
 → ① 本地验证（含 FE npm run build + .next/BUILD_ID 戳）
 → ② Staging 验证
@@ -78,6 +78,28 @@ python scripts/gates/check-rtvp-release-gate.py --phase pin-retarget-preflight
 ```
 
 Local / Staging **不是**产品 SSOT。
+
+## 防回滚锁（`LIVING_PARENT` · mixed_living_bake 机读）
+
+今天这类「修了又飘」不是闸随机失败，而是 **活官网字节 ≠ git 标签**：
+
+1. 从 **脏 occupied 工作树** 烤进 Official，`release-identity` 仍写旧 SHA → 用户看见的修复 **没有** 进入下一跳的 git 父提交。
+2. 下一跳按 **Living Pin / Bundle** 开干净 Candidate → 上一跳产品字节消失。
+3. leftover 甚至标成 `not-this-hop`，仍被当官网用户可见面烤上去。
+4. hop 结束后 **未改针**，下一跳再从 Pin 派生，等于再丢一次。
+
+**写死（每跳 Official `--live-hop` PASS 后自动写）：** [`evidence/GO_v9_fix_workflow/LIVING_PARENT.yaml`](../../evidence/GO_v9_fix_workflow/LIVING_PARENT.yaml)
+
+| 规则 | 闸 |
+|---|---|
+| `CAUSAL`/`ENVIRONMENTAL` inspect 必须 Candidate bake 树（≠ occupied）且 HEAD 含 Living Parent | `check-v9-pre-repair-inspection.py` |
+| inspect 允许 live == `LIVING_PARENT`（Pin 仍可指向旧 Bundle） | 同上 |
+| bake 树 `frontend/` · `crates/` 必须已提交；**Official 禁止** `TT_V9_BAKE_DIRTY_ACK` | `check-v9-local.py --bake-clean` / `--official` |
+| 仓内旁路部署脚本先 `--phase preflight` | `scripts/dev/lib/v9-unsigned-deploy-preflight.sh` |
+| hop 结束自动写改针待办（**不**改 Pin） | `PIN_RETARGET_DUE.yaml` |
+| 禁止 `not-this-hop leftover` 当 Official 用户可见面 | Agent 规则 · 不进 hop |
+
+`TT_V9_BAKE_DIRTY_ACK=1` 仅 ①/② 应急。**禁止**自动改 Living Pin / cite / Bundle。改针后 `--phase official-living-pin-live` 刷新 Living Parent。**不**自动 `TT_PRODUCTION_GO`。CMS/合约/Indexer 仍 `N_A`。
 
 ## CAUSAL（防止开缝变新功能）
 

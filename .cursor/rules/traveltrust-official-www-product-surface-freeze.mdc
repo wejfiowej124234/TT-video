@@ -3,9 +3,9 @@
 **SSOT:** [TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md](../../docs/runbook/TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md) · [FREEZE LATEST](../../docs/runbook/TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.md)
 
 **Living baseline:** **Verified Release Baseline Bundle** (`TT-OFFICIAL-OPS-20260820-V9` program id retained) · **TODAYS_OFFICIAL_STABLE**  
-**Live pin:** `https://www.web3-ttg.com` · `git_sha=7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` · `build_time=2026-08-27T02:34:57Z` · image `deployment-01M10H54624RMXJ6XCAH986TG6` · digest `sha256:13f3c001…` · Header login **OWNER_CONFIRMED** · stamp **`OFFICIAL_RUNTIME_REALITY_PASS_STOP`**  
-**API:** `6255987700405ebaced1824b5838c25a2797f17c` · Fly `tt-api-prod:625598770`  
-**SUPERSEDED as living:** previous Bundle `f148be96…` / `8e7e68028…` · OPS-v9 bake `3e356617…` / `8df2ab21…` / `hybrid-…-v9-20260820`  
+**Live pin:** `https://www.web3-ttg.com` · `git_sha=5c70d833a684e665d255f458a0efa1aa2b56b0cf` · `build_time=2026-08-27T09:31:29Z` · image `deployment-01M11900S0BWPHAW5CW7T70YDS` · digest `sha256:2faf87ad…` · Header login **OWNER_CONFIRMED** · stamp **`OFFICIAL_RUNTIME_REALITY_PASS_STOP`**  
+**API:** `8c522cdcfc655cfdcc5866d219dfc3254d833e32` · Fly `tt-api-prod:deployment-01M10SC0G961DYH81RD4A5VPD1`  
+**SUPERSEDED as living:** previous Bundle `7b25440f9…` / `625598770…` · `f148be96…` / `8e7e68028…` · OPS-v9 bake `3e356617…` / `8df2ab21…` / `hybrid-…-v9-20260820`  
 **`TT_PRODUCTION_GO`:** `NO_GO`  
 **GO 资格：** `READY_FOR_OWNER_PRODUCTION_GO_VERDICT` · 禁止自动签发 · 禁止无授权 bake www  
 

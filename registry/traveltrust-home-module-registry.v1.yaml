@@ -112,12 +112,12 @@ this_wave_release_policy:
   unlock: explicit RELEASE_SCOPE including that Module ID + Owner auth
 
 production_runtime_observation:
-  sampled_utc: "2026-08-27T03:15:00Z"
+  sampled_utc: "2026-08-27T09:47:00Z"
   url: https://www.web3-ttg.com/traveltrust
   pin_baseline_id: TT-OFFICIAL-OPS-20260820-V9
-  pin_git_sha: 7b25440f9fe26dae3a5ed2c10c7b57eb1716c539
-  live_build_time: "2026-08-27T02:34:57Z"
-  fly_image_tag: deployment-01M10H54624RMXJ6XCAH986TG6
+  pin_git_sha: 5c70d833a684e665d255f458a0efa1aa2b56b0cf
+  live_build_time: "2026-08-27T09:31:29Z"
+  fly_image_tag: deployment-01M11900S0BWPHAW5CW7T70YDS
   session_bootstrap: v8
   superseded_pin_git_sha: daa5ae87b8c1af548c6beff6dd3451e5d386acf2
   rolled_back_overlay_git_sha: 2551fafd73778ba2a4a8a83ef3d5b016f45a1e5b
@@ -156,7 +156,7 @@ staging_runtime_observation:
   note: >
     CANDIDATE_NOT_OFFICIAL_BUNDLE — living Staging www SHA is Candidate identity
     (GET https://tt-web-staging.fly.dev/api/release-identity). Do not copy Official
-    Bundle www SHA 7b25440f… here. Expected Difference vs Official: SHA / build_time /
+    Bundle www SHA 5c70d833… here. Expected Difference vs Official: SHA / build_time /
     Candidate contract_profile / Staging API Sepolia. Wave-D2 probe 2ba08bd4 SUPERSEDED.
 
 local_source_observation:

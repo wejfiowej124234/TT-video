@@ -10,14 +10,17 @@ tt_production_go: NO_GO
 official_promotion: FORBIDDEN_UNTIL_OWNER
 
 verified_release_baseline_bundle:
-  www_sha: "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539"
-  www_build_time: "2026-08-27T02:34:57Z"
-  api_sha: "6255987700405ebaced1824b5838c25a2797f17c"
+  www_sha: "5c70d833a684e665d255f458a0efa1aa2b56b0cf"
+  www_build_time: "2026-08-27T09:31:29Z"
+  api_sha: "8c522cdcfc655cfdcc5866d219dfc3254d833e32"
   runtime_reality_stamp: OFFICIAL_RUNTIME_REALITY_PASS_STOP
   identity_sha_is_not_git_checkout: true
 
 inherit:
   any_future_candidate_must_parent_this_bundle: true
+  # Until Owner retargets Living Pin, next Candidate must parent LIVING_PARENT.yaml
+  # (Official live SHA), not only this Bundle. Bundle-only forks drop the last hop.
+  any_future_candidate_must_parent_living_official_sha: true
   # RTVP: Local/Staging/Official must parent this Bundle + invariants.
   # Do NOT require www_sha == api_sha == git checkout.
   local_staging_official_must_parent_bundle: true
@@ -40,6 +43,9 @@ promotion_policy:
   plane_closure_ssot: registry/rtvp-plane-closure.v1.yaml
   cite_set: registry/rtvp-cite-set.v1.yaml
   candidate_must_parent_verified_bundle: true
+  candidate_must_parent_living_official_sha: true
+  bake_worktree_committed_product_bytes: true
+  living_parent: evidence/GO_v9_fix_workflow/LIVING_PARENT.yaml
   local_to_official_direct: forbidden
   mixed_living_bake: forbidden
   staging_hotfix: forbidden
@@ -77,8 +83,8 @@ required_invariants:
   known_residuals_causal_split: REQUIRED
 
 parent:
-  official_www_sha: "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539"
-  official_api_sha: "6255987700405ebaced1824b5838c25a2797f17c"
+  official_www_sha: "5c70d833a684e665d255f458a0efa1aa2b56b0cf"
+  official_api_sha: "8c522cdcfc655cfdcc5866d219dfc3254d833e32"
   superseded_ops_v9_www_sha: "3e356617a498b0faac42e4ae457343d36294a770"
   superseded_ops_v9_api_sha: "8df2ab214fdd8b8e3bd00e77d8f4aaef43875e51"
   product_reality_sha: "86287ff02b82c13056b36e6cb5a2f89769cafe39"

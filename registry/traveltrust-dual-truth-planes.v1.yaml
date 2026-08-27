@@ -18,9 +18,9 @@ planes:
     living_pin_id: TT-OFFICIAL-OPS-20260820-V9
     official_url: https://www.web3-ttg.com
     identity:
-      git_sha: "7b25440f9fe26dae3a5ed2c10c7b57eb1716c539"
-      build_time: "2026-08-27T02:34:57Z"
-      fly_image: "registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6"
+      git_sha: "5c70d833a684e665d255f458a0efa1aa2b56b0cf"
+      build_time: "2026-08-27T09:31:29Z"
+      fly_image: "registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS"
     local_staging_role: mirror_rebase_from_official
     includes:
       - routes

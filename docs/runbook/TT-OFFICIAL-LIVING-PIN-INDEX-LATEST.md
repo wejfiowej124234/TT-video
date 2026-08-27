@@ -1,7 +1,7 @@
 # Official Living Pin Index（唯一入口）
 
 **STATUS:** `TODAYS_OFFICIAL_STABLE` · **`OFFICIAL_RUNTIME_REALITY_PASS_STOP`**  
-**Living baseline:** **TravelTrust Official** · V9 hop-bake live (`7b25440f9` / `625598770`)  
+**Living baseline:** **TravelTrust Official** · V9 hop-bake live (`5c70d833a` / `8c522cdc`)  
 **Machine:** [`TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json`](./TT-OFFICIAL-WWW-PRODUCT-SURFACE-FREEZE-LATEST.json)  
 **Human (historical OPS-v9 bake):** [`TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md`](./TT-OFFICIAL-PRODUCT-BASELINE-OPS-20260820-V9-LATEST.md) · **not** live identity after 2026-08-26  
 **`TT_PRODUCTION_GO`:** `NO_GO`  
@@ -23,20 +23,21 @@
 | 对外名 | TravelTrust Official · living 2026-08-27 |
 | 机读 ID | `TT-OFFICIAL-OPS-20260820-V9`（program id retained · **live bytes ≠ 08-20 bake**） |
 | Web | `https://www.web3-ttg.com` |
-| Identity `git_sha` | `7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` |
-| `build_time` | `2026-08-27T02:34:57Z` |
-| Fly image | `registry.fly.io/tt-web-prod:deployment-01M10H54624RMXJ6XCAH986TG6` |
-| Digest | `sha256:13f3c0013788461fd119e88434a4e01e70f282fc9f4dd5a049cb23ae385ad8bf` |
+| Identity `git_sha` | `5c70d833a684e665d255f458a0efa1aa2b56b0cf` |
+| `build_time` | `2026-08-27T09:31:29Z` |
+| Fly image | `registry.fly.io/tt-web-prod:deployment-01M11900S0BWPHAW5CW7T70YDS` |
+| Digest | `sha256:2faf87adaacebb17486c819a62f3a2974a8f9efff01f63b52b9d6d6ca6ad50d4` |
 | Runtime Reality | **`OFFICIAL_RUNTIME_REALITY_PASS_STOP`** |
 | Header login | **OWNER_CONFIRMED**（Owner Official C1/C2 · 非 Staging `*@test.com`） |
 | Hybrid tip | `/` · `/traveltrust` · `/auth` |
 | Hybrid visual pin | `/market` · `/did-rank` · `/community` |
-| API | `6255987700405ebaced1824b5838c25a2797f17c` · Fly `tt-api-prod:625598770` |
+| API | `8c522cdcfc655cfdcc5866d219dfc3254d833e32` · Fly `tt-api-prod:deployment-01M10SC0G961DYH81RD4A5VPD1` |
 
 ## Forbidden as living Official
 
 | Handle | Why |
 |--------|-----|
+| `7b25440f9…` / `deployment-01M10H54624RMXJ6XCAH986TG6` | 2026-08-27 V9 hop-bake (traveler copy) · **SUPERSEDED as living** after hop `5c70d833a…` |
 | `f148be96…` / `deployment-01M0XZE5709ZC2WABY6M44VNEP` | 2026-08-26 unified Candidate living pin · **SUPERSEDED as living** after V9 hop `7b25440f9…` |
 | `3e356617…` / `hybrid-live-auth-pin-nontarget-v9-20260820` | OPS-2026.08.20-v9 bake · **SUPERSEDED as living** after Runtime Reality PASS_STOP |
 | `daa5ae87` / `deployment-01M05JAAXJPTRZJAQEJ4JJWQMK` | 08-16 pin · **SUPERSEDED** |
@@ -48,7 +49,7 @@
 
 ## Restore
 
-Living restore handle = current Fly tag `deployment-01M10H54624RMXJ6XCAH986TG6` (see Freeze JSON). Previous `f148be96…` / OPS-v9 images remain rollback archaeology only. **Do not** treat restore as Production GO.
+Living restore handle = current Fly tag `deployment-01M11900S0BWPHAW5CW7T70YDS` (see Freeze JSON). Previous `f148be96…` / OPS-v9 images remain rollback archaeology only. **Do not** treat restore as Production GO.
 
 ## Plan track (this closure)
 
@@ -75,15 +76,15 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 
 ## Local / Staging / Repo 一比一映射（写死）
 
-**Living Official 产品身份（2026-08-27）：** `git_sha=7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` · `build_time=2026-08-27T02:34:57Z`。  
-**上一针** `f148be96…` / `2026-08-26T02:46:51Z` 与 **历史 OPS-v9 08-20 bake** `3e356617…` / `2026-08-20T00:51:57Z` = **SUPERSEDED as living**（表内仍作考古）。
+**Living Official 产品身份（2026-08-27）：** `git_sha=5c70d833a684e665d255f458a0efa1aa2b56b0cf` · `build_time=2026-08-27T09:31:29Z`。  
+**上一针** `7b25440f9…` / `2026-08-27T02:34:57Z` · 再上一针 `f148be96…` / `2026-08-26T02:46:51Z` 与 **历史 OPS-v9 08-20 bake** `3e356617…` / `2026-08-20T00:51:57Z` = **SUPERSEDED as living**（表内仍作考古）。
 
 | 平面 | 映射 | 禁止 |
 |------|------|------|
 | **Repo** | `main` == `release/official-ops-v9-product-ssot` tip（工程 SSOT） | 旧 tip / `2ba08bd4` / `daa5` 当活工程线 |
 | **Local** | Release WT cite = `3e356617…`；本地开发对照本 pin | 用 Staging 旧针反推 Official；声称 checkout = 官网像素 |
 | **Staging www** | Candidate（staging env · **≠** Official Fly tag · 禁止把官网 SHA 抄进 staging_runtime_observation） | 把官网生产镜像原样钉进 Staging；`2ba08bd4` 当活面 |
-| **Official www** | Fly `deployment-01M10H54624RMXJ6XCAH986TG6` · `build_time=2026-08-27T02:34:57Z` · `7b25440f9…` | 把 `f148be96` / `3e356617` / hybrid-v9-20260820 当活面；M07 冒充 |
+| **Official www** | Fly `deployment-01M11900S0BWPHAW5CW7T70YDS` · `build_time=2026-08-27T09:31:29Z` · `5c70d833a…` | 把 `7b25440f9` / `f148be96` / `3e356617` / hybrid-v9-20260820 当活面；M07 冒充 |
 
 **Expected Difference：** Staging 新 bake 的 `build_time` / image tag 可 ≠ 官网冻结墙钟。  
 **本波实测（2026-08-20）：** Official `build_time=2026-08-20T00:51:57Z` · Staging `build_time=2026-08-20T10:50:46Z` · 双方 `git_sha=3e356617…`。
@@ -92,9 +93,9 @@ Wave-0 **FULLY_CLOSED**（含 Owner Header 登录确认）→ A living docs → 
 
 | 平面 | 活面值 | 在 V9 下的角色 |
 |------|--------|----------------|
-| Official www | `7b25440f9…` / `2026-08-27T02:34:57Z` | Product Truth（living） |
+| Official www | `5c70d833a…` / `2026-08-27T09:31:29Z` | Product Truth（living） |
 | Staging www | Candidate（staging env · 禁止抄 Official www SHA） | 产品身份对齐 living Official · **≠** Production GO |
-| Official API | `625598770…` / chain=`1` | **living 配对**（≠ FTB） |
+| Official API | `8c522cdcf…` / chain=`1` | **living 配对**（≠ FTB） |
 | Staging API | `1915ec4d…` / chain=`11155111` | **V9 映射 ED**（sha≠pin · Sepolia · CONFIRM_DESIGN） |
 | Staging www→API | `tt-api-staging.fly.dev` | 禁止指向 Official API |
 | Web3 FTB 地址 | FTB Active Truth | **另闸**（本页不改链） |

@@ -8,7 +8,7 @@
 
 ---
 
-**UNIQUE_PRODUCT_PROMOTION_PROTOCOL:** 产品升阶只认 [V9修复工作流程](./TT-V9-FIX-WORKFLOW-LATEST.md)（`V9_FIX_WORKFLOW`）。Living Official www `7b25440f9fe26dae3a5ed2c10c7b57eb1716c539` · API `6255987700405ebaced1824b5838c25a2797f17c`。
+**UNIQUE_PRODUCT_PROMOTION_PROTOCOL:** 产品升阶只认 [V9修复工作流程](./TT-V9-FIX-WORKFLOW-LATEST.md)（`V9_FIX_WORKFLOW`）。Living Official www `5c70d833a684e665d255f458a0efa1aa2b56b0cf` · API `8c522cdcfc655cfdcc5866d219dfc3254d833e32`。
 
 **Forbidden slogan as product master:** `Local → Staging → Production`  
 **Required:** derive Candidate **from Official pin**, verify ① then ②, write back Official.
